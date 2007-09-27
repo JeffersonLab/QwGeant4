@@ -1,0 +1,630 @@
+//=============================================================================
+// 
+//   ---------------------------
+//  | Doxygen File Information |
+//  ---------------------------
+// 
+/**
+ 
+   \file QweakSimDetectorConstruction.cc
+
+   $Revision: 1.10 $	
+   $Date: 2006/05/05 21:40:08 $
+
+   \author Klaus Hans Grimm   
+
+*/
+//=============================================================================
+
+//=============================================================================
+//   -----------------------
+//  | CVS File Information |
+//  -----------------------
+// 
+//  Last Update:      $Author: grimm $
+//  Update Date:      $Date: 2006/05/05 21:40:08 $
+//  CVS/RCS Revision: $Revision: 1.10 $
+//  Status:           $State: Exp $
+// 
+// ===================================
+//  CVS Revision Log at end of file !!
+// ===================================
+//
+//============================================================================
+// 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+#include "QweakSimDetectorConstruction.hh"
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+//===================================================================
+//	Qweak *Geant4* Geometry Conventions:
+//      The origin is at the center of the main toroidal magnet with
+//	the z-axis pointing along the beam direction, the y-axis
+//	pointing toward the ceiling, and the x-axis pointing toward
+//	beam-left so as to form a right-handed coordinate system.
+//	Octants are numbered from 1 to 8, clockwise with #1 at the 
+//	12 o-clock position.  
+//===================================================================
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+QweakSimDetectorConstruction::QweakSimDetectorConstruction(QweakSimUserInformation *userInfo)
+{
+  // initialize pointers and variables
+  experimentalHall_Solid    = NULL;  
+  experimentalHall_Logical  = NULL;  
+  experimentalHall_Physical = NULL;
+
+  HallFloor_Solid    = NULL;  
+  HallFloor_Logical  = NULL;  
+  HallFloor_Physical = NULL;
+  
+  detectorMessenger = NULL;
+  pMaterial         = NULL;
+
+  pGlobalMagnetField = NULL;
+
+  pTriggerScintillator  = NULL;
+  pCerenkovDetector     = NULL;
+
+  pCollimator1       = NULL;
+  pCollimator2       = NULL;
+  pCollimator3       = NULL;
+  pCollimatorSupport = NULL;
+
+
+  pShieldingWall     = NULL;
+
+  pGEM               = NULL;
+  pHDC               = NULL;
+  pVDC               = NULL;
+  pVDCRotator        = NULL;
+
+  pTarget            = NULL;
+  pMainMagnet        = NULL;
+  pMiniMagnet        = NULL;
+
+  fWorldLengthInX = 0.0*cm; 
+  fWorldLengthInY = 0.0*cm;
+  fWorldLengthInZ = 0.0*cm;
+
+  fFloorLengthInX   = 0.0*cm; 
+  fFloorLengthInY   = 0.0*cm;
+  fFloorLengthInZ   = 0.0*cm;
+  fFloorPositionInY = 0.0*cm; // Top positon, not the center pos
+
+  fGlobalEquation    = NULL;
+  fGlobalStepper     = NULL;
+  fGlobalChordFinder = NULL;
+
+  HallFloor_VisAtt = NULL;
+  HallFloor_VisAtt = new G4VisAttributes();
+
+  myUserInfo = userInfo;
+
+  detectorMessenger = new QweakSimDetectorMessenger(this);
+
+  pMaterial         = new QweakSimMaterial();
+  pMaterial->DefineMaterials();
+}
+
+QweakSimDetectorConstruction::~QweakSimDetectorConstruction()
+{
+  // I'm deleting the objects in the reverse order they were created (~FILO)
+
+  if (pGlobalMagnetField) delete pGlobalMagnetField;
+
+  if (pVDCRotator) delete pVDCRotator;
+  if (pGEM)        delete pGEM; 
+  if (pHDC)        delete pHDC;
+  //if (pVDC) delete pVDC; // something broken here
+
+
+  if (pCerenkovDetector)    delete pCerenkovDetector;
+  if (pTriggerScintillator) delete pTriggerScintillator;
+
+
+  if (pCollimator1)         delete pCollimator1;
+  if (pCollimator2)         delete pCollimator2;
+  if (pCollimator3)         delete pCollimator3;
+  if (pCollimatorSupport)   delete pCollimatorSupport;
+
+
+  if (pShieldingWall)       delete pShieldingWall;
+
+  if (pTarget)              delete pTarget;
+  if (pMainMagnet)          delete pMainMagnet;
+  if (pMiniMagnet)          delete pMiniMagnet;
+
+  if (detectorMessenger)    delete detectorMessenger;             
+  if (pMaterial)            delete pMaterial;
+
+}
+
+G4VPhysicalVolume* QweakSimDetectorConstruction::Construct()
+{
+  return ConstructQweak();
+}
+
+G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
+{
+
+  pTarget              = new QweakSimTarget(); 
+
+  pCollimator1         = new QweakSimCollimator(); 
+  pCollimator2         = new QweakSimCollimator(); 
+  pCollimator3         = new QweakSimCollimator(); 
+
+  pShieldingWall       = new QweakSimShieldingWall();
+
+  
+  pMiniMagnet          = new QweakSimMiniMagnet(); // MiniTorus Geometry (decoupled from field)
+  pMainMagnet          = new QweakSimMainMagnet(); // QTOR Geometry (decoupled from field) 
+
+  pGEM                 = new QweakSimGEM(); 
+  pHDC                 = new QweakSimHDC(); 
+  pVDC                 = new QweakSimVDC(); 
+  
+  //pCerenkovDetector    = new QweakSimCerenkovDetector(); 
+  pCerenkovDetector    = new QweakSimCerenkovDetector(myUserInfo);
+
+  pTriggerScintillator = new QweakSimTriggerScintillator(); 
+   
+   
+  //--------- Definitions of Solids, Logical Volumes, Physical Volumes ---------
+
+  fWorldLengthInX =  15.0*m;
+  fWorldLengthInY =  15.0*m;
+  fWorldLengthInZ =  30.0*m;
+
+ 
+  // experimentalHall_Material   = pMaterial->GetMaterial("HeGas");
+  // Note: experimentalHall_Material was HeGas all the time up to 12-28-2005 !!!
+  experimentalHall_Material   = pMaterial->GetMaterial("Air");
+
+  experimentalHall_Solid = new G4Box("ExpHall_Sol",
+				     0.5* fWorldLengthInX , 
+				     0.5* fWorldLengthInY ,
+				     0.5* fWorldLengthInZ );
+  
+  experimentalHall_Logical = new G4LogicalVolume( experimentalHall_Solid, 
+						  experimentalHall_Material, 
+						  "ExpHall_Logical", 
+						  0, 0, 0);
+  
+  //  Must place the World Physical volume unrotated at (0,0,0).
+  // 
+  experimentalHall_Physical = new G4PVPlacement(0,               // no rotation
+						G4ThreeVector(), // at (0,0,0)
+						experimentalHall_Logical,      // its logical volume
+						"ExpHall_Physical",         // its name
+						0,               // its mother  volume
+						false,           // no boolean operations
+						0);              // no field specific to volume
+
+  //==========================
+  // Defining the Hall Floor
+  //==========================
+
+  fFloorLengthInX =  12.0*m;
+  fFloorLengthInY =   1.0*m;
+  fFloorLengthInZ =  28.0*m;
+  
+  fFloorPositionInY =  -396.25*cm; // Top positon, not the center pos
+
+
+  HallFloor_Material   = pMaterial->GetMaterial("ShieldingConcrete");
+  
+  HallFloor_Solid = new G4Box("HallFloor_Sol",
+			      0.5* fFloorLengthInX , 
+			      0.5* fFloorLengthInY ,
+			      0.5* fFloorLengthInZ );
+  
+  HallFloor_Logical = new G4LogicalVolume( HallFloor_Solid, 
+					   HallFloor_Material, 
+					   "HallFloor_Logical", 
+					   0, 0, 0);
+
+  //  Must place the World Physical volume unrotated at (0,0,0).
+  // 
+  HallFloor_Physical = new G4PVPlacement(0,               // no rotation
+					 G4ThreeVector(0.,fFloorPositionInY -0.5* fFloorLengthInY,0.), 
+					 "HallFloor_Physical",          // its name
+					 HallFloor_Logical,             // its logical volume
+					 experimentalHall_Physical ,    // its physical mother volume
+					 false,                         // no boolean operations
+					 0);                            // no field specific to volume
+
+  
+  G4cout << G4endl << "###### QweakSimDetectorConstruction: Setting Attributes " << G4endl << G4endl;
+
+  G4Colour  grey      ( 127/255., 127/255., 127/255.);
+
+  HallFloor_VisAtt->SetColor(grey);
+  HallFloor_VisAtt->SetVisibility(true);
+  //HallFloor_VisAtt->SetVisibility(false);
+  //HallFloor_VisAtt->SetForceWireframe(true);
+  //HallFloor_VisAtt->SetForceSolid(true);
+  HallFloor_Logical->SetVisAttributes(HallFloor_VisAtt); 
+
+  //============================================
+  // create/place target body into MotherVolume 
+  //============================================
+  //
+  pTarget -> ConstructComponent(experimentalHall_Physical);
+  pTarget -> SetTargetCenterPositionInZ(-650*cm); 
+
+  //================================================
+  // create/place MainMagnet body into MotherVolume 
+  //================================================
+  //
+  if(pMiniMagnet){
+    pMiniMagnet -> ConstructComponent(experimentalHall_Physical);
+    pMiniMagnet -> SetCenterPositionInZ(-465.31*cm);
+  }
+
+  //================================================
+  // create/place MainMagnet body into MotherVolume 
+  //================================================
+  //
+  if(pMainMagnet){
+    pMainMagnet -> ConstructComponent(experimentalHall_Physical);
+    pMainMagnet -> SetCenterPositionInZ(0.0*cm);
+    pMainMagnet -> Construct_UpstreamSpider(experimentalHall_Physical);
+    pMainMagnet -> Construct_ClampPlates(experimentalHall_Physical);
+    pMainMagnet -> Construct_UpStreamMiniClampPlates(experimentalHall_Physical);
+    pMainMagnet -> Construct_CoilFrames(experimentalHall_Physical);
+    pMainMagnet -> Construct_RadialMountingBlocks(experimentalHall_Physical);
+    pMainMagnet -> Construct_SupportFrame(experimentalHall_Physical);
+    pMainMagnet -> Construct_DownstreamSpider(experimentalHall_Physical);
+  }
+
+
+
+  //Collimator 1 configuration
+  pCollimator1->SetCollimatorNumber(1);
+  pCollimator1->SetCollimatorHousing_FullLengthInX(240.0*cm);
+  pCollimator1->SetCollimatorHousing_FullLengthInY(240.0*cm);
+  pCollimator1->SetCollimatorHousing_FullLengthInZ(15.24*cm);
+
+  pCollimator1->SetOctantCutOutFrontFullLength_Y(3.28*cm);
+  pCollimator1->SetOctantCutOutFrontFullLength_X1(7.66*cm);
+  pCollimator1->SetOctantCutOutFrontFullLength_X2(7.66*cm);
+  pCollimator1->SetOctantCutOutBackFullLength_Y(6.24*cm);
+  pCollimator1->SetOctantCutOutBackFullLength_X1(7.66*cm);
+  pCollimator1->SetOctantCutOutBackFullLength_X2(7.66*cm);
+
+  pCollimator1->SetBeamlineCutoutDiameter(8.0*cm);
+
+  pCollimator1->SetOctantCutOutFrontInnerDiameter(100.0*mm);
+  pCollimator1->SetOctantCutOutFrontOuterDiameter(261.4*mm);
+  pCollimator1->SetOctantCutOutBackInnerDiameter(124.0*mm);
+  pCollimator1->SetOctantCutOutBackOuterDiameter(261.4*mm);
+  pCollimator1->SetOctantCutOutStartingPhiAngle((-16.344+90.0)*degree);
+  pCollimator1->SetOctantCutOutDeltaPhiAngle(2.0*16.344*degree);
+  pCollimator1->SetOctantCutOutRadialOffset(0.0*cm);
+
+  pCollimator1->ConstructCollimator(experimentalHall_Physical);
+
+  pCollimator1->SetCollimatorHousing_CenterPositionInZ(-575.79*cm);
+  pCollimator1->SetCollimatorHousingMaterial("CDA943");
+
+
+  //Collimator 2 
+  pCollimator2->SetCollimatorNumber(2);
+  pCollimator2->SetCollimatorHousing_FullLengthInX(240.0*cm);
+  pCollimator2->SetCollimatorHousing_FullLengthInY(240.0*cm);
+  pCollimator2->SetCollimatorHousing_FullLengthInZ(21.66*cm);
+
+  pCollimator2->SetOctantCutOutFrontFullLength_Y(16.96*cm);  
+  pCollimator2->SetOctantCutOutFrontFullLength_X1(20.16*cm); //lower edge
+  pCollimator2->SetOctantCutOutFrontFullLength_X2(20.08*cm); //was 20.08//upper edge
+  pCollimator2->SetOctantCutOutBackFullLength_Y(21.96*cm);
+  pCollimator2->SetOctantCutOutBackFullLength_X1(20.16*cm);
+  pCollimator2->SetOctantCutOutBackFullLength_X2(20.06*cm); //was 20.06
+
+  pCollimator2->SetBeamlineCutoutDiameter(8.0*cm);
+
+  pCollimator2->SetOctantCutOutFrontInnerDiameter(31.47*cm);
+  pCollimator2->SetOctantCutOutFrontOuterDiameter(48.75*cm);
+  pCollimator2->SetOctantCutOutBackInnerDiameter(34.87*cm);
+  pCollimator2->SetOctantCutOutBackOuterDiameter(48.75*cm);
+  pCollimator2->SetOctantCutOutStartingPhiAngle((-22.467+90.0)*degree);
+  pCollimator2->SetOctantCutOutDeltaPhiAngle(2.0*22.467*degree);
+  pCollimator2->SetOctantCutOutRadialOffset(15.665*cm);
+
+  pCollimator2->ConstructCollimator(experimentalHall_Physical);
+
+  pCollimator2->SetCollimatorHousing_CenterPositionInZ(-349.889*cm);
+  pCollimator2->SetCollimatorHousingMaterial("CDA943");
+
+  //Collimator 3 
+  pCollimator3->SetCollimatorNumber(3);
+  pCollimator3->SetCollimatorHousing_FullLengthInX(240.0*cm);
+  pCollimator3->SetCollimatorHousing_FullLengthInY(240.0*cm);
+  pCollimator3->SetCollimatorHousing_FullLengthInZ(15.24*cm);
+
+  pCollimator3->SetOctantCutOutFrontFullLength_Y(30.37*cm);  
+  pCollimator3->SetOctantCutOutFrontFullLength_X1(34.44*cm); //lower edge
+  pCollimator3->SetOctantCutOutFrontFullLength_X2(34.44*cm); //upper edge
+  pCollimator3->SetOctantCutOutBackFullLength_Y(33.37*cm);
+  pCollimator3->SetOctantCutOutBackFullLength_X1(34.44*cm);
+  pCollimator3->SetOctantCutOutBackFullLength_X2(34.44*cm);
+
+  pCollimator3->SetBeamlineCutoutDiameter(8.0*cm);
+
+  pCollimator3->SetOctantCutOutFrontInnerDiameter(2.0*38.0*cm);
+  pCollimator3->SetOctantCutOutFrontOuterDiameter(2.0*48.63*cm);
+  pCollimator3->SetOctantCutOutBackInnerDiameter(2.0*39.5*cm);
+  pCollimator3->SetOctantCutOutBackOuterDiameter(2.0*48.63*cm);
+  pCollimator3->SetOctantCutOutStartingPhiAngle((-19.499+90.0)*degree);
+  pCollimator3->SetOctantCutOutDeltaPhiAngle(2.0*19.499*degree);
+  pCollimator3->SetOctantCutOutRadialOffset(0.0*cm);
+
+  pCollimator3->ConstructCollimator(experimentalHall_Physical);
+
+  pCollimator3->SetCollimatorHousing_CenterPositionInZ(-264.239*cm);
+  pCollimator3->SetCollimatorHousingMaterial("CDA943");
+
+
+  //================================================
+  // create/place Collimator Support body into MotherVolume 
+  //================================================
+  //
+    pCollimatorSupport   = new QweakSimCollimatorSupport( pCollimator1 ,pCollimator3 ); 
+    pCollimatorSupport -> ConstructSupport(experimentalHall_Physical);
+
+
+  // #===================================================
+  // # create/place ShieldingWall body into MotherVolume   
+  // #===================================================
+  
+    pShieldingWall->SetCollimatorWall_FullLengthInX(670.56*cm);
+    pShieldingWall->SetCollimatorWall_FullLengthInY(670.56*cm);
+    pShieldingWall->SetCollimatorWall_FullLengthInZ( 50.0*cm);
+  
+    pShieldingWall->SetOctantCutOut_Trap_RadialDistance  (250.75*cm);
+    pShieldingWall->SetOctantCutOut_Trap_FullLengthFront (150.00*cm);
+    pShieldingWall->SetOctantCutOut_Trap_FullLengthBack  (164.00*cm);
+    pShieldingWall->SetOctantCutOut_Trap_FullHeightFront ( 34.50*cm);
+    pShieldingWall->SetOctantCutOut_Trap_FullHeightBack  ( 30.50*cm);
+    pShieldingWall->SetOctantCutOut_Trap_PolarAngle      ( 20.57*degree);
+  
+    pShieldingWall->ConstructShieldingWallHousing_UsingTrapezoids(experimentalHall_Physical);
+    pShieldingWall->SetCollimatorWall_CenterPositionInZ(355*cm);
+
+    pShieldingWall->SetCollimatorWallMaterial("ShieldingConcrete");
+    //pShieldingWall->SetCollimatorWallMaterial("Lead");
+
+    pShieldingWall->ConstructFrontWall(experimentalHall_Physical);
+    pShieldingWall->ConstructBackWall(experimentalHall_Physical);
+    pShieldingWall->ConstructBeamLeftSideWall(experimentalHall_Physical);
+    pShieldingWall->ConstructBeamRightSideWall(experimentalHall_Physical);
+    pShieldingWall->ConstructTopWall(experimentalHall_Physical);
+
+    //===============================================
+    // create/place Drift Chambers into MotherVolume
+    //===============================================
+    //
+    pGEM->ConstructComponent(experimentalHall_Physical);
+    pHDC->ConstructComponent(experimentalHall_Physical);
+    pVDC->ConstructComponent(experimentalHall_Physical);
+
+    //===============================================
+    // create/place VDC Rotator into MotherVolume
+    //===============================================
+    //
+    pVDCRotator  = new QweakSimVDCRotator(pVDC); 
+    pVDCRotator->SetMotherVolume(experimentalHall_Physical);
+    pVDCRotator->ConstructRings();
+    pVDCRotator->ConstructRails();
+    pVDCRotator->ConstructMount();
+    pVDCRotator->ConstructSliderSupport();
+    pVDCRotator->SetRotationAngleInPhi( 0.0*degree);
+
+    //=========================================
+    // create/place Cerenkov into MotherVolume
+    //=========================================
+    //
+    pCerenkovDetector->ConstructComponent(experimentalHall_Physical);
+
+    //=====================================================
+    // create/place Trigger Scintillator into MotherVolume
+    //=====================================================
+    //
+    pTriggerScintillator->ConstructComponent(experimentalHall_Physical);
+
+//--------- Visualization attributes -------------------------------
+  
+  // Invisible Volume
+  experimentalHall_Logical->SetVisAttributes (G4VisAttributes::Invisible);
+
+  G4cout << G4endl << "The geometrical tree defined are : " << G4endl << G4endl;
+  DumpGeometricalTree(experimentalHall_Physical);
+
+  G4cout << G4endl << "###### Leaving QweakSimDetectorConstruction::Construct() " << G4endl << G4endl;
+
+
+  SetGlobalMagneticField();
+
+  // Construct() *MUST* return the pointer of the physical World !!!  
+  return experimentalHall_Physical;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+void QweakSimDetectorConstruction::DumpGeometricalTree(G4VPhysicalVolume* aVolume,G4int depth)
+{
+  for(int isp=0;isp<depth;isp++)
+  { G4cout << "  "; }
+  G4cout << aVolume->GetName() << "[" << aVolume->GetCopyNo() << "] "
+         << aVolume->GetLogicalVolume()->GetName() << " "
+         << aVolume->GetLogicalVolume()->GetNoDaughters() << " "
+         << aVolume->GetLogicalVolume()->GetMaterial()->GetName();
+  if(aVolume->GetLogicalVolume()->GetSensitiveDetector())
+  {
+    G4cout << " " << aVolume->GetLogicalVolume()->GetSensitiveDetector()
+                            ->GetFullPathName();
+  }
+  G4cout << G4endl;
+  for(int i=0;i<aVolume->GetLogicalVolume()->GetNoDaughters();i++)
+  { DumpGeometricalTree(aVolume->GetLogicalVolume()->GetDaughter(i),depth+1); }
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+void QweakSimDetectorConstruction::UpdateGeometry()
+{
+  G4cout << G4endl << "###### Calling QweakDetectorConstruction::UpdateGeometry() " << G4endl << G4endl;
+
+  // taken from LXe example
+  G4GeometryManager::GetInstance()->OpenGeometry();
+
+  // clean up previous geometry
+  G4PhysicalVolumeStore  ::GetInstance()->Clean();
+  G4LogicalVolumeStore   ::GetInstance()->Clean();
+  G4SolidStore           ::GetInstance()->Clean();
+  G4LogicalBorderSurface ::CleanSurfaceTable();
+
+
+  // define new geometry
+  G4RunManager::GetRunManager()->DefineWorldVolume(ConstructQweak());
+  G4RunManager::GetRunManager()->GeometryHasBeenModified();
+
+ 
+  G4cout << G4endl << "###### Leaving QweakDetectorConstruction::UpdateGeometry() " << G4endl << G4endl;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+void QweakSimDetectorConstruction::SetGlobalMagneticField()   
+{
+
+  //--------- Magnetic Field -------------------------------
+  
+  //============================================
+  //  Define the global magnet field Manager
+  //============================================
+  pGlobalMagnetField = new QweakSimGlobalMagnetField();
+
+  // Get transportation, field, and propagator  managers
+  fGlobalFieldManager = G4TransportationManager::GetTransportationManager()->GetFieldManager();
+
+  // perform navigation/propagation in a general non-uni-form magnetic field
+  //G4PropagatorInField* pGlobalFieldPropagator = G4TransportationManager::GetTransportationManager()->GetPropagatorInField();
+  
+  // G4double minEps =  1.0e-5;
+  // G4double maxEps =  1.0e-4;
+  
+  //pGlobalFieldPropagator->SetMinimumEpsilonStep(minEps);
+  //pGlobalFieldPropagator->SetMaximumEpsilonStep(maxEps);
+  
+  
+  fGlobalFieldManager->SetDetectorField(pGlobalMagnetField);
+  
+  fGlobalEquation = new G4Mag_UsualEqRhs(pGlobalMagnetField);
+  
+  // taken from one of the Geant4 presentation:
+  // - If the field is calculated from a field map, a lower order stepper
+  //   is recommended: the less smooth the field is, the lower the order of the
+  //   stepper that should be used. For very rough fields one should use 1st order
+  //   stepper, for a somewhat smooth field one must choose between 1st and 2nd
+  //   order stepper.
+  
+  //fGlobalStepper  = new G4ClassicalRK4(fGlobalEquation);  // classical 4th order stepper
+  //fGlobalStepper  = new G4ExplicitEuler(fGlobalEquation); //           1st order stepper
+  //fGlobalStepper  = new G4ImplicitEuler(fGlobalEquation); //           2nd order stepper
+  fGlobalStepper  = new G4SimpleRunge(fGlobalEquation);   //           2nd order stepper
+
+
+  // Provides a driver that talks to the Integrator Stepper, and insures that 
+  //   the error is within acceptable bounds.
+  G4MagInt_Driver* fGlobalIntgrDriver = new G4MagInt_Driver(1.0e-3*mm, 
+							    fGlobalStepper,
+							    fGlobalStepper->GetNumberOfVariables());
+  
+  fGlobalChordFinder = new G4ChordFinder(fGlobalIntgrDriver);
+  
+  
+  
+  //       G4bool fieldChangesEnergy = false;
+  //       G4FieldManager* pFieldMgr = new G4FieldManager(myField,pChordFinder,FieldChangeEnergy);
+  //       LocalLogicalVolume = new G4LogicalVolume(shape, material,"name",pFieldMgr,0,0);
+  
+  //   // minimal step of 1 mm is default
+  //   fMinStep = 0.01*mm ;
+  //
+  //   fGlobalChordFinder = new G4ChordFinder (pGlobalMagnetField,
+  //                                           fMinStep,
+  //                                           fGlobalStepper);
+  
+  fGlobalFieldManager->SetChordFinder(fGlobalChordFinder);
+
+//=====================================================================================
+// you can use this in DetectorConstruction class to make more smooth visulisation:
+
+  G4TransportationManager* tmanager = G4TransportationManager::GetTransportationManager();
+  tmanager->GetPropagatorInField()->SetLargestAcceptableStep(1*mm);
+//=====================================================================================
+} 
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+void QweakSimDetectorConstruction::ShowHallFloor()
+{
+  G4cout << "###### Calling QweakSimDetectorConstruction::ShowHallFloor() " << G4endl << G4endl;
+
+  HallFloor_VisAtt->SetVisibility(true);
+
+  G4cout << "###### Leaving QweakSimDetectorConstruction::ShowHallFloor() " << G4endl << G4endl;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+void QweakSimDetectorConstruction::HideHallFloor()
+{
+  G4cout << "###### Calling QweakSimDetectorConstruction::HideHallFloor() " << G4endl << G4endl;
+
+  HallFloor_VisAtt->SetVisibility(false);
+
+  G4cout << "###### Leaving QweakSimDetectorConstruction::HideHallFloor() " << G4endl << G4endl;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+//=======================================================
+//   -----------------------
+//  | CVS File Information |
+//  -----------------------
+// 
+//      $Revisions$  
+//      $Log: QweakSimDetectorConstruction.cc,v $
+//      Revision 1.10  2006/05/05 21:40:08  grimm
+//      Added pVDCRotator->ConstructSliderSupport(experimentalHall_Physical);
+//
+//      Revision 1.9  2006/05/02 00:56:58  grimm
+//      Implemented VDC Rotator
+//
+//      Revision 1.8  2006/01/18 20:26:03  grimm
+//      Added for MainMagnet:
+//         pMainMagnet -> Construct_SupportFrame(experimentalHall_Physical);
+//         pMainMagnet -> Construct_DownstreamSpider(experimentalHall_Physical);
+//
+//      Revision 1.7  2006/01/13 00:27:46  grimm
+//      Added pMainMagnet -> Construct_RadialMountingBlocks(experimentalHall_Physical);
+//
+//      Revision 1.6  2006/01/12 20:27:31  grimm
+//      Included pMainMagnet->Construct_CoilFrames(experimentalHall_Physical);
+//      (Constructs the 5" thick frame holder in which the coil is embedded)
+//
+//      Revision 1.5  2005/12/29 02:54:01  grimm
+//      Added pMainMagnet->Construct_UpStreamMiniClampPlates
+//
+//      Revision 1.4  2005/12/28 22:58:55  grimm
+//      Changed experimentalHall_Material from HeGas to Air. Was HeGas all the time up to now.
+//
+//      Revision 1.3  2005/12/28 22:49:30  grimm
+//      Added QweakSimCollimatorSupport into the world
+//
+//      Revision 1.2  2005/12/27 19:07:38  grimm
+//      - Redesign of Doxygen header containing CVS info like revision and date
+//      - Added CVS revision log at the end of file
+//
+// 

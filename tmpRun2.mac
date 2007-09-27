@@ -1,0 +1,27 @@
+/Target/SetCenterPositionInZ  -650.0 cm
+/Target/SetTargetMaterial    H2Liquid
+
+/Cerenkov/SetCerenkovMaterial Quartz
+
+/Cerenkov/SetCenterPositionInX     0.0 cm
+/Cerenkov/SetCenterPositionInY   315.0 cm 
+/Cerenkov/SetCenterPositionInZ   570.0 cm
+
+/Cerenkov/SetTiltingAngle          0.0 degree
+
+
+/VDC/SetFrontCenterPositionInX     0.0 cm
+/VDC/SetFrontCenterPositionInY   280.0 cm
+/VDC/SetFrontCenterPositionInZ   480.0 cm
+
+/VDC/DriftCell/SetWireAngleFront     45.0 degree
+/VDC/DriftCell/SetWireAngleBack     -45.0 degree
+/VDC/DriftCell/SetFullHeight         60.0 cm
+/VDC/DriftCell/SetDCNumberPerPlane    301
+/VDC/DriftCell/SetFullThickness      26.9875 mm
+/VDC/DriftCell/SetFullWidthOnFrame   11.1125 mm
+
+#/Qweak/PrimaryGenerator/StartingEvent 000000 
+/run/beamOn 250
+
+

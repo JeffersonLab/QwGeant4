@@ -1,0 +1,241 @@
+//=============================================================================
+// 
+//   ---------------------------
+//  | Doxygen File Information |
+//  ---------------------------
+// 
+/**
+ 
+   \file QweakSimTrackingAction.cc
+
+   $Revision: 1.5 $	
+   $Date: 2006/01/18 20:27:32 $
+
+   \author Klaus Hans Grimm   
+
+*/
+//=============================================================================
+
+//=============================================================================
+//   -----------------------
+//  | CVS File Information |
+//  -----------------------
+// 
+//  Last Update:      $Author: grimm $
+//  Update Date:      $Date: 2006/01/18 20:27:32 $
+//  CVS/RCS Revision: $Revision: 1.5 $
+//  Status:           $State: Exp $
+// 
+// ===================================
+//  CVS Revision Log at end of file !!
+// ===================================
+//
+//============================================================================
+
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+#include "QweakSimTrackingAction.hh"
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+QweakSimTrackingAction::QweakSimTrackingAction(QweakSimUserInformation* myUI)
+  : myUserInfo(myUI)
+{
+  G4cout << G4endl << "###### Calling QweakSimTrackingAction::QweakSimTrackingAction() " << G4endl << G4endl;
+
+  pTrackingActionMessenger = new QweakSimTrackingActionMessenger(this);
+
+  G4cout << G4endl << "###### Leaving QweakSimTrackingAction::QweakSimTrackingAction() " << G4endl << G4endl;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+QweakSimTrackingAction::~QweakSimTrackingAction()
+{
+  G4cout << G4endl << "###### Calling QweakSimTrackingAction::~QweakSimTrackingAction() " << G4endl << G4endl;
+
+  delete pTrackingActionMessenger;
+
+
+  G4cout << G4endl << "###### Leaving QweakSimTrackingAction::~QweakSimTrackingAction() " << G4endl << G4endl;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+ void QweakSimTrackingAction::PreUserTrackingAction(const G4Track* aTrack)
+{
+
+  //G4cout << G4endl << "###### Calling QweakSimTrackingAction::PreUserTrackingAction() " << G4endl << G4endl;
+
+    // store only trajectory of primary
+    // BUT allow tracking of secondaries with an origin of  z>568*cm
+
+//     if( (aTrack->GetParentID()==0) || (aTrack->GetVertexPosition().z() > 568.0*cm) )
+//     {
+//         fpTrackingManager->SetStoreTrajectory(true);
+//         //fpTrackingManager->SetTrajectory(new G4Trajectory(aTrack));
+//     }
+//     else
+//     {
+//         fpTrackingManager->SetStoreTrajectory(false);
+//     }
+
+    //-----------------------------------------------------------
+    //
+
+  
+    if (TrackingPrimaryOnlyFlag==1) 
+    {
+	// store only trajectory of primary particles (== electrons from event generator) for tracking
+	//if( (aTrack->GetParentID()==0) || (aTrack->GetVertexPosition().z() > 568.0*cm) )
+	
+	if( (aTrack->GetParentID()==0) || (aTrack->GetDefinition() == G4OpticalPhoton::OpticalPhotonDefinition()) )
+	{
+	    fpTrackingManager->SetStoreTrajectory(true);
+	    
+	    // store track
+	    //fpTrackingManager->SetTrajectory(new G4Trajectory(aTrack));
+	    fpTrackingManager->SetTrajectory(new QweakSimTrajectory(aTrack));
+	}
+	else
+	{
+	    // G4cout << "===> Not a primary event, Trajectory not stored !!!" << G4endl;
+	    fpTrackingManager->SetStoreTrajectory(false);
+	}
+    }
+    else 
+    {
+	// store all trajectories (primary+secondaries)
+	fpTrackingManager->SetStoreTrajectory(true);
+	fpTrackingManager->SetTrajectory(new QweakSimTrajectory(aTrack));
+	
+    }
+    //
+    //-----------------------------------------------------------
+
+  
+    // Check if the track already has track info
+    // in case of a  primary event w/o user track info: 
+    // create/store user track info
+    if( (aTrack->GetParentID()==0) && (aTrack->GetUserInformation()==0) )
+    {
+	//  G4cout << G4endl << "###### Creating new Track User Information for primary" << G4endl << G4endl;
+		
+	// create user track info using current primary track pointer as an input
+	QweakSimTrackInformation* anInfo = new QweakSimTrackInformation(aTrack);
+	  
+	// fill user track info with data stored in myUserInfo (class QweakUserInformation)
+	anInfo->StorePrimaryQ2(myUserInfo->GetPrimaryQ2());
+	anInfo->StoreCrossSectionWeight(myUserInfo->GetCrossSectionWeight());
+	anInfo->StorePrimaryEventNumber(myUserInfo->GetPrimaryEventNumber());
+
+	// set the source track info (which is here identical to the primary track info)
+	anInfo->SetSourceTrackInformation(aTrack);
+	//anInfo->Print();
+	
+	// access the track pointer
+	G4Track* theTrack = (G4Track*) aTrack;
+	
+	// attach/expand track with user track info
+	theTrack->SetUserInformation(anInfo);
+	
+	//delete anInfo;
+      }
+
+
+
+ // G4cout << G4endl << "###### Leaving QweakSimTrackingAction::PreUserTrackingAction() " << G4endl << G4endl;
+
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+void QweakSimTrackingAction::PostUserTrackingAction(const G4Track* aTrack)
+{
+  //G4cout << G4endl << "###### Calling QweakSimTrackingAction::PostUserTrackingAction() " << G4endl << G4endl;
+
+  //-------------------------------------------------------------------------
+  // attach user track info of the primary particle to the seconary particles
+  //-------------------------------------------------------------------------
+  
+  // get pointer to secondaries
+  G4TrackVector* secondaries = fpTrackingManager->GimmeSecondaries();
+  
+
+  if(secondaries)
+  {
+ 
+    // how many secondaries do we have ?
+    G4int nSeco = secondaries->size();
+
+    //G4cout << "###### --> How many secondaries: " << nSeco << G4endl;
+
+    if(nSeco>0)
+    {
+	//G4cout << "###### --> Within secondary loop " << G4endl;
+
+	// get pointer to primary track info
+// 	QweakSimTrackInformation* info = (QweakSimTrackInformation*)(aTrack->GetUserInformation());
+
+// 	// NEW: add the track information of the source track to the secondaries
+// 	//      (don't mix up source track info with unique primary track info)
+// 	//      nedded for figuring out if a primary electron or secondary particles
+// 	//      has created a cerenkov photon           
+
+
+
+// 	//G4cout << "###### --> We got info = (QweakSimTrackInformation*)(aTrack->GetUserInformation() " << G4endl;
+	
+
+// 	for(G4int i=0;i<nSeco;i++)
+// 	{
+// 	    // create secondary track info pointer for each secondary
+// 	    QweakSimTrackInformation* infoNew = new QweakSimTrackInformation(info);
+
+
+// 	    // copy primary track info to the current secondary
+// 	    (*secondaries)[i]->SetUserInformation(infoNew);
+
+// 	    // check for cerenkov photon generation
+// 	    if ( (*secondaries)[i]->GetDefinition()==G4OpticalPhoton::OpticalPhotonDefinition() && 
+//          	 (*secondaries)[i]->GetCreatorProcess()->GetProcessName()=="Cerenkov" )
+// 	    {
+// 		G4cout << " Cerenkov Photon generated here" << G4endl;
+
+// 		info->SetSourceTrackInformation(aTrack);
+
+// 	    }
+
+// 	    // tried it: G4 crashes if I delete infoNew
+// 	    //delete infoNew;
+	    
+// 	}  // end for
+    }    // end if (nSeco>0)
+  }      // end if (secondaries)
+  
+  //G4cout << G4endl << "###### Leaving QweakSimTrackingAction::PostUserTrackingAction() " << G4endl << G4endl;
+  
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+ 
+//=======================================================
+//   -----------------------
+//  | CVS File Information |
+//  -----------------------
+// 
+//      $Revisions$  
+//      $Log: QweakSimTrackingAction.cc,v $
+//      Revision 1.5  2006/01/18 20:27:32  grimm
+//      Bogus committ
+//
+//      Revision 1.4  2006/01/06 21:34:33  grimm
+//      Added  TrackingPrimaryOnlyFlag foe switching on/off tracking of primary electrons
+//
+//      Revision 1.3  2005/12/28 23:11:42  grimm
+//      Testing: allowing tracking of all secondaries.
+//      Before this change secondaries were tracked with an origin of z > 568*cm.
+//
+//      Revision 1.2  2005/12/27 19:15:35  grimm
+//      - Redesign of Doxygen header containing CVS info like revision and date
+//      - Added CVS revision log at the end of file
+//
+//

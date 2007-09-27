@@ -1,0 +1,2373 @@
+
+*************************************************************
+ Geant4 version Name: geant4-08-02-patch-01    (23-February-2007)
+                      Copyright : Geant4 Collaboration
+                      Reference : NIM A 506 (2003), 250-303
+                            WWW : http://cern.ch/geant4
+*************************************************************
+
+E_value 0 = 6.19921 QE = 0
+E_value 1 = 4.95937 QE = 0
+E_value 2 = 4.42801 QE = 0.1
+E_value 3 = 4.27532 QE = 0.3
+E_value 4 = 4.13281 QE = 3
+E_value 5 = 3.93601 QE = 10
+E_value 6 = 3.7571 QE = 20
+E_value 7 = 3.54241 QE = 27.5
+E_value 8 = 3.09961 QE = 26
+E_value 9 = 2.58301 QE = 20
+E_value 10 = 2.296 QE = 10
+E_value 11 = 2.10143 QE = 3
+E_value 12 = 2.016 QE = 1
+E_value 13 = 1.93725 QE = 0.3
+E_value 14 = 1.87855 QE = 0.1
+
+###### Calling QweakSimMaterial::QweakSimMaterial() 
+
+
+###### Calling QweakSimMaterial::DefineMaterials() 
+
+### NIST DataBase for Materials is used
+G4Material: Mean excitation energy is changed for G4_Al Iold= 166.4eV; Inew= 166 eV;
+G4Material: Mean excitation energy is changed for G4_Cu Iold= 321.9eV; Inew= 322 eV;
+G4Material: Mean excitation energy is changed for H2Liquid Iold= 21.8eV; Inew= 21.8 eV;
+G4Material: Mean excitation energy is changed for CO2 Iold= 90.1643eV; Inew= 85 eV;
+G4Material: Mean excitation energy is changed for Water Iold= 70.8926eV; Inew= 75 eV;
+G4Material: Mean excitation energy is changed for Kapton Iold= 75.7177eV; Inew= 79.6 eV;
+G4Material: Mean excitation energy is changed for ShieldingConcrete Iold= 129.469eV; Inew= 135.2 eV;
+G4Material: Mean excitation energy is changed for Ethane Iold= 50.9975eV; Inew= 45.4 eV;
+
+###### Leaving QweakSimMaterial::DefineMaterials() 
+
+G4VUserPhysicsList::SetVerboseLevel  : Verbose level is set to 2
+###### Calling QweakSimPrimaryGeneratorAction::QweakSimPrimaryGeneratorAction 
+%%%%> QweakSimPrimaryGeneratorAction::QweakSimPrimaryGeneratorAction, kActiveOctantNumber = 1
+==> Initilize() called
+==> initilizing pointers done
+==> LoadInputRootFile() called
+==> Input root file is open, current file number: 
+==> InitInputTree() called
+###### Leaving QweakSimPrimaryGeneratorAction::QweakSimPrimaryGeneratorAction 
+
+###### Calling/Leaving QweakSimRunAction::QweakSimRunAction()
+
+###### Calling QweakSimSteppingAction::QweakSimSteppingAction() 
+###### Leaving QweakSimSteppingAction::QweakSimSteppingAction() 
+
+###### Calling QweakSimTrackingAction::QweakSimTrackingAction() 
+
+
+###### Leaving QweakSimTrackingAction::QweakSimTrackingAction() 
+
+
+###### Calling QweakSimTarget::QweakTarget() 
+
+
+###### Calling QweakSimMaterial::QweakSimMaterial() 
+
+
+###### Calling QweakSimMaterial::DefineMaterials() 
+
+G4Material: Mean excitation energy is changed for H2Liquid Iold= 21.8eV; Inew= 21.8 eV;
+G4Material: Mean excitation energy is changed for CO2 Iold= 90.1643eV; Inew= 85 eV;
+G4Material: Mean excitation energy is changed for Water Iold= 70.8926eV; Inew= 75 eV;
+G4Material: Mean excitation energy is changed for Kapton Iold= 75.7177eV; Inew= 79.6 eV;
+G4Material: Mean excitation energy is changed for ShieldingConcrete Iold= 129.469eV; Inew= 135.2 eV;
+G4Material: Mean excitation energy is changed for Ethane Iold= 50.9975eV; Inew= 45.4 eV;
+
+###### Leaving QweakSimMaterial::DefineMaterials() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::QweakSimMaterial() 
+
+
+###### Calling QweakSimMaterial::DefineMaterials() 
+
+G4Material: Mean excitation energy is changed for H2Liquid Iold= 21.8eV; Inew= 21.8 eV;
+G4Material: Mean excitation energy is changed for CO2 Iold= 90.1643eV; Inew= 85 eV;
+G4Material: Mean excitation energy is changed for Water Iold= 70.8926eV; Inew= 75 eV;
+G4Material: Mean excitation energy is changed for Kapton Iold= 75.7177eV; Inew= 79.6 eV;
+G4Material: Mean excitation energy is changed for ShieldingConcrete Iold= 129.469eV; Inew= 135.2 eV;
+G4Material: Mean excitation energy is changed for Ethane Iold= 50.9975eV; Inew= 45.4 eV;
+
+###### Leaving QweakSimMaterial::DefineMaterials() 
+
+
+###### Calling QweakSimMaterial::QweakSimMaterial() 
+
+
+###### Calling QweakSimMaterial::DefineMaterials() 
+
+G4Material: Mean excitation energy is changed for H2Liquid Iold= 21.8eV; Inew= 21.8 eV;
+G4Material: Mean excitation energy is changed for CO2 Iold= 90.1643eV; Inew= 85 eV;
+G4Material: Mean excitation energy is changed for Water Iold= 70.8926eV; Inew= 75 eV;
+G4Material: Mean excitation energy is changed for Kapton Iold= 75.7177eV; Inew= 79.6 eV;
+G4Material: Mean excitation energy is changed for ShieldingConcrete Iold= 129.469eV; Inew= 135.2 eV;
+G4Material: Mean excitation energy is changed for Ethane Iold= 50.9975eV; Inew= 45.4 eV;
+
+###### Leaving QweakSimMaterial::DefineMaterials() 
+
+
+###### Calling QweakSimMaterial::QweakSimMaterial() 
+
+
+###### Calling QweakSimMaterial::DefineMaterials() 
+
+G4Material: Mean excitation energy is changed for H2Liquid Iold= 21.8eV; Inew= 21.8 eV;
+G4Material: Mean excitation energy is changed for CO2 Iold= 90.1643eV; Inew= 85 eV;
+G4Material: Mean excitation energy is changed for Water Iold= 70.8926eV; Inew= 75 eV;
+G4Material: Mean excitation energy is changed for Kapton Iold= 75.7177eV; Inew= 79.6 eV;
+G4Material: Mean excitation energy is changed for ShieldingConcrete Iold= 129.469eV; Inew= 135.2 eV;
+G4Material: Mean excitation energy is changed for Ethane Iold= 50.9975eV; Inew= 45.4 eV;
+
+###### Leaving QweakSimMaterial::DefineMaterials() 
+
+
+###### Calling QweakSimShieldingWall::QweakSimShieldingWall() 
+
+
+###### Calling QweakSimMaterial::QweakSimMaterial() 
+
+
+###### Calling QweakSimMaterial::DefineMaterials() 
+
+G4Material: Mean excitation energy is changed for H2Liquid Iold= 21.8eV; Inew= 21.8 eV;
+G4Material: Mean excitation energy is changed for CO2 Iold= 90.1643eV; Inew= 85 eV;
+G4Material: Mean excitation energy is changed for Water Iold= 70.8926eV; Inew= 75 eV;
+G4Material: Mean excitation energy is changed for Kapton Iold= 75.7177eV; Inew= 79.6 eV;
+G4Material: Mean excitation energy is changed for ShieldingConcrete Iold= 129.469eV; Inew= 135.2 eV;
+G4Material: Mean excitation energy is changed for Ethane Iold= 50.9975eV; Inew= 45.4 eV;
+
+###### Leaving QweakSimMaterial::DefineMaterials() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMiniMagnet::QweakSimMiniMagnet() 
+
+
+###### Calling QweakSimMaterial::QweakSimMaterial() 
+
+
+###### Calling QweakSimMaterial::DefineMaterials() 
+
+G4Material: Mean excitation energy is changed for H2Liquid Iold= 21.8eV; Inew= 21.8 eV;
+G4Material: Mean excitation energy is changed for CO2 Iold= 90.1643eV; Inew= 85 eV;
+G4Material: Mean excitation energy is changed for Water Iold= 70.8926eV; Inew= 75 eV;
+G4Material: Mean excitation energy is changed for Kapton Iold= 75.7177eV; Inew= 79.6 eV;
+G4Material: Mean excitation energy is changed for ShieldingConcrete Iold= 129.469eV; Inew= 135.2 eV;
+G4Material: Mean excitation energy is changed for Ethane Iold= 50.9975eV; Inew= 45.4 eV;
+
+###### Leaving QweakSimMaterial::DefineMaterials() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Leaving QweakSimMiniMagnet::QweakSimMiniMagnet 
+
+
+###### Calling QweakSimMainMagnet::QweakSimMainMagnet() 
+
+
+###### Calling QweakSimMaterial::QweakSimMaterial() 
+
+
+###### Calling QweakSimMaterial::DefineMaterials() 
+
+G4Material: Mean excitation energy is changed for H2Liquid Iold= 21.8eV; Inew= 21.8 eV;
+G4Material: Mean excitation energy is changed for CO2 Iold= 90.1643eV; Inew= 85 eV;
+G4Material: Mean excitation energy is changed for Water Iold= 70.8926eV; Inew= 75 eV;
+G4Material: Mean excitation energy is changed for Kapton Iold= 75.7177eV; Inew= 79.6 eV;
+G4Material: Mean excitation energy is changed for ShieldingConcrete Iold= 129.469eV; Inew= 135.2 eV;
+G4Material: Mean excitation energy is changed for Ethane Iold= 50.9975eV; Inew= 45.4 eV;
+
+###### Leaving QweakSimMaterial::DefineMaterials() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Leaving QweakSimMainMagnet::QweakSimMainMagnet 
+
+
+###### Calling QweakSimGEM::QweakGEM() 
+
+
+###### Calling QweakSimMaterial::QweakSimMaterial() 
+
+
+###### Calling QweakSimMaterial::DefineMaterials() 
+
+G4Material: Mean excitation energy is changed for H2Liquid Iold= 21.8eV; Inew= 21.8 eV;
+G4Material: Mean excitation energy is changed for CO2 Iold= 90.1643eV; Inew= 85 eV;
+G4Material: Mean excitation energy is changed for Water Iold= 70.8926eV; Inew= 75 eV;
+G4Material: Mean excitation energy is changed for Kapton Iold= 75.7177eV; Inew= 79.6 eV;
+G4Material: Mean excitation energy is changed for ShieldingConcrete Iold= 129.469eV; Inew= 135.2 eV;
+G4Material: Mean excitation energy is changed for Ethane Iold= 50.9975eV; Inew= 45.4 eV;
+
+###### Leaving QweakSimMaterial::DefineMaterials() 
+
+
+###### Calling QweakSimHDC::QweakHDC() 
+
+
+###### Calling QweakSimMaterial::QweakSimMaterial() 
+
+
+###### Calling QweakSimMaterial::DefineMaterials() 
+
+G4Material: Mean excitation energy is changed for H2Liquid Iold= 21.8eV; Inew= 21.8 eV;
+G4Material: Mean excitation energy is changed for CO2 Iold= 90.1643eV; Inew= 85 eV;
+G4Material: Mean excitation energy is changed for Water Iold= 70.8926eV; Inew= 75 eV;
+G4Material: Mean excitation energy is changed for Kapton Iold= 75.7177eV; Inew= 79.6 eV;
+G4Material: Mean excitation energy is changed for ShieldingConcrete Iold= 129.469eV; Inew= 135.2 eV;
+G4Material: Mean excitation energy is changed for Ethane Iold= 50.9975eV; Inew= 45.4 eV;
+
+###### Leaving QweakSimMaterial::DefineMaterials() 
+
+
+###### Calling QweakSimVDC::QweakVDC() 
+
+
+###### Calling QweakSimMaterial::QweakSimMaterial() 
+
+
+###### Calling QweakSimMaterial::DefineMaterials() 
+
+G4Material: Mean excitation energy is changed for H2Liquid Iold= 21.8eV; Inew= 21.8 eV;
+G4Material: Mean excitation energy is changed for CO2 Iold= 90.1643eV; Inew= 85 eV;
+G4Material: Mean excitation energy is changed for Water Iold= 70.8926eV; Inew= 75 eV;
+G4Material: Mean excitation energy is changed for Kapton Iold= 75.7177eV; Inew= 79.6 eV;
+G4Material: Mean excitation energy is changed for ShieldingConcrete Iold= 129.469eV; Inew= 135.2 eV;
+G4Material: Mean excitation energy is changed for Ethane Iold= 50.9975eV; Inew= 45.4 eV;
+
+###### Leaving QweakSimMaterial::DefineMaterials() 
+
+
+###### Calling QweakSimMaterial::QweakSimMaterial() 
+
+
+###### Calling QweakSimMaterial::DefineMaterials() 
+
+G4Material: Mean excitation energy is changed for H2Liquid Iold= 21.8eV; Inew= 21.8 eV;
+G4Material: Mean excitation energy is changed for CO2 Iold= 90.1643eV; Inew= 85 eV;
+G4Material: Mean excitation energy is changed for Water Iold= 70.8926eV; Inew= 75 eV;
+G4Material: Mean excitation energy is changed for Kapton Iold= 75.7177eV; Inew= 79.6 eV;
+G4Material: Mean excitation energy is changed for ShieldingConcrete Iold= 129.469eV; Inew= 135.2 eV;
+G4Material: Mean excitation energy is changed for Ethane Iold= 50.9975eV; Inew= 45.4 eV;
+
+###### Leaving QweakSimMaterial::DefineMaterials() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::QweakSimMaterial() 
+
+
+###### Calling QweakSimMaterial::DefineMaterials() 
+
+G4Material: Mean excitation energy is changed for H2Liquid Iold= 21.8eV; Inew= 21.8 eV;
+G4Material: Mean excitation energy is changed for CO2 Iold= 90.1643eV; Inew= 85 eV;
+G4Material: Mean excitation energy is changed for Water Iold= 70.8926eV; Inew= 75 eV;
+G4Material: Mean excitation energy is changed for Kapton Iold= 75.7177eV; Inew= 79.6 eV;
+G4Material: Mean excitation energy is changed for ShieldingConcrete Iold= 129.469eV; Inew= 135.2 eV;
+G4Material: Mean excitation energy is changed for Ethane Iold= 50.9975eV; Inew= 45.4 eV;
+
+###### Leaving QweakSimMaterial::DefineMaterials() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### QweakSimDetectorConstruction: Setting Attributes 
+
+
+###### Calling QweakSimTarget::ConstructComponent() 
+
+
+###### QweakSimTarget: Define TargetCell_Solid 
+
+
+###### QweakSimTarget: Define TargetCell_Logical 
+
+
+###### QweakSimTarget: Define TargetCell_Physical 
+
+
+###### QweakSimTarget: Define TargetMaterial_Solid 
+
+
+###### QweakSimTarget: Define Target_Logical 
+
+
+###### QweakSimTarget: Define TargetMaterial_Physical 
+
+
+###### QweakSimTarget: Setting Attributes 
+
+
+###### Leaving QweakSimTarget::ConstructComponent() 
+
+
+###### Calling QweakSimTarget::SetTargetCenterPositionInZ() 
+
+
+###### Calling QweakSimMiniMagnet::ConstructComponent() 
+
+
+###### QweakSimMiniMagnet: Define MiniMagnet_MasterContainer_Solid 
+
+
+###### QweakSimMiniMagnet: Define SingleCoil_MasterContainer_Logical 
+
+
+###### QweakSimMiniMagnet: Setting Attributes 
+
+
+###### Leaving QweakSimMiniMagnet::ConstructComponent() 
+
+
+###### Calling QweakSimMiniMagnet::SetCenterPositionInZ() 
+
+
+###### Leaving QweakSimMiniMagnet::SetCenterPositionInZ() 
+
+
+###### Calling QweakSimMainMagnet::ConstructComponent() 
+
+
+###### QweakSimMainMagnet: Define MainMagnet_MasterContainer_Solid 
+
+
+###### QweakSimMainMagnet: Define SingleCoil C Shape Solid
+
+
+###### Leaving QweakSimMainMagnet::ConstructComponent() 
+
+
+###### Calling QweakSimMainMagnet::SetCenterPositionInZ() 
+
+
+###### Leaving QweakSimMainMagnet::SetCenterPositionInZ() 
+
+
+###### QweakSimMainMagnet: Define MainMagnet_ClampPlate_Solid 
+
+
+###### QweakSimMainMagnet: Define SingleCoil_ClampPlate_Logical 
+
+
+###### QweakSimMainMagnet: Define MainMagnet_MiniClampPlate_Solid 
+
+
+###### QweakSimMainMagnet: Define SingleCoil_RightMiniClampPlate_Logical 
+
+
+###### QweakSimMainMagnet: Define SingleCoil_RightMiniClampPlate_Logical 
+
+
+###### QweakSimMainMagnet: Define MainMagnet_MiniClampPlate_Solid 
+
+
+###### QweakSimMainMagnet: Define MainMagnet_MountingBlock_Solid 
+
+
+###### QweakSimMainMagnet: Define SingleCoil_RadialMountingBlock_Logical 
+
+
+###### QweakSimMainMagnet: Define MainMagnet_DownstreamSupportBox_Solid 
+
+
+###### QweakSimMainManet: Define SupportFrame_DownstreamHorizontalDoubleTBeam_Physical
+
+
+###### QweakSimMainManet: Define SupportFrame_DownstreamVerticalDoubleTBeam_Physical
+
+
+###### QweakSimMainMagnet: Setting Attributes for downstream support frame
+
+
+###### Leaving QweakSimMainMagnet::Construct_SupportFrame() 
+
+
+###### QweakSimMainMagnet: Define MainMagnet_DownstreamSpider_RadialSlabs_Solids 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+Octant   Rotation1   Solid1   Rotation2   Solid2
+
+     0          00      01          01        02
+     1          02      03          03        04
+     2          04      05          05        06
+     3          06      07          07        08
+     4          08      09          09        10
+     5          10      11          11        12
+     6          12      13          13        14
+     7          14      15          15        16
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+Octant   Rotation1   Solid1   Rotation2   Solid2
+
+     0          00      01          01        02
+     1          02      03          03        04
+     2          04      05          05        06
+     3          06      07          07        08
+     4          08      09          09        10
+     5          10      11          11        12
+     6          12      13          13        14
+     7          14      15          15        16
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+Octant   Rotation1   Solid1   Rotation2   Solid2
+
+     0          00      01          01        02
+     1          02      03          03        04
+     2          04      05          05        06
+     3          06      07          07        08
+     4          08      09          09        10
+     5          10      11          11        12
+     6          12      13          13        14
+     7          14      15          15        16
+
+###### Calling QweakSimCollimatorSupport::QweakCollimatorSupport() 
+
+
+###### Calling QweakSimMaterial::QweakSimMaterial() 
+
+
+###### Calling QweakSimMaterial::DefineMaterials() 
+
+G4Material: Mean excitation energy is changed for H2Liquid Iold= 21.8eV; Inew= 21.8 eV;
+G4Material: Mean excitation energy is changed for CO2 Iold= 90.1643eV; Inew= 85 eV;
+G4Material: Mean excitation energy is changed for Water Iold= 70.8926eV; Inew= 75 eV;
+G4Material: Mean excitation energy is changed for Kapton Iold= 75.7177eV; Inew= 79.6 eV;
+G4Material: Mean excitation energy is changed for ShieldingConcrete Iold= 129.469eV; Inew= 135.2 eV;
+G4Material: Mean excitation energy is changed for Ethane Iold= 50.9975eV; Inew= 45.4 eV;
+
+###### Leaving QweakSimMaterial::DefineMaterials() 
+
+
+###### Leaving QweakSimCollimatorSupport::QweakCollimatorSupport() 
+
+
+###### Calling QweakSimCollimatorSupport::ConstructSupport() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Leaving QweakSimCollimatorSupport::ConstructSupport() 
+
+###### Calling QweakSimShieldingWall::SetCollimatorWall_FullLengthInX() 
+
+###### Calling QweakSimShieldingWall::SetCollimatorWall_FullLengthInY() 
+
+###### Calling QweakSimShieldingWall::SetCollimatorWall_FullLengthInZ() 
+
+###### Calling QweakSimShieldingWall::SetOctantCutOut_RadialDistance() 
+
+###### Calling QweakSimShieldingWall::SetOctantCutOut_FullLengthFront() 
+
+###### Calling QweakSimShieldingWall::SetOctantCutOut_FullLengthBack() 
+
+###### Calling QweakSimShieldingWall::SetOctantCutOut_FullHeightFront() 
+
+###### Calling QweakSimShieldingWall::SetOctantCutOut_FullHeightBack() 
+
+###### Calling QweakSimShieldingWall::SetOctantCutOut_PolarAngle() 
+
+
+###### Calling QweakSimShieldingWall::ConstructComponent() 
+
+
+###### QweakSimShieldingWall: Define ShieldingWall_Solid 
+
+
+###### Calling QweakSimShieldingWall::DefineOctantCutOut() 
+
+
+###### Leaving QweakSimShieldingWall::DefineOctantCutOut() 
+
+
+###### QweakSimShieldingWall: Define ShieldingWall_Logical 
+
+
+###### QweakSimShieldingWall: Define ShieldingWall_Physical 
+
+
+###### QweakSimShieldingWall: Setting Attributes 
+
+
+###### Leaving QweakSimShieldingWall::ConstructComponent() 
+
+
+###### Calling QweakSimShieldingWall::SetCollimatorWall_CenterPositionInZ() 
+
+
+###### Leaving QweakSimShieldingWall::SetCollimatorWall_CenterPositionInZ() 
+
+==== Changing CollimatorWall Material: Looking up Material  
+==== Changing CollimatorWall Material:  Now the CollimatorWall is made of ShieldingConcrete
+
+###### QweakSimShieldingWall: Define ShieldingWall_Solid 
+
+
+###### QweakSimShieldingWall: Define FrontWall_Logical 
+
+
+###### QweakSimShieldingWall: Define FrontWall_Physical 
+
+
+###### QweakSimShieldingWall: Setting Attributes for Front Wall
+
+
+###### Leaving QweakSimShieldingWall::ConstructFrontWall() 
+
+
+###### QweakSimShieldingWall: Define ShieldingWall_Solid 
+
+
+###### QweakSimShieldingWall: Define BackWall_Logical 
+
+
+###### QweakSimShieldingWall: Define BackWall_Physical 
+
+
+###### QweakSimShieldingWall: Setting Attributes for Back Wall
+
+
+###### Leaving QweakSimShieldingWall::ConstructBackWall() 
+
+
+###### QweakSimShieldingWall: Define BeamLeftSideWall_Solid 
+
+
+###### QweakSimShieldingWall: Define BeamLeftSideWall_Logical 
+
+
+###### QweakSimShieldingWall: Define BeamLeftSideWall_Physical 
+
+
+###### QweakSimShieldingWall: Setting Attributes for BeamLeftSide Wall
+
+
+###### Leaving QweakSimShieldingWall::ConstructBeamLeftSideWall() 
+
+
+###### QweakSimShieldingWall: Define BeamRightSideWall_Solid 
+
+
+###### QweakSimShieldingWall: Define BeamRightSideWall_Logical 
+
+
+###### QweakSimShieldingWall: Define BeamRightSideWall_Physical 
+
+
+###### QweakSimShieldingWall: Setting Attributes for BeamRightSide Wall
+
+
+###### Leaving QweakSimShieldingWall::ConstructBeamRightSideWall() 
+
+
+###### QweakSimShieldingWall: Define TopWall_Solid 
+
+
+###### QweakSimShieldingWall: Define TopWall_Logical 
+
+
+###### QweakSimShieldingWall: Define TopWall_Physical 
+
+
+###### QweakSimShieldingWall: Setting Attributes for Top Wall
+
+
+###### Leaving QweakSimShieldingWall::ConstructTopWall() 
+
+
+###### Calling QweakSimGEM::ConstructComponent() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### QweakSimGEM: Define GEM_MasterContainer_Solid
+
+
+###### QweakSimGEM: Define GEM_MasterContainer_Logical 
+
+
+###### QweakSimGEM: Define GEM_MasterContainerFront_Physical
+
+
+###### QweakSimGEM: Define GEM_MasterContainerBack_Physical
+
+
+###### QweakSimGEM: Define GEM_OuterFrame_Solid
+
+
+###### QweakSimGEM: Define GEM_InnerFrame_Solid
+
+
+###### QweakSimGEM: Define GEM_Frame_Solid
+
+
+###### QweakSimGEM: Define GEM_Frame_Logical
+
+
+###### QweakSimGEM: Define GEM_Frame_Physical
+
+
+###### QweakSimGEM: Define GEM_SubContainer_Solid
+
+
+###### QweakSimGEM: Define GEM_SubContainer_Logical
+
+
+###### QweakSimGEM: Define GEM_SubContainer_Physical
+
+
+###### QweakSimGEM: Define GEM_MiddleFoilContainer_Solid
+
+
+###### QweakSimGEM: Define GEM_MiddleFoilContainer_Logical
+
+
+###### QweakSimGEM: Define GEM_KaptonMiddleFoil_Logical
+
+
+###### QweakSimGEM: Define GEM_CopperLayer_Solid
+
+
+###### QweakSimGEM: Define GEM_CopperMiddleFoil_Logical
+
+
+###### QweakSimGEM: Define GEM_CopperMiddleFoil_Physical
+
+
+###### QweakSimGEM: Define GEM_MiddleFoilContainer_Physical
+
+
+###### QweakSimGEM: Define GEM_AnodeReadoutPlaneContainer_Solid
+
+
+###### QweakSimGEM: Define GEM_AnodeReadoutPlaneContainer_Logical
+
+
+###### QweakSimGEM: Define GEM_AnodeReadoutBoard_Solid
+
+
+###### QweakSimGEM: Define GEM_AnodeReadoutBoard_Logical
+
+
+###### QweakSimGEM: Define GEM_AnodeReadoutBoard_Physical
+
+
+###### QweakSimGEM: Define GEM_AnodeCopperLayer_Solid
+
+
+###### QweakSimGEM: Define GEM_AnodeCopperLayer_Logical
+
+
+###### QweakSimGEM: Define GEM_AnodeCopperLayer_Physical
+
+
+###### QweakSimGEM: Define GEM_CathodeHVPlaneContainer_Solid
+
+
+###### QweakSimGEM: Define GEM_CathodeHVPlaneContainer_Logical
+
+
+###### QweakSimGEM: Define GEM_CathodeCopperLayer_Solid
+
+
+###### QweakSimGEM: Define GEM_CathodeHVCopperLayer_Logical
+
+
+###### QweakSimGEM: Define GEM_CathodeCopperLayer_Physical
+
+
+###### QweakSimGEM: Setting Sensitive Detectors 
+
+
+###### QweakSimGEM: Setting Attributes 
+
+
+###### Leaving QweakSimGEM::ConstructComponent() 
+
+
+###### Calling QweakSimHDC::ConstructComponent() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### QweakSimHDC: Define HDC_MasterContainer_Solid
+
+
+###### QweakSimHDC: Define HDC_MasterContainer_Logical 
+
+
+###### QweakSimHDC: Define HDC_MasterContainerFront_Physical
+
+
+###### QweakSimHDC: Define HDC_MasterContainerBack_Physical
+
+
+###### QweakSimHDC: Define HDC_OuterFrame_Solid
+
+
+###### QweakSimHDC: Define HDC_InnerFrame_Solid
+
+
+###### QweakSimHDC: Define HDC_Frame_Solid
+
+
+###### QweakSimHDC: Define HDC_Frame_Logical
+
+
+###### QweakSimHDC: Define HDC_Frame_Physical
+
+
+###### QweakSimHDC: Define HDC_SubContainer_Solid
+
+
+###### QweakSimHDC: Define HDC_SubContainer_Logical
+
+
+###### QweakSimHDC: Define HDC_SubContainer_Physical
+
+
+###### QweakSimHDC: Define HDC_Foil_Solid
+
+
+###### QweakSimHDC: Define HDC_Foil_Logical
+
+
+###### QweakSimHDC: Define HDC_Foil_Physical
+
+
+###### QweakSimHDC: Define HDC_WirePlane_Solid
+
+
+###### QweakSimHDC: Define HDC_WirePlane_Logical
+
+
+###### QweakSimHDC: Define HDC_WirePlane_Physical
+
+
+###### QweakSimHDC: Setting Sensitive Detectors 
+
+
+###### QweakSimHDC: Setting Attributes 
+
+
+###### Leaving QweakSimHDC::ConstructComponent() 
+
+
+###### Calling QweakSimVDC::ConstructComponent() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### QweakSimVDC: Define VDC_MasterContainer_Solid
+
+
+###### QweakSimVDC: Define VDC_MasterContainer_Logical 
+
+
+###### QweakSimVDC: Define VDC_MasterContainerFront Position
+
+
+###### QweakSimVDC: Define VDC_MasterContainerFront Orientation
+
+
+###### QweakSimVDC: Define VDC_MasterContainerFront_Physical
+
+
+###### QweakSimVDC: Define VDC_MasterContainerBack_Physical
+
+
+###### QweakSimVDC: Define VDC_G10OuterFrame_Solid
+
+
+###### QweakSimVDC: Define VDC_G10InnerFrame_Solid
+
+
+###### QweakSimVDC: Define VDC_G10Frame_Solid
+
+
+###### QweakSimVDC: Define VDC_G10Frame_Logical
+
+
+###### QweakSimVDC: Define VDC_G10Frame_Physical
+
+
+###### QweakSimVDC: Define VDC_AluOuterFrame_Solid
+
+
+###### QweakSimVDC: Define VDC_AluInnerFrame_Solid
+
+
+###### QweakSimVDC: Define VDC_AluFrame_Solid
+
+
+###### QweakSimVDC: Define VDC_AluFrame_Logical
+
+
+###### QweakSimVDC: Define VDC_AluTopFrame_Physical
+
+
+###### QweakSimVDC: Define VDC_AluBottomFrame_Physical
+
+
+###### QweakSimVDC: Define VDC_SubContainer_Solid
+
+
+###### QweakSimGEM: Define VDC_SubContainer_Logical
+
+
+###### QweakSimVDC: Define VDC_SubContainer_Physical
+
+
+###### QweakSimVDC: Define VDC_WirePlane_Solid
+
+
+###### QweakSimVDC: Define VDC_WirePlane_Logical
+
+
+###### QweakSimVDC: Define VDC_WirePlane_Physical
+
+
+###### QweakSimVDC: Define VDC_MylarFoil_Logical
+
+
+###### QweakSimVDC: Define VDC_AluLayer_Solid
+
+
+###### QweakSimVDC: Define VDC_AluFoil_Logical
+
+
+###### QweakSimVDC: Define VDC_AMA_FoilContainer_Solid
+
+
+###### QweakSimVDC: Define VDC_AMA_FoilContainer_Logical
+
+
+###### QweakSimVDC: Define VDC_AluLayer_Physical
+
+
+###### QweakSimVDC: Place Top AluLayer inside VDC_AMA_FoilContainer_Logical
+
+
+###### QweakSimVDC: Place Bottom AluLayer inside VDC_AMA_FoilContainer_Logical
+
+
+###### QweakSimVDC: Define VDC_AM_FoilContainer_Solid
+
+
+###### QweakSimVDC: Define VDC_AM_FoilContainer_Logical
+
+
+###### QweakSimVDC: Place Mylar inside VDC_AM_FoilContainer_Logical
+
+
+###### QweakSimVDC: Place AluLayer inside VDC_AM_FoilContainer_Logical
+
+
+###### QweakSimVDC: Define VDC_MA_FoilContainer_Solid
+
+
+###### QweakSimVDC: Define VDC_MA_FoilContainer_Logical
+
+
+###### QweakSimVDC: Place Mylar inside VDC_MA_FoilContainer_Logical
+
+
+###### QweakSimVDC: Place AluLayer inside VDC_MA_FoilContainer_Logical
+
+
+###### QweakSimVDC: Place VDC_TopGasFoilContainer_Physical inside VDC_SubContainer_Physical
+
+
+###### QweakSimVDC: Place VDC_TopHVFoilContainer_Physical inside VDC_SubContainer_Physical
+
+
+###### QweakSimVDC: Place VDC_CenterHVFoilContainer_Physical inside VDC_SubContainer_Physical
+
+
+###### QweakSimVDC: PlaceVDC_BottomHVFoilContainer_Physical inside VDC_SubContainer_Physical
+
+
+###### QweakSimVDC: Place VDC_BottomGasFoilContainer_Physical inside VDC_SubContainer_Physical
+
+
+###### QweakSimVDC: Define VDC_DriftCellMasteContainer_Solid
+
+
+###### QweakSimVDC: Define VDC_DriftCellMasterContainer_Logical 
+
+
+###### QweakSimVDC: Define VDC_DriftCellMasterContainer_Physical 
+
+
+###### QweakSimVDC: Define VDC_DriftCellFrontContainer_Solid
+
+
+###### QweakSimVDC: Define VDC_DriftCellFrontContainer_Logical 
+
+
+###### QweakSimVDC: Define VDC_DriftCellFrontContainer_Physical 
+
+
+###### QweakSimVDC: Define VDC_DriftCellFront_Solid
+
+
+###### QweakSimVDC: Define VDC_DriftCellFront_Logical 
+
+
+###### QweakSimVDC: Define VDC_DriftCellBackContainer_Solid
+
+
+###### QweakSimVDC: Define VDC_DriftCellBackContainer_Logical 
+
+
+###### QweakSimVDC: Define VDC_DriftCellBack_Solid
+
+
+###### QweakSimVDC: Define VDC_DriftCellBack_Logical 
+
+
+###### QweakSimVDC: Setting Sensitive Detectors 
+
+
+###### QweakSimVDC: Setting Attributes 
+
+
+###### Leaving QweakSimVDC::ConstructComponent() 
+
+
+###### Calling QweakSimVDCRotator::QweakCollimatorSupport() 
+
+================> kAngle_GlobalRotation = 0
+
+###### Calling QweakSimMaterial::QweakSimMaterial() 
+
+
+###### Calling QweakSimMaterial::DefineMaterials() 
+
+G4Material: Mean excitation energy is changed for H2Liquid Iold= 21.8eV; Inew= 21.8 eV;
+G4Material: Mean excitation energy is changed for CO2 Iold= 90.1643eV; Inew= 85 eV;
+G4Material: Mean excitation energy is changed for Water Iold= 70.8926eV; Inew= 75 eV;
+G4Material: Mean excitation energy is changed for Kapton Iold= 75.7177eV; Inew= 79.6 eV;
+G4Material: Mean excitation energy is changed for ShieldingConcrete Iold= 129.469eV; Inew= 135.2 eV;
+G4Material: Mean excitation energy is changed for Ethane Iold= 50.9975eV; Inew= 45.4 eV;
+
+###### Leaving QweakSimMaterial::DefineMaterials() 
+
+
+###### Leaving QweakSimVDCRotator::QweakCollimatorSupport() 
+
+
+###### Calling QweakSimVDCRotator::ConstructSupport() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Leaving QweakSimVDCRotator::ConstructSupport() 
+
+
+###### Calling QweakSimVDCRotator::ConstructRails() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimVDCRotator::ConstructMount() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### Calling QweakSimVDCRotator::ConstructSliderSupport() 
+
+
+###### Calling QweakSimMaterial::GetMaterial() 
+
+
+###### QweakSimVDCRotator: Define SliderSupport_Logical 
+
+
+###### Calling QweakSimVDCRotator::SetRotationAngleInPhi() 
+
+
+###### QweakSimCerenkovDetector: Setting Attributes 
+
+
+###### Leaving QweakSimCerenkovDetector::ConstructComponent() 
+
+
+###### Calling QweakSimTriggerScintillator::ConstructComponent() 
+
+
+###### QweakSimTriggerScintillator: Define TriggerScintillatorContainer_Solid 
+
+
+###### QweakSimTriggerScintillator: Define TriggerScintillatorContainer_Logical 
+
+
+###### QweakSimTriggerScintillator: Define TriggerScintillatorContainer_Physical 
+
+
+###### QweakSimShieldingWall: Define TriggerScintillator Physical 
+
+
+###### QweakSimTriggerScintillator: Setting Sensitive Detectors 
+
+
+###### QweakSimTriggerScintillator: Setting Attributes 
+
+
+###### Leaving QweakSimTriggerScintillator::ConstructComponent() 
+
+
+The geometrical tree defined are : 
+
+ExpHall_Physical[0] ExpHall_Logical 175 Air
+  HallFloor_Physical[0] HallFloor_Logical 0 ShieldingConcrete
+  QweakTargetCell[0] QweakTargetCell_Log 1 Aluminum
+    QweakTargetMaterial[0] QweakTargetMaterial_Log 0 H2Liquid
+  MiniMagnet_MasterContainer_Physical[0] SingleCoil_MasterContainer_Log 0 Copper
+  MiniMagnet_MasterContainer_Physical[1] SingleCoil_MasterContainer_Log 0 Copper
+  MiniMagnet_MasterContainer_Physical[2] SingleCoil_MasterContainer_Log 0 Copper
+  MiniMagnet_MasterContainer_Physical[3] SingleCoil_MasterContainer_Log 0 Copper
+  MiniMagnet_MasterContainer_Physical[4] SingleCoil_MasterContainer_Log 0 Copper
+  MiniMagnet_MasterContainer_Physical[5] SingleCoil_MasterContainer_Log 0 Copper
+  MiniMagnet_MasterContainer_Physical[6] SingleCoil_MasterContainer_Log 0 Copper
+  MiniMagnet_MasterContainer_Physical[7] SingleCoil_MasterContainer_Log 0 Copper
+  SingleCoil_UpperPlate_Physical[0] SingleCoil_Plate_Logical 0 Copper
+  SingleCoil_LowerPlate_Physical[0] SingleCoil_Plate_Logical 0 Copper
+  SingleCoil_LeftWing_Physical[0] SingleCoil_Wing_Log 0 Copper
+  SingleCoil_RightWing_Physical[0] SingleCoil_Wing_Log 0 Copper
+  SingleCoil_UpperPlate_Physical[1] SingleCoil_Plate_Logical 0 Copper
+  SingleCoil_LowerPlate_Physical[1] SingleCoil_Plate_Logical 0 Copper
+  SingleCoil_LeftWing_Physical[1] SingleCoil_Wing_Log 0 Copper
+  SingleCoil_RightWing_Physical[1] SingleCoil_Wing_Log 0 Copper
+  SingleCoil_UpperPlate_Physical[2] SingleCoil_Plate_Logical 0 Copper
+  SingleCoil_LowerPlate_Physical[2] SingleCoil_Plate_Logical 0 Copper
+  SingleCoil_LeftWing_Physical[2] SingleCoil_Wing_Log 0 Copper
+  SingleCoil_RightWing_Physical[2] SingleCoil_Wing_Log 0 Copper
+  SingleCoil_UpperPlate_Physical[3] SingleCoil_Plate_Logical 0 Copper
+  SingleCoil_LowerPlate_Physical[3] SingleCoil_Plate_Logical 0 Copper
+  SingleCoil_LeftWing_Physical[3] SingleCoil_Wing_Log 0 Copper
+  SingleCoil_RightWing_Physical[3] SingleCoil_Wing_Log 0 Copper
+  SingleCoil_UpperPlate_Physical[4] SingleCoil_Plate_Logical 0 Copper
+  SingleCoil_LowerPlate_Physical[4] SingleCoil_Plate_Logical 0 Copper
+  SingleCoil_LeftWing_Physical[4] SingleCoil_Wing_Log 0 Copper
+  SingleCoil_RightWing_Physical[4] SingleCoil_Wing_Log 0 Copper
+  SingleCoil_UpperPlate_Physical[5] SingleCoil_Plate_Logical 0 Copper
+  SingleCoil_LowerPlate_Physical[5] SingleCoil_Plate_Logical 0 Copper
+  SingleCoil_LeftWing_Physical[5] SingleCoil_Wing_Log 0 Copper
+  SingleCoil_RightWing_Physical[5] SingleCoil_Wing_Log 0 Copper
+  SingleCoil_UpperPlate_Physical[6] SingleCoil_Plate_Logical 0 Copper
+  SingleCoil_LowerPlate_Physical[6] SingleCoil_Plate_Logical 0 Copper
+  SingleCoil_LeftWing_Physical[6] SingleCoil_Wing_Log 0 Copper
+  SingleCoil_RightWing_Physical[6] SingleCoil_Wing_Log 0 Copper
+  SingleCoil_UpperPlate_Physical[7] SingleCoil_Plate_Logical 0 Copper
+  SingleCoil_LowerPlate_Physical[7] SingleCoil_Plate_Logical 0 Copper
+  SingleCoil_LeftWing_Physical[7] SingleCoil_Wing_Log 0 Copper
+  SingleCoil_RightWing_Physical[7] SingleCoil_Wing_Log 0 Copper
+  UpstreamSpider_Physical[0] UpstreamSpider_Log 0 Aluminum
+  MainMagnet_LeftClampPlate_Physical[0] MM_SingleCoil_ClampPlate_Logical 0 Aluminum
+  MainMagnet_RightClampPlate_Physical[0] MM_SingleCoil_ClampPlate_Logical 0 Aluminum
+  MainMagnet_LeftClampPlate_Physical[1] MM_SingleCoil_ClampPlate_Logical 0 Aluminum
+  MainMagnet_RightClampPlate_Physical[1] MM_SingleCoil_ClampPlate_Logical 0 Aluminum
+  MainMagnet_LeftClampPlate_Physical[2] MM_SingleCoil_ClampPlate_Logical 0 Aluminum
+  MainMagnet_RightClampPlate_Physical[2] MM_SingleCoil_ClampPlate_Logical 0 Aluminum
+  MainMagnet_LeftClampPlate_Physical[3] MM_SingleCoil_ClampPlate_Logical 0 Aluminum
+  MainMagnet_RightClampPlate_Physical[3] MM_SingleCoil_ClampPlate_Logical 0 Aluminum
+  MainMagnet_LeftClampPlate_Physical[4] MM_SingleCoil_ClampPlate_Logical 0 Aluminum
+  MainMagnet_RightClampPlate_Physical[4] MM_SingleCoil_ClampPlate_Logical 0 Aluminum
+  MainMagnet_LeftClampPlate_Physical[5] MM_SingleCoil_ClampPlate_Logical 0 Aluminum
+  MainMagnet_RightClampPlate_Physical[5] MM_SingleCoil_ClampPlate_Logical 0 Aluminum
+  MainMagnet_LeftClampPlate_Physical[6] MM_SingleCoil_ClampPlate_Logical 0 Aluminum
+  MainMagnet_RightClampPlate_Physical[6] MM_SingleCoil_ClampPlate_Logical 0 Aluminum
+  MainMagnet_LeftClampPlate_Physical[7] MM_SingleCoil_ClampPlate_Logical 0 Aluminum
+  MainMagnet_RightClampPlate_Physical[7] MM_SingleCoil_ClampPlate_Logical 0 Aluminum
+  MainMagnet_LeftMiniClampPlate_Physical[0] MM_SingleCoil_MiniClampPlate_Logical 0 Aluminum
+  MainMagnet_RightMiniClampPlate_Physical[0] MM_SingleCoil_RightMiniClampPlate_Logical 0 Aluminum
+  MainMagnet_LeftMiniClampPlate_Physical[1] MM_SingleCoil_MiniClampPlate_Logical 0 Aluminum
+  MainMagnet_RightMiniClampPlate_Physical[1] MM_SingleCoil_RightMiniClampPlate_Logical 0 Aluminum
+  MainMagnet_LeftMiniClampPlate_Physical[2] MM_SingleCoil_MiniClampPlate_Logical 0 Aluminum
+  MainMagnet_RightMiniClampPlate_Physical[2] MM_SingleCoil_RightMiniClampPlate_Logical 0 Aluminum
+  MainMagnet_LeftMiniClampPlate_Physical[3] MM_SingleCoil_MiniClampPlate_Logical 0 Aluminum
+  MainMagnet_RightMiniClampPlate_Physical[3] MM_SingleCoil_RightMiniClampPlate_Logical 0 Aluminum
+  MainMagnet_LeftMiniClampPlate_Physical[4] MM_SingleCoil_MiniClampPlate_Logical 0 Aluminum
+  MainMagnet_RightMiniClampPlate_Physical[4] MM_SingleCoil_RightMiniClampPlate_Logical 0 Aluminum
+  MainMagnet_LeftMiniClampPlate_Physical[5] MM_SingleCoil_MiniClampPlate_Logical 0 Aluminum
+  MainMagnet_RightMiniClampPlate_Physical[5] MM_SingleCoil_RightMiniClampPlate_Logical 0 Aluminum
+  MainMagnet_LeftMiniClampPlate_Physical[6] MM_SingleCoil_MiniClampPlate_Logical 0 Aluminum
+  MainMagnet_RightMiniClampPlate_Physical[6] MM_SingleCoil_RightMiniClampPlate_Logical 0 Aluminum
+  MainMagnet_LeftMiniClampPlate_Physical[7] MM_SingleCoil_MiniClampPlate_Logical 0 Aluminum
+  MainMagnet_RightMiniClampPlate_Physical[7] MM_SingleCoil_RightMiniClampPlate_Logical 0 Aluminum
+  MainMagnet_FramePlate_Physical[0] MM_SingleCoil_FramePlate_Logical 0 Aluminum
+  MainMagnet_FramePlate_Physical[1] MM_SingleCoil_FramePlate_Logical 0 Aluminum
+  MainMagnet_FramePlate_Physical[2] MM_SingleCoil_FramePlate_Logical 0 Aluminum
+  MainMagnet_FramePlate_Physical[3] MM_SingleCoil_FramePlate_Logical 0 Aluminum
+  MainMagnet_FramePlate_Physical[4] MM_SingleCoil_FramePlate_Logical 0 Aluminum
+  MainMagnet_FramePlate_Physical[5] MM_SingleCoil_FramePlate_Logical 0 Aluminum
+  MainMagnet_FramePlate_Physical[6] MM_SingleCoil_FramePlate_Logical 0 Aluminum
+  MainMagnet_FramePlate_Physical[7] MM_SingleCoil_FramePlate_Logical 0 Aluminum
+  MainMagnet_LeftRadialMountingBlock_Upstream_Physical[0] MM_SingleCoil_RadialMountingBlock_Logical 0 Aluminum
+  MainMagnet_RightRadialMountingBlock_Upstream_Physical[0] MM_SingleCoil_RadialMountingBlock_Logical 0 Aluminum
+  MainMagnet_LeftRadialMountingBlock_Downstream_Physical[0] MM_SingleCoil_RadialMountingBlock_Logical 0 Aluminum
+  MainMagnet_RightRadialMountingBlock_Downstream_Physical[0] MM_SingleCoil_RadialMountingBlock_Logical 0 Aluminum
+  MainMagnet_LeftRadialMountingBlock_Upstream_Physical[1] MM_SingleCoil_RadialMountingBlock_Logical 0 Aluminum
+  MainMagnet_RightRadialMountingBlock_Upstream_Physical[1] MM_SingleCoil_RadialMountingBlock_Logical 0 Aluminum
+  MainMagnet_LeftRadialMountingBlock_Downstream_Physical[1] MM_SingleCoil_RadialMountingBlock_Logical 0 Aluminum
+  MainMagnet_RightRadialMountingBlock_Downstream_Physical[1] MM_SingleCoil_RadialMountingBlock_Logical 0 Aluminum
+  MainMagnet_LeftRadialMountingBlock_Upstream_Physical[2] MM_SingleCoil_RadialMountingBlock_Logical 0 Aluminum
+  MainMagnet_RightRadialMountingBlock_Upstream_Physical[2] MM_SingleCoil_RadialMountingBlock_Logical 0 Aluminum
+  MainMagnet_LeftRadialMountingBlock_Downstream_Physical[2] MM_SingleCoil_RadialMountingBlock_Logical 0 Aluminum
+  MainMagnet_RightRadialMountingBlock_Downstream_Physical[2] MM_SingleCoil_RadialMountingBlock_Logical 0 Aluminum
+  MainMagnet_LeftRadialMountingBlock_Upstream_Physical[3] MM_SingleCoil_RadialMountingBlock_Logical 0 Aluminum
+  MainMagnet_RightRadialMountingBlock_Upstream_Physical[3] MM_SingleCoil_RadialMountingBlock_Logical 0 Aluminum
+  MainMagnet_LeftRadialMountingBlock_Downstream_Physical[3] MM_SingleCoil_RadialMountingBlock_Logical 0 Aluminum
+  MainMagnet_RightRadialMountingBlock_Downstream_Physical[3] MM_SingleCoil_RadialMountingBlock_Logical 0 Aluminum
+  MainMagnet_LeftRadialMountingBlock_Upstream_Physical[4] MM_SingleCoil_RadialMountingBlock_Logical 0 Aluminum
+  MainMagnet_RightRadialMountingBlock_Upstream_Physical[4] MM_SingleCoil_RadialMountingBlock_Logical 0 Aluminum
+  MainMagnet_LeftRadialMountingBlock_Downstream_Physical[4] MM_SingleCoil_RadialMountingBlock_Logical 0 Aluminum
+  MainMagnet_RightRadialMountingBlock_Downstream_Physical[4] MM_SingleCoil_RadialMountingBlock_Logical 0 Aluminum
+  MainMagnet_LeftRadialMountingBlock_Upstream_Physical[5] MM_SingleCoil_RadialMountingBlock_Logical 0 Aluminum
+  MainMagnet_RightRadialMountingBlock_Upstream_Physical[5] MM_SingleCoil_RadialMountingBlock_Logical 0 Aluminum
+  MainMagnet_LeftRadialMountingBlock_Downstream_Physical[5] MM_SingleCoil_RadialMountingBlock_Logical 0 Aluminum
+  MainMagnet_RightRadialMountingBlock_Downstream_Physical[5] MM_SingleCoil_RadialMountingBlock_Logical 0 Aluminum
+  MainMagnet_LeftRadialMountingBlock_Upstream_Physical[6] MM_SingleCoil_RadialMountingBlock_Logical 0 Aluminum
+  MainMagnet_RightRadialMountingBlock_Upstream_Physical[6] MM_SingleCoil_RadialMountingBlock_Logical 0 Aluminum
+  MainMagnet_LeftRadialMountingBlock_Downstream_Physical[6] MM_SingleCoil_RadialMountingBlock_Logical 0 Aluminum
+  MainMagnet_RightRadialMountingBlock_Downstream_Physical[6] MM_SingleCoil_RadialMountingBlock_Logical 0 Aluminum
+  MainMagnet_LeftRadialMountingBlock_Upstream_Physical[7] MM_SingleCoil_RadialMountingBlock_Logical 0 Aluminum
+  MainMagnet_RightRadialMountingBlock_Upstream_Physical[7] MM_SingleCoil_RadialMountingBlock_Logical 0 Aluminum
+  MainMagnet_LeftRadialMountingBlock_Downstream_Physical[7] MM_SingleCoil_RadialMountingBlock_Logical 0 Aluminum
+  MainMagnet_RightRadialMountingBlock_Downstream_Physical[7] MM_SingleCoil_RadialMountingBlock_Logical 0 Aluminum
+  SupportFrame_DownstreamHorizontalDoubleTBeam_TopOuter_Physical[0] SupportFrame_DownstreamHorizontalDoubleTBeam_Logical 0 Aluminum
+  SupportFrame_DownstreamHorizontalDoubleTBeam_TopInner_Physical[1] SupportFrame_DownstreamHorizontalDoubleTBeam_Logical 0 Aluminum
+  SupportFrame_DownstreamHorizontalDoubleTBeam_BottomInner_Physical[2] SupportFrame_DownstreamHorizontalDoubleTBeam_Logical 0 Aluminum
+  SupportFrame_DownstreamHorizontalDoubleTBeam_BottomOuter_Physical[3] SupportFrame_DownstreamHorizontalDoubleTBeam_Logical 0 Aluminum
+  SupportFrame_DownstreamVerticalDoubleTBeam_TopOuter_Physical[0] SupportFrame_DownstreamVerticalDoubleTBeam_Logical 0 Aluminum
+  SupportFrame_DownstreamVerticalDoubleTBeam_TopInner_Physical[1] SupportFrame_DownstreamVerticalDoubleTBeam_Logical 0 Aluminum
+  SupportFrame_DownstreamVerticalDoubleTBeam_BottomInner_Physical[2] SupportFrame_DownstreamVerticalDoubleTBeam_Logical 0 Aluminum
+  SupportFrame_DownstreamVerticalDoubleTBeam_BottomOuter_Physical[3] SupportFrame_DownstreamVerticalDoubleTBeam_Logical 0 Aluminum
+  SupportFrame_Downstream45DegDoubleTBeam[0] SupportFrame_Downstream45DegDoubleTBeam_Logical 0 Aluminum
+  SupportFrame_Downstream45DegDoubleTBeam[1] SupportFrame_Downstream45DegDoubleTBeam_Logical 0 Aluminum
+  SupportFrame_Downstream45DegDoubleTBeam[2] SupportFrame_Downstream45DegDoubleTBeam_Logical 0 Aluminum
+  SupportFrame_Downstream45DegDoubleTBeam[3] SupportFrame_Downstream45DegDoubleTBeam_Logical 0 Aluminum
+  DownstreamSpider_Physical[0] DownstreamSpider_Log 0 Aluminum
+  DownstreamSpider_RadialSlab_Physical[0] DownstreamSpider_RadialSlab_Logical 0 Aluminum
+  DownstreamSpider_RadialSlab_Physical[1] DownstreamSpider_RadialSlab_Logical 0 Aluminum
+  DownstreamSpider_RadialSlab_Physical[2] DownstreamSpider_RadialSlab_Logical 0 Aluminum
+  DownstreamSpider_RadialSlab_Physical[3] DownstreamSpider_RadialSlab_Logical 0 Aluminum
+  DownstreamSpider_RadialSlab_Physical[4] DownstreamSpider_RadialSlab_Logical 0 Aluminum
+  DownstreamSpider_RadialSlab_Physical[5] DownstreamSpider_RadialSlab_Logical 0 Aluminum
+  DownstreamSpider_RadialSlab_Physical[6] DownstreamSpider_RadialSlab_Logical 0 Aluminum
+  DownstreamSpider_RadialSlab_Physical[7] DownstreamSpider_RadialSlab_Logical 0 Aluminum
+  CollimatorHousing[0] CollimatorHousing_Log 0 CDA943
+  CollimatorHousing[0] CollimatorHousing_Log 0 CDA943
+  CollimatorHousing[0] CollimatorHousing_Log 0 CDA943
+  CollimatorSupport_TopCover[0] CollimatorSupport_TopCover_Log 0 CDA943
+  CollimatorSupport_BottomCover[0] CollimatorSupport_BottomCover_Log 0 CDA943
+  CollimatorSupport_LeftCover[0] CollimatorSupport_LeftCover_Log 0 CDA943
+  CollimatorSupport_RightCover[0] CollimatorSupport_RightCover_Log 0 CDA943
+  ShieldingWallHousing[0] ShieldingWallHousing_Log 0 ShieldingConcrete
+  FrontWall[0] FrontWall_Log 0 ShieldingConcrete
+  BackWall[0] BackWall_Log 0 ShieldingConcrete
+  BeamLeftSideWall[0] BeamLeftSideWall_Log 0 ShieldingConcrete
+  BeamRightSideWall[0] BeamRightSideWall_Log 0 ShieldingConcrete
+  TopWall[0] TopWall_Log 0 ShieldingConcrete
+  GEM_MasterContainerFront_Physical[0] GEM_MasterContainer_Log 2 Air
+    GEM_Frame_Physical[0] GEM_Frame_Log 0 NemaG10
+    GEM_SubContainer_Physical[0] GEM_SubContainer_Log 5 ArCO2
+      GEM_MiddleFoilContainer_Physical[0] GEM_MiddleFoilContainer_Log 3 ArCO2
+        GEM_KaptonMiddleFoil_Physical[0] GEM_KaptonMiddleFoil_Log 0 Kapton
+        GEM_TopCopperMiddleFoil_Physical[0] GEM_CopperMiddleFoil_Log 0 Copper
+        GEM_BottomCopperMiddleFoil_Physical[0] GEM_CopperMiddleFoil_Log 0 Copper
+      GEM_MiddleFoilContainer_Physical[1] GEM_MiddleFoilContainer_Log 3 ArCO2
+        GEM_KaptonMiddleFoil_Physical[0] GEM_KaptonMiddleFoil_Log 0 Kapton
+        GEM_TopCopperMiddleFoil_Physical[0] GEM_CopperMiddleFoil_Log 0 Copper
+        GEM_BottomCopperMiddleFoil_Physical[0] GEM_CopperMiddleFoil_Log 0 Copper
+      GEM_MiddleFoilContainer_Physical[2] GEM_MiddleFoilContainer_Log 3 ArCO2
+        GEM_KaptonMiddleFoil_Physical[0] GEM_KaptonMiddleFoil_Log 0 Kapton
+        GEM_TopCopperMiddleFoil_Physical[0] GEM_CopperMiddleFoil_Log 0 Copper
+        GEM_BottomCopperMiddleFoil_Physical[0] GEM_CopperMiddleFoil_Log 0 Copper
+      GEM_AnodeReadoutPlaneContainer_Physical[0] GEM_AnodeReadoutPlaneContainer_Log 2 Kapton
+        GEM_AnodeReadoutBoard_Physical[0] GEM_AnodeReadoutBoard_Log 0 NemaG10
+        GEM_AnodeCopperLayer_Physical[0] GEM_AnodeCopperLayer_Log 0 Copper /GEMWirePlaneSD
+      GEM_CathodeHVPlaneContainer_Physical[0] GEM_CathodeHVPlaneContainer_Log 1 Kapton
+        GEM_CathodeHVCopperLayer_Physical[0] GEM_CathodeHVCopperLayer_Log 0 Copper
+  GEM_MasterContainerBack_Physical[1] GEM_MasterContainer_Log 2 Air
+    GEM_Frame_Physical[0] GEM_Frame_Log 0 NemaG10
+    GEM_SubContainer_Physical[0] GEM_SubContainer_Log 5 ArCO2
+      GEM_MiddleFoilContainer_Physical[0] GEM_MiddleFoilContainer_Log 3 ArCO2
+        GEM_KaptonMiddleFoil_Physical[0] GEM_KaptonMiddleFoil_Log 0 Kapton
+        GEM_TopCopperMiddleFoil_Physical[0] GEM_CopperMiddleFoil_Log 0 Copper
+        GEM_BottomCopperMiddleFoil_Physical[0] GEM_CopperMiddleFoil_Log 0 Copper
+      GEM_MiddleFoilContainer_Physical[1] GEM_MiddleFoilContainer_Log 3 ArCO2
+        GEM_KaptonMiddleFoil_Physical[0] GEM_KaptonMiddleFoil_Log 0 Kapton
+        GEM_TopCopperMiddleFoil_Physical[0] GEM_CopperMiddleFoil_Log 0 Copper
+        GEM_BottomCopperMiddleFoil_Physical[0] GEM_CopperMiddleFoil_Log 0 Copper
+      GEM_MiddleFoilContainer_Physical[2] GEM_MiddleFoilContainer_Log 3 ArCO2
+        GEM_KaptonMiddleFoil_Physical[0] GEM_KaptonMiddleFoil_Log 0 Kapton
+        GEM_TopCopperMiddleFoil_Physical[0] GEM_CopperMiddleFoil_Log 0 Copper
+        GEM_BottomCopperMiddleFoil_Physical[0] GEM_CopperMiddleFoil_Log 0 Copper
+      GEM_AnodeReadoutPlaneContainer_Physical[0] GEM_AnodeReadoutPlaneContainer_Log 2 Kapton
+        GEM_AnodeReadoutBoard_Physical[0] GEM_AnodeReadoutBoard_Log 0 NemaG10
+        GEM_AnodeCopperLayer_Physical[0] GEM_AnodeCopperLayer_Log 0 Copper /GEMWirePlaneSD
+      GEM_CathodeHVPlaneContainer_Physical[0] GEM_CathodeHVPlaneContainer_Log 1 Kapton
+        GEM_CathodeHVCopperLayer_Physical[0] GEM_CathodeHVCopperLayer_Log 0 Copper
+  HDC_MasterContainerFront_Physical[0] HDC_MasterContainer_Log 2 Air
+    HDC_Frame_Physical[0] HDC_Frame_Log 0 NemaG10
+    HDC_SubContainer_Physical[0] HDC_SubContainer_Log 16 ArCO2
+      HDC_Foil_Physical[0] HDC_Foil_Log 0 Mylar
+      HDC_Foil_Physical[1] HDC_Foil_Log 0 Mylar
+      HDC_Foil_Physical[2] HDC_Foil_Log 0 Mylar
+      HDC_Foil_Physical[3] HDC_Foil_Log 0 Mylar
+      HDC_Foil_Physical[4] HDC_Foil_Log 0 Mylar
+      HDC_Foil_Physical[5] HDC_Foil_Log 0 Mylar
+      HDC_Foil_Physical[6] HDC_Foil_Log 0 Mylar
+      HDC_Foil_Physical[7] HDC_Foil_Log 0 Mylar
+      HDC_Foil_Physical[8] HDC_Foil_Log 0 Mylar
+      HDC_Foil_Physical[9] HDC_Foil_Log 0 Mylar
+      HDC_WirePlane_Physical[0] HDC_WirePlane_Log 0 ArCO2 /HDCWirePlaneSD
+      HDC_WirePlane_Physical[1] HDC_WirePlane_Log 0 ArCO2 /HDCWirePlaneSD
+      HDC_WirePlane_Physical[2] HDC_WirePlane_Log 0 ArCO2 /HDCWirePlaneSD
+      HDC_WirePlane_Physical[3] HDC_WirePlane_Log 0 ArCO2 /HDCWirePlaneSD
+      HDC_WirePlane_Physical[4] HDC_WirePlane_Log 0 ArCO2 /HDCWirePlaneSD
+      HDC_WirePlane_Physical[5] HDC_WirePlane_Log 0 ArCO2 /HDCWirePlaneSD
+  HDC_MasterContainerBack_Physical[1] HDC_MasterContainer_Log 2 Air
+    HDC_Frame_Physical[0] HDC_Frame_Log 0 NemaG10
+    HDC_SubContainer_Physical[0] HDC_SubContainer_Log 16 ArCO2
+      HDC_Foil_Physical[0] HDC_Foil_Log 0 Mylar
+      HDC_Foil_Physical[1] HDC_Foil_Log 0 Mylar
+      HDC_Foil_Physical[2] HDC_Foil_Log 0 Mylar
+      HDC_Foil_Physical[3] HDC_Foil_Log 0 Mylar
+      HDC_Foil_Physical[4] HDC_Foil_Log 0 Mylar
+      HDC_Foil_Physical[5] HDC_Foil_Log 0 Mylar
+      HDC_Foil_Physical[6] HDC_Foil_Log 0 Mylar
+      HDC_Foil_Physical[7] HDC_Foil_Log 0 Mylar
+      HDC_Foil_Physical[8] HDC_Foil_Log 0 Mylar
+      HDC_Foil_Physical[9] HDC_Foil_Log 0 Mylar
+      HDC_WirePlane_Physical[0] HDC_WirePlane_Log 0 ArCO2 /HDCWirePlaneSD
+      HDC_WirePlane_Physical[1] HDC_WirePlane_Log 0 ArCO2 /HDCWirePlaneSD
+      HDC_WirePlane_Physical[2] HDC_WirePlane_Log 0 ArCO2 /HDCWirePlaneSD
+      HDC_WirePlane_Physical[3] HDC_WirePlane_Log 0 ArCO2 /HDCWirePlaneSD
+      HDC_WirePlane_Physical[4] HDC_WirePlane_Log 0 ArCO2 /HDCWirePlaneSD
+      HDC_WirePlane_Physical[5] HDC_WirePlane_Log 0 ArCO2 /HDCWirePlaneSD
+  VDC_MasterContainerFront_Physical[0] VDC_MasterContainer_Log 4 Air
+    VDC_G10Frame_Physical[0] VDC_G10Frame_Log 0 NemaG10
+    VDC_AluTopFrame_Physical[0] VDC_AluFrame_Log 0 Aluminum
+    VDC_AluBottomFrame_Physical[1] VDC_AluFrame_Log 0 Aluminum
+    VDC_SubContainer_Physical[0] VDC_SubContainer_Log 7 Ar-C2H6_40-60
+      VDC_UPlane_Physical[0] VDC_WirePlane_Log 0 Vacuum /VDCWirePlaneSD
+      VDC_VPlane_Physical[1] VDC_WirePlane_Log 0 Vacuum /VDCWirePlaneSD
+      VDC_TopGasFoilContainer_Physical[0] VDC_AM_FoilContainer_Log 2 Ar-C2H6_40-60
+        VDC_MylarFoil_Physical[0] VDC_MylarFoil_Log 0 Mylar
+        VDC_TopAluLayer_Physical[0] VDC_AluLayer_Log 0 Aluminum
+      VDC_TopHVFoilContainer_Physical[0] VDC_MA_FoilContainer_Log 2 Ar-C2H6_40-60
+        VDC_MylarFoil_Physical[0] VDC_MylarFoil_Log 0 Mylar
+        VDC_TopAluLayer_Physical[0] VDC_AluLayer_Log 0 Aluminum
+      VDC_CenterHVFoilContainer_Physical[0] VDC_AMA_FoilContainer_Log 3 Ar-C2H6_40-60
+        VDC_MylarFoil_Physical[0] VDC_MylarFoil_Log 0 Mylar
+        VDC_TopAluLayer_Physical[0] VDC_AluLayer_Log 0 Aluminum
+        VDC_BottomAluLayer_Physical[1] VDC_AluLayer_Log 0 Aluminum
+      VDC_TopHVFoilContainer_Physical[1] VDC_AM_FoilContainer_Log 2 Ar-C2H6_40-60
+        VDC_MylarFoil_Physical[0] VDC_MylarFoil_Log 0 Mylar
+        VDC_TopAluLayer_Physical[0] VDC_AluLayer_Log 0 Aluminum
+      VDC_TopHVFoilContainer_Physical[1] VDC_MA_FoilContainer_Log 2 Ar-C2H6_40-60
+        VDC_MylarFoil_Physical[0] VDC_MylarFoil_Log 0 Mylar
+        VDC_TopAluLayer_Physical[0] VDC_AluLayer_Log 0 Aluminum
+  VDC_MasterContainerBack_Physical[1] VDC_MasterContainer_Log 4 Air
+    VDC_G10Frame_Physical[0] VDC_G10Frame_Log 0 NemaG10
+    VDC_AluTopFrame_Physical[0] VDC_AluFrame_Log 0 Aluminum
+    VDC_AluBottomFrame_Physical[1] VDC_AluFrame_Log 0 Aluminum
+    VDC_SubContainer_Physical[0] VDC_SubContainer_Log 7 Ar-C2H6_40-60
+      VDC_UPlane_Physical[0] VDC_WirePlane_Log 0 Vacuum /VDCWirePlaneSD
+      VDC_VPlane_Physical[1] VDC_WirePlane_Log 0 Vacuum /VDCWirePlaneSD
+      VDC_TopGasFoilContainer_Physical[0] VDC_AM_FoilContainer_Log 2 Ar-C2H6_40-60
+        VDC_MylarFoil_Physical[0] VDC_MylarFoil_Log 0 Mylar
+        VDC_TopAluLayer_Physical[0] VDC_AluLayer_Log 0 Aluminum
+      VDC_TopHVFoilContainer_Physical[0] VDC_MA_FoilContainer_Log 2 Ar-C2H6_40-60
+        VDC_MylarFoil_Physical[0] VDC_MylarFoil_Log 0 Mylar
+        VDC_TopAluLayer_Physical[0] VDC_AluLayer_Log 0 Aluminum
+      VDC_CenterHVFoilContainer_Physical[0] VDC_AMA_FoilContainer_Log 3 Ar-C2H6_40-60
+        VDC_MylarFoil_Physical[0] VDC_MylarFoil_Log 0 Mylar
+        VDC_TopAluLayer_Physical[0] VDC_AluLayer_Log 0 Aluminum
+        VDC_BottomAluLayer_Physical[1] VDC_AluLayer_Log 0 Aluminum
+      VDC_TopHVFoilContainer_Physical[1] VDC_AM_FoilContainer_Log 2 Ar-C2H6_40-60
+        VDC_MylarFoil_Physical[0] VDC_MylarFoil_Log 0 Mylar
+        VDC_TopAluLayer_Physical[0] VDC_AluLayer_Log 0 Aluminum
+      VDC_TopHVFoilContainer_Physical[1] VDC_MA_FoilContainer_Log 2 Ar-C2H6_40-60
+        VDC_MylarFoil_Physical[0] VDC_MylarFoil_Log 0 Mylar
+        VDC_TopAluLayer_Physical[0] VDC_AluLayer_Log 0 Aluminum
+  VDC_DriftCellMasterContainer_Physical[0] VDC_DriftCellMasterContainer_Log 2 Vacuum
+    VDC_DriftCellFrontContainer_Physical[0] VDC_DriftCellFrontContainer_Log 1 Vacuum
+      VDC_DriftCellFront_Physical[-1] VDC_DriftCellFront_Log 0 Vacuum /VDCDriftCellFrontSD
+    VDC_DriftCellBackContainer_Physical[0] VDC_DriftCellbackContainer_Log 1 Vacuum
+      VDC_DriftCellBack_Physical[-1] VDC_DriftCellBack_Log 0 Vacuum /VDCDriftCellBackSD
+  UpstreamRing[0] UpstreamRing_Log 0 StainlessSteel
+  UpstreamRing[0] DownstreamRing_Log 0 StainlessSteel
+  SliderSupportLeft_Physical[0] SliderSupportLeft_Logical 0 StainlessSteel
+  SliderSupportRight_Physical[0] SliderSupportRight_Logical 0 StainlessSteel
+  RodLR_LeftUpstream_Physical[0] Rod_LeftRight_Logical 0 StainlessSteel
+  RodLR_RightUpstream_Physical[0] Rod_LeftRight_Logical 0 StainlessSteel
+  RodLR_LeftDownstream_Physical[0] Rod_LeftRight_Logical 0 StainlessSteel
+  RodLR_RightDownstream_Physical[0] Rod_LeftRight_Logical 0 StainlessSteel
+  LeftRail_Physical[0] Rail_Logical 0 StainlessSteel
+  RightRail_Physical[0] Rail_Logical 0 StainlessSteel
+  CerenkovMasterContainer_Physical[0] CerenkovMasterContainer_Logical 1 Air
+    CerenkovContainer_Physical[0] CerenkovContainer_Logical 7 Air
+      ActiveArea_Physical[0] ActiveArea_Log 5 Air /CerenkovDetectorSD
+        QuartzBar_PhysicalRight[0] QuartzBar_LogicalRight 0 Quartz
+        QuartzGlue_PhysicalCenter[0] CenterGlueFilm_Log 0 SiElast_Glue
+        QuartzGlue_PhysicalRight[1] CenterGlueFilm_Log 0 SiElast_Glue
+        QuartzBar_PhysicalLeft[0] QuartzBar_LogicalLeft 0 Quartz
+        QuartzGlue_PhysicalLeft[1] CenterGlueFilm_Log 0 SiElast_Glue
+      LightGuide_PhysicalLeft[0] LightGuide_LogicalLeft 0 Quartz
+      LightGuide_PhysicalRight[0] LightGuide_LogicalRight 0 Quartz
+      mirrorface_physical2[0] mirrorface_log2 0 Mirror
+      mirrorface_physical4[0] mirrorface_log4 0 Mirror
+      PMTContainer_Physical[0] PMTContainer_Log 3 Vacuum
+        PMTQuartzOpticalFilm_Physical[0] PMTQuartzOpticalFilm_Log 0 SiElast_Glue
+        PMTEntranceWindow_Physical[0] PMTEntranceWindow_Log 0 LimeGlass
+        Cathode_Physical[0] Cathode_Log 0 LimeGlass /CerenkovPMTSD
+      PMTContainer_Physical[1] PMTContainer_Log 3 Vacuum
+        PMTQuartzOpticalFilm_Physical[0] PMTQuartzOpticalFilm_Log 0 SiElast_Glue
+        PMTEntranceWindow_Physical[0] PMTEntranceWindow_Log 0 LimeGlass
+        Cathode_Physical[0] Cathode_Log 0 LimeGlass /CerenkovPMTSD
+  CerenkovMasterContainer_Physical[1] CerenkovMasterContainer_Logical 1 Air
+    CerenkovContainer_Physical[0] CerenkovContainer_Logical 7 Air
+      ActiveArea_Physical[0] ActiveArea_Log 5 Air /CerenkovDetectorSD
+        QuartzBar_PhysicalRight[0] QuartzBar_LogicalRight 0 Quartz
+        QuartzGlue_PhysicalCenter[0] CenterGlueFilm_Log 0 SiElast_Glue
+        QuartzGlue_PhysicalRight[1] CenterGlueFilm_Log 0 SiElast_Glue
+        QuartzBar_PhysicalLeft[0] QuartzBar_LogicalLeft 0 Quartz
+        QuartzGlue_PhysicalLeft[1] CenterGlueFilm_Log 0 SiElast_Glue
+      LightGuide_PhysicalLeft[0] LightGuide_LogicalLeft 0 Quartz
+      LightGuide_PhysicalRight[0] LightGuide_LogicalRight 0 Quartz
+      mirrorface_physical2[0] mirrorface_log2 0 Mirror
+      mirrorface_physical4[0] mirrorface_log4 0 Mirror
+      PMTContainer_Physical[0] PMTContainer_Log 3 Vacuum
+        PMTQuartzOpticalFilm_Physical[0] PMTQuartzOpticalFilm_Log 0 SiElast_Glue
+        PMTEntranceWindow_Physical[0] PMTEntranceWindow_Log 0 LimeGlass
+        Cathode_Physical[0] Cathode_Log 0 LimeGlass /CerenkovPMTSD
+      PMTContainer_Physical[1] PMTContainer_Log 3 Vacuum
+        PMTQuartzOpticalFilm_Physical[0] PMTQuartzOpticalFilm_Log 0 SiElast_Glue
+        PMTEntranceWindow_Physical[0] PMTEntranceWindow_Log 0 LimeGlass
+        Cathode_Physical[0] Cathode_Log 0 LimeGlass /CerenkovPMTSD
+  CerenkovMasterContainer_Physical[2] CerenkovMasterContainer_Logical 1 Air
+    CerenkovContainer_Physical[0] CerenkovContainer_Logical 7 Air
+      ActiveArea_Physical[0] ActiveArea_Log 5 Air /CerenkovDetectorSD
+        QuartzBar_PhysicalRight[0] QuartzBar_LogicalRight 0 Quartz
+        QuartzGlue_PhysicalCenter[0] CenterGlueFilm_Log 0 SiElast_Glue
+        QuartzGlue_PhysicalRight[1] CenterGlueFilm_Log 0 SiElast_Glue
+        QuartzBar_PhysicalLeft[0] QuartzBar_LogicalLeft 0 Quartz
+        QuartzGlue_PhysicalLeft[1] CenterGlueFilm_Log 0 SiElast_Glue
+      LightGuide_PhysicalLeft[0] LightGuide_LogicalLeft 0 Quartz
+      LightGuide_PhysicalRight[0] LightGuide_LogicalRight 0 Quartz
+      mirrorface_physical2[0] mirrorface_log2 0 Mirror
+      mirrorface_physical4[0] mirrorface_log4 0 Mirror
+      PMTContainer_Physical[0] PMTContainer_Log 3 Vacuum
+        PMTQuartzOpticalFilm_Physical[0] PMTQuartzOpticalFilm_Log 0 SiElast_Glue
+        PMTEntranceWindow_Physical[0] PMTEntranceWindow_Log 0 LimeGlass
+        Cathode_Physical[0] Cathode_Log 0 LimeGlass /CerenkovPMTSD
+      PMTContainer_Physical[1] PMTContainer_Log 3 Vacuum
+        PMTQuartzOpticalFilm_Physical[0] PMTQuartzOpticalFilm_Log 0 SiElast_Glue
+        PMTEntranceWindow_Physical[0] PMTEntranceWindow_Log 0 LimeGlass
+        Cathode_Physical[0] Cathode_Log 0 LimeGlass /CerenkovPMTSD
+  CerenkovMasterContainer_Physical[3] CerenkovMasterContainer_Logical 1 Air
+    CerenkovContainer_Physical[0] CerenkovContainer_Logical 7 Air
+      ActiveArea_Physical[0] ActiveArea_Log 5 Air /CerenkovDetectorSD
+        QuartzBar_PhysicalRight[0] QuartzBar_LogicalRight 0 Quartz
+        QuartzGlue_PhysicalCenter[0] CenterGlueFilm_Log 0 SiElast_Glue
+        QuartzGlue_PhysicalRight[1] CenterGlueFilm_Log 0 SiElast_Glue
+        QuartzBar_PhysicalLeft[0] QuartzBar_LogicalLeft 0 Quartz
+        QuartzGlue_PhysicalLeft[1] CenterGlueFilm_Log 0 SiElast_Glue
+      LightGuide_PhysicalLeft[0] LightGuide_LogicalLeft 0 Quartz
+      LightGuide_PhysicalRight[0] LightGuide_LogicalRight 0 Quartz
+      mirrorface_physical2[0] mirrorface_log2 0 Mirror
+      mirrorface_physical4[0] mirrorface_log4 0 Mirror
+      PMTContainer_Physical[0] PMTContainer_Log 3 Vacuum
+        PMTQuartzOpticalFilm_Physical[0] PMTQuartzOpticalFilm_Log 0 SiElast_Glue
+        PMTEntranceWindow_Physical[0] PMTEntranceWindow_Log 0 LimeGlass
+        Cathode_Physical[0] Cathode_Log 0 LimeGlass /CerenkovPMTSD
+      PMTContainer_Physical[1] PMTContainer_Log 3 Vacuum
+        PMTQuartzOpticalFilm_Physical[0] PMTQuartzOpticalFilm_Log 0 SiElast_Glue
+        PMTEntranceWindow_Physical[0] PMTEntranceWindow_Log 0 LimeGlass
+        Cathode_Physical[0] Cathode_Log 0 LimeGlass /CerenkovPMTSD
+  CerenkovMasterContainer_Physical[4] CerenkovMasterContainer_Logical 1 Air
+    CerenkovContainer_Physical[0] CerenkovContainer_Logical 7 Air
+      ActiveArea_Physical[0] ActiveArea_Log 5 Air /CerenkovDetectorSD
+        QuartzBar_PhysicalRight[0] QuartzBar_LogicalRight 0 Quartz
+        QuartzGlue_PhysicalCenter[0] CenterGlueFilm_Log 0 SiElast_Glue
+        QuartzGlue_PhysicalRight[1] CenterGlueFilm_Log 0 SiElast_Glue
+        QuartzBar_PhysicalLeft[0] QuartzBar_LogicalLeft 0 Quartz
+        QuartzGlue_PhysicalLeft[1] CenterGlueFilm_Log 0 SiElast_Glue
+      LightGuide_PhysicalLeft[0] LightGuide_LogicalLeft 0 Quartz
+      LightGuide_PhysicalRight[0] LightGuide_LogicalRight 0 Quartz
+      mirrorface_physical2[0] mirrorface_log2 0 Mirror
+      mirrorface_physical4[0] mirrorface_log4 0 Mirror
+      PMTContainer_Physical[0] PMTContainer_Log 3 Vacuum
+        PMTQuartzOpticalFilm_Physical[0] PMTQuartzOpticalFilm_Log 0 SiElast_Glue
+        PMTEntranceWindow_Physical[0] PMTEntranceWindow_Log 0 LimeGlass
+        Cathode_Physical[0] Cathode_Log 0 LimeGlass /CerenkovPMTSD
+      PMTContainer_Physical[1] PMTContainer_Log 3 Vacuum
+        PMTQuartzOpticalFilm_Physical[0] PMTQuartzOpticalFilm_Log 0 SiElast_Glue
+        PMTEntranceWindow_Physical[0] PMTEntranceWindow_Log 0 LimeGlass
+        Cathode_Physical[0] Cathode_Log 0 LimeGlass /CerenkovPMTSD
+  CerenkovMasterContainer_Physical[5] CerenkovMasterContainer_Logical 1 Air
+    CerenkovContainer_Physical[0] CerenkovContainer_Logical 7 Air
+      ActiveArea_Physical[0] ActiveArea_Log 5 Air /CerenkovDetectorSD
+        QuartzBar_PhysicalRight[0] QuartzBar_LogicalRight 0 Quartz
+        QuartzGlue_PhysicalCenter[0] CenterGlueFilm_Log 0 SiElast_Glue
+        QuartzGlue_PhysicalRight[1] CenterGlueFilm_Log 0 SiElast_Glue
+        QuartzBar_PhysicalLeft[0] QuartzBar_LogicalLeft 0 Quartz
+        QuartzGlue_PhysicalLeft[1] CenterGlueFilm_Log 0 SiElast_Glue
+      LightGuide_PhysicalLeft[0] LightGuide_LogicalLeft 0 Quartz
+      LightGuide_PhysicalRight[0] LightGuide_LogicalRight 0 Quartz
+      mirrorface_physical2[0] mirrorface_log2 0 Mirror
+      mirrorface_physical4[0] mirrorface_log4 0 Mirror
+      PMTContainer_Physical[0] PMTContainer_Log 3 Vacuum
+        PMTQuartzOpticalFilm_Physical[0] PMTQuartzOpticalFilm_Log 0 SiElast_Glue
+        PMTEntranceWindow_Physical[0] PMTEntranceWindow_Log 0 LimeGlass
+        Cathode_Physical[0] Cathode_Log 0 LimeGlass /CerenkovPMTSD
+      PMTContainer_Physical[1] PMTContainer_Log 3 Vacuum
+        PMTQuartzOpticalFilm_Physical[0] PMTQuartzOpticalFilm_Log 0 SiElast_Glue
+        PMTEntranceWindow_Physical[0] PMTEntranceWindow_Log 0 LimeGlass
+        Cathode_Physical[0] Cathode_Log 0 LimeGlass /CerenkovPMTSD
+  CerenkovMasterContainer_Physical[6] CerenkovMasterContainer_Logical 1 Air
+    CerenkovContainer_Physical[0] CerenkovContainer_Logical 7 Air
+      ActiveArea_Physical[0] ActiveArea_Log 5 Air /CerenkovDetectorSD
+        QuartzBar_PhysicalRight[0] QuartzBar_LogicalRight 0 Quartz
+        QuartzGlue_PhysicalCenter[0] CenterGlueFilm_Log 0 SiElast_Glue
+        QuartzGlue_PhysicalRight[1] CenterGlueFilm_Log 0 SiElast_Glue
+        QuartzBar_PhysicalLeft[0] QuartzBar_LogicalLeft 0 Quartz
+        QuartzGlue_PhysicalLeft[1] CenterGlueFilm_Log 0 SiElast_Glue
+      LightGuide_PhysicalLeft[0] LightGuide_LogicalLeft 0 Quartz
+      LightGuide_PhysicalRight[0] LightGuide_LogicalRight 0 Quartz
+      mirrorface_physical2[0] mirrorface_log2 0 Mirror
+      mirrorface_physical4[0] mirrorface_log4 0 Mirror
+      PMTContainer_Physical[0] PMTContainer_Log 3 Vacuum
+        PMTQuartzOpticalFilm_Physical[0] PMTQuartzOpticalFilm_Log 0 SiElast_Glue
+        PMTEntranceWindow_Physical[0] PMTEntranceWindow_Log 0 LimeGlass
+        Cathode_Physical[0] Cathode_Log 0 LimeGlass /CerenkovPMTSD
+      PMTContainer_Physical[1] PMTContainer_Log 3 Vacuum
+        PMTQuartzOpticalFilm_Physical[0] PMTQuartzOpticalFilm_Log 0 SiElast_Glue
+        PMTEntranceWindow_Physical[0] PMTEntranceWindow_Log 0 LimeGlass
+        Cathode_Physical[0] Cathode_Log 0 LimeGlass /CerenkovPMTSD
+  CerenkovMasterContainer_Physical[7] CerenkovMasterContainer_Logical 1 Air
+    CerenkovContainer_Physical[0] CerenkovContainer_Logical 7 Air
+      ActiveArea_Physical[0] ActiveArea_Log 5 Air /CerenkovDetectorSD
+        QuartzBar_PhysicalRight[0] QuartzBar_LogicalRight 0 Quartz
+        QuartzGlue_PhysicalCenter[0] CenterGlueFilm_Log 0 SiElast_Glue
+        QuartzGlue_PhysicalRight[1] CenterGlueFilm_Log 0 SiElast_Glue
+        QuartzBar_PhysicalLeft[0] QuartzBar_LogicalLeft 0 Quartz
+        QuartzGlue_PhysicalLeft[1] CenterGlueFilm_Log 0 SiElast_Glue
+      LightGuide_PhysicalLeft[0] LightGuide_LogicalLeft 0 Quartz
+      LightGuide_PhysicalRight[0] LightGuide_LogicalRight 0 Quartz
+      mirrorface_physical2[0] mirrorface_log2 0 Mirror
+      mirrorface_physical4[0] mirrorface_log4 0 Mirror
+      PMTContainer_Physical[0] PMTContainer_Log 3 Vacuum
+        PMTQuartzOpticalFilm_Physical[0] PMTQuartzOpticalFilm_Log 0 SiElast_Glue
+        PMTEntranceWindow_Physical[0] PMTEntranceWindow_Log 0 LimeGlass
+        Cathode_Physical[0] Cathode_Log 0 LimeGlass /CerenkovPMTSD
+      PMTContainer_Physical[1] PMTContainer_Log 3 Vacuum
+        PMTQuartzOpticalFilm_Physical[0] PMTQuartzOpticalFilm_Log 0 SiElast_Glue
+        PMTEntranceWindow_Physical[0] PMTEntranceWindow_Log 0 LimeGlass
+        Cathode_Physical[0] Cathode_Log 0 LimeGlass /CerenkovPMTSD
+  TriggerScintillatorContainer_Physical[0] TriggerScintillatorContainer_Logical 1 Air /TriggerScintillatorSD
+    TriggerScintillator_Physical[0] TriggerScintillator_Logical 0 Scintillator
+
+###### Leaving QweakSimDetectorConstruction::Construct() 
+
+
+###### Calling QweakSimGlobalMagnetField::QweakSimGlobalMagnetField() 
+
+
+###### Calling QweakSimMagnetFieldMap::QweakSimMagnetFieldMap 
+
+zMinFromMap = -250.000000
+zMinFromMap = 250.000000
+rMinFromMap = 2.000000
+rMinFromMap = 300.000000
+phiMinFromMap = 0.000000
+phiMinFromMap = 359.000000
+degree = 0.017453
+mm = 1.000000
+cm = 10.000000
+nm = 0.000001
+m = 1000.000000
+km = 1000000.000000
+
+###### Leaving QweakSimMagnetFieldMap::QweakSimMagnetFieldMap 
+
+
+###### Calling QweakSimMagnetFieldMap::Initialize 
+
+
+###### Leaving QweakSimMagnetFieldMap::Initialize 
+
+
+###### Calling QweakSimMagnetFieldMap::ReadFieldMap 
+
+--------------------------------------------------------------------------------
+ Magnetic field interpolation: Reading the field grid from MainMagnet_FieldMap.dat
+--------------------------------------------------------------------------------
+... done reading0lines
+
+###### Leaving QweakSimMagnetFieldMap::ReadFieldMap 
+
+
+###### Leaving QweakSimGlobalMagnetField::QweakSimGlobalMagnetField 
+
+G4VUserPhysicsList::Construct()
+Construct processes 
+ AddDiscreteProcess to OpticalPhoton 
+G4VUserPhysicsList::SetCutsWithDefault:CutLength : 10 (mm)
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseEE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseEE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseEE : unimplemented case
+BooleanProcessor::caseEE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseEE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseEE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseEE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseEE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseEE : unimplemented case
+BooleanProcessor::caseEE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseEE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseEE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+BooleanProcessor::caseIE : unimplemented case
+alive after LoadTree
+==============================================================
+ Event Number        : 1
+ Number of hits      : 0
+ Paricle ID          : 3
+ vertx_o [cm]        : -0.180005
+ verty_o [cm]        : -0.0254779
+ vertz_o [cm]        : -652.774
+ px_o    [MeV]       : -213.258
+ py_o    [MeV]       : -47.1058
+ pz_o    [MeV]       : 1093.12
+ theta_o [deg]       : 11.2986
+ phi_o   [deg]       : 192.456
+ ptot_o  [MeV]       : 1114.72
+ en_o    [MeV]       : 1114.72
+ q__2    [GeV^2]     : 0.0493002
+ weight_n [ubarn/sr] : 1
+==============================================================
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 1
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 4
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+==============================================================
+ Event Number        : 2
+ Number of hits      : 0
+ Paricle ID          : 3
+ vertx_o [cm]        : 0.00789742
+ verty_o [cm]        : -0.133576
+ vertz_o [cm]        : -634.462
+ px_o    [MeV]       : -7.06059
+ py_o    [MeV]       : 110.903
+ pz_o    [MeV]       : 1128.91
+ theta_o [deg]       : 5.622
+ phi_o   [deg]       : 93.6428
+ ptot_o  [MeV]       : 1134.36
+ en_o    [MeV]       : 1134.36
+ q__2    [GeV^2]     : 0.0124516
+ weight_n [ubarn/sr] : 1
+==============================================================
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 0
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 4
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+==============================================================
+ Event Number        : 3
+ Number of hits      : 0
+ Paricle ID          : 3
+ vertx_o [cm]        : -0.130522
+ verty_o [cm]        : 0.0598969
+ vertz_o [cm]        : -643.27
+ px_o    [MeV]       : 71.4324
+ py_o    [MeV]       : 99.385
+ pz_o    [MeV]       : 1126.3
+ theta_o [deg]       : 6.20186
+ phi_o   [deg]       : 54.2935
+ ptot_o  [MeV]       : 1132.93
+ en_o    [MeV]       : 1132.93
+ q__2    [GeV^2]     : 0.0151309
+ weight_n [ubarn/sr] : 1
+==============================================================
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 1
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 4
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+==============================================================
+ Event Number        : 4
+ Number of hits      : 0
+ Paricle ID          : 3
+ vertx_o [cm]        : 0.165674
+ verty_o [cm]        : -0.178162
+ vertz_o [cm]        : -633.595
+ px_o    [MeV]       : -99.3745
+ py_o    [MeV]       : -181.915
+ pz_o    [MeV]       : 1098.01
+ theta_o [deg]       : 10.6908
+ phi_o   [deg]       : 241.354
+ ptot_o  [MeV]       : 1117.41
+ en_o    [MeV]       : 1117.41
+ q__2    [GeV^2]     : 0.0442598
+ weight_n [ubarn/sr] : 1
+==============================================================
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 1
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 5
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+==============================================================
+ Event Number        : 5
+ Number of hits      : 0
+ Paricle ID          : 3
+ vertx_o [cm]        : 0.135605
+ verty_o [cm]        : 0.158222
+ vertz_o [cm]        : -640.902
+ px_o    [MeV]       : -26.3204
+ py_o    [MeV]       : -96.4828
+ pz_o    [MeV]       : 1131.22
+ theta_o [deg]       : 5.05224
+ phi_o   [deg]       : 254.741
+ ptot_o  [MeV]       : 1135.63
+ en_o    [MeV]       : 1135.63
+ q__2    [GeV^2]     : 0.0100685
+ weight_n [ubarn/sr] : 1
+==============================================================
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 0
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 4
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+==============================================================
+ Event Number        : 6
+ Number of hits      : 0
+ Paricle ID          : 3
+ vertx_o [cm]        : 0.117013
+ verty_o [cm]        : -0.177333
+ vertz_o [cm]        : -659.292
+ px_o    [MeV]       : 78.1926
+ py_o    [MeV]       : 258.197
+ pz_o    [MeV]       : 1066.55
+ theta_o [deg]       : 14.1949
+ phi_o   [deg]       : 73.1516
+ ptot_o  [MeV]       : 1100.14
+ en_o    [MeV]       : 1100.14
+ q__2    [GeV^2]     : 0.0766533
+ weight_n [ubarn/sr] : 1
+==============================================================
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 0
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 4
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+==============================================================
+ Event Number        : 7
+ Number of hits      : 0
+ Paricle ID          : 3
+ vertx_o [cm]        : -0.0236644
+ verty_o [cm]        : 0.163163
+ vertz_o [cm]        : -641.687
+ px_o    [MeV]       : -7.32165
+ py_o    [MeV]       : -103.351
+ pz_o    [MeV]       : 1130.5
+ theta_o [deg]       : 5.23654
+ phi_o   [deg]       : 265.948
+ ptot_o  [MeV]       : 1135.24
+ en_o    [MeV]       : 1135.24
+ q__2    [GeV^2]     : 0.0108122
+ weight_n [ubarn/sr] : 1
+==============================================================
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 0
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 4
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+==============================================================
+ Event Number        : 8
+ Number of hits      : 0
+ Paricle ID          : 3
+ vertx_o [cm]        : -0.0755804
+ verty_o [cm]        : -0.0890814
+ vertz_o [cm]        : -654.071
+ px_o    [MeV]       : -54.8134
+ py_o    [MeV]       : 139.986
+ pz_o    [MeV]       : 1118.71
+ theta_o [deg]       : 7.6537
+ phi_o   [deg]       : 111.383
+ ptot_o  [MeV]       : 1128.77
+ en_o    [MeV]       : 1128.77
+ q__2    [GeV^2]     : 0.0229478
+ weight_n [ubarn/sr] : 1
+==============================================================
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 0
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 4
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+==============================================================
+ Event Number        : 9
+ Number of hits      : 0
+ Paricle ID          : 3
+ vertx_o [cm]        : 0.140103
+ verty_o [cm]        : 0.0385279
+ vertz_o [cm]        : -648.956
+ px_o    [MeV]       : 90.3454
+ py_o    [MeV]       : -138.502
+ pz_o    [MeV]       : 1113.94
+ theta_o [deg]       : 8.44383
+ phi_o   [deg]       : 303.117
+ ptot_o  [MeV]       : 1126.15
+ en_o    [MeV]       : 1126.15
+ q__2    [GeV^2]     : 0.0278567
+ weight_n [ubarn/sr] : 1
+==============================================================
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 1
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 4
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 3
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 8
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 1
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 4
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 0
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 6
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 1
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 4
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 0
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 4
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 1
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 5
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 1
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 4
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 1
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 4
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 1
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 4
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 1
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 4
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 0
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 4
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 1
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 9
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 0
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 4
+Number of hit in the Cerenkov      = 2
+alive after LoadTree
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 1
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 4
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 1
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 4
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 1
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 4
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 0
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 4
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 1
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 5
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 0
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 4
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 0
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 4
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 1
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 4
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 0
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 6
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 0
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 4
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 0
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 5
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 0
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 8
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 1
+Number of hit in the HDCs          = 12
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 4
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 1
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 4
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 0
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 5
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 1
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 4
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 1
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 5
+Number of hit in the Cerenkov      = 0
+alive after LoadTree
+ Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()
+Number of hit in the GEMs          = 1
+Number of hit in the HDCs          = 0
+Number of hit in the VDCs          = 0
+Number of hit in the VDC DC Front  = 0
+Number of hit in the VDC DC Back   = 0
+Number of hit in the TS            = 4
+Number of hit in the Cerenkov      = 10
+Graphics systems deleted.
+Visualization Manager deleting...
+
+###### Calling QweakSimGlobalMagnetField::~QweakSimGlobalMagnetField() 
+
+
+###### Leaving QweakSimGlobalMagnetField::~QweakSimGlobalMagnetField() 
+
+
+###### Calling QweakSimVDCRotator::~QweakCollimatorSupport() 
+
+
+###### Calling/Leaving QweakSimMaterial::~QweakSimMaterial() 
+
+
+###### Calling QweakSimVDCRotator::~QweakCollimatorSupport() 
+
+
+###### Calling/Leaving QweakSimMaterial::~QweakSimMaterial() 
+
+
+###### Calling/Leaving QweakSimMaterial::~QweakSimMaterial() 
+
+
+###### Calling/Leaving QweakSimMaterial::~QweakSimMaterial() 
+
+
+###### Calling/Leaving QweakSimMaterial::~QweakSimMaterial() 
+
+
+###### Calling/Leaving QweakSimMaterial::~QweakSimMaterial() 
+
+
+###### Calling/Leaving QweakSimMaterial::~QweakSimMaterial() 
+
+
+###### Calling/Leaving QweakSimMaterial::~QweakSimMaterial() 
+
+
+###### Calling QweakSimCollimatorSupport::~QweakCollimatorSupport() 
+
+
+###### Calling/Leaving QweakSimMaterial::~QweakSimMaterial() 
+
+
+###### Calling QweakSimCollimatorSupport::~QweakCollimatorSupport() 
+
+
+###### Calling/Leaving QweakSimMaterial::~QweakSimMaterial() 
+
+
+###### Calling/Leaving QweakSimMaterial::~QweakSimMaterial() 
+
+
+###### Calling QweakSimMainMagnet::~QweakSimMainMagnet() 
+
+
+###### Calling/Leaving QweakSimMaterial::~QweakSimMaterial() 
+
+
+###### Leaving QweakSimMainMagnet::~QweakSimMainMagnet() 
+
+
+###### Calling QweakSimMiniMagnet::~QweakSimMiniMagnet() 
+
+
+###### Calling/Leaving QweakSimMaterial::~QweakSimMaterial() 
+
+
+###### Leaving QweakSimMiniMagnet::~QweakSimMiniMagnet() 
+
+
+###### Calling/Leaving QweakSimMaterial::~QweakSimMaterial() 
+
+
+###### Calling/Leaving QweakSimRunAction::~QweakSimRunAction()
+
+###### Calling/Leaving QweakSimPrimaryGeneratorAction::~QweakSimPrimaryGeneratorAction 
+
+###### Calling QweakSimTrackingAction::~QweakSimTrackingAction() 
+
+
+###### Leaving QweakSimTrackingAction::~QweakSimTrackingAction() 
+

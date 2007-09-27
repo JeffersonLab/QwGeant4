@@ -1,0 +1,191 @@
+#=================================================
+#   Macro file myQweakConfiguration.mac
+#=================================================
+
+# store tracks
+/tracking/storeTrajectory 1
+
+#==========================
+# Primary Event related
+#==========================
+# defined/used later again
+#/PrimaryEvent/SelectOctant 3
+/PrimaryEvent/SelectOctant 1	
+
+#==========================
+# Target related
+#==========================
+/Target/SetCenterPositionInZ  -650.0 cm
+/Target/SetTargetCellMaterial  Aluminum
+#/Target/SetTargetCellMaterial  Vacuum
+/Target/SetTargetMaterial      H2Liquid
+
+#==========================
+# MiniMagnet related
+#==========================
+/MiniMagnet/SetCenterPositionInZ   -465.31 cm
+
+#==========================
+# Detector Hut related
+#==========================
+/DetectorHut/CollimatorWall/SetCollimatorWallMaterial ShieldingConcrete
+
+#==========================
+# Cerenkov Detector related
+#==========================
+#  Air    : without Cerenkov light production 
+#  Quartz  :with    Cerenkov light production
+# 
+# angle is definedagaing vertical (y) axis
+# - a tilt angle of 0.0*deg means vertical 
+# - negative angle will tilt detector towards target
+#
+#/Cerenkov/SetCerenkovMaterial HeGas
+#/Cerenkov/SetCerenkovMaterial SiO2
+/Cerenkov/SetCerenkovMaterial Quartz
+#/Cerenkov/SetCerenkovMaterial Vacuum
+
+# positions to be extracted from SolidWorks
+# or by Juliette Mammei's hit distribution
+# on the vertical detector plane
+ 
+/Cerenkov/SetCenterPositionInX     0.0 cm
+/Cerenkov/SetCenterPositionInY   322.0 cm 
+/Cerenkov/SetCenterPositionInZ   570.0 cm
+/Cerenkov/SetTiltingAngle         0.0 degree
+
+
+#==================================
+#  Trigger Scintillator related
+#==================================
+#  Air    : without Cerenkov light production 
+#  Quartz  :with    Cerenkov light production
+# 
+# angle is definedagaing vertical (y) axis
+# - a tilt angle of 0.0*deg means vertical 
+# - positive angle will tilt detector against target
+#
+#/TriggerScintillator/SetScintillatorMaterial  Vacuum
+#/TriggerScintillator/SetScintillatorMaterial  Polyethylene
+/TriggerScintillator/SetScintillatorMaterial SiO2
+#/TriggerScintillator/SetScintillatorMaterial Quartz
+ 
+/TriggerScintillator/SetCenterPositionInX     0.0 cm
+#/TriggerScintillator/SetCenterPositionInY   310.0 cm 
+#/TriggerScintillator/SetCenterPositionInZ   555.0 cm
+/TriggerScintillator/SetTiltingAngle          0.0 degree
+
+/TriggerScintillator/SetCenterPositionInY     10.0 cm 
+/TriggerScintillator/SetCenterPositionInZ   -620.0 cm
+
+#=============================
+#     GEM related  (Region1)
+#============================
+/GEM/SetFrontCenterPositionInX       0.0    cm
+/GEM/SetFrontCenterPositionInY      20.0    cm
+/GEM/SetFrontCenterPositionInZ    -543.170  cm
+
+/GEM/SetBackCenterPositionInX        0.0    cm
+/GEM/SetBackCenterPositionInY       20.0    cm
+/GEM/SetBackCenterPositionInZ     -535.0    cm
+
+/GEM/SetFrontChamberRotationAngleInPhi    90.0   degree
+/GEM/SetBackChamberRotationAngleInPhi    270.0   degree
+
+/GEM/SetMasterContainerMaterial     Air
+/GEM/SetSubContainerMaterial        ArCO2
+/GEM/SetFrameMaterial               NemaG10
+
+# /GEM/SetFoilMaterial                Kapton
+
+#=============================
+#    HDC related  (Region2)
+#============================
+/HDC/SetFrontCenterPositionInX       0.0    cm
+/HDC/SetFrontCenterPositionInY      48.0    cm
+/HDC/SetFrontCenterPositionInZ    -325.459  cm
+
+/HDC/SetBackCenterPositionInX        0.0    cm
+/HDC/SetBackCenterPositionInY       54.0    cm
+/HDC/SetBackCenterPositionInZ     -285.459  cm
+
+/HDC/SetRotationAngleInPhi           90.0   degree
+
+/HDC/SetMasterContainerMaterial     Air
+/HDC/SetSubContainerMaterial        ArCO2
+/HDC/SetFoilMaterial                Mylar
+/HDC/SetFrameMaterial               NemaG10
+/HDC/SetWirePlaneMaterial           ArCO2
+
+
+#==========================
+#   VDC related   (Region3)
+#==========================
+
+# here you can set the position of the Front VDC (upstream)
+# The Back VDC will automatically repositioned relative to the Front VDC
+#/VDC/SetMeanTrackAngle            20.57 degree
+#/VDC/SetFrontBackDistance         50.0  cm 
+/VDC/SetFrontCenterPositionInX     0.0  cm
+/VDC/SetFrontCenterPositionInY   280.0  cm
+/VDC/SetFrontCenterPositionInZ   480.0  cm
+
+/VDC/SetVDC_SubContainerMaterial   Vacuum
+#/VDC/SetVDC_SubContainerMaterial   Ar-C2H6_40-60
+
+# Angle Orientation in Phi
+# 90.0 degree = octant 1 in 12 o'clock position
+# 45.0 degree = octant2
+/VDC/SetRotationAngleInPhi  90.0 degree
+#/VDC/SetRotationAngleInPhi  45.0 degree
+#/VDC/SetRotationAngleInPhi  0.0 degree
+
+# angle in respect to SHORT Frame side
+# 90-26.57=63.43
+/VDC/DriftCell/SetWireAngleFront     63.43 degree
+/VDC/DriftCell/SetWireAngleBack     -63.43 degree
+#/VDC/DriftCell/SetWireAngleFront     45.0 degree
+#/VDC/DriftCell/SetWireAngleBack     -45.0 degree
+
+/VDC/DriftCell/SetMaterial           Ar-C2H6_40-60
+#/VDC/DriftCell/SetMaterial           NemaG10
+/VDC/DriftCell/SetFullHeight         70.0 cm
+/VDC/DriftCell/SetDCNumberPerPlane    341
+
+#==============================================
+# Thickness = 64/64 inch
+/VDC/DriftCell/SetFullThickness      25.4 mm 
+
+# Thickness = 68/64 inch
+#/VDC/DriftCell/SetFullThickness      26.9875 mm
+#==============================================
+
+# FullWidthOnFrame = 25/64 inch
+#/VDC/DriftCell/SetFullWidthOnFrame   9.9219 mm
+
+# FullWidthOnFrame = 26/64 inch
+#/VDC/DriftCell/SetFullWidthOnFrame   10.3188 mm
+
+# FullWidthOnFrame = 27/64 inch
+#/VDC/DriftCell/SetFullWidthOnFrame   10.7156 mm
+
+
+# FullWidthOnFrame =  28/64 inch
+/VDC/DriftCell/SetFullWidthOnFrame   11.1125 mm
+
+# FullWidthOnFrame = 29/64 inch
+#/VDC/DriftCell/SetFullWidthOnFrame   11.5094 mm
+
+# FullWidthOnFrame = 30/64 inch
+#/VDC/DriftCell/SetFullWidthOnFrame   11.9063 mm
+
+# FullWidthOnFrame = 31/64 inch
+#/VDC/DriftCell/SetFullWidthOnFrame   12.3031 mm
+
+# FullWidthOnFrame = 32/64 = 1/2 inch
+#/VDC/DriftCell/SetFullWidthOnFrame   12.7 mm
+
+
+
+   
+

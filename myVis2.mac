@@ -1,0 +1,165 @@
+#
+# Macro file for the initialization phase of "exampleN02.cc"
+# when runing in interactive mode
+#
+# Sets some default verbose
+#
+
+#/control/verbose 1
+#/control/saveHistory
+#
+#/run/verbose 1
+#/event/verbose 1
+#/tracking/verbose 1
+#/hits/verbose 1
+
+#  HOPELESS: /particle/process/inactivate does NOT WORK !!!
+#
+# deactivate physical processes that we do not need 
+# check http://www-heaf.hepl.hiroshima-u.ac.jp/glast/glast-hp/Geant4/G4command.txt
+#
+#Candidates for processes : all NotDefined Transportation Electromagnetic Optical Hadronic Photolepton_hadron 
+#                           Decay General Parameterisation UserDefined
+#
+#/particle/process/inactivate opticalphoton # ignored !!
+#/particle/process/inactivate Cerenkov
+#/particle/process/dump
+
+#
+# Store particle trajactories for visualisation
+#
+/tracking/storeTrajectory 1
+#/tracking/storeTrajectory 0
+
+# Create a scene handler for a specific graphics system
+# (Edit the next line(s) to choose another graphic system)
+#
+# Invoke the OpenGL Basic 3D-Viewer: interactive display
+#/vis/open OGLIX
+
+# Invoke the Coin3D (public OpenInventor) driver: interactive
+# Note: close Coin3D with  File->Escape and again File->Escape,
+# otherwise the root file is corrupted 
+/vis/open OIX
+
+
+# Invoke the WIRED driver: offline display
+#/vis/open HepRepFile
+
+# Invoke the VRML driver: offline display (freewrl)
+#/vis/open VRML2FILE
+
+# Invoke the DAWN  driver: offline display
+#/vis/open DAWNFILE
+
+#
+# Create a new empty scene
+#
+/vis/scene/create
+
+
+#
+# Declare that the world volume should be added to the scene
+#
+/vis/scene/add/volume
+
+#
+# Add axis (has to be after /vis/scene/create )
+#
+#/vis/scene/add/axes
+
+
+#
+# Attach scene to scenehandler
+#
+/vis/sceneHandler/attach
+
+#
+# Draw a picture that has just the detector (no trajectories or hits).
+#
+#/vis/viewer/flush
+
+#
+# Declare that trajectories and hits should be added to the scene
+#
+/vis/scene/add/trajectories
+
+# Adding hits: Drift Cell response 
+#/vis/scene/add/hits
+
+# Set camera
+/vis/viewer/reset
+#/vis/viewer/set/viewpointThetaPhi 90 180 deg	
+
+#From beam left (positive x) in the z-x plane at 45 degree angle to x-y plane normal
+#/vis/viewer/set/viewpointThetaPhi 135 0 deg
+
+#From beam left (positive x) normal to x-y plane
+/vis/viewer/set/viewpointThetaPhi 90 0 deg
+
+#along z, in beam direction (looking downstream)
+#/vis/viewer/set/viewpointThetaPhi 180 90 deg
+
+#along -z, opposite to  beam direction (looking upstream)
+#/vis/viewer/set/viewpointThetaPhi 0 90 deg
+
+#From the top
+#/vis/viewer/set/viewpointThetaPhi 90 90 deg
+
+#/vis/viewer/set/viewpointThetaPhi 22 90 deg
+#/vis/viewer/set/viewpointThetaPhi 90 2 deg
+#/vis/viewer/set/viewpointThetaPhi 60 20 deg
+/vis/viewer/zoom 2.0
+/vis/viewer/set/style surface
+#/vis/viewer/set/style surface2
+#/vis/viewer/flush
+
+# meaning unclear
+/vis/scene/notifyHandlers
+
+#
+# for drawing the tracks
+# (if too many tracks cause core dump => storeTrajectory 0)
+#
+# If multiple events in one run, accumulate all events into a single
+# graphical image.  If this line is commented out, each event will instead
+# appear in a separate image.
+/vis/scene/endOfEventAction accumulate
+
+# refresh image
+/vis/scene/endOfRunAction refresh
+
+# load/execute this macro:
+/control/execute myQweakConfiguration.mac
+
+#==========================
+# Visualization: Hall related
+#==========================
+/HallC/Visibility/ShowHallFloor
+#/HallC/Visibility/HideHallFloor
+
+#====================================
+# Visualization: Detector Hut related
+#====================================
+
+/DetectorHut/Visibility/ShowCollimatorWall
+#/DetectorHut/Visibility/HideShieldingWall
+
+/DetectorHut/Visibility/ShowFrontWall
+#/DetectorHut/Visibility/HideFrontWall
+
+#/DetectorHut/Visibility/ShowBackWall
+/DetectorHut/Visibility/HideBackWall
+
+#/DetectorHut/Visibility/ShowLeftWall
+/DetectorHut/Visibility/HideLeftWall
+
+#/DetectorHut/Visibility/ShowRightWall
+/DetectorHut/Visibility/HideRightWall
+
+#/DetectorHut/Visibility/ShowTopWall
+/DetectorHut/Visibility/HideTopWall
+
+#/Qweak/PrimaryGenerator/StartingEvent 000000 
+/run/beamOn 40
+#/Qweak/PrimaryGenerator/ResetNtupleEventCounter

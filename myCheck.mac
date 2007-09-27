@@ -1,0 +1,35 @@
+#
+# Macro file for the initialization phase of "exampleN02.cc"
+# when runing in interactive mode
+#
+# Sets some default verbose
+#
+
+#/control/verbose 1
+#/control/saveHistory
+#
+#/run/verbose 1
+#/event/verbose 1
+
+# running geantinos thru geometry, check for correct tracking
+#/tracking/verbose 4
+#/hits/verbose 1
+
+/control/execute myQweakConfiguration.mac
+
+#overlap checkout
+/geometry/test/recursive_test
+
+
+
+
+
+
+
+
+
+
+
+
+   
+
