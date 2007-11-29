@@ -54,10 +54,10 @@ G4cout << "###### Leaving QweakSimSteppingAction::QweakSimSteppingAction() " << 
 void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
 { 
 
-  //G4cout << "###### Calling QweakSimSteppingAction::UserSteppingAction() " << G4endl;
+//G4cout << "###### Calling QweakSimSteppingAction::UserSteppingAction() " << G4endl;
 
   fSecondary = fpSteppingManager->GetfSecondary();
-  //G4cout << " got fSecondary" << G4endl;
+//G4cout << " got fSecondary" << G4endl;
 
   G4Track*              theTrack     = theStep->GetTrack();
   G4StepPoint*          thePrePoint  = theStep->GetPreStepPoint();
@@ -74,12 +74,13 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
   G4VSteppingVerbose   *theVerbStep  = G4VSteppingVerbose::GetInstance();
   G4double              charge       = particleType->GetPDGCharge();
 
-
+//G4cout << "QweakSimSteppingAction:  get numbers of secondaries " << G4endl;
   G4int nSecAtRest       = GetNumOfAtRestSecondaries();
   G4int nSecAlong        = GetNumOfAlongStepSecondaries();
   G4int nSecPost         = GetNumOfPostStepSecondaries();
   G4int nSecTotal        = GetTotalNumOfSecondaries();
 
+//G4cout << "QweakSimSteppingAction:  get track information " << G4endl;
   QweakSimTrackInformation* info = (QweakSimTrackInformation*)(theTrack->GetUserInformation());
 
   for(G4int i = GetTrackVectorSize()-nSecTotal; i < GetTrackVectorSize(); i++){
@@ -87,6 +88,7 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
     if((*fSecondary)[i]->GetUserInformation()==0){
       QweakSimTrackInformation* infoNew = new QweakSimTrackInformation(info);
 
+//    G4cout << "QweakSimSteppingAction: store track info into secondaries " << G4endl;
       infoNew->StoreParticleDefinition(GetSecondaryParticleDefinition(i));
       infoNew->StoreParentEnergy(theTrack->GetTotalEnergy());
       infoNew->StorePrimaryKineticEnergy(GetSecondaryParticleKineticEnergy(i));
@@ -96,6 +98,7 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
       (*fSecondary)[i]->SetUserInformation(infoNew);
     } 
 
+//  G4cout << "QweakSimSteppingAction:  check for Cerenkov hit, store info" << G4endl;
     if(particleType==G4Electron::ElectronDefinition() && theTrack->GetParentID() == 0 &&
 //        !strcmp(thePrePV->GetName(),"CerenkovDetector_Physical")){
        (!strcmp(thePrePV->GetName(),"QuartzBar_PhysicalRight") || !strcmp(thePrePV->GetName(),"QuartzBar_PhysicalLeft") )){
@@ -108,9 +111,7 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
   }
 
   
-
-
-  G4cout << "Particle Name = " << particleType->GetParticleName() << G4endl;
+//G4cout << "Particle Name = " << particleType->GetParticleName() << G4endl;
 
 //   if(!strcmp(thePrePV->GetName(),"CerenkovDetector_Physical")){
 //!strcmp(thePrePV->GetName(),"LightGuide_PhysicalRight") || !strcmp(thePrePV->GetName(),"LightGuide_PhysicalLeft")
@@ -158,37 +159,43 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
   }
 
   QweakSimTrackInformation *TrackInfo = (QweakSimTrackInformation*)theTrack->GetUserInformation();
-  G4cout << "Particle History For This Particle" << G4endl;
-  G4cout << "Event ID = " << myUserInfo->GetPrimaryEventNumber() << G4endl;
-  //   G4cout << "Hit ID = " << myUserInfo->GetCurrentPMTHit()->GetHitID() << G4endl;
-  for(int i = 0; i < TrackInfo->GetParticleHistoryLength(); i++){	  
-    G4cout << "Particle "<< i <<" = " << TrackInfo->GetParticleDefinitionAtIndex(i)->GetParticleName() << std::setw(9)
-           << " at position " << G4BestUnit(TrackInfo->GetOriginVertex(i),"Length") << std::setw(9);
-    if(i == TrackInfo->GetParticleHistoryLength()-1)
-      G4cout << " Parent Eng = " << theTrack->GetTotalEnergy()/MeV;
-    else
-      G4cout << " Parent Eng = " << TrackInfo->GetParentEnergyAtIndex(i+1)/MeV;
-    G4cout << std::setw(18);
-    G4cout << " Creator Process = " << TrackInfo->GetCreatorProcessAtIndex(i);
-    G4cout << std::setw(18);
-    G4cout << " Kinetic Energy = " <<TrackInfo->GetPrimaryKineticEnergy();
-    G4cout << " Cerenkov Hit Energy = " << TrackInfo->GetCerenkovHitEnergyAtIndex(i) << G4endl;
-  }
-  if(TrackInfo->GetParticleHistoryLength() > 1 &&
-     TrackInfo->GetParticleDefinitionAtIndex(TrackInfo->GetParticleHistoryLength()-1) == G4Gamma::GammaDefinition() &&
-     TrackInfo->GetParticleDefinitionAtIndex(TrackInfo->GetParticleHistoryLength()-2) != G4Electron::ElectronDefinition() &&
-     TrackInfo->GetParticleDefinitionAtIndex(TrackInfo->GetParticleHistoryLength()-2) != G4Positron::PositronDefinition())
-    {
-      G4cout << "Gamma Created by " << TrackInfo->GetParticleDefinitionAtIndex(TrackInfo->GetParticleHistoryLength()-2)->GetParticleName() << G4endl;
-    }
 
+//G4cout << "Particle History For This Particle" << G4endl;
+//G4cout << "Event ID = " << myUserInfo->GetPrimaryEventNumber() << G4endl;
+  //   G4cout << "Hit ID = " << myUserInfo->GetCurrentPMTHit()->GetHitID() << G4endl;
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------
+//for(int i = 0; i < TrackInfo->GetParticleHistoryLength(); i++){
+//
+//    G4cout << "Particle "<< i <<" = " << TrackInfo->GetParticleDefinitionAtIndex(i)->GetParticleName() << std::setw(9)
+//    << " at position " << G4BestUnit(TrackInfo->GetOriginVertex(i),"Length") << std::setw(9);
+//
+//    if(i == TrackInfo->GetParticleHistoryLength()-1)
+//        G4cout << " Parent Energy = " << theTrack->GetTotalEnergy()/MeV;
+//    else
+//        G4cout << " Parent Energy = " << TrackInfo->GetParentEnergyAtIndex(i+1)/MeV;
+//
+//    G4cout << std::setw(18);
+//    G4cout << " Creator Process = " << TrackInfo->GetCreatorProcessAtIndex(i);
+//    G4cout << std::setw(18);
+//    G4cout << " Kinetic Energy = " <<TrackInfo->GetPrimaryKineticEnergy();
+//    G4cout << " Cerenkov Hit Energy = " << TrackInfo->GetCerenkovHitEnergyAtIndex(i) << G4endl;
+//}
+//
+//if(TrackInfo->GetParticleHistoryLength() > 1 &&
+//   TrackInfo->GetParticleDefinitionAtIndex(TrackInfo->GetParticleHistoryLength()-1) == G4Gamma::GammaDefinition() &&
+//   TrackInfo->GetParticleDefinitionAtIndex(TrackInfo->GetParticleHistoryLength()-2) != G4Electron::ElectronDefinition() &&
+//   TrackInfo->GetParticleDefinitionAtIndex(TrackInfo->GetParticleHistoryLength()-2) != G4Positron::PositronDefinition())
+//{
+//    G4cout << "Gamma Created by " << TrackInfo->GetParticleDefinitionAtIndex(TrackInfo->GetParticleHistoryLength()-2)->GetParticleName() << G4endl;
+//}
+//--------------------------------------------------------------------------------------------------------------------------------------------------
+ 
   if(particleType==G4OpticalPhoton::OpticalPhotonDefinition()){
   
-    if(!strcmp(myUserInfo->GetStoredStepVolumeName(),"PMTEntranceWindow_Physical")){
-      if(!strcmp(thePrePV->GetName(),"Cathode_Physical")){
-	
-
-	
+      if(!strcmp(myUserInfo->GetStoredStepVolumeName(),"PMTEntranceWindow_Physical")){
+	  if(!strcmp(thePrePV->GetName(),"Cathode_Physical")){
+	     	
 // 	G4int index = 0;
 // 	if(TrackInfo->GetParticleHistoryLength() < 3)
 // // 	  myUserInfo->SetPhotonFromPrimary(TrackInfo->GetParticleDefinitionAtIndex(index));
@@ -213,13 +220,13 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
 //   crashes on some out-of-memory error.
 //   To prevent this from happening, I've added below a quick fix where
 //   particles get killed when their step number gets absurdely high
-
-  if ( theStep->GetTrack()->GetCurrentStepNumber() > 10000 )
-      theStep->GetTrack()->SetTrackStatus(fStopAndKill);
+//
+//  if ( theStep->GetTrack()->GetCurrentStepNumber() > 10000 )
+//      theStep->GetTrack()->SetTrackStatus(fStopAndKill);
 //
 //======================================================================
 
-  // G4cout << "###### Leaving QweakSimSteppingAction::UserSteppingAction() " << G4endl;
+// G4cout << "###### Leaving QweakSimSteppingAction::UserSteppingAction() " << G4endl;
 
   return;
 }       // end of QweakSimSteppingAction::UserSteppingAction
