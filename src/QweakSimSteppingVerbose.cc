@@ -45,21 +45,22 @@ QweakSimSteppingVerbose::QweakSimSteppingVerbose()
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 QweakSimSteppingVerbose::~QweakSimSteppingVerbose()
-{}
+{;}
  
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void QweakSimSteppingVerbose::StepInfo()
 {
-//   G4cout << "In QweakSimSteppingVerbose::StepInfo()" << G4endl;
+   G4cout << "In QweakSimSteppingVerbose::StepInfo()" << G4endl;
 
   CopyState();// ??? , from G4VSteppingVerbose
   
   G4int prec = G4cout.precision(3);
-//   verboseLevel = 3;
+
+  verboseLevel = 0;
 
   if( verboseLevel >= 1 ){
-    if( verboseLevel >= 4 ) VerboseTrack();
+    if( verboseLevel >= 4 ) VerboseTrack(); // from G4VSteppingVerbose
     if( verboseLevel >= 3 ){
 //       G4cout << G4endl;    
 //       G4cout << std::setw( 5) << "#Step#"     << " "
