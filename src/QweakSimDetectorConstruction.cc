@@ -160,7 +160,7 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   pShieldingWall       = new QweakSimShieldingWall();
 
   
-  pMiniMagnet          = new QweakSimMiniMagnet(); // MiniTorus Geometry (decoupled from field)
+  // pMiniMagnet          = new QweakSimMiniMagnet(); // MiniTorus Geometry (decoupled from field)
   pMainMagnet          = new QweakSimMainMagnet(); // QTOR Geometry (decoupled from field) 
 
   pGEM                 = new QweakSimGEM(); 
@@ -446,7 +446,7 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
 
   G4cout << G4endl << "###### Leaving QweakSimDetectorConstruction::Construct() " << G4endl << G4endl;
 
-
+  // switch field on/off here:
   SetGlobalMagneticField();
 
   // Construct() *MUST* return the pointer of the physical World !!!  
@@ -538,9 +538,7 @@ void QweakSimDetectorConstruction::SetGlobalMagneticField()
 
   // Provides a driver that talks to the Integrator Stepper, and insures that 
   //   the error is within acceptable bounds.
-  G4MagInt_Driver* fGlobalIntgrDriver = new G4MagInt_Driver(1.0e-3*mm, 
-							    fGlobalStepper,
-							    fGlobalStepper->GetNumberOfVariables());
+  G4MagInt_Driver* fGlobalIntgrDriver = new G4MagInt_Driver(1.0e-3*mm, fGlobalStepper, fGlobalStepper->GetNumberOfVariables());
   
   fGlobalChordFinder = new G4ChordFinder(fGlobalIntgrDriver);
   
