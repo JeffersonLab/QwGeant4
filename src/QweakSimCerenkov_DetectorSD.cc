@@ -81,14 +81,20 @@ G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistor
 
 //G4cout << G4endl << "###### Calling QweakSimCerenkov_DetectorSD::ProcessHits() " << G4endl << G4endl; 
 
-  G4double charge = aStep->GetTrack()->GetDefinition()->GetPDGCharge();
 
-//   if(charge==0. && aStep->GetTrack()->GetTotalEnergy()/MeV < 0.1) {
-//
-//     G4cout << "Return on charge = 0" << G4endl;
-//
-//     return false;
-//   }
+//----------------------------------------------------------------------------------------------
+// only count charges hits, otherwise every cerenkov reflection will be counted as a hit ...
+// Todo: allow neutron hits
+
+    G4double charge = aStep->GetTrack()->GetDefinition()->GetPDGCharge();
+    
+    if(charge==0. && aStep->GetTrack()->GetTotalEnergy()/MeV < 0.1) {
+   
+	G4cout << "Return on charge = 0" << G4endl;
+	
+	return false;
+    }
+//----------------------------------------------------------------------------------------------
 
   G4StepPoint*        preStepPoint  = aStep->GetPreStepPoint();
   G4StepPoint*        postStepPoint = aStep->GetPostStepPoint();
@@ -148,7 +154,7 @@ G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistor
   G4double trackID = aStep->GetTrack()->GetTrackID();
 
   
-  G4int    MotherCopyNo   = theTouchable->GetVolume(1)->GetCopyNo();   // one Mother Volume
+G4int    MotherCopyNo   = theTouchable->GetVolume(1)->GetCopyNo();   // one Mother Volume
 //   G4int DetectorCopyNo    = theTouchable->GetVolume()->GetCopyNo();    // but several detectors per MV
 //   G4int DetectorReplicaNo = theTouchable->GetReplicaNumber();          // but several detectors per MV
 //   G4int MotherReplicaNo   = theTouchable->GetReplicaNumber(1);        // Several MotherVolumes
@@ -156,7 +162,7 @@ G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistor
 //   G4int MotherReplicaNo2  = theTouchable->GetReplicaNumber(2);        // Several MotherVolumes
 //
 
-    G4cout << "%%%%%%%%%%%%%%%%%%%  Cerenkov MV    CopyNumber  :" << MotherCopyNo      << G4endl;
+//     G4cout << "%%%%%%%%%%%%%%%%%%%  Cerenkov MV    CopyNumber  :" << MotherCopyNo      << G4endl;
 //     G4cout << "%%%%%%%%%%%%%%%%%%%  Cerenkov       CopyNumber  :" << DetectorCopyNo    << G4endl;
 //     G4cout << "%%%%%%%%%%%%%%%%%%%  Cerenkov    ReplicaNumber  :" << DetectorReplicaNo << G4endl;
 //     G4cout << "%%%%%%%%%%%%%%%%%%%  Cerenkov MV ReplicaNumber  :" << MotherReplicaNo << G4endl;
