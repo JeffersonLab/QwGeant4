@@ -235,6 +235,8 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
   n_hitCerenkov                  = CerenkovDetector_HC            -> entries();
   n_hitCerenkovPMT               = CerenkovDetectorPMT_HC         -> entries();
 
+  cout << "==============================================================="   << endl;
+  cout << "Current event                      = " << event_id                 << endl;
   cout << "Number of hit in the GEMs          = " << n_GEMhitWirePlane        << endl;
   cout << "Number of hit in the HDCs          = " << n_HDChitWirePlane        << endl;
   cout << "Number of hit in the VDCs          = " << n_VDChitWirePlane        << endl;
@@ -242,7 +244,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
   cout << "Number of hit in the VDC DC Back   = " << n_VDChitDCBack           << endl;
   cout << "Number of hit in the TS            = " << n_hitTriggerScintillator << endl;
   cout << "Number of hit in the Cerenkov      = " << n_hitCerenkov            << endl;
-
+  cout << "==============================================================="   << endl;
 
 
   // Initialize/Clear Event variables, initialize Cerenkov Detector with NoHit Flag 
