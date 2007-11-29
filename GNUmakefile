@@ -8,8 +8,6 @@ name := QweakSimG4
 G4TARGET := $(name)
 G4EXLIB := true
 
-G4DEBUG = 1
-
 ifndef G4INSTALL
   G4INSTALL = ../../..
 endif
@@ -105,6 +103,11 @@ LDFLAGS   += `root-config --nonew --libs`
 #CPPFLAGS += -I$(G4LISTS_BASE)/hadronic/QGSP_EMV/include
 
 #CPPFLAGS += -I$(G4LISTS_BASE)/hadronic/Packaging/include
+
+
+# Debugging
+G4DEBUG   = 1
+CPPFLAGS += -ggdb
 
 #-------------------------------------------------------------------------------------
 # Before we compile, use rootcint to create the dictionary files for our ROOT classes.
