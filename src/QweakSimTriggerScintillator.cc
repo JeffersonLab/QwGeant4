@@ -86,9 +86,11 @@ QweakSimTriggerScintillator::QweakSimTriggerScintillator()
   // define center position of Container in MotherVolume
   Position_TriggerScintillatorContainer_X =   0.0*cm;
   Position_TriggerScintillatorContainer_Y = 319.0*cm; // given by SolidWorks (or later by Juliette)
-  //Position_TriggerScintillatorContainer_Z = 555.0*cm; // given by SolidWorks (or later by Juliette)
+  Position_TriggerScintillatorContainer_Z = 555.0*cm; // given by SolidWorks (or later by Juliette)
 
-  Position_TriggerScintillatorContainer_Z = -620.0*cm; // given by SolidWorks (or later by Juliette)
+  // For test purpose only, used only when I need a trigger (scintillator)
+  // right after the target
+  //Position_TriggerScintillatorContainer_Z = -620.0*cm; 
   
   Position_TriggerScintillatorContainer  = G4ThreeVector(Position_TriggerScintillatorContainer_X,
 							 Position_TriggerScintillatorContainer_Y,
