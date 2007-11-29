@@ -63,7 +63,7 @@ QweakSimPhysicsList::QweakSimPhysicsList() : G4VUserPhysicsList()
 
   pMessenger = new QweakSimPhysicsListMessenger(this);
 
-  SetVerboseLevel(2);
+  SetVerboseLevel(0); // just be silent
 
 //   hadPhyics = new HadronPhysicsLHEP_PRECO_HP("hadron");
 //   RegisterPhysics(hadPhyics);
@@ -243,8 +243,8 @@ void QweakSimPhysicsList::ConstructEMProcess()
     paiVDC->SetHighEnergyLimit(100.0*TeV);
     
     // here 0 is the highest priority in region 'gas'
-    eion->AddEmModel(0,paiVDC,paiVDC,DriftCellRegion_VDC);
-
+    //// eion->AddEmModel(0,paiVDC,paiVDC,DriftCellRegion_VDC);
+    // debugging purpose
 
     G4PAIModel*     paiGEM = new G4PAIModel(G4Electron::ElectronDefinition(),"PAIModel");
     // set energy limits where 'pai' is active
@@ -252,7 +252,8 @@ void QweakSimPhysicsList::ConstructEMProcess()
     paiGEM->SetHighEnergyLimit(100.0*TeV);
     
     // here 0 is the highest priority in region 'gas'
-    eion->AddEmModel(0,paiGEM,paiGEM,DriftCellRegion_GEM);
+    ////eion->AddEmModel(0,paiGEM,paiGEM,DriftCellRegion_GEM);
+    // debugging purpose
 
     //eion->DumpInfo()
     //eion->PrintInfo()
@@ -340,7 +341,7 @@ void QweakSimPhysicsList::ConstructOpticalPhotonProcess()
 //  theAbsorptionProcess->DumpPhysicsTable();
 //  theRayleighScatteringProcess->DumpPhysicsTable();
 
-  SetVerbose(1);
+  //SetVerbose(1);
   
   theCerenkovProcess->SetMaxNumPhotonsPerStep(300);
   theCerenkovProcess->SetTrackSecondariesFirst(true);
