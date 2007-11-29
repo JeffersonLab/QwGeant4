@@ -76,10 +76,10 @@ QweakSimPrimaryGeneratorAction::QweakSimPrimaryGeneratorAction( QweakSimUserInfo
   // Juliette Mammei gave me a correct PAW Ntuple, so here is the h2root converted root file 
   //TString myfile = TString("minitorus.root");
 
-  TString myfile = TString("ep_elastic.root");
+//  TString myfile = TString("ep_elastic.root");
 //   myNtuple = new QweakSimG3NtupleReader(myfile);
 
-//   TString myfile = TString("ep_event.root");
+  TString myfile = TString("ep_event.root");
   myNtuple = new QweakSimInputRootFile_EventReader(myfile);
 
   //myNtuple->SetDebugLevel(20);
@@ -132,7 +132,7 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 //   G4cout << "myPE.KineticEnergy [MeV]   = " << myPE.KineticEnergy  << G4endl;
 //   G4cout << "myPE.TotalEnergy   [MeV]   = " << myPE.TotalEnergy    << G4endl;
 //   G4cout << "myPE.Q2            [GeV^2] = " << myPE.Q2             << G4endl;
-//   G4cout << "myPE.Weight                = " << myPE.Weight         << G4endl;
+//  G4cout << "myPE.Weight                = " << myPE.Weight         << G4endl;
 
   G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
 
