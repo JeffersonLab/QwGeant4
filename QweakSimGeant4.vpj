@@ -1,0 +1,408 @@
+<!DOCTYPE Project SYSTEM "http://www.slickedit.com/dtd/vse/10.0/vpj.dtd">
+<Project
+	Version="10.0"
+	VendorName="SlickEdit"
+	WorkingDir="."
+	VCSProject="Subversion:">
+	<Config
+		Name="Debug"
+		Type="gnuc"
+		DebugCallbackName="gdb"
+		Version="1"
+		OutputFile="%bdQweakSimGeant4"
+		CompilerConfigName="Latest Version"
+		Defines=""
+		ObjectDir="/users/grimm/Development/Project/Qweak/JLab/Simulation/Geant4">
+		<Menu>
+			<Target
+				Name="Compile"
+				MenuCaption="&amp;Compile"
+				Dialog="_gnuc_options_form Compile"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				OutputExts="*.o"
+				SaveOption="SaveCurrent"
+				RunFromDir="%rw">
+				<Exec CmdLine='g++ -c %xup -v %defd -g3 -ggdb -o "%bd%n%oe" %i "%f"'/>
+			</Target>
+			<Target
+				Name="Link"
+				MenuCaption="&amp;Link"
+				ShowOnMenu="Never"
+				Dialog="_gnuc_options_form Link"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveCurrent"
+				RunFromDir="%rw">
+				<Exec CmdLine='g++ %xup -v -g3 -ggdb -symbolic -o "%o" %objs'/>
+			</Target>
+			<Target
+				Name="Build"
+				MenuCaption="&amp;Build"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveWorkspaceFiles"
+				RunFromDir="."
+				Verbose="1">
+				<Exec CmdLine="make -f GNUmakefile"/>
+			</Target>
+			<Target
+				Name="Rebuild"
+				MenuCaption="&amp;Rebuild"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveWorkspaceFiles"
+				RunFromDir="%rw">
+				<Exec CmdLine=""/>
+			</Target>
+			<Target
+				Name="Debug"
+				MenuCaption="&amp;Debug"
+				Dialog="_gnuc_options_form Run/Debug"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveNone"
+				RunFromDir="%rw">
+				<Exec CmdLine='vsdebugio -prog "%o"'/>
+			</Target>
+			<Target
+				Name="Execute"
+				MenuCaption="E&amp;xecute"
+				Dialog="_gnuc_options_form Run/Debug"
+				BuildFirst="1"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveWorkspaceFiles"
+				RunFromDir="%rw">
+				<Exec CmdLine='"%o"'/>
+			</Target>
+			<Target
+				Name="dash"
+				MenuCaption="-"
+				Deletable="0">
+				<Exec/>
+			</Target>
+			<Target
+				Name="GNU C Options"
+				MenuCaption="GNU C &amp;Options..."
+				ShowOnMenu="HideIfNoCmdLine"
+				Deletable="0"
+				SaveOption="SaveNone">
+				<Exec
+					CmdLine="gnucoptions"
+					Type="Slick-C"/>
+			</Target>
+		</Menu>
+		<Includes>
+		</Includes>
+		<Libs PreObjects="0"/>
+	</Config>
+	<Config
+		Name="Release"
+		Type="gnuc"
+		DebugCallbackName="gdb"
+		Version="1"
+		OutputFile="%bdQweakSimGeant4"
+		CompilerConfigName="Latest Version"
+		Defines="">
+		<Menu>
+			<Target
+				Name="Compile"
+				MenuCaption="&amp;Compile"
+				Dialog="_gnuc_options_form Compile"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				OutputExts="*.o"
+				SaveOption="SaveCurrent"
+				RunFromDir="%rw">
+				<Exec CmdLine='g++ -c %xup -v %defd -g3 -ggdb -o "%bd%n%oe" %i "%f"'/>
+			</Target>
+			<Target
+				Name="Link"
+				MenuCaption="&amp;Link"
+				ShowOnMenu="Never"
+				Dialog="_gnuc_options_form Link"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveCurrent"
+				RunFromDir="%rw">
+				<Exec CmdLine='g++ %xup -v -g3 -ggdb -symbolic -o "%o" %objs'/>
+			</Target>
+			<Target
+				Name="Build"
+				MenuCaption="&amp;Build"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveWorkspaceFiles"
+				RunFromDir="."
+				Verbose="1">
+				<Exec CmdLine="make -f GNUmakefile"/>
+			</Target>
+			<Target
+				Name="Rebuild"
+				MenuCaption="&amp;Rebuild"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveWorkspaceFiles"
+				RunFromDir="%rw">
+				<Exec CmdLine=""/>
+			</Target>
+			<Target
+				Name="Debug"
+				MenuCaption="&amp;Debug"
+				Dialog="_gnuc_options_form Run/Debug"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveNone"
+				RunFromDir="%rw">
+				<Exec CmdLine='vsdebugio -prog "%o"'/>
+			</Target>
+			<Target
+				Name="Execute"
+				MenuCaption="E&amp;xecute"
+				Dialog="_gnuc_options_form Run/Debug"
+				BuildFirst="1"
+				CaptureOutputWith="ProcessBuffer"
+				Deletable="0"
+				SaveOption="SaveWorkspaceFiles"
+				RunFromDir="%rw">
+				<Exec CmdLine='"%o"'/>
+			</Target>
+			<Target
+				Name="dash"
+				MenuCaption="-"
+				Deletable="0">
+				<Exec/>
+			</Target>
+			<Target
+				Name="GNU C Options"
+				MenuCaption="GNU C &amp;Options..."
+				ShowOnMenu="HideIfNoCmdLine"
+				Deletable="0"
+				SaveOption="SaveNone">
+				<Exec
+					CmdLine="gnucoptions"
+					Type="Slick-C"/>
+			</Target>
+		</Menu>
+		<Includes>
+		</Includes>
+		<Libs PreObjects="0"/>
+	</Config>
+	<Files>
+		<Folder
+			Name="Source Files"
+			Filters="*.c;*.C;*.cc;*.cpp;*.cp;*.cxx;*.prg;*.pas;*.dpr;*.asm;*.s;*.bas;*.java;*.cs;*.sc;*.e;*.cob;*.html;*.rc;*.tcl;*.py;*.pl">
+			<F N="src/EPEvent.cc"/>
+			<F N="src/QweakSimAnalysis.cc"/>
+			<F N="src/QweakSimCerenkov_DetectorHit.cc"/>
+			<F N="src/QweakSimCerenkov_DetectorSD.cc"/>
+			<F N="src/QweakSimCerenkovDetector.cc"/>
+			<F N="src/QweakSimCerenkovDetector_PMTHit.cc"/>
+			<F N="src/QweakSimCerenkovDetector_PMTSD.cc"/>
+			<F N="src/QweakSimCerenkovDetectorMessenger.cc"/>
+			<F N="src/QweakSimCollimator.cc"/>
+			<F N="src/QweakSimCollimatorSupport.cc"/>
+			<F N="src/QweakSimDetectorConstruction.cc"/>
+			<F N="src/QweakSimDetectorMessenger.cc"/>
+			<F N="src/QweakSimEventAction.cc"/>
+			<F N="src/QweakSimG3Ntuple.cc"/>
+			<F N="src/QweakSimG3NtupleReader.cc"/>
+			<F N="QweakSimG4.cc"/>
+			<F N="src/QweakSimGEM.cc"/>
+			<F N="src/QweakSimGEM_WirePlaneHit.cc"/>
+			<F N="src/QweakSimGEM_WirePlaneSD.cc"/>
+			<F N="src/QweakSimGEMMessenger.cc"/>
+			<F N="src/QweakSimGlobalMagnetField.cc"/>
+			<F N="src/QweakSimHDC.cc"/>
+			<F N="src/QweakSimHDC_WirePlaneHit.cc"/>
+			<F N="src/QweakSimHDC_WirePlaneSD.cc"/>
+			<F N="src/QweakSimHDCMessenger.cc"/>
+			<F N="src/QweakSimInputRootFile_EventReader.cc"/>
+			<F N="src/QweakSimMagnet_CoilParameterisation.cc"/>
+			<F N="src/QweakSimMagnet_MiniTorusCoilParameterisation.cc"/>
+			<F N="src/QweakSimMagnetFieldMap.cc"/>
+			<F N="src/QweakSimMagnetFieldMapMessenger.cc"/>
+			<F N="src/QweakSimMainMagnet.cc"/>
+			<F N="src/QweakSimMaterial.cc"/>
+			<F N="src/QweakSimMiniMagnet.cc"/>
+			<F N="src/QweakSimMiniMagnetMessenger.cc"/>
+			<F N="src/QweakSimPhysicsList.cc"/>
+			<F N="src/QweakSimPhysicsListMessenger.cc"/>
+			<F N="src/QweakSimPrimaryGeneratorAction.cc"/>
+			<F N="src/QweakSimPrimaryGeneratorActionMessenger.cc"/>
+			<F N="src/QweakSimRunAction.cc"/>
+			<F N="src/QweakSimShieldingWall.cc"/>
+			<F N="src/QweakSimShieldingWallMessenger.cc"/>
+			<F N="src/QweakSimStackingAction.cc"/>
+			<F N="src/QweakSimSteppingAction.cc"/>
+			<F N="src/QweakSimSteppingVerbose.cc"/>
+			<F N="src/QweakSimTarget.cc"/>
+			<F N="src/QweakSimTargetMessenger.cc"/>
+			<F N="src/QweakSimTrackHistory.cc"/>
+			<F N="src/QweakSimTrackInformation.cc"/>
+			<F N="src/QweakSimTrackingAction.cc"/>
+			<F N="src/QweakSimTrackingActionMessenger.cc"/>
+			<F N="src/QweakSimTrajectory.cc"/>
+			<F N="src/QweakSimTriggerScintillator.cc"/>
+			<F N="src/QweakSimTriggerScintillator_DetectorHit.cc"/>
+			<F N="src/QweakSimTriggerScintillator_DetectorSD.cc"/>
+			<F N="src/QweakSimTriggerScintillatorMessenger.cc"/>
+			<F N="src/QweakSimUserCerenkov_DetectorEvent.cc"/>
+			<F N="src/QweakSimUserCerenkov_MainEvent.cc"/>
+			<F N="src/QweakSimUserCerenkov_OctantEvent.cc"/>
+			<F N="src/QweakSimUserCerenkov_PMTEvent.cc"/>
+			<F N="src/QweakSimUserGEM_MainEvent.cc"/>
+			<F N="src/QweakSimUserGEM_SingleGEMEvent.cc"/>
+			<F N="src/QweakSimUserGEM_WirePlaneEvent.cc"/>
+			<F N="src/QweakSimUserHDC_MainEvent.cc"/>
+			<F N="src/QweakSimUserHDC_SingleHDCEvent.cc"/>
+			<F N="src/QweakSimUserHDC_WirePlaneEvent.cc"/>
+			<F N="src/QweakSimUserInformation.cc"/>
+			<F N="src/QweakSimUserMainEvent.cc"/>
+			<F N="src/QweakSimUserMainEvent_Dict.cc"/>
+			<F N="src/QweakSimUserPrimaryEvent.cc"/>
+			<F N="src/QweakSimUserTriggerScintillator_DetectorEvent.cc"/>
+			<F N="src/QweakSimUserTriggerScintillator_MainEvent.cc"/>
+			<F N="src/QweakSimUserVDC_Config.cc"/>
+			<F N="src/QweakSimUserVDC_DriftCellEvent.cc"/>
+			<F N="src/QweakSimUserVDC_MainEvent.cc"/>
+			<F N="src/QweakSimUserVDC_SingleVDCEvent.cc"/>
+			<F N="src/QweakSimUserVDC_WirePlaneEvent.cc"/>
+			<F N="src/QweakSimVDC.cc"/>
+			<F N="src/QweakSimVDC_DriftCellBackSD.cc"/>
+			<F N="src/QweakSimVDC_DriftCellFrontSD.cc"/>
+			<F N="src/QweakSimVDC_DriftCellHit.cc"/>
+			<F N="src/QweakSimVDC_DriftCellParameterisation.cc"/>
+			<F N="src/QweakSimVDC_WirePlaneHit.cc"/>
+			<F N="src/QweakSimVDC_WirePlaneSD.cc"/>
+			<F N="src/QweakSimVDCMessenger.cc"/>
+			<F N="src/QweakSimVDCRotator.cc"/>
+		</Folder>
+		<Folder
+			Name="Header Files"
+			Filters="*.h;*.H;*.hh;*.hpp;*.hxx;*.inc;*.sh;*.cpy;*.if">
+			<F N="include/cpp_include.h"/>
+			<F N="include/EPEvent.hh"/>
+			<F N="include/Geant4_include.hh"/>
+			<F N="include/QweakSim_HitPlaneParameterisation.hh"/>
+			<F N="include/QweakSimAnalysis.hh"/>
+			<F N="include/QweakSimCerenkov_DetectorHit.hh"/>
+			<F N="include/QweakSimCerenkov_DetectorSD.hh"/>
+			<F N="include/QweakSimCerenkovDetector.hh"/>
+			<F N="include/QweakSimCerenkovDetector_PMTHit.hh"/>
+			<F N="include/QweakSimCerenkovDetector_PMTSD.hh"/>
+			<F N="include/QweakSimCerenkovDetectorMessenger.hh"/>
+			<F N="include/QweakSimCollimator.hh"/>
+			<F N="include/QweakSimCollimatorMessenger.hh"/>
+			<F N="include/QweakSimCollimatorSupport.hh"/>
+			<F N="include/QweakSimColorDefinitions.hh"/>
+			<F N="include/QweakSimDetectorConstruction.hh"/>
+			<F N="include/QweakSimDetectorMessenger.hh"/>
+			<F N="include/QweakSimEventAction.hh"/>
+			<F N="include/QweakSimG3Ntuple.hh"/>
+			<F N="include/QweakSimG3NtupleReader.hh"/>
+			<F N="include/QweakSimGEM.hh"/>
+			<F N="include/QweakSimGEM_WirePlaneHit.hh"/>
+			<F N="include/QweakSimGEM_WirePlaneSD.hh"/>
+			<F N="include/QweakSimGEMMessenger.hh"/>
+			<F N="include/QweakSimGlobalMagnetField.hh"/>
+			<F N="include/QweakSimHDC.hh"/>
+			<F N="include/QweakSimHDC_WirePlaneHit.hh"/>
+			<F N="include/QweakSimHDC_WirePlaneSD.hh"/>
+			<F N="include/QweakSimHDCMessenger.hh"/>
+			<F N="include/QweakSimInputRootFile_EventReader.hh"/>
+			<F N="include/QweakSimMagnet_CoilParameterisation.hh"/>
+			<F N="include/QweakSimMagnet_MiniTorusCoilParameterisation.hh"/>
+			<F N="include/QweakSimMagnetFieldMap.hh"/>
+			<F N="include/QweakSimMagnetFieldMapMessenger.hh"/>
+			<F N="include/QweakSimMainMagnet.hh"/>
+			<F N="include/QweakSimMaterial.hh"/>
+			<F N="include/QweakSimMiniMagnet.hh"/>
+			<F N="include/QweakSimMiniMagnetMessenger.hh"/>
+			<F N="include/QweakSimPhysicsList.hh"/>
+			<F N="include/QweakSimPhysicsListMessenger.hh"/>
+			<F N="include/QweakSimPrimaryGeneratorAction.hh"/>
+			<F N="include/QweakSimPrimaryGeneratorActionMessenger.hh"/>
+			<F N="include/QweakSimRunAction.hh"/>
+			<F N="include/QweakSimShieldingWall.hh"/>
+			<F N="include/QweakSimShieldingWallMessenger.hh"/>
+			<F N="include/QweakSimStackingAction.hh"/>
+			<F N="include/QweakSimSteppingAction.hh"/>
+			<F N="include/QweakSimSteppingVerbose.hh"/>
+			<F N="include/QweakSimTarget.hh"/>
+			<F N="include/QweakSimTargetMessenger.hh"/>
+			<F N="include/QweakSimTrackHistory.hh"/>
+			<F N="include/QweakSimTrackInformation.hh"/>
+			<F N="include/QweakSimTrackingAction.hh"/>
+			<F N="include/QweakSimTrackingActionMessenger.hh"/>
+			<F N="include/QweakSimTrajectory.hh"/>
+			<F N="include/QweakSimTriggerScintillator.hh"/>
+			<F N="include/QweakSimTriggerScintillator_DetectorHit.hh"/>
+			<F N="include/QweakSimTriggerScintillator_DetectorSD.hh"/>
+			<F N="include/QweakSimTriggerScintillator_PMTHit.hh"/>
+			<F N="include/QweakSimTriggerScintillator_PMTSD.hh"/>
+			<F N="include/QweakSimTriggerScintillatorMessenger.hh"/>
+			<F N="include/QweakSimUserCerenkov_DetectorEvent.hh"/>
+			<F N="include/QweakSimUserCerenkov_MainEvent.hh"/>
+			<F N="include/QweakSimUserCerenkov_OctantEvent.hh"/>
+			<F N="include/QweakSimUserCerenkov_PMTEvent.hh"/>
+			<F N="include/QweakSimUserGEM_MainEvent.hh"/>
+			<F N="include/QweakSimUserGEM_SingleGEMEvent.hh"/>
+			<F N="include/QweakSimUserGEM_WirePlaneEvent.hh"/>
+			<F N="include/QweakSimUserHDC_MainEvent.hh"/>
+			<F N="include/QweakSimUserHDC_SingleHDCEvent.hh"/>
+			<F N="include/QweakSimUserHDC_WirePlaneEvent.hh"/>
+			<F N="include/QweakSimUserInformation.hh"/>
+			<F N="include/QweakSimUserMainEvent.hh"/>
+			<F N="src/QweakSimUserMainEvent_Dict.h"/>
+			<F N="include/QweakSimUserMainEvent_LinkDef.hh"/>
+			<F N="include/QweakSimUserPrimaryEvent.hh"/>
+			<F N="include/QweakSimUserTriggerScintillator_DetectorEvent.hh"/>
+			<F N="include/QweakSimUserTriggerScintillator_MainEvent.hh"/>
+			<F N="include/QweakSimUserTriggerScintillator_PMTEvent.hh"/>
+			<F N="include/QweakSimUserVDC_Config.hh"/>
+			<F N="include/QweakSimUserVDC_DriftCellEvent.hh"/>
+			<F N="include/QweakSimUserVDC_MainEvent.hh"/>
+			<F N="include/QweakSimUserVDC_SingleVDCEvent.hh"/>
+			<F N="include/QweakSimUserVDC_WirePlaneEvent.hh"/>
+			<F N="include/QweakSimVDC.hh"/>
+			<F N="include/QweakSimVDC_DriftCellBackSD.hh"/>
+			<F N="include/QweakSimVDC_DriftCellFrontSD.hh"/>
+			<F N="include/QweakSimVDC_DriftCellHit.hh"/>
+			<F N="include/QweakSimVDC_DriftCellParameterisation.hh"/>
+			<F N="include/QweakSimVDC_WirePlaneHit.hh"/>
+			<F N="include/QweakSimVDC_WirePlaneSD.hh"/>
+			<F N="include/QweakSimVDCMessenger.hh"/>
+			<F N="include/QweakSimVDCRotator.hh"/>
+			<F N="include/Root_include.h"/>
+		</Folder>
+		<Folder
+			Name="MacFiles"
+			Filters="*.mac;">
+			<F N="gui.mac"/>
+			<F N="myQweakConfiguration.mac"/>
+			<F N="myRun.mac"/>
+			<F N="myValgrind.mac"/>
+			<F N="myVis.mac"/>
+		</Folder>
+		<Folder
+			Name="Other Files"
+			Filters="">
+			<Folder
+				Name="dox"
+				Filters="">
+				<F N="dox/FAQ.dox"/>
+				<F N="dox/mainpage.dox"/>
+				<F N="dox/QweakSimG4_Geometry.jpg"/>
+				<F N="dox/QweakSimG4_Geometry_small.jpg"/>
+				<F N="dox/Thumbs.db"/>
+			</Folder>
+			<F N="COMPILING"/>
+			<F N="Doxyfile"/>
+			<F N="GNUmakefile"/>
+		</Folder>
+	</Files>
+	<Macro>
+	</Macro>
+</Project>
