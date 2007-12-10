@@ -84,7 +84,7 @@ QweakSimDetectorConstruction::QweakSimDetectorConstruction(QweakSimUserInformati
 
   pTarget            = NULL;
   pMainMagnet        = NULL;
-  pMiniMagnet        = NULL;
+  //pMiniMagnet        = NULL;
 
   fWorldLengthInX = 0.0*cm; 
   fWorldLengthInY = 0.0*cm;
@@ -114,7 +114,7 @@ QweakSimDetectorConstruction::~QweakSimDetectorConstruction()
 {
   // I'm deleting the objects in the reverse order they were created (~FILO)
 
-  if (pGlobalMagnetField) delete pGlobalMagnetField;
+ // if (pGlobalMagnetField) delete pGlobalMagnetField;
 
   if (pVDCRotator) delete pVDCRotator;
   if (pGEM)        delete pGEM; 
@@ -136,7 +136,7 @@ QweakSimDetectorConstruction::~QweakSimDetectorConstruction()
 
   if (pTarget)              delete pTarget;
   if (pMainMagnet)          delete pMainMagnet;
-  if (pMiniMagnet)          delete pMiniMagnet;
+  //if (pMiniMagnet)          delete pMiniMagnet;
 
   if (detectorMessenger)    delete detectorMessenger;             
   if (pMaterial)            delete pMaterial;
@@ -260,10 +260,10 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   // create/place MainMagnet body into MotherVolume 
   //================================================
   //
-  if(pMiniMagnet){
-    pMiniMagnet -> ConstructComponent(experimentalHall_Physical);
-    pMiniMagnet -> SetCenterPositionInZ(-465.31*cm);
-  }
+  //if(pMiniMagnet){
+  //  pMiniMagnet -> ConstructComponent(experimentalHall_Physical);
+  //  pMiniMagnet -> SetCenterPositionInZ(-465.31*cm);
+  //}
 
   //================================================
   // create/place MainMagnet body into MotherVolume 
