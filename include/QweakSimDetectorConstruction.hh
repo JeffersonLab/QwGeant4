@@ -135,7 +135,7 @@ private:
   QweakSimShieldingWall*     pShieldingWall;
 
   QweakSimMainMagnet*        pMainMagnet; 
-  QweakSimMiniMagnet*        pMiniMagnet; 
+  //QweakSimMiniMagnet*        pMiniMagnet; 
 
   QweakSimVDC*                  pVDC; 
   QweakSimHDC*                  pHDC;
