@@ -1011,7 +1011,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 	  // get hit pointer for each hit 
 	  QweakSimHDC_WirePlaneHit* aHit = (*HDC_WirePlane_HC)[i1];
 
-	  G4cout << G4endl << "###### Printing HDC hit info within QweakSimEventAction::EndOfEventAction() " << G4endl << G4endl;
+	  // G4cout << G4endl << "###### Printing HDC hit info within QweakSimEventAction::EndOfEventAction() " << G4endl << G4endl;
 	  aHit->Print();
       
 	  // get local position of hit 
