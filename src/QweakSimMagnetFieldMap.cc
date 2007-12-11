@@ -41,12 +41,12 @@ QweakSimMagnetFieldMap::QweakSimMagnetFieldMap()
    printf("rMinFromMap = %f\n",rMaxFromMap);
    printf("phiMinFromMap = %f\n",phiMinFromMap);
    printf("phiMinFromMap = %f\n",phiMaxFromMap);
-   printf("degree = %f\n",degree);
-   printf("mm = %f\n",mm);
-   printf("cm = %f\n",cm);
-   printf("nm = %f\n",nm);
-   printf("m = %f\n",m);
-   printf("km = %f\n",km);
+// printf("degree = %f\n",degree);
+// printf("mm = %f\n",mm);
+// printf("cm = %f\n",cm);
+// printf("nm = %f\n",nm);
+// printf("m = %f\n",m);
+// printf("km = %f\n",km);
 
    // initialize variables
    //Initialize();
