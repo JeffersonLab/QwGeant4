@@ -41,18 +41,18 @@
 QweakSimCerenkov_DetectorSD::QweakSimCerenkov_DetectorSD(G4String name)
 :G4VSensitiveDetector(name)
 {
-  //G4cout << G4endl << "###### Calling QweakSimCerenkov_DetectorSD::QweakSimCerenkov_DetectorSD() " << G4endl << G4endl; 
+    G4cout << G4endl << "###### Calling QweakSimCerenkov_DetectorSD::QweakSimCerenkov_DetectorSD() " << G4endl << G4endl;
 
   collectionName.insert("CerenkovDetectorCollection"); 
   CerenkovDetector_CollectionID = -1;
 
-  //G4cout << G4endl << "###### Leaving QweakSimCerenkov_DetectorSD::QweakSimCerenkov_DetectorSD() " << G4endl << G4endl; 
+  G4cout << G4endl << "###### Leaving QweakSimCerenkov_DetectorSD::QweakSimCerenkov_DetectorSD() " << G4endl << G4endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 QweakSimCerenkov_DetectorSD::~QweakSimCerenkov_DetectorSD()
 {
-  //G4cout << G4endl << "###### Calling QweakSimCerenkov_DetectorSD::~QweakSimCerenkov_DetectorSD() " << G4endl << G4endl; 
+    G4cout << G4endl << "###### Calling/Leaving QweakSimCerenkov_DetectorSD::~QweakSimCerenkov_DetectorSD() " << G4endl << G4endl;
 
   //delete CerenkovDetector_HitsCollection;
 
@@ -61,7 +61,7 @@ QweakSimCerenkov_DetectorSD::~QweakSimCerenkov_DetectorSD()
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void QweakSimCerenkov_DetectorSD::Initialize(G4HCofThisEvent* HCE)
 {
-  //G4cout << G4endl << "###### Calling QweakSimCerenkov_DetectorSD::Initialize() " << G4endl << G4endl; 
+    G4cout << G4endl << "###### Calling QweakSimCerenkov_DetectorSD::Initialize() " << G4endl << G4endl;
 
    CerenkovDetector_HitsCollection = new QweakSimCerenkovDetectorHitsCollection(SensitiveDetectorName,collectionName[0]);
    
@@ -71,7 +71,7 @@ void QweakSimCerenkov_DetectorSD::Initialize(G4HCofThisEvent* HCE)
 
 
 
-  //G4cout << G4endl << "###### Leaving QweakSimCerenkov_DetectorSD::Initialize() " << G4endl << G4endl; 
+   G4cout << G4endl << "###### Leaving QweakSimCerenkov_DetectorSD::Initialize() " << G4endl << G4endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -86,11 +86,16 @@ G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistor
 // only count charges hits, otherwise every cerenkov reflection will be counted as a hit ...
 // Todo: allow neutron hits
 
-    G4double charge = aStep->GetTrack()->GetDefinition()->GetPDGCharge();
-    
-    if(charge==0. && aStep->GetTrack()->GetTotalEnergy()/MeV < 0.1) {
+//    G4double charge = aStep->GetTrack()->GetDefinition()->GetPDGCharge();
+//  aStep->GetTrack()->GetDynamicParticle()->GetDefinition().
+
+//  if(charge==0. && aStep->GetTrack()->GetTotalEnergy()/MeV < 0.1) {
+
+  if (aStep->GetTrack()->GetDefinition() ==  G4OpticalPhoton::OpticalPhotonDefinition()){
+
+//      if(charge==0. && aStep->GetTrack()->GetTotalEnergy()/MeV < 0.1)
    
-	G4cout << "Return on charge = 0" << G4endl;
+	G4cout << "QweakSimCerenkov_DetectorSD: Return on optical photon. No hit " << G4endl;
 	
 	return false;
     }
