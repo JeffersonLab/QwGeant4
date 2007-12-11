@@ -32,10 +32,10 @@ private:
   //QweakSimGlobalMagnetFieldMessenger*      fGlobalMagnetFieldMessenger;
 
     QweakSimMagnetFieldMap*  fMagneticField_MainMagnet;
-    QweakSimMagnetFieldMap*  fMagneticField_MiniMagnet;
+    //QweakSimMagnetFieldMap*  fMagneticField_MiniMagnet;
 
     G4double BFieldScalingFactor_MainMagnet;
-    G4double BFieldScalingFactor_MiniMagnet;
+    //G4double BFieldScalingFactor_MiniMagnet;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
