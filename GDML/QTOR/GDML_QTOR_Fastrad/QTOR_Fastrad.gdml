@@ -1,0 +1,4197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE gdml [
+	<!ENTITY materials SYSTEM "QTOR_Fastrad_materials.xml">
+]>
+
+<!--   GDML translation from the Fastrad file : "QTOR_Fastrad.ray"
+	Processed the 14/12/2007 at 15h05 by the GDML module of Fastrad 3.0
+	Result file : "QTOR_Fastrad.gdml" -->
+
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:noNamespaceSchemaLocation="../GDML2Schema/gdml.xsd">
+
+
+<define>
+	<constant name="HALFPI" value="pi/2."/>
+	<constant name="PI" value="1.*pi"/>
+	<constant name="TWOPI" value="2.*pi"/>
+	<position name="center"/>
+	<rotation name="identity"/>
+	<rotation name="aligneSurX" y="HALFPI" />
+	<rotation name="aligneSurY" x="HALFPI" />
+</define>
+
+<!-- Materials definition CallBack -->
+
+&materials;
+
+<solids>
+	<sphere name="worldSphereRef" rmin="0" rmax="6058.7713" startphi="0.0000" deltaphi="6.2832" starttheta="0.0000" deltatheta="3.1416"/>
+</solids>
+
+<structure>
+
+	<volume name="Structure_95030864">
+		<materialref ref="Vacuum"/>
+		<solidref ref="worldSphereRef"/>
+
+		<physvol>
+			<file name="Step_0_95031160.gdml"/>
+			<position name="posRef_1" x="2085.6475" y="468.4978" z="131.5715"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_1_95031384.gdml"/>
+			<position name="posRef_2" x="2085.6475" y="409.2372" z="-57.3755"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_2_95031608.gdml"/>
+			<position name="posRef_3" x="2174.1791" y="468.4978" z="45.0355"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_3_95031832.gdml"/>
+			<position name="posRef_4" x="2596.9813" y="-1595.7247" z="660.9708"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_4_95032056.gdml"/>
+			<position name="posRef_5" x="2673.9750" y="-1595.7247" z="660.9708"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_5_95032280.gdml"/>
+			<position name="posRef_6" x="2561.2625" y="-2815.9848" z="-1166.4191"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_6_95032504.gdml"/>
+			<position name="posRef_7" x="2589.8375" y="-2815.9848" z="-1166.4191"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_7_95032728.gdml"/>
+			<position name="posRef_8" x="2634.2875" y="-2815.9848" z="-1166.4191"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_8_95032952.gdml"/>
+			<position name="posRef_9" x="2561.2625" y="-2205.8548" z="-913.6950"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_9_95033176.gdml"/>
+			<position name="posRef_10" x="2589.8375" y="-2205.8548" z="-913.6950"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_10_95033400.gdml"/>
+			<position name="posRef_11" x="2634.2875" y="-2205.8548" z="-913.6950"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_11_95033624.gdml"/>
+			<position name="posRef_12" x="-2385.3875" y="1955.8000" z="-2526.3399"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_12_95033848.gdml"/>
+			<position name="posRef_13" x="-2385.3875" y="1955.8000" z="-2425.7000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_13_95034072.gdml"/>
+			<position name="posRef_14" x="-183.5250" y="2609.8613" z="-2851.6325"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_14_95034296.gdml"/>
+			<position name="posRef_15" x="-183.5250" y="1301.7387" z="-2851.6325"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_15_95034520.gdml"/>
+			<position name="posRef_16" x="2183.4375" y="3092.4500" z="-3175.0000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_16_95034744.gdml"/>
+			<position name="posRef_17" x="2183.4375" y="819.1500" z="-3175.0000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_17_95034968.gdml"/>
+			<position name="posRef_18" x="2085.6475" y="228.8753" z="434.5445"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_18_95035192.gdml"/>
+			<position name="posRef_19" x="2085.6475" y="327.8098" z="237.5785"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_19_95035416.gdml"/>
+			<position name="posRef_20" x="2174.1791" y="299.4331" z="363.1229"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_20_95035640.gdml"/>
+			<position name="posRef_21" x="2085.6475" y="434.5445" z="-228.8753"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_21_95035864.gdml"/>
+			<position name="posRef_22" x="2085.6475" y="237.5785" z="-327.8098"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_22_1698504.gdml"/>
+			<position name="posRef_23" x="2174.1791" y="363.1229" z="-299.4331"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_23_1727120.gdml"/>
+			<position name="posRef_24" x="-2385.3875" y="-3683.0000" z="-1803.4000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_24_1788992.gdml"/>
+			<position name="posRef_25" x="-2385.3875" y="-3683.0000" z="1803.4000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_25_1949904.gdml"/>
+			<position name="posRef_26" x="-2385.3875" y="-3835.4000" z="0.0000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_26_1918136.gdml"/>
+			<position name="posRef_27" x="-2385.3875" y="-3702.0500" z="0.0000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_27_2015072.gdml"/>
+			<position name="posRef_28" x="2377.1125" y="-3683.0000" z="-1803.4000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_28_1993504.gdml"/>
+			<position name="posRef_29" x="2377.1125" y="-3683.0000" z="1803.4000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_29_1857400.gdml"/>
+			<position name="posRef_30" x="2377.1125" y="-3835.4000" z="0.0000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_30_95090584.gdml"/>
+			<position name="posRef_31" x="2377.1125" y="-3702.0500" z="0.0000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_31_1971104.gdml"/>
+			<position name="posRef_32" x="-2385.3875" y="1955.8000" z="2526.3399"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_32_1971776.gdml"/>
+			<position name="posRef_33" x="-2385.3875" y="1955.8000" z="2425.7000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_33_1972600.gdml"/>
+			<position name="posRef_34" x="-183.5250" y="1301.7387" z="2851.6325"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_34_1972968.gdml"/>
+			<position name="posRef_35" x="-183.5250" y="2609.8613" z="2851.6325"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_35_1973344.gdml"/>
+			<position name="posRef_36" x="2183.4375" y="819.1500" z="3175.0000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_36_95029968.gdml"/>
+			<position name="posRef_37" x="2183.4375" y="3092.4500" z="3175.0000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_37_95030344.gdml"/>
+			<position name="posRef_38" x="2596.9813" y="-2205.8548" z="913.6950"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_38_95030712.gdml"/>
+			<position name="posRef_39" x="2673.9750" y="-2205.8548" z="913.6950"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_39_1789496.gdml"/>
+			<position name="posRef_40" x="2085.6475" y="-228.8753" z="-434.5445"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_40_95110568.gdml"/>
+			<position name="posRef_41" x="2085.6475" y="-327.8098" z="-237.5785"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_41_1692368.gdml"/>
+			<position name="posRef_42" x="2174.1791" y="-299.4331" z="-363.1229"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_42_1621320.gdml"/>
+			<position name="posRef_43" x="2085.6475" y="-434.5445" z="228.8753"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_43_1857080.gdml"/>
+			<position name="posRef_44" x="2085.6475" y="-237.5785" z="327.8098"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_44_1797808.gdml"/>
+			<position name="posRef_45" x="2174.1791" y="-363.1229" z="299.4331"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_45_2014304.gdml"/>
+			<position name="posRef_46" x="-2385.3875" y="608.7486" z="-1469.6492"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_46_1792200.gdml"/>
+			<position name="posRef_47" x="-2385.3875" y="994.7749" z="-994.7749"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_47_1653504.gdml"/>
+			<position name="posRef_48" x="-2385.3875" y="-1469.6492" z="-608.7486"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_48_1937416.gdml"/>
+			<position name="posRef_49" x="-2385.3875" y="-2120.9000" z="-1075.9440"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_49_1728600.gdml"/>
+			<position name="posRef_50" x="-2385.3875" y="-2298.7000" z="-1075.9440"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_50_1701216.gdml"/>
+			<position name="posRef_51" x="-2385.3875" y="-1955.8000" z="-2400.3000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_51_1507328.gdml"/>
+			<position name="posRef_52" x="-2218.7000" y="663.1198" z="-1465.8224"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_52_1917440.gdml"/>
+			<position name="posRef_53" x="-2385.3875" y="-608.7486" z="-1469.6492"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_53_95109080.gdml"/>
+			<position name="posRef_54" x="-2385.3875" y="1479.7410" z="-1479.7410"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_54_2014000.gdml"/>
+			<position name="posRef_55" x="-2385.3875" y="-2209.8000" z="-17.4625"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_55_1517688.gdml"/>
+			<position name="posRef_56" x="-2385.3875" y="1955.8000" z="-2400.3000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_56_1795320.gdml"/>
+			<position name="posRef_57" x="-2385.3875" y="-1479.7410" z="-1479.7410"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_57_1949352.gdml"/>
+			<position name="posRef_58" x="-2218.7000" y="-663.1198" z="-1465.8224"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_58_1565560.gdml"/>
+			<position name="posRef_59" x="-2385.3875" y="-561.9750" z="-2120.9000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_59_1851848.gdml"/>
+			<position name="posRef_60" x="-2385.3875" y="-3530.6000" z="-2209.8000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_60_1944584.gdml"/>
+			<position name="posRef_61" x="-2385.3875" y="2298.7000" z="-1075.9440"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_61_1946152.gdml"/>
+			<position name="posRef_62" x="-2385.3875" y="1469.6492" z="-608.7486"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_62_1856584.gdml"/>
+			<position name="posRef_63" x="-2385.3875" y="-1370.0005" z="-17.4625"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_63_1857296.gdml"/>
+			<position name="posRef_64" x="-2385.3875" y="-1370.0005" z="-312.7375"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_64_1971448.gdml"/>
+			<position name="posRef_65" x="-2218.7000" y="-1465.8224" z="-663.1198"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_65_1971896.gdml"/>
+			<position name="posRef_66" x="-2218.7000" y="1465.8224" z="-663.1198"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_66_1972344.gdml"/>
+			<position name="posRef_67" x="-2385.3875" y="-561.9750" z="-2298.7000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_67_1791832.gdml"/>
+			<position name="posRef_68" x="-2385.3875" y="1370.0005" z="-17.4625"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_68_1702664.gdml"/>
+			<position name="posRef_69" x="-2385.3875" y="1370.0005" z="-312.7375"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_69_1938104.gdml"/>
+			<position name="posRef_70" x="-2385.3875" y="-994.7749" z="-994.7749"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_70_1706488.gdml"/>
+			<position name="posRef_71" x="-2385.3875" y="2120.9000" z="-1075.9440"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_71_1953608.gdml"/>
+			<position name="posRef_72" x="-2385.3875" y="0.0000" z="-1370.0005"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_72_1943376.gdml"/>
+			<position name="posRef_73" x="-2385.3875" y="2209.8000" z="-17.4625"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_73_1619992.gdml"/>
+			<position name="posRef_74" x="-2385.3875" y="-994.7749" z="994.7749"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_74_1942816.gdml"/>
+			<position name="posRef_75" x="-2385.3875" y="2209.8000" z="17.4625"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_75_2026480.gdml"/>
+			<position name="posRef_76" x="-2385.3875" y="-2298.7000" z="1075.9440"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_76_2026704.gdml"/>
+			<position name="posRef_77" x="-2385.3875" y="-3530.6000" z="2209.8000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_77_1505656.gdml"/>
+			<position name="posRef_78" x="-2218.7000" y="-663.1198" z="1465.8224"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_78_1941640.gdml"/>
+			<position name="posRef_79" x="-2385.3875" y="-2209.8000" z="17.4625"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_79_1920192.gdml"/>
+			<position name="posRef_80" x="-2385.3875" y="1370.0005" z="17.4625"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_80_1920416.gdml"/>
+			<position name="posRef_81" x="-2385.3875" y="1370.0005" z="312.7375"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_81_1777480.gdml"/>
+			<position name="posRef_82" x="-2385.3875" y="-1469.6492" z="608.7486"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_82_1937720.gdml"/>
+			<position name="posRef_83" x="-2385.3875" y="-561.9750" z="2298.7000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_83_1854496.gdml"/>
+			<position name="posRef_84" x="-2385.3875" y="2298.7000" z="1075.9440"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_84_1854720.gdml"/>
+			<position name="posRef_85" x="-2385.3875" y="0.0000" z="1370.0005"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_85_95092456.gdml"/>
+			<position name="posRef_86" x="-2385.3875" y="-1479.7410" z="1479.7410"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_86_1916976.gdml"/>
+			<position name="posRef_87" x="-2385.3875" y="1955.8000" z="2400.3000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_87_1917200.gdml"/>
+			<position name="posRef_88" x="-2218.7000" y="1465.8224" z="663.1198"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_88_2012824.gdml"/>
+			<position name="posRef_89" x="-2385.3875" y="-2120.9000" z="1075.9440"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_89_1646000.gdml"/>
+			<position name="posRef_90" x="-2385.3875" y="2120.9000" z="1075.9440"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_90_1726208.gdml"/>
+			<position name="posRef_91" x="-2218.7000" y="-1465.8224" z="663.1198"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_91_1726392.gdml"/>
+			<position name="posRef_92" x="-2385.3875" y="-1955.8000" z="2400.3000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_92_1640456.gdml"/>
+			<position name="posRef_93" x="-2218.7000" y="663.1198" z="1465.8224"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_93_1640680.gdml"/>
+			<position name="posRef_94" x="-2385.3875" y="-561.9750" z="2120.9000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_94_1513888.gdml"/>
+			<position name="posRef_95" x="-2385.3875" y="1469.6492" z="608.7486"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_95_1514112.gdml"/>
+			<position name="posRef_96" x="-2385.3875" y="608.7486" z="1469.6492"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_96_1948168.gdml"/>
+			<position name="posRef_97" x="-2385.3875" y="-1370.0005" z="17.4625"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_97_1948392.gdml"/>
+			<position name="posRef_98" x="-2385.3875" y="-1370.0005" z="312.7375"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_98_1920536.gdml"/>
+			<position name="posRef_99" x="-2385.3875" y="-608.7486" z="1469.6492"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_99_1920760.gdml"/>
+			<position name="posRef_100" x="-2385.3875" y="994.7749" z="994.7749"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_100_1920896.gdml"/>
+			<position name="posRef_101" x="-2385.3875" y="1479.7410" z="1479.7410"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_101_1992624.gdml"/>
+			<position name="posRef_102" x="-2385.3875" y="-1955.8000" z="2526.3399"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_102_1992856.gdml"/>
+			<position name="posRef_103" x="-2385.3875" y="-1955.8000" z="2425.7000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_103_1531952.gdml"/>
+			<position name="posRef_104" x="-183.5250" y="-2609.8613" z="2851.6325"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_104_1532184.gdml"/>
+			<position name="posRef_105" x="-183.5250" y="-1301.7387" z="2851.6325"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_105_1532416.gdml"/>
+			<position name="posRef_106" x="2183.4375" y="-3092.4500" z="3175.0000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_106_1737416.gdml"/>
+			<position name="posRef_107" x="2183.4375" y="-819.1500" z="3175.0000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_107_1737648.gdml"/>
+			<position name="posRef_108" x="2561.2625" y="-1595.7247" z="-660.9708"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_108_1737880.gdml"/>
+			<position name="posRef_109" x="2589.8375" y="-1595.7247" z="-660.9708"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_109_1745424.gdml"/>
+			<position name="posRef_110" x="2634.2875" y="-1595.7247" z="-660.9708"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_110_1745656.gdml"/>
+			<position name="posRef_111" x="2639.0500" y="556.1150" z="865.9338"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_111_1745888.gdml"/>
+			<position name="posRef_112" x="2639.0500" y="633.4823" z="633.4823"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_112_1970224.gdml"/>
+			<position name="posRef_113" x="2639.0500" y="711.0244" z="711.0244"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_113_1970456.gdml"/>
+			<position name="posRef_114" x="2613.6500" y="591.6208" z="632.4573"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_114_1970688.gdml"/>
+			<position name="posRef_115" x="2664.4500" y="591.6208" z="632.4573"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_115_1970920.gdml"/>
+			<position name="posRef_116" x="2613.6500" y="632.4573" z="591.6208"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_116_2022744.gdml"/>
+			<position name="posRef_117" x="2664.4500" y="632.4573" z="591.6208"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_117_2022976.gdml"/>
+			<position name="posRef_118" x="2639.0500" y="-556.1150" z="-865.9338"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_118_2023208.gdml"/>
+			<position name="posRef_119" x="2639.0500" y="-2038.8334" z="2025.4781"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_119_2023440.gdml"/>
+			<position name="posRef_120" x="2639.0500" y="-424.0560" z="983.9732"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_120_1991032.gdml"/>
+			<position name="posRef_121" x="2639.0500" y="633.4823" z="-633.4823"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_121_1991264.gdml"/>
+			<position name="posRef_122" x="2639.0500" y="711.0244" z="-711.0244"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_122_1991496.gdml"/>
+			<position name="posRef_123" x="2613.6500" y="632.4573" z="-591.6208"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_123_1991728.gdml"/>
+			<position name="posRef_124" x="2664.4500" y="632.4573" z="-591.6208"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_124_1728976.gdml"/>
+			<position name="posRef_125" x="2613.6500" y="591.6208" z="-632.4573"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_125_1729208.gdml"/>
+			<position name="posRef_126" x="2664.4500" y="591.6208" z="-632.4573"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_126_1729440.gdml"/>
+			<position name="posRef_127" x="2639.0500" y="-0.0000" z="1005.5404"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_127_1729672.gdml"/>
+			<position name="posRef_128" x="2639.0500" y="-633.4823" z="-633.4823"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_128_1729904.gdml"/>
+			<position name="posRef_129" x="2639.0500" y="-711.0244" z="-711.0244"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_129_95105072.gdml"/>
+			<position name="posRef_130" x="2664.4500" y="-632.4573" z="-591.6208"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_130_95105304.gdml"/>
+			<position name="posRef_131" x="2613.6500" y="-632.4573" z="-591.6208"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_131_95105536.gdml"/>
+			<position name="posRef_132" x="2664.4500" y="-591.6208" z="-632.4573"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_132_95105768.gdml"/>
+			<position name="posRef_133" x="2613.6500" y="-591.6208" z="-632.4573"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_133_95106000.gdml"/>
+			<position name="posRef_134" x="2639.0500" y="983.9732" z="424.0560"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_134_1792376.gdml"/>
+			<position name="posRef_135" x="2639.0500" y="1005.5404" z="-0.0000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_135_1792608.gdml"/>
+			<position name="posRef_136" x="2639.0500" y="424.0560" z="-983.9732"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_136_1792840.gdml"/>
+			<position name="posRef_137" x="2639.0500" y="-633.4823" z="633.4823"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_137_1793072.gdml"/>
+			<position name="posRef_138" x="2639.0500" y="-711.0244" z="711.0244"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_138_1793304.gdml"/>
+			<position name="posRef_139" x="2664.4500" y="-591.6208" z="632.4573"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_139_1870448.gdml"/>
+			<position name="posRef_140" x="2613.6500" y="-591.6208" z="632.4573"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_140_1870680.gdml"/>
+			<position name="posRef_141" x="2664.4500" y="-632.4573" z="591.6208"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_141_1870912.gdml"/>
+			<position name="posRef_142" x="2613.6500" y="-632.4573" z="591.6208"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_142_1871144.gdml"/>
+			<position name="posRef_143" x="2639.0500" y="-424.0560" z="-983.9723"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_143_1871376.gdml"/>
+			<position name="posRef_144" x="2639.0500" y="424.0560" z="983.9723"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_144_1871608.gdml"/>
+			<position name="posRef_145" x="2639.0500" y="865.9338" z="-556.1150"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_145_1634752.gdml"/>
+			<position name="posRef_146" x="2639.0500" y="-556.1150" z="865.9338"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_146_1634944.gdml"/>
+			<position name="posRef_147" x="2639.0500" y="556.1150" z="-865.9338"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_147_1635176.gdml"/>
+			<position name="posRef_148" x="2639.0500" y="983.9723" z="-424.0560"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_148_1635408.gdml"/>
+			<position name="posRef_149" x="2639.0500" y="-0.0000" z="-1005.5404"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_149_1635640.gdml"/>
+			<position name="posRef_150" x="2639.0500" y="865.9338" z="556.1150"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_150_1635872.gdml"/>
+			<position name="posRef_151" x="2639.0500" y="-0.0000" z="-1189.5034"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_151_1636104.gdml"/>
+			<position name="posRef_152" x="2529.7799" y="-841.1059" z="-841.1059"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_152_1517880.gdml"/>
+			<position name="posRef_153" x="2612.0919" y="-841.1059" z="-841.1059"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_153_1518112.gdml"/>
+			<position name="posRef_154" x="2499.0636" y="-843.5637" z="-802.7272"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_154_1518344.gdml"/>
+			<position name="posRef_155" x="2499.0636" y="-879.4847" z="-838.6482"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_155_1518576.gdml"/>
+			<position name="posRef_156" x="2499.0636" y="-802.7272" z="-843.5637"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_156_1518808.gdml"/>
+			<position name="posRef_157" x="2499.0636" y="-838.6482" z="-879.4847"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_157_1519040.gdml"/>
+			<position name="posRef_158" x="2639.0500" y="1189.5034" z="-0.0000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_158_1519272.gdml"/>
+			<position name="posRef_159" x="2529.7799" y="841.1059" z="-841.1059"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_159_1519504.gdml"/>
+			<position name="posRef_160" x="2612.0919" y="841.1059" z="-841.1059"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_160_1754688.gdml"/>
+			<position name="posRef_161" x="2499.0636" y="802.7272" z="-843.5637"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_161_1754920.gdml"/>
+			<position name="posRef_162" x="2499.0636" y="838.6482" z="-879.4847"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_162_1755152.gdml"/>
+			<position name="posRef_163" x="2499.0636" y="843.5637" z="-802.7272"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_163_1755384.gdml"/>
+			<position name="posRef_164" x="2499.0636" y="879.4847" z="-838.6482"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_164_1755616.gdml"/>
+			<position name="posRef_165" x="2639.0500" y="500.2560" z="-1167.9363"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_165_1755848.gdml"/>
+			<position name="posRef_166" x="2639.0500" y="500.2560" z="1167.9353"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_166_1756080.gdml"/>
+			<position name="posRef_167" x="2529.7799" y="841.1059" z="841.1059"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_167_1756312.gdml"/>
+			<position name="posRef_168" x="2612.0919" y="841.1059" z="841.1059"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_168_1756544.gdml"/>
+			<position name="posRef_169" x="2499.0636" y="843.5637" z="802.7272"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_169_1756776.gdml"/>
+			<position name="posRef_170" x="2499.0636" y="879.4847" z="838.6482"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_170_1757008.gdml"/>
+			<position name="posRef_171" x="2499.0636" y="802.7272" z="843.5637"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_171_2019360.gdml"/>
+			<position name="posRef_172" x="2499.0636" y="838.6482" z="879.4847"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_172_2019592.gdml"/>
+			<position name="posRef_173" x="2639.0500" y="1167.9363" z="500.2560"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_173_2019824.gdml"/>
+			<position name="posRef_174" x="2639.0500" y="-1994.3638" z="2124.1078"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_174_2020056.gdml"/>
+			<position name="posRef_175" x="2639.0500" y="1022.9561" z="-659.2558"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_175_2020288.gdml"/>
+			<position name="posRef_176" x="2639.0500" y="1022.9561" z="659.2558"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_176_2020520.gdml"/>
+			<position name="posRef_177" x="2639.0500" y="659.2558" z="1022.9561"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_177_2020752.gdml"/>
+			<position name="posRef_178" x="2639.0500" y="-500.2560" z="-1167.9353"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_178_2021016.gdml"/>
+			<position name="posRef_179" x="2639.0500" y="-659.2558" z="1022.9561"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_179_2021280.gdml"/>
+			<position name="posRef_180" x="2529.7799" y="-841.1059" z="841.1059"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_180_2021544.gdml"/>
+			<position name="posRef_181" x="2612.0919" y="-841.1059" z="841.1059"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_181_2021808.gdml"/>
+			<position name="posRef_182" x="2499.0636" y="-802.7272" z="843.5637"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_182_2022072.gdml"/>
+			<position name="posRef_183" x="2499.0636" y="-838.6482" z="879.4847"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_183_1839280.gdml"/>
+			<position name="posRef_184" x="2499.0636" y="-843.5637" z="802.7272"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_184_1839544.gdml"/>
+			<position name="posRef_185" x="2499.0636" y="-879.4847" z="838.6482"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_185_1839808.gdml"/>
+			<position name="posRef_186" x="2639.0500" y="659.2558" z="-1022.9561"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_186_1840072.gdml"/>
+			<position name="posRef_187" x="2639.0500" y="-0.0000" z="1189.5034"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_187_1840336.gdml"/>
+			<position name="posRef_188" x="2639.0500" y="-659.2558" z="-1022.9561"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_188_1840600.gdml"/>
+			<position name="posRef_189" x="2639.0500" y="1167.9353" z="-500.2560"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_189_1840864.gdml"/>
+			<position name="posRef_190" x="2639.0500" y="-500.2560" z="1167.9363"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_190_1841128.gdml"/>
+			<position name="posRef_191" x="2673.9750" y="-3175.0000" z="3333.7500"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_191_1841392.gdml"/>
+			<position name="posRef_192" x="2584.2813" y="-3175.0000" z="3333.7500"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_192_1841656.gdml"/>
+			<position name="posRef_193" x="2673.9750" y="-3175.0000" z="2114.5500"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_193_1841920.gdml"/>
+			<position name="posRef_194" x="2584.2813" y="-3175.0000" z="2114.5500"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_194_1842184.gdml"/>
+			<position name="posRef_195" x="2462.0438" y="346.6618" z="770.5423"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_195_1748816.gdml"/>
+			<position name="posRef_196" x="2677.1500" y="572.0126" z="980.1242"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_196_1749080.gdml"/>
+			<position name="posRef_197" x="2588.2500" y="521.9450" z="918.8313"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_197_1749344.gdml"/>
+			<position name="posRef_198" x="2085.6475" y="131.5715" z="-468.4978"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_198_1749608.gdml"/>
+			<position name="posRef_199" x="2085.6475" y="-57.3755" z="-409.2372"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_199_1749872.gdml"/>
+			<position name="posRef_200" x="2174.1791" y="45.0355" z="-468.4978"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_200_1750136.gdml"/>
+			<position name="posRef_201" x="2677.1500" y="572.0126" z="-980.1242"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_201_1750400.gdml"/>
+			<position name="posRef_202" x="2462.0438" y="346.6618" z="-770.5423"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_202_1750664.gdml"/>
+			<position name="posRef_203" x="2588.2500" y="521.9450" z="-918.8313"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_203_1750928.gdml"/>
+			<position name="posRef_204" x="-2252.0375" y="-0.0000" z="-0.0000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_204_1751192.gdml"/>
+			<position name="posRef_205" x="2677.1500" y="-572.0126" z="980.1242"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_205_1751456.gdml"/>
+			<position name="posRef_206" x="2462.0438" y="-346.6618" z="770.5423"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_206_1751720.gdml"/>
+			<position name="posRef_207" x="2588.2500" y="-521.9450" z="918.8313"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_207_1712912.gdml"/>
+			<position name="posRef_208" x="2612.0625" y="-1927.4641" z="-674.6651"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_208_1713176.gdml"/>
+			<position name="posRef_209" x="2361.5550" y="-501.5364" z="-141.2356"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_209_1713440.gdml"/>
+			<position name="posRef_210" x="2612.0625" y="-1898.3036" z="-745.0648"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_210_1713704.gdml"/>
+			<position name="posRef_211" x="2637.4625" y="-3248.0853" z="-1450.8846"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_211_1713968.gdml"/>
+			<position name="posRef_212" x="2596.9813" y="-2815.9848" z="1166.4191"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_212_1714232.gdml"/>
+			<position name="posRef_213" x="2673.9750" y="-2815.9848" z="1166.4191"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_213_1714496.gdml"/>
+			<position name="posRef_214" x="-1554.9758" y="853.2489" z="-353.4273"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_214_1714760.gdml"/>
+			<position name="posRef_215" x="-1294.9359" y="853.2489" z="-353.4273"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_215_1715024.gdml"/>
+			<position name="posRef_216" x="-1897.2509" y="825.9110" z="-419.4269"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_216_1715288.gdml"/>
+			<position name="posRef_217" x="-1897.2509" y="880.5869" z="-287.4276"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_217_1715552.gdml"/>
+			<position name="posRef_218" x="-1959.2942" y="816.7983" z="-441.4268"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_218_1715816.gdml"/>
+			<position name="posRef_219" x="-1959.2942" y="889.6995" z="-265.4278"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_219_1716080.gdml"/>
+			<position name="posRef_220" x="-4.1375" y="762.8702" z="-390.8888"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_220_1847424.gdml"/>
+			<position name="posRef_221" x="-4.1375" y="814.3273" z="-266.6604"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_221_1847688.gdml"/>
+			<position name="posRef_222" x="-4.1375" y="408.3872" z="-170.5130"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_222_1847952.gdml"/>
+			<position name="posRef_223" x="-4.1375" y="147.9795" z="-62.7480"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_223_1848216.gdml"/>
+			<position name="posRef_224" x="503.8625" y="1495.6997" z="-547.3706"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_224_1848480.gdml"/>
+			<position name="posRef_225" x="-4.1375" y="1443.1084" z="-508.4036"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_225_1848744.gdml"/>
+			<position name="posRef_226" x="1900.8625" y="1436.4258" z="-524.5369"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_226_1849008.gdml"/>
+			<position name="posRef_227" x="-1909.1375" y="1436.4258" z="-524.5369"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_227_1849272.gdml"/>
+			<position name="posRef_228" x="-4.1375" y="1720.4883" z="-642.1994"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_228_1849536.gdml"/>
+			<position name="posRef_229" x="-512.1375" y="1495.6997" z="-547.3706"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_229_1849800.gdml"/>
+			<position name="posRef_230" x="2132.6375" y="1343.7795" z="-655.4138"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_230_1850064.gdml"/>
+			<position name="posRef_231" x="-1689.0161" y="274.8431" z="-197.7455"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_231_1850328.gdml"/>
+			<position name="posRef_232" x="-1572.7065" y="275.4506" z="-184.5456"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_232_1850592.gdml"/>
+			<position name="posRef_233" x="-4.1375" y="1086.4642" z="-450.0282"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_233_95036064.gdml"/>
+			<position name="posRef_234" x="1233.1600" y="853.2489" z="-353.4273"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_234_95036328.gdml"/>
+			<position name="posRef_235" x="2060.2475" y="385.5166" z="-220.4699"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_235_95036592.gdml"/>
+			<position name="posRef_236" x="2060.2475" y="274.8230" z="-56.9831"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_236_95036856.gdml"/>
+			<position name="posRef_237" x="95.5080" y="864.7304" z="-325.7086"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_237_95037120.gdml"/>
+			<position name="posRef_238" x="95.5080" y="842.5436" z="-381.4674"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_238_95037384.gdml"/>
+			<position name="posRef_239" x="1909.3888" y="693.2000" z="-373.1616"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_239_95037648.gdml"/>
+			<position name="posRef_240" x="1779.2243" y="698.9425" z="-359.9617"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_240_95037912.gdml"/>
+			<position name="posRef_241" x="-2140.9125" y="1299.7798" z="-637.1885"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_241_95038176.gdml"/>
+			<position name="posRef_242" x="-1572.7065" y="325.2664" z="-64.2796"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_242_95038440.gdml"/>
+			<position name="posRef_243" x="-1689.0161" y="330.7340" z="-60.9766"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_243_95038704.gdml"/>
+			<position name="posRef_244" x="-2140.9125" y="1366.6059" z="-467.2646"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_244_95038968.gdml"/>
+			<position name="posRef_245" x="-893.1375" y="762.8702" z="-390.8888"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_245_95039232.gdml"/>
+			<position name="posRef_246" x="-893.1375" y="814.3273" z="-266.6604"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_246_1720328.gdml"/>
+			<position name="posRef_247" x="-893.1375" y="408.3872" z="-170.5130"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_247_1720592.gdml"/>
+			<position name="posRef_248" x="-893.1375" y="147.9795" z="-62.7480"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_248_1720856.gdml"/>
+			<position name="posRef_249" x="884.8625" y="762.8702" z="-390.8888"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_249_1721120.gdml"/>
+			<position name="posRef_250" x="884.8625" y="814.3273" z="-266.6604"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_250_1721384.gdml"/>
+			<position name="posRef_251" x="884.8625" y="408.3872" z="-170.5130"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_251_1721648.gdml"/>
+			<position name="posRef_252" x="884.8625" y="147.9795" z="-62.7480"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_252_1721912.gdml"/>
+			<position name="posRef_253" x="-4.1375" y="873.9043" z="-307.2275"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_253_1722176.gdml"/>
+			<position name="posRef_254" x="-4.1375" y="834.1124" z="-403.2937"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_254_1722440.gdml"/>
+			<position name="posRef_255" x="-4.1375" y="660.4815" z="-273.5804"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_255_1722704.gdml"/>
+			<position name="posRef_256" x="-4.1375" y="1021.3867" z="-423.0722"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_256_1722968.gdml"/>
+			<position name="posRef_257" x="-4.1375" y="679.2445" z="-281.3523"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_257_1723232.gdml"/>
+			<position name="posRef_258" x="-4.1375" y="1046.0164" z="-433.2742"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_258_1723496.gdml"/>
+			<position name="posRef_259" x="-512.1375" y="1444.6689" z="-670.5699"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_259_1723760.gdml"/>
+			<position name="posRef_260" x="-4.1375" y="1379.9274" z="-660.9361"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_260_1739920.gdml"/>
+			<position name="posRef_261" x="-1909.1375" y="1386.6100" z="-644.8029"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_261_1740184.gdml"/>
+			<position name="posRef_262" x="1900.8625" y="1386.6100" z="-644.8029"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_262_1740448.gdml"/>
+			<position name="posRef_263" x="-4.1375" y="1670.6725" z="-762.4654"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_263_1740712.gdml"/>
+			<position name="posRef_264" x="503.8625" y="1444.6689" z="-670.5699"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_264_1740976.gdml"/>
+			<position name="posRef_265" x="1779.2243" y="748.7583" z="-239.6957"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_265_1741240.gdml"/>
+			<position name="posRef_266" x="1909.3888" y="754.4327" z="-226.2334"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_266_1741504.gdml"/>
+			<position name="posRef_267" x="-893.1375" y="873.9043" z="-307.2275"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_267_1741768.gdml"/>
+			<position name="posRef_268" x="-893.1375" y="834.1124" z="-403.2937"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_268_1742032.gdml"/>
+			<position name="posRef_269" x="-893.1375" y="660.4815" z="-273.5804"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_269_1742296.gdml"/>
+			<position name="posRef_270" x="-893.1375" y="1021.3867" z="-423.0722"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_270_1742560.gdml"/>
+			<position name="posRef_271" x="-893.1375" y="679.2445" z="-281.3523"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_271_1742824.gdml"/>
+			<position name="posRef_272" x="-893.1375" y="1046.0164" z="-433.2742"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_272_1743088.gdml"/>
+			<position name="posRef_273" x="884.8625" y="873.9043" z="-307.2275"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_273_1743352.gdml"/>
+			<position name="posRef_274" x="884.8625" y="834.1124" z="-403.2937"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_274_1743616.gdml"/>
+			<position name="posRef_275" x="884.8625" y="660.4815" z="-273.5804"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_275_1743880.gdml"/>
+			<position name="posRef_276" x="884.8625" y="1021.3867" z="-423.0722"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_276_1730912.gdml"/>
+			<position name="posRef_277" x="884.8625" y="679.2445" z="-281.3523"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_277_1731176.gdml"/>
+			<position name="posRef_278" x="884.8625" y="1046.0164" z="-433.2742"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_278_1731440.gdml"/>
+			<position name="posRef_279" x="2132.6375" y="1410.6056" z="-485.4899"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_279_1731704.gdml"/>
+			<position name="posRef_280" x="-1554.9758" y="353.4273" z="-853.2489"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_280_1731968.gdml"/>
+			<position name="posRef_281" x="-1294.9359" y="353.4273" z="-853.2489"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_281_1732232.gdml"/>
+			<position name="posRef_282" x="-1897.2509" y="287.4276" z="-880.5869"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_282_1732496.gdml"/>
+			<position name="posRef_283" x="-1897.2509" y="419.4269" z="-825.9110"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_283_1732760.gdml"/>
+			<position name="posRef_284" x="-1959.2942" y="265.4278" z="-889.6995"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_284_1733024.gdml"/>
+			<position name="posRef_285" x="-1959.2942" y="441.4268" z="-816.7983"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_285_1733288.gdml"/>
+			<position name="posRef_286" x="-4.1375" y="266.6604" z="-814.3273"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_286_1733552.gdml"/>
+			<position name="posRef_287" x="-4.1375" y="390.8888" z="-762.8702"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_287_1733816.gdml"/>
+			<position name="posRef_288" x="-4.1375" y="170.5130" z="-408.3872"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_288_1734080.gdml"/>
+			<position name="posRef_289" x="-4.1375" y="62.7480" z="-147.9795"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_289_1734344.gdml"/>
+			<position name="posRef_290" x="503.8625" y="670.5699" z="-1444.6689"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_290_1734608.gdml"/>
+			<position name="posRef_291" x="-4.1375" y="660.9361" z="-1379.9274"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_291_1769568.gdml"/>
+			<position name="posRef_292" x="1900.8625" y="644.8029" z="-1386.6100"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_292_1769832.gdml"/>
+			<position name="posRef_293" x="-1909.1375" y="644.8029" z="-1386.6100"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_293_1770096.gdml"/>
+			<position name="posRef_294" x="-4.1375" y="762.4654" z="-1670.6725"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_294_1770360.gdml"/>
+			<position name="posRef_295" x="-512.1375" y="670.5699" z="-1444.6689"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_295_1770624.gdml"/>
+			<position name="posRef_296" x="2132.6375" y="485.4899" z="-1410.6056"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_296_1770888.gdml"/>
+			<position name="posRef_297" x="-1689.0161" y="60.9766" z="-330.7340"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_297_1771152.gdml"/>
+			<position name="posRef_298" x="-1572.7065" y="64.2796" z="-325.2664"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_298_1771416.gdml"/>
+			<position name="posRef_299" x="-4.1375" y="450.0282" z="-1086.4642"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_299_1771680.gdml"/>
+			<position name="posRef_300" x="1233.1600" y="353.4273" z="-853.2489"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_300_1771944.gdml"/>
+			<position name="posRef_301" x="2060.2475" y="115.3041" z="-415.6222"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_301_1772208.gdml"/>
+			<position name="posRef_302" x="2060.2475" y="162.1490" z="-244.7174"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_302_1772472.gdml"/>
+			<position name="posRef_303" x="95.5080" y="381.1460" z="-841.7675"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_303_1772736.gdml"/>
+			<position name="posRef_304" x="95.5080" y="326.0301" z="-865.5065"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_304_1773000.gdml"/>
+			<position name="posRef_305" x="1909.3888" y="226.2820" z="-754.2259"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_305_1773264.gdml"/>
+			<position name="posRef_306" x="1779.2243" y="239.6957" z="-748.7583"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_306_1773528.gdml"/>
+			<position name="posRef_307" x="-2140.9125" y="467.2646" z="-1366.6059"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_307_1646792.gdml"/>
+			<position name="posRef_308" x="-1572.7065" y="184.5456" z="-275.4506"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_308_1647056.gdml"/>
+			<position name="posRef_309" x="-1689.0161" y="197.7455" z="-274.8431"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_309_1647320.gdml"/>
+			<position name="posRef_310" x="-2140.9125" y="637.1885" z="-1299.7798"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_310_1647584.gdml"/>
+			<position name="posRef_311" x="-893.1375" y="266.6604" z="-814.3273"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_311_1647848.gdml"/>
+			<position name="posRef_312" x="-893.1375" y="390.8888" z="-762.8702"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_312_1648112.gdml"/>
+			<position name="posRef_313" x="-893.1375" y="170.5130" z="-408.3872"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_313_1648376.gdml"/>
+			<position name="posRef_314" x="-893.1375" y="62.7480" z="-147.9795"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_314_1648640.gdml"/>
+			<position name="posRef_315" x="884.8625" y="266.6604" z="-814.3273"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_315_1648904.gdml"/>
+			<position name="posRef_316" x="884.8625" y="390.8888" z="-762.8702"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_316_1649168.gdml"/>
+			<position name="posRef_317" x="884.8625" y="170.5130" z="-408.3872"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_317_1649432.gdml"/>
+			<position name="posRef_318" x="884.8625" y="62.7480" z="-147.9795"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_318_1649696.gdml"/>
+			<position name="posRef_319" x="-4.1375" y="403.2937" z="-834.1124"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_319_1649960.gdml"/>
+			<position name="posRef_320" x="-4.1375" y="307.2275" z="-873.9043"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_320_1650224.gdml"/>
+			<position name="posRef_321" x="-4.1375" y="273.5804" z="-660.4815"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_321_1650488.gdml"/>
+			<position name="posRef_322" x="-4.1375" y="423.0722" z="-1021.3867"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_322_1650752.gdml"/>
+			<position name="posRef_323" x="-4.1375" y="281.3523" z="-679.2445"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_323_1651016.gdml"/>
+			<position name="posRef_324" x="-4.1375" y="433.2742" z="-1046.0164"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_324_1676712.gdml"/>
+			<position name="posRef_325" x="-512.1375" y="547.3706" z="-1495.6997"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_325_1676976.gdml"/>
+			<position name="posRef_326" x="-4.1375" y="508.4036" z="-1443.1084"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_326_1677240.gdml"/>
+			<position name="posRef_327" x="-1909.1375" y="524.5369" z="-1436.4258"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_327_1677504.gdml"/>
+			<position name="posRef_328" x="1900.8625" y="524.5369" z="-1436.4258"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_328_1677768.gdml"/>
+			<position name="posRef_329" x="-4.1375" y="642.1994" z="-1720.4883"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_329_1678032.gdml"/>
+			<position name="posRef_330" x="503.8625" y="547.3706" z="-1495.6997"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_330_1678296.gdml"/>
+			<position name="posRef_331" x="1779.2243" y="359.9617" z="-698.9425"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_331_1678560.gdml"/>
+			<position name="posRef_332" x="1909.3888" y="373.2472" z="-693.2000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_332_1678824.gdml"/>
+			<position name="posRef_333" x="-893.1375" y="403.2937" z="-834.1124"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_333_1679088.gdml"/>
+			<position name="posRef_334" x="-893.1375" y="307.2275" z="-873.9043"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_334_1679352.gdml"/>
+			<position name="posRef_335" x="-893.1375" y="273.5804" z="-660.4815"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_335_1679616.gdml"/>
+			<position name="posRef_336" x="-893.1375" y="423.0722" z="-1021.3867"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_336_1679880.gdml"/>
+			<position name="posRef_337" x="-893.1375" y="281.3523" z="-679.2445"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_337_1680144.gdml"/>
+			<position name="posRef_338" x="-893.1375" y="433.2742" z="-1046.0164"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_338_1680408.gdml"/>
+			<position name="posRef_339" x="884.8625" y="403.2937" z="-834.1124"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_339_1680672.gdml"/>
+			<position name="posRef_340" x="884.8625" y="307.2275" z="-873.9043"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_340_1680936.gdml"/>
+			<position name="posRef_341" x="884.8625" y="273.5804" z="-660.4815"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_341_1681200.gdml"/>
+			<position name="posRef_342" x="884.8625" y="423.0722" z="-1021.3867"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_342_1681464.gdml"/>
+			<position name="posRef_343" x="884.8625" y="281.3523" z="-679.2445"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_343_1681728.gdml"/>
+			<position name="posRef_344" x="884.8625" y="433.2742" z="-1046.0164"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_344_1681992.gdml"/>
+			<position name="posRef_345" x="2132.6375" y="655.4138" z="-1343.7795"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_345_1682256.gdml"/>
+			<position name="posRef_346" x="-1554.9758" y="853.2489" z="353.4273"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_346_1682520.gdml"/>
+			<position name="posRef_347" x="-1294.9359" y="853.2489" z="353.4273"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_347_1682784.gdml"/>
+			<position name="posRef_348" x="-1897.2509" y="880.5869" z="287.4276"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_348_1683048.gdml"/>
+			<position name="posRef_349" x="-1897.2509" y="825.9110" z="419.4269"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_349_1683312.gdml"/>
+			<position name="posRef_350" x="-1959.2942" y="889.6995" z="265.4278"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_350_1683576.gdml"/>
+			<position name="posRef_351" x="-1959.2942" y="816.7983" z="441.4268"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_351_1683840.gdml"/>
+			<position name="posRef_352" x="-4.1375" y="814.3273" z="266.6604"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_352_1684104.gdml"/>
+			<position name="posRef_353" x="-4.1375" y="762.8702" z="390.8888"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_353_1684368.gdml"/>
+			<position name="posRef_354" x="-4.1375" y="408.3872" z="170.5130"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_354_1684632.gdml"/>
+			<position name="posRef_355" x="-4.1375" y="147.9795" z="62.7480"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_355_1684896.gdml"/>
+			<position name="posRef_356" x="503.8625" y="1444.6689" z="670.5699"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_356_1685160.gdml"/>
+			<position name="posRef_357" x="-4.1375" y="1379.9274" z="660.9361"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_357_1685424.gdml"/>
+			<position name="posRef_358" x="1900.8625" y="1386.6100" z="644.8029"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_358_1685688.gdml"/>
+			<position name="posRef_359" x="-1909.1375" y="1386.6100" z="644.8029"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_359_1685952.gdml"/>
+			<position name="posRef_360" x="-4.1375" y="1670.6725" z="762.4654"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_360_1777760.gdml"/>
+			<position name="posRef_361" x="-512.1375" y="1444.6689" z="670.5699"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_361_1777992.gdml"/>
+			<position name="posRef_362" x="2132.6375" y="1410.6056" z="485.4899"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_362_1778256.gdml"/>
+			<position name="posRef_363" x="-1689.0161" y="330.7340" z="60.9766"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_363_1778520.gdml"/>
+			<position name="posRef_364" x="-1572.7065" y="325.2664" z="64.2796"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_364_1778784.gdml"/>
+			<position name="posRef_365" x="-4.1375" y="1086.4642" z="450.0282"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_365_1779048.gdml"/>
+			<position name="posRef_366" x="1233.1600" y="853.2489" z="353.4273"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_366_1779312.gdml"/>
+			<position name="posRef_367" x="2060.2475" y="415.6222" z="115.3041"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_367_1779576.gdml"/>
+			<position name="posRef_368" x="2060.2475" y="244.7174" z="162.1490"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_368_1779840.gdml"/>
+			<position name="posRef_369" x="95.5080" y="841.7675" z="381.1460"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_369_1780104.gdml"/>
+			<position name="posRef_370" x="95.5080" y="865.5065" z="326.0301"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_370_1780368.gdml"/>
+			<position name="posRef_371" x="1909.3888" y="754.2259" z="226.2820"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_371_1780632.gdml"/>
+			<position name="posRef_372" x="1779.2243" y="748.7583" z="239.6957"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_372_1780896.gdml"/>
+			<position name="posRef_373" x="-2140.9125" y="1366.6059" z="467.2646"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_373_1781160.gdml"/>
+			<position name="posRef_374" x="-1572.7065" y="275.4506" z="184.5456"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_374_1781424.gdml"/>
+			<position name="posRef_375" x="-1689.0161" y="274.8431" z="197.7455"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_375_1781688.gdml"/>
+			<position name="posRef_376" x="-2140.9125" y="1299.7798" z="637.1885"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_376_1781952.gdml"/>
+			<position name="posRef_377" x="-893.1375" y="814.3273" z="266.6604"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_377_1782216.gdml"/>
+			<position name="posRef_378" x="-893.1375" y="762.8702" z="390.8888"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_378_1782480.gdml"/>
+			<position name="posRef_379" x="-893.1375" y="408.3872" z="170.5130"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_379_1782744.gdml"/>
+			<position name="posRef_380" x="-893.1375" y="147.9795" z="62.7480"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_380_1783008.gdml"/>
+			<position name="posRef_381" x="884.8625" y="814.3273" z="266.6604"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_381_1783272.gdml"/>
+			<position name="posRef_382" x="884.8625" y="762.8702" z="390.8888"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_382_1783536.gdml"/>
+			<position name="posRef_383" x="884.8625" y="408.3872" z="170.5130"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_383_1783800.gdml"/>
+			<position name="posRef_384" x="884.8625" y="147.9795" z="62.7480"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_384_1784064.gdml"/>
+			<position name="posRef_385" x="-4.1375" y="834.1124" z="403.2937"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_385_1784328.gdml"/>
+			<position name="posRef_386" x="-4.1375" y="873.9043" z="307.2275"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_386_1784592.gdml"/>
+			<position name="posRef_387" x="-4.1375" y="660.4815" z="273.5804"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_387_1784856.gdml"/>
+			<position name="posRef_388" x="-4.1375" y="1021.3867" z="423.0722"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_388_1785120.gdml"/>
+			<position name="posRef_389" x="-4.1375" y="679.2445" z="281.3523"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_389_1785384.gdml"/>
+			<position name="posRef_390" x="-4.1375" y="1046.0164" z="433.2742"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_390_1785648.gdml"/>
+			<position name="posRef_391" x="-512.1375" y="1495.6997" z="547.3706"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_391_1785912.gdml"/>
+			<position name="posRef_392" x="-4.1375" y="1443.1084" z="508.4036"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_392_1786176.gdml"/>
+			<position name="posRef_393" x="-1909.1375" y="1436.4258" z="524.5369"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_393_1786440.gdml"/>
+			<position name="posRef_394" x="1900.8625" y="1436.4258" z="524.5369"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_394_1786704.gdml"/>
+			<position name="posRef_395" x="-4.1375" y="1720.4883" z="642.1994"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_395_1786968.gdml"/>
+			<position name="posRef_396" x="503.8625" y="1495.6997" z="547.3706"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_396_1859568.gdml"/>
+			<position name="posRef_397" x="1779.2243" y="698.9425" z="359.9617"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_397_1859832.gdml"/>
+			<position name="posRef_398" x="1909.3888" y="693.2000" z="373.2472"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_398_1860096.gdml"/>
+			<position name="posRef_399" x="-893.1375" y="834.1124" z="403.2937"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_399_1860360.gdml"/>
+			<position name="posRef_400" x="-893.1375" y="873.9043" z="307.2275"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_400_1860624.gdml"/>
+			<position name="posRef_401" x="-893.1375" y="660.4815" z="273.5804"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_401_1860888.gdml"/>
+			<position name="posRef_402" x="-893.1375" y="1021.3867" z="423.0722"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_402_1861152.gdml"/>
+			<position name="posRef_403" x="-893.1375" y="679.2445" z="281.3523"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_403_1861416.gdml"/>
+			<position name="posRef_404" x="-893.1375" y="1046.0164" z="433.2742"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_404_1861680.gdml"/>
+			<position name="posRef_405" x="884.8625" y="834.1124" z="403.2937"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_405_1861944.gdml"/>
+			<position name="posRef_406" x="884.8625" y="873.9043" z="307.2275"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_406_1862208.gdml"/>
+			<position name="posRef_407" x="884.8625" y="660.4815" z="273.5804"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_407_1862472.gdml"/>
+			<position name="posRef_408" x="884.8625" y="1021.3867" z="423.0722"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_408_1862736.gdml"/>
+			<position name="posRef_409" x="884.8625" y="679.2445" z="281.3523"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_409_1863000.gdml"/>
+			<position name="posRef_410" x="884.8625" y="1046.0164" z="433.2742"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_410_1863264.gdml"/>
+			<position name="posRef_411" x="2132.6375" y="1343.7795" z="655.4138"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_411_1863528.gdml"/>
+			<position name="posRef_412" x="-1554.9758" y="-353.4273" z="853.2489"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_412_1863792.gdml"/>
+			<position name="posRef_413" x="-1294.9359" y="-353.4273" z="853.2489"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_413_1864056.gdml"/>
+			<position name="posRef_414" x="-1897.2509" y="-287.4276" z="880.5869"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_414_1864320.gdml"/>
+			<position name="posRef_415" x="-1897.2509" y="-419.4269" z="825.9110"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_415_1864584.gdml"/>
+			<position name="posRef_416" x="-1959.2942" y="-265.4278" z="889.6995"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_416_1864848.gdml"/>
+			<position name="posRef_417" x="-1959.2942" y="-441.4268" z="816.7983"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_417_1865112.gdml"/>
+			<position name="posRef_418" x="-4.1375" y="-266.6604" z="814.3273"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_418_1865376.gdml"/>
+			<position name="posRef_419" x="-4.1375" y="-390.8888" z="762.8702"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_419_1865640.gdml"/>
+			<position name="posRef_420" x="-4.1375" y="-170.5130" z="408.3872"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_420_1865904.gdml"/>
+			<position name="posRef_421" x="-4.1375" y="-62.7480" z="147.9795"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_421_1866168.gdml"/>
+			<position name="posRef_422" x="503.8625" y="-670.5699" z="1444.6689"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_422_1866432.gdml"/>
+			<position name="posRef_423" x="-4.1375" y="-660.9361" z="1379.9274"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_423_1866696.gdml"/>
+			<position name="posRef_424" x="1900.8625" y="-644.8029" z="1386.6100"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_424_1866960.gdml"/>
+			<position name="posRef_425" x="-1909.1375" y="-644.8029" z="1386.6100"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_425_1867224.gdml"/>
+			<position name="posRef_426" x="-4.1375" y="-762.4654" z="1670.6725"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_426_1867488.gdml"/>
+			<position name="posRef_427" x="-512.1375" y="-670.5699" z="1444.6689"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_427_1867752.gdml"/>
+			<position name="posRef_428" x="2132.6375" y="-485.4899" z="1410.6056"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_428_1868016.gdml"/>
+			<position name="posRef_429" x="-1689.0161" y="-60.9766" z="330.7340"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_429_1868280.gdml"/>
+			<position name="posRef_430" x="-1572.7065" y="-64.2796" z="325.2664"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_430_1868544.gdml"/>
+			<position name="posRef_431" x="-4.1375" y="-450.0282" z="1086.4642"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_431_1868808.gdml"/>
+			<position name="posRef_432" x="1233.1600" y="-353.4273" z="853.2489"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_432_1869072.gdml"/>
+			<position name="posRef_433" x="2060.2475" y="-115.3041" z="415.6222"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_433_1869336.gdml"/>
+			<position name="posRef_434" x="2060.2475" y="-162.1490" z="244.7174"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_434_1869600.gdml"/>
+			<position name="posRef_435" x="95.5080" y="-381.1460" z="841.7675"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_435_1869864.gdml"/>
+			<position name="posRef_436" x="95.5080" y="-326.0301" z="865.5065"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_436_1870128.gdml"/>
+			<position name="posRef_437" x="1909.3888" y="-226.2820" z="754.2259"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_437_1519768.gdml"/>
+			<position name="posRef_438" x="1779.2243" y="-239.6957" z="748.7583"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_438_1520032.gdml"/>
+			<position name="posRef_439" x="-2140.9125" y="-467.2646" z="1366.6059"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_439_1520296.gdml"/>
+			<position name="posRef_440" x="-1572.7065" y="-184.5456" z="275.4506"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_440_1520560.gdml"/>
+			<position name="posRef_441" x="-1689.0161" y="-197.7455" z="274.8431"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_441_1520824.gdml"/>
+			<position name="posRef_442" x="-2140.9125" y="-637.1885" z="1299.7798"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_442_1521088.gdml"/>
+			<position name="posRef_443" x="-893.1375" y="-266.6604" z="814.3273"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_443_1521352.gdml"/>
+			<position name="posRef_444" x="-893.1375" y="-390.8888" z="762.8702"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_444_1521616.gdml"/>
+			<position name="posRef_445" x="-893.1375" y="-170.5130" z="408.3872"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_445_1521880.gdml"/>
+			<position name="posRef_446" x="-893.1375" y="-62.7480" z="147.9795"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_446_1522144.gdml"/>
+			<position name="posRef_447" x="884.8625" y="-266.6604" z="814.3273"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_447_1522408.gdml"/>
+			<position name="posRef_448" x="884.8625" y="-390.8888" z="762.8702"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_448_1522672.gdml"/>
+			<position name="posRef_449" x="884.8625" y="-170.5130" z="408.3872"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_449_1522936.gdml"/>
+			<position name="posRef_450" x="884.8625" y="-62.7480" z="147.9795"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_450_1523200.gdml"/>
+			<position name="posRef_451" x="-4.1375" y="-403.2937" z="834.1124"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_451_1523464.gdml"/>
+			<position name="posRef_452" x="-4.1375" y="-307.2275" z="873.9043"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_452_1523728.gdml"/>
+			<position name="posRef_453" x="-4.1375" y="-273.5804" z="660.4815"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_453_1523992.gdml"/>
+			<position name="posRef_454" x="-4.1375" y="-423.0722" z="1021.3867"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_454_1524256.gdml"/>
+			<position name="posRef_455" x="-4.1375" y="-281.3523" z="679.2445"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_455_1524520.gdml"/>
+			<position name="posRef_456" x="-4.1375" y="-433.2742" z="1046.0164"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_456_1524784.gdml"/>
+			<position name="posRef_457" x="-512.1375" y="-547.3706" z="1495.6997"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_457_1525048.gdml"/>
+			<position name="posRef_458" x="-4.1375" y="-508.4036" z="1443.1084"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_458_1525312.gdml"/>
+			<position name="posRef_459" x="-1909.1375" y="-524.5369" z="1436.4258"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_459_1525576.gdml"/>
+			<position name="posRef_460" x="1900.8625" y="-524.5369" z="1436.4258"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_460_1525840.gdml"/>
+			<position name="posRef_461" x="-4.1375" y="-642.1994" z="1720.4883"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_461_1526104.gdml"/>
+			<position name="posRef_462" x="503.8625" y="-547.3706" z="1495.6997"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_462_1526368.gdml"/>
+			<position name="posRef_463" x="1779.2243" y="-359.9617" z="698.9425"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_463_1526632.gdml"/>
+			<position name="posRef_464" x="1909.3888" y="-373.2472" z="693.2000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_464_1526896.gdml"/>
+			<position name="posRef_465" x="-893.1375" y="-403.2937" z="834.1124"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_465_1527160.gdml"/>
+			<position name="posRef_466" x="-893.1375" y="-307.2275" z="873.9043"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_466_1527424.gdml"/>
+			<position name="posRef_467" x="-893.1375" y="-273.5804" z="660.4815"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_467_1527688.gdml"/>
+			<position name="posRef_468" x="-893.1375" y="-423.0722" z="1021.3867"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_468_1527952.gdml"/>
+			<position name="posRef_469" x="-893.1375" y="-281.3523" z="679.2445"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_469_1528216.gdml"/>
+			<position name="posRef_470" x="-893.1375" y="-433.2742" z="1046.0164"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_470_1528480.gdml"/>
+			<position name="posRef_471" x="884.8625" y="-403.2937" z="834.1124"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_471_1528744.gdml"/>
+			<position name="posRef_472" x="884.8625" y="-307.2275" z="873.9043"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_472_1529008.gdml"/>
+			<position name="posRef_473" x="884.8625" y="-273.5804" z="660.4815"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_473_1529272.gdml"/>
+			<position name="posRef_474" x="884.8625" y="-423.0722" z="1021.3867"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_474_1529536.gdml"/>
+			<position name="posRef_475" x="884.8625" y="-281.3523" z="679.2445"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_475_1529800.gdml"/>
+			<position name="posRef_476" x="884.8625" y="-433.2742" z="1046.0164"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_476_1530064.gdml"/>
+			<position name="posRef_477" x="2132.6375" y="-655.4138" z="1343.7795"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_477_1530328.gdml"/>
+			<position name="posRef_478" x="-1554.9758" y="353.4273" z="853.2489"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_478_1530592.gdml"/>
+			<position name="posRef_479" x="-1294.9359" y="353.4273" z="853.2489"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_479_1530856.gdml"/>
+			<position name="posRef_480" x="-1897.2509" y="419.4269" z="825.9110"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_480_1531120.gdml"/>
+			<position name="posRef_481" x="-1897.2509" y="287.4276" z="880.5869"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_481_1531384.gdml"/>
+			<position name="posRef_482" x="-1959.2942" y="441.4268" z="816.7983"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_482_1531648.gdml"/>
+			<position name="posRef_483" x="-1959.2942" y="265.4278" z="889.6995"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_483_1716232.gdml"/>
+			<position name="posRef_484" x="-4.1375" y="390.8888" z="762.8702"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_484_1716496.gdml"/>
+			<position name="posRef_485" x="-4.1375" y="266.6604" z="814.3273"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_485_1716760.gdml"/>
+			<position name="posRef_486" x="-4.1375" y="170.5130" z="408.3872"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_486_1717024.gdml"/>
+			<position name="posRef_487" x="-4.1375" y="62.7480" z="147.9795"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_487_1717288.gdml"/>
+			<position name="posRef_488" x="503.8625" y="547.3706" z="1495.6997"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_488_1717552.gdml"/>
+			<position name="posRef_489" x="-4.1375" y="508.4036" z="1443.1084"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_489_1717816.gdml"/>
+			<position name="posRef_490" x="1900.8625" y="524.5369" z="1436.4258"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_490_1718080.gdml"/>
+			<position name="posRef_491" x="-1909.1375" y="524.5369" z="1436.4258"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_491_1718344.gdml"/>
+			<position name="posRef_492" x="-4.1375" y="642.1994" z="1720.4883"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_492_1718608.gdml"/>
+			<position name="posRef_493" x="-512.1375" y="547.3706" z="1495.6997"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_493_1718872.gdml"/>
+			<position name="posRef_494" x="2132.6375" y="655.4138" z="1343.7795"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_494_1719136.gdml"/>
+			<position name="posRef_495" x="-1689.0161" y="197.7455" z="274.8431"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_495_1719400.gdml"/>
+			<position name="posRef_496" x="-1572.7065" y="184.5456" z="275.4506"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_496_1719664.gdml"/>
+			<position name="posRef_497" x="-4.1375" y="450.0282" z="1086.4642"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_497_1719928.gdml"/>
+			<position name="posRef_498" x="1233.1600" y="353.4273" z="853.2489"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_498_1720192.gdml"/>
+			<position name="posRef_499" x="2060.2475" y="220.4699" z="385.5166"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_499_1757328.gdml"/>
+			<position name="posRef_500" x="2060.2475" y="56.9831" z="274.8230"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_500_1757592.gdml"/>
+			<position name="posRef_501" x="95.5080" y="325.7086" z="864.7304"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_501_1757856.gdml"/>
+			<position name="posRef_502" x="95.5080" y="381.4674" z="842.5436"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_502_1758120.gdml"/>
+			<position name="posRef_503" x="1909.3888" y="373.1616" z="693.2000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_503_1758384.gdml"/>
+			<position name="posRef_504" x="1779.2243" y="359.9617" z="698.9425"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_504_1758648.gdml"/>
+			<position name="posRef_505" x="-2140.9125" y="637.1885" z="1299.7798"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_505_1758912.gdml"/>
+			<position name="posRef_506" x="-1572.7065" y="64.2796" z="325.2664"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_506_1759176.gdml"/>
+			<position name="posRef_507" x="-1689.0161" y="60.9766" z="330.7340"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_507_1759440.gdml"/>
+			<position name="posRef_508" x="-2140.9125" y="467.2646" z="1366.6059"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_508_1759704.gdml"/>
+			<position name="posRef_509" x="-893.1375" y="390.8888" z="762.8702"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_509_1759968.gdml"/>
+			<position name="posRef_510" x="-893.1375" y="266.6604" z="814.3273"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_510_1760232.gdml"/>
+			<position name="posRef_511" x="-893.1375" y="170.5130" z="408.3872"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_511_1760496.gdml"/>
+			<position name="posRef_512" x="-893.1375" y="62.7480" z="147.9795"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_512_1760760.gdml"/>
+			<position name="posRef_513" x="884.8625" y="390.8888" z="762.8702"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_513_1761024.gdml"/>
+			<position name="posRef_514" x="884.8625" y="266.6604" z="814.3273"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_514_1761288.gdml"/>
+			<position name="posRef_515" x="884.8625" y="170.5130" z="408.3872"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_515_1761552.gdml"/>
+			<position name="posRef_516" x="884.8625" y="62.7480" z="147.9795"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_516_1761816.gdml"/>
+			<position name="posRef_517" x="-4.1375" y="307.2275" z="873.9043"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_517_1762080.gdml"/>
+			<position name="posRef_518" x="-4.1375" y="403.2937" z="834.1124"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_518_1762344.gdml"/>
+			<position name="posRef_519" x="-4.1375" y="273.5804" z="660.4815"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_519_1762608.gdml"/>
+			<position name="posRef_520" x="-4.1375" y="423.0722" z="1021.3867"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_520_1762872.gdml"/>
+			<position name="posRef_521" x="-4.1375" y="281.3523" z="679.2445"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_521_1763136.gdml"/>
+			<position name="posRef_522" x="-4.1375" y="433.2742" z="1046.0164"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_522_1763400.gdml"/>
+			<position name="posRef_523" x="-512.1375" y="670.5699" z="1444.6689"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_523_1763664.gdml"/>
+			<position name="posRef_524" x="-4.1375" y="660.9361" z="1379.9274"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_524_1763928.gdml"/>
+			<position name="posRef_525" x="-1909.1375" y="644.8029" z="1386.6100"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_525_1764192.gdml"/>
+			<position name="posRef_526" x="1900.8625" y="644.8029" z="1386.6100"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_526_1764456.gdml"/>
+			<position name="posRef_527" x="-4.1375" y="762.4654" z="1670.6725"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_527_1764720.gdml"/>
+			<position name="posRef_528" x="503.8625" y="670.5699" z="1444.6689"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_528_1764984.gdml"/>
+			<position name="posRef_529" x="1779.2243" y="239.6957" z="748.7583"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_529_1765248.gdml"/>
+			<position name="posRef_530" x="1909.3888" y="226.2334" z="754.4327"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_530_1765512.gdml"/>
+			<position name="posRef_531" x="-893.1375" y="307.2275" z="873.9043"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_531_1765776.gdml"/>
+			<position name="posRef_532" x="-893.1375" y="403.2937" z="834.1124"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_532_1766040.gdml"/>
+			<position name="posRef_533" x="-893.1375" y="273.5804" z="660.4815"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_533_1766304.gdml"/>
+			<position name="posRef_534" x="-893.1375" y="423.0722" z="1021.3867"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_534_1766568.gdml"/>
+			<position name="posRef_535" x="-893.1375" y="281.3523" z="679.2445"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_535_1766832.gdml"/>
+			<position name="posRef_536" x="-893.1375" y="433.2742" z="1046.0164"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_536_1767096.gdml"/>
+			<position name="posRef_537" x="884.8625" y="307.2275" z="873.9043"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_537_1767360.gdml"/>
+			<position name="posRef_538" x="884.8625" y="403.2937" z="834.1124"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_538_1767624.gdml"/>
+			<position name="posRef_539" x="884.8625" y="273.5804" z="660.4815"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_539_1767888.gdml"/>
+			<position name="posRef_540" x="884.8625" y="423.0722" z="1021.3867"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_540_1768152.gdml"/>
+			<position name="posRef_541" x="884.8625" y="281.3523" z="679.2445"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_541_1768416.gdml"/>
+			<position name="posRef_542" x="884.8625" y="433.2742" z="1046.0164"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_542_1768680.gdml"/>
+			<position name="posRef_543" x="2132.6375" y="485.4899" z="1410.6056"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_543_1768944.gdml"/>
+			<position name="posRef_544" x="-1554.9758" y="-853.2489" z="-353.4273"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_544_1769208.gdml"/>
+			<position name="posRef_545" x="-1294.9359" y="-853.2489" z="-353.4273"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_545_1798152.gdml"/>
+			<position name="posRef_546" x="-1897.2509" y="-880.5869" z="-287.4276"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_546_1798416.gdml"/>
+			<position name="posRef_547" x="-1897.2509" y="-825.9110" z="-419.4269"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_547_1798680.gdml"/>
+			<position name="posRef_548" x="-1959.2942" y="-889.6995" z="-265.4278"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_548_1798944.gdml"/>
+			<position name="posRef_549" x="-1959.2942" y="-816.7983" z="-441.4268"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_549_1799208.gdml"/>
+			<position name="posRef_550" x="-4.1375" y="-814.3273" z="-266.6604"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_550_1799472.gdml"/>
+			<position name="posRef_551" x="-4.1375" y="-762.8702" z="-390.8888"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_551_1799736.gdml"/>
+			<position name="posRef_552" x="-4.1375" y="-408.3872" z="-170.5130"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_552_1800000.gdml"/>
+			<position name="posRef_553" x="-4.1375" y="-147.9795" z="-62.7480"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_553_1800264.gdml"/>
+			<position name="posRef_554" x="503.8625" y="-1444.6689" z="-670.5699"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_554_1800528.gdml"/>
+			<position name="posRef_555" x="-4.1375" y="-1379.9274" z="-660.9361"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_555_1800792.gdml"/>
+			<position name="posRef_556" x="1900.8625" y="-1386.6100" z="-644.8029"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_556_1801056.gdml"/>
+			<position name="posRef_557" x="-1909.1375" y="-1386.6100" z="-644.8029"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_557_1801320.gdml"/>
+			<position name="posRef_558" x="-4.1375" y="-1670.6725" z="-762.4654"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_558_1801584.gdml"/>
+			<position name="posRef_559" x="-512.1375" y="-1444.6689" z="-670.5699"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_559_1801848.gdml"/>
+			<position name="posRef_560" x="2132.6375" y="-1410.6056" z="-485.4899"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_560_1802112.gdml"/>
+			<position name="posRef_561" x="-1689.0161" y="-330.7340" z="-60.9766"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_561_1802376.gdml"/>
+			<position name="posRef_562" x="-1572.7065" y="-325.2664" z="-64.2796"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_562_1802640.gdml"/>
+			<position name="posRef_563" x="-4.1375" y="-1086.4642" z="-450.0282"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_563_1802904.gdml"/>
+			<position name="posRef_564" x="1233.1600" y="-853.2489" z="-353.4273"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_564_1803168.gdml"/>
+			<position name="posRef_565" x="2060.2475" y="-415.6222" z="-115.3041"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_565_1803432.gdml"/>
+			<position name="posRef_566" x="2060.2475" y="-244.7174" z="-162.1490"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_566_1803696.gdml"/>
+			<position name="posRef_567" x="95.5080" y="-841.7675" z="-381.1460"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_567_1803960.gdml"/>
+			<position name="posRef_568" x="95.5080" y="-865.5065" z="-326.0301"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_568_1804224.gdml"/>
+			<position name="posRef_569" x="1909.3888" y="-754.2259" z="-226.2820"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_569_1804488.gdml"/>
+			<position name="posRef_570" x="1779.2243" y="-748.7583" z="-239.6957"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_570_1804752.gdml"/>
+			<position name="posRef_571" x="-2140.9125" y="-1366.6059" z="-467.2646"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_571_1805016.gdml"/>
+			<position name="posRef_572" x="-1572.7065" y="-275.4506" z="-184.5456"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_572_1805280.gdml"/>
+			<position name="posRef_573" x="-1689.0161" y="-274.8431" z="-197.7455"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_573_1805544.gdml"/>
+			<position name="posRef_574" x="-2140.9125" y="-1299.7798" z="-637.1885"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_574_1805808.gdml"/>
+			<position name="posRef_575" x="-893.1375" y="-814.3273" z="-266.6604"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_575_1806072.gdml"/>
+			<position name="posRef_576" x="-893.1375" y="-762.8702" z="-390.8888"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_576_1806344.gdml"/>
+			<position name="posRef_577" x="-893.1375" y="-408.3872" z="-170.5130"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_577_1806608.gdml"/>
+			<position name="posRef_578" x="-893.1375" y="-147.9795" z="-62.7480"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_578_1806872.gdml"/>
+			<position name="posRef_579" x="884.8625" y="-814.3273" z="-266.6604"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_579_1807136.gdml"/>
+			<position name="posRef_580" x="884.8625" y="-762.8702" z="-390.8888"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_580_1807400.gdml"/>
+			<position name="posRef_581" x="884.8625" y="-408.3872" z="-170.5130"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_581_1807664.gdml"/>
+			<position name="posRef_582" x="884.8625" y="-147.9795" z="-62.7480"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_582_1807928.gdml"/>
+			<position name="posRef_583" x="-4.1375" y="-834.1124" z="-403.2937"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_583_1808192.gdml"/>
+			<position name="posRef_584" x="-4.1375" y="-873.9043" z="-307.2275"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_584_1808456.gdml"/>
+			<position name="posRef_585" x="-4.1375" y="-660.4815" z="-273.5804"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_585_1808720.gdml"/>
+			<position name="posRef_586" x="-4.1375" y="-1021.3867" z="-423.0722"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_586_1808984.gdml"/>
+			<position name="posRef_587" x="-4.1375" y="-679.2445" z="-281.3523"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_587_1809248.gdml"/>
+			<position name="posRef_588" x="-4.1375" y="-1046.0164" z="-433.2742"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_588_1809512.gdml"/>
+			<position name="posRef_589" x="-512.1375" y="-1495.6997" z="-547.3706"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_589_1809776.gdml"/>
+			<position name="posRef_590" x="-4.1375" y="-1443.1084" z="-508.4036"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_590_1810040.gdml"/>
+			<position name="posRef_591" x="-1909.1375" y="-1436.4258" z="-524.5369"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_591_1810304.gdml"/>
+			<position name="posRef_592" x="1900.8625" y="-1436.4258" z="-524.5369"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_592_1810568.gdml"/>
+			<position name="posRef_593" x="-4.1375" y="-1720.4883" z="-642.1994"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_593_1810832.gdml"/>
+			<position name="posRef_594" x="503.8625" y="-1495.6997" z="-547.3706"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_594_1811096.gdml"/>
+			<position name="posRef_595" x="1779.2243" y="-698.9425" z="-359.9617"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_595_1811360.gdml"/>
+			<position name="posRef_596" x="1909.3888" y="-693.2000" z="-373.2472"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_596_1811624.gdml"/>
+			<position name="posRef_597" x="-893.1375" y="-834.1124" z="-403.2937"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_597_1811888.gdml"/>
+			<position name="posRef_598" x="-893.1375" y="-873.9043" z="-307.2275"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_598_1812152.gdml"/>
+			<position name="posRef_599" x="-893.1375" y="-660.4815" z="-273.5804"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_599_1812416.gdml"/>
+			<position name="posRef_600" x="-893.1375" y="-1021.3867" z="-423.0722"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_600_1812680.gdml"/>
+			<position name="posRef_601" x="-893.1375" y="-679.2445" z="-281.3523"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_601_1812944.gdml"/>
+			<position name="posRef_602" x="-893.1375" y="-1046.0164" z="-433.2742"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_602_1813208.gdml"/>
+			<position name="posRef_603" x="884.8625" y="-834.1124" z="-403.2937"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_603_1813472.gdml"/>
+			<position name="posRef_604" x="884.8625" y="-873.9043" z="-307.2275"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_604_1813736.gdml"/>
+			<position name="posRef_605" x="884.8625" y="-660.4815" z="-273.5804"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_605_1814000.gdml"/>
+			<position name="posRef_606" x="884.8625" y="-1021.3867" z="-423.0722"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_606_1814264.gdml"/>
+			<position name="posRef_607" x="884.8625" y="-679.2445" z="-281.3523"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_607_1814536.gdml"/>
+			<position name="posRef_608" x="884.8625" y="-1046.0164" z="-433.2742"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_608_1814800.gdml"/>
+			<position name="posRef_609" x="2132.6375" y="-1343.7795" z="-655.4138"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_609_1815064.gdml"/>
+			<position name="posRef_610" x="-1554.9758" y="-353.4273" z="-853.2489"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_610_1815328.gdml"/>
+			<position name="posRef_611" x="-1294.9359" y="-353.4273" z="-853.2489"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_611_1815592.gdml"/>
+			<position name="posRef_612" x="-1897.2509" y="-419.4269" z="-825.9110"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_612_1815856.gdml"/>
+			<position name="posRef_613" x="-1897.2509" y="-287.4276" z="-880.5869"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_613_1816120.gdml"/>
+			<position name="posRef_614" x="-1959.2942" y="-441.4268" z="-816.7983"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_614_1816384.gdml"/>
+			<position name="posRef_615" x="-1959.2942" y="-265.4278" z="-889.6995"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_615_1816648.gdml"/>
+			<position name="posRef_616" x="-4.1375" y="-390.8888" z="-762.8702"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_616_1816912.gdml"/>
+			<position name="posRef_617" x="-4.1375" y="-266.6604" z="-814.3273"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_617_1817176.gdml"/>
+			<position name="posRef_618" x="-4.1375" y="-170.5130" z="-408.3872"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_618_1817440.gdml"/>
+			<position name="posRef_619" x="-4.1375" y="-62.7480" z="-147.9795"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_619_1817704.gdml"/>
+			<position name="posRef_620" x="503.8625" y="-547.3706" z="-1495.6997"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_620_1817968.gdml"/>
+			<position name="posRef_621" x="-4.1375" y="-508.4036" z="-1443.1084"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_621_1818232.gdml"/>
+			<position name="posRef_622" x="1900.8625" y="-524.5369" z="-1436.4258"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_622_1818496.gdml"/>
+			<position name="posRef_623" x="-1909.1375" y="-524.5369" z="-1436.4258"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_623_1818760.gdml"/>
+			<position name="posRef_624" x="-4.1375" y="-642.1994" z="-1720.4883"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_624_1819024.gdml"/>
+			<position name="posRef_625" x="-512.1375" y="-547.3706" z="-1495.6997"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_625_1819288.gdml"/>
+			<position name="posRef_626" x="2132.6375" y="-655.4138" z="-1343.7795"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_626_1819552.gdml"/>
+			<position name="posRef_627" x="-1689.0161" y="-197.7455" z="-274.8431"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_627_1819816.gdml"/>
+			<position name="posRef_628" x="-1572.7065" y="-184.5456" z="-275.4506"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_628_1820080.gdml"/>
+			<position name="posRef_629" x="-4.1375" y="-450.0282" z="-1086.4642"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_629_1820344.gdml"/>
+			<position name="posRef_630" x="1233.1600" y="-353.4273" z="-853.2489"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_630_1820608.gdml"/>
+			<position name="posRef_631" x="2060.2475" y="-220.4699" z="-385.5166"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_631_1820872.gdml"/>
+			<position name="posRef_632" x="2060.2475" y="-56.9831" z="-274.8230"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_632_1821136.gdml"/>
+			<position name="posRef_633" x="95.5080" y="-325.7086" z="-864.7304"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_633_1821400.gdml"/>
+			<position name="posRef_634" x="95.5080" y="-381.4674" z="-842.5436"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_634_1821664.gdml"/>
+			<position name="posRef_635" x="1909.3888" y="-373.1616" z="-693.2000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_635_1821928.gdml"/>
+			<position name="posRef_636" x="1779.2243" y="-359.9617" z="-698.9425"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_636_1822192.gdml"/>
+			<position name="posRef_637" x="-2140.9125" y="-637.1885" z="-1299.7798"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_637_1822456.gdml"/>
+			<position name="posRef_638" x="-1572.7065" y="-64.2796" z="-325.2664"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_638_1822728.gdml"/>
+			<position name="posRef_639" x="-1689.0161" y="-60.9766" z="-330.7340"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_639_1822992.gdml"/>
+			<position name="posRef_640" x="-2140.9125" y="-467.2646" z="-1366.6059"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_640_1823256.gdml"/>
+			<position name="posRef_641" x="-893.1375" y="-390.8888" z="-762.8702"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_641_1823520.gdml"/>
+			<position name="posRef_642" x="-893.1375" y="-266.6604" z="-814.3273"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_642_1823784.gdml"/>
+			<position name="posRef_643" x="-893.1375" y="-170.5130" z="-408.3872"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_643_1824048.gdml"/>
+			<position name="posRef_644" x="-893.1375" y="-62.7480" z="-147.9795"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_644_1824312.gdml"/>
+			<position name="posRef_645" x="884.8625" y="-390.8888" z="-762.8702"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_645_1824576.gdml"/>
+			<position name="posRef_646" x="884.8625" y="-266.6604" z="-814.3273"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_646_1824840.gdml"/>
+			<position name="posRef_647" x="884.8625" y="-170.5130" z="-408.3872"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_647_1825104.gdml"/>
+			<position name="posRef_648" x="884.8625" y="-62.7480" z="-147.9795"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_648_1825368.gdml"/>
+			<position name="posRef_649" x="-4.1375" y="-307.2275" z="-873.9043"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_649_1825632.gdml"/>
+			<position name="posRef_650" x="-4.1375" y="-403.2937" z="-834.1124"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_650_1825896.gdml"/>
+			<position name="posRef_651" x="-4.1375" y="-273.5804" z="-660.4815"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_651_1826160.gdml"/>
+			<position name="posRef_652" x="-4.1375" y="-423.0722" z="-1021.3867"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_652_1826424.gdml"/>
+			<position name="posRef_653" x="-4.1375" y="-281.3523" z="-679.2445"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_653_1826688.gdml"/>
+			<position name="posRef_654" x="-4.1375" y="-433.2742" z="-1046.0164"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_654_1826952.gdml"/>
+			<position name="posRef_655" x="-512.1375" y="-670.5699" z="-1444.6689"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_655_1827216.gdml"/>
+			<position name="posRef_656" x="-4.1375" y="-660.9361" z="-1379.9274"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_656_1827480.gdml"/>
+			<position name="posRef_657" x="-1909.1375" y="-644.8029" z="-1386.6100"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_657_1827744.gdml"/>
+			<position name="posRef_658" x="1900.8625" y="-644.8029" z="-1386.6100"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_658_1828008.gdml"/>
+			<position name="posRef_659" x="-4.1375" y="-762.4654" z="-1670.6725"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_659_1828272.gdml"/>
+			<position name="posRef_660" x="503.8625" y="-670.5699" z="-1444.6689"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_660_1828536.gdml"/>
+			<position name="posRef_661" x="1779.2243" y="-239.6957" z="-748.7583"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_661_1828800.gdml"/>
+			<position name="posRef_662" x="1909.3888" y="-226.2334" z="-754.4327"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_662_1829064.gdml"/>
+			<position name="posRef_663" x="-893.1375" y="-307.2275" z="-873.9043"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_663_1829328.gdml"/>
+			<position name="posRef_664" x="-893.1375" y="-403.2937" z="-834.1124"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_664_1829592.gdml"/>
+			<position name="posRef_665" x="-893.1375" y="-273.5804" z="-660.4815"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_665_1829856.gdml"/>
+			<position name="posRef_666" x="-893.1375" y="-423.0722" z="-1021.3867"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_666_1830120.gdml"/>
+			<position name="posRef_667" x="-893.1375" y="-281.3523" z="-679.2445"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_667_1830384.gdml"/>
+			<position name="posRef_668" x="-893.1375" y="-433.2742" z="-1046.0164"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_668_1830648.gdml"/>
+			<position name="posRef_669" x="884.8625" y="-307.2275" z="-873.9043"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_669_1830920.gdml"/>
+			<position name="posRef_670" x="884.8625" y="-403.2937" z="-834.1124"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_670_1831184.gdml"/>
+			<position name="posRef_671" x="884.8625" y="-273.5804" z="-660.4815"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_671_1831448.gdml"/>
+			<position name="posRef_672" x="884.8625" y="-423.0722" z="-1021.3867"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_672_1831712.gdml"/>
+			<position name="posRef_673" x="884.8625" y="-281.3523" z="-679.2445"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_673_1831976.gdml"/>
+			<position name="posRef_674" x="884.8625" y="-433.2742" z="-1046.0164"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_674_1832240.gdml"/>
+			<position name="posRef_675" x="2132.6375" y="-485.4899" z="-1410.6056"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_675_1832504.gdml"/>
+			<position name="posRef_676" x="-1554.9758" y="-853.2489" z="353.4273"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_676_1832768.gdml"/>
+			<position name="posRef_677" x="-1294.9359" y="-853.2489" z="353.4273"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_677_1833032.gdml"/>
+			<position name="posRef_678" x="-1897.2509" y="-825.9110" z="419.4269"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_678_1833296.gdml"/>
+			<position name="posRef_679" x="-1897.2509" y="-880.5869" z="287.4276"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_679_1833560.gdml"/>
+			<position name="posRef_680" x="-1959.2942" y="-816.7983" z="441.4268"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_680_1833824.gdml"/>
+			<position name="posRef_681" x="-1959.2942" y="-889.6995" z="265.4278"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_681_1834088.gdml"/>
+			<position name="posRef_682" x="-4.1375" y="-762.8702" z="390.8888"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_682_1834352.gdml"/>
+			<position name="posRef_683" x="-4.1375" y="-814.3273" z="266.6604"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_683_1834616.gdml"/>
+			<position name="posRef_684" x="-4.1375" y="-408.3872" z="170.5130"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_684_1834880.gdml"/>
+			<position name="posRef_685" x="-4.1375" y="-147.9795" z="62.7480"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_685_1835144.gdml"/>
+			<position name="posRef_686" x="503.8625" y="-1495.6997" z="547.3706"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_686_1835408.gdml"/>
+			<position name="posRef_687" x="-4.1375" y="-1443.1084" z="508.4036"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_687_1835672.gdml"/>
+			<position name="posRef_688" x="1900.8625" y="-1436.4258" z="524.5369"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_688_1835936.gdml"/>
+			<position name="posRef_689" x="-1909.1375" y="-1436.4258" z="524.5369"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_689_1836200.gdml"/>
+			<position name="posRef_690" x="-4.1375" y="-1720.4883" z="642.1994"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_690_1836464.gdml"/>
+			<position name="posRef_691" x="-512.1375" y="-1495.6997" z="547.3706"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_691_1836728.gdml"/>
+			<position name="posRef_692" x="2132.6375" y="-1343.7795" z="655.4138"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_692_1836992.gdml"/>
+			<position name="posRef_693" x="-1689.0161" y="-274.8431" z="197.7455"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_693_1837256.gdml"/>
+			<position name="posRef_694" x="-1572.7065" y="-275.4506" z="184.5456"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_694_1837520.gdml"/>
+			<position name="posRef_695" x="-4.1375" y="-1086.4642" z="450.0282"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_695_1837784.gdml"/>
+			<position name="posRef_696" x="1233.1600" y="-853.2489" z="353.4273"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_696_1838048.gdml"/>
+			<position name="posRef_697" x="2060.2475" y="-385.5166" z="220.4699"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_697_1838312.gdml"/>
+			<position name="posRef_698" x="2060.2475" y="-274.8230" z="56.9831"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_698_1838576.gdml"/>
+			<position name="posRef_699" x="95.5080" y="-864.7304" z="325.7086"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_699_1838840.gdml"/>
+			<position name="posRef_700" x="95.5080" y="-842.5436" z="381.4674"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_700_1843208.gdml"/>
+			<position name="posRef_701" x="1909.3888" y="-693.2000" z="373.1616"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_701_1843472.gdml"/>
+			<position name="posRef_702" x="1779.2243" y="-698.9425" z="359.9617"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_702_1843736.gdml"/>
+			<position name="posRef_703" x="-2140.9125" y="-1299.7798" z="637.1885"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_703_1844000.gdml"/>
+			<position name="posRef_704" x="-1572.7065" y="-325.2664" z="64.2796"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_704_1844264.gdml"/>
+			<position name="posRef_705" x="-1689.0161" y="-330.7340" z="60.9766"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_705_1844528.gdml"/>
+			<position name="posRef_706" x="-2140.9125" y="-1366.6059" z="467.2646"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_706_1844792.gdml"/>
+			<position name="posRef_707" x="-893.1375" y="-762.8702" z="390.8888"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_707_1845056.gdml"/>
+			<position name="posRef_708" x="-893.1375" y="-814.3273" z="266.6604"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_708_1845320.gdml"/>
+			<position name="posRef_709" x="-893.1375" y="-408.3872" z="170.5130"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_709_1845584.gdml"/>
+			<position name="posRef_710" x="-893.1375" y="-147.9795" z="62.7480"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_710_1845848.gdml"/>
+			<position name="posRef_711" x="884.8625" y="-762.8702" z="390.8888"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_711_1846112.gdml"/>
+			<position name="posRef_712" x="884.8625" y="-814.3273" z="266.6604"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_712_1846376.gdml"/>
+			<position name="posRef_713" x="884.8625" y="-408.3872" z="170.5130"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_713_1846640.gdml"/>
+			<position name="posRef_714" x="884.8625" y="-147.9795" z="62.7480"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_714_1846904.gdml"/>
+			<position name="posRef_715" x="-4.1375" y="-873.9043" z="307.2275"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_715_1847168.gdml"/>
+			<position name="posRef_716" x="-4.1375" y="-834.1124" z="403.2937"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_716_1872016.gdml"/>
+			<position name="posRef_717" x="-4.1375" y="-660.4815" z="273.5804"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_717_1872280.gdml"/>
+			<position name="posRef_718" x="-4.1375" y="-1021.3867" z="423.0722"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_718_1872544.gdml"/>
+			<position name="posRef_719" x="-4.1375" y="-679.2445" z="281.3523"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_719_1872808.gdml"/>
+			<position name="posRef_720" x="-4.1375" y="-1046.0164" z="433.2742"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_720_1873072.gdml"/>
+			<position name="posRef_721" x="-512.1375" y="-1444.6689" z="670.5699"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_721_1873336.gdml"/>
+			<position name="posRef_722" x="-4.1375" y="-1379.9274" z="660.9361"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_722_1873600.gdml"/>
+			<position name="posRef_723" x="-1909.1375" y="-1386.6100" z="644.8029"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_723_1873864.gdml"/>
+			<position name="posRef_724" x="1900.8625" y="-1386.6100" z="644.8029"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_724_1874128.gdml"/>
+			<position name="posRef_725" x="-4.1375" y="-1670.6725" z="762.4654"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_725_1874392.gdml"/>
+			<position name="posRef_726" x="503.8625" y="-1444.6689" z="670.5699"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_726_1874656.gdml"/>
+			<position name="posRef_727" x="1779.2243" y="-748.7583" z="239.6957"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_727_1874920.gdml"/>
+			<position name="posRef_728" x="1909.3888" y="-754.4327" z="226.2334"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_728_1875184.gdml"/>
+			<position name="posRef_729" x="-893.1375" y="-873.9043" z="307.2275"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_729_1875448.gdml"/>
+			<position name="posRef_730" x="-893.1375" y="-834.1124" z="403.2937"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_730_1875712.gdml"/>
+			<position name="posRef_731" x="-893.1375" y="-660.4815" z="273.5804"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_731_1875976.gdml"/>
+			<position name="posRef_732" x="-893.1375" y="-1021.3867" z="423.0722"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_732_1876240.gdml"/>
+			<position name="posRef_733" x="-893.1375" y="-679.2445" z="281.3523"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_733_1876504.gdml"/>
+			<position name="posRef_734" x="-893.1375" y="-1046.0164" z="433.2742"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_734_1876768.gdml"/>
+			<position name="posRef_735" x="884.8625" y="-873.9043" z="307.2275"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_735_1877032.gdml"/>
+			<position name="posRef_736" x="884.8625" y="-834.1124" z="403.2937"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_736_1877296.gdml"/>
+			<position name="posRef_737" x="884.8625" y="-660.4815" z="273.5804"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_737_1877560.gdml"/>
+			<position name="posRef_738" x="884.8625" y="-1021.3867" z="423.0722"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_738_1877824.gdml"/>
+			<position name="posRef_739" x="884.8625" y="-679.2445" z="281.3523"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_739_1878088.gdml"/>
+			<position name="posRef_740" x="884.8625" y="-1046.0164" z="433.2742"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_740_1878352.gdml"/>
+			<position name="posRef_741" x="2132.6375" y="-1410.6056" z="485.4899"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_741_1878616.gdml"/>
+			<position name="posRef_742" x="2085.6475" y="-131.5715" z="468.4978"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_742_1878880.gdml"/>
+			<position name="posRef_743" x="2085.6475" y="57.3755" z="409.2372"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_743_1879144.gdml"/>
+			<position name="posRef_744" x="2174.1791" y="-45.0355" z="468.4978"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_744_1879408.gdml"/>
+			<position name="posRef_745" x="2612.0625" y="-1789.6550" z="-864.6412"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_745_1879672.gdml"/>
+			<position name="posRef_746" x="2225.3475" y="-407.4898" z="88.2730"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_746_1879936.gdml"/>
+			<position name="posRef_747" x="2339.6475" y="15.7766" z="0.0000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_747_1880200.gdml"/>
+			<position name="posRef_748" x="2637.4625" y="-3071.3130" z="-1495.0806"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_748_1880464.gdml"/>
+			<position name="posRef_749" x="2339.6475" y="21.8160" z="-0.0000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_749_1880728.gdml"/>
+			<position name="posRef_750" x="2475.8550" y="-423.6755" z="-323.2125"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_750_1880992.gdml"/>
+			<position name="posRef_751" x="2612.0625" y="-1818.8155" z="-794.2416"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_751_1881256.gdml"/>
+			<position name="posRef_752" x="-2385.3875" y="-1955.8000" z="-2526.3399"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_752_1881520.gdml"/>
+			<position name="posRef_753" x="-2385.3875" y="-1955.8000" z="-2425.7000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_753_1881784.gdml"/>
+			<position name="posRef_754" x="-183.5250" y="-1301.7387" z="-2851.6325"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_754_1882048.gdml"/>
+			<position name="posRef_755" x="-183.5250" y="-2609.8613" z="-2851.6325"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_755_1882312.gdml"/>
+			<position name="posRef_756" x="2183.4375" y="-819.1500" z="-3175.0000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_756_1882576.gdml"/>
+			<position name="posRef_757" x="2183.4375" y="-3092.4500" z="-3175.0000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_757_1882840.gdml"/>
+			<position name="posRef_758" x="2210.4250" y="-3092.4500" z="-3092.4500"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_758_1883104.gdml"/>
+			<position name="posRef_759" x="2377.1125" y="-2162.2405" z="-2162.2405"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_759_1883368.gdml"/>
+			<position name="posRef_760" x="2377.1125" y="-1414.0750" z="-321.8656"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_760_1883632.gdml"/>
+			<position name="posRef_761" x="2377.1125" y="-1414.0750" z="-17.4625"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_761_1883896.gdml"/>
+			<position name="posRef_762" x="2377.1125" y="-3086.1000" z="-1558.5440"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_762_1884168.gdml"/>
+			<position name="posRef_763" x="2377.1125" y="-1905.3161" z="-789.2078"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_763_1884432.gdml"/>
+			<position name="posRef_764" x="2377.1125" y="-79.3750" z="-3263.9000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_764_1884696.gdml"/>
+			<position name="posRef_765" x="2377.1125" y="-3263.9000" z="-1558.5440"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_765_1884960.gdml"/>
+			<position name="posRef_766" x="2210.4250" y="-2002.4192" z="-852.5800"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_766_1885224.gdml"/>
+			<position name="posRef_767" x="2542.2125" y="2322.1923" z="-990.7283"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_767_1885488.gdml"/>
+			<position name="posRef_768" x="2377.1125" y="-3175.0000" z="-17.4625"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_768_1885752.gdml"/>
+			<position name="posRef_769" x="2542.2125" y="-2322.1923" z="-990.7283"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_769_1886016.gdml"/>
+			<position name="posRef_770" x="2377.1125" y="-789.2078" z="-1905.3161"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_770_1886280.gdml"/>
+			<position name="posRef_771" x="2377.1125" y="3263.9000" z="-1558.5440"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_771_1886544.gdml"/>
+			<position name="posRef_772" x="2377.1125" y="3175.0000" z="-17.4625"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_772_1886808.gdml"/>
+			<position name="posRef_773" x="2542.2125" y="990.7283" z="-2322.1923"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_773_1887072.gdml"/>
+			<position name="posRef_774" x="2377.1125" y="-3530.6000" z="-3175.0000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_774_1887336.gdml"/>
+			<position name="posRef_775" x="2377.1125" y="1025.9402" z="-1025.9402"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_775_1887600.gdml"/>
+			<position name="posRef_776" x="2210.4250" y="2002.4192" z="-852.5800"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_776_1887864.gdml"/>
+			<position name="posRef_777" x="2377.1125" y="1414.0750" z="-321.8656"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_777_1888128.gdml"/>
+			<position name="posRef_778" x="2377.1125" y="1414.0750" z="-17.4625"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_778_1888392.gdml"/>
+			<position name="posRef_779" x="2377.1125" y="1905.3161" z="-789.2078"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_779_1888656.gdml"/>
+			<position name="posRef_780" x="2377.1125" y="3086.1000" z="-1558.5440"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_780_1888920.gdml"/>
+			<position name="posRef_781" x="2210.4250" y="-852.5800" z="-2002.4192"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_781_1889184.gdml"/>
+			<position name="posRef_782" x="2377.1125" y="789.2078" z="-1905.3161"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_782_1889448.gdml"/>
+			<position name="posRef_783" x="2377.1125" y="0.0000" z="-1414.0750"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_783_1889712.gdml"/>
+			<position name="posRef_784" x="2377.1125" y="-1025.9402" z="-1025.9402"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_784_1889976.gdml"/>
+			<position name="posRef_785" x="2210.4250" y="852.5800" z="-2002.4192"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_785_1890240.gdml"/>
+			<position name="posRef_786" x="2210.4250" y="3092.4500" z="-3092.4500"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_786_1890504.gdml"/>
+			<position name="posRef_787" x="2542.2125" y="-990.7283" z="-2322.1923"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_787_1890768.gdml"/>
+			<position name="posRef_788" x="2246.9375" y="781.0500" z="-17.4625"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_788_1891032.gdml"/>
+			<position name="posRef_789" x="2246.9375" y="-0.0000" z="-512.3322"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_789_1891296.gdml"/>
+			<position name="posRef_790" x="2246.9375" y="-781.0500" z="-17.4625"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_790_1891560.gdml"/>
+			<position name="posRef_791" x="2377.1125" y="2162.2405" z="-2162.2405"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_791_1891824.gdml"/>
+			<position name="posRef_792" x="2377.1125" y="-79.3750" z="-3086.1000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_792_1892088.gdml"/>
+			<position name="posRef_793" x="2377.1125" y="3175.0000" z="17.4625"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_793_1892360.gdml"/>
+			<position name="posRef_794" x="2377.1125" y="-79.3750" z="3263.9000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_794_1892624.gdml"/>
+			<position name="posRef_795" x="2377.1125" y="-3263.9000" z="1558.5440"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_795_1892888.gdml"/>
+			<position name="posRef_796" x="2210.4250" y="-3092.4500" z="3092.4500"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_796_1893152.gdml"/>
+			<position name="posRef_797" x="2210.4250" y="-2002.4192" z="852.5800"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_797_1893416.gdml"/>
+			<position name="posRef_798" x="2377.1125" y="-789.2078" z="1905.3161"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_798_1893680.gdml"/>
+			<position name="posRef_799" x="2210.4250" y="852.5800" z="2002.4192"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_799_1893944.gdml"/>
+			<position name="posRef_800" x="2377.1125" y="-2162.2405" z="2162.2405"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_800_1894208.gdml"/>
+			<position name="posRef_801" x="2377.1125" y="-3530.6000" z="3175.0000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_801_1894472.gdml"/>
+			<position name="posRef_802" x="2377.1125" y="2162.2405" z="2162.2405"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_802_1894736.gdml"/>
+			<position name="posRef_803" x="2377.1125" y="-79.3750" z="3086.1000"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_803_1895000.gdml"/>
+			<position name="posRef_804" x="2377.1125" y="789.2078" z="1905.3161"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_804_1895264.gdml"/>
+			<position name="posRef_805" x="2542.2125" y="-990.7283" z="2322.1923"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_805_1895528.gdml"/>
+			<position name="posRef_806" x="2210.4250" y="3092.4500" z="3092.4500"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_806_1895792.gdml"/>
+			<position name="posRef_807" x="2377.1125" y="-1905.3161" z="789.2078"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_807_1896056.gdml"/>
+			<position name="posRef_808" x="2210.4250" y="2002.4192" z="852.5800"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_808_1896320.gdml"/>
+			<position name="posRef_809" x="2542.2125" y="2322.1923" z="990.7283"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_809_1896584.gdml"/>
+			<position name="posRef_810" x="2377.1125" y="-1025.9402" z="1025.9402"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_810_1896848.gdml"/>
+			<position name="posRef_811" x="2377.1125" y="0.0000" z="1414.0750"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_811_1897112.gdml"/>
+			<position name="posRef_812" x="2246.9375" y="781.0500" z="17.4625"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_812_1897376.gdml"/>
+			<position name="posRef_813" x="2246.9375" y="-0.0000" z="512.3322"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_813_1897640.gdml"/>
+			<position name="posRef_814" x="2246.9375" y="-781.0500" z="17.4625"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_814_1897904.gdml"/>
+			<position name="posRef_815" x="2377.1125" y="1905.3161" z="789.2078"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_815_1898168.gdml"/>
+			<position name="posRef_816" x="2377.1125" y="3263.9000" z="1558.5440"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_816_1898432.gdml"/>
+			<position name="posRef_817" x="2377.1125" y="-1414.0750" z="321.8656"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_817_1898696.gdml"/>
+			<position name="posRef_818" x="2377.1125" y="-1414.0750" z="17.4625"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_818_1898960.gdml"/>
+			<position name="posRef_819" x="2542.2125" y="-2322.1923" z="990.7283"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_819_1899224.gdml"/>
+			<position name="posRef_820" x="2377.1125" y="-3086.1000" z="1558.5440"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_820_1899488.gdml"/>
+			<position name="posRef_821" x="2377.1125" y="-3175.0000" z="17.4625"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_821_1899752.gdml"/>
+			<position name="posRef_822" x="2377.1125" y="3086.1000" z="1558.5440"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_822_1900016.gdml"/>
+			<position name="posRef_823" x="2377.1125" y="1414.0750" z="321.8656"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_823_1900280.gdml"/>
+			<position name="posRef_824" x="2377.1125" y="1414.0750" z="17.4625"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_824_1900552.gdml"/>
+			<position name="posRef_825" x="2542.2125" y="990.7283" z="2322.1923"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_825_1900816.gdml"/>
+			<position name="posRef_826" x="2210.4250" y="-852.5800" z="2002.4192"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_826_1901080.gdml"/>
+			<position name="posRef_827" x="2377.1125" y="1025.9402" z="1025.9402"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_827_1901344.gdml"/>
+			<position name="posRef_828" x="2462.0438" y="-346.6618" z="-770.5423"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_828_1901608.gdml"/>
+			<position name="posRef_829" x="2677.1500" y="-572.0126" z="-980.1242"/>
+			<rotationref ref="identity"/>
+		</physvol>
+		<physvol>
+			<file name="Step_829_1901872.gdml"/>
+			<position name="posRef_830" x="2588.2500" y="-521.9450" z="-918.8313"/>
+			<rotationref ref="identity"/>
+		</physvol>
+	</volume>
+</structure>
+
+<setup name="QTOR_Fastrad" version="1.0">
+	<world ref="Structure_95030864"/>
+</setup>
+
+</gdml>

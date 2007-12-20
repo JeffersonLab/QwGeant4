@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE gdml [
+	<!ENTITY materials SYSTEM "QTOR_Fastrad_materials.xml">
+]>
+
+<!--   GDML translation of the component "Step 246" from the Fastrad file : "QTOR_Fastrad.ray"
+	Processed the 14/12/2007 at 15h05 by the GDML module of Fastrad 3.0-->
+
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="QTOR_Fastrad.xsd">
+
+
+<define>
+	<position name="v0" x="-144.4625" y="-282.0244" z="56.3011" unit="mm"/>
+	<position name="v1" x="-144.4625" y="-274.1967" z="94.0600" unit="mm"/>
+	<position name="v2" x="-144.4625" y="-259.4397" z="129.6864" unit="mm"/>
+	<position name="v3" x="-144.4625" y="-238.2752" z="161.9210" unit="mm"/>
+	<position name="v4" x="144.4625" y="-282.0244" z="56.3011" unit="mm"/>
+	<position name="v5" x="144.4625" y="-274.1967" z="94.0600" unit="mm"/>
+	<position name="v6" x="144.4625" y="-259.4397" z="129.6864" unit="mm"/>
+	<position name="v7" x="144.4625" y="-238.2752" z="161.9210" unit="mm"/>
+	<position name="v8" x="-144.4625" y="-275.0363" z="44.4806" unit="mm"/>
+	<position name="v9" x="-144.4625" y="-279.0370" z="47.2614" unit="mm"/>
+	<position name="v10" x="-144.4625" y="-281.5164" z="51.4555" unit="mm"/>
+	<position name="v11" x="144.4625" y="-275.0363" z="44.4806" unit="mm"/>
+	<position name="v12" x="144.4625" y="-279.0370" z="47.2614" unit="mm"/>
+	<position name="v13" x="144.4625" y="-281.5164" z="51.4555" unit="mm"/>
+	<position name="v14" x="-144.4625" y="248.7602" z="-172.4830" unit="mm"/>
+	<position name="v15" x="144.4625" y="248.7602" z="-172.4830" unit="mm"/>
+	<position name="v16" x="-144.4625" y="249.4902" z="-170.7207" unit="mm"/>
+	<position name="v17" x="144.4625" y="249.4902" z="-170.7207" unit="mm"/>
+	<position name="v18" x="-144.4625" y="-274.3064" z="46.2430" unit="mm"/>
+	<position name="v19" x="144.4625" y="-274.3064" z="46.2430" unit="mm"/>
+	<position name="v20" x="-144.4625" y="-280.1284" z="56.0911" unit="mm"/>
+	<position name="v21" x="-144.4625" y="-279.7052" z="52.0541" unit="mm"/>
+	<position name="v22" x="-144.4625" y="-277.6395" z="48.5598" unit="mm"/>
+	<position name="v23" x="144.4625" y="-280.1284" z="56.0911" unit="mm"/>
+	<position name="v24" x="144.4625" y="-279.7052" z="52.0541" unit="mm"/>
+	<position name="v25" x="144.4625" y="-277.6395" z="48.5598" unit="mm"/>
+	<position name="v26" x="-144.4625" y="-236.7861" z="160.7288" unit="mm"/>
+	<position name="v27" x="-144.4625" y="-257.7538" z="128.7940" unit="mm"/>
+	<position name="v28" x="-144.4625" y="-272.3735" z="93.4989" unit="mm"/>
+	<position name="v29" x="144.4625" y="-236.7861" z="160.7288" unit="mm"/>
+	<position name="v30" x="144.4625" y="-257.7538" z="128.7940" unit="mm"/>
+	<position name="v31" x="144.4625" y="-272.3735" z="93.4989" unit="mm"/>
+	<position name="v32" x="-144.4625" y="-225.7056" z="163.5757" unit="mm"/>
+	<position name="v33" x="-144.4625" y="-229.7007" z="164.2943" unit="mm"/>
+	<position name="v34" x="-144.4625" y="-233.6322" z="163.2842" unit="mm"/>
+	<position name="v35" x="144.4625" y="-225.7056" z="163.5757" unit="mm"/>
+	<position name="v36" x="144.4625" y="-229.7007" z="164.2943" unit="mm"/>
+	<position name="v37" x="144.4625" y="-233.6322" z="163.2842" unit="mm"/>
+	<position name="v38" x="-144.4625" y="298.0910" z="-53.3880" unit="mm"/>
+	<position name="v39" x="144.4625" y="298.0910" z="-53.3880" unit="mm"/>
+	<position name="v40" x="-144.4625" y="298.8210" z="-51.6256" unit="mm"/>
+	<position name="v41" x="144.4625" y="298.8210" z="-51.6256" unit="mm"/>
+	<position name="v42" x="-144.4625" y="-224.9756" z="165.3380" unit="mm"/>
+	<position name="v43" x="144.4625" y="-224.9756" z="165.3380" unit="mm"/>
+	<position name="v44" x="-144.4625" y="-234.4896" z="164.9882" unit="mm"/>
+	<position name="v45" x="-144.4625" y="-229.7708" z="166.2005" unit="mm"/>
+	<position name="v46" x="144.4625" y="-234.4896" z="164.9882" unit="mm"/>
+	<position name="v47" x="144.4625" y="-229.7708" z="166.2005" unit="mm"/>
+</define>
+
+<!-- Materials definition CallBack -->
+
+&materials;
+
+<solids>
+	<tessellated name="Step_246_1720328_solid">
+	<!-- Face 0 -->
+		<triangular vertex1="v4" vertex2="v5" vertex3="v1" type="ABSOLUTE"/>
+		<triangular vertex1="v1" vertex2="v0" vertex3="v4" type="ABSOLUTE"/>
+		<triangular vertex1="v5" vertex2="v6" vertex3="v1" type="ABSOLUTE"/>
+		<triangular vertex1="v6" vertex2="v7" vertex3="v3" type="ABSOLUTE"/>
+		<triangular vertex1="v3" vertex2="v2" vertex3="v6" type="ABSOLUTE"/>
+		<triangular vertex1="v6" vertex2="v2" vertex3="v1" type="ABSOLUTE"/>
+	<!-- Face 1 -->
+		<triangular vertex1="v11" vertex2="v12" vertex3="v9" type="ABSOLUTE"/>
+		<triangular vertex1="v9" vertex2="v8" vertex3="v11" type="ABSOLUTE"/>
+		<triangular vertex1="v12" vertex2="v13" vertex3="v9" type="ABSOLUTE"/>
+		<triangular vertex1="v13" vertex2="v4" vertex3="v0" type="ABSOLUTE"/>
+		<triangular vertex1="v0" vertex2="v10" vertex3="v13" type="ABSOLUTE"/>
+		<triangular vertex1="v13" vertex2="v10" vertex3="v9" type="ABSOLUTE"/>
+	<!-- Face 2 -->
+		<triangular vertex1="v15" vertex2="v11" vertex3="v8" type="ABSOLUTE"/>
+		<triangular vertex1="v8" vertex2="v14" vertex3="v15" type="ABSOLUTE"/>
+	<!-- Face 3 -->
+		<triangular vertex1="v15" vertex2="v14" vertex3="v16" type="ABSOLUTE"/>
+		<triangular vertex1="v16" vertex2="v17" vertex3="v15" type="ABSOLUTE"/>
+	<!-- Face 4 -->
+		<triangular vertex1="v16" vertex2="v18" vertex3="v19" type="ABSOLUTE"/>
+		<triangular vertex1="v19" vertex2="v17" vertex3="v16" type="ABSOLUTE"/>
+	<!-- Face 5 -->
+		<triangular vertex1="v22" vertex2="v25" vertex3="v19" type="ABSOLUTE"/>
+		<triangular vertex1="v19" vertex2="v18" vertex3="v22" type="ABSOLUTE"/>
+		<triangular vertex1="v22" vertex2="v24" vertex3="v25" type="ABSOLUTE"/>
+		<triangular vertex1="v20" vertex2="v23" vertex3="v24" type="ABSOLUTE"/>
+		<triangular vertex1="v24" vertex2="v21" vertex3="v20" type="ABSOLUTE"/>
+		<triangular vertex1="v22" vertex2="v21" vertex3="v24" type="ABSOLUTE"/>
+	<!-- Face 6 -->
+		<triangular vertex1="v28" vertex2="v31" vertex3="v23" type="ABSOLUTE"/>
+		<triangular vertex1="v23" vertex2="v20" vertex3="v28" type="ABSOLUTE"/>
+		<triangular vertex1="v28" vertex2="v30" vertex3="v31" type="ABSOLUTE"/>
+		<triangular vertex1="v26" vertex2="v29" vertex3="v30" type="ABSOLUTE"/>
+		<triangular vertex1="v30" vertex2="v27" vertex3="v26" type="ABSOLUTE"/>
+		<triangular vertex1="v28" vertex2="v27" vertex3="v30" type="ABSOLUTE"/>
+	<!-- Face 7 -->
+		<triangular vertex1="v34" vertex2="v37" vertex3="v29" type="ABSOLUTE"/>
+		<triangular vertex1="v29" vertex2="v26" vertex3="v34" type="ABSOLUTE"/>
+		<triangular vertex1="v34" vertex2="v36" vertex3="v37" type="ABSOLUTE"/>
+		<triangular vertex1="v32" vertex2="v35" vertex3="v36" type="ABSOLUTE"/>
+		<triangular vertex1="v36" vertex2="v33" vertex3="v32" type="ABSOLUTE"/>
+		<triangular vertex1="v34" vertex2="v33" vertex3="v36" type="ABSOLUTE"/>
+	<!-- Face 8 -->
+		<triangular vertex1="v39" vertex2="v35" vertex3="v32" type="ABSOLUTE"/>
+		<triangular vertex1="v32" vertex2="v38" vertex3="v39" type="ABSOLUTE"/>
+	<!-- Face 9 -->
+		<triangular vertex1="v39" vertex2="v38" vertex3="v40" type="ABSOLUTE"/>
+		<triangular vertex1="v40" vertex2="v41" vertex3="v39" type="ABSOLUTE"/>
+	<!-- Face 10 -->
+		<triangular vertex1="v40" vertex2="v42" vertex3="v43" type="ABSOLUTE"/>
+		<triangular vertex1="v43" vertex2="v41" vertex3="v40" type="ABSOLUTE"/>
+	<!-- Face 11 -->
+		<triangular vertex1="v7" vertex2="v46" vertex3="v44" type="ABSOLUTE"/>
+		<triangular vertex1="v44" vertex2="v3" vertex3="v7" type="ABSOLUTE"/>
+		<triangular vertex1="v46" vertex2="v47" vertex3="v44" type="ABSOLUTE"/>
+		<triangular vertex1="v47" vertex2="v43" vertex3="v42" type="ABSOLUTE"/>
+		<triangular vertex1="v42" vertex2="v45" vertex3="v47" type="ABSOLUTE"/>
+		<triangular vertex1="v47" vertex2="v45" vertex3="v44" type="ABSOLUTE"/>
+	<!-- Face 12 -->
+		<triangular vertex1="v23" vertex2="v13" vertex3="v24" type="ABSOLUTE"/>
+		<triangular vertex1="v4" vertex2="v13" vertex3="v23" type="ABSOLUTE"/>
+		<triangular vertex1="v12" vertex2="v24" vertex3="v13" type="ABSOLUTE"/>
+		<triangular vertex1="v23" vertex2="v31" vertex3="v4" type="ABSOLUTE"/>
+		<triangular vertex1="v5" vertex2="v4" vertex3="v31" type="ABSOLUTE"/>
+		<triangular vertex1="v30" vertex2="v5" vertex3="v31" type="ABSOLUTE"/>
+		<triangular vertex1="v17" vertex2="v11" vertex3="v15" type="ABSOLUTE"/>
+		<triangular vertex1="v12" vertex2="v11" vertex3="v19" type="ABSOLUTE"/>
+		<triangular vertex1="v12" vertex2="v19" vertex3="v25" type="ABSOLUTE"/>
+		<triangular vertex1="v11" vertex2="v17" vertex3="v19" type="ABSOLUTE"/>
+		<triangular vertex1="v25" vertex2="v24" vertex3="v12" type="ABSOLUTE"/>
+		<triangular vertex1="v29" vertex2="v6" vertex3="v30" type="ABSOLUTE"/>
+		<triangular vertex1="v5" vertex2="v30" vertex3="v6" type="ABSOLUTE"/>
+		<triangular vertex1="v7" vertex2="v6" vertex3="v29" type="ABSOLUTE"/>
+		<triangular vertex1="v29" vertex2="v37" vertex3="v46" type="ABSOLUTE"/>
+		<triangular vertex1="v47" vertex2="v46" vertex3="v37" type="ABSOLUTE"/>
+		<triangular vertex1="v7" vertex2="v29" vertex3="v46" type="ABSOLUTE"/>
+		<triangular vertex1="v43" vertex2="v36" vertex3="v35" type="ABSOLUTE"/>
+		<triangular vertex1="v41" vertex2="v35" vertex3="v39" type="ABSOLUTE"/>
+		<triangular vertex1="v35" vertex2="v41" vertex3="v43" type="ABSOLUTE"/>
+		<triangular vertex1="v47" vertex2="v36" vertex3="v43" type="ABSOLUTE"/>
+		<triangular vertex1="v47" vertex2="v37" vertex3="v36" type="ABSOLUTE"/>
+	<!-- Face 13 -->
+		<triangular vertex1="v21" vertex2="v10" vertex3="v20" type="ABSOLUTE"/>
+		<triangular vertex1="v20" vertex2="v10" vertex3="v0" type="ABSOLUTE"/>
+		<triangular vertex1="v10" vertex2="v21" vertex3="v9" type="ABSOLUTE"/>
+		<triangular vertex1="v0" vertex2="v28" vertex3="v20" type="ABSOLUTE"/>
+		<triangular vertex1="v28" vertex2="v0" vertex3="v1" type="ABSOLUTE"/>
+		<triangular vertex1="v28" vertex2="v1" vertex3="v27" type="ABSOLUTE"/>
+		<triangular vertex1="v14" vertex2="v8" vertex3="v16" type="ABSOLUTE"/>
+		<triangular vertex1="v18" vertex2="v8" vertex3="v9" type="ABSOLUTE"/>
+		<triangular vertex1="v22" vertex2="v18" vertex3="v9" type="ABSOLUTE"/>
+		<triangular vertex1="v18" vertex2="v16" vertex3="v8" type="ABSOLUTE"/>
+		<triangular vertex1="v9" vertex2="v21" vertex3="v22" type="ABSOLUTE"/>
+		<triangular vertex1="v27" vertex2="v2" vertex3="v26" type="ABSOLUTE"/>
+		<triangular vertex1="v2" vertex2="v27" vertex3="v1" type="ABSOLUTE"/>
+		<triangular vertex1="v26" vertex2="v2" vertex3="v3" type="ABSOLUTE"/>
+		<triangular vertex1="v44" vertex2="v34" vertex3="v26" type="ABSOLUTE"/>
+		<triangular vertex1="v34" vertex2="v44" vertex3="v45" type="ABSOLUTE"/>
+		<triangular vertex1="v44" vertex2="v26" vertex3="v3" type="ABSOLUTE"/>
+		<triangular vertex1="v32" vertex2="v33" vertex3="v42" type="ABSOLUTE"/>
+		<triangular vertex1="v38" vertex2="v32" vertex3="v40" type="ABSOLUTE"/>
+		<triangular vertex1="v42" vertex2="v40" vertex3="v32" type="ABSOLUTE"/>
+		<triangular vertex1="v42" vertex2="v33" vertex3="v45" type="ABSOLUTE"/>
+		<triangular vertex1="v33" vertex2="v34" vertex3="v45" type="ABSOLUTE"/>
+	</tessellated>
+</solids>
+
+<structure>
+
+	<volume name="Step_246_1720328">
+		<materialref ref="ALUMINUM_Al"/>
+		<solidref ref="Step_246_1720328_solid"/>
+	</volume>
+</structure>
+
+</gdml>
