@@ -57,17 +57,17 @@ QweakSimGlobalMagnetField::QweakSimGlobalMagnetField()
 //       BFieldScalingFactor_MainMagnet = 0.52; //4He target with 600 MeV incident electron energy
 //       BFieldScalingFactor_MainMagnet = 0.34;
       BFieldScalingFactor_MainMagnet = 1.0;
-      fMagneticField_MainMagnet->SetFieldMap_RMin(2.0);      
-      fMagneticField_MainMagnet->SetFieldMap_RMax(300.0); 
-      fMagneticField_MainMagnet->SetFieldMap_RStepsize(2.0);
-      
-      fMagneticField_MainMagnet->SetFieldMap_ZMin(-250.0); 
-      fMagneticField_MainMagnet->SetFieldMap_ZMax( 250.0);
-      fMagneticField_MainMagnet->SetFieldMap_ZStepsize(2.0);
-      
-      fMagneticField_MainMagnet->SetFieldMap_PhiMin(1.0);
-      fMagneticField_MainMagnet->SetFieldMap_PhiMax(360.0);
-      fMagneticField_MainMagnet->SetFieldMap_PhiStepsize(1.0);
+//    fMagneticField_MainMagnet->SetFieldMap_RMin(2.0);
+//    fMagneticField_MainMagnet->SetFieldMap_RMax(300.0);
+//    fMagneticField_MainMagnet->SetFieldMap_RStepsize(2.0);
+//
+//    fMagneticField_MainMagnet->SetFieldMap_ZMin(-250.0);
+//    fMagneticField_MainMagnet->SetFieldMap_ZMax( 250.0);
+//    fMagneticField_MainMagnet->SetFieldMap_ZStepsize(2.0);
+//
+//    fMagneticField_MainMagnet->SetFieldMap_PhiMin(1.0);
+//    fMagneticField_MainMagnet->SetFieldMap_PhiMax(360.0);
+//    fMagneticField_MainMagnet->SetFieldMap_PhiStepsize(1.0);!
     
       fMagneticField_MainMagnet->InitializeGrid();
     
@@ -158,27 +158,32 @@ void QweakSimGlobalMagnetField::GetFieldValue(const G4double Point[4], G4double 
 //  Bfield[2] = myLocalBfieldInMainMagnet[2]*BFieldScalingFactor_MainMagnet + myLocalBfieldInMiniMagnet[2]*BFieldScalingFactor_MiniMagnet;
 //}
 //else if(fMagneticField_MainMagnet && !fMagneticField_MiniMagnet){
-//  fMagneticField_MainMagnet->GetFieldValue( myLocalPointInMainMagnet, myLocalBfieldInMainMagnet );
-    
-    Bfield[0] = myLocalBfieldInMainMagnet[0]*BFieldScalingFactor_MainMagnet;
-    Bfield[1] = myLocalBfieldInMainMagnet[1]*BFieldScalingFactor_MainMagnet;
-    Bfield[2] = myLocalBfieldInMainMagnet[2]*BFieldScalingFactor_MainMagnet;
 
-//}
-//else if(!fMagneticField_MainMagnet && fMagneticField_MiniMagnet){
-//  fMagneticField_MiniMagnet->GetFieldValue( myLocalPointInMiniMagnet, myLocalBfieldInMiniMagnet );
-//
-//  Bfield[0] =  myLocalBfieldInMiniMagnet[0]*BFieldScalingFactor_MiniMagnet;
-//  Bfield[1] =  myLocalBfieldInMiniMagnet[1]*BFieldScalingFactor_MiniMagnet;
-//  Bfield[2] =  myLocalBfieldInMiniMagnet[2]*BFieldScalingFactor_MiniMagnet;
-//}
-//else{
-//  Bfield[0] = 0.0*kilogauss;
-//  Bfield[1] = 0.0*kilogauss;
-//  Bfield[2] = 0.0*kilogauss;
-//}
+  if(fMagneticField_MainMagnet){
+      
+      fMagneticField_MainMagnet->GetFieldValue( myLocalPointInMainMagnet, myLocalBfieldInMainMagnet );
+      
+      Bfield[0] = myLocalBfieldInMainMagnet[0]*BFieldScalingFactor_MainMagnet;
+      Bfield[1] = myLocalBfieldInMainMagnet[1]*BFieldScalingFactor_MainMagnet;
+      Bfield[2] = myLocalBfieldInMainMagnet[2]*BFieldScalingFactor_MainMagnet;
+
+  }
+  //else if(!fMagneticField_MainMagnet && fMagneticField_MiniMagnet){
+  //  fMagneticField_MiniMagnet->GetFieldValue( myLocalPointInMiniMagnet, myLocalBfieldInMiniMagnet );
+  //
+  //  Bfield[0] =  myLocalBfieldInMiniMagnet[0]*BFieldScalingFactor_MiniMagnet;
+  //  Bfield[1] =  myLocalBfieldInMiniMagnet[1]*BFieldScalingFactor_MiniMagnet;
+  //  Bfield[2] =  myLocalBfieldInMiniMagnet[2]*BFieldScalingFactor_MiniMagnet;
+  //}
+  else{
+      
+      Bfield[0] = 0.0*kilogauss;
+      Bfield[1] = 0.0*kilogauss;
+      Bfield[2] = 0.0*kilogauss;
+
+  }
   
-//   G4cout << "------------------------------------------------------------------------" << G4endl;
+  //   G4cout << "------------------------------------------------------------------------" << G4endl;
 //   G4cout << " X pos [cm] = " << Point[0]/cm << "  , with X BField [kG] = " << Bfield[0] << G4endl;
 //   G4cout << " Y pos [cm] = " << Point[1]/cm << "  , with Y BField [kG] = " << Bfield[1] << G4endl;
 //   G4cout << " Z pos [cm] = " << Point[2]/cm << "  , with Z BField [kG] = " << Bfield[2] << G4endl;
