@@ -361,7 +361,16 @@ void QweakSimPhysicsList::ConstructOpticalPhotonProcess()
       G4String              particleName = particle->GetParticleName();     
 
       if (theCerenkovProcess->IsApplicable(*particle)) {
-	  pManager->AddContinuousProcess(theCerenkovProcess); // here: disable Cerenkov (part 2 of 2)
+
+	// Mandatory changes with Geant 4.9.1
+	//
+	// before Geant 4.9.1
+	//   pManager->AddContinuousProcess(theCerenkovProcess); // here: disable Cerenkov (part 2 of 2)
+	//   pManager->AddProcess(theCerenkovProcess);
+	//
+	// with Geant 4.9.1
+	     pManager->AddProcess(theCerenkovProcess);
+	     pManager->SetProcessOrdering(theCerenkovProcess,idxPostStep);
       }
 
       //     if (theScintillationProcess->IsApplicable(*particle)) {
