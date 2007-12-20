@@ -402,6 +402,23 @@
 			<F N="Doxyfile"/>
 			<F N="GNUmakefile"/>
 		</Folder>
+		<Folder
+			Name="config"
+			Filters="">
+			<Folder
+				Name="make"
+				Filters="">
+				<F N="config/make/gdml.gmk"/>
+				<F N="config/make/geant4.gmk"/>
+				<F N="config/make/GNUmakefile.LCPhys"/>
+				<F N="config/make/hadronic_lists.gmk"/>
+				<F N="config/make/lcdd.gmk"/>
+				<F N="config/make/lcio.gmk"/>
+				<F N="config/make/lcphys.gmk"/>
+				<F N="config/make/xerces.gmk"/>
+			</Folder>
+		</Folder>
+		<F N="config/make/root.gmk"/>
 	</Files>
 	<Macro>
 	</Macro>
