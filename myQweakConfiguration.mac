@@ -23,7 +23,7 @@
 #==========================
 # MiniMagnet related
 #==========================
-/MiniMagnet/SetCenterPositionInZ   -465.31 cm
+#/MiniMagnet/SetCenterPositionInZ   -465.31 cm
 
 #==========================
 # Detector Hut related
@@ -71,12 +71,12 @@
 #/TriggerScintillator/SetScintillatorMaterial Quartz
  
 /TriggerScintillator/SetCenterPositionInX     0.0 cm
-#/TriggerScintillator/SetCenterPositionInY   310.0 cm 
-#/TriggerScintillator/SetCenterPositionInZ   555.0 cm
+/TriggerScintillator/SetCenterPositionInY   310.0 cm 
+/TriggerScintillator/SetCenterPositionInZ   555.0 cm
 /TriggerScintillator/SetTiltingAngle          0.0 degree
 
-/TriggerScintillator/SetCenterPositionInY     10.0 cm 
-/TriggerScintillator/SetCenterPositionInZ   -620.0 cm
+#/TriggerScintillator/SetCenterPositionInY     10.0 cm 
+#/TriggerScintillator/SetCenterPositionInZ   -620.0 cm
 
 #=============================
 #     GEM related  (Region1)
