@@ -38,15 +38,15 @@ endif
 #
 
 ifndef XERCESCROOT	
-	@echo XERCESCROOT not defined!
+  $(warning XERCESCROOT not defined!)
 endif
 
 ifndef GDML_INC
-	@echo GDML_INC not defined!
+  $(warning GDML_INC not defined!)
 endif
 
 ifndef GDML_LIB
-	@echo GDML_LIB not defined!
+  $(warning GDML_LIB not defined!)
 endif
 
 .PHONY: all
