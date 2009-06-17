@@ -2,6 +2,10 @@
 # ROOT make fragment
 #
 
+ifndef ROOTSYS
+  ROOTSYS := `root-config --prefix`
+endif
+
 ifdef ROOTSYS
 
   ROOTCFLAGS := `root-config --cflags`
@@ -16,5 +20,8 @@ ifdef ROOTSYS
   PATH := $(ROOTSYS)/bin:$(PATH)
 
 else
-  $(error define ROOTSYS=/path/to/root/install_dir)
+
+  $(warning ROOTSYS is not defined)
+
 endif
+
