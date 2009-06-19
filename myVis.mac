@@ -103,22 +103,15 @@
 #
 # Declare that trajectories and hits should be added to the scene
 #
-#/vis/scene/add/trajectories
-#/vis/scene/add/hits
+/vis/scene/add/trajectories
+/vis/scene/add/hits
 
 # Set camera
 /vis/viewer/reset
 #/vis/viewer/set/viewpointThetaPhi 90 180 deg
 #/vis/viewer/set/viewpointThetaPhi 90 90 deg
 #/vis/viewer/set/viewpointThetaPhi 90 0 deg
-#/vis/viewer/set/viewpointThetaPhi 60 20 deg
-
-#From beam left (positive x) in the z-x plane at 45 degree angle to x-y plane normal
-#/vis/viewer/set/viewpointThetaPhi 135 0 deg
-
-#From beam left (positive x) normal to x-y plane
-/vis/viewer/set/viewpointThetaPhi 90 0 deg
-
+/vis/viewer/set/viewpointThetaPhi 60 20 deg
 /vis/viewer/zoom 2.0
 /vis/viewer/set/style surface
 #/vis/viewer/set/style surface2

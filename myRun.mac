@@ -32,14 +32,14 @@
 
 
 # load/execute this macro:
-/control/execute myQweakConfiguration.mac
+#/control/execute myQweakConfiguration.mac
 
 # Alllow only the tracking of the primary particles (== electrons from event generator)
 #  0: track all primaries and their secondaries (default)
 #  1: Allow primaries only
 # 
-/TrackingAction/PrimaryElectronsOnly 0
-#/TrackingAction/PrimaryElectronsOnly 1
+#/TrackingAction/PrimaryElectronsOnly 0
+/TrackingAction/PrimaryElectronsOnly 1
 
 #/run/verbose 2
 #/tracking/verbose 2

@@ -44,8 +44,9 @@ ClassImp(QweakSimUserTriggerScintillator_MainEvent)
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 QweakSimUserTriggerScintillator_MainEvent::QweakSimUserTriggerScintillator_MainEvent()
 {
- Detector.clear();
- Detector.resize(2);
+//jpan@nuclear.uwinnipeg.ca
+// Detector.clear();
+// Detector.resize(2);
 } 
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....

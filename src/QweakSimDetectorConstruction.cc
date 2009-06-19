@@ -84,7 +84,7 @@ QweakSimDetectorConstruction::QweakSimDetectorConstruction(QweakSimUserInformati
 
   pTarget            = NULL;
   pMainMagnet        = NULL;
-  //pMiniMagnet        = NULL;
+  pMiniMagnet        = NULL;
 
   fWorldLengthInX = 0.0*cm; 
   fWorldLengthInY = 0.0*cm;
@@ -114,7 +114,7 @@ QweakSimDetectorConstruction::~QweakSimDetectorConstruction()
 {
   // I'm deleting the objects in the reverse order they were created (~FILO)
 
- // if (pGlobalMagnetField) delete pGlobalMagnetField;
+  if (pGlobalMagnetField) delete pGlobalMagnetField;
 
   if (pVDCRotator) delete pVDCRotator;
   if (pGEM)        delete pGEM; 
@@ -136,7 +136,7 @@ QweakSimDetectorConstruction::~QweakSimDetectorConstruction()
 
   if (pTarget)              delete pTarget;
   if (pMainMagnet)          delete pMainMagnet;
-  //if (pMiniMagnet)          delete pMiniMagnet;
+  if (pMiniMagnet)          delete pMiniMagnet;
 
   if (detectorMessenger)    delete detectorMessenger;             
   if (pMaterial)            delete pMaterial;
@@ -157,10 +157,12 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   pCollimator2         = new QweakSimCollimator(); 
   pCollimator3         = new QweakSimCollimator(); 
 
+//jpan@nuclear.uwinnipeg.ca
   pShieldingWall       = new QweakSimShieldingWall();
 
-  
-  // pMiniMagnet          = new QweakSimMiniMagnet(); // MiniTorus Geometry (decoupled from field)
+//jpan@nuclear.uwinnipeg.ca  
+//  pMiniMagnet          = new QweakSimMiniMagnet(); // MiniTorus Geometry (decoupled from field)
+
   pMainMagnet          = new QweakSimMainMagnet(); // QTOR Geometry (decoupled from field) 
 
   pGEM                 = new QweakSimGEM(); 
@@ -182,7 +184,10 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
  
   // experimentalHall_Material   = pMaterial->GetMaterial("HeGas");
   // Note: experimentalHall_Material was HeGas all the time up to 12-28-2005 !!!
-  experimentalHall_Material   = pMaterial->GetMaterial("Air");
+
+//jpan@nuclear.uwinnipeg.ca
+//  experimentalHall_Material   = pMaterial->GetMaterial("Air");
+  experimentalHall_Material   = pMaterial->GetMaterial("Vacuum");
 
   experimentalHall_Solid = new G4Box("ExpHall_Sol",
 				     0.5* fWorldLengthInX , 
@@ -260,10 +265,13 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   // create/place MainMagnet body into MotherVolume 
   //================================================
   //
-  //if(pMiniMagnet){
-  //  pMiniMagnet -> ConstructComponent(experimentalHall_Physical);
-  //  pMiniMagnet -> SetCenterPositionInZ(-465.31*cm);
-  //}
+//jpan@nuclear.uwinnipeg.ca
+/*
+  if(pMiniMagnet){
+    pMiniMagnet -> ConstructComponent(experimentalHall_Physical);
+    pMiniMagnet -> SetCenterPositionInZ(-465.31*cm);
+  }
+*/
 
   //================================================
   // create/place MainMagnet body into MotherVolume 
@@ -277,10 +285,10 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
     pMainMagnet -> Construct_UpStreamMiniClampPlates(experimentalHall_Physical);
     pMainMagnet -> Construct_CoilFrames(experimentalHall_Physical);
     pMainMagnet -> Construct_RadialMountingBlocks(experimentalHall_Physical);
-    pMainMagnet -> Construct_SupportFrame(experimentalHall_Physical);
-    pMainMagnet -> Construct_DownstreamSpider(experimentalHall_Physical);
+//jpan@nuclear.uwinnipeg.ca
+//    pMainMagnet -> Construct_SupportFrame(experimentalHall_Physical);
+//    pMainMagnet -> Construct_DownstreamSpider(experimentalHall_Physical);
   }
-
 
 
   //Collimator 1 configuration
@@ -380,7 +388,7 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   // #===================================================
   // # create/place ShieldingWall body into MotherVolume   
   // #===================================================
-  
+
     pShieldingWall->SetCollimatorWall_FullLengthInX(670.56*cm);
     pShieldingWall->SetCollimatorWall_FullLengthInY(670.56*cm);
     pShieldingWall->SetCollimatorWall_FullLengthInZ( 50.0*cm);
@@ -398,11 +406,19 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
     pShieldingWall->SetCollimatorWallMaterial("ShieldingConcrete");
     //pShieldingWall->SetCollimatorWallMaterial("Lead");
 
-    pShieldingWall->ConstructFrontWall(experimentalHall_Physical);
-    pShieldingWall->ConstructBackWall(experimentalHall_Physical);
-    pShieldingWall->ConstructBeamLeftSideWall(experimentalHall_Physical);
-    pShieldingWall->ConstructBeamRightSideWall(experimentalHall_Physical);
-    pShieldingWall->ConstructTopWall(experimentalHall_Physical);
+//jpan@nuclear.uwinnipeg.ca
+//    pShieldingWall->ConstructFrontWall(experimentalHall_Physical);
+//    pShieldingWall->ConstructBackWall(experimentalHall_Physical);
+//    pShieldingWall->ConstructBeamLeftSideWall(experimentalHall_Physical);
+//    pShieldingWall->ConstructBeamRightSideWall(experimentalHall_Physical);
+//    pShieldingWall->ConstructTopWall(experimentalHall_Physical);
+
+//only keep front wall to speed up the simulation since the electron will shower in the shielding wall
+    pShieldingWall->ConstructFrontWall(experimentalHall_Physical); 
+//    pShieldingWall->ConstructBackWall(experimentalHall_Physical);
+//    pShieldingWall->ConstructBeamLeftSideWall(experimentalHall_Physical);
+//    pShieldingWall->ConstructBeamRightSideWall(experimentalHall_Physical);
+//    pShieldingWall->ConstructTopWall(experimentalHall_Physical);
 
     //===============================================
     // create/place Drift Chambers into MotherVolume
@@ -416,6 +432,8 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
     // create/place VDC Rotator into MotherVolume
     //===============================================
     //
+//jpan@nuclear.uwinnipeg.ca
+/*
     pVDCRotator  = new QweakSimVDCRotator(pVDC); 
     pVDCRotator->SetMotherVolume(experimentalHall_Physical);
     pVDCRotator->ConstructRings();
@@ -423,6 +441,7 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
     pVDCRotator->ConstructMount();
     pVDCRotator->ConstructSliderSupport();
     pVDCRotator->SetRotationAngleInPhi( 0.0*degree);
+*/
 
     //=========================================
     // create/place Cerenkov into MotherVolume
@@ -446,7 +465,7 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
 
   G4cout << G4endl << "###### Leaving QweakSimDetectorConstruction::Construct() " << G4endl << G4endl;
 
-  // switch field on/off here:
+
   SetGlobalMagneticField();
 
   // Construct() *MUST* return the pointer of the physical World !!!  
@@ -538,7 +557,9 @@ void QweakSimDetectorConstruction::SetGlobalMagneticField()
 
   // Provides a driver that talks to the Integrator Stepper, and insures that 
   //   the error is within acceptable bounds.
-  G4MagInt_Driver* fGlobalIntgrDriver = new G4MagInt_Driver(1.0e-3*mm, fGlobalStepper, fGlobalStepper->GetNumberOfVariables());
+  G4MagInt_Driver* fGlobalIntgrDriver = new G4MagInt_Driver(0.1*mm,  //1.0e-3*mm, 
+							    fGlobalStepper,
+							    fGlobalStepper->GetNumberOfVariables());
   
   fGlobalChordFinder = new G4ChordFinder(fGlobalIntgrDriver);
   

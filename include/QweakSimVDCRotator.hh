@@ -58,9 +58,9 @@
 #include "Geant4_include.hh" 
 
 // user includes
-//#include "QweakSimMaterial.hh"
+#include "QweakSimMaterial.hh"
 #include "QweakSimVDC.hh"
-//#include "QweakSimVDCMessenger.hh"
+#include "QweakSimVDCMessenger.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 

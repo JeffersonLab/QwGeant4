@@ -36,6 +36,7 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
 #include "QweakSimAnalysis.hh"
+#include <ctime>  //jpan@nuclear.uwinnipeg.ca for using time lib
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 QweakSimAnalysis::QweakSimAnalysis()
@@ -69,7 +70,7 @@ void QweakSimAnalysis::Finish()
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 void QweakSimAnalysis::BeginOfRun() 
 { 
-  QweakSimG4_RootFile = new TFile( "QweakSim.root","RECREATE","W&M Qweak ROOT file");
+  QweakSimG4_RootFile = new TFile( "QweakSim.root","RECREATE","Qweak ROOT file");
 
   ConstructRootNtuple();
 
@@ -106,11 +107,12 @@ void QweakSimAnalysis::ConstructRootNtuple()
 
   // Create a branch with the data structure defined by QweakSimG4_Event
 
-  int bufsize = 64000;
-  int split   = 10; 
+//jpan@nuclear.uwinnipeg.ca
+//  int bufsize = 64000;
+//  int split   = 10; 
+//  int split   = 99; 
 
-  QweakSimG4_RootBranch = QweakSimG4_RootNtuple->Branch("QweakSimUserMainEvent", "QweakSimUserMainEvent", &QweakSimG4_RootEvent, 64000, 10);
-
+  QweakSimG4_RootBranch = QweakSimG4_RootNtuple->Branch("QweakSimUserMainEvent", "QweakSimUserMainEvent", &QweakSimG4_RootEvent, 64000, 99);
 
 }
 
@@ -129,10 +131,19 @@ void QweakSimAnalysis::AutoSaveRootNtuple()
     //
     // see http://root.cern.ch/root/html/TTree.html#TTree:AutoSave
 
-    //QweakSimG4_RootNtuple -> AutoSave("SaveSelf");
+    //   QweakSimG4_RootNtuple -> AutoSave("SaveSelf");
     QweakSimG4_RootNtuple -> AutoSave();
 
+//jpan@nuclear.uwinnipeg.ca
+//print the timestamp on screen, test code, add by Jie
+
+//     time_t ltime;     // calendar time  
+//     ltime=time(NULL); // get current cal time  
+//     cout<<"=====>> Data saved at "<< asctime( localtime(&ltime) ) <<G4endl;
+
 }
+
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 //=======================================================

@@ -72,8 +72,11 @@ private:
 
 public:
 
-      vector <QweakSimUserCerenkov_OctantEvent> Octant;
-    
+//jpan@nuclear.uwinnipeg.ca
+//      vector <QweakSimUserCerenkov_OctantEvent> Octant;
+  QweakSimUserCerenkov_DetectorEvent  Detector;
+  QweakSimUserCerenkov_PMTEvent       PMT;
+
 public:
     
   // Constructor

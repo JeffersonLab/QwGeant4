@@ -240,7 +240,10 @@ public:
   void     StorePrimaryQ2(Float_t pq2)  { PrimaryQ2 = pq2; }
   Float_t    GetPrimaryQ2() const {return PrimaryQ2; }
   //-----------------
-  void     StoreCrossSectionWeight(Float_t csw)   {CrossSectionWeight = csw;}
+  void     StoreCrossSectionWeight(Float_t csw)
+   {     CrossSectionWeight = csw;}
+
+
   Float_t    GetCrossSectionWeight() const {return CrossSectionWeight; }
   //-----------------
 

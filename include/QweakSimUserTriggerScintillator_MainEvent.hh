@@ -74,7 +74,10 @@ private:
 
 public:
 
-  vector <QweakSimUserTriggerScintillator_DetectorEvent>  Detector;
+//jpan@nuclear.uwinnipeg.ca
+//  vector <QweakSimUserTriggerScintillator_DetectorEvent>  Detector;
+  QweakSimUserTriggerScintillator_DetectorEvent  Detector;
+
 //  QweakSimUserTriggerScintillator_PMTEvent       PMT;
 
 public:

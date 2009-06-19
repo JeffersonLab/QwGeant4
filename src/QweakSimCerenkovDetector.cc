@@ -13,10 +13,11 @@ QweakSimCerenkovDetector::QweakSimCerenkovDetector(QweakSimUserInformation *user
   CerenkovContainer_Logical  = NULL;
   CerenkovContainer_Physical = NULL;
   CerenkovContainer_Material = NULL;
-
-  CerenkovMasterContainer_Logical  = NULL;
-  CerenkovMasterContainer_Material  = NULL;
   
+//   CerenkovDetector_Logical   = NULL;
+//   CerenkovDetector_Physical  = NULL;
+//   CerenkovDetector_Material  = NULL;
+
   ActiveArea_Logical         = NULL;
   ActiveArea_Physical        = NULL;
   ActiveArea_Material        = NULL;
@@ -97,7 +98,6 @@ QweakSimCerenkovDetector::QweakSimCerenkovDetector(QweakSimUserInformation *user
 
   //CerenkovContainer_Material = pMaterial->GetMaterial("HeGas");  
   CerenkovContainer_Material = pMaterial->GetMaterial("Air");  
-  CerenkovMasterContainer_Material = pMaterial->GetMaterial("Air");  
   ActiveArea_Material        = pMaterial->GetMaterial("Air");
   QuartzBar_Material         = pMaterial->GetMaterial("Quartz");
   LightGuide_Material        = pMaterial->GetMaterial("Quartz");
@@ -122,14 +122,13 @@ QweakSimCerenkovDetector::QweakSimCerenkovDetector(QweakSimUserInformation *user
   GlueFilm_FullLength_Y      =   18.00*cm;
   GlueFilm_FullLength_Z      =    1.25*cm;
 
-  ActiveArea_FullLength_X    =    2.0*(// LightGuide_FullLength +
-				       QuartzBar_FullLength +GlueFilm_FullLength_X) + GlueFilm_FullLength_X;// + 2.0*mm; 
+  ActiveArea_FullLength_X    =    2.0*(LightGuide_FullLength + QuartzBar_FullLength +GlueFilm_FullLength_X) + GlueFilm_FullLength_X +2.0*mm; 
   ActiveArea_FullLength_Y    =    QuartzBar_FullHeight + 1.0*mm;
-  ActiveArea_FullLength_Z    =    QuartzBar_FullThickness + 40.0*mm;
+  ActiveArea_FullLength_Z    =    QuartzBar_FullThickness + 2.0*mm;
   
-  Container_FullLength_X     =  2.0*(LightGuide_FullLength + QuartzBar_FullLength +GlueFilm_FullLength_X) + GlueFilm_FullLength_X + 2.0*mm; //ActiveArea_FullLength_X + 20.0*cm;
-  Container_FullLength_Y     =  QuartzBar_FullHeight +  4.0*cm;
-  Container_FullLength_Z     =  QuartzBar_FullHeight + 10.0*cm;
+  Container_FullLength_X     =  ActiveArea_FullLength_X + 20.0*cm;
+  Container_FullLength_Y     =  ActiveArea_FullLength_Y +  4.0*cm;
+  Container_FullLength_Z     =  ActiveArea_FullLength_Z + 10.0*cm;
 
   Chamfer_FullLength         =  120.00*cm;   
   Chamfer_FullHeight         =    7.00*mm;
@@ -150,10 +149,6 @@ QweakSimCerenkovDetector::QweakSimCerenkovDetector(QweakSimUserInformation *user
   PMTContainer_FullLength_Z    =  2.0*mm+PMTEntranceWindow_Thickness+Cathode_Thickness;
 
   Tilting_Angle   =  0.0*degree;
-
-  Position_CerenkovMasterContainer_X =   0.0*cm;
-  Position_CerenkovMasterContainer_Y = 319.0*cm; // given by SolidWorks (or later by Juliette)
-  Position_CerenkovMasterContainer_Z = 570.0*cm; // given by SolidWorks (or later by Juliette)
   
 }
 
@@ -185,18 +180,21 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 //****************************************************************************************************
 //******************************Define Detector Container*********************************************  
 
-  G4Box* CerenkovMasterContainer_Solid  = new G4Box("CerenkovMasterContainer_Solid",
-						    0.5 * Container_FullLength_X + 1.0*cm,    // half X length required by Geant4
-						    0.5 * Container_FullLength_Y + 1.0*cm,    // half Y length required by Geant4
-						    0.5 * Container_FullLength_Z + 1.0*cm);   // half Z length required by Geant4
- 
-  CerenkovMasterContainer_Logical  = new G4LogicalVolume(CerenkovMasterContainer_Solid,
-							 CerenkovMasterContainer_Material,
-							 "CerenkovMasterContainer_Logical",
-							 0,0,0);
+  Position_CerenkovContainer_X =   0.0*cm;
 
+//jpan@nuclear.uwinnipeg.ca
+//  Position_CerenkovContainer_Y = 319.0*cm; // given by SolidWorks (or later by Juliette)
+  Position_CerenkovContainer_Y = 325.0*cm; 
 
-  Position_CerenkovContainer  = G4ThreeVector(0,0,0);
+  Position_CerenkovContainer_Z = 570.0*cm; // given by SolidWorks (or later by Juliette)
+  
+  Position_CerenkovContainer  = G4ThreeVector(Position_CerenkovContainer_X,
+					      Position_CerenkovContainer_Y,
+					      Position_CerenkovContainer_Z);
+  
+  Rotation_CerenkovContainer = new G4RotationMatrix();
+
+  Rotation_CerenkovContainer->rotateX(Tilting_Angle);
    
   G4Box* CerenkovContainer_Solid  = new G4Box("CerenkovContainer_Solid",
 					      0.5 * Container_FullLength_X ,    // half X length required by Geant4
@@ -208,11 +206,13 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 						   "CerenkovContainer_Logical",
 						   0,0,0);
 
-  CerenkovContainer_Physical   = new G4PVPlacement(0,Position_CerenkovContainer, 
-						   CerenkovContainer_Logical,
-						   "CerenkovContainer_Physical", 
-						   CerenkovMasterContainer_Logical, 
-						   false,0);
+//   CerenkovContainer_Physical   = new G4PVPlacement(Rotation_CerenkovContainer,  
+// 						   Position_CerenkovContainer, 
+// 						   "CerenkovContainer_Physical", 
+// 						   CerenkovContainer_Logical,
+// 						   MotherVolume, 
+// 						   false, 
+// 						   0);
 
 //****************************************************************************************************
 //****************************************************************************************************
@@ -222,22 +222,22 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 //******************************Define Detector Active Area*******************************************
 
   G4Box* ActiveArea_Solid  = new G4Box("CerenkoDetector_Solid",
-				       0.5 * ActiveArea_FullLength_X , 
-				       0.5 * ActiveArea_FullLength_Y , 
-				       0.5 * ActiveArea_FullLength_Z );
+					     0.5 * ActiveArea_FullLength_X , 
+					     0.5 * ActiveArea_FullLength_Y , 
+					     0.5 * ActiveArea_FullLength_Z );
 
   ActiveArea_Logical  = new G4LogicalVolume(ActiveArea_Solid,
-					    ActiveArea_Material,
-					    "ActiveArea_Log",
-					    0,0,0);
+						  ActiveArea_Material,
+						  "ActiveArea_Log",
+						  0,0,0);
 
   G4ThreeVector Position_ActiveArea  = G4ThreeVector(0,0,0);
 
   ActiveArea_Physical   = new G4PVPlacement(0,Position_ActiveArea, 
-					    ActiveArea_Logical,
-					    "ActiveArea_Physical", 
-					    CerenkovContainer_Logical, 
-					    false,0);
+						  ActiveArea_Logical,
+						  "ActiveArea_Physical", 
+						  CerenkovContainer_Logical, 
+						  false,0);
 
 //****************************************************************************************************
 //****************************************************************************************************
@@ -688,9 +688,8 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
   
   LightGuide_PhysicalLeft = new G4PVPlacement(Transform_LGLeft,
 					      LightGuide_LogicalLeft,
-					      "LightGuide_PhysicalLeft",
-					      CerenkovContainer_Logical,
-// 					      ActiveArea_Logical, 
+					      "LightGuide_PhysicalLeft", 
+					      ActiveArea_Logical, 
 					      false,0);
   
   
@@ -703,8 +702,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
   LightGuide_PhysicalRight = new G4PVPlacement(Transform_LGRight,
 					       LightGuide_LogicalRight,
 					       "LightGuide_PhysicalRight", 
-					       CerenkovContainer_Logical,
-// 					       ActiveArea_Logical, 
+					       ActiveArea_Logical, 
 					       false,0);
   
   //****************************************************************************************************
@@ -773,8 +771,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
   mirror_physical[1] = new G4PVPlacement(Transform_LGEMLeft,
 					 mirror_logical[1],
 					 "mirrorface_physical2", 
-					 CerenkovContainer_Logical,
-// 					 ActiveArea_Logical, 
+					 ActiveArea_Logical, 
 					 false, 
 					 0); // copy number for left PMTContainer
 
@@ -799,8 +796,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
   mirror_physical[3] = new G4PVPlacement(Transform_LGEMRight,
 					 mirror_logical[3],
 					 "mirrorface_physical4", 
-					 CerenkovContainer_Logical,
-// 					 ActiveArea_Logical, 
+					 ActiveArea_Logical, 
 					 false, 
 					 0); // copy number for left PMTContainer
 
@@ -843,7 +839,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 
   G4double mypi   = 4.0*std::atan(1.0);
   G4double thetaY = std::atan(LightGuide_FullThickness*(1 - redfr)/(LightGuide_FullLength));
-  G4double Xoffs = 1.0*cm;//7.0*cm;
+  G4double Xoffs = 0.0*cm;//7.0*cm;
 
   //Flat on guide face configuration
   G4double PMTContXShift = QuartzBar_FullLength + LightGuide_FullLength - 0.5*PMTEntranceWindow_Diameter - Xoffs;  
@@ -901,7 +897,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
   // location and orientation of the cathode WITHIN the PMT
   //-------------------------------------------------------------------------------------
   
-  G4double CathodeZShift = PMTEntranceWindow_Thickness + 0.5*(Cathode_Thickness - PMTContainer_FullLength_Z) + PMTQuartzOpticalFilm_Thickness;
+  G4double CathodeZShift = PMTEntranceWindow_Thickness + 0.5*(Cathode_Thickness - PMTContainer_FullLength_Z);
   
   // location of the Photon Detector relative to  Photon Detector Container
   Translation_Cathode.setX(0.0*cm);
@@ -928,8 +924,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
   PMTContainer_PhysicalLeft  = new G4PVPlacement(Transform3D_PMTContainerLeft,
 						 PMTContainer_Logical,
 						 "PMTContainer_Physical", 
-						 CerenkovContainer_Logical,
-// 						 ActiveArea_Logical, 
+						 ActiveArea_Logical, 
 						 false, 
 						 0); // copy number for left PMTContainer
 
@@ -937,8 +932,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
   PMTContainer_PhysicalRight = new G4PVPlacement(Transform3D_PMTContainerRight,
 						PMTContainer_Logical,
 						"PMTContainer_Physical", 
-						 CerenkovContainer_Logical,
-// 						ActiveArea_Logical, 
+						ActiveArea_Logical, 
 						false, 
 						1); // copy number for right PMTContainer
 
@@ -1008,14 +1002,22 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 
   //=============================================================================================
 
-
-  G4ThreeVector Position_CerenkovMasterContainer  = G4ThreeVector(Position_CerenkovMasterContainer_X,
-								  Position_CerenkovMasterContainer_Y,
-								  Position_CerenkovMasterContainer_Z);
+   Position_CerenkovContainer  = G4ThreeVector(Position_CerenkovContainer_X,
+					       Position_CerenkovContainer_Y,
+					       Position_CerenkovContainer_Z);
   
   // define Rotation matrix for Container orientated in MotherVolume
   Rotation_CerenkovContainer =  new G4RotationMatrix();
   Rotation_CerenkovContainer -> rotateX(Tilting_Angle);
+
+//   CerenkovContainer_Physical   = new G4PVPlacement(Rotation_CerenkovContainer,
+//                                                    Position_CerenkovContainer,
+//                                                    "CerenkovContainer_Physical",
+//                                                    CerenkovContainer_Logical,
+//                                                    MotherVolume,
+//                                                    false,
+//                                                    0);
+
 
  //----------------------------------------------
 
@@ -1144,12 +1146,11 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 
   G4OpticalSurface* ActiveArea_OpticalSurface = new G4OpticalSurface("ActiveAreaOpticalSurface");
 
-  G4LogicalBorderSurface* ActiveArea_BorderSurface    = new G4LogicalBorderSurface("ActiveArea_BorderSurface",
-										   ActiveArea_Physical,
-										   CerenkovContainer_Physical,
-										   ActiveArea_OpticalSurface);
+//   G4LogicalBorderSurface* ActiveArea_BorderSurface    = new G4LogicalBorderSurface("ActiveArea_BorderSurface",
+// 										   ActiveArea_Physical,
+// 										   CerenkovMasterContainer_Physical,
+// 										   ActiveArea_OpticalSurface);
 
-  ActiveArea_OpticalSurface->SetType(dielectric_dielectric);
   ActiveArea_OpticalSurface->SetFinish(groundbackpainted); //new for wrapping test
 //   ActiveArea_OpticalSurface->SetPolish(0.0);          //new for wrapping test
 //   ActiveArea_OpticalSurface->SetModel(glisur);    	 //new for wrapping test
@@ -1211,13 +1212,11 @@ G4cout << G4endl << "###### QweakSimCerenkovDetector: Setting Attributes " << G4
  //------------------------------------------
  // Visual Attributes for:  CerenkovContainer
  //------------------------------------------
-
  G4VisAttributes* CerenkovContainerVisAtt = new G4VisAttributes(blue);
  CerenkovContainerVisAtt->SetVisibility(false);
  //CerenkovContainerVisAtt->SetVisibility(true);
  //CerenkovContainerVisAtt->SetForceWireframe(true);
  //CerenkovContainerVisAtt->SetForceSolid(true);
- CerenkovMasterContainer_Logical->SetVisAttributes(CerenkovContainerVisAtt); 
  CerenkovContainer_Logical->SetVisAttributes(CerenkovContainerVisAtt); 
  ActiveArea_Logical->SetVisAttributes(CerenkovContainerVisAtt); 
 
@@ -1331,7 +1330,7 @@ void QweakSimCerenkovDetector::SetCerenkovDetectorCenterPositionInX(G4double xPo
 {
     G4cout << G4endl << "###### Calling QweakSimCerenkovDetector::SetCerenkovCenterPositionInX() " << G4endl << G4endl;
 
-    Position_CerenkovMasterContainer_X =xPos;	 
+    Position_CerenkovContainer_X =xPos;	 
 
     CerenkovGeometryPVUpdate();
 
@@ -1343,7 +1342,7 @@ void QweakSimCerenkovDetector::SetCerenkovDetectorCenterPositionInY(G4double yPo
 {
     G4cout << G4endl << "###### Calling QweakSimCerenkovDetector::SetCerenkovCenterPositionInY() " << G4endl << G4endl;
 
-    Position_CerenkovMasterContainer_Y = yPos;
+    Position_CerenkovContainer_Y = yPos;
 
     CerenkovGeometryPVUpdate();
 
@@ -1355,7 +1354,7 @@ void QweakSimCerenkovDetector::SetCerenkovDetectorCenterPositionInZ(G4double zPo
 {
     G4cout << G4endl << "###### Calling QweakSimCerenkovDetector::SetCerenkovCenterPositionInZ() " << G4endl << G4endl;
 
-    Position_CerenkovMasterContainer_Z = zPos;
+    Position_CerenkovContainer_Z = zPos;
 
     CerenkovGeometryPVUpdate();
 
@@ -1425,9 +1424,9 @@ void QweakSimCerenkovDetector::PlacePVCerenkovMasterContainer()
 	 // This procedure is easier than the calculation by hand for individual positions/orientations 
 
 	 // define 12' o'clock start location
-	 centerVector->setX(Position_CerenkovMasterContainer_X);    
-	 centerVector->setY(Position_CerenkovMasterContainer_Y);    
-	 centerVector->setZ(Position_CerenkovMasterContainer_Z);    
+	 centerVector->setX(Position_CerenkovContainer_X);    
+	 centerVector->setY(Position_CerenkovContainer_Y);    
+	 centerVector->setZ(Position_CerenkovContainer_Z);    
 
 	 // rotate centerVector to the 8 positions
          centerVector->rotateZ(AnglePhi_CerenkovMasterContainer[n]);
@@ -1442,7 +1441,7 @@ void QweakSimCerenkovDetector::PlacePVCerenkovMasterContainer()
 	 CerenkovMasterContainer_Physical[n]   = new G4PVPlacement(Rotation_CerenkovMasterContainer[n],
 								   Translation_CerenkovMasterContainer[n],
 								   "CerenkovMasterContainer_Physical",
-								   CerenkovMasterContainer_Logical,
+								   CerenkovContainer_Logical,
 								   theMotherPV,
 								   false,
 								   n);

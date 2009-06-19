@@ -89,7 +89,8 @@ ShieldingWallHousing_Material = NULL;
  ShieldingWallHousing_FullLength_Y = 264*inch;    // Full Y length 
  ShieldingWallHousing_FullLength_Z =  50.0*cm;    // Full Z length 
  
- ShieldingWallHousing_UpStreamWall_ZPosition = 330.0*cm;
+
+ ShieldingWallHousing_UpStreamWall_ZPosition = 330.0*cm;  
  ShieldingWallHousing_CenterZPosition        = ShieldingWallHousing_UpStreamWall_ZPosition + 0.5*ShieldingWallHousing_FullLength_Z; 
 
  // get shielding wall material
@@ -293,6 +294,7 @@ G4cout << G4endl << "###### Leaving QweakSimShieldingWall::DefineOctantCutOut() 
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 void QweakSimShieldingWall::ConstructShieldingWallHousing_UsingTrapezoids(G4VPhysicalVolume* MotherVolume)
 {
 G4cout << G4endl << "###### Calling QweakSimShieldingWall::ConstructComponent() " << G4endl << G4endl;
@@ -513,7 +515,7 @@ G4cout << G4endl << "###### Calling QweakSimShieldingWall::ConstructComponent() 
 				       MotherVolume, 
 				       false, 
 				       0);
-
+// jpan@nuclear.uwinnipeg.ca
 
 G4cout << G4endl << "###### QweakSimShieldingWall: Setting Attributes " << G4endl << G4endl;
 
@@ -522,8 +524,8 @@ G4cout << G4endl << "###### QweakSimShieldingWall: Setting Attributes " << G4end
   G4Colour  mangenta1 (104/255., 49/255., 94/255.);
 
   ShieldingWallHousing_VisAtt->SetColor(mangenta1);
-  //ShieldingWallHousing_VisAtt->SetVisibility(true);
-  ShieldingWallHousing_VisAtt->SetVisibility(false);
+  ShieldingWallHousing_VisAtt->SetVisibility(true);
+  //ShieldingWallHousing_VisAtt->SetVisibility(false);
   //ShieldingWallHousing_VisAtt->SetForceWireframe(true);
   ShieldingWallHousing_VisAtt->SetForceSolid(true);
   ShieldingWallHousing_Logical->SetVisAttributes(ShieldingWallHousing_VisAtt); 

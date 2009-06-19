@@ -12,7 +12,7 @@
 #include "QweakSimCerenkovDetector_PMTSD.hh"
 // #include "QweakSimPMTEntranceWindowSD.hh"
 #include "QweakSimMaterial.hh"
-//#include "QweakSimUserInformation.hh"
+#include "QweakSimUserInformation.hh"
 // user classes
 class QweakSimCerenkovDetectorMessenger;
 //class QweakSimMaterial;
@@ -60,9 +60,6 @@ private:
    std::vector< G4double >           AnglePhi_CerenkovMasterContainer;
    std::vector< G4ThreeVector >      Translation_CerenkovMasterContainer;
    std::vector< G4RotationMatrix* >  Rotation_CerenkovMasterContainer;
-
-  G4LogicalVolume*   CerenkovMasterContainer_Logical; 
-  G4Material*        CerenkovMasterContainer_Material;
 
   G4LogicalVolume*   CerenkovContainer_Logical; 
   G4VPhysicalVolume* CerenkovContainer_Physical; 
@@ -245,9 +242,9 @@ private:
   G4VSensitiveDetector* CerenkovDetectorSD;
   G4VSensitiveDetector* CerenkovDetector_PMTSD;
 
-  G4double Position_CerenkovMasterContainer_X;
-  G4double Position_CerenkovMasterContainer_Y;
-  G4double Position_CerenkovMasterContainer_Z;
+  G4double Position_CerenkovContainer_X;
+  G4double Position_CerenkovContainer_Y;
+  G4double Position_CerenkovContainer_Z;
 
 
 };

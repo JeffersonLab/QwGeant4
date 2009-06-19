@@ -74,8 +74,9 @@ private:
 
 public:
 
-  QweakSimUserCerenkov_DetectorEvent  Detector;
-  QweakSimUserCerenkov_PMTEvent       PMT;
+//jpan@nuclear.uwinnipeg.ca
+//  QweakSimUserCerenkov_DetectorEvent  Detector;
+//  QweakSimUserCerenkov_PMTEvent       PMT;
 
 public:
     
@@ -88,7 +89,9 @@ public:
   //void SetTree(TTree *data){  Detector.SetTree(data); };
   
   // define a new Class known to ROOT  
-  ClassDef(QweakSimUserCerenkov_OctantEvent,1)
+
+//jpan@nuclear.uwinnipeg.ca
+//  ClassDef(QweakSimUserCerenkov_OctantEvent,1)
 
 };  // end class QweakSimCerenkov_OctantEvent 
 

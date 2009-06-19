@@ -56,22 +56,22 @@
 // user includes
 #include "QweakSimDetectorMessenger.hh"
 
-//#include "QweakSimMaterial.hh"
+#include "QweakSimMaterial.hh"
 #include "QweakSimTarget.hh"
 #include "QweakSimTargetMessenger.hh"
-//#include "QweakSimCollimator.hh"
+#include "QweakSimCollimator.hh"
 #include "QweakSimCollimatorSupport.hh"
 #include "QweakSimShieldingWall.hh"
 #include "QweakSimMainMagnet.hh"
 #include "QweakSimMiniMagnet.hh"
-//#include "QweakSimVDC.hh"
+#include "QweakSimVDC.hh"
 #include "QweakSimVDCRotator.hh"
 #include "QweakSimHDC.hh"
 #include "QweakSimGEM.hh"
 #include "QweakSimTriggerScintillator.hh"
 #include "QweakSimCerenkovDetector.hh"
 #include "QweakSimGlobalMagnetField.hh"
-//#include "QweakSimUserInformation.hh"
+#include "QweakSimUserInformation.hh"
 
 // user classes
 class QweakSimDetectorMessenger;
@@ -135,7 +135,7 @@ private:
   QweakSimShieldingWall*     pShieldingWall;
 
   QweakSimMainMagnet*        pMainMagnet; 
-  //QweakSimMiniMagnet*        pMiniMagnet; 
+  QweakSimMiniMagnet*        pMiniMagnet; 
 
   QweakSimVDC*                  pVDC; 
   QweakSimHDC*                  pHDC;

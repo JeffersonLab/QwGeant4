@@ -310,7 +310,7 @@ private:
       G4ThreeVector    Position_UpstreamCylinder; // upstream
       G4ThreeVector    Position_DownstreamCylinder; // downstream
       G4ThreeVector    Position_CenterBox;
-      G4ThreeVector    Position_DownstreamBox;
+      G4ThreeVector    Position_DownstreamBox;;
 
       G4VisAttributes* SingleCoil_FramePlate_VisAtt;
 

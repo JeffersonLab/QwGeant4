@@ -59,7 +59,7 @@
 
 // user includes
 //#include "QweakSimCollimatorMessenger.hh"
-//#include "QweakSimMaterial.hh"
+#include "QweakSimMaterial.hh"
 #include "QweakSimCollimator.hh"
 
 

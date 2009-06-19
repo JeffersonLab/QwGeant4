@@ -10,7 +10,8 @@
 #include "Geant4_include.hh" 
 
 #include "QweakSimSteppingAction.hh"
-//#include "QweakSimTrackInformation.hh"
+#include "QweakSimTrackInformation.hh"
+#include "QweakSimTrajectory.hh"		
 
 class QweakSimStackingAction : public G4UserStackingAction
 {

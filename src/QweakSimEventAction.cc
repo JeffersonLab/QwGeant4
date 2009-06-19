@@ -235,8 +235,6 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
   n_hitCerenkov                  = CerenkovDetector_HC            -> entries();
   n_hitCerenkovPMT               = CerenkovDetectorPMT_HC         -> entries();
 
-  cout << "==============================================================="   << endl;
-  cout << "Current event                      = " << event_id                 << endl;
   cout << "Number of hit in the GEMs          = " << n_GEMhitWirePlane        << endl;
   cout << "Number of hit in the HDCs          = " << n_HDChitWirePlane        << endl;
   cout << "Number of hit in the VDCs          = " << n_VDChitWirePlane        << endl;
@@ -244,16 +242,19 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
   cout << "Number of hit in the VDC DC Back   = " << n_VDChitDCBack           << endl;
   cout << "Number of hit in the TS            = " << n_hitTriggerScintillator << endl;
   cout << "Number of hit in the Cerenkov      = " << n_hitCerenkov            << endl;
-  cout << "==============================================================="   << endl;
+
 
 
   // Initialize/Clear Event variables, initialize Cerenkov Detector with NoHit Flag 
-    for (int noctant=0;noctant<8;noctant++) {
-	analysis->QweakSimG4_RootEvent->Cerenkov.Octant[noctant].Detector.Initialize();  
-	analysis->QweakSimG4_RootEvent->Cerenkov.Octant[noctant].PMT.Initialize();  
-
-	analysis->QweakSimG4_RootEvent->Cerenkov.Octant[noctant].Detector.StoreDetectorHasBeenHit(0);        
-    }
+//jpan@nuclear.uwinnipeg.ca
+//    for (int noctant=0;noctant<8;noctant++) {
+//	analysis->QweakSimG4_RootEvent->Cerenkov.Octant[noctant].Detector.Initialize();  
+//	analysis->QweakSimG4_RootEvent->Cerenkov.Octant[noctant].PMT.Initialize();  
+//	analysis->QweakSimG4_RootEvent->Cerenkov.Octant[noctant].Detector.StoreDetectorHasBeenHit(0);   
+//    }
+	analysis->QweakSimG4_RootEvent->Cerenkov.Detector.Initialize();  
+	analysis->QweakSimG4_RootEvent->Cerenkov.PMT.Initialize();  
+	analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreDetectorHasBeenHit(0);     
 
   //------------------------------------------------------------------------------------------------------------------------------------------
   // Initialize/Clear Event variables in Region 1 
@@ -319,10 +320,14 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
  //------------------------------------------------------------------------------------------------------------------------------------------
 
   // Initialize/Clear Event variables, initialize TriggerScintillator with NoHit Flag 
-    for (int ndet=0;ndet<2;ndet++) {
-	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector[ndet].Initialize();    
-	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector[ndet].StoreDetectorHasBeenHit(0);        
-    }
+//jpan@nuclear.uwinnipeg.ca
+//    for (int ndet=0;ndet<2;ndet++) {
+//	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector[ndet].Initialize();    
+//	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector[ndet].StoreDetectorHasBeenHit(0);        
+//    }
+
+	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector.Initialize();    
+	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector.StoreDetectorHasBeenHit(0);        
 
   //------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -386,20 +391,31 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
     // my phi determination that really works ....
     // (Beware: atan2 returns the arctangent of Y/X in the range -PI to PI) 
     // see also http://root.cern.ch/root/html/TVector2.h
-    OriginVertexPhiAngle = (TMath::ATan2(-1.0*rOriginVertexMomentumDirectionY, -1.0*rOriginVertexMomentumDirectionX) )*TMath::RadToDeg()*degree + 90.0*degree; 
-    rOriginVertexPhiAngle = OriginVertexPhiAngle/degree; 
+//     OriginVertexPhiAngle = (TMath::ATan2(-1.0*rOriginVertexMomentumDirectionY, -1.0*rOriginVertexMomentumDirectionX) )*TMath::RadToDeg()*degree + 90.0*degree; 
+//     rOriginVertexPhiAngle = OriginVertexPhiAngle/degree;
+    
+
+    OriginVertexPhiAngle = (atan2(-1.0*rOriginVertexMomentumDirectionY, -1.0*rOriginVertexMomentumDirectionX) )*180/3.1415927*degree + 90.0*degree; 
+    rOriginVertexPhiAngle = OriginVertexPhiAngle/degree;
 
     analysis->QweakSimG4_RootEvent->Primary.StoreOriginVertexPhiAngle( rOriginVertexPhiAngle );
      
     //-------------------------------------------------------------------------------------------     
-    OriginVertexThetaAngle = (TMath::ATan2( rOriginVertexMomentumDirectionY, rOriginVertexMomentumDirectionZ) )*TMath::RadToDeg()*degree; 
+//     OriginVertexThetaAngle = (TMath::ATan2( rOriginVertexMomentumDirectionY, rOriginVertexMomentumDirectionZ) )*TMath::RadToDeg()*degree; 
+//     rOriginVertexThetaAngle = OriginVertexThetaAngle/degree; 
+
+    OriginVertexThetaAngle = (atan2( rOriginVertexMomentumDirectionY, rOriginVertexMomentumDirectionZ) )*180/3.1415927*degree; 
     rOriginVertexThetaAngle = OriginVertexThetaAngle/degree; 
      
     analysis->QweakSimG4_RootEvent->Primary.StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
 
 
     //-------------------------------------------------------------------------------------------
-    rOriginVertexKineticEnergy = TMath::Sqrt(    rOriginVertexMomentumDirectionX * rOriginVertexMomentumDirectionX 
+//     rOriginVertexKineticEnergy = TMath::Sqrt(    rOriginVertexMomentumDirectionX * rOriginVertexMomentumDirectionX 
+// 					       + rOriginVertexMomentumDirectionY * rOriginVertexMomentumDirectionY 
+// 					       + rOriginVertexMomentumDirectionZ * rOriginVertexMomentumDirectionZ );
+
+    rOriginVertexKineticEnergy =          sqrt(    rOriginVertexMomentumDirectionX * rOriginVertexMomentumDirectionX 
 					       + rOriginVertexMomentumDirectionY * rOriginVertexMomentumDirectionY 
 					       + rOriginVertexMomentumDirectionZ * rOriginVertexMomentumDirectionZ );
 
@@ -409,7 +425,9 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
     OriginVertexParticleMass = evt->GetPrimaryVertex(0)->GetPrimary(0)->GetMass();
     rOriginVertexParticleMass = OriginVertexParticleMass/MeV;
 
-    rOriginVertexTotalEnergy = TMath::Sqrt(rOriginVertexKineticEnergy*rOriginVertexKineticEnergy + rOriginVertexParticleMass*rOriginVertexParticleMass );
+//     rOriginVertexTotalEnergy = TMath::Sqrt(rOriginVertexKineticEnergy*rOriginVertexKineticEnergy + rOriginVertexParticleMass*rOriginVertexParticleMass );
+
+    rOriginVertexTotalEnergy = sqrt(rOriginVertexKineticEnergy*rOriginVertexKineticEnergy + rOriginVertexParticleMass*rOriginVertexParticleMass );
 
     analysis->QweakSimG4_RootEvent->Primary.StoreOriginVertexTotalEnergy( rOriginVertexTotalEnergy ); //MeV
 
@@ -444,7 +462,9 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
     // Store Number of Hits for: Cerenkov Detector
     //analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreDetectorNbOfHits(n_hitCerenkov);  	   
 
-
+//jpan@nuclear.uwinnipeg.ca
+    analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreDetectorNbOfHits(n_hitCerenkov);  
+	 
     //=====================================================================================================================================================
 
 
@@ -781,7 +801,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 
  	rOctantID = G4IndexToOctantNumber[ (Int_t) aHit->GetDetectorID()];
 
-//         //aHit->Print();
+         aHit->Print();
 	      
 	// get local position of hit 
 	localPosition  = aHit->GetLocalPosition();
@@ -862,6 +882,8 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 
 	//==========================================================
 
+//jpan@nuclear.uwinnipeg.ca
+/*
 	     analysis->QweakSimG4_RootEvent->Cerenkov.Octant[rOctantID].Detector.StoreDetectorID(rOctantID);  	   
 	     analysis->QweakSimG4_RootEvent->Cerenkov.Octant[rOctantID].Detector.StoreDetectorHasBeenHit(5);  	   
 	     analysis->QweakSimG4_RootEvent->Cerenkov.Octant[rOctantID].Detector.StoreParticleName(rParticleName);
@@ -898,6 +920,43 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 	     for(int cp = 0; cp < myUserInfo->GetCerenkovOpticalPhotonCount(); cp ++){
 	       analysis->QweakSimG4_RootEvent->Cerenkov.Octant[rOctantID].Detector.StoreCerenkovPhotonEnergy((Double_t)myUserInfo->GetCerenkovPhotonEnergyAtIndex(cp));
 	     }
+*/
+
+	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreDetectorID(rOctantID);  	   
+	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreDetectorHasBeenHit(5);  	   
+	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreParticleName(rParticleName);
+	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreParticleType(rParticleType);  
+	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreGlobalTimeOfHit(rGlobalTime);  	   
+	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreOriginVertexPositionX(rOriginVertexPositionX);  
+	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreOriginVertexPositionY(rOriginVertexPositionY);		    
+	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
+	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);	     
+	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
+	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StorePrimaryQ2(rPrimaryQ2);
+	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreCrossSectionWeight(rCrossSectionWeight);
+	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreDetectorLocalPositionX(rLocalPositionX);  
+	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreDetectorLocalPositionY(rLocalPositionY);
+	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreDetectorLocalPositionZ(rLocalPositionZ);  
+	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreDetectorLocalExitPositionX(rLocalExitPositionX);  
+	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreDetectorLocalExitPositionY(rLocalExitPositionY);
+	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreDetectorLocalExitPositionZ(rLocalExitPositionZ);  
+	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreDetectorGlobalPositionX(rGlobalPositionX);  
+	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreDetectorGlobalPositionY(rGlobalPositionY);
+	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreDetectorGlobalPositionZ(rGlobalPositionZ);  
+	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreDetectorLocalVertexTotalEnergy((Float_t ) aHit->GetTotalEnergy()/MeV);
+	     
+	     // store global track angles Phi and Theta 
+	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreGlobalPhiAngle(rGlobalPhiAngle);  
+	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreGlobalThetaAngle(rGlobalThetaAngle);  
+	     
+	     // store total+kinetic energy of a hit
+	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreTotalEnergy(rtotalEnergy); 
+	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreKineticEnergy(rkineticEnergy);  
+	     
+	     //-----------------------------------------------------------------------------
+
+//jpan@nuclear.uwinnipeg.ca 
+
 
 	     for(int sec = 0; sec < myUserInfo->GetCerenkovSecondaryParticleCount(); sec++){
 		 
@@ -913,16 +972,25 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 		 
 		 rSecondaryPartEnergy = (Float_t) myUserInfo->GetCerenkovSecondaryParticleEnergy(sec)/MeV;
 		 rSecondaryPartCharge = (Float_t) myUserInfo->GetCerenkovSecondaryParticleCharge(sec);
-		 
-		 analysis->QweakSimG4_RootEvent->Cerenkov.Octant[rOctantID].Detector.AddSecondaryParticleEvent(rSecondaryPartOriginX,
-													       rSecondaryPartOriginY,
-													       rSecondaryPartOriginZ,
-													       rSecondaryPartMomentumX,
-													       rSecondaryPartMomentumY,
-													       rSecondaryPartMomentumZ,
-													       rSecondaryPartEnergy,
-													       rSecondaryPartCharge); 
-		 
+
+//jpan@nuclear.uwinnipeg.ca		 
+//		 analysis->QweakSimG4_RootEvent->Cerenkov.Octant[rOctantID].Detector.AddSecondaryParticleEvent(rSecondaryPartOriginX,
+//												     rSecondaryPartOriginY,
+//												     rSecondaryPartOriginZ,
+//												     rSecondaryPartMomentumX,
+//												     rSecondaryPartMomentumY,
+//												     rSecondaryPartMomentumZ,
+//												     rSecondaryPartEnergy,
+//												     rSecondaryPartCharge); 
+
+		 analysis->QweakSimG4_RootEvent->Cerenkov.Detector.AddSecondaryParticleEvent(rSecondaryPartOriginX,
+												     rSecondaryPartOriginY,
+												     rSecondaryPartOriginZ,
+												     rSecondaryPartMomentumX,
+												     rSecondaryPartMomentumY,
+												     rSecondaryPartMomentumZ,
+												     rSecondaryPartEnergy,
+												     rSecondaryPartCharge); 		 
 	     } // end for
 	     //-----------------------------------------------------------------------------
 
@@ -933,8 +1001,11 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 		 edgeEvent = 1;
 	     else
 		 edgeEvent = 0;
-	     
-	     analysis->QweakSimG4_RootEvent->Cerenkov.Octant[rOctantID].Detector.StoreEdgeEventFlag(edgeEvent);
+
+//jpan@nuclear.uwinnipeg.ca	     
+//	     analysis->QweakSimG4_RootEvent->Cerenkov.Octant[rOctantID].Detector.StoreEdgeEventFlag(edgeEvent);
+	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreEdgeEventFlag(edgeEvent);
+
 	     // G4cout << "Edge Event Flag = " << edgeEvent << G4endl;
 	     //--------------------------------------------------------------------------------------------
 
@@ -988,12 +1059,20 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
     //---------------------------------------------
     for(int noctant=0; noctant<8; noctant++) 
 	{
-	analysis->QweakSimG4_RootEvent->Cerenkov.Octant[noctant].PMT.StorePMTLeftNbOfHits(pmtHitsLeft[noctant]);
-	analysis->QweakSimG4_RootEvent->Cerenkov.Octant[noctant].PMT.StorePMTRightNbOfHits(pmtHitsRight[noctant]);
-	analysis->QweakSimG4_RootEvent->Cerenkov.Octant[noctant].PMT.StorePMTTotalNbOfHits(pmtHitsLeft[noctant] + pmtHitsRight[noctant]);
-	analysis->QweakSimG4_RootEvent->Cerenkov.Octant[noctant].PMT.StorePMTLeftNbOfPEs(pmtNPELeft[noctant]);
-	analysis->QweakSimG4_RootEvent->Cerenkov.Octant[noctant].PMT.StorePMTRightNbOfPEs(pmtNPERight[noctant]);
-	analysis->QweakSimG4_RootEvent->Cerenkov.Octant[noctant].PMT.StorePMTTotalNbOfPEs(pmtNPELeft[noctant] + pmtNPERight[noctant]);
+//jpan@nuclear.uwinnipeg.ca
+//	analysis->QweakSimG4_RootEvent->Cerenkov.Octant[noctant].PMT.StorePMTLeftNbOfHits(pmtHitsLeft[noctant]);
+//	analysis->QweakSimG4_RootEvent->Cerenkov.Octant[noctant].PMT.StorePMTRightNbOfHits(pmtHitsRight[noctant]);
+//	analysis->QweakSimG4_RootEvent->Cerenkov.Octant[noctant].PMT.StorePMTTotalNbOfHits(pmtHitsLeft[noctant] + pmtHitsRight[noctant]);
+//	analysis->QweakSimG4_RootEvent->Cerenkov.Octant[noctant].PMT.StorePMTLeftNbOfPEs(pmtNPELeft[noctant]);
+//	analysis->QweakSimG4_RootEvent->Cerenkov.Octant[noctant].PMT.StorePMTRightNbOfPEs(pmtNPERight[noctant]);
+//	analysis->QweakSimG4_RootEvent->Cerenkov.Octant[noctant].PMT.StorePMTTotalNbOfPEs(pmtNPELeft[noctant] + pmtNPERight[noctant]);
+
+	analysis->QweakSimG4_RootEvent->Cerenkov.PMT.StorePMTLeftNbOfHits(pmtHitsLeft[noctant]);
+	analysis->QweakSimG4_RootEvent->Cerenkov.PMT.StorePMTRightNbOfHits(pmtHitsRight[noctant]);
+	analysis->QweakSimG4_RootEvent->Cerenkov.PMT.StorePMTTotalNbOfHits(pmtHitsLeft[noctant] + pmtHitsRight[noctant]);
+	analysis->QweakSimG4_RootEvent->Cerenkov.PMT.StorePMTLeftNbOfPEs(pmtNPELeft[noctant]);
+	analysis->QweakSimG4_RootEvent->Cerenkov.PMT.StorePMTRightNbOfPEs(pmtNPERight[noctant]);
+	analysis->QweakSimG4_RootEvent->Cerenkov.PMT.StorePMTTotalNbOfPEs(pmtNPELeft[noctant] + pmtNPERight[noctant]);
     }
     
     //===============================================================================================================
@@ -1011,7 +1090,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 	  // get hit pointer for each hit 
 	  QweakSimHDC_WirePlaneHit* aHit = (*HDC_WirePlane_HC)[i1];
 
-	  // G4cout << G4endl << "###### Printing HDC hit info within QweakSimEventAction::EndOfEventAction() " << G4endl << G4endl;
+	  G4cout << G4endl << "###### Printing HDC hit info within QweakSimEventAction::EndOfEventAction() " << G4endl << G4endl;
 	  aHit->Print();
       
 	  // get local position of hit 
@@ -1456,7 +1535,9 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 
 
 	// 	      edgeEvent = myUserInfo->GetEdgeEventDetected();
-	      
+
+//jpan@nuclear.uwinnipeg.ca
+/*	      
 	// mark TriggerScintillator detector as been hit
 	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector[0].StoreDetectorHasBeenHit(5);  	   
 	      
@@ -1491,6 +1572,42 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 	// store global track angles Phi and Theta 
 	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector[0].StoreGlobalPhiAngle(rGlobalPhiAngle);  
 	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector[0].StoreGlobalThetaAngle(rGlobalThetaAngle);
+*/
+
+	// mark TriggerScintillator detector as been hit
+	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector.StoreDetectorHasBeenHit(5);  	   
+	      
+	// store global time of hit
+	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector.StoreGlobalTimeOfHit(rGlobalTime);  	   
+	      
+	// store origin vertex info
+	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector.StoreOriginVertexPositionX(rOriginVertexPositionX);  
+	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector.StoreOriginVertexPositionY(rOriginVertexPositionY);		    
+	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
+	      
+	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);	     
+	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
+	      
+	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector.StorePrimaryQ2(rPrimaryQ2);
+	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector.StoreCrossSectionWeight(rCrossSectionWeight);
+	      
+	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector.StoreDetectorLocalPositionX(rLocalPositionX);  
+	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector.StoreDetectorLocalPositionY(rLocalPositionY);
+	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector.StoreDetectorLocalPositionZ(rLocalPositionZ);  
+	      
+//         analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector.StoreDetectorLocalExitPositionX(rLocalExitPositionX);
+//         analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector.StoreDetectorLocalExitPositionY(rLocalExitPositionY);
+//         analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector.StoreDetectorLocalExitPositionZ(rLocalExitPositionZ);
+
+	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector.StoreDetectorGlobalPositionX(rGlobalPositionX);  
+	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector.StoreDetectorGlobalPositionY(rGlobalPositionY);
+	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector.StoreDetectorGlobalPositionZ(rGlobalPositionZ);  
+	  
+	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector.StoreDetectorLocalVertexTotalEnergy((Float_t ) aHit->GetTotalEnergy()/MeV);
+
+	// store global track angles Phi and Theta 
+	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector.StoreGlobalPhiAngle(rGlobalPhiAngle);  
+	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector.StoreGlobalThetaAngle(rGlobalThetaAngle);
        //--------------------------------------------------------------------------------------------
 	      
       } // end  for(int i1=0;i1<n_hitTriggerScintillator;i1++)
@@ -1498,15 +1615,16 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 
 
 
-  G4cout << "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" << G4endl;
-      
+//  G4cout << "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" << G4endl;
+
+   
     // Finally fill our event ntuple
     analysis->Fill_RootNtuple();
+
       
   } //end of if( (n_hitWirePlane == 2)&&(n_hitFront >0)&&(n_hitBack >0)&&(n_hitCerenkov >0) ) 
   
   myUserInfo->ResetCerenkovSecondaryParticleInfo();
-
 
 
 //=======================================================================
@@ -1514,7 +1632,12 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 
   G4int eventNumber = evt->GetEventID();
 
- if (eventNumber%25000 == 1) analysis->AutoSaveRootNtuple();
+//jpan@nuclear.uwinnipeg.ca
+// if (eventNumber%25000 == 1) analysis->AutoSaveRootNtuple();
+
+ if (eventNumber%10000 == 1) 
+        analysis->AutoSaveRootNtuple(); 
+
 //=======================================================================
 
 

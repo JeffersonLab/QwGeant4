@@ -1,9 +1,0 @@
-<!DOCTYPE Workspace SYSTEM "http://www.slickedit.com/dtd/vse/10.0/vpw.dtd">
-<Workspace Version="10.0" VendorName="SlickEdit">
-	<Projects>
-		<Project File="QweakSimGeant4.vpj" />
-	</Projects>
-	<Environment>
-		<Set Name="LD_LIBRARY_PATH" Value="/apps/packages/x64/Coin3D/Coin-2.4.6/lib:/apps/packages/x64/Coin3D/SoXt-1.2.2/lib:/apps/packages/x64/Coin3D/SoQt-1.4.1/lib:/apps/packages/x64/cern-gcc4gf/2005/lib:/apps/packages/x64/clhep-2.0.3.1/lib:/apps/packages/x64/root-5.17.02/lib/root:/apps/packages/x64/gdml-2.10.0/lib:/apps/packages/x64/xercesc-2.8.0/lib:/apps/packages/x64/geant4.9.0.p01/lib/Linux-g++:/apps/packages/x64/clhep-2.0.3.1/lib:/usr/local/OpenCASCADE/lib" />
-	</Environment>
-</Workspace>

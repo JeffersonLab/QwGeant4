@@ -63,7 +63,7 @@ QweakSimPhysicsList::QweakSimPhysicsList() : G4VUserPhysicsList()
 
   pMessenger = new QweakSimPhysicsListMessenger(this);
 
-  SetVerboseLevel(0); // just be silent
+  SetVerboseLevel(2);
 
 //   hadPhyics = new HadronPhysicsLHEP_PRECO_HP("hadron");
 //   RegisterPhysics(hadPhyics);
@@ -105,13 +105,22 @@ void QweakSimPhysicsList::ConstructProcess()
 {
   AddTransportation();
 
+//jpan@nuclear.uwinnipeg.ca
+//  ConstructEMProcess();
+//  ConstructOpticalPhotonProcess();
+//  ConstructHadronProcess();
+//  //ConstructNeutronProcess();
+//  ConstructPhotonNuclearProcess();
+//  ConstructElectronNuclearProcess();
+//  ConstructDecayProcess();
+
   ConstructEMProcess();
-  ConstructOpticalPhotonProcess();
-  ConstructHadronProcess();
+//  ConstructOpticalPhotonProcess();
+//  ConstructHadronProcess();
   //ConstructNeutronProcess();
   ConstructPhotonNuclearProcess();
   ConstructElectronNuclearProcess();
-  ConstructDecayProcess();
+//  ConstructDecayProcess();
 }
 
 void QweakSimPhysicsList::ConstructBosons()
@@ -243,8 +252,8 @@ void QweakSimPhysicsList::ConstructEMProcess()
     paiVDC->SetHighEnergyLimit(100.0*TeV);
     
     // here 0 is the highest priority in region 'gas'
-    //// eion->AddEmModel(0,paiVDC,paiVDC,DriftCellRegion_VDC);
-    // debugging purpose
+    eion->AddEmModel(0,paiVDC,paiVDC,DriftCellRegion_VDC);
+
 
     G4PAIModel*     paiGEM = new G4PAIModel(G4Electron::ElectronDefinition(),"PAIModel");
     // set energy limits where 'pai' is active
@@ -252,8 +261,7 @@ void QweakSimPhysicsList::ConstructEMProcess()
     paiGEM->SetHighEnergyLimit(100.0*TeV);
     
     // here 0 is the highest priority in region 'gas'
-    ////eion->AddEmModel(0,paiGEM,paiGEM,DriftCellRegion_GEM);
-    // debugging purpose
+    eion->AddEmModel(0,paiGEM,paiGEM,DriftCellRegion_GEM);
 
     //eion->DumpInfo()
     //eion->PrintInfo()
@@ -341,7 +349,7 @@ void QweakSimPhysicsList::ConstructOpticalPhotonProcess()
 //  theAbsorptionProcess->DumpPhysicsTable();
 //  theRayleighScatteringProcess->DumpPhysicsTable();
 
-  //SetVerbose(1);
+  SetVerbose(1);
   
   theCerenkovProcess->SetMaxNumPhotonsPerStep(300);
   theCerenkovProcess->SetTrackSecondariesFirst(true);
@@ -361,16 +369,8 @@ void QweakSimPhysicsList::ConstructOpticalPhotonProcess()
       G4String              particleName = particle->GetParticleName();     
 
       if (theCerenkovProcess->IsApplicable(*particle)) {
-
-	// Mandatory changes with Geant 4.9.1
-	//
-	// before Geant 4.9.1
-	//   pManager->AddContinuousProcess(theCerenkovProcess); // here: disable Cerenkov (part 2 of 2)
-	//   pManager->AddProcess(theCerenkovProcess);
-	//
-	// with Geant 4.9.1
-	     pManager->AddProcess(theCerenkovProcess);
-	     pManager->SetProcessOrdering(theCerenkovProcess,idxPostStep);
+//jpan@nuclear.uwinnipeg.ca
+//	  pManager->AddContinuousProcess(theCerenkovProcess); // here: disable Cerenkov (part 2 of 2)
       }
 
       //     if (theScintillationProcess->IsApplicable(*particle)) {

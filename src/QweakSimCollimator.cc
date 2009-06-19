@@ -269,7 +269,7 @@ void QweakSimCollimator::ConstructCollimator(G4VPhysicalVolume* MotherVolume)
   
   G4VisAttributes* CollimatorHousingVisAtt = new G4VisAttributes(mangenta1);
   CollimatorHousingVisAtt->SetVisibility(true);
-  CollimatorHousingVisAtt->SetForceSolid(true);
+//  CollimatorHousingVisAtt->SetForceSolid(true);
 //   CollimatorHousingVisAtt->SetForceWireframe(true);
   CollimatorHousing_Logical->SetVisAttributes(CollimatorHousingVisAtt); 
   //**********************************************************************************

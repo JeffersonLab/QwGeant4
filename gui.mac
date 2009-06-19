@@ -17,7 +17,6 @@
 /gui/addButton run "beamOn 15"   "/run/beamOn 15"
 /gui/addButton run "beamOn 20"   "/run/beamOn 20"
 /gui/addButton run "beamOn 25"   "/run/beamOn 25"
-/gui/addButton run "beamOn 40"   "/run/beamOn 40"
 /gui/addButton run "beamOn 50"   "/run/beamOn 50"
 /gui/addButton run "beamOn 100"  "/run/beamOn 100"
 /gui/addButton run "beamOn 200"  "/run/beamOn 200"

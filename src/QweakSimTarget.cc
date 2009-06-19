@@ -65,10 +65,10 @@ static const G4double mil = 0.001*2.54*cm;
 
   // define target geometry values
 
-  targetCellWindowThickness =  3.5*mil;  //  3.5*mil
+  targetCellWindowThickness =  5*mil;  //  3.5*mil
   targetCellWallThickness   = 20.0*mil;  // 20.0*mil
 
-  targetCellInnerLength     = 37.0*cm;
+  targetCellInnerLength     = 35.0*cm;
   targetCellOuterLength     = targetCellInnerLength + 2.0*targetCellWindowThickness;  // Full length of Target
 
   targetCellRadiusMin        =  0.0*cm;
@@ -107,7 +107,7 @@ G4cout << G4endl << "###### Calling QweakSimTarget::ConstructComponent() " << G4
   G4cout << G4endl << "###### QweakSimTarget: Define TargetCell_Solid " << G4endl << G4endl;
   
   G4Tubs* TargetCell_Solid    = new G4Tubs("QweakTargetCell_Sol",
-				       targetCellRadiusMin,
+				       targetCellInnerRadiusMax+0.000001*cm, //targetCellRadiusMin, jpan@nuclear.uwinnipeg.ca
 				       targetCellOuterRadiusMax,
 				   0.5*targetCellOuterLength,
 				       targetCellStartingPhi,
@@ -137,7 +137,7 @@ G4cout << G4endl << "###### Calling QweakSimTarget::ConstructComponent() " << G4
   G4cout << G4endl << "###### QweakSimTarget: Define TargetMaterial_Solid " << G4endl << G4endl;
   
   G4Tubs* TargetMaterial_Solid    = new G4Tubs("QweakTargetMaterial_Sol",
-				       targetCellRadiusMin,
+				       targetCellRadiusMin, 
 				       targetCellInnerRadiusMax,
 				   0.5*targetCellInnerLength,
 				       targetCellStartingPhi,

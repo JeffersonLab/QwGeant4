@@ -11,7 +11,6 @@
 #include "QweakSimUserInformation.hh"
 #include "QweakSimSteppingVerbose.hh"
 #include "QweakSimTrackInformation.hh"
-#include "QweakSimTrajectory.hh"		
 
 // system classes
 //class G4Step;

@@ -40,13 +40,12 @@
 
 QweakSimInputRootFile_EventReader::QweakSimInputRootFile_EventReader(TString FileName)
 {
-    G4cout << "###### Calling QweakSimInputRootFile_EventReader::QweakSimInputRootFile_EventReader()" << G4endl;
 
   //==================
   // start initilizing
   //==================
 
-  SetDebugLevel(5);
+  SetDebugLevel(20);
   
   // initialize the pointers pointing to NULL
   Initialize();
@@ -58,17 +57,13 @@ QweakSimInputRootFile_EventReader::QweakSimInputRootFile_EventReader(TString Fil
    // read entries
    //LoopEvents(0, 200000);
 
-G4cout << "###### Leaving QweakSimInputRootFile_EventReader::QweakSimInputRootFile_EventReader()" << G4endl;
-
 } //end of track::track
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 QweakSimInputRootFile_EventReader::~QweakSimInputRootFile_EventReader()
-{	
-    G4cout << "###### Calling QweakSimInputRootFile_EventReader::~QweakSimInputRootFile_EventReader()" << G4endl;
-
-  if (debug!=0) G4cout << "==> Destructor() called" << G4endl;
+{
+  if (debug!=0) cout << "==> Destructor() called" << endl;
  
    if (fInputRootFile==0) return;
    fInputRootFile->Close();
@@ -78,8 +73,7 @@ QweakSimInputRootFile_EventReader::~QweakSimInputRootFile_EventReader()
    
    delete RotatedVertex;
    delete RotatedMomentum;
-
-   G4cout << "###### Leaving QweakSimInputRootFile_EventReader::~QweakSimInputRootFile_EventReader()" << G4endl;
+   
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -90,8 +84,6 @@ void QweakSimInputRootFile_EventReader::SetDebugLevel(Int_t debuglevel)
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 Int_t QweakSimInputRootFile_EventReader::Initialize() {
-
-    G4cout << "###### Calling QweakSimInputRootFile_EventReader::Initialize()" << G4endl;
 
   if (debug!=0) cout << "==> Initilize() called" << endl; 
 
@@ -117,18 +109,13 @@ Int_t QweakSimInputRootFile_EventReader::Initialize() {
 
   cout << "==> initilizing pointers done" << endl;  
 
-  G4cout << "###### Leaving QweakSimInputRootFile_EventReader::Initialize()" << G4endl;
-
   return 0;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 Int_t QweakSimInputRootFile_EventReader::LoadInputRootFile(TString FileName)
 {
-
-    G4cout << "###### Calling QweakSimInputRootFile_EventReader::LoadInputRootFile()" << G4endl;
-
-  if (debug!=0) G4cout << "==> LoadInputRootFile() called" << G4endl; 
+  if (debug!=0) cout << "==> LoadInputRootFile() called" << endl; 
 
   // e.g. "QweakTrack.1.root"
   //fInputFileName = TString("ep_m0_neven_larget_r5.root");
@@ -158,8 +145,6 @@ Int_t QweakSimInputRootFile_EventReader::LoadInputRootFile(TString FileName)
     cout << "==> Input root file is open, current file number: " << fInputFileNumber << endl;
   }
 
-   G4cout << "###### Leaving QweakSimInputRootFile_EventReader::LoadInputRootFile()" << G4endl;
-
   return 0;
 }
 
@@ -167,8 +152,6 @@ Int_t QweakSimInputRootFile_EventReader::LoadInputRootFile(TString FileName)
 
 void QweakSimInputRootFile_EventReader::InitInputTree()
 {
-     G4cout << "###### Calling QweakSimInputRootFile_EventReader::InitInputTree()" << G4endl;
-
   if (debug!=0) cout << "==> InitInputTree() called" << endl; 
 
   // get the tree "h20"
@@ -184,8 +167,6 @@ void QweakSimInputRootFile_EventReader::InitInputTree()
   branch = InputTree->GetBranch("CurrentEvent");  //getting the address of the EventBranch so we can access it through a pointer
 
   branch->SetAddress(&event);  //setting the address to which objects from that branch will be loaded 
-
-  G4cout << "###### Leaving QweakSimInputRootFile_EventReader::InitInputTree()" << G4endl;
 
 } // end of QweakSimInputRootFile_EventReader::Init() 
 
@@ -212,9 +193,7 @@ void QweakSimInputRootFile_EventReader::check_events_to_be_read(Int_t &lastevent
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void QweakSimInputRootFile_EventReader::LoopEvents(Int_t firstevent, Int_t lastevent)
-{
-    
-
+{  
   if (debug!=0) cout << "==> ReadNodes() called" << endl; 
 
   NumberOfEntries = (Int_t) branch->GetEntries();
@@ -241,6 +220,8 @@ void QweakSimInputRootFile_EventReader::LoopEvents(Int_t firstevent, Int_t laste
 
     Int_t entryNumber = branch->GetEntryNumber(); 
     
+    if (debug>10) {cout << "entryNumber: " << entryNumber << endl;}
+    
     if(entryNumber<0) break;
     
     // load the activated branches
@@ -253,9 +234,6 @@ void QweakSimInputRootFile_EventReader::LoopEvents(Int_t firstevent, Int_t laste
     if (debug>10) {cout << "alive after GetEntry" << endl;}
     
     FillLeavesFromCurrentEvent(event);
-
-    // Print out the current event number
-    cout << " Current Event Number        : " << eventcounter       << endl; 
 
     eventcounter++;
 
@@ -274,10 +252,7 @@ void QweakSimInputRootFile_EventReader::LoopEvents(Int_t firstevent, Int_t laste
 //void QweakSimInputRootFile_EventReader::GetRandomEvent(Double_t *primaryEvent)
 void QweakSimInputRootFile_EventReader::GetRandomEvent(QweakSimG3Ntuple *primaryEvent)
 {  
-
-     G4cout << "###### Calling QweakSimInputRootFile_EventReader::GetRandomEvent()" << G4endl;
-
-  //if (debug!=0) cout << "==> calling QweakSimInputRootFile_EventReader::GetRandomEvent() " << endl; 
+  if (debug!=0) cout << "==> calling QweakSimInputRootFile_EventReader::GetRandomEvent() " << endl; 
 
 //   myrand->SetSeed(0);
 //   Double_t mynumber = numberOfEntries * myrand->Rndm(nrandom);
@@ -354,22 +329,17 @@ void QweakSimInputRootFile_EventReader::GetRandomEvent(QweakSimG3Ntuple *primary
     primaryEvent->Q2            = my_gt_q__2 ;
     primaryEvent->Weight        = my_gt_weight_n;
 
-
- G4cout << "###### Leaving QweakSimInputRootFile_EventReader::GetRandomEvent()" << G4endl;
-
 } //end QweakSimInputRootFile_EventReader::GetRandomEvent()
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void QweakSimInputRootFile_EventReader::GetPrimaryEvent(int myNumber, QweakSimG3Ntuple *primaryEvent)
 {  
-    //G4cout << "###### Calling QweakSimInputRootFile_EventReader::GetPrimaryEvent()" << G4endl;
-
-   if (debug!=0) G4cout << "==> calling QweakSimInputRootFile_EventReader::GetPrimaryEvent() " << G4endl; 
+//   if (debug!=0) cout << "==> calling QweakSimInputRootFile_EventReader::GetPrimaryEvent() " << endl; 
 
     NumberOfEntries = (Int_t) branch->GetEntries(); 
  
-    //cout << "==> total number of Primary Nodes in the Geant ntuple: " << NumberOfEntries << endl;
+    // cout << "==> total number of Primary Nodes in the Geant ntuple: " << NumberOfEntries << endl;
     
     if (myNumber>NumberOfEntries) 
     { 
@@ -380,15 +350,10 @@ void QweakSimInputRootFile_EventReader::GetPrimaryEvent(int myNumber, QweakSimG3
   if (debug>10) {cout << "alive after LoadTree" << endl;}
     
   // get the current event()
-
-  //G4cout << "Before: branch->GetEntry()" << G4endl;
   branch->GetEntry(myNumber);
-
-  G4cout << "Eventcounter = " << eventcounter << G4endl;
 
   eventcounter++;
 
-  //G4cout << "Before: FillLeavesFromCurrentEvent()" << G4endl;
   FillLeavesFromCurrentEvent(event);
 
   //--------------------
@@ -440,7 +405,7 @@ void QweakSimInputRootFile_EventReader::GetPrimaryEvent(int myNumber, QweakSimG3
   primaryEvent->Momentum[2]   = RotatedMomentum->z();
 
 
-  G4cout << " Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()" << endl; 
+    cout << " Leaving QweakSimInputRootFile_EventReader::GetPrimaryEvent()" << endl; 
 
 } //end QweakSimInputRootFile_EventReader::GetPrimaryEvent()
 
@@ -448,8 +413,6 @@ void QweakSimInputRootFile_EventReader::GetPrimaryEvent(int myNumber, QweakSimG3
 
 void QweakSimInputRootFile_EventReader::FillLeavesFromCurrentEvent(EPEvent* currentevent)
 {
-   G4cout << "###### Calling QweakSimInputRootFile_EventReader::FillLeavesFromCurrentEvent()" << G4endl; 
-
     // geant3 event generator: energy, momentum in MeV
     // Root event generator: energy, momentum in GeV
     // Up to now QweakSimG4 is compatible with Geant3 event energy  
@@ -469,7 +432,6 @@ void QweakSimInputRootFile_EventReader::FillLeavesFromCurrentEvent(EPEvent* curr
     my_gt_q__2         = currentevent->Get_q__2(); 
     my_gt_weight_n     = currentevent->Get_weight_n();
 
-    G4cout << "###### Leaving QweakSimInputRootFile_EventReader::FillLeavesFromCurrentEvent()" << G4endl; 
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
