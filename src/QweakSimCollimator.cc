@@ -43,25 +43,25 @@ QweakSimCollimator::QweakSimCollimator()
   CollimatorHousing_Physical = NULL;
 
 
-  CollimatorHousing_CenterZPosition = -575.79*cm;
-  CollimatorHousing_FullLength_X    = 120.0*cm;
-  CollimatorHousing_FullLength_Y    = 120.0*cm;
+  CollimatorHousing_CenterZPosition = -575.7895*cm;//-579.79*cm
+  CollimatorHousing_FullLength_X    = 120.0*cm;//should be update to 86.36*cm
+  CollimatorHousing_FullLength_Y    = 120.0*cm;//86.36*cm
   CollimatorHousing_FullLength_Z    = 15.24*cm;
 
-  BeamlineCutoutDiameter            = 8.0*cm;
+  BeamlineCutoutDiameter            = 8.3*cm;//8.0*cm
   
-  OctantCutOutFrontFullLength_Y     = 3.28*cm;
-  OctantCutOutFrontFullLength_X1    = 7.66*cm;
-  OctantCutOutFrontFullLength_X2    = 7.66*cm;
-  OctantCutOutBackFullLength_Y      = 6.25*cm;
-  OctantCutOutBackFullLength_X1     = 7.66*cm;
-  OctantCutOutBackFullLength_X2     = 7.66*cm;
-  OctantCutOutFrontInnerDiameter    = 10.0*cm;
-  OctantCutOutFrontOuterDiameter    = 26.14*cm;
-  OctantCutOutBackInnerDiameter     = 12.40*cm;
-  OctantCutOutBackOuterDiameter     = 26.14*cm;
-  OctantCutOutStartingPhiAngle      = (-16.344 + 90.0)*degree;
-  OctantCutOutDeltaPhiAngle         = 2.0*16.344*degree;
+  OctantCutOutFrontFullLength_Y     = 5.04*cm;//3.28*cm
+  OctantCutOutFrontFullLength_X1    = 6.38*cm;//7.66*cm
+  OctantCutOutFrontFullLength_X2    = 6.38*cm;//7.66*cm
+  OctantCutOutBackFullLength_Y      = 5.83*cm;//6.25*cm
+  OctantCutOutBackFullLength_X1     = 7.30*cm;//7.66*cm
+  OctantCutOutBackFullLength_X2     = 7.30*cm;//7.66*cm
+  OctantCutOutFrontInnerDiameter    = 10.42*cm;//10.0*cm
+  OctantCutOutFrontOuterDiameter    = 21.38*cm;//26.14*cm
+  OctantCutOutBackInnerDiameter     = 14.06*cm;//12.40*cm
+  OctantCutOutBackOuterDiameter     = 25.26*cm;//26.14*cm
+  OctantCutOutStartingPhiAngle      = (-16.61 + 90.0)*degree;//(-16.344+90)*degree
+  OctantCutOutDeltaPhiAngle         = 2.0*16.61*degree;//2.0*16.344*degree
   OctantCutOutRadialOffset          = 0.0*cm;
 
 
@@ -101,9 +101,8 @@ void QweakSimCollimator::ConstructCollimator(G4VPhysicalVolume* MotherVolume)
                                                               //somewhere else, but
                                                               //what the heck
 
-
   // assign material
- G4Material* CollimatorHousing_Material = pMaterial->GetMaterial("CDA943"); 
+ G4Material* CollimatorHousing_Material = pMaterial->GetMaterial("PBA"); 
 
 
   std::vector< G4SubtractionSolid* >  Solids;
@@ -152,15 +151,21 @@ void QweakSimCollimator::ConstructCollimator(G4VPhysicalVolume* MotherVolume)
 
   
   //**********************************************************************************
-  //Construct weired fucking shape cutout on top of pie, for collimator acceptance
+  //Construct weired shape cutout on top of pie, for collimator acceptance
 
-  G4double theta  = std::atan((OctantCutOutBackFullLength_Y-
-			       OctantCutOutFrontFullLength_Y)/
-			      CollimatorHousing_FullLength_Z/2.0)*180/PI*degree;
+ // G4double theta  = std::atan((OctantCutOutBackFullLength_Y-
+//			       OctantCutOutFrontFullLength_Y)/
+//			      CollimatorHousing_FullLength_Z/2.0)*180/PI*degree;
+
+  G4double theta  = std::atan((OctantCutOutBackFullLength_Y-OctantCutOutFrontFullLength_Y                            +OctantCutOutBackOuterDiameter-OctantCutOutFrontOuterDiameter)/
+                     CollimatorHousing_FullLength_Z/2.0)*180/PI*degree; 
+//Theta here should be defined as the polar angle of the line joining the centres of the faces at +/-Dz of the trapezoid - corrected by Jie Pan 2009/06/17
+
   G4double phi    = 90.0*degree;
   G4double alpha1 = 0.0*degree;
   G4double alpha2 = 0.0*degree;
-  G4double radLoc = (OctantCutOutRadialOffset - 0.01*cm +
+  
+G4double radLoc = (OctantCutOutRadialOffset - 0.01*cm +
 		     (OctantCutOutFrontOuterDiameter+
 		      OctantCutOutFrontFullLength_Y + 
 		      std::tan(theta)*CollimatorHousing_FullLength_Z)/2.0);
@@ -269,7 +274,7 @@ void QweakSimCollimator::ConstructCollimator(G4VPhysicalVolume* MotherVolume)
   
   G4VisAttributes* CollimatorHousingVisAtt = new G4VisAttributes(mangenta1);
   CollimatorHousingVisAtt->SetVisibility(true);
-//  CollimatorHousingVisAtt->SetForceSolid(true);
+  //CollimatorHousingVisAtt->SetForceSolid(true);//comment out by Jie
 //   CollimatorHousingVisAtt->SetForceWireframe(true);
   CollimatorHousing_Logical->SetVisAttributes(CollimatorHousingVisAtt); 
   //**********************************************************************************

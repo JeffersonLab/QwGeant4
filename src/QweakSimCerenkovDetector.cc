@@ -184,7 +184,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 
 //jpan@nuclear.uwinnipeg.ca
 //  Position_CerenkovContainer_Y = 319.0*cm; // given by SolidWorks (or later by Juliette)
-  Position_CerenkovContainer_Y = 325.0*cm; 
+  Position_CerenkovContainer_Y = 328.0*cm; 
 
   Position_CerenkovContainer_Z = 570.0*cm; // given by SolidWorks (or later by Juliette)
   

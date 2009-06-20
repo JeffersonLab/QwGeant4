@@ -257,6 +257,13 @@ G4cout << G4endl << "###### Calling QweakSimMaterial::DefineMaterials() " << G4e
   density =  7.28*g/cm3;
   G4Material* matSn = new G4Material(name,Z,A,density);
 
+  //Antimony material (added June-10-09 by Jie Pan)
+  name    = "Sb";
+  A       = 121.76*g/mole;
+  Z       = 51.;
+  density =  6.68*g/cm3;
+  G4Material* matSb = new G4Material(name,Z,A,density);
+
   // Lead material
   name    = "Lead";
   A       = 207.19*g/mole;
@@ -465,7 +472,7 @@ G4cout << G4endl << "###### Calling QweakSimMaterial::DefineMaterials() " << G4e
   G4Material* matPolyethylene = new G4Material(name,density, ncomponents);
               matPolyethylene -> AddElement(elH, fractionmass=0.14);
               matPolyethylene -> AddElement(elC, fractionmass=0.86);
-  
+
   // Polyacrylate
   name        = "Polyacrylate";
   density     = 1.19 * g/cm3;
@@ -484,31 +491,41 @@ G4cout << G4endl << "###### Calling QweakSimMaterial::DefineMaterials() " << G4e
               matArCO2->AddMaterial(matCO2,      fractionmass = 0.2);
 
 
-  // ShieldingConcrete: must  check recipe for concrete
+  // ShieldingConcrete(The receipe is modified 06/19/2009 by Jie pan)
 
   name        = "ShieldingConcrete";
-  density     = 2.5*g/cm3;
+  density     = 2.7*g/cm3;
   ncomponents = 6;
   G4Material* matConcrete = new G4Material(name,density,ncomponents);
-              matConcrete -> AddElement(elO,  fractionmass = 0.520);
-              matConcrete -> AddElement(elSi, fractionmass = 0.325);
-              matConcrete -> AddElement(elCa, fractionmass = 0.060);
-              matConcrete -> AddElement(elNa, fractionmass = 0.015);
-              matConcrete -> AddElement(elFe, fractionmass = 0.040);
-              matConcrete -> AddElement(elAl, fractionmass = 0.040);
+              matConcrete -> AddElement(elO,  fractionmass = 0.509);
+              matConcrete -> AddElement(elSi, fractionmass = 0.345);
+              matConcrete -> AddElement(elCa, fractionmass = 0.070);
+              matConcrete -> AddElement(elH, fractionmass = 0.004);
+              matConcrete -> AddElement(elFe, fractionmass = 0.038);
+              matConcrete -> AddElement(elAl, fractionmass = 0.034);
 	      matConcrete -> GetIonisation() -> SetMeanExcitationEnergy(135.2*eV);
 
 
-  // material for the collimators: High Leaded Tin Bronze 
+  //The material used in the final collimator design is Lead Antimony (~95% Lead and 5% Antimony)
+  //Added June-10-09 by Jie Pan
+  name        = "PBA";
+  density     = 11.005 * g/cm3;
+  ncomponents = 2;
+  G4Material* matCollimator = new G4Material(name,density,ncomponents);
+              matCollimator-> AddMaterial(matPb    , fractionmass = 0.955);
+              matCollimator-> AddMaterial(matSb    , fractionmass = 0.045);
+
+
+// material for the collimators: High Leaded Tin Bronze 
   // Copper Alloy No. C94300
   // see http://www/anchorbronze.com/c94300.html
-  name        = "CDA943";
-  density     = 9.29 * g/cm3;
-  ncomponents = 3;
-  G4Material* matCollimator = new G4Material(name,density,ncomponents);
-              matCollimator-> AddMaterial(matCopper, fractionmass = 0.695);
-              matCollimator-> AddMaterial(matPb    , fractionmass = 0.25);
-              matCollimator-> AddMaterial(matSn    , fractionmass = 0.055);
+//   name        = "CDA943";
+//   density     = 9.29 * g/cm3;
+//   ncomponents = 3;
+//   G4Material* matCollimator = new G4Material(name,density,ncomponents);
+//              matCollimator-> AddMaterial(matCopper, fractionmass = 0.695);
+//              matCollimator-> AddMaterial(matPb    , fractionmass = 0.25);
+//              matCollimator-> AddMaterial(matSn    , fractionmass = 0.055);
 
 
   // Stainless steel (Medical Physics, Vol 25, No 10, Oct 1998)

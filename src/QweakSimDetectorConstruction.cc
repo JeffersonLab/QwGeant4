@@ -84,7 +84,6 @@ QweakSimDetectorConstruction::QweakSimDetectorConstruction(QweakSimUserInformati
 
   pTarget            = NULL;
   pMainMagnet        = NULL;
-  pMiniMagnet        = NULL;
 
   fWorldLengthInX = 0.0*cm; 
   fWorldLengthInY = 0.0*cm;
@@ -136,12 +135,12 @@ QweakSimDetectorConstruction::~QweakSimDetectorConstruction()
 
   if (pTarget)              delete pTarget;
   if (pMainMagnet)          delete pMainMagnet;
-  if (pMiniMagnet)          delete pMiniMagnet;
 
   if (detectorMessenger)    delete detectorMessenger;             
   if (pMaterial)            delete pMaterial;
 
 }
+
 
 G4VPhysicalVolume* QweakSimDetectorConstruction::Construct()
 {
@@ -161,8 +160,6 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   pShieldingWall       = new QweakSimShieldingWall();
 
 //jpan@nuclear.uwinnipeg.ca  
-//  pMiniMagnet          = new QweakSimMiniMagnet(); // MiniTorus Geometry (decoupled from field)
-
   pMainMagnet          = new QweakSimMainMagnet(); // QTOR Geometry (decoupled from field) 
 
   pGEM                 = new QweakSimGEM(); 
@@ -261,17 +258,6 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   pTarget -> ConstructComponent(experimentalHall_Physical);
   pTarget -> SetTargetCenterPositionInZ(-650*cm); 
 
-  //================================================
-  // create/place MainMagnet body into MotherVolume 
-  //================================================
-  //
-//jpan@nuclear.uwinnipeg.ca
-/*
-  if(pMiniMagnet){
-    pMiniMagnet -> ConstructComponent(experimentalHall_Physical);
-    pMiniMagnet -> SetCenterPositionInZ(-465.31*cm);
-  }
-*/
 
   //================================================
   // create/place MainMagnet body into MotherVolume 
@@ -290,91 +276,93 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
 //    pMainMagnet -> Construct_DownstreamSpider(experimentalHall_Physical);
   }
 
+//jpan@nuclear.uwinnipeg.ca: Fri Jun  5 12:24:18 CDT 2009
+//update collimators' geometry parameters according to the drawings from //http://qweak.jlab.org/doc-private/ShowDocument?docid=745
 
   //Collimator 1 configuration
   pCollimator1->SetCollimatorNumber(1);
-  pCollimator1->SetCollimatorHousing_FullLengthInX(240.0*cm);
+  pCollimator1->SetCollimatorHousing_FullLengthInX(240.0*cm);//should be updated to 86.36*cm
   pCollimator1->SetCollimatorHousing_FullLengthInY(240.0*cm);
   pCollimator1->SetCollimatorHousing_FullLengthInZ(15.24*cm);
 
-  pCollimator1->SetOctantCutOutFrontFullLength_Y(3.28*cm);
-  pCollimator1->SetOctantCutOutFrontFullLength_X1(7.66*cm);
-  pCollimator1->SetOctantCutOutFrontFullLength_X2(7.66*cm);
-  pCollimator1->SetOctantCutOutBackFullLength_Y(6.24*cm);
-  pCollimator1->SetOctantCutOutBackFullLength_X1(7.66*cm);
-  pCollimator1->SetOctantCutOutBackFullLength_X2(7.66*cm);
+  pCollimator1->SetOctantCutOutFrontFullLength_Y(5.04*cm);//3.28*cm
+  pCollimator1->SetOctantCutOutFrontFullLength_X1(6.38*cm);//7.66*cm
+  pCollimator1->SetOctantCutOutFrontFullLength_X2(6.38*cm);//7.66*cm
+  pCollimator1->SetOctantCutOutBackFullLength_Y(5.83*cm);//6.24*cm
+  pCollimator1->SetOctantCutOutBackFullLength_X1(7.30*cm);//7.66*cm
+  pCollimator1->SetOctantCutOutBackFullLength_X2(7.30*cm);//7.66*cm
 
-  pCollimator1->SetBeamlineCutoutDiameter(8.0*cm);
+  pCollimator1->SetBeamlineCutoutDiameter(8.3*cm);//8.0*cm
 
-  pCollimator1->SetOctantCutOutFrontInnerDiameter(100.0*mm);
-  pCollimator1->SetOctantCutOutFrontOuterDiameter(261.4*mm);
-  pCollimator1->SetOctantCutOutBackInnerDiameter(124.0*mm);
-  pCollimator1->SetOctantCutOutBackOuterDiameter(261.4*mm);
-  pCollimator1->SetOctantCutOutStartingPhiAngle((-16.344+90.0)*degree);
-  pCollimator1->SetOctantCutOutDeltaPhiAngle(2.0*16.344*degree);
+  pCollimator1->SetOctantCutOutFrontInnerDiameter(104.2*mm);//100.0*mm
+  pCollimator1->SetOctantCutOutFrontOuterDiameter(213.8*mm);//261.4*mm
+  pCollimator1->SetOctantCutOutBackInnerDiameter(140.6*mm);//124.0*mm
+  pCollimator1->SetOctantCutOutBackOuterDiameter(252.6*mm);//261.4*mm
+  pCollimator1->SetOctantCutOutStartingPhiAngle((-16.61+90.0)*degree);//(-16.344+90.0)*degree
+  pCollimator1->SetOctantCutOutDeltaPhiAngle(2.0*16.61*degree);
   pCollimator1->SetOctantCutOutRadialOffset(0.0*cm);
 
   pCollimator1->ConstructCollimator(experimentalHall_Physical);
 
-  pCollimator1->SetCollimatorHousing_CenterPositionInZ(-575.79*cm);
-  pCollimator1->SetCollimatorHousingMaterial("CDA943");
+  pCollimator1->SetCollimatorHousing_CenterPositionInZ(-575.7895*cm);//-575.79*cm
+  pCollimator1->SetCollimatorHousingMaterial("PBA"); //housing material - Lead with 5% Antimony
 
 
   //Collimator 2 
   pCollimator2->SetCollimatorNumber(2);
-  pCollimator2->SetCollimatorHousing_FullLengthInX(240.0*cm);
+  pCollimator2->SetCollimatorHousing_FullLengthInX(240.0*cm);//should be updated to 142.2*cm
   pCollimator2->SetCollimatorHousing_FullLengthInY(240.0*cm);
-  pCollimator2->SetCollimatorHousing_FullLengthInZ(21.66*cm);
+  pCollimator2->SetCollimatorHousing_FullLengthInZ(15.00*cm);//21.66*cm
 
-  pCollimator2->SetOctantCutOutFrontFullLength_Y(16.96*cm);  
-  pCollimator2->SetOctantCutOutFrontFullLength_X1(20.16*cm); //lower edge
-  pCollimator2->SetOctantCutOutFrontFullLength_X2(20.08*cm); //was 20.08//upper edge
-  pCollimator2->SetOctantCutOutBackFullLength_Y(21.96*cm);
-  pCollimator2->SetOctantCutOutBackFullLength_X1(20.16*cm);
-  pCollimator2->SetOctantCutOutBackFullLength_X2(20.06*cm); //was 20.06
+  pCollimator2->SetOctantCutOutFrontFullLength_Y(15.40*cm);//16.96*cm
+  pCollimator2->SetOctantCutOutFrontFullLength_X1(18.37*cm);//20.16*cm (lower edge)
+  pCollimator2->SetOctantCutOutFrontFullLength_X2(18.37*cm);//20.08*cm (upper edge)
+  pCollimator2->SetOctantCutOutBackFullLength_Y(16.60*cm);//21.96*cm
+  pCollimator2->SetOctantCutOutBackFullLength_X1(18.37*cm);//20.16*cm
+  pCollimator2->SetOctantCutOutBackFullLength_X2(18.37*cm);//20.06*cm
 
-  pCollimator2->SetBeamlineCutoutDiameter(8.0*cm);
+  pCollimator2->SetBeamlineCutoutDiameter(13.50*cm);//8.0*cm
 
-  pCollimator2->SetOctantCutOutFrontInnerDiameter(31.47*cm);
-  pCollimator2->SetOctantCutOutFrontOuterDiameter(48.75*cm);
-  pCollimator2->SetOctantCutOutBackInnerDiameter(34.87*cm);
-  pCollimator2->SetOctantCutOutBackOuterDiameter(48.75*cm);
-  pCollimator2->SetOctantCutOutStartingPhiAngle((-22.467+90.0)*degree);
-  pCollimator2->SetOctantCutOutDeltaPhiAngle(2.0*22.467*degree);
-  pCollimator2->SetOctantCutOutRadialOffset(15.665*cm);
+  pCollimator2->SetOctantCutOutFrontInnerDiameter(57.12*cm);//31.47*cm
+  pCollimator2->SetOctantCutOutFrontOuterDiameter(71.62*cm);//48.75*cm
+  pCollimator2->SetOctantCutOutBackInnerDiameter(61.14*cm);//34.87*cm
+  pCollimator2->SetOctantCutOutBackOuterDiameter(74.14*cm);//48.75*cm
+  pCollimator2->SetOctantCutOutStartingPhiAngle((-14.378+90.0)*degree);//(-22.467+90.0)*degree
+  pCollimator2->SetOctantCutOutDeltaPhiAngle(2.0*14.378*degree);//2.0*22.467*degree
+  pCollimator2->SetOctantCutOutRadialOffset(0.0*cm);//15.665*cm
 
   pCollimator2->ConstructCollimator(experimentalHall_Physical);
 
-  pCollimator2->SetCollimatorHousing_CenterPositionInZ(-349.889*cm);
-  pCollimator2->SetCollimatorHousingMaterial("CDA943");
+  pCollimator2->SetCollimatorHousing_CenterPositionInZ(-378.2195*cm);//-349.889*cm
+  pCollimator2->SetCollimatorHousingMaterial("PBA");
 
   //Collimator 3 
   pCollimator3->SetCollimatorNumber(3);
-  pCollimator3->SetCollimatorHousing_FullLengthInX(240.0*cm);
+  pCollimator3->SetCollimatorHousing_FullLengthInX(240.0*cm);//should be updated to 238.76*cm
   pCollimator3->SetCollimatorHousing_FullLengthInY(240.0*cm);
-  pCollimator3->SetCollimatorHousing_FullLengthInZ(15.24*cm);
+  pCollimator3->SetCollimatorHousing_FullLengthInZ(11.23*cm);//15.24*cm
 
-  pCollimator3->SetOctantCutOutFrontFullLength_Y(30.37*cm);  
-  pCollimator3->SetOctantCutOutFrontFullLength_X1(34.44*cm); //lower edge
-  pCollimator3->SetOctantCutOutFrontFullLength_X2(34.44*cm); //upper edge
-  pCollimator3->SetOctantCutOutBackFullLength_Y(33.37*cm);
-  pCollimator3->SetOctantCutOutBackFullLength_X1(34.44*cm);
-  pCollimator3->SetOctantCutOutBackFullLength_X2(34.44*cm);
+  pCollimator3->SetOctantCutOutFrontFullLength_Y(24.00*cm);//30.37*cm
+  pCollimator3->SetOctantCutOutFrontFullLength_X1(29.00*cm); //34.44*cm(lower edge)
+  pCollimator3->SetOctantCutOutFrontFullLength_X2(29.00*cm); //34.44*cm(upper edge)
+  pCollimator3->SetOctantCutOutBackFullLength_Y(26.495*cm);//33.37*cm
+  pCollimator3->SetOctantCutOutBackFullLength_X1(29.00*cm);//34.44*cm
+  pCollimator3->SetOctantCutOutBackFullLength_X2(29.00*cm);//34.44*cm
 
-  pCollimator3->SetBeamlineCutoutDiameter(8.0*cm);
+  pCollimator3->SetBeamlineCutoutDiameter(32.54*cm);//8.0*cm
 
-  pCollimator3->SetOctantCutOutFrontInnerDiameter(2.0*38.0*cm);
-  pCollimator3->SetOctantCutOutFrontOuterDiameter(2.0*48.63*cm);
-  pCollimator3->SetOctantCutOutBackInnerDiameter(2.0*39.5*cm);
-  pCollimator3->SetOctantCutOutBackOuterDiameter(2.0*48.63*cm);
-  pCollimator3->SetOctantCutOutStartingPhiAngle((-19.499+90.0)*degree);
-  pCollimator3->SetOctantCutOutDeltaPhiAngle(2.0*19.499*degree);
+  pCollimator3->SetOctantCutOutFrontInnerDiameter(2.0*39.0*cm);//2.0*38.0*cm
+  pCollimator3->SetOctantCutOutFrontOuterDiameter(2.0*51.0*cm);//2.0*48.63*cm
+  pCollimator3->SetOctantCutOutBackInnerDiameter(2.0*39.954*cm);//2.0*39.5*cm
+  pCollimator3->SetOctantCutOutBackOuterDiameter(2.0*51.0*cm);//2.0*48.63*cm
+  pCollimator3->SetOctantCutOutStartingPhiAngle((-16.390+90.0)*degree);//(-19.499+90.0)*degree
+  pCollimator3->SetOctantCutOutDeltaPhiAngle(2.0*16.390*degree);//2.0*19.499*degree
   pCollimator3->SetOctantCutOutRadialOffset(0.0*cm);
 
   pCollimator3->ConstructCollimator(experimentalHall_Physical);
 
-  pCollimator3->SetCollimatorHousing_CenterPositionInZ(-264.239*cm);
-  pCollimator3->SetCollimatorHousingMaterial("CDA943");
+  pCollimator3->SetCollimatorHousing_CenterPositionInZ(-266.244*cm);//-264.239*cm
+  pCollimator3->SetCollimatorHousingMaterial("PBA");
 
 
   //================================================

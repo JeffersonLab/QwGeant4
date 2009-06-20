@@ -63,7 +63,6 @@
 #include "QweakSimCollimatorSupport.hh"
 #include "QweakSimShieldingWall.hh"
 #include "QweakSimMainMagnet.hh"
-#include "QweakSimMiniMagnet.hh"
 #include "QweakSimVDC.hh"
 #include "QweakSimVDCRotator.hh"
 #include "QweakSimHDC.hh"
@@ -83,7 +82,6 @@ class QweakSimCollimator;
 class QweakSimCollimatorSupport;
 class QweakSimShieldingWall;
 class QweakSimMainMagnet;
-class QweakSimMiniMagnet;
 class QweakSimVDC;
 class QweakSimVDCRotator;
 class QweakSimHDC;
@@ -135,7 +133,7 @@ private:
   QweakSimShieldingWall*     pShieldingWall;
 
   QweakSimMainMagnet*        pMainMagnet; 
-  QweakSimMiniMagnet*        pMiniMagnet; 
+
 
   QweakSimVDC*                  pVDC; 
   QweakSimHDC*                  pHDC;

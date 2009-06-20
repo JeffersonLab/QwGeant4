@@ -44,7 +44,7 @@ QweakSimGlobalMagnetField::QweakSimGlobalMagnetField()
   G4cout << G4endl << "###### Calling QweakSimGlobalMagnetField::QweakSimGlobalMagnetField() " << G4endl << G4endl;
 
     fMagneticField_MainMagnet = NULL;
-    fMagneticField_MiniMagnet = NULL;
+
     
      //=======================================================
     //    configuration values of the QTOR field map
@@ -73,33 +73,6 @@ QweakSimGlobalMagnetField::QweakSimGlobalMagnetField()
     
       fMagneticField_MainMagnet->ReadFieldMap("MainMagnet_FieldMap.dat");
     }
-    //=======================================================
-    //    configuration values of the MiniTorus field map
-    //=======================================================
-        
-    BFieldScalingFactor_MiniMagnet =  0.0;
-//     fMagneticField_MiniMagnet = new QweakSimMagnetFieldMap();
-
-    if(fMagneticField_MiniMagnet){
-
-      BFieldScalingFactor_MiniMagnet =  0.0;//-0.15434; // according to Juliette Mammei
-
-      fMagneticField_MiniMagnet->SetFieldMap_RMin(20.0*mm);      
-      fMagneticField_MiniMagnet->SetFieldMap_RMax(1100.0*mm); 
-      fMagneticField_MiniMagnet->SetFieldMap_RStepsize(20.0*mm);
-      
-      fMagneticField_MiniMagnet->SetFieldMap_ZMin(-2040.0*mm); 
-      fMagneticField_MiniMagnet->SetFieldMap_ZMax( 2040.0*mm);
-      fMagneticField_MiniMagnet->SetFieldMap_ZStepsize(20.0*mm);
-      
-      fMagneticField_MiniMagnet->SetFieldMap_PhiMin(1.0*degree);
-      fMagneticField_MiniMagnet->SetFieldMap_PhiMax(43.0*degree);
-      fMagneticField_MiniMagnet->SetFieldMap_PhiStepsize(1.0*degree);
-      
-      fMagneticField_MiniMagnet->InitializeGrid();
-      
-      fMagneticField_MiniMagnet->ReadFieldMap("MiniTorus_FieldMap.dat");
-    }
 
     G4cout << G4endl << "###### Leaving QweakSimGlobalMagnetField::QweakSimGlobalMagnetField " << G4endl << G4endl;
 }		
@@ -109,8 +82,7 @@ QweakSimGlobalMagnetField::~QweakSimGlobalMagnetField()
 {  
     G4cout << G4endl << "###### Calling QweakSimGlobalMagnetField::~QweakSimGlobalMagnetField() " << G4endl << G4endl;
 
-//    if (fMagneticField_MainMagnet) delete fMagneticField_MainMagnet;	
-//    if (fMagneticField_MiniMagnet) delete fMagneticField_MiniMagnet;	
+    //if (fMagneticField_MainMagnet) delete fMagneticField_MainMagnet;	
     
     G4cout << G4endl << "###### Leaving QweakSimGlobalMagnetField::~QweakSimGlobalMagnetField() " << G4endl << G4endl;
 }	
@@ -122,10 +94,8 @@ void QweakSimGlobalMagnetField::GetFieldValue(const G4double Point[4], G4double 
   //G4cout << G4endl << "###### Calling QweakSimGlobalMagnetField::GetFieldValue() " << G4endl << G4endl;
 
   G4double myLocalPointInMainMagnet[4];
-  G4double myLocalPointInMiniMagnet[4];
   
   G4double myLocalBfieldInMainMagnet[3];
-  G4double myLocalBfieldInMiniMagnet[3];
   
   //---------------------------------------------------------------
   // translation from global Point[4] into local magnet coordinates
@@ -138,38 +108,14 @@ void QweakSimGlobalMagnetField::GetFieldValue(const G4double Point[4], G4double 
   myLocalPointInMainMagnet[2] = Point[2];             // z-pos
   myLocalPointInMainMagnet[3] = Point[3];             // time
   //
-  // (2) transformation into local MiniMagnet coordinate is easy
-  //     since MiniMagnet is shifted by 505*cm in z
-  myLocalPointInMiniMagnet[0] = Point[0];             // x-pos
-  myLocalPointInMiniMagnet[1] = Point[1];             // y-pos
-  myLocalPointInMiniMagnet[2] = Point[2] + 465.31*cm;  // z-pos
-  myLocalPointInMiniMagnet[3] = Point[3];             // time
-
 
 //     G4cout << " X pos [cm] = " << Point[0]/cm << " ,Y pos [cm] = " << Point[1]/cm << " ,Z pos [cm] = " << Point[2]/cm << G4endl;
-
-
-  if(fMagneticField_MiniMagnet && fMagneticField_MainMagnet){
-    fMagneticField_MiniMagnet->GetFieldValue( myLocalPointInMiniMagnet, myLocalBfieldInMiniMagnet );
-    fMagneticField_MainMagnet->GetFieldValue( myLocalPointInMainMagnet, myLocalBfieldInMainMagnet );
-    
-    Bfield[0] = myLocalBfieldInMainMagnet[0]*BFieldScalingFactor_MainMagnet + myLocalBfieldInMiniMagnet[0]*BFieldScalingFactor_MiniMagnet;
-    Bfield[1] = myLocalBfieldInMainMagnet[1]*BFieldScalingFactor_MainMagnet + myLocalBfieldInMiniMagnet[1]*BFieldScalingFactor_MiniMagnet;
-    Bfield[2] = myLocalBfieldInMainMagnet[2]*BFieldScalingFactor_MainMagnet + myLocalBfieldInMiniMagnet[2]*BFieldScalingFactor_MiniMagnet;
-  }
-  else if(fMagneticField_MainMagnet && !fMagneticField_MiniMagnet){
+ if(fMagneticField_MainMagnet){
     fMagneticField_MainMagnet->GetFieldValue( myLocalPointInMainMagnet, myLocalBfieldInMainMagnet );
     
     Bfield[0] = myLocalBfieldInMainMagnet[0]*BFieldScalingFactor_MainMagnet;
     Bfield[1] = myLocalBfieldInMainMagnet[1]*BFieldScalingFactor_MainMagnet;
     Bfield[2] = myLocalBfieldInMainMagnet[2]*BFieldScalingFactor_MainMagnet;
-  }
-  else if(!fMagneticField_MainMagnet && fMagneticField_MiniMagnet){
-    fMagneticField_MiniMagnet->GetFieldValue( myLocalPointInMiniMagnet, myLocalBfieldInMiniMagnet );
-
-    Bfield[0] =  myLocalBfieldInMiniMagnet[0]*BFieldScalingFactor_MiniMagnet;
-    Bfield[1] =  myLocalBfieldInMiniMagnet[1]*BFieldScalingFactor_MiniMagnet;
-    Bfield[2] =  myLocalBfieldInMiniMagnet[2]*BFieldScalingFactor_MiniMagnet;    
   }
   else{
     Bfield[0] = 0.0*kilogauss;

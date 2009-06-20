@@ -96,6 +96,11 @@ private:
   G4VPhysicalVolume* TargetCell_Physical; 
   G4Material*        TargetCell_Material;  
 
+  G4LogicalVolume*   TargetWindowFront_Logical; 
+  G4VPhysicalVolume* TargetWindowFront_Physical; 
+  G4LogicalVolume*   TargetWindowBack_Logical; 
+  G4VPhysicalVolume* TargetWindowBack_Physical;
+
   G4LogicalVolume*   TargetMaterial_Logical; 
   G4VPhysicalVolume* TargetMaterial_Physical; 
   G4Material*        Target_Material;  

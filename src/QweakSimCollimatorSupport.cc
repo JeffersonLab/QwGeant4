@@ -122,7 +122,8 @@ void QweakSimCollimatorSupport::ConstructSupport(G4VPhysicalVolume* MotherVolume
     G4cout << G4endl << "###### Calling QweakSimCollimatorSupport::ConstructSupport() " << G4endl << G4endl;
 
   // assign material
-  G4Material* CollimatorSupport_Material = pMaterial->GetMaterial("CDA943"); 
+  // G4Material* CollimatorSupport_Material = pMaterial->GetMaterial("CDA943"); 
+  G4Material* CollimatorSupport_Material = pMaterial->GetMaterial("ShieldingConcrete");
 
 
   //===========

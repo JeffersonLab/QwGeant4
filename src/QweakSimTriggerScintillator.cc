@@ -85,7 +85,10 @@ QweakSimTriggerScintillator::QweakSimTriggerScintillator()
   
   // define center position of Container in MotherVolume
   Position_TriggerScintillatorContainer_X =   0.0*cm;
-  Position_TriggerScintillatorContainer_Y = 319.0*cm; // given by SolidWorks (or later by Juliette)
+
+//jpan@nuclear.uwinnipeg.ca
+  //Position_TriggerScintillatorContainer_Y = 319.0*cm;
+  Position_TriggerScintillatorContainer_Y = 328.0*cm;
 
 //jpan@nuclear.uwinnipeg.ca
   Position_TriggerScintillatorContainer_Z = 555.0*cm; // adjusted by Jie

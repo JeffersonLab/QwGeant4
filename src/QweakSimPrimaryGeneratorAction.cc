@@ -141,7 +141,7 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
    G4double Mass;
    G4double weight_n;
 
-   G4int ReactionType = 2; // 1 - LH2 elastic
+   G4int ReactionType = 1; // 1 - LH2 elastic
                            // 2 - Al window elastic
                            // 3 - Al window quasi-elastic proton
                            // 4 - Al window quasi-elastic neutron
