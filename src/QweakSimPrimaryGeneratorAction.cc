@@ -239,12 +239,11 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 
   // fill user track info: store Q2 value of this primary 
 
-  myPE.Q2 = 4.0*E_in*E_f*sin(ThetaAngle/2.0)*sin(ThetaAngle/2.0);
-  myUserInfo->SetPrimaryQ2( (G4double) myPE.Q2);
+  G4double myQ2 = 4.0*E_in*E_f*sin(ThetaAngle/2.0)*sin(ThetaAngle/2.0);
+  myUserInfo->SetPrimaryQ2( myQ2 );
 
   // fill user track info: store cross section weight (micro barn) of this primary 
-  myPE.Weight = weight_n;
-  myUserInfo->SetCrossSectionWeight( (G4double) myPE.Weight);
+  myUserInfo->SetCrossSectionWeight( (G4double) weight_n);
 
   // fill user track info: store primary event number 
   myUserInfo->SetPrimaryEventNumber( (G4int) myEventCounter );

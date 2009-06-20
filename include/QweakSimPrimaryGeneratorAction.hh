@@ -61,7 +61,7 @@
 // user includes
 #include "QweakSimPrimaryGeneratorActionMessenger.hh"
 #include "QweakSimUserInformation.hh"
-#include "QweakSimInputRootFile_EventReader.hh"
+
 
 // user classes
 class QweakSimPrimaryGeneratorActionMessenger;
