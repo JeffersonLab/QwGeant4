@@ -65,24 +65,6 @@ QweakSimPrimaryGeneratorAction::QweakSimPrimaryGeneratorAction( QweakSimUserInfo
   G4int n_particle = 1;
   particleGun = new G4ParticleGun(n_particle);
 
-  // Neven's ntuple with errors due to internal bremsstrahlung,
-  // errors: some events with wrong energy and momenta (e.g. 50GeV) 
-  // TString myfile = TString("ep_m0_neven_larget_r5.root"); 
-
-  // Juliette MammE_in gave me a correct PAW Ntuple, so here is the h2root converted root file 
-  //TString myfile = TString("minitorus.root");
-
-  TString myfile = TString("ep_elastic.root");
-//   myNtuple = new QweakSimG3NtupleReader(myfile);
-
-//   TString myfile = TString("ep_event.root");
-
-//jpan@nuclear.uwinnipeg.ca
-//  myNtuple = new QweakSimInputRootFile_EventReader(myfile);
-
-  //myNtuple->SetDebugLevel(20);
-  //myNtuple->LoopEvents(0,10);
-
 //jpan@nuclear.uwinnipeg.ca
   std::ofstream EventDataFile("Event.dat", std::ios::out);
 
@@ -98,8 +80,6 @@ QweakSimPrimaryGeneratorAction::~QweakSimPrimaryGeneratorAction()
   G4cout << "###### Calling/Leaving QweakSimPrimaryGeneratorAction::~QweakSimPrimaryGeneratorAction " << G4endl;
 
   if (particleGun) delete particleGun;
-  //if (myNtuple)    delete myNtuple;
-
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -109,72 +89,6 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
    G4cout << "###### Calling QweakSimPrimaryGeneratorAction::GeneratePrimaries" << G4endl;
 
   G4cout << "************************************************ myEventCounter = " << myEventCounter << G4endl;
-
-  // Two ways to retreve primary events:
-  // choosing randomly a primary event in the root file:
-  //myNtuple->GetRandomEvent(&myPE);
-
-  // or loading it inthe order saved in the root file:
-
-//jpan@nuclear.uwinnipeg.ca
-//  myNtuple->GetPrimaryEvent( (int) myEventCounter, &myPE);
-
-//   G4cout << "myPE.ParticlE_inD            = " << myPE.ParticleID     << G4endl;
-//   G4cout << "myPE.Vertex[0]     [cm]    = " << myPE.Vertex[0]      << G4endl;
-//   G4cout << "myPE.Vertex[1]     [cm]    = " << myPE.Vertex[1]      << G4endl;
-//   G4cout << "myPE.Vertex[2]     [cm]    = " << myPE.Vertex[2]      << G4endl;
-//   G4cout << "myPE.Momentum[0]   [MeV]   = " << myPE.Momentum[0]    << G4endl;
-//   G4cout << "myPE.Momentum[1]   [MeV]   = " << myPE.Momentum[1]    << G4endl;
-//   G4cout << "myPE.Momentum[2]   [Mev]   = " << myPE.Momentum[2]    << G4endl;
-//   G4cout << "myPE.Phi           [deg]   = " << myPE.Phi            << G4endl;
-//   G4cout << "myPE.Theta         [deg]   = " << myPE.Theta          << G4endl;
-//   G4cout << "myPE.KineticEnergy [MeV]   = " << myPE.KineticEnergy  << G4endl;
-//   G4cout << "myPE.TotalEnergy   [MeV]   = " << myPE.TotalEnergy    << G4endl;
-//   G4cout << "myPE.Q2            [GeV^2] = " << myPE.Q2             << G4endl;
-//   G4cout << "myPE.WE_inght                = " << myPE.WE_inght         << G4endl;
-
-//jpan@nuclear.uwinnipeg.ca
-/*
-  G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
-
-  // Translation of the Geant3 PDG code into the GEANT4 PDG code
-  if(myPE.ParticleID==1)
-    {
-      G4ParticleDefinition* particle = particleTable->FindParticle("gamma");
-      particleGun->SetParticleDefinition(particle);
-    }
-
-  if(myPE.ParticleID==2)
-    {
-      G4ParticleDefinition* particle = particleTable->FindParticle("e+");
-      particleGun->SetParticleDefinition(particle);
-    }
-
-  if(myPE.ParticleID==3)
-    {
-      G4ParticleDefinition* particle = particleTable->FindParticle("e-");
-      //G4ParticleDefinition* particle = particleTable->FindParticle("neutron");
-      particleGun->SetParticleDefinition(particle);
-    }
-
-  if(myPE.ParticleID==14)
-    {
-      G4ParticleDefinition* particle = particleTable->FindParticle("proton");
-      particleGun->SetParticleDefinition(particle);
-    }
-
-//  G4double myEnergy = myPE.KineticEnergy *MeV;
-  G4double myEnergy = 1165*MeV;
-  particleGun->SetParticleEnergy(myEnergy);
-
-  myPositionX =  myPE.Vertex[0]*cm;
-  myPositionY =  myPE.Vertex[1]*cm;
-  myPositionZ =  myPE.Vertex[2]*cm;
-
-  particleGun->SetParticlePosition(G4ThreeVector( myPositionX,
-						  myPositionY,
-						  myPositionZ ));
-*/
 
 //jpan@nuclear.uwinnipeg.ca
 //  

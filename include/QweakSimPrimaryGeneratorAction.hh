@@ -60,19 +60,12 @@
 
 // user includes
 #include "QweakSimPrimaryGeneratorActionMessenger.hh"
-
-#include "QweakSimG3Ntuple.hh"
-#include "QweakSimG3NtupleReader.hh"
 #include "QweakSimUserInformation.hh"
 #include "QweakSimInputRootFile_EventReader.hh"
 
 // user classes
 class QweakSimPrimaryGeneratorActionMessenger;
-
-class QweakSimG3NtupleReader;
-class QweakSimG3Ntuple;
 class QweakSimUserInformation;
-class QweakSimInputRootFile_EventReader;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
  
@@ -93,13 +86,11 @@ public:
       }
 
   G4int             myEventCounter;
-  QweakSimG3Ntuple  myPE;
   
 private:
 
   G4ParticleGun*                      particleGun;
-//   QweakSimG3NtupleReader*             myNtuple;
-  QweakSimInputRootFile_EventReader*  myNtuple;
+
   QweakSimUserInformation*            myUserInfo;
 
   QweakSimPrimaryGeneratorActionMessenger* myMessenger;  // pointer to the Messenger
