@@ -71,11 +71,11 @@ private:
 public:
 
   QweakSimUserHDC_WirePlaneEvent  WirePlane1;
-  //QweakSimUserHDC_WirePlaneEvent  WirePlane2;
-  //QweakSimUserHDC_WirePlaneEvent  WirePlane3;
-  //QweakSimUserHDC_WirePlaneEvent  WirePlane4;
-  //QweakSimUserHDC_WirePlaneEvent  WirePlane5;
-  //QweakSimUserHDC_WirePlaneEvent  WirePlane6;
+  QweakSimUserHDC_WirePlaneEvent  WirePlane2;
+  QweakSimUserHDC_WirePlaneEvent  WirePlane3;
+  QweakSimUserHDC_WirePlaneEvent  WirePlane4;
+  QweakSimUserHDC_WirePlaneEvent  WirePlane5;
+  QweakSimUserHDC_WirePlaneEvent  WirePlane6;
 
 public:
     

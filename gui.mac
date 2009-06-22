@@ -73,3 +73,12 @@
 /gui/addMenu   trackingAction TrackingAction 
 /gui/addButton trackingAction "Track all particles " "/TrackingAction/PrimaryElectronsOnly 0"
 /gui/addButton trackingAction "Track primaries only" "/TrackingAction/PrimaryElectronsOnly 1"
+
+# Reaction menue
+/gui/addMenu reactionType ReactionType
+/gui/addButton reactionType "Elastic LH2 target" "/"
+/gui/addButton reactionType "Elastic Al entrance window" "/"
+/gui/addButton reactionType "Elastic Al exit window" "/"
+/gui/addButton reactionType "Quasi-elastic Al entrance window" "/"
+/gui/addButton reactionType "Quasi-elastic Al exit window" "/"
+

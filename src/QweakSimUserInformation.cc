@@ -17,9 +17,24 @@ void QweakSimUserInformation::Print() const
 void QweakSimUserInformation::Initialize()
 {
 
-  primaryQ2                      = 0.0;
-  crossSectionWeight             = 0.0;
-  primaryEventNumber             = 0;
+  PrimaryEventNumber = 0;
+  ReactionType = 0;         // assign a number to which kind of reaction,e.g. 1 = elastic ep,
+  PDGcode = 0;              // particle data code/number for the primary particle, e.g. 3=electron
+  TrackID = 0;
+  GlobalTime = 0.0;
+  PrimaryQ2 = 0.0;
+  CrossSection = 0.0;
+  CrossSectionWeight = 0.0;
+  OriginVertexPositionX = 0.0;
+  OriginVertexPositionY = 0.0;
+  OriginVertexPositionZ = 0.0;
+  OriginVertexThetaAngle = 0.0;
+  OriginVertexPhiAngle = 0.0;
+  OriginVertexMomentumDirectionX = 0.0;
+  OriginVertexMomentumDirectionY = 0.0;
+  OriginVertexMomentumDirectionZ = 0.0;
+  OriginVertexKineticEnergy = 0.0;
+  OriginVertexTotalEnergy = 0.0;
 
   CerEngDep                      = 0.0;
   

@@ -12,9 +12,12 @@
 #include "QweakSimSteppingVerbose.hh"
 #include "QweakSimTrackInformation.hh"
 
+#include "QweakSimEPEvent.hh"
+
 // system classes
 //class G4Step;
 
+class QweakSimEPEvent;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 class QweakSimSteppingAction : public G4UserSteppingAction
@@ -47,9 +50,10 @@ public:
 
 private:
 
+  G4int myEventCounter;
   G4TrackVector *fSecondary;
   QweakSimUserInformation* myUserInfo;
-  
+
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

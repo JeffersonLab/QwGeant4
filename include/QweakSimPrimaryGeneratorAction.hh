@@ -106,13 +106,6 @@ private:
 
   G4int kActiveOctantNumber;
 
-// jpan@nuclear.uwinnipeg.ca
-// electron-proton elastic scattering cross section
-  G4double Elastic_Cross_Section_Proton(G4double E_in, G4double Theta);
-  G4double Elastic_Cross_Section_Aluminum(G4double E_in, G4double Theta);
-  G4double Quasi_Elastic_Neutron(G4double E_in, G4double Theta);
-
-  G4double PreTracking_Energy_Loss(G4double E_in, G4double Vertex_Z, G4double Target_A);
 
 };
 

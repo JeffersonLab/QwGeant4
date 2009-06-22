@@ -67,7 +67,7 @@
 #pragma link C++ class QweakSimUserCerenkov_DetectorEvent+;
 #pragma link C++ class QweakSimUserCerenkov_PMTEvent+;
 
-#pragma link C++ class EPEvent+;
+//#pragma link C++ class QweakSimEPEvent+;
 
 #endif
 

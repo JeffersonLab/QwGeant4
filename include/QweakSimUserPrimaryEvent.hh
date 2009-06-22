@@ -81,6 +81,7 @@ private:
   Float_t OriginVertexTotalEnergy;
 
   Float_t PrimaryQ2;
+  Float_t CrossSection;
   Float_t CrossSectionWeight;
 
   Int_t   PrimaryEventNumber;
@@ -136,6 +137,9 @@ public:
   //-----------------
   void     StorePrimaryQ2(Float_t pq2)  { PrimaryQ2 = pq2; }
   Float_t    GetPrimaryQ2() const {return PrimaryQ2; }
+
+  void     StoreCrossSection(Float_t cs)  {CrossSection = cs;}
+  Float_t    GetCrossSection() const {return CrossSection; }
 
   void     StoreCrossSectionWeight(Float_t csw)  {CrossSectionWeight = csw;}
   Float_t    GetCrossSectionWeight() const {return CrossSectionWeight; }

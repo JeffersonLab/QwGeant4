@@ -43,6 +43,7 @@ QweakSimSteppingAction::QweakSimSteppingAction(QweakSimUserInformation* myUInfo)
 
 G4cout << "###### Calling QweakSimSteppingAction::QweakSimSteppingAction() " << G4endl;
 
+  myEventCounter = 0;
   fSecondary = NULL;
   myUserInfo = myUInfo;
 
@@ -85,14 +86,64 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
 // I'd like to disregard all secondaries to speed up the primary particle simulation
 // check if it is primary
   G4int parentID = theTrack->GetParentID();
-  if(parentID!=0) { theTrack->SetTrackStatus(fStopAndKill); return;}
+  //if(thePrePV->GetName()!="ExpHall_Physical" && thePostPV->GetName()!="ExpHall_Physical")
+  if( particleType==G4Electron::ElectronDefinition() && parentID==0 ){
+
+//jpan: to account for the energy loss before the event generation,
+//      force to change primary momentum direction
+  QweakSimEPEvent myEvent;
+    G4ThreeVector thePosition = theTrack->GetPosition();
+    G4double theZ = thePosition.getZ();
+    G4double theStepLength = theStep->GetStepLength();
+
+    G4double RandomPositionZ = myEvent.GetVertexZ();
+      if( abs(theZ - RandomPositionZ)<=theStepLength && RandomPositionZ > theZ 
+          && abs(thePosition.getX())<=2.54*cm 
+          && abs(thePosition.getY())<=2.54*cm){ //scattering only occur inside target
+           G4double CrossSection, WeightN, Q2, E_out, theta, phi;
+           G4ThreeVector MomentumDirection;
+           G4double E_in = theTrack->GetVertexKineticEnergy();
+           myEvent.GetanEvent(E_in, CrossSection, WeightN, Q2, E_out, MomentumDirection,theta,phi);
+           theTrack->SetVertexKineticEnergy(E_out);
+           theTrack->SetMomentumDirection(MomentumDirection);
+           thePosition.setZ(RandomPositionZ);
+           //theTrack->SetPosition(thePosition);
+
+           // fill user track info
+           myUserInfo->StoreTrackID(theTrack->GetTrackID());
+           myUserInfo->StoreGlobalTime(theTrack->GetGlobalTime());
+           myUserInfo->StoreOriginVertexPositionX(thePosition.getX());
+           myUserInfo->StoreOriginVertexPositionY(thePosition.getY());
+           myUserInfo->StoreOriginVertexPositionZ(thePosition.getZ());
+           myUserInfo->StoreOriginVertexMomentumDirectionX(MomentumDirection.getX());
+           myUserInfo->StoreOriginVertexMomentumDirectionY(MomentumDirection.getY());
+           myUserInfo->StoreOriginVertexMomentumDirectionZ(MomentumDirection.getZ());
+           myUserInfo->StoreOriginVertexThetaAngle(theta);
+           myUserInfo->StoreOriginVertexPhiAngle(phi);
+           myUserInfo->StoreOriginVertexKineticEnergy(theTrack->GetKineticEnergy());
+           myUserInfo->StoreOriginVertexTotalEnergy(theTrack->GetTotalEnergy());
+           myUserInfo->StorePrimaryQ2(Q2);
+           myUserInfo->StoreCrossSection(CrossSection);
+           myUserInfo->StoreCrossSectionWeight(WeightN);
+           myUserInfo->StorePrimaryEventNumber(++myEventCounter);
+           myUserInfo->StoreReactionType(myEvent.GetReactionType());
+           myUserInfo->StorePDGcode(3);
+
+           // print the stored values
+           G4cout << "*********** myEventCounter = " << myEventCounter << G4endl;
+           myUserInfo->Print();
+      }
+  }
+  else
+    { theTrack->SetTrackStatus(fStopAndKill); return;}
 
 //kill a track if it is in collimators or shielding wall
   if(thePrePV->GetName()=="CollimatorHousing" || thePrePV->GetName()=="ShieldingWallHousing"){
   theTrack->SetTrackStatus(fStopAndKill); return;
   }
-//I commented out all of the following codes. Recover them if we need to trace secondaries.
-/*
+
+
+//Commented out all of the following codes. Recover them if we need to trace secondaries.
 
   QweakSimTrackInformation* info = (QweakSimTrackInformation*)(theTrack->GetUserInformation());
 
@@ -242,7 +293,7 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
 
   return;
 
-*/ //jpan@nuclear.uwinnipeg.ca
+ //jpan@nuclear.uwinnipeg.ca
 
 }       // end of QweakSimSteppingAction::UserSteppingAction
                 

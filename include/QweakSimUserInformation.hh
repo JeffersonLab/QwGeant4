@@ -6,6 +6,7 @@
 #include "Root_include.h"
 #include "Geant4_include.hh" 
 #include "QweakSimCerenkovDetector_PMTHit.hh"
+#include "QweakSimUserPrimaryEvent.hh"
 
 class QweakSimUserInformation 
 {
@@ -16,11 +17,28 @@ public:
 
 private:
 
-  G4double primaryQ2;
-  G4double crossSectionWeight;
+  G4int    PrimaryEventNumber;
+  G4int    ReactionType;         // assign a number to which kind of reaction,e.g. 1 = elastic ep,
+  G4int    PDGcode;              // particle data code/number for the primary particle, e.g. 3=electron
+  G4int    TrackID;
+  G4double GlobalTime;
+  G4double PrimaryQ2;
+  G4double CrossSection;
+  G4double CrossSectionWeight;
+  G4double OriginVertexPositionX;
+  G4double OriginVertexPositionY;
+  G4double OriginVertexPositionZ;
+  G4double OriginVertexThetaAngle;
+  G4double OriginVertexPhiAngle;
+  G4double OriginVertexMomentumDirectionX;
+  G4double OriginVertexMomentumDirectionY;
+  G4double OriginVertexMomentumDirectionZ;
+  G4double OriginVertexKineticEnergy;
+  G4double OriginVertexTotalEnergy;
+
+
   G4double CerEngDep;
 
-  G4int    primaryEventNumber;
   G4int    edgeEventDetected;
   G4int    leftPMTHitValid;
   G4int    rightPMTHitValid;
@@ -51,17 +69,70 @@ private:
   void Print() const;
   void Initialize();
 
+  void     StoreTrackID(G4int tid)    { TrackID = tid; }
+  G4int    GetTrackID() const {return TrackID;}
+
+  void     StoreGlobalTime(G4double gtime) { GlobalTime = gtime; }
+  G4double    GetGlobalTime()  const {return GlobalTime;}
+
+  //-----------------
+  void     StoreOriginVertexPositionX(G4double vx)   { OriginVertexPositionX = vx; }
+  G4double    GetOriginVertexPositionX() const {return OriginVertexPositionX;}
+
+  void     StoreOriginVertexPositionY(G4double vy)   { OriginVertexPositionY = vy; }
+  G4double    GetOriginVertexPositionY() const {return OriginVertexPositionY;}
+
+  void     StoreOriginVertexPositionZ(G4double vz)   { OriginVertexPositionZ = vz; }
+  G4double    GetOriginVertexPositionZ() const {return OriginVertexPositionZ;}
+  //-----------------
+  void     StoreOriginVertexMomentumDirectionX(G4double vx)   { OriginVertexMomentumDirectionX = vx; }
+  G4double    GetOriginVertexMomentumDirectionX() const {return OriginVertexMomentumDirectionX;}
+
+  void     StoreOriginVertexMomentumDirectionY(G4double vy)   { OriginVertexMomentumDirectionY = vy; }
+  G4double    GetOriginVertexMomentumDirectionY() const {return OriginVertexMomentumDirectionY;}
+
+  void     StoreOriginVertexMomentumDirectionZ(G4double vz)   { OriginVertexMomentumDirectionZ = vz; }
+  G4double    GetOriginVertexMomentumDirectionZ() const {return OriginVertexMomentumDirectionZ;}
+  //-----------------
+  void     StoreOriginVertexThetaAngle(G4double theta) { OriginVertexThetaAngle = theta; }
+  G4double    GetOriginVertexThetaAngle() const  {return OriginVertexThetaAngle;}
+
+  void     StoreOriginVertexPhiAngle(G4double phi)  { OriginVertexPhiAngle = phi; }
+  G4double    GetOriginVertexPhiAngle() const {return OriginVertexPhiAngle;}
+  //-----------------
+  void     StoreOriginVertexKineticEnergy(G4double ekin) { OriginVertexKineticEnergy = ekin; }
+  G4double    GetOriginVertexKineticEnergy() const {return OriginVertexKineticEnergy;}
+
+  void     StoreOriginVertexTotalEnergy(G4double etot) { OriginVertexTotalEnergy = etot; }
+  G4double    GetOriginVertexTotalEnergy() const {return OriginVertexTotalEnergy;}
+  //-----------------
+  void     StorePrimaryQ2(G4double pq2)  { PrimaryQ2 = pq2; }
+  G4double    GetPrimaryQ2() const {return PrimaryQ2; }
+
+  void     StoreCrossSection(G4double cs)  {CrossSection = cs;}
+  G4double    GetCrossSection() const {return CrossSection; }
+
+  void     StoreCrossSectionWeight(G4double csw)  {CrossSectionWeight = csw;}
+  G4double    GetCrossSectionWeight() const {return CrossSectionWeight; }
+
+  void     StorePrimaryEventNumber(G4int pen)    { PrimaryEventNumber = pen; }
+  G4int      GetPrimaryEventNumber() const {return PrimaryEventNumber; }
+  //-----------------
+
+  void     StoreReactionType(G4int rt)  { ReactionType = rt; }
+  G4int      GetReactionType() const {return ReactionType; }
+
+  void     StorePDGcode(G4int code)  { PDGcode = code; }
+  G4int      GetPDGcode() const {return PDGcode; }
+
+
+
+
+
+
+
   void     IncrementCerenkovOpticalPhotonCount() {cerenkovOpticalPhotonCount++;}
   G4int    GetCerenkovOpticalPhotonCount() {return cerenkovOpticalPhotonCount;}
-  
-  void     SetPrimaryQ2(G4double q2)   {primaryQ2 = q2;}
-  G4double GetPrimaryQ2() const {return primaryQ2;}
-
-  void     SetCrossSectionWeight(G4double csw)   {crossSectionWeight = csw;}
-  G4double GetCrossSectionWeight() const {return crossSectionWeight;}
-
-  void     SetPrimaryEventNumber(G4int en)      {primaryEventNumber = en;}
-  G4int    GetPrimaryEventNumber() const {return primaryEventNumber;}
 
   G4double GetNumberOfPhotoelectrons(G4double eng);
   G4double GetNumberOfPhotoelectronsS20(G4double eng);
