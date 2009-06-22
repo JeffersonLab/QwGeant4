@@ -46,6 +46,8 @@ G4cout << "###### Calling QweakSimSteppingAction::QweakSimSteppingAction() " << 
   myEventCounter = 0;
   fSecondary = NULL;
   myUserInfo = myUInfo;
+  evtGenStatus = 0;
+  RandomPositionZ = myEvent.GetVertexZ();
 
 G4cout << "###### Leaving QweakSimSteppingAction::QweakSimSteppingAction() " << G4endl;
 
@@ -86,53 +88,64 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
 // I'd like to disregard all secondaries to speed up the primary particle simulation
 // check if it is primary
   G4int parentID = theTrack->GetParentID();
-  //if(thePrePV->GetName()!="ExpHall_Physical" && thePostPV->GetName()!="ExpHall_Physical")
+
   if( particleType==G4Electron::ElectronDefinition() && parentID==0 ){
 
 //jpan: to account for the energy loss before the event generation,
 //      force to change primary momentum direction
-  QweakSimEPEvent myEvent;
+
+    //scattering only occur inside reaction region of the target, only occur once
     G4ThreeVector thePosition = theTrack->GetPosition();
     G4double theZ = thePosition.getZ();
-    G4double theStepLength = theStep->GetStepLength();
+    if( theZ > -650*cm+35*cm*0.5+5*(2.54*cm*0.001) || abs(thePosition.getX())>2.0*mm || abs(thePosition.getY())>2.0*mm) {
+       evtGenStatus = 0;
+       RandomPositionZ = myEvent.GetVertexZ();
+    }
 
-    G4double RandomPositionZ = myEvent.GetVertexZ();
-      if( abs(theZ - RandomPositionZ)<=theStepLength && RandomPositionZ > theZ 
-          && abs(thePosition.getX())<=2.54*cm 
-          && abs(thePosition.getY())<=2.54*cm){ //scattering only occur inside target
-           G4double CrossSection, WeightN, Q2, E_out, theta, phi;
-           G4ThreeVector MomentumDirection;
-           G4double E_in = theTrack->GetVertexKineticEnergy();
-           myEvent.GetanEvent(E_in, CrossSection, WeightN, Q2, E_out, MomentumDirection,theta,phi);
-           theTrack->SetVertexKineticEnergy(E_out);
-           theTrack->SetMomentumDirection(MomentumDirection);
-           thePosition.setZ(RandomPositionZ);
-           //theTrack->SetPosition(thePosition);
+    if(evtGenStatus == 0){
+      //QweakSimEPEvent myEvent;
 
-           // fill user track info
-           myUserInfo->StoreTrackID(theTrack->GetTrackID());
-           myUserInfo->StoreGlobalTime(theTrack->GetGlobalTime());
-           myUserInfo->StoreOriginVertexPositionX(thePosition.getX());
-           myUserInfo->StoreOriginVertexPositionY(thePosition.getY());
-           myUserInfo->StoreOriginVertexPositionZ(thePosition.getZ());
-           myUserInfo->StoreOriginVertexMomentumDirectionX(MomentumDirection.getX());
-           myUserInfo->StoreOriginVertexMomentumDirectionY(MomentumDirection.getY());
-           myUserInfo->StoreOriginVertexMomentumDirectionZ(MomentumDirection.getZ());
-           myUserInfo->StoreOriginVertexThetaAngle(theta);
-           myUserInfo->StoreOriginVertexPhiAngle(phi);
-           myUserInfo->StoreOriginVertexKineticEnergy(theTrack->GetKineticEnergy());
-           myUserInfo->StoreOriginVertexTotalEnergy(theTrack->GetTotalEnergy());
-           myUserInfo->StorePrimaryQ2(Q2);
-           myUserInfo->StoreCrossSection(CrossSection);
-           myUserInfo->StoreCrossSectionWeight(WeightN);
-           myUserInfo->StorePrimaryEventNumber(++myEventCounter);
-           myUserInfo->StoreReactionType(myEvent.GetReactionType());
-           myUserInfo->StorePDGcode(3);
+      G4double theStepLength = theStep->GetStepLength();
 
-           // print the stored values
-           G4cout << "*********** myEventCounter = " << myEventCounter << G4endl;
-           myUserInfo->Print();
+        if( abs(theZ - RandomPositionZ)<=theStepLength
+             && abs(thePosition.getX())<=2.0*mm && abs(thePosition.getY())<=2.0*mm) 
+           { 
+             G4double CrossSection, WeightN, Q2, E_out, theta, phi;
+             G4ThreeVector MomentumDirection;
+             G4double E_in = theTrack->GetKineticEnergy()/MeV;  //Event generator needs units of MeV
+             myEvent.GetanEvent(E_in, CrossSection, WeightN, Q2, E_out, MomentumDirection, theta, phi);
+             theTrack->SetKineticEnergy(E_out*MeV);
+             theTrack->SetMomentumDirection(MomentumDirection);
+             //thePosition.setZ(RandomPositionZ);
+             //theTrack->SetPosition(thePosition);
+
+             evtGenStatus = 1;
+
+             // fill user track info
+             myUserInfo->StoreTrackID(theTrack->GetTrackID());
+             myUserInfo->StoreGlobalTime(theTrack->GetGlobalTime());
+             myUserInfo->StoreOriginVertexPositionX(thePosition.getX());
+             myUserInfo->StoreOriginVertexPositionY(thePosition.getY());
+             myUserInfo->StoreOriginVertexPositionZ(thePosition.getZ());
+             myUserInfo->StoreOriginVertexMomentumDirectionX(MomentumDirection.getX());
+             myUserInfo->StoreOriginVertexMomentumDirectionY(MomentumDirection.getY());
+             myUserInfo->StoreOriginVertexMomentumDirectionZ(MomentumDirection.getZ());
+             myUserInfo->StoreOriginVertexThetaAngle(theta);
+             myUserInfo->StoreOriginVertexPhiAngle(phi);
+             myUserInfo->StoreOriginVertexKineticEnergy(theTrack->GetKineticEnergy()/GeV);
+             myUserInfo->StoreOriginVertexTotalEnergy(theTrack->GetTotalEnergy()/GeV);
+             myUserInfo->StorePrimaryQ2(Q2*0.000001);
+             myUserInfo->StoreCrossSection(CrossSection);
+             myUserInfo->StoreCrossSectionWeight(WeightN);
+             myUserInfo->StorePrimaryEventNumber(++myEventCounter);
+             myUserInfo->StoreReactionType(myEvent.GetReactionType());
+             myUserInfo->StorePDGcode(3);
+
+             // print the stored values
+             G4cout << "*********** myEventCounter = " << myEventCounter << G4endl;
+             myUserInfo->Print();
       }
+    }
   }
   else
     { theTrack->SetTrackStatus(fStopAndKill); return;}

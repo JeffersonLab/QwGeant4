@@ -128,9 +128,6 @@ private:
 
 
 
-
-
-
   void     IncrementCerenkovOpticalPhotonCount() {cerenkovOpticalPhotonCount++;}
   G4int    GetCerenkovOpticalPhotonCount() {return cerenkovOpticalPhotonCount;}
 

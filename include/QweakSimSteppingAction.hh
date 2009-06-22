@@ -50,9 +50,13 @@ public:
 
 private:
 
+  G4int evtGenStatus;
   G4int myEventCounter;
   G4TrackVector *fSecondary;
   QweakSimUserInformation* myUserInfo;
+
+  QweakSimEPEvent myEvent;
+  G4double RandomPositionZ;
 
 };
 

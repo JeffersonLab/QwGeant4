@@ -91,12 +91,12 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   G4ParticleDefinition* particle = particleTable->FindParticle("e-");
   particleGun->SetParticleDefinition(particle);
 
-  G4double PositionX_min = -1.0*mm;
-  G4double PositionX_max =  1.0*mm;
+  G4double PositionX_min = -2.0*mm;
+  G4double PositionX_max =  2.0*mm;
   myPositionX =  (G4UniformRand()-0.5)*(PositionX_max-PositionX_min);
 
-  G4double PositionY_min = -1.0*mm;
-  G4double PositionY_max =  1.0*mm;
+  G4double PositionY_min = -2.0*mm;
+  G4double PositionY_max =  2.0*mm;
   myPositionY =  (G4UniformRand()-0.5)*(PositionY_max-PositionY_min);
 
   myPositionZ = -700.0*cm;

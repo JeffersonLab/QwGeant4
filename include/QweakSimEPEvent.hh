@@ -18,9 +18,9 @@
 
 #include "cpp_include.h"
 #include "Geant4_include.hh"
-#include "QweakSimUserInformation.hh"
+//#include "QweakSimUserInformation.hh"
 
-class QweakSimUserInformation;
+//class QweakSimUserInformation;
 
 class QweakSimEPEvent {
 
