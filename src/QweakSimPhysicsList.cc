@@ -42,7 +42,7 @@ QweakSimPhysicsList::QweakSimPhysicsList() : G4VUserPhysicsList()
 {
   defaultCutValue = 1.0*cm;
 
-//   defaultCutValue     = 1.0*micrometer;
+   //defaultCutValue     = 1.0*micrometer;
 
   //********************************************
   //Added for low energy hadronic tests 04/27/06
@@ -238,7 +238,7 @@ void QweakSimPhysicsList::ConstructEMProcess()
     pManager = G4Electron::Electron()->GetProcessManager();
     pManager->AddProcess(new G4MultipleScattering,-1, 1,1);
     pManager->AddProcess(new G4eBremsstrahlung,   -1, 3,3);
-    //pManager->AddProcess(new G4eIonisation,       -1, 2,2);
+    pManager->AddProcess(new G4eIonisation,       -1, 2,2);
 
     // see http://geant4.home.cern.ch/geant4/G4UsersDocuments/UsersGuides/PhysicsReferenceManual/html/node38.html
     // The Photoabsorption Ionization (PAI) model describes the ionization energy loss of a relativistic charged particle in matter.

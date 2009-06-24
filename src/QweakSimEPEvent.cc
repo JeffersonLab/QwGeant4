@@ -45,8 +45,6 @@ QweakSimEPEvent::QweakSimEPEvent()
   ReactionType = 1;
   ReactionRegion = 1;
 
-  std::ofstream EventDataFile("Event.dat", std::ios::out);
-
   // G4cout << "###### Leavinging QweakSimEPEvent::QweakSimEPEvent () " << G4endl;
 } 
 

@@ -62,7 +62,6 @@ static const G4double mil = 0.001*2.54*cm;
   // get target material
   Target_Material = pMaterial->GetMaterial("H2Liquid");  
 
-
   // define target geometry values
 
   targetCellWindowThickness =  5*mil;  //  3.5*mil
@@ -101,7 +100,8 @@ G4cout << G4endl << "###### Calling QweakSimTarget::ConstructComponent() " << G4
   
   // define Target position
   G4ThreeVector positionTarget = G4ThreeVector(0,0,targetCellZPos);
-
+  G4ThreeVector positionTargetEntranceWindow = G4ThreeVector(0,0,targetCellZPos-0.5*targetCellInnerLength - 0.5*targetCellWindowThickness);
+  G4ThreeVector positionTargetExitWindow = G4ThreeVector(0,0,targetCellZPos+0.5*targetCellInnerLength + 0.5*targetCellWindowThickness);
   
   // define target solid volume
   G4cout << G4endl << "###### QweakSimTarget: Define TargetCell_Solid " << G4endl << G4endl;
@@ -152,10 +152,10 @@ G4cout << G4endl << "###### Calling QweakSimTarget::ConstructComponent() " << G4
   // define Target window physical volume (front, upstream)
   G4cout << G4endl << "###### QweakSimTarget: Define TargetWindowFront_Physical " << G4endl << G4endl;
   TargetWindowFront_Physical   = new G4PVPlacement(0, 
-				       G4ThreeVector(0,0,-0.5*targetCellInnerLength - 0.5*targetCellWindowThickness), 
+				       positionTargetEntranceWindow, 
 				       "QweakTargetWindowFront", 
 				       TargetWindowFront_Logical,
-				       TargetCell_Physical, 
+				       MotherVolume, 
 				       false, 
 				       0);
 
@@ -182,10 +182,10 @@ G4cout << G4endl << "###### Calling QweakSimTarget::ConstructComponent() " << G4
   // define Target window physical volume (back, downstream)
   G4cout << G4endl << "###### QweakSimTarget: Define TargetWindowBack_Physical " << G4endl << G4endl;
   TargetWindowBack_Physical   = new G4PVPlacement(0, 
-				       G4ThreeVector(0,0,0.5*targetCellInnerLength + 0.5*targetCellWindowThickness), 
+				       positionTargetExitWindow, 
 				       "QweakTargetWindowBack", 
 				       TargetWindowBack_Logical,
-				       TargetCell_Physical, 
+				       MotherVolume, 
 				       false, 
 				       0);
 
@@ -211,10 +211,10 @@ G4cout << G4endl << "###### Calling QweakSimTarget::ConstructComponent() " << G4
   // define Target material physical volume
   G4cout << G4endl << "###### QweakSimTarget: Define TargetMaterial_Physical " << G4endl << G4endl;
   TargetMaterial_Physical   = new G4PVPlacement(0, 
-				       G4ThreeVector(0,0,0), 
+				       positionTarget,
 				       "QweakTargetMaterial", 
 				       TargetMaterial_Logical,
-				       TargetCell_Physical, 
+				       MotherVolume, 
 				       false, 
 				       0);
 
@@ -229,12 +229,12 @@ G4cout << G4endl << "###### QweakSimTarget: Setting Attributes " << G4endl << G4
 
   G4VisAttributes* TargetCell_VisAtt = new G4VisAttributes(blue);
   TargetCell_VisAtt -> SetVisibility(true);
-  //TargetVisAtt -> SetForceWireframe(true);
+  TargetCell_VisAtt -> SetForceWireframe(true);
   TargetCell_Logical -> SetVisAttributes(TargetCell_VisAtt); 
 
   G4VisAttributes* TargetWindow_VisAtt = new G4VisAttributes(blue);
   TargetWindow_VisAtt -> SetVisibility(true);
-  TargetWindow_VisAtt -> SetForceWireframe(true);
+  //TargetWindow_VisAtt -> SetForceWireframe(true);
   TargetWindowFront_Logical -> SetVisAttributes(TargetWindow_VisAtt);
   TargetWindowBack_Logical -> SetVisAttributes(TargetWindow_VisAtt);
 

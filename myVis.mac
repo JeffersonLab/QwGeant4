@@ -44,8 +44,8 @@
 # Alllow only the tracking of the primary particles (== electrons from event generator)
 #  0: track all primaries and their secondaries (default)
 #  1: Allow primaries only, 
-/TrackingAction/PrimaryElectronsOnly 0
-#/TrackingAction/PrimaryElectronsOnly 1
+#TrackingAction/PrimaryElectronsOnly 0
+/TrackingAction/PrimaryElectronsOnly 1
 
 #
 # Store particle trajactories for visualisation
@@ -108,10 +108,10 @@
 
 # Set camera
 /vis/viewer/reset
-#/vis/viewer/set/viewpointThetaPhi 90 180 deg
+/vis/viewer/set/viewpointThetaPhi 90 180 deg
 #/vis/viewer/set/viewpointThetaPhi 90 90 deg
 #/vis/viewer/set/viewpointThetaPhi 90 0 deg
-/vis/viewer/set/viewpointThetaPhi 60 20 deg
+#/vis/viewer/set/viewpointThetaPhi 60 20 deg
 /vis/viewer/zoom 2.0
 /vis/viewer/set/style surface
 #/vis/viewer/set/style surface2

@@ -49,6 +49,8 @@ G4cout << "###### Calling QweakSimSteppingAction::QweakSimSteppingAction() " << 
   evtGenStatus = 0;
   RandomPositionZ = myEvent.GetVertexZ();
 
+  //std::ofstream EventDataFile("Event.dat", std::ios::out);
+
 G4cout << "###### Leaving QweakSimSteppingAction::QweakSimSteppingAction() " << G4endl;
 
 }
@@ -143,12 +145,22 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
 
              // print the stored values
              G4cout << "*********** myEventCounter = " << myEventCounter << G4endl;
+
+// std::ofstream EventDataFile("Event.dat", std::ios::app);
+// EventDataFile << "Event: "<<myEventCounter<<std::endl;
+// EventDataFile << "E_in : "<<E_in<<std::endl;
+// EventDataFile << "E_out: "<<E_out<<std::endl;
+// EventDataFile << "StepLength: "<<theStepLength<<std::endl;
+// EventDataFile << "myTrack ID: "<<theTrack->GetTrackID()<<std::endl;
+// EventDataFile << "Eng_deposi: "<<theStep->GetTotalEnergyDeposit ()<<std::endl;
+// EventDataFile << "Material: "<<theTrack->GetMaterial()<<std::endl;
+
              myUserInfo->Print();
       }
     }
   }
   else
-    { theTrack->SetTrackStatus(fStopAndKill); return;}
+   { theTrack->SetTrackStatus(fStopAndKill); return;}
 
 //kill a track if it is in collimators or shielding wall
   if(thePrePV->GetName()=="CollimatorHousing" || thePrePV->GetName()=="ShieldingWallHousing"){
