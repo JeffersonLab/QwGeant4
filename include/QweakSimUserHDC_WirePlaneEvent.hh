@@ -80,11 +80,10 @@ private:
   Float_t OriginVertexKineticEnergy;
   Float_t OriginVertexTotalEnergy;
 
-  Float_t PrimaryQ2;
-  Float_t CrossSection;
-  Float_t CrossSectionWeight;
-
-  Int_t   PrimaryEventNumber;
+//   Float_t PrimaryQ2;
+//   Float_t CrossSection;
+//   Float_t CrossSectionWeight;
+//   Int_t   PrimaryEventNumber;
 
   Float_t GlobalPhiAngle;
   Float_t GlobalThetaAngle;
@@ -183,17 +182,17 @@ public:
   void     StoreOriginVertexTotalEnergy(Float_t etot) { OriginVertexTotalEnergy = etot; }
   Float_t    GetOriginVertexTotalEnergy() const {return OriginVertexTotalEnergy;}
   //-----------------
-  void     StorePrimaryQ2(Float_t pq2)  { PrimaryQ2 = pq2; }
-  Float_t    GetPrimaryQ2() const {return PrimaryQ2; }
-
-  void     StoreCrossSection(Float_t cs)  {CrossSection = cs;}
-  Float_t    GetCrossSection() const {return CrossSection; }
-
-  void     StoreCrossSectionWeight(Float_t csw)  {CrossSectionWeight = csw;}
-  Float_t    GetCrossSectionWeight() const {return CrossSectionWeight; }
-
-  void     StorePrimaryEventNumber(Int_t pen)    { PrimaryEventNumber = pen; }
-  Int_t      GetPrimaryEventNumber() const {return PrimaryEventNumber; }
+//   void     StorePrimaryQ2(Float_t pq2)  { PrimaryQ2 = pq2; }
+//   Float_t    GetPrimaryQ2() const {return PrimaryQ2; }
+// 
+//   void     StoreCrossSection(Float_t cs)  {CrossSection = cs;}
+//   Float_t    GetCrossSection() const {return CrossSection; }
+// 
+//   void     StoreCrossSectionWeight(Float_t csw)  {CrossSectionWeight = csw;}
+//   Float_t    GetCrossSectionWeight() const {return CrossSectionWeight; }
+// 
+//   void     StorePrimaryEventNumber(Int_t pen)    { PrimaryEventNumber = pen; }
+//   Int_t      GetPrimaryEventNumber() const {return PrimaryEventNumber; }
   //-----------------
   void     StoreGlobalThetaAngle(Float_t theta) { GlobalThetaAngle = theta; }
   Float_t    GetGlobalThetaAngle() const  {return GlobalThetaAngle;}

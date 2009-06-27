@@ -16,22 +16,6 @@
 */
 //=============================================================================
 
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2005/12/27 19:09:32 $
-//  CVS/RCS Revision: $Revision: 1.2 $
-//  Status:           $State: Exp $
-// 
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-//
-//============================================================================
-
 #include "QweakSimDetectorConstruction.hh"
 #include "QweakSimPhysicsList.hh"
 #include "QweakSimPrimaryGeneratorAction.hh"
@@ -87,12 +71,15 @@ int main(int argc,char** argv) {
 
 
   // UserAction classes
-  runManager->SetUserAction( new QweakSimPrimaryGeneratorAction(myQweakSimUserInformation) );
-  runManager->SetUserAction( new QweakSimRunAction(myQweakSimAnalysis) );  
-  runManager->SetUserAction( new QweakSimEventAction(myQweakSimAnalysis, myQweakSimUserInformation) );
+  //runManager->SetUserAction( new QweakSimPrimaryGeneratorAction(myQweakSimUserInformation) );
+  runManager->SetUserAction( new QweakSimPrimaryGeneratorAction( ) );
   runManager->SetUserAction( new QweakSimSteppingAction(myQweakSimUserInformation) );
   runManager->SetUserAction( new QweakSimStackingAction() );
   runManager->SetUserAction( new QweakSimTrackingAction(myQweakSimUserInformation) );
+  runManager->SetUserAction( new QweakSimEventAction(myQweakSimAnalysis, myQweakSimUserInformation) );
+  runManager->SetUserAction( new QweakSimRunAction(myQweakSimAnalysis) );  
+
+
 
   //Initialize G4 kernel
   runManager->Initialize();
@@ -171,16 +158,4 @@ int main(int argc,char** argv) {
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-//=======================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//      $Revisions$  
-//      $Log: QweakSimG4.cc,v $
-//      Revision 1.2  2005/12/27 19:09:32  grimm
-//      - Redesign of Doxygen header containing CVS info like revision and date
-//      - Added CVS revision log at the end of file
-//
-//  adding something here , forcing update
 

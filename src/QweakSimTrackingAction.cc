@@ -107,10 +107,10 @@ QweakSimTrackingAction::~QweakSimTrackingAction()
 	QweakSimTrackInformation* anInfo = new QweakSimTrackInformation(aTrack);
 	  
 	// fill user track info with data stored in myUserInfo (class QweakUserInformation)
-	anInfo->StorePrimaryQ2(myUserInfo->GetPrimaryQ2());
-	anInfo->StoreCrossSection(myUserInfo->GetCrossSection());
-	anInfo->StoreCrossSectionWeight(myUserInfo->GetCrossSectionWeight());
-	anInfo->StorePrimaryEventNumber(myUserInfo->GetPrimaryEventNumber());
+// 	anInfo->StorePrimaryQ2(myUserInfo->GetPrimaryQ2());
+// 	anInfo->StoreCrossSection(myUserInfo->GetCrossSection());
+// 	anInfo->StoreCrossSectionWeight(myUserInfo->GetCrossSectionWeight());
+// 	anInfo->StorePrimaryEventNumber(myUserInfo->GetPrimaryEventNumber());
 
 /*
         anInfo->StorePrimaryTrackID(myUserInfo->GetTrackID());

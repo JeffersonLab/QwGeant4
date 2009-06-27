@@ -202,10 +202,10 @@ else { return false;}
 // get User Track Info
   QweakSimTrackInformation* info = (QweakSimTrackInformation*)(aStep->GetTrack()->GetUserInformation());
 
-  G4int    primaryTrackID                 = info->GetPrimaryTrackID();
-  G4double primaryQ2                      = info->GetPrimaryQ2();
-  G4double crossSection                   = info->GetCrossSection();
-  G4double crossSectionWeight             = info->GetCrossSectionWeight();
+//   G4int    primaryTrackID                 = info->GetPrimaryTrackID();
+//   G4double primaryQ2                      = info->GetPrimaryQ2();
+//   G4double crossSection                   = info->GetCrossSection();
+//   G4double crossSectionWeight             = info->GetCrossSectionWeight();
 
 
 //   G4cout << " @@@@@@@@@@@@@@@@@@@@@@@ Original Track ID                 : " << primaryTrackID                  << G4endl;
@@ -237,9 +237,9 @@ else { return false;}
   aHit->StoreKineticEnergy(currentKineticEnergy);
   aHit->StoreTotalEnergy(currentTotalEnergy);
 
-  aHit->StorePrimaryQ2(primaryQ2);
-  aHit->StoreCrossSection(crossSection);
-  aHit->StoreCrossSectionWeight(crossSectionWeight);
+//   aHit->StorePrimaryQ2(primaryQ2);
+//   aHit->StoreCrossSection(crossSection);
+//   aHit->StoreCrossSectionWeight(crossSectionWeight);
 
   // check if it is first touch
   if(!(aHit->GetLogVolume()))

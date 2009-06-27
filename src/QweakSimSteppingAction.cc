@@ -14,23 +14,6 @@
    \author Klaus Hans Grimm   
 
 */
-//=============================================================================
-
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2006/05/05 21:46:05 $
-//  CVS/RCS Revision: $Revision: 1.4 $
-//  Status:           $State: Exp $
-// 
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-//
-//============================================================================
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -123,6 +106,7 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
              theTrack->SetMomentumDirection(MomentumDirection);
 
              evtGenStatus = 1;
+             myEventCounter = myEventCounter + 1;
 
              // set track info
             theTrack->SetVertexPosition(thePosition);
@@ -142,10 +126,10 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
              myUserInfo->StoreOriginVertexPhiAngle(phi);
              myUserInfo->StoreOriginVertexKineticEnergy(theTrack->GetKineticEnergy());
              myUserInfo->StoreOriginVertexTotalEnergy(theTrack->GetTotalEnergy());
-             myUserInfo->StorePrimaryQ2(Q2*0.000001);
+             myUserInfo->StorePrimaryQ2(Q2*0.000001); //in units of GeV^2
              myUserInfo->StoreCrossSection(CrossSection);
              myUserInfo->StoreCrossSectionWeight(WeightN);
-             myUserInfo->StorePrimaryEventNumber(++myEventCounter);
+             myUserInfo->StorePrimaryEventNumber(myEventCounter);
              myUserInfo->StoreReactionType(myEvent.GetReactionType());
              myUserInfo->StorePDGcode(3);
 
@@ -486,24 +470,5 @@ G4String QweakSimSteppingAction::GetSecondaryCreatorProcessName(G4int idx)
 
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
- 
-//=======================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//      $Revisions$  
-//      $Log: QweakSimSteppingAction.cc,v $
-//      Revision 1.4  2006/05/05 21:46:05  grimm
-//      Added Color control of tracks/particles in the visualization, e.g. neutrons appear as white tracks.
-//
-//      Revision 1.3  2006/03/01 16:58:20  grimm
-//      Cosmetic changes
-//
-//      Revision 1.2  2005/12/27 19:14:57  grimm
-//      - Redesign of Doxygen header containing CVS info like revision and date
-//      - Added CVS revision log at the end of file
-//
-//
 
 

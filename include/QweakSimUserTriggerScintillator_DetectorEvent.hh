@@ -28,21 +28,6 @@
  */
 //=============================================================================
 //
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2005/12/27 19:30:53 $
-//  CVS/RCS Revision: $Revision: 1.2 $
-//  Status:           $State: Exp $
-// 
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-// 
-//=============================================================================
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 #ifndef QweakSimUserTriggerScintillator_DetectorEvent_h
@@ -125,9 +110,9 @@ private:
 
   Float_t LocalVertexTotalEnergy;
 
-  Float_t PrimaryQ2;
-  Float_t CrossSection;
-  Float_t CrossSectionWeight;
+//   Float_t PrimaryQ2;
+//   Float_t CrossSection;
+//   Float_t CrossSectionWeight;
 
   Float_t GlobalPhiAngle;
   Float_t GlobalThetaAngle;
@@ -216,7 +201,7 @@ public:
   void     StoreDetectorLocalVertexTotalEnergy(Float_t etot) { LocalVertexTotalEnergy = etot; };
   Float_t    GetDetectorLocalVertexTotalEnergy() {return LocalVertexTotalEnergy;};
   //----------------
-
+/*
   void     StorePrimaryQ2(Float_t pq2)  { PrimaryQ2 = pq2; }
   Float_t    GetPrimaryQ2() const {return PrimaryQ2; }
   //-----------------
@@ -224,7 +209,7 @@ public:
   Float_t    GetCrossSection() const {return CrossSection; }
 
   void     StoreCrossSectionWeight(Float_t csw)   {CrossSectionWeight = csw;}
-  Float_t    GetCrossSectionWeight() const {return CrossSectionWeight; }
+  Float_t    GetCrossSectionWeight() const {return CrossSectionWeight; }*/
   //-----------------
 
 

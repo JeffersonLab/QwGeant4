@@ -16,23 +16,6 @@
 */
 //=============================================================================
 
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2006/01/06 19:12:25 $
-//  CVS/RCS Revision: $Revision: 1.4 $
-//  Status:           $State: Exp $
-// 
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-//
-//==============================================================================
-
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
 #include "QweakSimAnalysis.hh"
@@ -131,8 +114,8 @@ void QweakSimAnalysis::AutoSaveRootNtuple()
     //
     // see http://root.cern.ch/root/html/TTree.html#TTree:AutoSave
 
-    //   QweakSimG4_RootNtuple -> AutoSave("SaveSelf");
-    QweakSimG4_RootNtuple -> AutoSave();
+     // QweakSimG4_RootNtuple -> AutoSave("SaveSelf");
+     QweakSimG4_RootNtuple -> AutoSave();
 
 //jpan@nuclear.uwinnipeg.ca
 //print the timestamp on screen, test code, add by Jie
@@ -146,21 +129,3 @@ void QweakSimAnalysis::AutoSaveRootNtuple()
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-//=======================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//      $Revisions$  
-//      $Log: QweakSimAnalysis.cc,v $
-//      Revision 1.4  2006/01/06 19:12:25  grimm
-//      Bogus commit due to time stamp mismatch
-//
-//      Revision 1.3  2006/01/06 18:00:00  grimm
-//      Bogus commit. CVS time on dogbert was in the future
-//
-//      Revision 1.2  2005/12/27 19:01:03  grimm
-//      - Redesign of Doxygen header containing CVS info like revision and date
-//      - Added CVS revision log at the end of file
-//
-//

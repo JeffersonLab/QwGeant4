@@ -69,10 +69,10 @@ private:
   G4double              primaryTime;
 
   // TrackInfo which can *not* derived from G4Track
-  G4double              primaryQ2;
-  G4double		crossSection;
-  G4double              crossSectionWeight;
-  G4int                 primaryEventNumber;
+//   G4double              primaryQ2;
+//   G4double		   crossSection;
+//   G4double              crossSectionWeight;
+//   G4int                 primaryEventNumber;
 
   vector <QweakSimTrackHistory*> theCerenkovTrackHistory;
 
@@ -171,17 +171,17 @@ public:
   void     StorePrimaryTime(G4double otime) {primaryTime = otime;}
   G4double   GetPrimaryTime()  const {return primaryTime;}
   
-  void     StorePrimaryQ2(G4double q2)   {primaryQ2 = q2;}
-  G4double   GetPrimaryQ2() const {return primaryQ2;}
-  
-  void     StoreCrossSection(G4double cs)   {crossSection = cs;}
-  G4double   GetCrossSection() const {return crossSection;}
-
-  void     StoreCrossSectionWeight(G4double csw)   {crossSectionWeight = csw;}
-  G4double   GetCrossSectionWeight() const {return crossSectionWeight;}
-  
-  void     StorePrimaryEventNumber(G4int en)   {primaryEventNumber = en;}
-  G4int      GetPrimaryEventNumber() const {return primaryEventNumber;}
+//   void     StorePrimaryQ2(G4double q2)   {primaryQ2 = q2;}
+//   G4double   GetPrimaryQ2() const {return primaryQ2;}
+//   
+//   void     StoreCrossSection(G4double cs)   {crossSection = cs;}
+//   G4double   GetCrossSection() const {return crossSection;}
+// 
+//   void     StoreCrossSectionWeight(G4double csw)   {crossSectionWeight = csw;}
+//   G4double   GetCrossSectionWeight() const {return crossSectionWeight;}
+//   
+//   void     StorePrimaryEventNumber(G4int en)   {primaryEventNumber = en;}
+//   G4int      GetPrimaryEventNumber() const {return primaryEventNumber;}
   
   //---------------------------------------------------------------------------
   

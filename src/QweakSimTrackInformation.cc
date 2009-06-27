@@ -87,10 +87,10 @@ QweakSimTrackInformation::QweakSimTrackInformation(const QweakSimTrackInformatio
 
     // Return TrackInfo which can not derived from G4Track
     // Must be filled/provided manually  
-    primaryQ2                   = aTrackInfo->primaryQ2;
-    crossSection                = aTrackInfo->crossSection;
-    crossSectionWeight          = aTrackInfo->crossSectionWeight;
-    primaryEventNumber          = aTrackInfo->primaryEventNumber;
+//     primaryQ2                   = aTrackInfo->primaryQ2;
+//     crossSection                = aTrackInfo->crossSection;
+//     crossSectionWeight          = aTrackInfo->crossSectionWeight;
+//     primaryEventNumber          = aTrackInfo->primaryEventNumber;
     //----------
     primaryTrackID              = aTrackInfo->primaryTrackID;
     particleDefinition          = aTrackInfo->particleDefinition;
@@ -186,10 +186,10 @@ void QweakSimTrackInformation::PrintPrimaryTrackInfo() const
     G4cout << "Primary Particle Energy [GeV] = " << primaryEnergy/GeV                     << G4endl; 
     G4cout << "Primary Start Position  [mm]  = " << primaryPosition                       << G4endl;
     G4cout << "------------------------------------------------------------------------"  << G4endl; 
-    G4cout << "Primary track with Q2         = " << primaryQ2                             << G4endl;
-    G4cout << "Primary track with CS         = " << crossSection                          << G4endl;
-    G4cout << "Primary track with CSW        = " << crossSectionWeight                    << G4endl;
-    G4cout << "Primary track event number    = " << primaryEventNumber                    << G4endl;
+//     G4cout << "Primary track with Q2         = " << primaryQ2                             << G4endl;
+//     G4cout << "Primary track with CS         = " << crossSection                          << G4endl;
+//     G4cout << "Primary track with CSW        = " << crossSectionWeight                    << G4endl;
+//     G4cout << "Primary track event number    = " << primaryEventNumber                    << G4endl;
     G4cout << "########################################################################"  << G4endl; 
 
 //   G4cout  << "###### Leaving QweakSimTrackInformation::PrintPrimaryTrackInfo() " << G4endl;
@@ -247,10 +247,10 @@ void QweakSimTrackInformation::Initialize()
     ParticleCreatorProcess.resize(0);
     OriginVertex.resize(0);
 
-    primaryQ2          = 0.0;
-    crossSection       = 0.0;
-    crossSectionWeight = 0.0;
-    primaryEventNumber = 0;
+//     primaryQ2          = 0.0;
+//     crossSection       = 0.0;
+//     crossSectionWeight = 0.0;
+//     primaryEventNumber = 0;
 
     trackingStatus       = 0;
     trackIsPrimaryStatus = 0;

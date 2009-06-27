@@ -109,9 +109,9 @@ void QweakSimUserTriggerScintillator_DetectorEvent::Initialize()
     OriginVertexKineticEnergy      = 0.0;
     OriginVertexTotalEnergy        = 0.0; 
     
-    PrimaryQ2                      = 0.0;
-    CrossSection                   = 0.0;
-    CrossSectionWeight             = 0.0;
+//     PrimaryQ2                      = 0.0;
+//     CrossSection                   = 0.0;
+//     CrossSectionWeight             = 0.0;
 
     EdgeEventFlag                  = 0;
 
