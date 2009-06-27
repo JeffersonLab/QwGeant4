@@ -56,6 +56,7 @@ QweakSimCerenkov_DetectorHit::QweakSimCerenkov_DetectorHit()
   currentTotalEnergy              = 0.;
 
   primaryQ2                       = 0.;
+  crossSection                    = 0.;
   crossSectionWeight              = 0.;
 }
 

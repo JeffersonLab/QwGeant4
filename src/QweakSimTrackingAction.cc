@@ -16,23 +16,6 @@
 */
 //=============================================================================
 
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2006/01/18 20:27:32 $
-//  CVS/RCS Revision: $Revision: 1.5 $
-//  Status:           $State: Exp $
-// 
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-//
-//============================================================================
-
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #include "QweakSimTrackingAction.hh"
@@ -116,7 +99,7 @@ QweakSimTrackingAction::~QweakSimTrackingAction()
     // Check if the track already has track info
     // in case of a  primary event w/o user track info: 
     // create/store user track info
-    if( (aTrack->GetParentID()==0) && (aTrack->GetUserInformation()==0) )
+   if( (aTrack->GetParentID()==0) && (aTrack->GetUserInformation()==0) )
     {
 	//  G4cout << G4endl << "###### Creating new Track User Information for primary" << G4endl << G4endl;
 		
@@ -125,8 +108,35 @@ QweakSimTrackingAction::~QweakSimTrackingAction()
 	  
 	// fill user track info with data stored in myUserInfo (class QweakUserInformation)
 	anInfo->StorePrimaryQ2(myUserInfo->GetPrimaryQ2());
+	anInfo->StoreCrossSection(myUserInfo->GetCrossSection());
 	anInfo->StoreCrossSectionWeight(myUserInfo->GetCrossSectionWeight());
 	anInfo->StorePrimaryEventNumber(myUserInfo->GetPrimaryEventNumber());
+
+/*
+        anInfo->StorePrimaryTrackID(myUserInfo->GetTrackID());
+
+        int particleType = myUserInfo->GetPDGcode();
+        if (particleType==3)
+          anInfo->StorePrimaryParticle(G4Electron::ElectronDefinition());
+
+        G4double theX = myUserInfo->GetOriginVertexPositionX();
+        G4double theY = myUserInfo->GetOriginVertexPositionY();
+        G4double theZ = myUserInfo->GetOriginVertexPositionZ();
+        anInfo->StorePrimaryPosition(G4ThreeVector(theX, theY, theZ));
+
+        G4double mdX = myUserInfo->GetOriginVertexMomentumDirectionX();
+        G4double mdY = myUserInfo->GetOriginVertexMomentumDirectionY();
+        G4double mdZ = myUserInfo->GetOriginVertexMomentumDirectionZ();
+        G4double mdNormal = sqrt(mdX*mdX+mdY*mdY+mdZ*mdZ);
+        G4double Ek = myUserInfo->GetOriginVertexKineticEnergy();
+        G4double px = Ek*mdX/mdNormal;
+        G4double py = Ek*mdY/mdNormal;
+        G4double pz = Ek*mdZ/mdNormal;
+        anInfo->StorePrimaryMomentum(G4ThreeVector(px,py,pz));
+        anInfo->StorePrimaryEnergy(Ek);
+        anInfo->StorePrimaryKineticEnergy(Ek);
+        anInfo->StorePrimaryTime(myUserInfo->GetGlobalTime());
+*/
 
 	// set the source track info (which is here identical to the primary track info)
 	anInfo->SetSourceTrackInformation(aTrack);
@@ -217,25 +227,3 @@ void QweakSimTrackingAction::PostUserTrackingAction(const G4Track* aTrack)
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
  
-//=======================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//      $Revisions$  
-//      $Log: QweakSimTrackingAction.cc,v $
-//      Revision 1.5  2006/01/18 20:27:32  grimm
-//      Bogus committ
-//
-//      Revision 1.4  2006/01/06 21:34:33  grimm
-//      Added  TrackingPrimaryOnlyFlag foe switching on/off tracking of primary electrons
-//
-//      Revision 1.3  2005/12/28 23:11:42  grimm
-//      Testing: allowing tracking of all secondaries.
-//      Before this change secondaries were tracked with an origin of z > 568*cm.
-//
-//      Revision 1.2  2005/12/27 19:15:35  grimm
-//      - Redesign of Doxygen header containing CVS info like revision and date
-//      - Added CVS revision log at the end of file
-//
-//

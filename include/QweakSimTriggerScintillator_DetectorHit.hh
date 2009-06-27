@@ -107,6 +107,7 @@ private:
   G4double      currentTotalEnergy;
 
   G4double      primaryQ2;
+  G4double      crossSection;
   G4double      crossSectionWeight;
 
 
@@ -162,14 +163,11 @@ public:
   inline void   StoreTotalEnergy(G4double etot) { currentTotalEnergy  = etot; }
   inline G4double GetTotalEnergy() const { return currentTotalEnergy; }
 
-
-
-
-
- //------
-
   inline void     StorePrimaryQ2(G4double q2)   { primaryQ2 = q2; }
   inline G4double   GetPrimaryQ2() const { return primaryQ2; }
+
+  inline void     StoreCrossSection(G4double cs)  {crossSection = cs;}
+  inline G4double   GetCrossSection() const {return crossSection;}
 
   inline void     StoreCrossSectionWeight(G4double csw)  {crossSectionWeight = csw;}
   inline G4double   GetCrossSectionWeight() const {return crossSectionWeight;}

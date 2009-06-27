@@ -105,6 +105,7 @@ private:
   G4double      currentTotalEnergy;
 
   G4double      primaryQ2;
+  G4double      crossSection;
   G4double      crossSectionWeight;
 
   G4String      particleName;
@@ -170,6 +171,9 @@ public:
 
   inline void     StorePrimaryQ2(G4double q2)   { primaryQ2 = q2; }
   inline G4double   GetPrimaryQ2() const { return primaryQ2; }
+
+  inline void     StoreCrossSection(G4double cs)  {crossSection = cs;}
+  inline G4double   GetCrossSection() const {return crossSection;}
 
   inline void     StoreCrossSectionWeight(G4double csw)  {crossSectionWeight = csw;}
   inline G4double   GetCrossSectionWeight() const {return crossSectionWeight;}

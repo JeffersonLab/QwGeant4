@@ -14,23 +14,6 @@
    \author Klaus Hans Grimm   
 
 */
-//=============================================================================
-
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2005/12/27 19:15:27 $
-//  CVS/RCS Revision: $Revision: 1.2 $
-//  Status:           $State: Exp $
-// 
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-//
-//============================================================================
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -105,6 +88,7 @@ QweakSimTrackInformation::QweakSimTrackInformation(const QweakSimTrackInformatio
     // Return TrackInfo which can not derived from G4Track
     // Must be filled/provided manually  
     primaryQ2                   = aTrackInfo->primaryQ2;
+    crossSection                = aTrackInfo->crossSection;
     crossSectionWeight          = aTrackInfo->crossSectionWeight;
     primaryEventNumber          = aTrackInfo->primaryEventNumber;
     //----------
@@ -203,6 +187,7 @@ void QweakSimTrackInformation::PrintPrimaryTrackInfo() const
     G4cout << "Primary Start Position  [mm]  = " << primaryPosition                       << G4endl;
     G4cout << "------------------------------------------------------------------------"  << G4endl; 
     G4cout << "Primary track with Q2         = " << primaryQ2                             << G4endl;
+    G4cout << "Primary track with CS         = " << crossSection                          << G4endl;
     G4cout << "Primary track with CSW        = " << crossSectionWeight                    << G4endl;
     G4cout << "Primary track event number    = " << primaryEventNumber                    << G4endl;
     G4cout << "########################################################################"  << G4endl; 
@@ -263,6 +248,7 @@ void QweakSimTrackInformation::Initialize()
     OriginVertex.resize(0);
 
     primaryQ2          = 0.0;
+    crossSection       = 0.0;
     crossSectionWeight = 0.0;
     primaryEventNumber = 0;
 
@@ -346,16 +332,3 @@ G4ThreeVector QweakSimTrackInformation::GetOriginVertex(G4int ind)
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
- 
-//=======================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//      $Revisions$  
-//      $Log: QweakSimTrackInformation.cc,v $
-//      Revision 1.2  2005/12/27 19:15:27  grimm
-//      - Redesign of Doxygen header containing CVS info like revision and date
-//      - Added CVS revision log at the end of file
-//
-//

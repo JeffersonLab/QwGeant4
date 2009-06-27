@@ -15,24 +15,6 @@
 
 */
 //=============================================================================
-
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2005/12/27 19:03:43 $
-//  CVS/RCS Revision: $Revision: 1.2 $
-//  Status:           $State: Exp $
-// 
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-//
-//============================================================================
-
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #include "QweakSimCerenkov_DetectorSD.hh"
@@ -169,6 +151,7 @@ G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistor
 
   G4int    primaryTrackID                 = info->GetPrimaryTrackID();
   G4double primaryQ2                      = info->GetPrimaryQ2();
+  G4double crossSection                   = info->GetCrossSection();
   G4double crossSectionWeight             = info->GetCrossSectionWeight();
 
   QweakSimCerenkov_DetectorHit* aHit = new QweakSimCerenkov_DetectorHit(MotherCopyNo);
@@ -195,6 +178,7 @@ G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistor
   aHit->StoreTotalEnergy(currentTotalEnergy);
 
   aHit->StorePrimaryQ2(primaryQ2);
+  aHit->StoreCrossSection(crossSection);
   aHit->StoreCrossSectionWeight(crossSectionWeight);
 
   // check if it is first touch
@@ -240,16 +224,3 @@ void QweakSimCerenkov_DetectorSD::EndOfEvent(G4HCofThisEvent* )
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-//=======================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//      $Revisions$  
-//      $Log: QweakSimCerenkov_DetectorSD.cc,v $
-//      Revision 1.2  2005/12/27 19:03:43  grimm
-//      - Redesign of Doxygen header containing CVS info like revision and date
-//      - Added CVS revision log at the end of file
-//
-// 

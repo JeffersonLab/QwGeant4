@@ -26,24 +26,6 @@
    Placeholder for a long explaination
     
  */
-//=============================================================================
-//
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2005/12/27 19:27:20 $
-//  CVS/RCS Revision: $Revision: 1.2 $
-//  Status:           $State: Exp $
-// 
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-// 
-//=============================================================================
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 #ifndef QweakSimTrackInformation_h
 #define QweakSimTrackInformation_h 1
@@ -88,6 +70,7 @@ private:
 
   // TrackInfo which can *not* derived from G4Track
   G4double              primaryQ2;
+  G4double		crossSection;
   G4double              crossSectionWeight;
   G4int                 primaryEventNumber;
 
@@ -191,6 +174,9 @@ public:
   void     StorePrimaryQ2(G4double q2)   {primaryQ2 = q2;}
   G4double   GetPrimaryQ2() const {return primaryQ2;}
   
+  void     StoreCrossSection(G4double cs)   {crossSection = cs;}
+  G4double   GetCrossSection() const {return crossSection;}
+
   void     StoreCrossSectionWeight(G4double csw)   {crossSectionWeight = csw;}
   G4double   GetCrossSectionWeight() const {return crossSectionWeight;}
   
@@ -255,17 +241,3 @@ inline void QweakSimTrackInformation::operator delete(void *aTrackInfo)
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #endif
-
-//=======================================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//      $Revisions$  
-//      $Log: QweakSimTrackInformation.hh,v $
-//      Revision 1.2  2005/12/27 19:27:20  grimm
-//      - Redesign of Doxygen header containing CVS info like revision and date
-//      - Added CVS revision log at the end of file
-//
-//
-

@@ -203,7 +203,10 @@ private:
   
   G4double primaryQ2;
   Float_t rPrimaryQ2;
-  
+
+  G4double  crossSection;
+  Float_t  rCrossSection;
+
   G4double  crossSectionWeight;
   Float_t  rCrossSectionWeight;
   

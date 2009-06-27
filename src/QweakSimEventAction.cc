@@ -16,22 +16,6 @@
 */
 //=============================================================================
 
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2006/05/05 21:37:16 $
-//  CVS/RCS Revision: $Revision: 1.5 $
-//  Status:           $State: Exp $
-// 
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-//
-//============================================================================
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo...... 
 
 #include "QweakSimEventAction.hh"
@@ -331,8 +315,8 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 
   //-------------------------------------------------------------------------------------------------
 
-  //################
-  //###########################################################################
+  //#########################################################################################################################
+  //#########################################################################################################################
   // 
   //
   //                                 ================================================================
@@ -341,15 +325,14 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
   //                                  or: what is required for filling the Root ntuple for this event
   //                                 =================================================================
   // 
-  //###########################################################################################################################################################
-  //###########################################################################################################################################################
+  //##########################################################################################################################
+  //##########################################################################################################################
   // 
-  // if ( (n_hitWirePlane == 4)&&(n_hitDCFront >0)&&(n_hitDCBack >0)&&(n_hitCerenkov >0) )       // ask for 4 fold coincidence 
-  // if ( (n_VDChitWirePlane >= 2)&&(n_VDChitDCFront >0)&&(n_VDChitDCBack >0) )                           //  ask for 3 fold coincidence 
-  if (n_hitCerenkov > 0) 
-//     if (n_GEMhitWirePlane > 0)  // Triggering on GEM only
-
-  // if (n_hitTriggerScintillator > 0) // Qweak triggers DAQ on a hit in the trigger scintillator 
+  // if ( (n_hitWirePlane == 4)&&(n_hitDCFront >0)&&(n_hitDCBack >0)&&(n_hitCerenkov >0) )  // ask for 4 fold coincidence 
+  // if ( (n_VDChitWirePlane >= 2)&&(n_VDChitDCFront >0)&&(n_VDChitDCBack >0) )             //  ask for 3 fold coincidence 
+  //     if (n_GEMhitWirePlane > 0)     // Triggering on GEM only
+  if (n_hitTriggerScintillator > 0)  // Qweak triggers DAQ on a hit in the trigger scintillator 
+  // if (n_hitCerenkov > 0)  //Triggering on Main Detector
     {
 
 
@@ -405,16 +388,16 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 
  
     // Store Number of Hits for: UPlane DriftCell of Front Chamber
-    analysis->QweakSimG4_RootEvent->Region3.ChamberFront.DriftCell.StoreUDriftCellNbOfHits(n_VDChitDCFront);  	   
+    analysis->QweakSimG4_RootEvent->Region3.ChamberFront.DriftCell.StoreUDriftCellNbOfHits(n_VDChitDCFront);
 
     // Store Number of Hits for: VPlane DriftCell of Front Chamber
-    analysis->QweakSimG4_RootEvent->Region3.ChamberFront.DriftCell.StoreVDriftCellNbOfHits(n_VDChitDCBack);  	               
+    analysis->QweakSimG4_RootEvent->Region3.ChamberFront.DriftCell.StoreVDriftCellNbOfHits(n_VDChitDCBack);
 
     // Store Number of Hits for: Cerenkov Detector
-    analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreDetectorNbOfHits(n_hitCerenkov);  	   
+    //analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreDetectorNbOfHits(n_hitCerenkov);
 
 //jpan@nuclear.uwinnipeg.ca
-    analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreDetectorNbOfHits(n_hitCerenkov);  
+    analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreDetectorNbOfHits(n_hitCerenkov);
 	 
     //==========================================================================================================
 
@@ -473,12 +456,26 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 	  
 	  
       originVertexMomentumDirection = aHit->GetOriginVertexMomentumDirection();
+      rOriginVertexMomentumDirectionX = (Float_t) originVertexMomentumDirection.x();
+      rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
+      rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
+
+    OriginVertexPhiAngle = (atan2(-1.0*rOriginVertexMomentumDirectionY, -1.0*rOriginVertexMomentumDirectionX) )*180/3.1415927*degree + 90.0*degree; 
+    rOriginVertexPhiAngle = OriginVertexPhiAngle/degree;
+
+    OriginVertexThetaAngle = (atan2( rOriginVertexMomentumDirectionY, rOriginVertexMomentumDirectionZ) )*180/3.1415927*degree; 
+    rOriginVertexThetaAngle = OriginVertexThetaAngle/degree; 
 	  
       originVertexKineticEnergy = aHit->GetOriginVertexKineticEnergy();
-      rOriginVertexKineticEnergy = (Float_t ) originVertexKineticEnergy/MeV;	  
+      rOriginVertexKineticEnergy = (Float_t ) originVertexKineticEnergy/MeV;
+      originVertexTotalEnergy = aHit->GetOriginVertexTotalEnergy();
+      rOriginVertexTotalEnergy = (Float_t ) originVertexTotalEnergy/MeV;
 	  
       primaryQ2  = aHit->GetPrimaryQ2();	
       rPrimaryQ2  = (Float_t) primaryQ2;
+
+      crossSection = aHit->GetCrossSection();
+      rCrossSection = (Float_t) crossSection;
 
       crossSectionWeight = aHit->GetCrossSectionWeight();
       rCrossSectionWeight = (Float_t) crossSectionWeight;
@@ -531,9 +528,11 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 	analysis->QweakSimG4_RootEvent->Region3.ChamberFront.WirePlane.StoreOriginVertexPositionY(rOriginVertexPositionY);		    
 	analysis->QweakSimG4_RootEvent->Region3.ChamberFront.WirePlane.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
 	      
-	analysis->QweakSimG4_RootEvent->Region3.ChamberFront.WirePlane.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);	     
+	analysis->QweakSimG4_RootEvent->Region3.ChamberFront.WirePlane.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
+	analysis->QweakSimG4_RootEvent->Region3.ChamberFront.WirePlane.StoreOriginVertexTotalEnergy(rOriginVertexKineticEnergy);	     
 
 	analysis->QweakSimG4_RootEvent->Region3.ChamberFront.WirePlane.StorePrimaryQ2(rPrimaryQ2);
+	analysis->QweakSimG4_RootEvent->Region3.ChamberFront.WirePlane.StoreCrossSection(rCrossSection);
 	analysis->QweakSimG4_RootEvent->Region3.ChamberFront.WirePlane.StoreCrossSectionWeight(rCrossSectionWeight);
  
 	analysis->QweakSimG4_RootEvent->Region3.ChamberFront.WirePlane.StorePrimaryEventNumber(rPrimaryEventNumber);
@@ -613,12 +612,21 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 	analysis->QweakSimG4_RootEvent->Region3.ChamberBack.WirePlane.StoreOriginVertexPositionY(rOriginVertexPositionY);		    
 	analysis->QweakSimG4_RootEvent->Region3.ChamberBack.WirePlane.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
 
+	analysis->QweakSimG4_RootEvent->Region3.ChamberBack.WirePlane.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);  
+	analysis->QweakSimG4_RootEvent->Region3.ChamberBack.WirePlane.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);		    
+	analysis->QweakSimG4_RootEvent->Region3.ChamberBack.WirePlane.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
+
+    analysis->QweakSimG4_RootEvent->Region3.ChamberBack.WirePlane.StoreOriginVertexPhiAngle( rOriginVertexPhiAngle );
+    analysis->QweakSimG4_RootEvent->Region3.ChamberBack.WirePlane.StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
+
 	// store total+kinetic energy of hit
 	analysis->QweakSimG4_RootEvent->Region3.ChamberBack.WirePlane.StoreTotalEnergy(rtotalEnergy); 
 	analysis->QweakSimG4_RootEvent->Region3.ChamberBack.WirePlane.StoreKineticEnergy(rkineticEnergy);  
 
-	analysis->QweakSimG4_RootEvent->Region3.ChamberBack.WirePlane.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);	     
+	analysis->QweakSimG4_RootEvent->Region3.ChamberBack.WirePlane.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
+	analysis->QweakSimG4_RootEvent->Region3.ChamberBack.WirePlane.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);	     
 	analysis->QweakSimG4_RootEvent->Region3.ChamberBack.WirePlane.StorePrimaryQ2(rPrimaryQ2);
+	analysis->QweakSimG4_RootEvent->Region3.ChamberBack.WirePlane.StoreCrossSection(rCrossSection);
 	analysis->QweakSimG4_RootEvent->Region3.ChamberBack.WirePlane.StoreCrossSectionWeight(rCrossSectionWeight);
 	
 	analysis->QweakSimG4_RootEvent->Region3.ChamberBack.WirePlane.StorePrimaryEventNumber(rPrimaryEventNumber);
@@ -789,15 +797,29 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 	rOriginVertexPositionZ      = (Float_t) originVertexPosition.z()/cm;
 	      
 	originVertexMomentumDirection = aHit->GetOriginVertexMomentumDirection();
+        rOriginVertexMomentumDirectionX = (Float_t) originVertexMomentumDirection.x();
+        rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
+        rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
+
+    OriginVertexPhiAngle = (atan2(-1.0*rOriginVertexMomentumDirectionY, -1.0*rOriginVertexMomentumDirectionX) )*180/3.1415927*degree + 90.0*degree; 
+    rOriginVertexPhiAngle = OriginVertexPhiAngle/degree;
+
+    OriginVertexThetaAngle = (atan2( rOriginVertexMomentumDirectionY, rOriginVertexMomentumDirectionZ) )*180/3.1415927*degree; 
+    rOriginVertexThetaAngle = OriginVertexThetaAngle/degree;
 	      
 	originVertexKineticEnergy =   aHit->GetOriginVertexKineticEnergy();
 	rOriginVertexKineticEnergy = (Float_t ) originVertexKineticEnergy/MeV;
+      originVertexTotalEnergy = aHit->GetOriginVertexTotalEnergy();
+      rOriginVertexTotalEnergy = (Float_t ) originVertexTotalEnergy/MeV;
 	      
 	originVertexTotalEnergy =   aHit->GetOriginVertexTotalEnergy();
 	rOriginVertexTotalEnergy = (Float_t ) originVertexTotalEnergy/MeV;
 	      
 	primaryQ2  = aHit->GetPrimaryQ2();	
 	rPrimaryQ2  = (Float_t) primaryQ2;
+
+	crossSection =  aHit->GetCrossSection();
+	rCrossSection = (Float_t) crossSection;
 
 	crossSectionWeight =  aHit->GetCrossSectionWeight();
 	rCrossSectionWeight = (Float_t) crossSectionWeight;
@@ -881,9 +903,17 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreOriginVertexPositionX(rOriginVertexPositionX);  
 	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreOriginVertexPositionY(rOriginVertexPositionY);		    
 	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
-	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);	     
-	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
+	analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);  
+	analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);		    
+	analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
+    analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreOriginVertexPhiAngle( rOriginVertexPhiAngle );
+    analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
+
+	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
+	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);	     
+
 	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StorePrimaryQ2(rPrimaryQ2);
+	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreCrossSection(rCrossSection);
 	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreCrossSectionWeight(rCrossSectionWeight);
 	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreDetectorLocalPositionX(rLocalPositionX);  
 	     analysis->QweakSimG4_RootEvent->Cerenkov.Detector.StoreDetectorLocalPositionY(rLocalPositionY);
@@ -1075,12 +1105,26 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 	  
 	  
 	  originVertexMomentumDirection = aHit->GetOriginVertexMomentumDirection();
-	  
+          rOriginVertexMomentumDirectionX = (Float_t) originVertexMomentumDirection.x();
+          rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
+          rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
+
+    OriginVertexPhiAngle = (atan2(-1.0*rOriginVertexMomentumDirectionY, -1.0*rOriginVertexMomentumDirectionX) )*180/3.1415927*degree + 90.0*degree; 
+    rOriginVertexPhiAngle = OriginVertexPhiAngle/degree;
+
+    OriginVertexThetaAngle = (atan2( rOriginVertexMomentumDirectionY, rOriginVertexMomentumDirectionZ) )*180/3.1415927*degree; 
+    rOriginVertexThetaAngle = OriginVertexThetaAngle/degree;
+
 	   originVertexKineticEnergy = aHit->GetOriginVertexKineticEnergy();
-	  rOriginVertexKineticEnergy = (Float_t ) originVertexKineticEnergy/MeV;	  
+	  rOriginVertexKineticEnergy = (Float_t ) originVertexKineticEnergy/MeV;
+      originVertexTotalEnergy = aHit->GetOriginVertexTotalEnergy();
+      rOriginVertexTotalEnergy = (Float_t ) originVertexTotalEnergy/MeV;	  
 	  
 	   primaryQ2  = aHit->GetPrimaryQ2();	
 	  rPrimaryQ2  = (Float_t) primaryQ2;
+
+	   crossSection = aHit->GetCrossSection();
+	  rCrossSection = (Float_t) crossSection;
 
 	   crossSectionWeight = aHit->GetCrossSectionWeight();
 	  rCrossSectionWeight = (Float_t) crossSectionWeight;
@@ -1119,10 +1163,17 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane1.StoreOriginVertexPositionX(rOriginVertexPositionX);  
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane1.StoreOriginVertexPositionY(rOriginVertexPositionY);		    
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane1.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
-	      
-	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane1.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);	     
+	analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane1.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);  
+	analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane1.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);		    
+	analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane1.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
+    analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane1.StoreOriginVertexPhiAngle( rOriginVertexPhiAngle );
+    analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane1.StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
+
+	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane1.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
+	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane1.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);	     
 
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane1.StorePrimaryQ2(rPrimaryQ2);
+	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane1.StoreCrossSection(rCrossSection);
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane1.StoreCrossSectionWeight(rCrossSectionWeight);
 	      
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane1.StorePrimaryEventNumber(rPrimaryEventNumber);
@@ -1168,10 +1219,16 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane2.StoreOriginVertexPositionX(rOriginVertexPositionX);  
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane2.StoreOriginVertexPositionY(rOriginVertexPositionY);		    
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane2.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
-	      
-	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane2.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);	     
+	analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane2.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);  
+	analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane2.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);		    
+	analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane2.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
+    analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane2.StoreOriginVertexPhiAngle( rOriginVertexPhiAngle );
+    analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane2.StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
+	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane2.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
+	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane2.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);	     
 
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane2.StorePrimaryQ2(rPrimaryQ2);
+	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane2.StoreCrossSection(rCrossSection);
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane2.StoreCrossSectionWeight(rCrossSectionWeight);
 	      
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane2.StorePrimaryEventNumber(rPrimaryEventNumber);
@@ -1217,10 +1274,17 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane3.StoreOriginVertexPositionX(rOriginVertexPositionX);  
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane3.StoreOriginVertexPositionY(rOriginVertexPositionY);		    
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane3.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
+	analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane3.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);  
+	analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane3.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);		    
+	analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane3.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
+    analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane3.StoreOriginVertexPhiAngle( rOriginVertexPhiAngle );
+    analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane3.StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
 	      
-	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane3.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);	     
+	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane3.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
+	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane3.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);	     
 
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane3.StorePrimaryQ2(rPrimaryQ2);
+	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane3.StoreCrossSection(rCrossSection);
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane3.StoreCrossSectionWeight(rCrossSectionWeight);
 
 	      
@@ -1267,10 +1331,17 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane4.StoreOriginVertexPositionX(rOriginVertexPositionX);  
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane4.StoreOriginVertexPositionY(rOriginVertexPositionY);		    
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane4.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
-	      
-	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane4.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);	     
+	analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane4.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);  
+	analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane4.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);		    
+	analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane4.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
+    analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane4.StoreOriginVertexPhiAngle( rOriginVertexPhiAngle );
+    analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane4.StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
+
+	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane4.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
+	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane4.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);	     
 
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane4.StorePrimaryQ2(rPrimaryQ2);
+	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane4.StoreCrossSection(rCrossSection);
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane4.StoreCrossSectionWeight(rCrossSectionWeight);
 	      
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane4.StorePrimaryEventNumber(rPrimaryEventNumber);
@@ -1316,10 +1387,17 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane5.StoreOriginVertexPositionX(rOriginVertexPositionX);  
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane5.StoreOriginVertexPositionY(rOriginVertexPositionY);		    
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane5.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
-	      
-	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane5.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);	     
+	analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane5.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);  
+	analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane5.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);		    
+	analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane5.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
+   analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane5.StoreOriginVertexPhiAngle( rOriginVertexPhiAngle );
+    analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane5.StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
+
+	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane5.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
+	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane5.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);	     
 
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane5.StorePrimaryQ2(rPrimaryQ2);
+	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane5.StoreCrossSection(rCrossSection);
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane5.StoreCrossSectionWeight(rCrossSectionWeight);
 	      
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane5.StorePrimaryEventNumber(rPrimaryEventNumber);
@@ -1366,10 +1444,17 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane6.StoreOriginVertexPositionX(rOriginVertexPositionX);  
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane6.StoreOriginVertexPositionY(rOriginVertexPositionY);		    
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane6.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
-	      
-	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane6.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);	     
+	analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane6.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);  
+	analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane6.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);		    
+	analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane6.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
+    analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane6.StoreOriginVertexPhiAngle( rOriginVertexPhiAngle );
+    analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane6.StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
+
+	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane6.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
+	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane6.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);	     
 
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane6.StorePrimaryQ2(rPrimaryQ2);
+	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane6.StoreCrossSection(rCrossSection);
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane6.StoreCrossSectionWeight(rCrossSectionWeight);
 	      
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberFront.WirePlane6.StorePrimaryEventNumber(rPrimaryEventNumber);
@@ -1413,10 +1498,17 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane1.StoreOriginVertexPositionX(rOriginVertexPositionX);  
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane1.StoreOriginVertexPositionY(rOriginVertexPositionY);		    
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane1.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
+	analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane1.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);  
+	analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane1.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);		    
+	analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane1.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
+    analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane1.StoreOriginVertexPhiAngle( rOriginVertexPhiAngle );
+    analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane1.StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
 	      
-	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane1.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);	     
+	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane1.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
+	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane1.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);	     
 	      
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane1.StorePrimaryQ2(rPrimaryQ2);
+	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane1.StoreCrossSection(rCrossSection);
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane1.StoreCrossSectionWeight(rCrossSectionWeight);
 	      
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane1.StorePrimaryEventNumber(rPrimaryEventNumber);
@@ -1463,10 +1555,16 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane2.StoreOriginVertexPositionX(rOriginVertexPositionX);  
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane2.StoreOriginVertexPositionY(rOriginVertexPositionY);		    
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane2.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
-	      
-	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane2.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);	     
+	analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane2.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);  
+	analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane2.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);		    
+	analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane2.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
+    analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane2.StoreOriginVertexPhiAngle( rOriginVertexPhiAngle );
+    analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane2.StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
+	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane2.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
+	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane2.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);	     
 	      
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane2.StorePrimaryQ2(rPrimaryQ2);
+	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane2.StoreCrossSection(rCrossSection);
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane2.StoreCrossSectionWeight(rCrossSectionWeight);
 	      
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane2.StorePrimaryEventNumber(rPrimaryEventNumber);
@@ -1512,10 +1610,17 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane3.StoreOriginVertexPositionX(rOriginVertexPositionX);  
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane3.StoreOriginVertexPositionY(rOriginVertexPositionY);		    
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane3.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
-	      
-	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane3.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);	     
+	analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane3.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);  
+	analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane3.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);		    
+	analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane3.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
+    analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane3.StoreOriginVertexPhiAngle( rOriginVertexPhiAngle );
+    analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane3.StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
+
+	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane3.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
+	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane3.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);	     
 	      
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane3.StorePrimaryQ2(rPrimaryQ2);
+	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane3.StoreCrossSection(rCrossSection);
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane3.StoreCrossSectionWeight(rCrossSectionWeight);
 	      
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane3.StorePrimaryEventNumber(rPrimaryEventNumber);
@@ -1561,10 +1666,17 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane4.StoreOriginVertexPositionX(rOriginVertexPositionX);  
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane4.StoreOriginVertexPositionY(rOriginVertexPositionY);		    
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane4.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
-	      
-	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane4.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);	     
+	analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane4.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);  
+	analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane4.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);		    
+	analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane4.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
+    analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane4.StoreOriginVertexPhiAngle( rOriginVertexPhiAngle );
+    analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane4.StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
+
+	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane4.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
+	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane4.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);	     
 	      
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane4.StorePrimaryQ2(rPrimaryQ2);
+	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane4.StoreCrossSection(rCrossSection);
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane4.StoreCrossSectionWeight(rCrossSectionWeight);
 	      
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane4.StorePrimaryEventNumber(rPrimaryEventNumber);
@@ -1610,10 +1722,17 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane5.StoreOriginVertexPositionX(rOriginVertexPositionX);  
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane5.StoreOriginVertexPositionY(rOriginVertexPositionY);		    
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane5.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
-	      
-	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane5.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);	     
+	analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane5.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);  
+	analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane5.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);		    
+	analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane5.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
+    analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane5.StoreOriginVertexPhiAngle( rOriginVertexPhiAngle );
+    analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane5.StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
+
+	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane5.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
+	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane5.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);	     
 	      
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane5.StorePrimaryQ2(rPrimaryQ2);
+	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane5.StoreCrossSection(rCrossSection);
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane5.StoreCrossSectionWeight(rCrossSectionWeight);
 	      
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane5.StorePrimaryEventNumber(rPrimaryEventNumber);
@@ -1660,10 +1779,17 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane6.StoreOriginVertexPositionX(rOriginVertexPositionX);  
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane6.StoreOriginVertexPositionY(rOriginVertexPositionY);		    
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane6.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
-	      
-	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane6.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);	     
+	analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane6.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);  
+	analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane6.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);		    
+	analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane6.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
+    analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane6.StoreOriginVertexPhiAngle( rOriginVertexPhiAngle );
+    analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane6.StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
+
+	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane6.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
+	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane6.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);	     
 	      
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane6.StorePrimaryQ2(rPrimaryQ2);
+	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane6.StoreCrossSection(rCrossSection);
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane6.StoreCrossSectionWeight(rCrossSectionWeight);
 	      
 	      analysis->QweakSimG4_RootEvent->Region2.ChamberBack.WirePlane6.StorePrimaryEventNumber(rPrimaryEventNumber);
@@ -1757,12 +1883,26 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 	  
 	  
 	  originVertexMomentumDirection = aHit->GetOriginVertexMomentumDirection();
-	  
+          rOriginVertexMomentumDirectionX = (Float_t) originVertexMomentumDirection.x();
+          rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
+          rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
+
+    OriginVertexPhiAngle = (atan2(-1.0*rOriginVertexMomentumDirectionY, -1.0*rOriginVertexMomentumDirectionX) )*180/3.1415927*degree + 90.0*degree; 
+    rOriginVertexPhiAngle = OriginVertexPhiAngle/degree;
+
+    OriginVertexThetaAngle = (atan2( rOriginVertexMomentumDirectionY, rOriginVertexMomentumDirectionZ) )*180/3.1415927*degree; 
+    rOriginVertexThetaAngle = OriginVertexThetaAngle/degree;
+
 	   originVertexKineticEnergy = aHit->GetOriginVertexKineticEnergy();
-	  rOriginVertexKineticEnergy = (Float_t ) originVertexKineticEnergy/MeV;	  
+	  rOriginVertexKineticEnergy = (Float_t ) originVertexKineticEnergy/MeV;
+      originVertexTotalEnergy = aHit->GetOriginVertexTotalEnergy();
+      rOriginVertexTotalEnergy = (Float_t ) originVertexTotalEnergy/MeV;	  
 	  
 	   primaryQ2  = aHit->GetPrimaryQ2();	
 	  rPrimaryQ2  = (Float_t) primaryQ2;
+
+	   crossSection = aHit->GetCrossSection();
+	  rCrossSection = (Float_t) crossSection;
 
 	   crossSectionWeight = aHit->GetCrossSectionWeight();
 	  rCrossSectionWeight = (Float_t) crossSectionWeight;
@@ -1800,7 +1940,11 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 	      analysis->QweakSimG4_RootEvent->Region1.ChamberFront.WirePlane.StoreOriginVertexPositionX(rOriginVertexPositionX);  
 	      analysis->QweakSimG4_RootEvent->Region1.ChamberFront.WirePlane.StoreOriginVertexPositionY(rOriginVertexPositionY);		    
 	      analysis->QweakSimG4_RootEvent->Region1.ChamberFront.WirePlane.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
-
+	analysis->QweakSimG4_RootEvent->Region1.ChamberFront.WirePlane.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);  
+	analysis->QweakSimG4_RootEvent->Region1.ChamberFront.WirePlane.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);		    
+	analysis->QweakSimG4_RootEvent->Region1.ChamberFront.WirePlane.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
+    analysis->QweakSimG4_RootEvent->Region1.ChamberFront.WirePlane.StoreOriginVertexPhiAngle( rOriginVertexPhiAngle );
+    analysis->QweakSimG4_RootEvent->Region1.ChamberFront.WirePlane.StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
 	      //------------------------------------------------------------------------------------------------------------------------------------------
 
 	      for (int noctant=0;noctant<8;noctant++) {
@@ -1808,9 +1952,11 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 	      }
 	      //------------------------------------------------------------------------------------------------------------------------------------------
 
-	      analysis->QweakSimG4_RootEvent->Region1.ChamberFront.WirePlane.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);	     
+	      analysis->QweakSimG4_RootEvent->Region1.ChamberFront.WirePlane.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
+	      analysis->QweakSimG4_RootEvent->Region1.ChamberFront.WirePlane.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);	     
 
 	      analysis->QweakSimG4_RootEvent->Region1.ChamberFront.WirePlane.StorePrimaryQ2(rPrimaryQ2);
+	      analysis->QweakSimG4_RootEvent->Region1.ChamberFront.WirePlane.StoreCrossSection(rCrossSection);
 	      analysis->QweakSimG4_RootEvent->Region1.ChamberFront.WirePlane.StoreCrossSectionWeight(rCrossSectionWeight);
 	      
 	      analysis->QweakSimG4_RootEvent->Region1.ChamberFront.WirePlane.StorePrimaryEventNumber(rPrimaryEventNumber);
@@ -1857,10 +2003,17 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 	      analysis->QweakSimG4_RootEvent->Region1.ChamberBack.WirePlane.StoreOriginVertexPositionX(rOriginVertexPositionX);  
 	      analysis->QweakSimG4_RootEvent->Region1.ChamberBack.WirePlane.StoreOriginVertexPositionY(rOriginVertexPositionY);		    
 	      analysis->QweakSimG4_RootEvent->Region1.ChamberBack.WirePlane.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
-	      
-	      analysis->QweakSimG4_RootEvent->Region1.ChamberBack.WirePlane.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);	     
+	analysis->QweakSimG4_RootEvent->Region1.ChamberBack.WirePlane.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);  
+	analysis->QweakSimG4_RootEvent->Region1.ChamberBack.WirePlane.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);		    
+	analysis->QweakSimG4_RootEvent->Region1.ChamberBack.WirePlane.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
+    analysis->QweakSimG4_RootEvent->Region1.ChamberBack.WirePlane.StoreOriginVertexPhiAngle( rOriginVertexPhiAngle );
+    analysis->QweakSimG4_RootEvent->Region1.ChamberBack.WirePlane.StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
+
+	      analysis->QweakSimG4_RootEvent->Region1.ChamberBack.WirePlane.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
+	      analysis->QweakSimG4_RootEvent->Region1.ChamberBack.WirePlane.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);	     
 	      
 	      analysis->QweakSimG4_RootEvent->Region1.ChamberBack.WirePlane.StorePrimaryQ2(rPrimaryQ2);
+	      analysis->QweakSimG4_RootEvent->Region1.ChamberBack.WirePlane.StoreCrossSection(rCrossSection);
 	      analysis->QweakSimG4_RootEvent->Region1.ChamberBack.WirePlane.StoreCrossSectionWeight(rCrossSectionWeight);
 	      
 	      analysis->QweakSimG4_RootEvent->Region1.ChamberBack.WirePlane.StorePrimaryEventNumber(rPrimaryEventNumber);
@@ -1952,15 +2105,29 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 	  rOriginVertexPositionZ      = (Float_t) originVertexPosition.z()/cm;
 	  
 	   originVertexMomentumDirection = aHit->GetOriginVertexMomentumDirection();
-	  
+           rOriginVertexMomentumDirectionX = (Float_t) originVertexMomentumDirection.x();
+           rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
+           rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
+
+    OriginVertexPhiAngle = (atan2(-1.0*rOriginVertexMomentumDirectionY, -1.0*rOriginVertexMomentumDirectionX) )*180/3.1415927*degree + 90.0*degree; 
+    rOriginVertexPhiAngle = OriginVertexPhiAngle/degree;
+
+    OriginVertexThetaAngle = (atan2( rOriginVertexMomentumDirectionY, rOriginVertexMomentumDirectionZ) )*180/3.1415927*degree; 
+    rOriginVertexThetaAngle = OriginVertexThetaAngle/degree;
+
 	   originVertexKineticEnergy =   aHit->GetOriginVertexKineticEnergy();
 	  rOriginVertexKineticEnergy = (Float_t ) originVertexKineticEnergy/MeV;
+      originVertexTotalEnergy = aHit->GetOriginVertexTotalEnergy();
+      rOriginVertexTotalEnergy = (Float_t ) originVertexTotalEnergy/MeV;
 	      
 	   originVertexTotalEnergy =   aHit->GetOriginVertexTotalEnergy();
 	  rOriginVertexTotalEnergy = (Float_t ) originVertexTotalEnergy/MeV;
 	  
 	   primaryQ2  = aHit->GetPrimaryQ2();	
 	  rPrimaryQ2  = (Float_t) primaryQ2;
+
+	   crossSection =  aHit->GetCrossSection();
+	  rCrossSection = (Float_t) crossSection;
 	  
 	   crossSectionWeight =  aHit->GetCrossSectionWeight();
 	  rCrossSectionWeight = (Float_t) crossSectionWeight;
@@ -2026,11 +2193,17 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector.StoreOriginVertexPositionX(rOriginVertexPositionX);  
 	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector.StoreOriginVertexPositionY(rOriginVertexPositionY);		    
 	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
-	      
+	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);  
+	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);		    
+	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
+    analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector.StoreOriginVertexPhiAngle( rOriginVertexPhiAngle );
+    analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector.StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
+
 	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);	     
 	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
 	      
 	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector.StorePrimaryQ2(rPrimaryQ2);
+	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector.StoreCrossSection(rCrossSection);
 	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector.StoreCrossSectionWeight(rCrossSectionWeight);
 	      
 	analysis->QweakSimG4_RootEvent->TriggerScintillator.Detector.StoreDetectorLocalPositionX(rLocalPositionX);  
@@ -2133,6 +2306,9 @@ void QweakSimEventAction::Initialize()
    primaryQ2 = 0.;
   rPrimaryQ2 = 0.;
 
+   crossSection = 0.0;
+  rCrossSection = 0.0;
+
    crossSectionWeight = 0.0;
   rCrossSectionWeight = 0.0;
 
@@ -2208,25 +2384,4 @@ G4double QweakSimEventAction::GetDistance(G4ThreeVector p1,G4ThreeVector p2)
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-//=======================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//      $Revisions$  
-//      $Log: QweakSimEventAction.cc,v $
-//      Revision 1.5  2006/05/05 21:37:16  grimm
-//      Records now the kinetic and total energy of all drift chambers
-//
-//      Revision 1.4  2006/01/06 21:39:30  grimm
-//      kineticEnergy and totalEnergy will be filled
-//
-//      Revision 1.3  2005/12/28 23:05:44  grimm
-//      Testing: Extract trajectories collected with QweakSimTrajectory (following LXe example)
-//
-//      Revision 1.2  2005/12/27 19:08:00  grimm
-//      - Redesign of Doxygen header containing CVS info like revision and date
-//      - Added CVS revision log at the end of file
-//
-// 
 

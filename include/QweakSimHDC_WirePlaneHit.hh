@@ -28,21 +28,6 @@
  */
 //=============================================================================
 //
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2006/05/05 21:38:26 $
-//  CVS/RCS Revision: $Revision: 1.3 $
-//  Status:           $State: Exp $
-// 
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-// 
-//=============================================================================
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 #ifndef QweakSimHDC_WirePlaneHit_h
@@ -99,6 +84,7 @@ private:
   G4double      currentTotalEnergy;
 
   G4double      primaryQ2;
+  G4double      crossSection;
   G4double      crossSectionWeight;
 
   G4int         primaryEventNumber;
@@ -134,12 +120,18 @@ public:
   
   inline void     StoreOriginVertexKineticEnergy(G4double ekin) { originVertexKineticEnergy = ekin; }
   inline G4double   GetOriginVertexKineticEnergy() const { return originVertexKineticEnergy; }
+
+  inline void     StoreOriginVertexTotalEnergy(G4double et) { originVertexTotalEnergy = et; }
+  inline G4double   GetOriginVertexTotalEnergy() const { return originVertexTotalEnergy; }
   //------
   inline void     StorePrimaryEventNumber(G4int en)   { primaryEventNumber = en; }
   inline G4int      GetPrimaryEventNumber() const { return  primaryEventNumber; }
   //------
   inline void     StorePrimaryQ2(G4double q2)   { primaryQ2 = q2; }
   inline G4double   GetPrimaryQ2() const { return primaryQ2; }
+
+  inline void     StoreCrossSection(G4double cs)  {crossSection = cs;}
+  inline G4double   GetCrossSection() const {return crossSection;}
 
   inline void     StoreCrossSectionWeight(G4double csw)  {crossSectionWeight = csw;}
   inline G4double   GetCrossSectionWeight() const {return crossSectionWeight;}
@@ -175,18 +167,3 @@ inline void QweakSimHDC_WirePlaneHit::operator delete(void* aHit)
 
 #endif
 
-//=======================================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//      $Revisions$  
-//      $Log: QweakSimHDC_WirePlaneHit.hh,v $
-//      Revision 1.3  2006/05/05 21:38:26  grimm
-//      Records now the kinetic and total energy.
-//
-//      Revision 1.2  2005/12/27 19:24:44  grimm
-//      - Redesign of Doxygen header containing CVS info like revision and date
-//      - Added CVS revision log at the end of file
-//
-// 

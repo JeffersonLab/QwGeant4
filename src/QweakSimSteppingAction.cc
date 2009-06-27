@@ -49,7 +49,7 @@ G4cout << "###### Calling QweakSimSteppingAction::QweakSimSteppingAction() " << 
   evtGenStatus = 0;
   RandomPositionZ = myEvent.GetVertexZ();
 
-  //std::ofstream EventDataFile("Event.dat", std::ios::out);
+//  std::ofstream EventDataFile("Event.dat", std::ios::out);
 
 G4cout << "###### Leaving QweakSimSteppingAction::QweakSimSteppingAction() " << G4endl;
 
@@ -94,23 +94,26 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
   if( particleType==G4Electron::ElectronDefinition() && parentID==0 ){
 
 //jpan: to account for the energy loss before the event generation,
-//      force to change primary momentum direction
+//      force to change primary momentum direction here
 
     //scattering only occur inside reaction region of the target, only occur once
     G4ThreeVector thePosition = theTrack->GetPosition();
+    G4double theX = thePosition.getX();
+    G4double theY = thePosition.getY();
     G4double theZ = thePosition.getZ();
-    if( theZ > -650*cm+35*cm*0.5+5*(2.54*cm*0.001) || abs(thePosition.getX())>2.0*mm || abs(thePosition.getY())>2.0*mm) {
+
+   if( theZ > -650*cm+35*cm*0.5+5*(2.54*cm*0.001) || sqrt(theX*theX+theY*theY)>2.54*cm) 
+    {
        evtGenStatus = 0;
        RandomPositionZ = myEvent.GetVertexZ();
     }
 
     if(evtGenStatus == 0){
-      //QweakSimEPEvent myEvent;
 
       G4double theStepLength = theStep->GetStepLength();
 
-        if( abs(theZ - RandomPositionZ)<=theStepLength
-             && abs(thePosition.getX())<=2.0*mm && abs(thePosition.getY())<=2.0*mm) 
+       //trap the particle
+        if( abs(theZ - RandomPositionZ)<=theStepLength && sqrt(theX*theX+theY*theY)<2.54*cm)
            { 
              G4double CrossSection, WeightN, Q2, E_out, theta, phi;
              G4ThreeVector MomentumDirection;
@@ -118,24 +121,27 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
              myEvent.GetanEvent(E_in, CrossSection, WeightN, Q2, E_out, MomentumDirection, theta, phi);
              theTrack->SetKineticEnergy(E_out*MeV);
              theTrack->SetMomentumDirection(MomentumDirection);
-             //thePosition.setZ(RandomPositionZ);
-             //theTrack->SetPosition(thePosition);
 
              evtGenStatus = 1;
 
-             // fill user track info
+             // set track info
+            theTrack->SetVertexPosition(thePosition);
+            theTrack->SetVertexMomentumDirection(MomentumDirection);
+            theTrack->SetVertexKineticEnergy(E_out);
+
+            //fill user info
              myUserInfo->StoreTrackID(theTrack->GetTrackID());
              myUserInfo->StoreGlobalTime(theTrack->GetGlobalTime());
-             myUserInfo->StoreOriginVertexPositionX(thePosition.getX());
-             myUserInfo->StoreOriginVertexPositionY(thePosition.getY());
-             myUserInfo->StoreOriginVertexPositionZ(thePosition.getZ());
+             myUserInfo->StoreOriginVertexPositionX(theX);
+             myUserInfo->StoreOriginVertexPositionY(theY);
+             myUserInfo->StoreOriginVertexPositionZ(theZ);
              myUserInfo->StoreOriginVertexMomentumDirectionX(MomentumDirection.getX());
              myUserInfo->StoreOriginVertexMomentumDirectionY(MomentumDirection.getY());
              myUserInfo->StoreOriginVertexMomentumDirectionZ(MomentumDirection.getZ());
              myUserInfo->StoreOriginVertexThetaAngle(theta);
              myUserInfo->StoreOriginVertexPhiAngle(phi);
-             myUserInfo->StoreOriginVertexKineticEnergy(theTrack->GetKineticEnergy()/GeV);
-             myUserInfo->StoreOriginVertexTotalEnergy(theTrack->GetTotalEnergy()/GeV);
+             myUserInfo->StoreOriginVertexKineticEnergy(theTrack->GetKineticEnergy());
+             myUserInfo->StoreOriginVertexTotalEnergy(theTrack->GetTotalEnergy());
              myUserInfo->StorePrimaryQ2(Q2*0.000001);
              myUserInfo->StoreCrossSection(CrossSection);
              myUserInfo->StoreCrossSectionWeight(WeightN);
@@ -150,11 +156,11 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
 // EventDataFile << "Event: "<<myEventCounter<<std::endl;
 // EventDataFile << "E_in : "<<E_in<<std::endl;
 // EventDataFile << "E_out: "<<E_out<<std::endl;
-// EventDataFile << "StepLength: "<<theStepLength<<std::endl;
+// EventDataFile << "StepLength: "<<theStepLength/mm<<" mm"<<std::endl;
 // EventDataFile << "myTrack ID: "<<theTrack->GetTrackID()<<std::endl;
-// EventDataFile << "Eng_deposi: "<<theStep->GetTotalEnergyDeposit ()<<std::endl;
+// EventDataFile << "Eng_deposi: "<<theStep->GetTotalEnergyDeposit ()/MeV<<" MeV"<<std::endl;
 // EventDataFile << "Material: "<<theTrack->GetMaterial()<<std::endl;
-
+ 
              myUserInfo->Print();
       }
     }
@@ -166,9 +172,6 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
   if(thePrePV->GetName()=="CollimatorHousing" || thePrePV->GetName()=="ShieldingWallHousing"){
   theTrack->SetTrackStatus(fStopAndKill); return;
   }
-
-
-//Commented out all of the following codes. Recover them if we need to trace secondaries.
 
   QweakSimTrackInformation* info = (QweakSimTrackInformation*)(theTrack->GetUserInformation());
 

@@ -204,6 +204,7 @@ else { return false;}
 
   G4int    primaryTrackID                 = info->GetPrimaryTrackID();
   G4double primaryQ2                      = info->GetPrimaryQ2();
+  G4double crossSection                   = info->GetCrossSection();
   G4double crossSectionWeight             = info->GetCrossSectionWeight();
 
 
@@ -237,6 +238,7 @@ else { return false;}
   aHit->StoreTotalEnergy(currentTotalEnergy);
 
   aHit->StorePrimaryQ2(primaryQ2);
+  aHit->StoreCrossSection(crossSection);
   aHit->StoreCrossSectionWeight(crossSectionWeight);
 
   // check if it is first touch

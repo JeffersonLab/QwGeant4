@@ -23,7 +23,7 @@
 #==========================
 /Target/SetCenterPositionInZ  -650.0 cm
 #/Target/SetTargetMaterial    Vacuum
-/Target/SetTargetMaterial    Lead
+/Target/SetTargetMaterial    H2Liquid
 
 #==========================
 # Cerenkov Detector related

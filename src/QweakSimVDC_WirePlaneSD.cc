@@ -233,6 +233,7 @@ else                                           { particletype = 999;}
   info->Print();
 
   G4double primaryQ2                      = info->GetPrimaryQ2();
+  G4double crossSection                   = info->GetCrossSection();
   G4double crossSectionWeight             = info->GetCrossSectionWeight();
   G4int    primaryEventNumber             = info->GetPrimaryEventNumber();
 
@@ -263,6 +264,7 @@ else                                           { particletype = 999;}
     aHit->StoreOriginVertexKineticEnergy(originVertexKineticEnergy);
 
     aHit->StorePrimaryQ2(primaryQ2);
+    aHit->StoreCrossSection(crossSection);
     aHit->StoreCrossSectionWeight(crossSectionWeight);
 
     aHit->StorePrimaryEventNumber(primaryEventNumber);

@@ -58,6 +58,7 @@ QweakSimVDC_WirePlaneHit::QweakSimVDC_WirePlaneHit()
   currentTotalEnergy              = 0.;
 
   primaryQ2                       = 0.;
+  crossSection                    = 0.;
   crossSectionWeight              = 0.;
 
   primaryEventNumber              = 0;

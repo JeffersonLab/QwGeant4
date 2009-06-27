@@ -192,6 +192,7 @@ G4bool QweakSimGEM_WirePlaneSD::ProcessHits(G4Step* aStep,G4TouchableHistory* RO
   info->Print();
 
   G4double primaryQ2                      = info->GetPrimaryQ2();
+  G4double crossSection             = info->GetCrossSection();
   G4double crossSectionWeight             = info->GetCrossSectionWeight();
   G4int    primaryEventNumber             = info->GetPrimaryEventNumber();
 
@@ -222,6 +223,7 @@ G4bool QweakSimGEM_WirePlaneSD::ProcessHits(G4Step* aStep,G4TouchableHistory* RO
     aHit->StoreOriginVertexKineticEnergy(originVertexKineticEnergy);
 
     aHit->StorePrimaryQ2(primaryQ2);
+    aHit->StoreCrossSection(crossSection);
     aHit->StoreCrossSectionWeight(crossSectionWeight);
 
     aHit->StorePrimaryEventNumber(primaryEventNumber);

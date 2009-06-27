@@ -27,23 +27,6 @@
     
  */
 //=============================================================================
-//
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2005/12/27 19:22:33 $
-//  CVS/RCS Revision: $Revision: 1.2 $
-//  Status:           $State: Exp $
-// 
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-// 
-//=============================================================================
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 #ifndef QweakSimCerenkov_DetectorSD_h
 #define QweakSimCerenkov_DetectorSD_h 
@@ -83,17 +66,4 @@ private:
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 #endif
-
-//=======================================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//      $Revisions$  
-//      $Log: QweakSimCerenkov_DetectorSD.hh,v $
-//      Revision 1.2  2005/12/27 19:22:33  grimm
-//      - Redesign of Doxygen header containing CVS info like revision and date
-//      - Added CVS revision log at the end of file
-//
-// 
 
