@@ -32,11 +32,6 @@ QweakSimPrimaryGeneratorAction::QweakSimPrimaryGeneratorAction( )
 
   G4cout << "###### Calling QweakSimPrimaryGeneratorAction::QweakSimPrimaryGeneratorAction " << G4endl;
 
-  // default octant [1,,8]
-  kActiveOctantNumber = 1;
-
-  G4cout <<"%%%%> QweakSimPrimaryGeneratorAction::QweakSimPrimaryGeneratorAction, kActiveOctantNumber = " << kActiveOctantNumber << G4endl;
-
   myNormMomentumX  = 0.0;
   myNormMomentumY  = 0.0;
   myNormMomentumZ  = 0.0;
@@ -68,7 +63,7 @@ QweakSimPrimaryGeneratorAction::~QweakSimPrimaryGeneratorAction()
 
 void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 { 
-  G4cout << "###### Calling QweakSimPrimaryGeneratorAction::GeneratePrimaries" << G4endl;
+//  G4cout << "###### Calling QweakSimPrimaryGeneratorAction::GeneratePrimaries" << G4endl;
 
 //jpan@nuclear.uwinnipeg.ca
 //  
@@ -98,14 +93,10 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 
   particleGun->SetParticleEnergy(1.165*GeV);
 
-  G4cout <<"%%%%> QweakSimPrimaryGeneratorAction::GeneratePrimaries, kActiveOctantNumber = " << kActiveOctantNumber << G4endl;
-
-  myNormMomentum.rotateZ( (kActiveOctantNumber-1)*45.0*degree);
-
   // finally : fire !!!
   particleGun->GeneratePrimaryVertex(anEvent);
 
-  G4cout << "###### Leaving QweakSimPrimaryGeneratorAction::GeneratePrimaries" << G4endl;
+//  G4cout << "###### Leaving QweakSimPrimaryGeneratorAction::GeneratePrimaries" << G4endl;
 
 }
 

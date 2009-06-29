@@ -60,6 +60,9 @@ int main(int argc,char** argv) {
   QweakSimDetectorConstruction*  myQweakSimExperiment       = new QweakSimDetectorConstruction(myQweakSimUserInformation);
   QweakSimAnalysis*              myQweakSimAnalysis         = new QweakSimAnalysis();
 
+//jpan@nuclear.uwinnipeg.ca
+  QweakSimEPEvent*               myEPEvent                  = new QweakSimEPEvent();
+
 
   runManager->SetUserInitialization(myQweakSimExperiment);
   runManager->SetUserInitialization(new QweakSimPhysicsList() );
@@ -73,7 +76,7 @@ int main(int argc,char** argv) {
   // UserAction classes
   //runManager->SetUserAction( new QweakSimPrimaryGeneratorAction(myQweakSimUserInformation) );
   runManager->SetUserAction( new QweakSimPrimaryGeneratorAction( ) );
-  runManager->SetUserAction( new QweakSimSteppingAction(myQweakSimUserInformation) );
+  runManager->SetUserAction( new QweakSimSteppingAction(myQweakSimUserInformation, myEPEvent));
   runManager->SetUserAction( new QweakSimStackingAction() );
   runManager->SetUserAction( new QweakSimTrackingAction(myQweakSimUserInformation) );
   runManager->SetUserAction( new QweakSimEventAction(myQweakSimAnalysis, myQweakSimUserInformation) );
@@ -98,6 +101,7 @@ int main(int argc,char** argv) {
     #else
       session = new G4UIterminal();
     #endif
+
  }
 
 

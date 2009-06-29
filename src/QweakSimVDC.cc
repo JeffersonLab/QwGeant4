@@ -17,21 +17,6 @@
 */
 //=============================================================================
 
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2006/05/05 21:48:53 $
-//  CVS/RCS Revision: $Revision: 1.7 $
-//  Status:           $State: Exp $
-// 
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-//
-//============================================================================
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #include "QweakSimVDC.hh"
@@ -99,13 +84,13 @@ fRegGasDet = NULL;
   AluFrame_InnerWidth       =  50.0*cm; 
 
   VDC_CenterFront_XPos        =   0.0*cm;
-  VDC_CenterFront_YPos        = 280.0*cm;  // SW for 20.75 deg
-  VDC_CenterFront_ZPos        = 480.0*cm;   // SW: 330.0 +107.0
+  VDC_CenterFront_YPos        = 276.165*cm; // 280.0*cm;  // SW for 20.75 deg
+  VDC_CenterFront_ZPos        = 443.920*cm; //480.0*cm;   // SW: 330.0 +107.0
   //VDC_CenterFront_ZPos        = -700*cm;   // for testing
 
   VDC_FrontBackDistance       = 40.0*cm; // center to center
 
-  MeanTrackAngle             =  20.57*degree;  // also tilting angle of VDcs  // 
+  MeanTrackAngle             =  24.43*degree;  //20.57*degree;  // also tilting angle of VDcs  // 
   VDC_RotationAngleInPhi     =   0.0*degree;   // normally 0.0*degree = 12 o'clock = octant 1
   
   SetVDC_BackVDC_CenterPosition();
@@ -116,7 +101,7 @@ fRegGasDet = NULL;
   DriftCell_FullWidthOnFrame =  11.1125*mm;
   DriftCell_FullHeight       =  70.0*cm;
   DriftCell_FullThickness    =   2.54*cm; 
-  DriftCell_WireAngleFront   =  63.43*degree; // (90-26.57)*degree
+  DriftCell_WireAngleFront   =  65.57; // 63.43*degree; // (90-26.57)*degree
 
   DriftCell_MasterContainer_FullThickness    =    6.0*cm;   //extral large value
   DriftCell_MasterContainer_FullHeight       =   85.00*cm;  //extral large value
@@ -1654,34 +1639,3 @@ void QweakSimVDC::SetVDC_RotationAngleInPhi(G4double vdc_phiangle)
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-//=======================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//      $Revisions$  
-//      $Log: QweakSimVDC.cc,v $
-//      Revision 1.7  2006/05/05 21:48:53  grimm
-//      Added correct rotation of the driftcells when the VDC is rotated.
-//
-//      Revision 1.6  2006/04/26 20:06:46  grimm
-//      Defined the Drift Cells as G4Region for a later use (PAImodel)
-//
-//      Revision 1.5  2006/03/01 17:05:23  grimm
-//      Cosmetic changes
-//
-//      Revision 1.4  2006/01/13 23:16:47  grimm
-//      Major changes: rewrote and updated the VDC geometry code
-//      Added gas and HV foils with aluminum coatings (single or double sided).
-//      Added alu top+bottom support frames.
-//
-//      Revision 1.3  2005/12/29 21:03:09  grimm
-//      moved Front VDC to z=480cm and y=280cm position. The old position z=437*cm caused an initial overlapp with the shielding wall,
-//      even if the VDC zpos is larger in the input file.
-//
-//      Revision 1.2  2005/12/27 19:19:09  grimm
-//      - Redesign of Doxygen header containing CVS info like revision and date
-//      - Added CVS revision log at the end of file
-//
-//

@@ -17,21 +17,6 @@
 */
 //=============================================================================
 
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2006/05/05 21:54:17 $
-//  CVS/RCS Revision: $Revision: 1.6 $
-//  Status:           $State: Exp $
-// 
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-//
-//============================================================================
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #include "QweakSimShieldingWall.hh"
@@ -90,7 +75,7 @@ ShieldingWallHousing_Material = NULL;
  ShieldingWallHousing_FullLength_Z =  50.0*cm;    // Full Z length 
  
 
- ShieldingWallHousing_UpStreamWall_ZPosition = 330.0*cm;  
+ ShieldingWallHousing_UpStreamWall_ZPosition = 340.0*cm;// 330.0*cm;  
  ShieldingWallHousing_CenterZPosition        = ShieldingWallHousing_UpStreamWall_ZPosition + 0.5*ShieldingWallHousing_FullLength_Z; 
 
  // get shielding wall material

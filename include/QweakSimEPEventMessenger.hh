@@ -5,10 +5,8 @@
 //  ---------------------------
 /**
  
-   \file QweakSimPrimaryGeneratorActionMessenger.hh
-   $Revision: 1.3 $	
-   $Date: 2006/05/05 21:33:13 $
-   \author Klaus Hans Grimm
+   \file QweakSimEPEventMessenger.hh
+   \author Peiqing Wang
      
 */
 //=============================================================================
@@ -19,18 +17,16 @@
 //  | Doxygen Class Information |
 //  ---------------------------
 /**
-   \class QweakSimPrimaryGeneratorActionMessenger
+   \class QweakSimEPEventMessenger
     
-   \brief Scans the input file for ...
-
-   Placeholder for a long explaination
+   \brief UI control for the event generator 
     
  */
 
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-#ifndef QweakSimPrimaryGeneratorActionMessenger_h
-#define QweakSimPrimaryGeneratorActionMessenger_h 1
+#ifndef QweakSimEPEventMessenger_h
+#define QweakSimEPEventMessenger_h 1
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 // system includes
@@ -39,7 +35,7 @@
 #include "Geant4_include.hh" 
 
 // user includes
-#include "QweakSimPrimaryGeneratorAction.hh"
+#include "QweakSimEPEvent.hh"
 
 // system classes
 // class G4UIdirectory;
@@ -47,26 +43,26 @@
 // class G4UIcmdWithoutParameter;
 
 // user classes
-class QweakSimPrimaryGeneratorAction;
+class QweakSimEPEvent;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-class QweakSimPrimaryGeneratorActionMessenger: public G4UImessenger
+class QweakSimEPEventMessenger: public G4UImessenger
 {
 public:  
-   QweakSimPrimaryGeneratorActionMessenger(QweakSimPrimaryGeneratorAction* );
-  ~QweakSimPrimaryGeneratorActionMessenger();
+   QweakSimEPEventMessenger(QweakSimEPEvent* );
+  ~QweakSimEPEventMessenger();
     
   void SetNewValue(G4UIcommand*, G4String);
     
 private:  
   
-  QweakSimPrimaryGeneratorAction*     pPrimaryGeneratorAction;
+  QweakSimEPEvent*     pQweakSimEPEvent;
   
-  G4UIdirectory*           Dir;
+  G4UIdirectory*           EventGenDir;
   G4UIcmdWithAnInteger*    verboseCmd;
-  G4UIcmdWithoutParameter* resetCmd;
-  G4UIcmdWithAnInteger*    InitEventCounterCmd;
+  G4UIcmdWithAnInteger*    SelectReactionType_Cmd;
+  G4UIcmdWithAnInteger*    SelectReactionRegion_Cmd;
   G4UIcmdWithAnInteger*    SelectOctant_Cmd;
 };
 

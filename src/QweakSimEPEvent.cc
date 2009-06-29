@@ -35,7 +35,7 @@
 //                : myUserInfo(myUI)
 QweakSimEPEvent::QweakSimEPEvent()
 {
-  // G4cout << "###### Calling QweakSimEPEvent::QweakSimEPEvent () " << G4endl;
+  std::cout << "###### Calling QweakSimEPEvent::QweakSimEPEvent () " << std::endl;
 
   meanPhiAngle = 0.0*degree;
   sigmaPhiAngle = 18.0*degree;
@@ -44,8 +44,11 @@ QweakSimEPEvent::QweakSimEPEvent()
 
   ReactionType = 1;
   ReactionRegion = 1;
+  kActiveOctantNumber = 1;  //default octant 1, choose from [1,8]
 
-  // G4cout << "###### Leavinging QweakSimEPEvent::QweakSimEPEvent () " << G4endl;
+  EventGen_Messenger = new QweakSimEPEventMessenger(this);
+
+  std::cout << "###### Leavinging QweakSimEPEvent::QweakSimEPEvent () " << std::endl;
 } 
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -53,9 +56,11 @@ QweakSimEPEvent::QweakSimEPEvent()
 QweakSimEPEvent::~QweakSimEPEvent()
 {
 
-  // G4cout << "###### Calling QweakSimEPEvent::~QweakSimEPEvent () " << G4endl;
+  std::cout << "###### Calling QweakSimEPEvent::~QweakSimEPEvent () " << std::endl;
 
-  //G4cout << "###### Leavinging QweakSimEPEvent::~QweakSimEPEvent () " << G4endl;
+ if( EventGen_Messenger) delete EventGen_Messenger;
+
+  std::cout << "###### Leavinging QweakSimEPEvent::~QweakSimEPEvent () " << std::endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -63,15 +68,19 @@ QweakSimEPEvent::~QweakSimEPEvent()
 G4double QweakSimEPEvent::GetVertexZ()
 {
 
-   if(ReactionType==1) //LH2 target
+   if(ReactionRegion==1) // target
      myPositionZ =  TargetCenterPositionZ + (G4UniformRand()-0.5)*TargetLength;
-   else if(ReactionType==2 || ReactionType==3 || ReactionType==4) {// Aluminum window
+
        // select the front window or back window by ReactionRegion
-       if(ReactionRegion == 2) //front entrance window
-             myPositionZ =  TargetCenterPositionZ - 0.5*TargetLength - TargetWindowThickness*G4UniformRand();
-       else  //back exit window
-             myPositionZ =  TargetCenterPositionZ + 0.5*TargetLength + TargetWindowThickness*G4UniformRand();
-      }
+   else if(ReactionRegion == 2) //front entrance window
+     myPositionZ =  TargetCenterPositionZ - 0.5*TargetLength - TargetWindowThickness*G4UniformRand();
+
+   else if(ReactionRegion == 3) //back exit window
+     myPositionZ =  TargetCenterPositionZ + 0.5*TargetLength + TargetWindowThickness*G4UniformRand();
+
+   else
+     myPositionZ =  TargetCenterPositionZ + (G4UniformRand()-0.5)*TargetLength; //default region
+
   return myPositionZ;
 }
 
@@ -82,12 +91,13 @@ G4ThreeVector QweakSimEPEvent::GetMomentumDirection(){
    ThetaAngle =  ThetaAngle_Min + G4UniformRand()*(ThetaAngle_Max - ThetaAngle_Min);
    PhiAngle =  (meanPhiAngle + ((G4UniformRand()-0.5)*2.0*sigmaPhiAngle));
 
-//   G4cout << "=====================> Theta Angle = " << ThetaAngle/degree << " degree" << G4endl;
-//   G4cout << "=====================> Phi   Angle = " << PhiAngle/degree   << " degree" << G4endl;
+   G4ThreeVector myNormMomentum(sin(ThetaAngle)*sin(PhiAngle),
+                                sin(ThetaAngle)*cos(PhiAngle),
+                                cos(ThetaAngle) );
 
-   return G4ThreeVector(sin(ThetaAngle)*sin(PhiAngle),
-                        sin(ThetaAngle)*cos(PhiAngle),
-                        cos(ThetaAngle) ); 
+   myNormMomentum.rotateZ( (kActiveOctantNumber-1)*45.0*degree);
+
+   return myNormMomentum; 
 }
 
 

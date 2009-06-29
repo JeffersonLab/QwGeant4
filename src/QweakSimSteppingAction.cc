@@ -21,7 +21,7 @@
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-QweakSimSteppingAction::QweakSimSteppingAction(QweakSimUserInformation* myUInfo)
+QweakSimSteppingAction::QweakSimSteppingAction(QweakSimUserInformation* myUInfo, QweakSimEPEvent* myEPEvent)
 { 
 
 G4cout << "###### Calling QweakSimSteppingAction::QweakSimSteppingAction() " << G4endl;
@@ -29,8 +29,11 @@ G4cout << "###### Calling QweakSimSteppingAction::QweakSimSteppingAction() " << 
   myEventCounter = 0;
   fSecondary = NULL;
   myUserInfo = myUInfo;
+
+  myEvent = myEPEvent;
+
   evtGenStatus = 0;
-  RandomPositionZ = myEvent.GetVertexZ();
+  RandomPositionZ = myEvent->GetVertexZ();
 
 //  std::ofstream EventDataFile("Event.dat", std::ios::out);
 
@@ -88,7 +91,7 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
    if( theZ > -650*cm+35*cm*0.5+5*(2.54*cm*0.001) || sqrt(theX*theX+theY*theY)>2.54*cm) 
     {
        evtGenStatus = 0;
-       RandomPositionZ = myEvent.GetVertexZ();
+       RandomPositionZ = myEvent->GetVertexZ();
     }
 
     if(evtGenStatus == 0){
@@ -101,7 +104,7 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
              G4double CrossSection, WeightN, Q2, E_out, theta, phi;
              G4ThreeVector MomentumDirection;
              G4double E_in = theTrack->GetKineticEnergy()/MeV;  //Event generator needs units of MeV
-             myEvent.GetanEvent(E_in, CrossSection, WeightN, Q2, E_out, MomentumDirection, theta, phi);
+             myEvent->GetanEvent(E_in, CrossSection, WeightN, Q2, E_out, MomentumDirection, theta, phi);
              theTrack->SetKineticEnergy(E_out*MeV);
              theTrack->SetMomentumDirection(MomentumDirection);
 
@@ -130,11 +133,11 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
              myUserInfo->StoreCrossSection(CrossSection);
              myUserInfo->StoreCrossSectionWeight(WeightN);
              myUserInfo->StorePrimaryEventNumber(myEventCounter);
-             myUserInfo->StoreReactionType(myEvent.GetReactionType());
+             myUserInfo->StoreReactionType(myEvent->GetReactionType());
              myUserInfo->StorePDGcode(3);
 
              // print the stored values
-             G4cout << "*********** myEventCounter = " << myEventCounter << G4endl;
+//             G4cout << "*********** myEventCounter = " << myEventCounter << G4endl;
 
 // std::ofstream EventDataFile("Event.dat", std::ios::app);
 // EventDataFile << "Event: "<<myEventCounter<<std::endl;
@@ -145,13 +148,14 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
 // EventDataFile << "Eng_deposi: "<<theStep->GetTotalEnergyDeposit ()/MeV<<" MeV"<<std::endl;
 // EventDataFile << "Material: "<<theTrack->GetMaterial()<<std::endl;
  
-             myUserInfo->Print();
+//             myUserInfo->Print();
       }
     }
   }
   else
    { theTrack->SetTrackStatus(fStopAndKill); return;}
 
+//jpan@nuclear.uwinnipeg
 //kill a track if it is in collimators or shielding wall
   if(thePrePV->GetName()=="CollimatorHousing" || thePrePV->GetName()=="ShieldingWallHousing"){
   theTrack->SetTrackStatus(fStopAndKill); return;
@@ -187,7 +191,10 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
   
 
 
-  G4cout << "Particle Name = " << particleType->GetParticleName() << G4endl;
+//jpan@nuclear.uwinnipeg.ca
+// I commented out the cout statements for speeding up 
+
+//  G4cout << "Particle Name = " << particleType->GetParticleName() << G4endl;
 
 //   if(!strcmp(thePrePV->GetName(),"CerenkovDetector_Physical")){
 //!strcmp(thePrePV->GetName(),"LightGuide_PhysicalRight") || !strcmp(thePrePV->GetName(),"LightGuide_PhysicalLeft")
@@ -235,29 +242,29 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
   }
 
   QweakSimTrackInformation *TrackInfo = (QweakSimTrackInformation*)theTrack->GetUserInformation();
-  G4cout << "Particle History For This Particle" << G4endl;
-  G4cout << "Event ID = " << myUserInfo->GetPrimaryEventNumber() << G4endl;
+//  G4cout << "Particle History For This Particle" << G4endl;
+//  G4cout << "Event ID = " << myUserInfo->GetPrimaryEventNumber() << G4endl;
   //   G4cout << "Hit ID = " << myUserInfo->GetCurrentPMTHit()->GetHitID() << G4endl;
-  for(int i = 0; i < TrackInfo->GetParticleHistoryLength(); i++){	  
-    G4cout << "Particle "<< i <<" = " << TrackInfo->GetParticleDefinitionAtIndex(i)->GetParticleName() << std::setw(9)
-           << " at position " << G4BestUnit(TrackInfo->GetOriginVertex(i),"Length") << std::setw(9);
-    if(i == TrackInfo->GetParticleHistoryLength()-1)
-      G4cout << " Parent Eng = " << theTrack->GetTotalEnergy()/MeV;
-    else
-      G4cout << " Parent Eng = " << TrackInfo->GetParentEnergyAtIndex(i+1)/MeV;
-    G4cout << std::setw(18);
-    G4cout << " Creator Process = " << TrackInfo->GetCreatorProcessAtIndex(i);
-    G4cout << std::setw(18);
-    G4cout << " Kinetic Energy = " <<TrackInfo->GetPrimaryKineticEnergy();
-    G4cout << " Cerenkov Hit Energy = " << TrackInfo->GetCerenkovHitEnergyAtIndex(i) << G4endl;
-  }
-  if(TrackInfo->GetParticleHistoryLength() > 1 &&
-     TrackInfo->GetParticleDefinitionAtIndex(TrackInfo->GetParticleHistoryLength()-1) == G4Gamma::GammaDefinition() &&
-     TrackInfo->GetParticleDefinitionAtIndex(TrackInfo->GetParticleHistoryLength()-2) != G4Electron::ElectronDefinition() &&
-     TrackInfo->GetParticleDefinitionAtIndex(TrackInfo->GetParticleHistoryLength()-2) != G4Positron::PositronDefinition())
-    {
-      G4cout << "Gamma Created by " << TrackInfo->GetParticleDefinitionAtIndex(TrackInfo->GetParticleHistoryLength()-2)->GetParticleName() << G4endl;
-    }
+//  for(int i = 0; i < TrackInfo->GetParticleHistoryLength(); i++){	  
+//    G4cout << "Particle "<< i <<" = " << TrackInfo->GetParticleDefinitionAtIndex(i)->GetParticleName() << std::setw(9)
+//           << " at position " << G4BestUnit(TrackInfo->GetOriginVertex(i),"Length") << std::setw(9);
+//    if(i == TrackInfo->GetParticleHistoryLength()-1)
+//      G4cout << " Parent Eng = " << theTrack->GetTotalEnergy()/MeV;
+//    else
+//      G4cout << " Parent Eng = " << TrackInfo->GetParentEnergyAtIndex(i+1)/MeV;
+//    G4cout << std::setw(18);
+//    G4cout << " Creator Process = " << TrackInfo->GetCreatorProcessAtIndex(i);
+//    G4cout << std::setw(18);
+//    G4cout << " Kinetic Energy = " <<TrackInfo->GetPrimaryKineticEnergy();
+//    G4cout << " Cerenkov Hit Energy = " << TrackInfo->GetCerenkovHitEnergyAtIndex(i) << G4endl;
+//  }
+//   if(TrackInfo->GetParticleHistoryLength() > 1 &&
+//      TrackInfo->GetParticleDefinitionAtIndex(TrackInfo->GetParticleHistoryLength()-1) == G4Gamma::GammaDefinition() &&
+//      TrackInfo->GetParticleDefinitionAtIndex(TrackInfo->GetParticleHistoryLength()-2) != G4Electron::ElectronDefinition() &&
+//      TrackInfo->GetParticleDefinitionAtIndex(TrackInfo->GetParticleHistoryLength()-2) != G4Positron::PositronDefinition())
+//     {
+//       G4cout << "Gamma Created by " << TrackInfo->GetParticleDefinitionAtIndex(TrackInfo->GetParticleHistoryLength()-2)->GetParticleName() << G4endl;
+//     }
 
   if(particleType==G4OpticalPhoton::OpticalPhotonDefinition()){
   

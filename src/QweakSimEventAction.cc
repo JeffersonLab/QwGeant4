@@ -330,9 +330,9 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
   // 
   // if ( (n_hitWirePlane == 4)&&(n_hitDCFront >0)&&(n_hitDCBack >0)&&(n_hitCerenkov >0) )  // ask for 4 fold coincidence 
   // if ( (n_VDChitWirePlane >= 2)&&(n_VDChitDCFront >0)&&(n_VDChitDCBack >0) )             //  ask for 3 fold coincidence 
-  //     if (n_GEMhitWirePlane > 0)     // Triggering on GEM only
-  if (n_hitTriggerScintillator > 0)  // Qweak triggers DAQ on a hit in the trigger scintillator 
-  // if (n_hitCerenkov > 0)  //Triggering on Main Detector
+  // if (n_GEMhitWirePlane > 0)         // Triggering on GEM only
+  // if (n_hitTriggerScintillator > 0)  // Qweak triggers DAQ on a hit in the trigger scintillator 
+   if (n_hitCerenkov > 0)             //Triggering on Main Detector
     {
 
 

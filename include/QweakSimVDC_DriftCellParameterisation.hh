@@ -65,7 +65,7 @@
 // class G4Cons;
 // class G4Orb;
 // class G4Sphere;
-// class G4Torus;
+// class G4Torus
 // class G4Para;
 // class G4Hype;
 // class G4Tubs;

@@ -18,9 +18,11 @@
 
 #include "cpp_include.h"
 #include "Geant4_include.hh"
+#include "QweakSimEPEventMessenger.hh"
 //#include "QweakSimUserInformation.hh"
 
 //class QweakSimUserInformation;
+class QweakSimEPEventMessenger;
 
 class QweakSimEPEvent {
 
@@ -52,6 +54,8 @@ class QweakSimEPEvent {
                            // 2 - entrance window
                            // 3 - exit window
 
+  G4int kActiveOctantNumber;
+
   G4double meanPhiAngle;
   G4double sigmaPhiAngle;
   G4double ThetaAngle_Min;
@@ -63,13 +67,23 @@ class QweakSimEPEvent {
 
   G4ThreeVector GetMomentumDirection();
 
+  QweakSimEPEventMessenger *EventGen_Messenger;
+
  public:
 
   //QweakSimEPEvent(QweakSimUserInformation* myUI);
   QweakSimEPEvent();
   virtual ~QweakSimEPEvent();
 
+  void SetActiveOctantNumber(G4int kaot) { kActiveOctantNumber = kaot; };
+  G4int GetActiveOctantNumber( ) {return kActiveOctantNumber;};
+
+  void  SetReactionType(G4int rt) { ReactionType = rt;};
   G4int GetReactionType() {return ReactionType; };
+
+  void  SetReactionRegion(G4int rr) { ReactionRegion = rr; };
+  G4int GetReactionRegion() {return ReactionRegion; };
+
   G4double GetVertexZ();
   void GetanEvent(G4double E_in, 
                   G4double &CrossSection, 

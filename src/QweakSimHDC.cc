@@ -16,23 +16,6 @@
 */
 //=============================================================================
 
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2005/12/27 19:10:29 $
-//  CVS/RCS Revision: $Revision: 1.2 $
-//  Status:           $State: Exp $
-// 
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-//
-//============================================================================
-
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #include "QweakSimHDC.hh"
@@ -105,11 +88,11 @@ G4cout << G4endl << "###### Calling QweakSimHDC::QweakHDC() " << G4endl << G4end
 
   HDC_CenterFront_XPos        =    0.0*cm;
   HDC_CenterFront_YPos        =   60.0*cm; 
-  HDC_CenterFront_ZPos        = -325.459*cm;  // Allena's keepout info 
+  HDC_CenterFront_ZPos        = -336.987*cm; //-325.459*cm;  // Allena's keepout info 
 
   HDC_CenterBack_XPos        =    0.0*cm;
   HDC_CenterBack_YPos        =   60.0*cm; 
-  HDC_CenterBack_ZPos        = -285.459*cm; 
+  HDC_CenterBack_ZPos        = -296.675*cm; // -285.459*cm; 
 
   HDC_RotationAngleInPhi     =   0.0*degree;   // normally 0.0*degree = 12 o'clock = octant 1
   
@@ -670,17 +653,4 @@ void QweakSimHDC::SetHDC_RotationAngleInPhi(G4double HDC_phiangle)
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-//=======================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//      $Revisions$  
-//      $Log: QweakSimHDC.cc,v $
-//      Revision 1.2  2005/12/27 19:10:29  grimm
-//      - Redesign of Doxygen header containing CVS info like revision and date
-//      - Added CVS revision log at the end of file
-//
-// 
 

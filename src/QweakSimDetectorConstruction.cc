@@ -15,22 +15,6 @@
 
 */
 //=============================================================================
-
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2006/05/05 21:40:08 $
-//  CVS/RCS Revision: $Revision: 1.10 $
-//  Status:           $State: Exp $
-// 
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-//
-//============================================================================
 // 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -403,10 +387,7 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
 
 //only keep front wall to speed up the simulation since the electron will shower in the shielding wall
     pShieldingWall->ConstructFrontWall(experimentalHall_Physical); 
-//    pShieldingWall->ConstructBackWall(experimentalHall_Physical);
-//    pShieldingWall->ConstructBeamLeftSideWall(experimentalHall_Physical);
-//    pShieldingWall->ConstructBeamRightSideWall(experimentalHall_Physical);
-//    pShieldingWall->ConstructTopWall(experimentalHall_Physical);
+
 
     //===============================================
     // create/place Drift Chambers into MotherVolume
@@ -420,16 +401,15 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
     // create/place VDC Rotator into MotherVolume
     //===============================================
     //
-//jpan@nuclear.uwinnipeg.ca
-/*
-    pVDCRotator  = new QweakSimVDCRotator(pVDC); 
-    pVDCRotator->SetMotherVolume(experimentalHall_Physical);
-    pVDCRotator->ConstructRings();
-    pVDCRotator->ConstructRails();
-    pVDCRotator->ConstructMount();
-    pVDCRotator->ConstructSliderSupport();
-    pVDCRotator->SetRotationAngleInPhi( 0.0*degree);
-*/
+
+//     pVDCRotator  = new QweakSimVDCRotator(pVDC); 
+//     pVDCRotator->SetMotherVolume(experimentalHall_Physical);
+//     pVDCRotator->ConstructRings();
+//     pVDCRotator->ConstructRails();
+//     pVDCRotator->ConstructMount();
+//     pVDCRotator->ConstructSliderSupport();
+//     pVDCRotator->SetRotationAngleInPhi( 0.0*degree);
+
 
     //=========================================
     // create/place Cerenkov into MotherVolume
@@ -595,43 +575,3 @@ void QweakSimDetectorConstruction::HideHallFloor()
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-//=======================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//      $Revisions$  
-//      $Log: QweakSimDetectorConstruction.cc,v $
-//      Revision 1.10  2006/05/05 21:40:08  grimm
-//      Added pVDCRotator->ConstructSliderSupport(experimentalHall_Physical);
-//
-//      Revision 1.9  2006/05/02 00:56:58  grimm
-//      Implemented VDC Rotator
-//
-//      Revision 1.8  2006/01/18 20:26:03  grimm
-//      Added for MainMagnet:
-//         pMainMagnet -> Construct_SupportFrame(experimentalHall_Physical);
-//         pMainMagnet -> Construct_DownstreamSpider(experimentalHall_Physical);
-//
-//      Revision 1.7  2006/01/13 00:27:46  grimm
-//      Added pMainMagnet -> Construct_RadialMountingBlocks(experimentalHall_Physical);
-//
-//      Revision 1.6  2006/01/12 20:27:31  grimm
-//      Included pMainMagnet->Construct_CoilFrames(experimentalHall_Physical);
-//      (Constructs the 5" thick frame holder in which the coil is embedded)
-//
-//      Revision 1.5  2005/12/29 02:54:01  grimm
-//      Added pMainMagnet->Construct_UpStreamMiniClampPlates
-//
-//      Revision 1.4  2005/12/28 22:58:55  grimm
-//      Changed experimentalHall_Material from HeGas to Air. Was HeGas all the time up to now.
-//
-//      Revision 1.3  2005/12/28 22:49:30  grimm
-//      Added QweakSimCollimatorSupport into the world
-//
-//      Revision 1.2  2005/12/27 19:07:38  grimm
-//      - Redesign of Doxygen header containing CVS info like revision and date
-//      - Added CVS revision log at the end of file
-//
-// 

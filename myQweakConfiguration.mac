@@ -10,7 +10,7 @@
 #==========================
 # defined/used later again
 #/PrimaryEvent/SelectOctant 3
-/PrimaryEvent/SelectOctant 1	
+#/PrimaryEvent/SelectOctant 1	
 
 #==========================
 # Target related
@@ -60,8 +60,8 @@
 # - positive angle will tilt detector against target
 #
 #/TriggerScintillator/SetScintillatorMaterial  Vacuum
-#/TriggerScintillator/SetScintillatorMaterial  Polyethylene
-/TriggerScintillator/SetScintillatorMaterial SiO2
+/TriggerScintillator/SetScintillatorMaterial  Polyethylene
+#/TriggerScintillator/SetScintillatorMaterial SiO2
 #/TriggerScintillator/SetScintillatorMaterial Quartz
  
 /TriggerScintillator/SetCenterPositionInX     0.0 cm
@@ -69,8 +69,6 @@
 #/TriggerScintillator/SetCenterPositionInZ   555.0 cm
 /TriggerScintillator/SetTiltingAngle          0.0 degree
 
-#/TriggerScintillator/SetCenterPositionInY     10.0 cm 
-#/TriggerScintillator/SetCenterPositionInZ   -620.0 cm
 
 #=============================
 #     GEM related  (Region1)
@@ -84,7 +82,7 @@
 /GEM/SetBackCenterPositionInZ     -535.0    cm
 
 /GEM/SetFrontChamberRotationAngleInPhi    90.0   degree
-/GEM/SetBackChamberRotationAngleInPhi    270.0   degree
+/GEM/SetBackChamberRotationAngleInPhi     90.0   degree
 
 /GEM/SetMasterContainerMaterial     Air
 /GEM/SetSubContainerMaterial        ArCO2
@@ -121,11 +119,11 @@
 #/VDC/SetMeanTrackAngle            20.57 degree
 #/VDC/SetFrontBackDistance         50.0  cm 
 /VDC/SetFrontCenterPositionInX     0.0  cm
-/VDC/SetFrontCenterPositionInY   280.0  cm
-/VDC/SetFrontCenterPositionInZ   480.0  cm
+/VDC/SetFrontCenterPositionInY   276.165  cm
+/VDC/SetFrontCenterPositionInZ   443.92  cm
 
-/VDC/SetVDC_SubContainerMaterial   Vacuum
-#/VDC/SetVDC_SubContainerMaterial   Ar-C2H6_40-60
+#/VDC/SetVDC_SubContainerMaterial   Vacuum
+/VDC/SetVDC_SubContainerMaterial   Ar-C2H6_40-60
 
 # Angle Orientation in Phi
 # 90.0 degree = octant 1 in 12 o'clock position
@@ -136,8 +134,8 @@
 
 # angle in respect to SHORT Frame side
 # 90-26.57=63.43
-/VDC/DriftCell/SetWireAngleFront     63.43 degree
-/VDC/DriftCell/SetWireAngleBack     -63.43 degree
+/VDC/DriftCell/SetWireAngleFront     65.57 degree
+/VDC/DriftCell/SetWireAngleBack     -65.57 degree
 #/VDC/DriftCell/SetWireAngleFront     45.0 degree
 #/VDC/DriftCell/SetWireAngleBack     -45.0 degree
 
@@ -180,6 +178,12 @@
 #/VDC/DriftCell/SetFullWidthOnFrame   12.7 mm
 
 
+#====================================
+# Event generator related
+#====================================
 
+#/EventGen/SelectOctant         1
+#/EventGen/SelectReactionType   1
+#/EventGen/SelectReactionRegion 1
    
 

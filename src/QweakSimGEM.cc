@@ -16,22 +16,6 @@
 */
 //=============================================================================
 
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2005/12/29 01:00:11 $
-//  CVS/RCS Revision: $Revision: 1.3 $
-//  Status:           $State: Exp $
-// 
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-//
-//============================================================================
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #include "QweakSimGEM.hh"
@@ -153,11 +137,11 @@ fRegGasDet = NULL;
   AluFrame_InnerWidth       =  GEMFrame_InnerWidth;
 
   GEM_CenterFront_XPos        =    0.0*cm;
-  GEM_CenterFront_YPos        =   15.0*cm; 
+  GEM_CenterFront_YPos        =   20.0*cm; //15.0*cm; 
   GEM_CenterFront_ZPos        = -543.170*cm; // Allena's keepout info 
 
   GEM_CenterBack_XPos        =    0.0*cm;
-  GEM_CenterBack_YPos        =   17.0*cm; 
+  GEM_CenterBack_YPos        =   20.0*cm; //17.0*cm; 
   GEM_CenterBack_ZPos        = -535.0*cm; 
 
   
@@ -1110,19 +1094,4 @@ void QweakSimGEM::SetGEM_BackChamber_RotationAngleInPhi(G4double GEM_phiangle)
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
- 
-//=======================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//      $Revisions$  
-//      $Log: QweakSimGEM.cc,v $
-//      Revision 1.3  2005/12/29 01:00:11  grimm
-//      Bug Fix: Overlapping volumes in AnodeReadoutPlaneContainer and wrong stacking order of copper,kapton, and readout board (reversed z positions)
-//
-//      Revision 1.2  2005/12/27 19:09:40  grimm
-//      - Redesign of Doxygen header containing CVS info like revision and date
-//      - Added CVS revision log at the end of file
-//
-// 
+

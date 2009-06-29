@@ -38,14 +38,14 @@
 
 # Gun menu :
 /gui/addMenu   octant Octant
-/gui/addButton octant "Select Octant1" "/PrimaryEvent/SelectOctant 1"
-/gui/addButton octant "Select Octant2" "/PrimaryEvent/SelectOctant 2"
-/gui/addButton octant "Select Octant3" "/PrimaryEvent/SelectOctant 3"
-/gui/addButton octant "Select Octant4" "/PrimaryEvent/SelectOctant 4"
-/gui/addButton octant "Select Octant5" "/PrimaryEvent/SelectOctant 5"
-/gui/addButton octant "Select Octant6" "/PrimaryEvent/SelectOctant 6"
-/gui/addButton octant "Select Octant7" "/PrimaryEvent/SelectOctant 7"
-/gui/addButton octant "Select Octant8" "/PrimaryEvent/SelectOctant 8"
+/gui/addButton octant "Select Octant1" "/EventGen/SelectOctant 1"
+/gui/addButton octant "Select Octant2" "/EventGen/SelectOctant 2"
+/gui/addButton octant "Select Octant3" "/EventGen/SelectOctant 3"
+/gui/addButton octant "Select Octant4" "/EventGen/SelectOctant 4"
+/gui/addButton octant "Select Octant5" "/EventGen/SelectOctant 5"
+/gui/addButton octant "Select Octant6" "/EventGen/SelectOctant 6"
+/gui/addButton octant "Select Octant7" "/EventGen/SelectOctant 7"
+/gui/addButton octant "Select Octant8" "/EventGen/SelectOctant 8"
 
 # Detectorhut menu :
 /gui/addMenu   detectorhut DetectorHut
@@ -74,11 +74,16 @@
 /gui/addButton trackingAction "Track all particles " "/TrackingAction/PrimaryElectronsOnly 0"
 /gui/addButton trackingAction "Track primaries only" "/TrackingAction/PrimaryElectronsOnly 1"
 
-# Reaction menue
-/gui/addMenu reactionType ReactionType
-/gui/addButton reactionType "Elastic LH2 target" "/"
-/gui/addButton reactionType "Elastic Al entrance window" "/"
-/gui/addButton reactionType "Elastic Al exit window" "/"
-/gui/addButton reactionType "Quasi-elastic Al entrance window" "/"
-/gui/addButton reactionType "Quasi-elastic Al exit window" "/"
+# Reaction type menue
+/gui/addMenu reactionType Reaction
+/gui/addButton reactionType "1 - Elastic LH2" "/EventGen/SeletReactionType 1"
+/gui/addButton reactionType "2 - Elastic Al" "/EventGen/SeletReactionType 2"
+/gui/addButton reactionType "3 - Quasi-elastic Al (proton)" "/EventGen/SeletReactionType 3"
+/gui/addButton reactionType "4 - Quasi-elastic Al (neutron)" "/EventGen/SeletReactionType 4"
+
+# Reaction region menue
+/gui/addMenu reactionRegion ReactionRegion
+/gui/addButton reactionRegion "1 - Target" "/EventGen/SeletReactionRegion 1"
+/gui/addButton reactionRegion "2 - Entrance target window" "/EventGen/SeletReactionRegion 2"
+/gui/addButton reactionRegion "3 - Exit target window" "/EventGen/SeletReactionRegion 3"
 

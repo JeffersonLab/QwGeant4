@@ -24,7 +24,7 @@ class QweakSimSteppingAction : public G4UserSteppingAction
 {
   
 public:
-  QweakSimSteppingAction(QweakSimUserInformation* myUInfo);
+  QweakSimSteppingAction(QweakSimUserInformation* myUInfo, QweakSimEPEvent* myEPEvent);
   ~QweakSimSteppingAction(){};
   
   void UserSteppingAction(const G4Step*);
@@ -55,7 +55,7 @@ private:
   G4TrackVector *fSecondary;
   QweakSimUserInformation* myUserInfo;
 
-  QweakSimEPEvent myEvent;
+  QweakSimEPEvent *myEvent;
   G4double RandomPositionZ;
 
 };

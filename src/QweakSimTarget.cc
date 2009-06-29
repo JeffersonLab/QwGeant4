@@ -65,7 +65,7 @@ static const G4double mil = 0.001*2.54*cm;
   // define target geometry values
 
   targetCellWindowThickness =  5*mil;  //  3.5*mil
-  targetCellWallThickness   = 20.0*mil;  // 20.0*mil
+  targetCellWallThickness   = 10.0*mil;  // 20.0*mil
 
   targetCellInnerLength     = 35.0*cm;
   targetCellOuterLength     = targetCellInnerLength + 2.0*targetCellWindowThickness;  // Full length of Target

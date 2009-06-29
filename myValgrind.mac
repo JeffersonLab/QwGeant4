@@ -25,16 +25,16 @@
 # - a tilt angle of 0.0*deg means vertical 
 # - positive angle will tilt detector against target
 #
-/Cerenkov/SetCerenkovMaterial HeGas
+#/Cerenkov/SetCerenkovMaterial HeGas
 #/Cerenkov/SetCerenkovMaterial SiO2
-#/Cerenkov/SetCerenkovMaterial Quartz
+/Cerenkov/SetCerenkovMaterial Quartz
 
 # positions to be extracted from SolidWorks
 # or by Juliette Mammei's hit distribution
 # on the vertical detector plane
  
 /Cerenkov/SetCenterPositionInX     0.0 cm
-/Cerenkov/SetCenterPositionInY   319.0 cm 
+/Cerenkov/SetCenterPositionInY   328.0 cm 
 /Cerenkov/SetCenterPositionInZ   570.0 cm
 /Cerenkov/SetTiltingAngle          0.0 degree
 
@@ -70,7 +70,7 @@
 /GEM/SetBackCenterPositionInZ     -535.0    cm
 
 /GEM/SetFrontChamberRotationAngleInPhi    90.0   degree
-/GEM/SetBackChamberRotationAngleInPhi    270.0   degree
+/GEM/SetBackChamberRotationAngleInPhi     90.0   degree
 
 /GEM/SetMasterContainerMaterial     Air
 /GEM/SetSubContainerMaterial        ArCO2
@@ -106,8 +106,8 @@
 #/VDC/SetMeanTrackAngle           20.8 degree
 #/VDC/SetFrontBackDistance        50.0 cm 
 /VDC/SetFrontCenterPositionInX     0.0 cm
-/VDC/SetFrontCenterPositionInY   265.0 cm
-#/VDC/SetFrontCenterPositionInY   270.0 cm
+#/VDC/SetFrontCenterPositionInY   265.0 cm
+/VDC/SetFrontCenterPositionInY   270.0 cm
 /VDC/SetFrontCenterPositionInZ   437.0 cm
 
 
