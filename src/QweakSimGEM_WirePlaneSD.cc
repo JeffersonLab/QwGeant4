@@ -16,22 +16,6 @@
 */
 //=============================================================================
 
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2006/05/05 21:39:28 $
-//  CVS/RCS Revision: $Revision: 1.3 $
-//  Status:           $State: Exp $
-// 
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-//
-//============================================================================
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #include "QweakSimGEM_WirePlaneSD.hh"
@@ -105,9 +89,9 @@ G4bool QweakSimGEM_WirePlaneSD::ProcessHits(G4Step* aStep,G4TouchableHistory* RO
 
   if(strcmp(physVol->GetName(),"GEM_AnodeCopperLayer_Physical") == 0 ) {
 
-    G4cout << "=============================================================" << G4endl;
-    G4cout << ">>>>>>> Particle crossing  : GEM_AnodeCopperLayer_Physical <<<<<<<<<" << G4endl;
-    G4cout << "=============================================================" << G4endl;
+//    G4cout << "=============================================================" << G4endl;
+//    G4cout << ">>>>>>> Particle crossing  : GEM_AnodeCopperLayer_Physical <<<<<<<<<" << G4endl;
+//    G4cout << "=============================================================" << G4endl;
 
     G4double trackID = aStep->GetTrack()->GetTrackID();
 //     G4cout << "====> Track ID     : " <<  trackID << G4endl;
@@ -121,9 +105,14 @@ G4bool QweakSimGEM_WirePlaneSD::ProcessHits(G4Step* aStep,G4TouchableHistory* RO
     G4int WirePlaneCopyNo = theTouchable->GetVolume()->GetCopyNo();   // but only one WirePlane per MV
     G4int MotherReplicaNo = theTouchable->GetReplicaNumber(1);        // Several MotherVolumes
 
-    G4int    MotherCopyNo2 = theTouchable->GetVolume(2)->GetCopyNo();  // Several MotherVolumes
-    G4int MotherReplicaNo2 = theTouchable->GetReplicaNumber(2);        // Several MotherVolumes
+//pqwang@jlab.org
+//there are 3 fold MotherVolume, the GEMID must be taken from the outer container
+// for decoding correct GEMID in the EventAction
+//    G4int    MotherCopyNo2 = theTouchable->GetVolume(2)->GetCopyNo();  // Several MotherVolumes
+//    G4int MotherReplicaNo2 = theTouchable->GetReplicaNumber(2);        // Several MotherVolumes
 
+    G4int    MotherCopyNo3 = theTouchable->GetVolume(3)->GetCopyNo();  // Several MotherVolumes
+    G4int MotherReplicaNo3 = theTouchable->GetReplicaNumber(3);        // Several MotherVolumes
 
 //     G4cout << "%%%%%%%%%%%%%%%%%%%  WirePlane MV    CopyNumber  :" << MotherCopyNo    << G4endl;
 //     G4cout << "%%%%%%%%%%%%%%%%%%%  WirePlane       CopyNumber  :" << WirePlaneCopyNo << G4endl;
@@ -189,7 +178,7 @@ G4bool QweakSimGEM_WirePlaneSD::ProcessHits(G4Step* aStep,G4TouchableHistory* RO
   // get User Track Info
   QweakSimTrackInformation* info = (QweakSimTrackInformation*) (aStep->GetTrack()->GetUserInformation());
 
-  info->Print();
+//  info->Print();
 
 //   G4double primaryQ2                      = info->GetPrimaryQ2();
 //   G4double crossSection                   = info->GetCrossSection();
@@ -202,12 +191,15 @@ G4bool QweakSimGEM_WirePlaneSD::ProcessHits(G4Step* aStep,G4TouchableHistory* RO
 
 
 
-  G4cout << " =====> Storing GEM hit information into aHit" << G4endl;
+//  G4cout << " =====> Storing GEM hit information into aHit" << G4endl;
 
     //   QweakSimGEMHit* aHit = new QweakSimGEMHit(MotherCopyNo); // there is only one plane per motherVolume
     QweakSimGEM_WirePlaneHit* aHit = new QweakSimGEM_WirePlaneHit(); // there is only one plane per motherVolume
 
-    aHit->StoreGEMID(MotherCopyNo2);         // 0: Front GEM       , 1: Back GEM
+//pqwang@jlab.org
+//there are 3 fold MotherVolume, the GEMID must be taken from the outer container
+// for decoding correct GEMID in the EventAction 
+    aHit->StoreGEMID(MotherCopyNo3);         // 0: Front GEM       , 1: Back GEM
     aHit->StoreWirePlaneID(WirePlaneCopyNo);    // [0,5] : WirePlane #0 to #5 (6 wire plane in total per GEM)
 
     aHit->StoreWorldPosition(worldPos);
@@ -259,20 +251,3 @@ void QweakSimGEM_WirePlaneSD::EndOfEvent(G4HCofThisEvent* )
 
 }
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-//=======================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//      $Revisions$  
-//      $Log: QweakSimGEM_WirePlaneSD.cc,v $
-//      Revision 1.3  2006/05/05 21:39:28  grimm
-//      Records now the kinetic and total energy.
-//
-//      Revision 1.2  2005/12/27 19:10:00  grimm
-//      - Redesign of Doxygen header containing CVS info like revision and date
-//      - Added CVS revision log at the end of file
-//
-// 
-

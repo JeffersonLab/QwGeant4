@@ -73,7 +73,6 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
 
 
 //jpan@nuclear.uwinnipeg.ca Thu Apr 16 01:33:14 CDT 2009
-// I'd like to disregard all secondaries to speed up the primary particle simulation
 // check if it is primary
   G4int parentID = theTrack->GetParentID();
 
@@ -152,7 +151,7 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
       }
     }
   }
-  else  //secondary
+  else  //secondary, umcomment to disregard all secondaries to speed up the primary particle simulation
    { 
 //      theTrack->SetTrackStatus(fStopAndKill); 
 //      return;

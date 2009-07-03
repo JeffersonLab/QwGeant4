@@ -19,23 +19,6 @@
     
  */
 //=============================================================================
-//
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2006/01/06 21:29:35 $
-//  CVS/RCS Revision: $Revision: 1.4 $
-//  Status:           $State: Exp $
-// 
-// ==============================
-//  CVS/RCS Log at end of file !!
-// ==============================
-//
-//=============================================================================
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 #ifndef QweakSimEventAction_h
 #define QweakSimEventAction_h 1
@@ -252,35 +235,3 @@ private:
 
 #endif
 
-//=======================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//      $Revisions$  
-//      $Log: QweakSimEventAction.hh,v $
-//      Revision 1.4  2006/01/06 21:29:35  grimm
-//      Adding variables for storing these for VDC and Cerenkov:
-//
-//        G4String   particleName;
-//        TString   rParticleName;
-//
-//        G4int      particleType;
-//        Int_t     rParticleType;
-//
-//        G4double   totalEnergy;
-//        Float_t   rtotalEnergy;
-//
-//        G4double   kineticEnergy;
-//        Float_t   rkineticEnergy;
-//
-//      Revision 1.3  2005/12/28 23:05:53  grimm
-//      Testing: Extract trajectories collected with QweakSimTrajectory (following LXe example)
-//
-//      Revision 1.2  2005/12/27 19:23:34  grimm
-//      - Redesign of Doxygen header containing CVS info like revision and date
-//      - Added CVS revision log at the end of file
-//
-// 
-
-    

@@ -177,7 +177,7 @@ G4bool QweakSimHDC_WirePlaneSD::ProcessHits(G4Step* aStep,G4TouchableHistory* RO
   // get User Track Info
   QweakSimTrackInformation* info = (QweakSimTrackInformation*) (aStep->GetTrack()->GetUserInformation());
 
-  info->Print();
+  // info->Print();
 
 //   G4double primaryQ2                      = info->GetPrimaryQ2();
 //   G4double crossSection                   = info->GetCrossSection();

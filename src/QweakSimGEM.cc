@@ -290,9 +290,6 @@ static const G4double mil = 0.001*2.54*cm;
   Rotation_FrontChamber_GEM -> rotateX(roationAngleInTheta);
   Rotation_BackChamber_GEM  -> rotateX(roationAngleInTheta);
 
-
-  
-
   // define GEM physical volume of drift chamber container
   G4cout << G4endl << "###### QweakSimGEM: Define GEM_MasterContainerFront_Physical" << G4endl << G4endl;
 
@@ -623,6 +620,7 @@ static const G4double mil = 0.001*2.54*cm;
   G4double _LocalPostionInZ_AnodeCopperLayer =
       -0.5* (GEM_G10AnodeBoard_Thickness + GEM_CopperLayer_Thickness + GEM_KaptonAnodeFoil_Thickness)
      + 0.5*  GEM_CopperLayer_Thickness; 
+
 
    GEM_AnodeCopperLayer_Physical  =  new G4PVPlacement(0, 
 						       G4ThreeVector(0. , 0. , _LocalPostionInZ_AnodeCopperLayer ), 

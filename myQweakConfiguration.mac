@@ -45,7 +45,7 @@
  
 /Cerenkov/SetCenterPositionInX     0.0 cm
 #/Cerenkov/SetCenterPositionInY   328.0 cm 
-/Cerenkov/SetCenterPositionInY   338.0 cm
+/Cerenkov/SetCenterPositionInY   334.0 cm
 /Cerenkov/SetCenterPositionInZ   570.0 cm
 /Cerenkov/SetTiltingAngle         0.0 degree
 

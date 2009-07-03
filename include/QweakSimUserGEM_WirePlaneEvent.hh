@@ -26,23 +26,6 @@
    Placeholder for a long explaination
     
  */
-//=============================================================================
-//
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2006/05/05 21:38:33 $
-//  CVS/RCS Revision: $Revision: 1.3 $
-//  Status:           $State: Exp $
-// 
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-// 
-//=============================================================================
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 #ifndef QweakSimUserGEM_WirePlaneEvent_h
@@ -233,18 +216,4 @@ public:
 
 #endif 
 
-//=======================================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//      $Revisions$  
-//      $Log: QweakSimUserGEM_WirePlaneEvent.hh,v $
-//      Revision 1.3  2006/05/05 21:38:33  grimm
-//      Records now the kinetic and total energy.
-//
-//      Revision 1.2  2005/12/27 19:29:49  grimm
-//      - Redesign of Doxygen header containing CVS info like revision and date
-//      - Added CVS revision log at the end of file
-//
-// 
+

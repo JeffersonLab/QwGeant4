@@ -460,10 +460,10 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
       rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
       rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
 
-    OriginVertexPhiAngle = (atan2(-1.0*rOriginVertexMomentumDirectionY, -1.0*rOriginVertexMomentumDirectionX) )*180/3.1415927*degree + 90.0*degree; 
+    OriginVertexPhiAngle = atan2(-1.0*rOriginVertexMomentumDirectionY, -1.0*rOriginVertexMomentumDirectionX)+ 90.0*degree; 
     rOriginVertexPhiAngle = OriginVertexPhiAngle/degree;
 
-    OriginVertexThetaAngle = (atan2( rOriginVertexMomentumDirectionY, rOriginVertexMomentumDirectionZ) )*180/3.1415927*degree; 
+    OriginVertexThetaAngle = atan2( rOriginVertexMomentumDirectionY, rOriginVertexMomentumDirectionZ); 
     rOriginVertexThetaAngle = OriginVertexThetaAngle/degree; 
 	  
       originVertexKineticEnergy = aHit->GetOriginVertexKineticEnergy();
@@ -758,7 +758,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 
  	rOctantID = G4IndexToOctantNumber[ (Int_t) aHit->GetDetectorID()];
 
-         aHit->Print();
+        // aHit->Print();
 	      
 	// get local position of hit 
 	localPosition  = aHit->GetLocalPosition();
@@ -799,10 +799,10 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
         rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
         rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
 
-    OriginVertexPhiAngle = (atan2(-1.0*rOriginVertexMomentumDirectionY, -1.0*rOriginVertexMomentumDirectionX) )*180/3.1415927*degree + 90.0*degree; 
+    OriginVertexPhiAngle = atan2(-1.0*rOriginVertexMomentumDirectionY, -1.0*rOriginVertexMomentumDirectionX)+ 90.0*degree; 
     rOriginVertexPhiAngle = OriginVertexPhiAngle/degree;
 
-    OriginVertexThetaAngle = (atan2( rOriginVertexMomentumDirectionY, rOriginVertexMomentumDirectionZ) )*180/3.1415927*degree; 
+    OriginVertexThetaAngle = atan2( rOriginVertexMomentumDirectionY, rOriginVertexMomentumDirectionZ); 
     rOriginVertexThetaAngle = OriginVertexThetaAngle/degree;
 	      
 	originVertexKineticEnergy =   aHit->GetOriginVertexKineticEnergy();
@@ -1107,10 +1107,10 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
           rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
           rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
 
-    OriginVertexPhiAngle = (atan2(-1.0*rOriginVertexMomentumDirectionY, -1.0*rOriginVertexMomentumDirectionX) )*180/3.1415927*degree + 90.0*degree; 
+    OriginVertexPhiAngle = atan2(-1.0*rOriginVertexMomentumDirectionY, -1.0*rOriginVertexMomentumDirectionX)+ 90.0*degree; 
     rOriginVertexPhiAngle = OriginVertexPhiAngle/degree;
 
-    OriginVertexThetaAngle = (atan2( rOriginVertexMomentumDirectionY, rOriginVertexMomentumDirectionZ) )*180/3.1415927*degree; 
+    OriginVertexThetaAngle = atan2( rOriginVertexMomentumDirectionY, rOriginVertexMomentumDirectionZ); 
     rOriginVertexThetaAngle = OriginVertexThetaAngle/degree;
 
 	   originVertexKineticEnergy = aHit->GetOriginVertexKineticEnergy();
@@ -1832,8 +1832,8 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 	  // get hit pointer for each hit 
 	  QweakSimGEM_WirePlaneHit* aHit = (*GEM_WirePlane_HC)[i1];
 
-	  G4cout << G4endl << "###### Printing GEM hit info within QweakSimEventAction::EndOfEventAction() " << G4endl << G4endl;
-	  aHit->Print();
+	  // G4cout << G4endl << "###### Printing GEM hit info within QweakSimEventAction::EndOfEventAction() " << G4endl << G4endl;
+	  // aHit->Print();
       
 	  // get local position of hit 
 	   localPosition  = aHit->GetLocalPosition();
@@ -1870,10 +1870,10 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
           rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
           rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
 
-    OriginVertexPhiAngle = (atan2(-1.0*rOriginVertexMomentumDirectionY, -1.0*rOriginVertexMomentumDirectionX) )*180/3.1415927*degree + 90.0*degree; 
+    OriginVertexPhiAngle = atan2(-1.0*rOriginVertexMomentumDirectionY, -1.0*rOriginVertexMomentumDirectionX)+ 90.0*degree; 
     rOriginVertexPhiAngle = OriginVertexPhiAngle/degree;
 
-    OriginVertexThetaAngle = (atan2( rOriginVertexMomentumDirectionY, rOriginVertexMomentumDirectionZ) )*180/3.1415927*degree; 
+    OriginVertexThetaAngle = atan2( rOriginVertexMomentumDirectionY, rOriginVertexMomentumDirectionZ); 
     rOriginVertexThetaAngle = OriginVertexThetaAngle/degree;
 
 	   originVertexKineticEnergy = aHit->GetOriginVertexKineticEnergy();
@@ -1975,9 +1975,9 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 	  
 	  
 	  //-----------------------------------
-	  
+ 
 	  if((aHit->GetGEMID()==1) && (aHit->GetWirePlaneID()==0)) { 
-	      
+
 	      // mark wire plane as been hit
 	      analysis->QweakSimG4_RootEvent->Region1.ChamberBack.WirePlane.StorePlaneHasBeenHit(5);  
 	      
@@ -2090,10 +2090,10 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
            rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
            rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
 
-    OriginVertexPhiAngle = (atan2(-1.0*rOriginVertexMomentumDirectionY, -1.0*rOriginVertexMomentumDirectionX) )*180/3.1415927*degree + 90.0*degree; 
+    OriginVertexPhiAngle = atan2(-1.0*rOriginVertexMomentumDirectionY, -1.0*rOriginVertexMomentumDirectionX) + 90.0*degree; 
     rOriginVertexPhiAngle = OriginVertexPhiAngle/degree;
 
-    OriginVertexThetaAngle = (atan2( rOriginVertexMomentumDirectionY, rOriginVertexMomentumDirectionZ) )*180/3.1415927*degree; 
+    OriginVertexThetaAngle = atan2( rOriginVertexMomentumDirectionY, rOriginVertexMomentumDirectionZ); 
     rOriginVertexThetaAngle = OriginVertexThetaAngle/degree;
 
 	   originVertexKineticEnergy =   aHit->GetOriginVertexKineticEnergy();
