@@ -152,8 +152,11 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
       }
     }
   }
-  else
-   { theTrack->SetTrackStatus(fStopAndKill); return;}
+  else  //secondary
+   { 
+//      theTrack->SetTrackStatus(fStopAndKill); 
+//      return;
+   }
 
 //jpan@nuclear.uwinnipeg
 //kill a track if it is in collimators or shielding wall

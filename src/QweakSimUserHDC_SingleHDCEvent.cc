@@ -59,6 +59,17 @@ void QweakSimUserHDC_SingleHDCEvent::Initialize()
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
+void QweakSimUserHDC_SingleHDCEvent::Clear()
+{
+  WirePlane1.Clear();
+  WirePlane2.Clear();
+  WirePlane3.Clear();
+  WirePlane4.Clear();
+  WirePlane5.Clear();
+  WirePlane6.Clear();
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
 //=======================================================
 //   -----------------------

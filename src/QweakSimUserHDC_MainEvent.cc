@@ -51,16 +51,10 @@ QweakSimUserHDC_MainEvent::~QweakSimUserHDC_MainEvent()
 {;}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
+void QweakSimUserHDC_MainEvent::Clear()
+{
+  ChamberFront.Clear();
+  ChamberBack.Clear();
+}
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
-//=======================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//      $Revisions$  
-//      $Log: QweakSimUserHDC_MainEvent.cc,v $
-//      Revision 1.2  2005/12/27 19:17:29  grimm
-//      - Redesign of Doxygen header containing CVS info like revision and date
-//      - Added CVS revision log at the end of file
-//
-//

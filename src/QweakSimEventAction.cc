@@ -8,10 +8,10 @@
  
    \file QweakSimEventAction.cc
 
-   $Revision: 1.5 $	
-   $Date: 2006/05/05 21:37:16 $
+   $Date: Fri Jul  3 11:38:14 CDT 2009 $
 
-   \author Klaus Hans Grimm   
+   \author Klaus Hans Grimm
+   \author Jie Pan
 
 */
 //=============================================================================
@@ -1069,8 +1069,8 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 	  // get hit pointer for each hit 
 	  QweakSimHDC_WirePlaneHit* aHit = (*HDC_WirePlane_HC)[i1];
 
-	  G4cout << G4endl << "###### Printing HDC hit info within QweakSimEventAction::EndOfEventAction() " << G4endl << G4endl;
-	  aHit->Print();
+	  //G4cout << G4endl << "###### Printing HDC hit info within QweakSimEventAction::EndOfEventAction() " << G4endl << G4endl;
+	  //aHit->Print();
       
 	  // get local position of hit 
 	   localPosition  = aHit->GetLocalPosition();
@@ -1813,7 +1813,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 	  
       } // end of  for(int i1=0;i1<n_HDChitWirePlane;i1++){
       
-  } // end of if ( (n_HDChitWirePlane == 6)
+  } // end of if (n_HDChitWirePlane > 0)
   
 
     //===============================================================================================================
@@ -2216,6 +2216,11 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
    
     // Finally fill our event ntuple
     analysis->Fill_RootNtuple();
+
+   //jpan@nuclear.uwinnipeg.ca
+   //clear contents
+   analysis->QweakSimG4_RootEvent->Region3.Clear();
+   analysis->QweakSimG4_RootEvent->Region2.Clear();
 
       
   } //end of if( (n_hitWirePlane == 2)&&(n_hitFront >0)&&(n_hitBack >0)&&(n_hitCerenkov >0) ) 

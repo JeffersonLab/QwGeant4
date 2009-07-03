@@ -132,6 +132,7 @@ public:
   virtual ~QweakSimUserVDC_WirePlaneEvent();
 
   void     Initialize();
+  void     Clear();
 
   void     StoreTrackID(Int_t tid)    { TrackID.push_back(tid); }
   vector <Int_t>      GetTrackID() const {return TrackID;}

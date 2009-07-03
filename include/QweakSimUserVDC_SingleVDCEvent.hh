@@ -7,8 +7,7 @@
 /**
  
    \file QweakSimUserVDC_SingleVDCEvent.hh
-   $Revision: 1.2 $	
-   $Date: 2005/12/27 19:31:36 $
+   $Date: Fri Jul  3 14:19:13 CDT 2009$
    \author Klaus Hans Grimm
      
 */
@@ -37,22 +36,6 @@
 
     
  */
-//=============================================================================
-//
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2005/12/27 19:31:36 $
-//  CVS/RCS Revision: $Revision: 1.2 $
-//  Status:           $State: Exp $
-// 
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-// 
 //=============================================================================
 //=============================================================================
 /**
@@ -115,6 +98,7 @@ public:
   virtual ~QweakSimUserVDC_SingleVDCEvent();
   
   void Initialize();
+  void Clear();
   
   // define a new Class known to ROOT  
   ClassDef(QweakSimUserVDC_SingleVDCEvent,1)

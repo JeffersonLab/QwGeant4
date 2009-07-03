@@ -81,7 +81,7 @@ public:
   // Destructor 
  virtual ~QweakSimUserHDC_MainEvent();
   
-
+  void Clear();
   
   // define a new Class known to ROOT  
   ClassDef(QweakSimUserHDC_MainEvent,1)

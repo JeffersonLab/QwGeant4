@@ -85,6 +85,7 @@ public:
   virtual ~QweakSimUserHDC_SingleHDCEvent();
   
   void Initialize();
+  void Clear();
   
   // define a new Class known to ROOT  
   ClassDef(QweakSimUserHDC_SingleHDCEvent,1)

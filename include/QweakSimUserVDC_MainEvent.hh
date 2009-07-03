@@ -114,9 +114,9 @@ public:
   // Constructor
   QweakSimUserVDC_MainEvent();
   // Destructor 
- virtual ~QweakSimUserVDC_MainEvent();
+  virtual ~QweakSimUserVDC_MainEvent();
   
-
+  void Clear();
   
   // define a new Class known to ROOT  
   ClassDef(QweakSimUserVDC_MainEvent,1)
