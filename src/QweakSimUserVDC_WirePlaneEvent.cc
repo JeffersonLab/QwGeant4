@@ -15,24 +15,6 @@
 
 */
 //=============================================================================
-
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2006/01/06 21:42:29 $
-//  CVS/RCS Revision: $Revision: 1.3 $
-//  Status:           $State: Exp $
-// 
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-//
-//============================================================================
-
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
 #include "QweakSimUserVDC_WirePlaneEvent.hh"
@@ -54,86 +36,65 @@ QweakSimUserVDC_WirePlaneEvent::~QweakSimUserVDC_WirePlaneEvent()
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 void QweakSimUserVDC_WirePlaneEvent::Initialize()
 {
-  TrackID                        = 0;
-  GlobalTimeOfHit                = 0.0;
+  TrackID.clear();
+  GlobalTimeOfHit.clear();
 
-  UPlaneHasBeenHit               = 0;
-  VPlaneHasBeenHit               = 0;
+  UPlaneHasBeenHit.clear();
+  VPlaneHasBeenHit.clear();
 
-  UPlaneLocalPositionX           = 0.0;
-  UPlaneLocalPositionY           = 0.0;
-  UPlaneLocalPositionZ           = 0.0;
-  UPlaneGlobalPositionX          = 0.0;
-  UPlaneGlobalPositionY          = 0.0;
-  UPlaneGlobalPositionZ          = 0.0;
+  UPlaneLocalPositionX.clear();
+  UPlaneLocalPositionY.clear();
+  UPlaneLocalPositionZ.clear();
+  UPlaneGlobalPositionX.clear();
+  UPlaneGlobalPositionY.clear();
+  UPlaneGlobalPositionZ.clear();
 
-  UPlaneLocalMomentumX           = 0.0;
-  UPlaneLocalMomentumY           = 0.0;
-  UPlaneLocalMomentumZ           = 0.0;
-  UPlaneGlobalMomentumX          = 0.0;
-  UPlaneGlobalMomentumY          = 0.0;
-  UPlaneGlobalMomentumZ          = 0.0;
+  UPlaneLocalMomentumX.clear();
+  UPlaneLocalMomentumY.clear();
+  UPlaneLocalMomentumZ.clear();
+  UPlaneGlobalMomentumX.clear();
+  UPlaneGlobalMomentumY.clear();
+  UPlaneGlobalMomentumZ.clear();
 
-  VPlaneLocalPositionX           = 0.0;
-  VPlaneLocalPositionY           = 0.0;
-  VPlaneLocalPositionZ           = 0.0;
-  VPlaneGlobalPositionX          = 0.0;
-  VPlaneGlobalPositionY          = 0.0;
-  VPlaneGlobalPositionZ          = 0.0;
+  VPlaneLocalPositionX.clear();
+  VPlaneLocalPositionY.clear();
+  VPlaneLocalPositionZ.clear();
+  VPlaneGlobalPositionX.clear();
+  VPlaneGlobalPositionY.clear();
+  VPlaneGlobalPositionZ.clear();
 
-  VPlaneLocalMomentumX           = 0.0;
-  VPlaneLocalMomentumY           = 0.0;
-  VPlaneLocalMomentumZ           = 0.0;
-  VPlaneGlobalMomentumX          = 0.0;
-  VPlaneGlobalMomentumY          = 0.0;
-  VPlaneGlobalMomentumZ          = 0.0;
+  VPlaneLocalMomentumX.clear();
+  VPlaneLocalMomentumY.clear();
+  VPlaneLocalMomentumZ.clear();
+  VPlaneGlobalMomentumX.clear();
+  VPlaneGlobalMomentumY.clear();
+  VPlaneGlobalMomentumZ.clear();
 
-  OriginVertexPositionX          = 0.0;
-  OriginVertexPositionY          = 0.0;
-  OriginVertexPositionZ          = 0.0;
-  OriginVertexMomentumDirectionX = 0.0;
-  OriginVertexMomentumDirectionY = 0.0;
-  OriginVertexMomentumDirectionZ = 0.0;
-  OriginVertexThetaAngle         = 0.0;
-  OriginVertexPhiAngle           = 0.0;
-  OriginVertexKineticEnergy      = 0.0;
-  OriginVertexTotalEnergy        = 0.0;
+  OriginVertexPositionX.clear();
+  OriginVertexPositionY.clear();
+  OriginVertexPositionZ.clear();
+  OriginVertexMomentumDirectionX.clear();
+  OriginVertexMomentumDirectionY.clear();
+  OriginVertexMomentumDirectionZ.clear();
+  OriginVertexThetaAngle.clear();
+  OriginVertexPhiAngle.clear();
+  OriginVertexKineticEnergy.clear();
+  OriginVertexTotalEnergy.clear();
 
 //   PrimaryQ2                      = 0.0;
 //   CrossSection                   = 0.0;
 //   CrossSectionWeight             = 0.0;
 
-  UPlaneGlobalPhiAngle           = 0.;
-  UPlaneGlobalThetaAngle         = 0.;
+  UPlaneGlobalPhiAngle.clear();
+  UPlaneGlobalThetaAngle.clear();
 
-  VPlaneGlobalPhiAngle           = 0.;
-  VPlaneGlobalThetaAngle         = 0.;
+  VPlaneGlobalPhiAngle.clear();
+  VPlaneGlobalThetaAngle.clear();
 
-  ParticleName                   = "None";
-  ParticleType                   = -1;
-  TotalEnergy                    = 0.;
-  KineticEnergy                  = 0.;
+  ParticleName.clear();
+  ParticleType.clear();         //   = -1;
+  TotalEnergy.clear();
+  KineticEnergy.clear();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-
-//=======================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//      $Revisions$  
-//      $Log: QweakSimUserVDC_WirePlaneEvent.cc,v $
-//      Revision 1.3  2006/01/06 21:42:29  grimm
-//       Added initialization of:
-//
-//        ParticleName                   = "None";
-//        ParticleType                   = -1;
-//        TotalEnergy                    = 0.;
-//        KineticEnergy                  = 0.;
-//
-//      Revision 1.2  2005/12/27 19:19:01  grimm
-//      - Redesign of Doxygen header containing CVS info like revision and date
-//      - Added CVS revision log at the end of file
-//
-//
