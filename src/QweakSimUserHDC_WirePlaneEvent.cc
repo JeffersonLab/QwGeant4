@@ -38,47 +38,7 @@ QweakSimUserHDC_WirePlaneEvent::~QweakSimUserHDC_WirePlaneEvent()
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 void QweakSimUserHDC_WirePlaneEvent::Initialize()
 {
-  TrackID.clear();
-  GlobalTimeOfHit.clear();
-
-  PlaneHasBeenHit.clear();
-
-  PlaneLocalPositionX.clear();
-  PlaneLocalPositionY.clear();
-  PlaneLocalPositionZ.clear();
-
-  PlaneGlobalPositionX.clear();
-  PlaneGlobalPositionY.clear();
-  PlaneGlobalPositionZ.clear();
-
-  PlaneLocalMomentumX.clear();
-  PlaneLocalMomentumY.clear();
-  PlaneLocalMomentumZ.clear();
-
-  PlaneGlobalMomentumX.clear();
-  PlaneGlobalMomentumY.clear();
-  PlaneGlobalMomentumZ.clear();
-
-  OriginVertexPositionX.clear();
-  OriginVertexPositionY.clear();
-  OriginVertexPositionZ.clear();
-
-  OriginVertexMomentumDirectionX.clear();
-  OriginVertexMomentumDirectionY.clear();
-  OriginVertexMomentumDirectionZ.clear();
-
-  OriginVertexThetaAngle.clear();
-  OriginVertexPhiAngle.clear();
-
-  OriginVertexKineticEnergy.clear();
-  OriginVertexTotalEnergy.clear();
-
-//   PrimaryQ2                      = 0.0;
-//   CrossSection                   = 0.0;
-//   CrossSectionWeight             = 0.0;
-
-  GlobalPhiAngle.clear();
-  GlobalThetaAngle.clear();
+  Clear();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....

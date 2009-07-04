@@ -54,52 +54,59 @@ QweakSimUserGEM_WirePlaneEvent::~QweakSimUserGEM_WirePlaneEvent()
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 void QweakSimUserGEM_WirePlaneEvent::Initialize()
 {
-  TrackID                        = 0;
-  GlobalTimeOfHit                = 0.0;
+  Clear();
+}
 
-  PlaneHasBeenHit                = 0;
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
+void QweakSimUserGEM_WirePlaneEvent::Clear()
+{
+  TrackID.clear();
+  GlobalTimeOfHit.clear();
 
-  PlaneLocalPositionX            = 0.0;
-  PlaneLocalPositionY            = 0.0;
-  PlaneLocalPositionZ            = 0.0;
+  PlaneHasBeenHit.clear();
 
-  PlaneGlobalPositionX           = 0.0;
-  PlaneGlobalPositionY           = 0.0;
-  PlaneGlobalPositionZ           = 0.0;
+  PlaneLocalPositionX.clear();
+  PlaneLocalPositionY.clear();
+  PlaneLocalPositionZ.clear();
 
-  PlaneLocalMomentumX            = 0.0;
-  PlaneLocalMomentumY            = 0.0;
-  PlaneLocalMomentumZ            = 0.0;
+  PlaneGlobalPositionX.clear();
+  PlaneGlobalPositionY.clear();
+  PlaneGlobalPositionZ.clear();
 
-  PlaneGlobalMomentumX           = 0.0;
-  PlaneGlobalMomentumY           = 0.0;
-  PlaneGlobalMomentumZ           = 0.0;
+  PlaneLocalMomentumX.clear();
+  PlaneLocalMomentumY.clear();
+  PlaneLocalMomentumZ.clear();
 
-  OriginVertexPositionX          = 0.0;
-  OriginVertexPositionY          = 0.0;
-  OriginVertexPositionZ          = 0.0;
+  PlaneGlobalMomentumX.clear();
+  PlaneGlobalMomentumY.clear();
+  PlaneGlobalMomentumZ.clear();
 
-  OriginVertexMomentumDirectionX = 0.0;
-  OriginVertexMomentumDirectionY = 0.0;
-  OriginVertexMomentumDirectionZ = 0.0;
+  OriginVertexPositionX.clear();
+  OriginVertexPositionY.clear();
+  OriginVertexPositionZ.clear();
 
-  OriginVertexThetaAngle         = 0.0;
-  OriginVertexPhiAngle           = 0.0;
+  OriginVertexMomentumDirectionX.clear();
+  OriginVertexMomentumDirectionY.clear();
+  OriginVertexMomentumDirectionZ.clear();
 
-  OriginVertexKineticEnergy      = 0.0;
-  OriginVertexTotalEnergy        = 0.0;
+  OriginVertexThetaAngle.clear();
+  OriginVertexPhiAngle.clear();
+
+  OriginVertexKineticEnergy.clear();
+  OriginVertexTotalEnergy.clear();
 
 //   PrimaryQ2                      = 0.0;
 //   CrossSection                   = 0.0;
 //   CrossSectionWeight             = 0.0;
 
-  GlobalPhiAngle                 = 0.;
-  GlobalThetaAngle               = 0.;
+  GlobalPhiAngle.clear();
+  GlobalThetaAngle.clear();
 
-  TotalEnergy                    = 0.;
-  KineticEnergy                  = 0.;
+  TotalEnergy.clear();
+  KineticEnergy.clear();
 
 }
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
 //=======================================================

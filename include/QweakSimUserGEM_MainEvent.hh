@@ -63,9 +63,9 @@ public:
   // Constructor
   QweakSimUserGEM_MainEvent();
   // Destructor 
- virtual ~QweakSimUserGEM_MainEvent();
+  virtual ~QweakSimUserGEM_MainEvent();
   
-
+  void Clear();
   
   // define a new Class known to ROOT  
   ClassDef(QweakSimUserGEM_MainEvent,1)

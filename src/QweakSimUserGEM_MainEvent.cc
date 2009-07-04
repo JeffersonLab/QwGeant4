@@ -50,6 +50,13 @@ QweakSimUserGEM_MainEvent::~QweakSimUserGEM_MainEvent()
 {;}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
+void QweakSimUserGEM_MainEvent::Clear()
+{
+  ChamberFront.Clear();
+  ChamberBack.Clear();
+} 
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
 //=======================================================
 //   -----------------------

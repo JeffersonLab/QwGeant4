@@ -2218,9 +2218,10 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
     analysis->Fill_RootNtuple();
 
    //jpan@nuclear.uwinnipeg.ca
-   //clear contents
+   //clear vector contents
    analysis->QweakSimG4_RootEvent->Region3.Clear();
    analysis->QweakSimG4_RootEvent->Region2.Clear();
+   analysis->QweakSimG4_RootEvent->Region1.Clear();
 
       
   } //end of if( (n_hitWirePlane == 2)&&(n_hitFront >0)&&(n_hitBack >0)&&(n_hitCerenkov >0) ) 

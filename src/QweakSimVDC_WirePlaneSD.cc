@@ -116,17 +116,17 @@ G4bool QweakSimVDC_WirePlaneSD::ProcessHits(G4Step* aStep,G4TouchableHistory* RO
 
       if(   (strcmp(physVol->GetName(),"VDC_UPlane_Physical")==0) ) 
       {
-	  G4cout << "=============================================================" << G4endl;
-	  G4cout << ">>>>>>> Particle crossing  : VDC_UPlane_Physical <<<<<<<<<" << G4endl;
-	  G4cout << "=============================================================" << G4endl;
+// 	  G4cout << "=============================================================" << G4endl;
+// 	  G4cout << ">>>>>>> Particle crossing  : VDC_UPlane_Physical <<<<<<<<<" << G4endl;
+// 	  G4cout << "=============================================================" << G4endl;
       }
 
 
       if(   (strcmp(physVol->GetName(),"VDC_VPlane_Physical")==0) ) 
       {
-	  G4cout << "=============================================================" << G4endl;
-	  G4cout << ">>>>>>> Particle crossing  : VDC_VPlane_Physical <<<<<<<<<" << G4endl;
-	  G4cout << "=============================================================" << G4endl;
+// 	  G4cout << "=============================================================" << G4endl;
+// 	  G4cout << ">>>>>>> Particle crossing  : VDC_VPlane_Physical <<<<<<<<<" << G4endl;
+// 	  G4cout << "=============================================================" << G4endl;
       }
       
 

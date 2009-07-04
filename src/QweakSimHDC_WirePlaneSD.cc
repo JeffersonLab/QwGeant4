@@ -106,9 +106,9 @@ G4bool QweakSimHDC_WirePlaneSD::ProcessHits(G4Step* aStep,G4TouchableHistory* RO
 
   if(strcmp(physVol->GetName(),"HDC_WirePlane_Physical")==0) {
 
-    G4cout << "=============================================================" << G4endl;
-    G4cout << ">>>>>>> Particle crossing  : HDC_WirePlane_Physical <<<<<<<<<" << G4endl;
-    G4cout << "=============================================================" << G4endl;
+//     G4cout << "=============================================================" << G4endl;
+//     G4cout << ">>>>>>> Particle crossing  : HDC_WirePlane_Physical <<<<<<<<<" << G4endl;
+//     G4cout << "=============================================================" << G4endl;
 
     G4double trackID = aStep->GetTrack()->GetTrackID();
 //     G4cout << "====> Track ID     : " <<  trackID << G4endl;
@@ -190,7 +190,7 @@ G4bool QweakSimHDC_WirePlaneSD::ProcessHits(G4Step* aStep,G4TouchableHistory* RO
 
 
 
-  G4cout << " =====> Storing HDC hit information into aHit" << G4endl;
+  //G4cout << " =====> Storing HDC hit information into aHit" << G4endl;
 
     //   QweakSimHDCHit* aHit = new QweakSimHDCHit(MotherCopyNo); // there is only one plane per motherVolume
     QweakSimHDC_WirePlaneHit* aHit = new QweakSimHDC_WirePlaneHit(); // there is only one plane per motherVolume

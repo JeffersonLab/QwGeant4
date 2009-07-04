@@ -65,7 +65,8 @@ public:
   virtual ~QweakSimUserGEM_SingleGEMEvent();
   
   void Initialize();
-  
+  void Clear();
+
   // define a new Class known to ROOT  
   ClassDef(QweakSimUserGEM_SingleGEMEvent,1)
     
