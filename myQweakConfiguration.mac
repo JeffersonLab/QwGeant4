@@ -36,8 +36,8 @@
 #
 #/Cerenkov/SetCerenkovMaterial HeGas
 #/Cerenkov/SetCerenkovMaterial SiO2
-#/Cerenkov/SetCerenkovMaterial Quartz
-/Cerenkov/SetCerenkovMaterial Vacuum
+/Cerenkov/SetCerenkovMaterial Quartz
+#/Cerenkov/SetCerenkovMaterial Vacuum
 
 # positions to be extracted from SolidWorks
 # or by Juliette Mammei's hit distribution

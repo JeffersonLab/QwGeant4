@@ -76,7 +76,7 @@ class QweakSimTrackingActionMessenger: public G4UImessenger
 
     G4UIdirectory*             TrackingActionDir;
 
-    G4UIcmdWithAnInteger*      PrimaryOnly_Cmd;
+    G4UIcmdWithAnInteger*      TrackingFlag_Cmd;
 
 };
 

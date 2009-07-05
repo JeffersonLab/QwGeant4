@@ -36,7 +36,7 @@ QweakSimEPEventMessenger::QweakSimEPEventMessenger(QweakSimEPEvent* pEPEvent)
   SelectOctant_Cmd->SetGuidance("Select octant for primaries");
   SelectOctant_Cmd->SetParameterName("SelectOctant",true);
   SelectOctant_Cmd->SetDefaultValue(1);
-  SelectOctant_Cmd->SetRange("SelectOctant>=1");
+  SelectOctant_Cmd->SetRange("SelectOctant>=1 && SelectOctant<=8");
   SelectOctant_Cmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
 //    ReactionType:            1 - LH2 elastic

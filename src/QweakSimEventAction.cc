@@ -2237,7 +2237,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt)
 //jpan@nuclear.uwinnipeg.ca
 // if (eventNumber%25000 == 1) analysis->AutoSaveRootNtuple();
 
- if (eventNumber%200 == 1) 
+ if (eventNumber%1000 == 1) 
         analysis->AutoSaveRootNtuple(); 
 
 //=======================================================================

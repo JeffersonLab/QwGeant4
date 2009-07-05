@@ -71,8 +71,10 @@
 
 # TrackingAction menue
 /gui/addMenu   trackingAction TrackingAction 
-/gui/addButton trackingAction "Track all particles " "/TrackingAction/PrimaryElectronsOnly 0"
-/gui/addButton trackingAction "Track primaries only" "/TrackingAction/PrimaryElectronsOnly 1"
+/gui/addButton trackingAction "Track primary electrons only" "/TrackingAction/TrackingFlag 0"
+/gui/addButton trackingAction "Track primary electrons and optical photons only" "/TrackingAction/TrackingFlag 1"
+/gui/addButton trackingAction "Track all particles except optical photons" "/TrackingAction/TrackingFlag 2"
+/gui/addButton trackingAction "Track all particles" "/TrackingAction/TrackingFlag 3"
 
 # Reaction type menue
 /gui/addMenu reactionType Reaction

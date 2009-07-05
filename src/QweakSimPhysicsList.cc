@@ -40,9 +40,9 @@
 
 QweakSimPhysicsList::QweakSimPhysicsList() : G4VUserPhysicsList()
 {
-  defaultCutValue = 1.0*cm;
+  //defaultCutValue = 1.0*cm;
 
-   //defaultCutValue     = 1.0*micrometer;
+   defaultCutValue     = 1.0*micrometer;
 
   //********************************************
   //Added for low energy hadronic tests 04/27/06
@@ -115,7 +115,7 @@ void QweakSimPhysicsList::ConstructProcess()
 //  ConstructDecayProcess();
 
   ConstructEMProcess();
-//  ConstructOpticalPhotonProcess();
+  ConstructOpticalPhotonProcess();
 //  ConstructHadronProcess();
   //ConstructNeutronProcess();
   ConstructPhotonNuclearProcess();
@@ -370,7 +370,7 @@ void QweakSimPhysicsList::ConstructOpticalPhotonProcess()
 
       if (theCerenkovProcess->IsApplicable(*particle)) {
 //jpan@nuclear.uwinnipeg.ca
-//	  pManager->AddContinuousProcess(theCerenkovProcess); // here: disable Cerenkov (part 2 of 2)
+	  pManager->AddContinuousProcess(theCerenkovProcess); // here: disable Cerenkov (part 2 of 2)
       }
 
       //     if (theScintillationProcess->IsApplicable(*particle)) {

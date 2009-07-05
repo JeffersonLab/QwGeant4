@@ -151,11 +151,13 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
       }
     }
   }
-  else  //secondary, umcomment to disregard all secondaries to speed up the primary particle simulation
-   { 
+
+//now this is handled in the TrackingAction with the control of the tracking flag
+//  else  //secondary, umcomment to disregard all secondaries to speed up the primary particle simulation
+//   { 
 //      theTrack->SetTrackStatus(fStopAndKill); 
 //      return;
-   }
+//   }
 
 //jpan@nuclear.uwinnipeg
 //kill a track if it is in collimators or shielding wall

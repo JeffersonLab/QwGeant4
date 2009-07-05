@@ -12,26 +12,9 @@
    $Date: 2006/01/06 04:46:45 $
 
    \author Klaus Hans Grimm   
+   \author Peiqing Wang
 
 */
-//=============================================================================
-
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2006/01/06 04:46:45 $
-//  CVS/RCS Revision: $Revision: 1.1 $
-//  Status:           $State: Exp $
-// 
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-//
-//============================================================================
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #include "QweakSimTrackingActionMessenger.hh"
@@ -45,20 +28,24 @@ QweakSimTrackingActionMessenger::QweakSimTrackingActionMessenger(QweakSimTrackin
   TrackingActionDir = new G4UIdirectory("/TrackingAction/");
   TrackingActionDir -> SetGuidance("TrackingAction control.");
 
-  PrimaryOnly_Cmd =  new G4UIcmdWithAnInteger("/TrackingAction/PrimaryElectronsOnly",this);
-  PrimaryOnly_Cmd->SetGuidance("Track only primary target electrons"); 
-  PrimaryOnly_Cmd->SetGuidance(" 1 : Track Primary only"); 
-  PrimaryOnly_Cmd->SetGuidance(" 0 : Track Primary and Secondaries"); 
-  PrimaryOnly_Cmd->SetParameterName("Store",true);
-  PrimaryOnly_Cmd->SetDefaultValue(0);
-  PrimaryOnly_Cmd->SetRange("Store >=0 && Store <= 1");
+  TrackingFlag_Cmd =  new G4UIcmdWithAnInteger("/TrackingAction/TrackingFlag",this);
+  TrackingFlag_Cmd->SetGuidance("Select tracking flag"); 
+  TrackingFlag_Cmd->SetGuidance(" 0 : Track primary electrons only");
+  TrackingFlag_Cmd->SetGuidance(" 1 : Track primary electrons and optical photons only"); 
+  TrackingFlag_Cmd->SetGuidance(" 2 : Track all particles except optical photons");
+  TrackingFlag_Cmd->SetGuidance(" 3 : Track all particles"); 
+  TrackingFlag_Cmd->SetParameterName("Store",true);
+  TrackingFlag_Cmd->SetDefaultValue(0);
+  TrackingFlag_Cmd->SetRange("Store >=0 && Store <= 3");
+  TrackingFlag_Cmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 QweakSimTrackingActionMessenger::~QweakSimTrackingActionMessenger()
 {
-  delete PrimaryOnly_Cmd;
+  delete TrackingFlag_Cmd;
   delete TrackingActionDir;
 }
 
@@ -68,26 +55,15 @@ void QweakSimTrackingActionMessenger::SetNewValue(G4UIcommand* command,G4String 
 { 
   G4cout << "#### Calling QweakSimTrackingActionMessenger::SetNewValue() " << newValue << G4endl;
 
-  if( command == PrimaryOnly_Cmd )
+  if( command == TrackingFlag_Cmd )
    {
-     G4cout << "#### Messenger: Setting Tracking PrimaryOnly Flag to " << newValue << G4endl;
+     G4cout << "#### Messenger: Setting Tracking Flag to " << newValue << G4endl;
 
-     myTrackingAction->SetTrackingPrimaryOnlyFlag(PrimaryOnly_Cmd->ConvertToBool(newValue));
+     myTrackingAction->SetTrackingFlag(TrackingFlag_Cmd->GetNewIntValue(newValue));
    }
 
   G4cout << "#### Leaving QweakSimTrackingActionMessenger::SetNewValue() " << newValue << G4endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-//=======================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//      $Revisions$  
-//      $Log: QweakSimTrackingActionMessenger.cc,v $
-//      Revision 1.1  2006/01/06 04:46:45  grimm
-//      Initial version. Allows to set a flag for the tracking of primary electrons.
-//
 

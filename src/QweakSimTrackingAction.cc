@@ -65,8 +65,8 @@ QweakSimTrackingAction::~QweakSimTrackingAction()
     //-----------------------------------------------------------
     //
 
-  
-    if (TrackingPrimaryOnlyFlag==1) 
+  /*
+    if (TrackingFlag==1) 
     {
 	// store only trajectory of primary particles (== electrons from event generator) for tracking
 	//if( (aTrack->GetParentID()==0) || (aTrack->GetVertexPosition().z() > 568.0*cm) )
@@ -86,6 +86,74 @@ QweakSimTrackingAction::~QweakSimTrackingAction()
 	}
     }
     else 
+    {
+	// store all trajectories (primary+secondaries)
+	fpTrackingManager->SetStoreTrajectory(true);
+	fpTrackingManager->SetTrajectory(new QweakSimTrajectory(aTrack));
+	
+    }*/
+
+
+
+    if (TrackingFlag==0)  //track primary electron only
+    {
+	// store only trajectory of primary particles (== electrons from event generator) for tracking
+	//if( (aTrack->GetParentID()==0) || (aTrack->GetVertexPosition().z() > 568.0*cm) )
+	
+	if( aTrack->GetParentID()==0 )
+	{
+	    fpTrackingManager->SetStoreTrajectory(true);
+	    
+	    // store track
+	    fpTrackingManager->SetTrajectory(new QweakSimTrajectory(aTrack));
+	}
+	else
+	{
+	    //fpTrackingManager->SetStoreTrajectory(false);
+            //aTrack->SetTrackStatus(fStopAndKill); 
+            fpTrackingManager->EventAborted();
+            return;
+	}
+    }
+    else if (TrackingFlag==1)  //track primary electron and optical photon
+    {
+	if( (aTrack->GetParentID()==0) || (aTrack->GetDefinition() == G4OpticalPhoton::OpticalPhotonDefinition()) )
+	{
+	    fpTrackingManager->SetStoreTrajectory(true);
+	    
+	    // store track
+	    fpTrackingManager->SetTrajectory(new QweakSimTrajectory(aTrack));
+	}
+	else
+	{
+	    //fpTrackingManager->SetStoreTrajectory(false);
+            //aTrack->SetTrackStatus(fStopAndKill); 
+            fpTrackingManager->EventAborted();
+            return;
+	}
+	
+    }
+
+    else if (TrackingFlag==2)  //track primary electron and secondaries except optical photon
+    {
+	if( aTrack->GetDefinition() != G4OpticalPhoton::OpticalPhotonDefinition() )
+	{
+	    fpTrackingManager->SetStoreTrajectory(true);
+	    
+	    // store track
+	    fpTrackingManager->SetTrajectory(new QweakSimTrajectory(aTrack));
+	}
+	else
+	{
+	    //fpTrackingManager->SetStoreTrajectory(false);
+            //aTrack->SetTrackStatus(fStopAndKill); 
+            fpTrackingManager->EventAborted();
+            return;
+	}
+	
+    }
+
+    else  // if (TrackingFlag==3)  //track all particles
     {
 	// store all trajectories (primary+secondaries)
 	fpTrackingManager->SetStoreTrajectory(true);

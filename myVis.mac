@@ -41,11 +41,13 @@
 # /particle/process/dump
 # /particle/process/inactivate 1
 
-# Alllow only the tracking of the primary particles (== electrons from event generator)
-#  0: track all primaries and their secondaries (default)
-#  1: Allow primaries only, 
-#TrackingAction/PrimaryElectronsOnly 0
-/TrackingAction/PrimaryElectronsOnly 1
+# Select the tracking flag
+#  0: Allow primaries only (default)
+#  1: Allow primaries and optical photons only
+#  0: track all primaries and their secondaries
+/TrackingAction/TrackingFlag 0
+#/TrackingAction/TrackingFlag 1
+#/TrackingAction/TrackingFlag 2
 
 #
 # Store particle trajactories for visualisation

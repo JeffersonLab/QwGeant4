@@ -116,6 +116,7 @@ void QweakSimAnalysis::AutoSaveRootNtuple()
 
      // QweakSimG4_RootNtuple -> AutoSave("SaveSelf");
      QweakSimG4_RootNtuple -> AutoSave();
+     gDirectory -> Purge(); //jpan: Purge old trees
 
 //jpan@nuclear.uwinnipeg.ca
 //print the timestamp on screen, test code, add by Jie

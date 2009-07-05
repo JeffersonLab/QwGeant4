@@ -65,7 +65,7 @@ public:
   void  PreUserTrackingAction(const G4Track* aTrack);
   void PostUserTrackingAction(const G4Track* aTrack);
 
-  void SetTrackingPrimaryOnlyFlag(G4bool myflag) {TrackingPrimaryOnlyFlag = myflag;}
+  void SetTrackingFlag(G4int myflag) {TrackingFlag = myflag;}
 
 private:
 
@@ -74,7 +74,7 @@ private:
   QweakSimUserInformation*         myUserInfo;
 
 
-  G4bool TrackingPrimaryOnlyFlag;
+  G4int TrackingFlag;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
