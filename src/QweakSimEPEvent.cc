@@ -38,9 +38,9 @@ QweakSimEPEvent::QweakSimEPEvent()
   std::cout << "###### Calling QweakSimEPEvent::QweakSimEPEvent () " << std::endl;
 
   meanPhiAngle = 0.0*degree;
-  sigmaPhiAngle = 18.0*degree;
+  sigmaPhiAngle = 17.0*degree;
   ThetaAngle_Min =  4.0*degree;
-  ThetaAngle_Max = 18.0*degree;
+  ThetaAngle_Max = 14.0*degree;
 
   ReactionType = 1;
   ReactionRegion = 1;

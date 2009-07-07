@@ -50,54 +50,34 @@ class QweakSimUserVDC_WirePlaneEvent
 
 private:
 
+  Int_t            NbOfHits;
+
   vector <Int_t>   TrackID;
   vector <Float_t> GlobalTimeOfHit;
 
-  vector <Int_t>   UPlaneHasBeenHit;
-  vector <Int_t>   VPlaneHasBeenHit;
-
-  vector <Float_t> UPlaneLocalPositionX;
-  vector <Float_t> UPlaneLocalPositionY;
-  vector <Float_t> UPlaneLocalPositionZ;
+  vector <Int_t>   HasBeenHit;
+ 
+  vector <Float_t> LocalPositionX;
+  vector <Float_t> LocalPositionY;
+  vector <Float_t> LocalPositionZ;
   
-  vector <Float_t> UPlaneGlobalPositionX;
-  vector <Float_t> UPlaneGlobalPositionY;
-  vector <Float_t> UPlaneGlobalPositionZ;
+  vector <Float_t> GlobalPositionX;
+  vector <Float_t> GlobalPositionY;
+  vector <Float_t> GlobalPositionZ;
 
 
-  vector <Float_t> UPlaneLocalMomentumX;
-  vector <Float_t> UPlaneLocalMomentumY;
-  vector <Float_t> UPlaneLocalMomentumZ;
+  vector <Float_t> LocalMomentumX;
+  vector <Float_t> LocalMomentumY;
+  vector <Float_t> LocalMomentumZ;
 
-  vector <Float_t> UPlaneGlobalMomentumX;
-  vector <Float_t> UPlaneGlobalMomentumY;
-  vector <Float_t> UPlaneGlobalMomentumZ;
+  vector <Float_t> GlobalMomentumX;
+  vector <Float_t> GlobalMomentumY;
+  vector <Float_t> GlobalMomentumZ;
 
-  vector <Float_t> UPlaneGlobalPhiAngle;
-  vector <Float_t> UPlaneGlobalThetaAngle;
-
-
+  vector <Float_t> GlobalPhiAngle;
+  vector <Float_t> GlobalThetaAngle;
 
 
-  vector <Float_t> VPlaneLocalPositionX;
-  vector <Float_t> VPlaneLocalPositionY;
-  vector <Float_t> VPlaneLocalPositionZ;
-
-  vector <Float_t> VPlaneGlobalPositionX;
-  vector <Float_t> VPlaneGlobalPositionY;
-  vector <Float_t> VPlaneGlobalPositionZ;
-
-
-  vector <Float_t> VPlaneLocalMomentumX;
-  vector <Float_t> VPlaneLocalMomentumY;
-  vector <Float_t> VPlaneLocalMomentumZ;
-  
-  vector <Float_t> VPlaneGlobalMomentumX;
-  vector <Float_t> VPlaneGlobalMomentumY;
-  vector <Float_t> VPlaneGlobalMomentumZ;
-
-  vector <Float_t> VPlaneGlobalPhiAngle;
-  vector <Float_t> VPlaneGlobalThetaAngle;
 
   vector <Float_t> OriginVertexPositionX;
   vector <Float_t> OriginVertexPositionY;
@@ -134,6 +114,9 @@ public:
   void     Initialize();
   void     Clear();
 
+  void     StoreNbOfHits(Int_t noh)    { NbOfHits = noh; }
+  Int_t      GetNbOfHits() const {return NbOfHits;}
+
   void     StoreTrackID(Int_t tid)    { TrackID.push_back(tid); }
   vector <Int_t>      GetTrackID() const {return TrackID;}
 
@@ -154,105 +137,56 @@ public:
   void     StoreKineticEnergy(Float_t ke)   { KineticEnergy.push_back(ke); }
   vector <Float_t>    GetKineticEnergy() const {return KineticEnergy;}
 
-  void     StoreUPlaneHasBeenHit(Int_t nu)      { UPlaneHasBeenHit.push_back(nu); }
-  vector <Int_t>      GetUPlaneHasBeenHit() const {return UPlaneHasBeenHit;}
-
-  void     StoreVPlaneHasBeenHit(Int_t nv)      { VPlaneHasBeenHit.push_back(nv); }
-  vector <Int_t>      GetVPlaneHasBeenHit() const {return VPlaneHasBeenHit;}
+  void     StoreHasBeenHit(Int_t nu)      { HasBeenHit.push_back(nu); }
+  vector <Int_t>      GetHasBeenHit() const {return HasBeenHit;}
 
   //-----------------
-  void     StoreUPlaneLocalPositionX(Float_t lx)   { UPlaneLocalPositionX.push_back(lx); }
-  vector <Float_t>    GetUPlaneLocalPositionX() const {return UPlaneLocalPositionX;}
+  void     StoreLocalPositionX(Float_t lx)   { LocalPositionX.push_back(lx); }
+  vector <Float_t>    GetLocalPositionX() const {return LocalPositionX;}
 
-  void     StoreUPlaneLocalPositionY(Float_t ly)   { UPlaneLocalPositionY.push_back(ly); }
-  vector <Float_t>    GetUPlaneLocalPositionY() const {return UPlaneLocalPositionY;}
+  void     StoreLocalPositionY(Float_t ly)   { LocalPositionY.push_back(ly); }
+  vector <Float_t>    GetLocalPositionY() const {return LocalPositionY;}
 
-  void     StoreUPlaneLocalPositionZ(Float_t lz)   { UPlaneLocalPositionZ.push_back(lz); }
-  vector <Float_t>    GetUPlaneLocalPositionZ() const {return UPlaneLocalPositionZ;}
+  void     StoreLocalPositionZ(Float_t lz)   { LocalPositionZ.push_back(lz); }
+  vector <Float_t>    GetLocalPositionZ() const {return LocalPositionZ;}
   //---
-  void     StoreUPlaneGlobalPositionX(Float_t lx)   { UPlaneGlobalPositionX.push_back(lx); }
-  vector <Float_t>    GetUPlaneGlobalPositionX() const {return UPlaneGlobalPositionX;}
+  void     StoreGlobalPositionX(Float_t lx)   { GlobalPositionX.push_back(lx); }
+  vector <Float_t>    GetGlobalPositionX() const {return GlobalPositionX;}
 
-  void     StoreUPlaneGlobalPositionY(Float_t ly)   { UPlaneGlobalPositionY.push_back(ly); }
-  vector <Float_t>    GetUPlaneGlobalPositionY() const {return UPlaneGlobalPositionY;}
+  void     StoreGlobalPositionY(Float_t ly)   { GlobalPositionY.push_back(ly); }
+  vector <Float_t>    GetGlobalPositionY() const {return GlobalPositionY;}
 
-  void     StoreUPlaneGlobalPositionZ(Float_t lz)   { UPlaneGlobalPositionZ.push_back(lz); }
-  vector <Float_t>    GetUPlaneGlobalPositionZ() const {return UPlaneGlobalPositionZ;}
+  void     StoreGlobalPositionZ(Float_t lz)   { GlobalPositionZ.push_back(lz); }
+  vector <Float_t>    GetGlobalPositionZ() const {return GlobalPositionZ;}
 
   //-----------------
 
-  void     StoreUPlaneLocalMomentumX(Float_t lpx)   { UPlaneLocalMomentumX.push_back(lpx); }
-  vector <Float_t>    GetUPlaneLocalMomentumX() const {return UPlaneLocalMomentumX;}
+  void     StoreLocalMomentumX(Float_t lpx)   { LocalMomentumX.push_back(lpx); }
+  vector <Float_t>    GetLocalMomentumX() const {return LocalMomentumX;}
 
-  void     StoreUPlaneLocalMomentumY(Float_t lpy)   { UPlaneLocalMomentumY.push_back(lpy); }
-  vector <Float_t>    GetUPlaneLocalMomentumY() const {return UPlaneLocalMomentumY;}
+  void     StoreLocalMomentumY(Float_t lpy)   { LocalMomentumY.push_back(lpy); }
+  vector <Float_t>    GetLocalMomentumY() const {return LocalMomentumY;}
 
-  void     StoreUPlaneLocalMomentumZ(Float_t lpz)   { UPlaneLocalMomentumZ.push_back(lpz); }
-  vector <Float_t>    GetUPlaneLocalMomentumZ() const {return UPlaneLocalMomentumZ;}
+  void     StoreLocalMomentumZ(Float_t lpz)   { LocalMomentumZ.push_back(lpz); }
+  vector <Float_t>    GetLocalMomentumZ() const {return LocalMomentumZ;}
   //---
-  void     StoreUPlaneGlobalMomentumX(Float_t gpx)   { UPlaneGlobalMomentumX.push_back(gpx); }
-  vector <Float_t>    GetUPlaneGlobalMomentumX() const {return UPlaneGlobalMomentumX;}
+  void     StoreGlobalMomentumX(Float_t gpx)   { GlobalMomentumX.push_back(gpx); }
+  vector <Float_t>    GetGlobalMomentumX() const {return GlobalMomentumX;}
 
-  void     StoreUPlaneGlobalMomentumY(Float_t gpy)   { UPlaneGlobalMomentumY.push_back(gpy); }
-  vector <Float_t>    GetUPlaneGlobalMomentumY() const {return UPlaneGlobalMomentumY;}
+  void     StoreGlobalMomentumY(Float_t gpy)   { GlobalMomentumY.push_back(gpy); }
+  vector <Float_t>    GetGlobalMomentumY() const {return GlobalMomentumY;}
 
-  void     StoreUPlaneGlobalMomentumZ(Float_t gpz)   { UPlaneGlobalMomentumZ.push_back(gpz); }
-  vector <Float_t>    GetUPlaneGlobalMomentumZ() const {return UPlaneGlobalMomentumZ;}
+  void     StoreGlobalMomentumZ(Float_t gpz)   { GlobalMomentumZ.push_back(gpz); }
+  vector <Float_t>    GetGlobalMomentumZ() const {return GlobalMomentumZ;}
 
 
-  void     StoreUPlaneGlobalThetaAngle(Float_t theta) { UPlaneGlobalThetaAngle.push_back(theta); }
-  vector <Float_t>    GetUPlaneGlobalThetaAngle() const  {return UPlaneGlobalThetaAngle;}
+  void     StoreGlobalThetaAngle(Float_t theta) { GlobalThetaAngle.push_back(theta); }
+  vector <Float_t>    GetGlobalThetaAngle() const  {return GlobalThetaAngle;}
 
-  void     StoreUPlaneGlobalPhiAngle(Float_t phi)  { UPlaneGlobalPhiAngle.push_back(phi); }
-  vector <Float_t>    GetUPlaneGlobalPhiAngle() const {return UPlaneGlobalPhiAngle;}
-
-  //-----------------
-
-  void     StoreVPlaneLocalPositionX(Float_t lx)   { VPlaneLocalPositionX.push_back(lx); }
-  vector <Float_t>    GetVPlaneLocalPositionX() const {return VPlaneLocalPositionX;}
-
-  void     StoreVPlaneLocalPositionY(Float_t ly)   { VPlaneLocalPositionY.push_back(ly); }
-  vector <Float_t>    GetVPlaneLocalPositionY() const {return VPlaneLocalPositionY;}
-
-  void     StoreVPlaneLocalPositionZ(Float_t lz)   { VPlaneLocalPositionZ.push_back(lz); }
-  vector <Float_t>    GetVPlaneLocalPositionZ() const {return VPlaneLocalPositionZ;}
-
-  void     StoreVPlaneGlobalPositionX(Float_t lx)   { VPlaneGlobalPositionX.push_back(lx); }
-  vector <Float_t>    GetVPlaneGlobalPositionX() const {return VPlaneGlobalPositionX;}
-
-  void     StoreVPlaneGlobalPositionY(Float_t ly)   { VPlaneGlobalPositionY.push_back(ly); }
-  vector <Float_t>    GetVPlaneGlobalPositionY() const {return VPlaneGlobalPositionY;}
-
-  void     StoreVPlaneGlobalPositionZ(Float_t lz)   { VPlaneGlobalPositionZ.push_back(lz); }
-  vector <Float_t>    GetVPlaneGlobalPositionZ() const {return VPlaneGlobalPositionZ;}
+  void     StoreGlobalPhiAngle(Float_t phi)  { GlobalPhiAngle.push_back(phi); }
+  vector <Float_t>    GetGlobalPhiAngle() const {return GlobalPhiAngle;}
 
   //-----------------
-
-  void     StoreVPlaneLocalMomentumX(Float_t lpx)   { VPlaneLocalMomentumX.push_back(lpx); }
-  vector <Float_t>    GetVPlaneLocalMomentumX() const {return VPlaneLocalMomentumX;}
-
-  void     StoreVPlaneLocalMomentumY(Float_t lpy)   { VPlaneLocalMomentumY.push_back(lpy); }
-  vector <Float_t>    GetVPlaneLocalMomentumY() const {return VPlaneLocalMomentumY;}
-
-  void     StoreVPlaneLocalMomentumZ(Float_t lpz)   { VPlaneLocalMomentumZ.push_back(lpz); }
-  vector <Float_t>    GetVPlaneLocalMomentumZ() const {return VPlaneLocalMomentumZ;}
-  //---
-  void     StoreVPlaneGlobalMomentumX(Float_t gpx)   { VPlaneGlobalMomentumX.push_back(gpx); }
-  vector <Float_t>    GetVPlaneGlobalMomentumX() const {return VPlaneGlobalMomentumX;}
-
-  void     StoreVPlaneGlobalMomentumY(Float_t gpy)   { VPlaneGlobalMomentumY.push_back(gpy); }
-  vector <Float_t>    GetVPlaneGlobalMomentumY() const {return VPlaneGlobalMomentumY;}
-
-  void     StoreVPlaneGlobalMomentumZ(Float_t gpz)   { VPlaneGlobalMomentumZ.push_back(gpz); }
-  vector <Float_t>    GetVPlaneGlobalMomentumZ() const {return VPlaneGlobalMomentumZ;}
-
-
-  void     StoreVPlaneGlobalThetaAngle(Float_t theta) { VPlaneGlobalThetaAngle.push_back(theta); }
-  vector <Float_t>    GetVPlaneGlobalThetaAngle() const  {return VPlaneGlobalThetaAngle;}
-
-  void     StoreVPlaneGlobalPhiAngle(Float_t phi)  { VPlaneGlobalPhiAngle.push_back(phi); }
-  vector <Float_t>    GetVPlaneGlobalPhiAngle() const {return VPlaneGlobalPhiAngle;}
-
   //-----------------
   void     StoreOriginVertexPositionX(Float_t vx)   { OriginVertexPositionX.push_back(vx); }
   vector <Float_t>    GetOriginVertexPositionX() const {return OriginVertexPositionX;}

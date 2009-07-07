@@ -12,7 +12,7 @@
    $Date: Fri Jul  3 10:21:43 CDT 2009 $
 
    \author Klaus Hans Grimm   
-   \author Jie PAn
+   \author Jie Pan
 
 */
 //=============================================================================
@@ -44,6 +44,8 @@ void QweakSimUserHDC_WirePlaneEvent::Initialize()
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 void QweakSimUserHDC_WirePlaneEvent::Clear()
 {
+  NbOfHits = 0;
+
   TrackID.clear();
   GlobalTimeOfHit.clear();
 

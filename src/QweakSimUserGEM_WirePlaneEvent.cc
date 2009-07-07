@@ -60,6 +60,8 @@ void QweakSimUserGEM_WirePlaneEvent::Initialize()
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 void QweakSimUserGEM_WirePlaneEvent::Clear()
 {
+  NbOfHits = 0;
+
   TrackID.clear();
   GlobalTimeOfHit.clear();
 

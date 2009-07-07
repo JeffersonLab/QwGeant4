@@ -44,39 +44,26 @@ void QweakSimUserVDC_WirePlaneEvent::Initialize()
 
 void QweakSimUserVDC_WirePlaneEvent::Clear()
 {
+  NbOfHits = 0;
+
   TrackID.clear();
   GlobalTimeOfHit.clear();
 
-  UPlaneHasBeenHit.clear();
-  VPlaneHasBeenHit.clear();
+  HasBeenHit.clear();
 
-  UPlaneLocalPositionX.clear();
-  UPlaneLocalPositionY.clear();
-  UPlaneLocalPositionZ.clear();
-  UPlaneGlobalPositionX.clear();
-  UPlaneGlobalPositionY.clear();
-  UPlaneGlobalPositionZ.clear();
+  LocalPositionX.clear();
+  LocalPositionY.clear();
+  LocalPositionZ.clear();
+  GlobalPositionX.clear();
+  GlobalPositionY.clear();
+  GlobalPositionZ.clear();
 
-  UPlaneLocalMomentumX.clear();
-  UPlaneLocalMomentumY.clear();
-  UPlaneLocalMomentumZ.clear();
-  UPlaneGlobalMomentumX.clear();
-  UPlaneGlobalMomentumY.clear();
-  UPlaneGlobalMomentumZ.clear();
-
-  VPlaneLocalPositionX.clear();
-  VPlaneLocalPositionY.clear();
-  VPlaneLocalPositionZ.clear();
-  VPlaneGlobalPositionX.clear();
-  VPlaneGlobalPositionY.clear();
-  VPlaneGlobalPositionZ.clear();
-
-  VPlaneLocalMomentumX.clear();
-  VPlaneLocalMomentumY.clear();
-  VPlaneLocalMomentumZ.clear();
-  VPlaneGlobalMomentumX.clear();
-  VPlaneGlobalMomentumY.clear();
-  VPlaneGlobalMomentumZ.clear();
+  LocalMomentumX.clear();
+  LocalMomentumY.clear();
+  LocalMomentumZ.clear();
+  GlobalMomentumX.clear();
+  GlobalMomentumY.clear();
+  GlobalMomentumZ.clear();
 
   OriginVertexPositionX.clear();
   OriginVertexPositionY.clear();
@@ -93,11 +80,8 @@ void QweakSimUserVDC_WirePlaneEvent::Clear()
 //   CrossSection                   = 0.0;
 //   CrossSectionWeight             = 0.0;
 
-  UPlaneGlobalPhiAngle.clear();
-  UPlaneGlobalThetaAngle.clear();
-
-  VPlaneGlobalPhiAngle.clear();
-  VPlaneGlobalThetaAngle.clear();
+  GlobalPhiAngle.clear();
+  GlobalThetaAngle.clear();
 
   ParticleName.clear();
   ParticleType.clear();         //   = -1;

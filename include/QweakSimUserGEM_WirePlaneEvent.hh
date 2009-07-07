@@ -44,6 +44,7 @@ class QweakSimUserGEM_WirePlaneEvent
 
 private:
 
+  Int_t            NbOfHits;
   vector <Int_t>   TrackID;
   vector <Float_t> GlobalTimeOfHit;
 
@@ -100,6 +101,9 @@ public:
 
   void     Initialize();
   void     Clear();
+
+  void     StoreNbOfHits(Int_t noh)    { NbOfHits = noh; }
+  Int_t      GetNbOfHits() const {return NbOfHits;}
 
   void     StoreTrackID(Int_t tid)    { TrackID.push_back(tid); }
   vector <Int_t>      GetTrackID() const {return TrackID;}

@@ -60,7 +60,8 @@ void QweakSimUserVDC_SingleVDCEvent::Initialize()
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 void QweakSimUserVDC_SingleVDCEvent::Clear()
 {
-    WirePlane.Clear();
+    WirePlaneU.Clear();
+    WirePlaneV.Clear();
 }
 
 

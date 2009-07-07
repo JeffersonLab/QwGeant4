@@ -4,8 +4,6 @@
 #
 # usage:
 #
-#  ./QweakSimG4 myRun.mac > /dev/zero
-#
 #=======================================
 
 # This shows the processes for all particles

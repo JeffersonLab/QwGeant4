@@ -87,7 +87,9 @@ private:
 
 public:
 
-  QweakSimUserVDC_WirePlaneEvent  WirePlane;
+  QweakSimUserVDC_WirePlaneEvent  WirePlaneU;
+  QweakSimUserVDC_WirePlaneEvent  WirePlaneV;
+
   QweakSimUserVDC_DriftCellEvent  DriftCell;
 
 public:
