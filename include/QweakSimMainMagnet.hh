@@ -1,30 +1,30 @@
 //=============================================================================
-// 
+//
 //   ---------------------------
 //  | Doxygen File Information |
 //  ---------------------------
 /**
- 
+
    \file QweakSimMainMagnet.hh
-   $Revision: 1.7 $	
+   $Revision: 1.7 $
    $Date: 2006/01/18 20:19:05 $
    \author Klaus Hans Grimm
-     
+
 */
 //=============================================================================
-// 
+//
 //=============================================================================
-// 
+//
 //   ---------------------------
 //  | Doxygen Class Information |
 //  ---------------------------
 /**
    \class QweakSimMainMagnet
-    
+
    \brief Main Magnet solids like coils and support, no field
 
    Placeholder for a long explaination
-    
+
  */
 //=============================================================================
 //
@@ -32,27 +32,27 @@
 //   -----------------------
 //  | CVS File Information |
 //  -----------------------
-// 
+//
 //  Last Update:      $Author: grimm $
 //  Update Date:      $Date: 2006/01/18 20:19:05 $
 //  CVS/RCS Revision: $Revision: 1.7 $
 //  Status:           $State: Exp $
-// 
+//
 // ===================================
 //  CVS Revision Log at end of file !!
 // ===================================
-// 
+//
 //=============================================================================
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 #ifndef QweakSimMainMagnet_h
-#define QweakSimMainMagnet_h 
+#define QweakSimMainMagnet_h
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 // system includes
 #include "cpp_include.h"
 //#include "Root_include.h"
-#include "Geant4_include.hh" 
+#include "Geant4_include.hh"
 
 // user includes
 //#include "QweakSimMainMagnetMessenger.hh"
@@ -86,12 +86,12 @@ public:
   void SetCenterPositionInZ(G4double myCenterPositionInZ);
   void SetSingleCoil_RadialCenterDistanceToBeamLine(G4double RadialDistance) { SingleCoil_CenterPositionInR = RadialDistance; }
 
-  G4LogicalVolume*   getMainMagnetLogicalVolume()    {return MainMagnet_MasterContainer_Logical;} 
-  G4VPhysicalVolume* getMainMagnetPhysicalVolume()   {return MainMagnet_MasterContainer_Physical;} 
+  G4LogicalVolume*   getMainMagnetLogicalVolume()    {return MainMagnet_MasterContainer_Logical;}
+  G4VPhysicalVolume* getMainMagnetPhysicalVolume()   {return MainMagnet_MasterContainer_Physical;}
 
 private:
 
-    
+
 
   //QweakSimMainMagnetMessenger*      fMainMagnetMessenger;
 
@@ -99,21 +99,21 @@ private:
 
   G4VPVParameterisation* MM_SingleCoilParam;
 
-  G4LogicalVolume*   MainMagnet_MasterContainer_Logical; 
-  G4VPhysicalVolume* MainMagnet_MasterContainer_Physical; 
+  G4LogicalVolume*   MainMagnet_MasterContainer_Logical;
+  G4VPhysicalVolume* MainMagnet_MasterContainer_Physical;
   G4Material*        MainMagnet_MasterContainer_Material;
 
-  G4double MainMagnet_MasterContainer_FullLength_X; 
-  G4double MainMagnet_MasterContainer_FullLength_Y; 
-  G4double MainMagnet_MasterContainer_FullLength_Z; 
+  G4double MainMagnet_MasterContainer_FullLength_X;
+  G4double MainMagnet_MasterContainer_FullLength_Y;
+  G4double MainMagnet_MasterContainer_FullLength_Z;
 
   G4double MainMagnet_CenterPositionInZ;
 
    // SingleCoil MasterContainer
-   G4LogicalVolume*   SingleCoil_MasterContainer_Logical; 
- 
+   G4LogicalVolume*   SingleCoil_MasterContainer_Logical;
+
    // needed for manual coil placement
-  
+
 
    std::vector< G4double >           Angle_SingleCoil;
    std::vector< G4ThreeVector >      Translation_SingleCoil;
@@ -121,9 +121,9 @@ private:
 
    G4Material*        SingleCoil_MasterContainer_Material;
 
-   G4double SingleCoil_MasterContainer_FullLength_X; 
-   G4double SingleCoil_MasterContainer_FullLength_Y; 
-   G4double SingleCoil_MasterContainer_FullLength_Z; 
+   G4double SingleCoil_MasterContainer_FullLength_X;
+   G4double SingleCoil_MasterContainer_FullLength_Y;
+   G4double SingleCoil_MasterContainer_FullLength_Z;
 
    G4double            SingleCoil_CenterPositionInR;
    G4double            SingleCoil_MinimalRadialDistance;
@@ -132,28 +132,28 @@ private:
    G4Material*         SingleCoil_Material;
 
     // SingleCoil plate shape,
-    G4LogicalVolume*   SingleCoil_Plate_Logical; 
+    G4LogicalVolume*   SingleCoil_Plate_Logical;
     std::vector< G4VPhysicalVolume* > SingleCoil_UpperPlate_Physical;
     std::vector< G4VPhysicalVolume* > SingleCoil_LowerPlate_Physical;
     std::vector< G4ThreeVector >      Translation_SingleCoil_UpperPlate;
     std::vector< G4ThreeVector >      Translation_SingleCoil_LowerPlate;
 
     // SingleCoil wing shape,
-    G4LogicalVolume*   SingleCoil_Wing_Logical; 
-    std::vector< G4VPhysicalVolume* > SingleCoil_LeftWing_Physical; 
+    G4LogicalVolume*   SingleCoil_Wing_Logical;
+    std::vector< G4VPhysicalVolume* > SingleCoil_LeftWing_Physical;
     std::vector< G4VPhysicalVolume* > SingleCoil_RightWing_Physical;
     std::vector< G4RotationMatrix* >  Rotation_SingleCoil_LeftWing;
     std::vector< G4RotationMatrix* >  Rotation_SingleCoil_RightWing;
     std::vector< G4ThreeVector >      Translation_SingleCoil_LeftWing;
     std::vector< G4ThreeVector >      Translation_SingleCoil_RightWing;
-    
+
     // define a single C-coil: left wing
     G4double SingleCoil_Wing_DiameterMin;
     G4double SingleCoil_Wing_DiameterMax;
     G4double SingleCoil_Wing_PhiAngleStart;
     G4double SingleCoil_Wing_PhiDeltaAngle;
-  
-    // define a single coil plate 
+
+    // define a single coil plate
     G4double SingleCoil_Plate_FullLength_X;
     G4double SingleCoil_Plate_FullLength_Y;
     G4double SingleCoil_Plate_FullLength_Z;
@@ -163,9 +163,9 @@ private:
     //-----------------------------
     // Upstream spider definition
         //-----------------------------
-    G4LogicalVolume*   UpstreamSpider_Tube_Subtraction_Logical; 
-    G4LogicalVolume*   UpstreamSpider_Box_Subtraction_Logical; 
-    G4LogicalVolume*   UpstreamSpider_Box_Union_Logical; 
+    G4LogicalVolume*   UpstreamSpider_Tube_Subtraction_Logical;
+    G4LogicalVolume*   UpstreamSpider_Box_Subtraction_Logical;
+    G4LogicalVolume*   UpstreamSpider_Box_Union_Logical;
 
     G4LogicalVolume*   UpstreamSpider_LowThetaCutoutLeft_Logical;
     G4VPhysicalVolume* UpstreamSpider_LowThetaCutoutLeft_Physical;
@@ -176,15 +176,15 @@ private:
     G4LogicalVolume*   UpstreamSpider_LowThetaCutoutFinal_Logical;
     G4VPhysicalVolume* UpstreamSpider_LowThetaCutoutFinal_Physical;
 
-    G4LogicalVolume*   UpstreamSpider_Logical; 
-    G4VPhysicalVolume* UpstreamSpider_Physical; 
+    G4LogicalVolume*   UpstreamSpider_Logical;
+    G4VPhysicalVolume* UpstreamSpider_Physical;
     G4Material*        UpstreamSpider_Material;
 
     G4double UpstreamSpider_DiameterMin;
     G4double UpstreamSpider_DiameterMax;
     G4double UpstreamSpider_FullThickness;
     G4double UpstreamSpider_PhiAngleStart;
-    G4double UpstreamSpider_PhiDeltaAngle;  
+    G4double UpstreamSpider_PhiDeltaAngle;
 
     G4double UpstreamSpider_CenterPositionInZ;
 
@@ -254,13 +254,13 @@ private:
 
      // placing the chamfers
      G4ThreeVector    Position_Chamfer1;
-     G4RotationMatrix Rotation_Chamfer1;  
+     G4RotationMatrix Rotation_Chamfer1;
      G4ThreeVector    Position_Chamfer2;
-     G4RotationMatrix Rotation_Chamfer2;  
+     G4RotationMatrix Rotation_Chamfer2;
      G4ThreeVector    Position_Chamfer3;
-     G4RotationMatrix Rotation_Chamfer3;  
+     G4RotationMatrix Rotation_Chamfer3;
      G4ThreeVector    Position_Chamfer4;
-     G4RotationMatrix Rotation_Chamfer4;  
+     G4RotationMatrix Rotation_Chamfer4;
 
      G4VisAttributes* SingleCoil_MiniClampPlate_VisAtt;
 
@@ -310,7 +310,7 @@ private:
       G4ThreeVector    Position_UpstreamCylinder; // upstream
       G4ThreeVector    Position_DownstreamCylinder; // downstream
       G4ThreeVector    Position_CenterBox;
-      G4ThreeVector    Position_DownstreamBox;;
+      G4ThreeVector    Position_DownstreamBox;
 
       G4VisAttributes* SingleCoil_FramePlate_VisAtt;
 
@@ -331,7 +331,7 @@ private:
       G4LogicalVolume*   SingleCoil_RadialMountingBlock_Logical;
       G4Material*        SingleCoil_RadialMountingBlock_Material;
 
- 
+
       std::vector< G4VPhysicalVolume* > SingleCoil_LeftRadialMountingBlock_Upstream_Physical;
       std::vector< G4VPhysicalVolume* > SingleCoil_RightRadialMountingBlock_Upstream_Physical;
 
@@ -371,7 +371,7 @@ private:
       G4LogicalVolume* SupportFrame_DownstreamHorizontalDoubleTBeam_Logical;
       G4LogicalVolume* SupportFrame_DownstreamVerticalDoubleTBeam_Logical;
 
-      G4Material*      SupportFrame_Material;   
+      G4Material*      SupportFrame_Material;
 
       std::vector< G4SubtractionSolid* >  SupportFrameSubtraction_TempSolid;
       std::vector< G4UnionSolid* >        SupportFrameUnion_TempSolid;
@@ -411,14 +411,14 @@ private:
       G4VisAttributes* SupportFrame_Downstream45DegDoubleTBeam_VisAtt;
 
       //------------------------------------
-      // Downstream Spider and radial slabs 
+      // Downstream Spider and radial slabs
       //------------------------------------
       //
       G4double DownstreamSpider_DiameterMin;
       G4double DownstreamSpider_DiameterMax;
       G4double DownstreamSpider_FullThickness;
       G4double DownstreamSpider_PhiAngleStart;
-      G4double DownstreamSpider_PhiDeltaAngle;  
+      G4double DownstreamSpider_PhiDeltaAngle;
 
       G4double DownstreamSpider_CenterPositionInZ;
 
@@ -458,8 +458,8 @@ private:
 //   -----------------------
 //  | CVS File Information |
 //  -----------------------
-// 
-//      $Revisions$  
+//
+//      $Revisions$
 //      $Log: QweakSimMainMagnet.hh,v $
 //      Revision 1.7  2006/01/18 20:19:05  grimm
 //      Added downstream support structure and downstream spider
@@ -484,5 +484,5 @@ private:
 //      - Redesign of Doxygen header containing CVS info like revision and date
 //      - Added CVS revision log at the end of file
 //
-// 
+//
 
