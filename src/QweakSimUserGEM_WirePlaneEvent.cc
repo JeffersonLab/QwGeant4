@@ -65,7 +65,7 @@ void QweakSimUserGEM_WirePlaneEvent::Clear()
   TrackID.clear();
   GlobalTimeOfHit.clear();
 
-  PlaneHasBeenHit.clear();
+  PlaneHasBeenHit = 0;
 
   PlaneLocalPositionX.clear();
   PlaneLocalPositionY.clear();

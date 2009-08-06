@@ -70,8 +70,8 @@ class QweakSimUserTriggerScintillator_MainEvent;
 class QweakSimUserCerenkov_MainEvent;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-//class QweakSimUserMainEvent : public TObject
-class QweakSimUserMainEvent 
+class QweakSimUserMainEvent : public TObject
+// class QweakSimUserMainEvent 
 {
 
 private:

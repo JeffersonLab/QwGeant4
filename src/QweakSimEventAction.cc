@@ -332,10 +332,10 @@ cout <<",\tCerenkov "<<n_hitCerenkov<<endl;
   //##########################################################################################################################
   // 
   // if ( (n_hitWirePlane == 4)&&(n_hitDCFront >0)&&(n_hitDCBack >0)&&(n_hitCerenkov >0) )  // ask for 4 fold coincidence 
-  // if ( (n_VDChitWirePlane >= 2)&&(n_VDChitDCFront >0)&&(n_VDChitDCBack >0) )             //  ask for 3 fold coincidence 
+   if ( (n_VDChitWirePlane >= 2)&&(n_VDChitDCFront >0)&&(n_VDChitDCBack >0) )             //  ask for 3 fold coincidence 
   // if (n_GEMhitWirePlane > 0)         // Triggering on GEM only
   // if (n_hitTriggerScintillator > 0)  // Qweak triggers DAQ on a hit in the trigger scintillator 
-   if (n_hitCerenkov > 0)             //Triggering on Main Detector
+  // if (n_hitCerenkov > 0)             //Triggering on Main Detector
     {
 
 
@@ -1931,6 +1931,12 @@ cout <<",\tCerenkov "<<n_hitCerenkov<<endl;
 
   if (n_GEMhitWirePlane > 0)
   {
+    //========================================
+    // Store GEM Hit Information into /Region1
+    //========================================
+
+      int GEM_ChamberFront_WirePlane_NbOfHits = 0;
+      int GEM_ChamberBack_WirePlane_NbOfHits = 0;
 
       // loop over wire plane hits
       // up to now there should be only one GEM per octant
@@ -2021,6 +2027,9 @@ cout <<",\tCerenkov "<<n_hitCerenkov<<endl;
 	 //-----------------------------------
 	  
 	  if((aHit->GetGEMID()==0) && (aHit->GetWirePlaneID()==0)) { 
+
+              GEM_ChamberFront_WirePlane_NbOfHits++;
+              analysis->QweakSimG4_RootEvent->Region1.ChamberFront.WirePlane.StoreNbOfHits(GEM_ChamberFront_WirePlane_NbOfHits++);
 	      
 	      // mark wire plane as been hit
 	      analysis->QweakSimG4_RootEvent->Region1.ChamberFront.WirePlane.StorePlaneHasBeenHit(5);  
@@ -2084,6 +2093,9 @@ cout <<",\tCerenkov "<<n_hitCerenkov<<endl;
 	  //-----------------------------------
  
 	  if((aHit->GetGEMID()==1) && (aHit->GetWirePlaneID()==0)) { 
+
+              GEM_ChamberBack_WirePlane_NbOfHits++;
+              analysis->QweakSimG4_RootEvent->Region1.ChamberBack.WirePlane.StoreNbOfHits(GEM_ChamberBack_WirePlane_NbOfHits++);
 
 	      // mark wire plane as been hit
 	      analysis->QweakSimG4_RootEvent->Region1.ChamberBack.WirePlane.StorePlaneHasBeenHit(5);  

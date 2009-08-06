@@ -49,7 +49,7 @@ void QweakSimUserVDC_WirePlaneEvent::Clear()
   TrackID.clear();
   GlobalTimeOfHit.clear();
 
-  HasBeenHit.clear();
+  HasBeenHit = 0;
 
   LocalPositionX.clear();
   LocalPositionY.clear();

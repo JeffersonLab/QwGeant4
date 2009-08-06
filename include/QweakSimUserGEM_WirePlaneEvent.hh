@@ -48,7 +48,7 @@ private:
   vector <Int_t>   TrackID;
   vector <Float_t> GlobalTimeOfHit;
 
-  vector <Int_t>   PlaneHasBeenHit;
+  Int_t   PlaneHasBeenHit;
 
   vector <Float_t> PlaneLocalPositionX;
   vector <Float_t> PlaneLocalPositionY;
@@ -114,8 +114,8 @@ public:
   //-----------------
   // Setter/Getter for X,U,V wire planes 
 
-  void     StorePlaneHasBeenHit(Int_t nx)      { PlaneHasBeenHit.push_back(nx); }
-  vector <Int_t>      GetPlaneHasBeenHit() const {return  PlaneHasBeenHit;}
+  void     StorePlaneHasBeenHit(Int_t nx)      { PlaneHasBeenHit = nx; }
+  Int_t      GetPlaneHasBeenHit() const {return  PlaneHasBeenHit;}
 
   //-----------------
   void     StorePlaneLocalPositionX(Float_t lx)   { PlaneLocalPositionX.push_back(lx); }

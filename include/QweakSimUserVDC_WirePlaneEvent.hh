@@ -55,7 +55,7 @@ private:
   vector <Int_t>   TrackID;
   vector <Float_t> GlobalTimeOfHit;
 
-  vector <Int_t>   HasBeenHit;
+  Int_t   HasBeenHit;
  
   vector <Float_t> LocalPositionX;
   vector <Float_t> LocalPositionY;
@@ -137,8 +137,8 @@ public:
   void     StoreKineticEnergy(Float_t ke)   { KineticEnergy.push_back(ke); }
   vector <Float_t>    GetKineticEnergy() const {return KineticEnergy;}
 
-  void     StoreHasBeenHit(Int_t nu)      { HasBeenHit.push_back(nu); }
-  vector <Int_t>      GetHasBeenHit() const {return HasBeenHit;}
+  void     StoreHasBeenHit(Int_t nu)      { HasBeenHit = nu; }
+  Int_t     GetHasBeenHit() const {return HasBeenHit;}
 
   //-----------------
   void     StoreLocalPositionX(Float_t lx)   { LocalPositionX.push_back(lx); }
