@@ -116,6 +116,11 @@
 #include "G4Circle.hh"
 #include "G4Polyhedra.hh"
 
+// GDML related
+#ifdef G4LIB_USE_GDML
+# include "G4GDMLParser.hh"
+#endif
+
 // manager related
 #include "G4GeometryManager.hh"
 #include "G4SDManager.hh"

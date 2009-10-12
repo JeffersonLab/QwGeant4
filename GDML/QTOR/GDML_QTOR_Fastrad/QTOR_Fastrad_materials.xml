@@ -30,23 +30,23 @@
 	</element>
 
 	<material name="Vacuum" formula="Vacuum">
-		<D value ="1E-25" unit="g/cm3"/>
+		<D value="1E-25" unit="g/cm3"/>
 		<fraction n="1.0" ref="videRef"/>
 	</material>
 	<material name="ALUMINUM_Al" formula="ALUMINUM_Al">
-		<D value ="2.6990" unit="g/cm3"/>
+		<D value="2.6990" unit="g/cm3"/>
 		<fraction n="1.0000" ref="aluminum"/>
 	</material>
 	<material name="SILICON_Si" formula="SILICON_Si">
-		<D value ="2.3300" unit="g/cm3"/>
+		<D value="2.3300" unit="g/cm3"/>
 		<fraction n="1.0000" ref="silicon"/>
 	</material>
 	<material name="COPPER_Cu" formula="COPPER_Cu">
-		<D value ="8.9600" unit="g/cm3"/>
+		<D value="8.9600" unit="g/cm3"/>
 		<fraction n="1.0000" ref="copper"/>
 	</material>
 	<material name="STEEL_STAINLESS_Fe7Cr2Ni" formula="STEEL_STAINLESS_Fe7Cr2Ni">
-		<D value ="7.9300" unit="g/cm3"/>
+		<D value="7.9300" unit="g/cm3"/>
 		<fraction n="0.0010" ref="carbon"/>
 		<fraction n="0.1800" ref="chromium"/>
 		<fraction n="0.7298" ref="iron"/>
