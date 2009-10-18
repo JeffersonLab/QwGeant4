@@ -6,10 +6,10 @@
 //
 /**
 
-   \file QweakSimGDMLGeometryMessenger.hh
+   \file QweakSimEventActionMessenger.hh
 
    $Revision: 1.0 $
-   $Date: 2009/10/12 13:32:26 $
+   $Date: 2009/10/17 20:02:16 $
 
    \author Wouter Deconinck
 
@@ -22,17 +22,17 @@
 //  | Doxygen Class Information |
 //  ---------------------------
 /**
-   \class QweakSimGDMLGeometryMessenger
+   \class QweakSimEventActionMessenger
 
-   \brief Scans the input file for /GDML/ commands
+   \brief Messenger for filling//storing the hit event structure at the end of an event
 
-   Placeholder for a long explaination
+   Placeholder for a long explanation
 
  */
 //=============================================================================
 
-#ifndef QweakSimGDMLGeometryMessenger_h
-#define QweakSimGDMLGeometryMessenger_h 1
+#ifndef QweakSimEventActionMessenger_h
+#define QweakSimEventActionMessenger_h 1
 
 // system includes
 #include "cpp_include.h"
@@ -40,30 +40,30 @@
 #include "Geant4_include.hh"
 
 // user include
-#include "QweakSimGDMLGeometry.hh"
+#include "QweakSimEventAction.hh"
 
 // user classes
-class QweakSimGDMLGeometry;
+class QweakSimEventAction;
 
 // ----------------------------------------------------------------------------
 
-class QweakSimGDMLGeometryMessenger: public G4UImessenger
+class QweakSimEventActionMessenger: public G4UImessenger
 {
 
   public:
 
-    QweakSimGDMLGeometryMessenger(QweakSimGDMLGeometry*);
-   ~QweakSimGDMLGeometryMessenger();
+    QweakSimEventActionMessenger(QweakSimEventAction*);
+   ~QweakSimEventActionMessenger();
 
     void SetNewValue( G4UIcommand*, G4String );
     void SetNewValue( G4UIcommand*, G4int );
 
   private:
 
-    QweakSimGDMLGeometry*      theGDMLGeometry;
-    G4UIdirectory*             theGDMLGeometryDir;
-    G4UIcmdWithAString*        theReadCommand;
-    G4UIcmdWithAString*        theWriteCommand;
+    QweakSimEventAction*       theEventAction;
+    G4UIdirectory*             theTriggerDir;
+    G4UIcmdWithAString*        theTriggerEnableCommand;
+    G4UIcmdWithAString*        theTriggerDisableCommand;
 };
 
 // ----------------------------------------------------------------------------

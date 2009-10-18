@@ -6,7 +6,7 @@
 //
 /**
 
-   \file QweakSimGDMLGeometryMessenger.cc
+   \file QweakSimGeometryMessenger.cc
 
    $Revision: 1.0 $
    $Date: 2009/10/12 13:32:26 $
@@ -16,20 +16,22 @@
 */
 //=============================================================================
 
-#include "QweakSimGDMLGeometryMessenger.hh"
+#include "QweakSimGeometryMessenger.hh"
 
 // ----------------------------------------------------------------------------
 
-QweakSimGDMLGeometryMessenger::QweakSimGDMLGeometryMessenger(QweakSimGDMLGeometry* aGDMLGeometry)
-  : theGDMLGeometry(aGDMLGeometry)
+QweakSimGeometryMessenger::QweakSimGeometryMessenger(QweakSimGeometry* aGeometry)
+  : theGeometry(aGeometry)
 {
-  theGDMLGeometryDir = new G4UIdirectory( "/GDML/" );
-  theGDMLGeometryDir->SetGuidance("GDML geometry control.");
+  G4cout << G4endl << "###### Calling QweakSimGeometryMessenger::QweakSimGeometryMessenger() " << G4endl << G4endl;
+
+  theGeometryDir = new G4UIdirectory( "/GDML/" );
+  theGeometryDir->SetGuidance("GDML geometry control.");
 
   theReadCommand = new G4UIcmdWithAString("/GDML/Read", this);
   theReadCommand->SetGuidance("Read geometry from GDML file with given name");
   theReadCommand->SetParameterName("FileRead", false);
-  theReadCommand->SetDefaultValue("GDML/qweak.gdml");
+  theReadCommand->SetDefaultValue("GMDL/qweak.gdml");
   theReadCommand->AvailableForStates(G4State_PreInit);
 
   theWriteCommand = new G4UIcmdWithAString("/GDML/Write", this);
@@ -37,29 +39,35 @@ QweakSimGDMLGeometryMessenger::QweakSimGDMLGeometryMessenger(QweakSimGDMLGeometr
   theWriteCommand->SetParameterName("FileWrite", false);
   theWriteCommand->SetDefaultValue("GDML/qweak_out.gdml");
   theWriteCommand->AvailableForStates(G4State_Idle);
+
+  G4cout << G4endl << "###### Leaving QweakSimGeometryMessenger::QweakSimGeometryMessenger() " << G4endl << G4endl;
 }
 
 // ----------------------------------------------------------------------------
 
-QweakSimGDMLGeometryMessenger::~QweakSimGDMLGeometryMessenger()
+QweakSimGeometryMessenger::~QweakSimGeometryMessenger()
 {
+  G4cout << G4endl << "###### Calling QweakSimGeometryMessenger::~QweakSimGeometryMessenger() " << G4endl << G4endl;
+
   if (theReadCommand)     delete theReadCommand;
   if (theWriteCommand)    delete theWriteCommand;
-  if (theGDMLGeometryDir) delete theGDMLGeometryDir;
+  if (theGeometryDir) delete theGeometryDir;
+
+  G4cout << G4endl << "###### Leaving QweakSimGeometryMessenger::~QweakSimGeometryMessenger() " << G4endl << G4endl;
 }
 
 // ----------------------------------------------------------------------------
 
-void QweakSimGDMLGeometryMessenger::SetNewValue(G4UIcommand* command, G4String newValue)
+void QweakSimGeometryMessenger::SetNewValue(G4UIcommand* command, G4String newValue)
 {
   if ( command == theReadCommand )
   {
-    theGDMLGeometry->SetReadFile(newValue);
-//    theGDMLGeometry->Read();
+    theGeometry->SetReadFile(newValue);
+//    theGeometry->Read();
   }
   if ( command == theWriteCommand )
   {
-    theGDMLGeometry->SetWriteFile(newValue);
-    theGDMLGeometry->Write();
+    theGeometry->SetWriteFile(newValue);
+    theGeometry->Write();
   }
 }

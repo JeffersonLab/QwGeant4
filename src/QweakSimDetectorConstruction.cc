@@ -1,21 +1,21 @@
 //=============================================================================
-// 
+//
 //   ---------------------------
 //  | Doxygen File Information |
 //  ---------------------------
-// 
+//
 /**
- 
+
    \file QweakSimDetectorConstruction.cc
 
-   $Revision: 1.10 $	
+   $Revision: 1.10 $
    $Date: 2006/05/05 21:40:08 $
 
-   \author Klaus Hans Grimm   
+   \author Klaus Hans Grimm
 
 */
 //=============================================================================
-// 
+//
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #include "QweakSimDetectorConstruction.hh"
@@ -28,8 +28,8 @@
 //	the z-axis pointing along the beam direction, the y-axis
 //	pointing toward the ceiling, and the x-axis pointing toward
 //	beam-left so as to form a right-handed coordinate system.
-//	Octants are numbered from 1 to 8, clockwise with #1 at the 
-//	12 o-clock position.  
+//	Octants are numbered from 1 to 8, clockwise with #1 at the
+//	12 o-clock position.
 //===================================================================
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -37,16 +37,17 @@
 QweakSimDetectorConstruction::QweakSimDetectorConstruction(QweakSimUserInformation *userInfo)
 {
   // initialize pointers and variables
-  experimentalHall_Solid    = NULL;  
-  experimentalHall_Logical  = NULL;  
+  experimentalHall_Solid    = NULL;
+  experimentalHall_Logical  = NULL;
   experimentalHall_Physical = NULL;
 
-  HallFloor_Solid    = NULL;  
-  HallFloor_Logical  = NULL;  
+  HallFloor_Solid    = NULL;
+  HallFloor_Logical  = NULL;
   HallFloor_Physical = NULL;
-  
+
   detectorMessenger = NULL;
   pMaterial         = NULL;
+  pGeometry         = NULL;
 
   pGlobalMagnetField = NULL;
 
@@ -69,11 +70,11 @@ QweakSimDetectorConstruction::QweakSimDetectorConstruction(QweakSimUserInformati
   pTarget            = NULL;
   pMainMagnet        = NULL;
 
-  fWorldLengthInX = 0.0*cm; 
+  fWorldLengthInX = 0.0*cm;
   fWorldLengthInY = 0.0*cm;
   fWorldLengthInZ = 0.0*cm;
 
-  fFloorLengthInX   = 0.0*cm; 
+  fFloorLengthInX   = 0.0*cm;
   fFloorLengthInY   = 0.0*cm;
   fFloorLengthInZ   = 0.0*cm;
   fFloorPositionInY = 0.0*cm; // Top positon, not the center pos
@@ -100,7 +101,7 @@ QweakSimDetectorConstruction::~QweakSimDetectorConstruction()
   if (pGlobalMagnetField) delete pGlobalMagnetField;
 
   if (pVDCRotator) delete pVDCRotator;
-  if (pGEM)        delete pGEM; 
+  if (pGEM)        delete pGEM;
   if (pHDC)        delete pHDC;
   //if (pVDC) delete pVDC; // something broken here
 
@@ -120,8 +121,9 @@ QweakSimDetectorConstruction::~QweakSimDetectorConstruction()
   if (pTarget)              delete pTarget;
   if (pMainMagnet)          delete pMainMagnet;
 
-  if (detectorMessenger)    delete detectorMessenger;             
+  if (detectorMessenger)    delete detectorMessenger;
   if (pMaterial)            delete pMaterial;
+  if (pGeometry)            delete pGeometry;
 
 }
 
@@ -134,35 +136,35 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::Construct()
 G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
 {
 
-  pTarget              = new QweakSimTarget(); 
+  pTarget              = new QweakSimTarget();
 
-  pCollimator1         = new QweakSimCollimator(); 
-  pCollimator2         = new QweakSimCollimator(); 
-  pCollimator3         = new QweakSimCollimator(); 
+  pCollimator1         = new QweakSimCollimator();
+  pCollimator2         = new QweakSimCollimator();
+  pCollimator3         = new QweakSimCollimator();
 
 //jpan@nuclear.uwinnipeg.ca
   pShieldingWall       = new QweakSimShieldingWall();
 
-//jpan@nuclear.uwinnipeg.ca  
-  pMainMagnet          = new QweakSimMainMagnet(); // QTOR Geometry (decoupled from field) 
+//jpan@nuclear.uwinnipeg.ca
+  pMainMagnet          = new QweakSimMainMagnet(); // QTOR Geometry (decoupled from field)
 
-  pGEM                 = new QweakSimGEM(); 
-  pHDC                 = new QweakSimHDC(); 
-  pVDC                 = new QweakSimVDC(); 
-  
-  //pCerenkovDetector    = new QweakSimCerenkovDetector(); 
+  pGEM                 = new QweakSimGEM();
+  pHDC                 = new QweakSimHDC();
+  pVDC                 = new QweakSimVDC();
+
+  //pCerenkovDetector    = new QweakSimCerenkovDetector();
   pCerenkovDetector    = new QweakSimCerenkovDetector(myUserInfo);
 
-  pTriggerScintillator = new QweakSimTriggerScintillator(); 
-   
-   
+  pTriggerScintillator = new QweakSimTriggerScintillator();
+
+
   //--------- Definitions of Solids, Logical Volumes, Physical Volumes ---------
 
   fWorldLengthInX =  15.0*m;
   fWorldLengthInY =  15.0*m;
   fWorldLengthInZ =  30.0*m;
 
- 
+
   // experimentalHall_Material   = pMaterial->GetMaterial("HeGas");
   // Note: experimentalHall_Material was HeGas all the time up to 12-28-2005 !!!
 
@@ -171,17 +173,17 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   experimentalHall_Material   = pMaterial->GetMaterial("Vacuum");
 
   experimentalHall_Solid = new G4Box("ExpHall_Sol",
-				     0.5* fWorldLengthInX , 
+				     0.5* fWorldLengthInX ,
 				     0.5* fWorldLengthInY ,
 				     0.5* fWorldLengthInZ );
-  
-  experimentalHall_Logical = new G4LogicalVolume( experimentalHall_Solid, 
-						  experimentalHall_Material, 
-						  "ExpHall_Logical", 
+
+  experimentalHall_Logical = new G4LogicalVolume( experimentalHall_Solid,
+						  experimentalHall_Material,
+						  "ExpHall_Logical",
 						  0, 0, 0);
-  
+
   //  Must place the World Physical volume unrotated at (0,0,0).
-  // 
+  //
   experimentalHall_Physical = new G4PVPlacement(0,               // no rotation
 						G4ThreeVector(), // at (0,0,0)
 						experimentalHall_Logical,      // its logical volume
@@ -190,6 +192,11 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
 						false,           // no boolean operations
 						0);              // no field specific to volume
 
+  // Get the geometry, which defines the world volume
+  //
+  pGeometry = new QweakSimGeometry();
+  pGeometry->SetWorldVolume(experimentalHall_Physical);
+
   //==========================
   // Defining the Hall Floor
   //==========================
@@ -197,33 +204,33 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   fFloorLengthInX =  12.0*m;
   fFloorLengthInY =   1.0*m;
   fFloorLengthInZ =  28.0*m;
-  
+
   fFloorPositionInY =  -396.25*cm; // Top positon, not the center pos
 
 
   HallFloor_Material   = pMaterial->GetMaterial("ShieldingConcrete");
-  
+
   HallFloor_Solid = new G4Box("HallFloor_Sol",
-			      0.5* fFloorLengthInX , 
+			      0.5* fFloorLengthInX ,
 			      0.5* fFloorLengthInY ,
 			      0.5* fFloorLengthInZ );
-  
-  HallFloor_Logical = new G4LogicalVolume( HallFloor_Solid, 
-					   HallFloor_Material, 
-					   "HallFloor_Logical", 
+
+  HallFloor_Logical = new G4LogicalVolume( HallFloor_Solid,
+					   HallFloor_Material,
+					   "HallFloor_Logical",
 					   0, 0, 0);
 
   //  Must place the World Physical volume unrotated at (0,0,0).
-  // 
+  //
   HallFloor_Physical = new G4PVPlacement(0,               // no rotation
-					 G4ThreeVector(0.,fFloorPositionInY -0.5* fFloorLengthInY,0.), 
+					 G4ThreeVector(0.,fFloorPositionInY -0.5* fFloorLengthInY,0.),
 					 "HallFloor_Physical",          // its name
 					 HallFloor_Logical,             // its logical volume
 					 experimentalHall_Physical ,    // its physical mother volume
 					 false,                         // no boolean operations
 					 0);                            // no field specific to volume
 
-  
+
   G4cout << G4endl << "###### QweakSimDetectorConstruction: Setting Attributes " << G4endl << G4endl;
 
   G4Colour  grey      ( 127/255., 127/255., 127/255.);
@@ -233,18 +240,18 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   //HallFloor_VisAtt->SetVisibility(false);
   //HallFloor_VisAtt->SetForceWireframe(true);
   //HallFloor_VisAtt->SetForceSolid(true);
-  HallFloor_Logical->SetVisAttributes(HallFloor_VisAtt); 
+  HallFloor_Logical->SetVisAttributes(HallFloor_VisAtt);
 
   //============================================
-  // create/place target body into MotherVolume 
+  // create/place target body into MotherVolume
   //============================================
   //
   pTarget -> ConstructComponent(experimentalHall_Physical);
-  pTarget -> SetTargetCenterPositionInZ(-650*cm); 
+  pTarget -> SetTargetCenterPositionInZ(-650*cm);
 
 
   //================================================
-  // create/place MainMagnet body into MotherVolume 
+  // create/place MainMagnet body into MotherVolume
   //================================================
   //
   if(pMainMagnet){
@@ -292,7 +299,7 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   pCollimator1->SetCollimatorHousingMaterial("PBA"); //housing material - Lead with 5% Antimony
 
 
-  //Collimator 2 
+  //Collimator 2
   pCollimator2->SetCollimatorNumber(2);
   pCollimator2->SetCollimatorHousing_FullLengthInX(240.0*cm);//should be updated to 142.2*cm
   pCollimator2->SetCollimatorHousing_FullLengthInY(240.0*cm);
@@ -320,7 +327,7 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   pCollimator2->SetCollimatorHousing_CenterPositionInZ(-378.2195*cm);//-349.889*cm
   pCollimator2->SetCollimatorHousingMaterial("PBA");
 
-  //Collimator 3 
+  //Collimator 3
   pCollimator3->SetCollimatorNumber(3);
   pCollimator3->SetCollimatorHousing_FullLengthInX(240.0*cm);//should be updated to 238.76*cm
   pCollimator3->SetCollimatorHousing_FullLengthInY(240.0*cm);
@@ -350,28 +357,28 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
 
 
   //================================================
-  // create/place Collimator Support body into MotherVolume 
+  // create/place Collimator Support body into MotherVolume
   //================================================
   //
-    pCollimatorSupport   = new QweakSimCollimatorSupport( pCollimator1 ,pCollimator3 ); 
+    pCollimatorSupport   = new QweakSimCollimatorSupport( pCollimator1 ,pCollimator3 );
     pCollimatorSupport -> ConstructSupport(experimentalHall_Physical);
 
 
   // #===================================================
-  // # create/place ShieldingWall body into MotherVolume   
+  // # create/place ShieldingWall body into MotherVolume
   // #===================================================
 
     pShieldingWall->SetCollimatorWall_FullLengthInX(670.56*cm);
     pShieldingWall->SetCollimatorWall_FullLengthInY(670.56*cm);
     pShieldingWall->SetCollimatorWall_FullLengthInZ( 50.0*cm);
-  
+
     pShieldingWall->SetOctantCutOut_Trap_RadialDistance  (250.75*cm);
     pShieldingWall->SetOctantCutOut_Trap_FullLengthFront (150.00*cm);
     pShieldingWall->SetOctantCutOut_Trap_FullLengthBack  (164.00*cm);
     pShieldingWall->SetOctantCutOut_Trap_FullHeightFront ( 34.50*cm);
     pShieldingWall->SetOctantCutOut_Trap_FullHeightBack  ( 30.50*cm);
     pShieldingWall->SetOctantCutOut_Trap_PolarAngle      ( 20.57*degree);
-  
+
     pShieldingWall->ConstructShieldingWallHousing_UsingTrapezoids(experimentalHall_Physical);
     pShieldingWall->SetCollimatorWall_CenterPositionInZ(355*cm);
 
@@ -386,7 +393,7 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
 //    pShieldingWall->ConstructTopWall(experimentalHall_Physical);
 
 //only keep front wall to speed up the simulation since the electron will shower in the shielding wall
-    pShieldingWall->ConstructFrontWall(experimentalHall_Physical); 
+    pShieldingWall->ConstructFrontWall(experimentalHall_Physical);
 
 
     //===============================================
@@ -402,7 +409,7 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
     //===============================================
     //
 
-//     pVDCRotator  = new QweakSimVDCRotator(pVDC); 
+//     pVDCRotator  = new QweakSimVDCRotator(pVDC);
 //     pVDCRotator->SetMotherVolume(experimentalHall_Physical);
 //     pVDCRotator->ConstructRings();
 //     pVDCRotator->ConstructRails();
@@ -424,7 +431,7 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
     pTriggerScintillator->ConstructComponent(experimentalHall_Physical);
 
 //--------- Visualization attributes -------------------------------
-  
+
   // Invisible Volume
   experimentalHall_Logical->SetVisAttributes (G4VisAttributes::Invisible);
 
@@ -436,7 +443,7 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
 
   SetGlobalMagneticField();
 
-  // Construct() *MUST* return the pointer of the physical World !!!  
+  // Construct() *MUST* return the pointer of the physical World !!!
   return experimentalHall_Physical;
 }
 
@@ -478,16 +485,16 @@ void QweakSimDetectorConstruction::UpdateGeometry()
   G4RunManager::GetRunManager()->DefineWorldVolume(ConstructQweak());
   G4RunManager::GetRunManager()->GeometryHasBeenModified();
 
- 
+
   G4cout << G4endl << "###### Leaving QweakDetectorConstruction::UpdateGeometry() " << G4endl << G4endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void QweakSimDetectorConstruction::SetGlobalMagneticField()   
+void QweakSimDetectorConstruction::SetGlobalMagneticField()
 {
 
   //--------- Magnetic Field -------------------------------
-  
+
   //============================================
   //  Define the global magnet field Manager
   //============================================
@@ -498,52 +505,52 @@ void QweakSimDetectorConstruction::SetGlobalMagneticField()
 
   // perform navigation/propagation in a general non-uni-form magnetic field
   //G4PropagatorInField* pGlobalFieldPropagator = G4TransportationManager::GetTransportationManager()->GetPropagatorInField();
-  
+
   // G4double minEps =  1.0e-5;
   // G4double maxEps =  1.0e-4;
-  
+
   //pGlobalFieldPropagator->SetMinimumEpsilonStep(minEps);
   //pGlobalFieldPropagator->SetMaximumEpsilonStep(maxEps);
-  
-  
+
+
   fGlobalFieldManager->SetDetectorField(pGlobalMagnetField);
-  
+
   fGlobalEquation = new G4Mag_UsualEqRhs(pGlobalMagnetField);
-  
+
   // taken from one of the Geant4 presentation:
   // - If the field is calculated from a field map, a lower order stepper
   //   is recommended: the less smooth the field is, the lower the order of the
   //   stepper that should be used. For very rough fields one should use 1st order
   //   stepper, for a somewhat smooth field one must choose between 1st and 2nd
   //   order stepper.
-  
+
   //fGlobalStepper  = new G4ClassicalRK4(fGlobalEquation);  // classical 4th order stepper
   //fGlobalStepper  = new G4ExplicitEuler(fGlobalEquation); //           1st order stepper
   //fGlobalStepper  = new G4ImplicitEuler(fGlobalEquation); //           2nd order stepper
   fGlobalStepper  = new G4SimpleRunge(fGlobalEquation);   //           2nd order stepper
 
 
-  // Provides a driver that talks to the Integrator Stepper, and insures that 
+  // Provides a driver that talks to the Integrator Stepper, and insures that
   //   the error is within acceptable bounds.
-  G4MagInt_Driver* fGlobalIntgrDriver = new G4MagInt_Driver(0.1*mm,  //1.0e-3*mm, 
+  G4MagInt_Driver* fGlobalIntgrDriver = new G4MagInt_Driver(0.1*mm,  //1.0e-3*mm,
 							    fGlobalStepper,
 							    fGlobalStepper->GetNumberOfVariables());
-  
+
   fGlobalChordFinder = new G4ChordFinder(fGlobalIntgrDriver);
-  
-  
-  
+
+
+
   //       G4bool fieldChangesEnergy = false;
   //       G4FieldManager* pFieldMgr = new G4FieldManager(myField,pChordFinder,FieldChangeEnergy);
   //       LocalLogicalVolume = new G4LogicalVolume(shape, material,"name",pFieldMgr,0,0);
-  
+
   //   // minimal step of 1 mm is default
   //   fMinStep = 0.01*mm ;
   //
   //   fGlobalChordFinder = new G4ChordFinder (pGlobalMagnetField,
   //                                           fMinStep,
   //                                           fGlobalStepper);
-  
+
   fGlobalFieldManager->SetChordFinder(fGlobalChordFinder);
 
 //=====================================================================================
@@ -552,7 +559,7 @@ void QweakSimDetectorConstruction::SetGlobalMagneticField()
   G4TransportationManager* tmanager = G4TransportationManager::GetTransportationManager();
   tmanager->GetPropagatorInField()->SetLargestAcceptableStep(1*mm);
 //=====================================================================================
-} 
+}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void QweakSimDetectorConstruction::ShowHallFloor()

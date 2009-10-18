@@ -1,31 +1,31 @@
 //=============================================================================
-// 
+//
 //   ---------------------------
 //  | Doxygen File Information |
 //  ---------------------------
 /**
- 
+
    \file QweakSimDetectorConstruction.hh
-   $Revision: 1.4 $	
+   $Revision: 1.4 $
    $Date: 2006/05/02 00:58:26 $
    \author Klaus Hans Grimm
-     
+
 */
 //=============================================================================
-// 
+//
 //=============================================================================
-// 
+//
 //   ---------------------------
 //  | Doxygen Class Information |
 //  ---------------------------
 /**
    \class QweakSimDetectorConstruction
-    
+
    \brief main class of QweakSim.
-    All experiment components are are placed here.	
+    All experiment components are are placed here.
 
    Placeholder for a long explaination
-    
+
  */
 //=============================================================================
 //
@@ -33,16 +33,16 @@
 //   -----------------------
 //  | CVS File Information |
 //  -----------------------
-// 
+//
 //  Last Update:      $Author: grimm $
 //  Update Date:      $Date: 2006/05/02 00:58:26 $
 //  CVS/RCS Revision: $Revision: 1.4 $
 //  Status:           $State: Exp $
-// 
+//
 // ===================================
 //  CVS Revision Log at end of file !!
 // ===================================
-// 
+//
 //=============================================================================
 
 #ifndef QweakSimDetectorConstruction_h
@@ -51,12 +51,14 @@
 // system includes
 #include "cpp_include.h"
 #include "Root_include.h"
-#include "Geant4_include.hh" 
+#include "Geant4_include.hh"
 
 // user includes
 #include "QweakSimDetectorMessenger.hh"
 
 #include "QweakSimMaterial.hh"
+#include "QweakSimGeometry.hh"
+#include "QweakSimGeometryMessenger.hh"
 #include "QweakSimTarget.hh"
 #include "QweakSimTargetMessenger.hh"
 #include "QweakSimCollimator.hh"
@@ -76,6 +78,8 @@
 class QweakSimDetectorMessenger;
 
 class QweakSimMaterial;
+class QweakSimGeometry;
+class QweakSimGeometryMessenger;
 class QweakSimTarget;
 class QweakSimTargetMessenger;
 class QweakSimCollimator;
@@ -95,7 +99,7 @@ class QweakSimGlobalMagnetField;
 class QweakSimDetectorConstruction : public G4VUserDetectorConstruction
 {
   public:
-  
+
      QweakSimDetectorConstruction(QweakSimUserInformation*);
     ~QweakSimDetectorConstruction();
 
@@ -115,10 +119,12 @@ public:
 private:
 
     QweakSimUserInformation* myUserInfo;
-    G4VPhysicalVolume*       ConstructQweak();  
+    G4VPhysicalVolume*       ConstructQweak();
 
   void DumpGeometricalTree(G4VPhysicalVolume* aVolume,G4int depth=0);
 
+
+  QweakSimGeometry*          pGeometry;
 
   QweakSimMaterial*          pMaterial;
   QweakSimTarget*            pTarget;
@@ -132,30 +138,30 @@ private:
 
   QweakSimShieldingWall*     pShieldingWall;
 
-  QweakSimMainMagnet*        pMainMagnet; 
+  QweakSimMainMagnet*        pMainMagnet;
 
 
-  QweakSimVDC*                  pVDC; 
+  QweakSimVDC*                  pVDC;
   QweakSimHDC*                  pHDC;
   QweakSimGEM*                  pGEM;
 
-  QweakSimVDCRotator*           pVDCRotator; 
+  QweakSimVDCRotator*           pVDCRotator;
 
-  QweakSimTriggerScintillator*  pTriggerScintillator; 
-  QweakSimCerenkovDetector*     pCerenkovDetector; 
+  QweakSimTriggerScintillator*  pTriggerScintillator;
+  QweakSimCerenkovDetector*     pCerenkovDetector;
   //G4VReadOutGeometry*        pROHitPlane;
 
   QweakSimDetectorMessenger*      detectorMessenger;  // pointer to the Messenger
 
-     G4Box*             experimentalHall_Solid;     // pointer to the solid envelope 
+     G4Box*             experimentalHall_Solid;     // pointer to the solid envelope
      G4LogicalVolume*   experimentalHall_Logical;   // pointer to the logical envelope
      G4VPhysicalVolume* experimentalHall_Physical;  // pointer to the physical envelope
-     G4Material*        experimentalHall_Material; 
+     G4Material*        experimentalHall_Material;
 
-     G4Box*             HallFloor_Solid;     // pointer to the solid envelope 
+     G4Box*             HallFloor_Solid;     // pointer to the solid envelope
      G4LogicalVolume*   HallFloor_Logical;   // pointer to the logical envelope
      G4VPhysicalVolume* HallFloor_Physical;  // pointer to the physical envelope
-     G4Material*        HallFloor_Material; 
+     G4Material*        HallFloor_Material;
      G4VisAttributes*   HallFloor_VisAtt;
 
      G4double fWorldLength;               // Full length of the world volume
@@ -163,9 +169,9 @@ private:
      G4double fWorldLengthInY;            // Full length of the world volume
      G4double fWorldLengthInZ;            // Full length of the world volume
 
-     G4double fFloorLengthInX;         
-     G4double fFloorLengthInY;         
-     G4double fFloorLengthInZ;         
+     G4double fFloorLengthInX;
+     G4double fFloorLengthInY;
+     G4double fFloorLengthInZ;
      G4double fFloorPositionInY;
 
   //----------------------
@@ -176,7 +182,7 @@ private:
 
      G4FieldManager*         fGlobalFieldManager;
      G4ChordFinder*          fGlobalChordFinder;
-     G4Mag_UsualEqRhs*       fGlobalEquation; 
+     G4Mag_UsualEqRhs*       fGlobalEquation;
      G4MagIntegratorStepper* fGlobalStepper;
 
      G4double                fMinStep;
@@ -191,8 +197,8 @@ private:
 //   -----------------------
 //  | CVS File Information |
 //  -----------------------
-// 
-//      $Revisions$  
+//
+//      $Revisions$
 //      $Log: QweakSimDetectorConstruction.hh,v $
 //      Revision 1.4  2006/05/02 00:58:26  grimm
 //      Implemented VDC Rotator
@@ -204,4 +210,4 @@ private:
 //      - Redesign of Doxygen header containing CVS info like revision and date
 //      - Added CVS revision log at the end of file
 //
-// 
+//

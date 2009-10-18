@@ -5,7 +5,7 @@
 //  ---------------------------
 /**
 
-   \file QweakSimGDMLGeometry.hh
+   \file QweakSimGeometry.hh
    $Revision: 0.1 $
    $Date: 2009/09/02 19:37:26 $
    \author Wouter Deconinck
@@ -19,7 +19,7 @@
 //  | Doxygen Class Information |
 //  ---------------------------
 /**
-   \class QweakSimGDMLGeometry
+   \class QweakSimGeometry
 
    \brief main class of QweakSim.
     All passive elements are are read from the GDML files.
@@ -39,8 +39,8 @@
 //
 //=============================================================================
 
-#ifndef QweakSimGDMLGeometry_h
-#define QweakSimGDMLGeometry_h 1
+#ifndef QweakSimGeometry_h
+#define QweakSimGeometry_h 1
 
 // system includes
 #include "cpp_include.h"
@@ -48,19 +48,19 @@
 #include "Geant4_include.hh"
 
 // user includes
-#include "QweakSimGDMLGeometryMessenger.hh"
+#include "QweakSimGeometryMessenger.hh"
 
 // user classes
-class QweakSimGDMLGeometryMessenger;
+class QweakSimGeometryMessenger;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-class QweakSimGDMLGeometry
+class QweakSimGeometry
 {
   public:
 
-    QweakSimGDMLGeometry();
-   ~QweakSimGDMLGeometry();
+    QweakSimGeometry();
+   ~QweakSimGeometry();
 
     void SetWorldVolume(G4VPhysicalVolume* worldvolume);
 
@@ -93,7 +93,7 @@ class QweakSimGDMLGeometry
 
     // Geometry Messenger
     //
-    QweakSimGDMLGeometryMessenger* fGeometryMessenger;
+    QweakSimGeometryMessenger* fGeometryMessenger;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
