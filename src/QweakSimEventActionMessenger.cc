@@ -28,15 +28,19 @@ QweakSimEventActionMessenger::QweakSimEventActionMessenger(QweakSimEventAction* 
   theTriggerDir = new G4UIdirectory( "/Trigger/" );
   theTriggerDir->SetGuidance("Software trigger.");
 
+  theTriggerShowCommand = new G4UIcmdWithoutParameter("/Trigger/Show", this);
+  theTriggerShowCommand->SetGuidance("List trigger conditions.");
+  theTriggerShowCommand->AvailableForStates(G4State_PreInit,G4State_Idle);
+
   theTriggerEnableCommand = new G4UIcmdWithAString("/Trigger/Enable", this);
   theTriggerEnableCommand->SetParameterName("trigger condition", false);
-  theTriggerEnableCommand->SetDefaultValue("4Fold");
-  theTriggerEnableCommand->SetGuidance("Enable trigger condition");
+  theTriggerEnableCommand->SetDefaultValue("3fold");
+  theTriggerEnableCommand->SetGuidance("Enable trigger condition.");
   theTriggerEnableCommand->AvailableForStates(G4State_Idle);
 
   theTriggerDisableCommand = new G4UIcmdWithAString("/Trigger/Disable", this);
   theTriggerDisableCommand->SetParameterName("trigger condition", false);
-  theTriggerDisableCommand->SetDefaultValue("4Fold");
+  theTriggerDisableCommand->SetDefaultValue("3fold");
   theTriggerDisableCommand->SetGuidance("Disable trigger condition.");
   theTriggerDisableCommand->AvailableForStates(G4State_Idle);
 
@@ -49,6 +53,7 @@ QweakSimEventActionMessenger::~QweakSimEventActionMessenger()
 {
   G4cout << G4endl << "###### Calling QweakSimEventActionMessenger::~QweakSimEventActionMessenger() " << G4endl << G4endl;
 
+  if (theTriggerShowCommand)    delete theTriggerShowCommand;
   if (theTriggerEnableCommand)  delete theTriggerEnableCommand;
   if (theTriggerDisableCommand) delete theTriggerDisableCommand;
   if (theTriggerDir)            delete theTriggerDir;
@@ -60,6 +65,10 @@ QweakSimEventActionMessenger::~QweakSimEventActionMessenger()
 
 void QweakSimEventActionMessenger::SetNewValue(G4UIcommand* command, G4String newValue)
 {
+  if ( command == theTriggerShowCommand )
+  {
+    theEventAction->ShowTrigger();
+  }
   if ( command == theTriggerEnableCommand )
   {
     theEventAction->EnableTrigger(newValue);

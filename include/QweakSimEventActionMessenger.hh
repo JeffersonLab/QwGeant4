@@ -62,6 +62,7 @@ class QweakSimEventActionMessenger: public G4UImessenger
 
     QweakSimEventAction*       theEventAction;
     G4UIdirectory*             theTriggerDir;
+    G4UIcmdWithoutParameter*   theTriggerShowCommand;
     G4UIcmdWithAString*        theTriggerEnableCommand;
     G4UIcmdWithAString*        theTriggerDisableCommand;
 };

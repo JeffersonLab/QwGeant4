@@ -73,6 +73,7 @@ public:
   void BeginOfEventAction(const G4Event* evt);
   void EndOfEventAction(const G4Event* evt);
 
+  void ShowTrigger();
   void SetTrigger(const G4String value, const G4bool status);
   void EnableTrigger(const G4String value) { SetTrigger(value, true); };
   void DisableTrigger(const G4String value) { SetTrigger(value, false); };
@@ -88,6 +89,7 @@ private:
   // Trigger mask
   #define EVENT_ACTION_NUM_TRIGGER 6
   G4bool fTrigger[EVENT_ACTION_NUM_TRIGGER];
+  G4String fTriggerName[EVENT_ACTION_NUM_TRIGGER];
   std::map < G4String, EQweakSimTriggerMode > kMapTriggerMode;
 
 

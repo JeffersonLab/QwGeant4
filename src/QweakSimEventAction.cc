@@ -56,12 +56,12 @@ QweakSimEventAction::QweakSimEventAction(QweakSimAnalysis* AN, QweakSimUserInfor
 
     // Initialize map from string to trigger mode
     if (kMapTriggerMode.size() == 0) {
-      kMapTriggerMode["all"]   = kTriggerAll;
-      kMapTriggerMode["4fold"] = kTrigger4Fold;
-      kMapTriggerMode["3fold"] = kTrigger3Fold;
-      kMapTriggerMode["scint"] = kTriggerScint;
-      kMapTriggerMode["gem"]   = kTriggerGEM;
-      kMapTriggerMode["cer"]   = kTriggerCer;
+      kMapTriggerMode["all"]   = kTriggerAll;   fTriggerName[kTriggerAll] = "all";
+      kMapTriggerMode["4fold"] = kTrigger4Fold; fTriggerName[kTrigger4Fold] = "4fold";
+      kMapTriggerMode["3fold"] = kTrigger3Fold; fTriggerName[kTrigger3Fold] = "3fold";
+      kMapTriggerMode["scint"] = kTriggerScint; fTriggerName[kTriggerScint] = "scint";
+      kMapTriggerMode["gem"]   = kTriggerGEM;   fTriggerName[kTriggerGEM] = "gem";
+      kMapTriggerMode["cer"]   = kTriggerCer;   fTriggerName[kTriggerCer] = "cer";
     }
     if (kMapTriggerMode.size() != EVENT_ACTION_NUM_TRIGGER)
       G4cout << "Number of software triggers is not defined correctly!" << G4endl;
@@ -78,6 +78,14 @@ QweakSimEventAction::~QweakSimEventAction()
 {
   // Delete the event action messenger
   if (fEventActionMessenger) delete fEventActionMessenger;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+void QweakSimEventAction::ShowTrigger()
+{
+  for (int iTrigger = 0; iTrigger < EVENT_ACTION_NUM_TRIGGER; iTrigger++)
+    G4cout << (fTrigger[iTrigger]? "Enabled":"Disabled")
+           << " software trigger " << fTriggerName[iTrigger] << "." << G4endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
