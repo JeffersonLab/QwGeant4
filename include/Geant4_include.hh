@@ -115,6 +115,7 @@
 #include "G4Polyline.hh"
 #include "G4Circle.hh"
 #include "G4Polyhedra.hh"
+#include "G4Polycone.hh"
 
 // GDML related
 #ifdef G4LIB_USE_GDML

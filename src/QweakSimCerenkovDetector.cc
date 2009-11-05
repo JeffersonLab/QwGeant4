@@ -1,7 +1,10 @@
 #include "QweakSimCerenkovDetector.hh"
 
+    static const G4double inch = 2.54*cm;
+
 QweakSimCerenkovDetector::QweakSimCerenkovDetector(QweakSimUserInformation *userInfo)
 {	    	    
+
   // initialize some pointers
   myUserInfo = userInfo;
 
@@ -14,9 +17,11 @@ QweakSimCerenkovDetector::QweakSimCerenkovDetector(QweakSimUserInformation *user
   CerenkovContainer_Physical = NULL;
   CerenkovContainer_Material = NULL;
   
-//   CerenkovDetector_Logical   = NULL;
-//   CerenkovDetector_Physical  = NULL;
-//   CerenkovDetector_Material  = NULL;
+  Frame_Logical   = NULL;
+  Frame_Physical  = NULL;
+  Frame_Material  = NULL;
+
+  SideBracket_Logical = NULL; 
 
   ActiveArea_Logical         = NULL;
   ActiveArea_Physical        = NULL;
@@ -79,6 +84,10 @@ QweakSimCerenkovDetector::QweakSimCerenkovDetector(QweakSimUserInformation *user
   mirror_logical.resize(8);
   mirror_physical.resize(8);
 
+  SideBracket_Physical.clear();
+  Rotation_SideBracket.clear();
+  Position_SideBracket.clear();
+
   CerenkovMasterContainer_Physical.clear();
   CerenkovMasterContainer_Physical.resize(8);
 
@@ -108,6 +117,8 @@ QweakSimCerenkovDetector::QweakSimCerenkovDetector(QweakSimUserInformation *user
   Radiator_Material          = pMaterial->GetMaterial("Lead");
   QuartzGlue_Material        = pMaterial->GetMaterial("SiElast_Glue");
   mirror_material            = pMaterial->GetMaterial("Mirror");  
+  Frame_Material             = pMaterial->GetMaterial("Aluminum");
+  Window_Material             = pMaterial->GetMaterial("Tyvek");
 
   LightGuide_FullLength      =   18.00*cm;  
   LightGuide_FullWidth1      =   18.00*cm; 
@@ -217,8 +228,522 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 //****************************************************************************************************
 //****************************************************************************************************
 
+//******************************Define Detector Outer Frame*******************************************
+
+  Frame_FullLength_X = 95.5*inch;
+  Frame_FullLength_Y = 9.5*inch;
+  Frame_FullLength_Z = 2.0*inch;
+
+  Frame_InnerFullLength_X = (95.5-0.75*2.0)*inch;
+  Frame_InnerFullLength_Y = (9.5-0.75*2.0)*inch;
+  Frame_InnerFullLength_Z = 2.0*inch+0.1*mm;  // a bit larger to avoid sharing surface with the outer which may cause vis-problem
+
+  G4Box* OuterFrame  = new G4Box("OuterFrame",
+			     0.5 * Frame_FullLength_X , 
+			     0.5 * Frame_FullLength_Y , 
+			     0.5 * Frame_FullLength_Z );
+
+  G4Box* InnerFrame  = new G4Box("InnerFrame",
+			     0.5 * Frame_InnerFullLength_X , 
+			     0.5 * Frame_InnerFullLength_Y , 
+			     0.5 * Frame_InnerFullLength_Z );
+
+  G4SubtractionSolid* Frame_Solid = new G4SubtractionSolid("OuterFrame-InnerFrame", OuterFrame, InnerFrame);
+
+  Frame_Logical  = new G4LogicalVolume(Frame_Solid,
+					  Frame_Material,
+					  "Frame_Log",
+					  0,0,0);
+
+  G4ThreeVector Position_Frame  = G4ThreeVector(0,0,0.25*inch);
+
+  Frame_Physical   = new G4PVPlacement(0,Position_Frame, 
+						  Frame_Logical,
+						  "Frame_Physical", 
+						  CerenkovContainer_Logical, 
+						  false,0);
+
  
 //****************************************************************************************************
+//******************************Define Side Bracket*******************************************
+
+  SideBracketLength_X = 3.0*inch;
+  SideBracketLength_Y = 0.75*inch;
+  SideBracketLength_Z = 1.75*inch;
+
+  SideBracketCutLength_X = 3.0*inch+0.1*mm;
+  SideBracketCutLength_Y = 0.5*inch+0.1*mm;
+  SideBracketCutLength_Z = 0.75*inch;
+
+  G4Box* OuterSideBracket  = new G4Box("OuterSideBracket",
+			     0.5 * SideBracketLength_X, 
+			     0.5 * SideBracketLength_Y, 
+			     0.5 * SideBracketLength_Z);
+
+  G4Box* InnerSideBracket  = new G4Box("InnerSideBracket",
+			     0.5 * SideBracketCutLength_X, 
+			     0.5 * SideBracketCutLength_Y, 
+			     0.5 * SideBracketCutLength_Z);
+
+  G4RotationMatrix* cutRot = new G4RotationMatrix(0,0,0);
+  G4ThreeVector cutTrans(0, 0.125*inch, -0.25*inch);
+
+  G4SubtractionSolid* SideBracket_Solid = new G4SubtractionSolid("OuterSideBracket-InnerSideBracket",
+							 OuterSideBracket,
+							 InnerSideBracket,
+							 cutRot,
+							 cutTrans);
+
+  SideBracket_Logical  = new G4LogicalVolume(SideBracket_Solid,
+					  Frame_Material,
+					  "SideBracket_Log",
+					  0,0,0);
+
+  for (G4int i=0; i<12; i++){
+    Rotation_SideBracket.push_back(new G4RotationMatrix(0,0,0));
+    if (i>=6)     Rotation_SideBracket[i]->rotateZ(180.0*degree);
+  }
+
+  Position_SideBracket.push_back (G4ThreeVector(3.0*inch,-3.625*inch,0.25*inch) );
+  Position_SideBracket.push_back (G4ThreeVector(-3.0*inch,-3.625*inch,0.25*inch) );
+  Position_SideBracket.push_back (G4ThreeVector(35.37*inch,-3.625*inch,0.25*inch) );
+  Position_SideBracket.push_back (G4ThreeVector(-35.37*inch,-3.625*inch,0.25*inch) );
+  Position_SideBracket.push_back (G4ThreeVector(43.62*inch,-3.625*inch,0.25*inch) );
+  Position_SideBracket.push_back (G4ThreeVector(-43.62*inch,-3.625*inch,0.25*inch) );
+  Position_SideBracket.push_back (G4ThreeVector(3.0*inch,3.625*inch,0.25*inch) );
+  Position_SideBracket.push_back (G4ThreeVector(-3.0*inch,3.625*inch,0.25*inch) );
+  Position_SideBracket.push_back (G4ThreeVector(35.37*inch,3.625*inch,0.25*inch) );
+  Position_SideBracket.push_back (G4ThreeVector(-35.37*inch,3.625*inch,0.25*inch) );
+  Position_SideBracket.push_back (G4ThreeVector(43.62*inch,3.625*inch,0.25*inch) );
+  Position_SideBracket.push_back (G4ThreeVector(-43.62*inch,3.625*inch,0.25*inch) );
+
+
+  for (G4int i = 0; i<12; i++){
+    SideBracket_Physical.push_back( new G4PVPlacement(Rotation_SideBracket.at(i),Position_SideBracket.at(i), 
+		  		SideBracket_Logical,
+		  		"SideBracket_Physical", 
+		  		CerenkovContainer_Logical, 
+		  		false,i));
+
+  }
+
+//******************************Define End Bracket*******************************************
+
+  EndBracketLength_X = 1.5*inch;
+  EndBracketLength_Y = 0.75*inch;
+  EndBracketLength_Z = 1.75*inch;
+
+  EndBracketCutLength_X = 1.5*inch+0.1*mm;
+  EndBracketCutLength_Y = 0.5*inch+0.1*mm;
+  EndBracketCutLength_Z = 0.75*inch;
+
+  G4Box* OuterEndBracket  = new G4Box("OuterEndBracket",
+			     0.5 * EndBracketLength_X, 
+			     0.5 * EndBracketLength_Y, 
+			     0.5 * EndBracketLength_Z);
+
+  G4Box* InnerEndBracket  = new G4Box("InnerEndBracket",
+			     0.5 * EndBracketCutLength_X, 
+			     0.5 * EndBracketCutLength_Y, 
+			     0.5 * EndBracketCutLength_Z);
+
+  //G4RotationMatrix* cutRot = new G4RotationMatrix(0,0,0);
+  //G4ThreeVector cutTrans(0, 0.125*inch, -0.25*inch);
+
+  G4SubtractionSolid* EndBracket_Solid = new G4SubtractionSolid("OuterEndBracket-InnerEndBracket",
+							 OuterEndBracket,
+							 InnerEndBracket,
+							 cutRot,
+							 cutTrans);
+
+  EndBracket_Logical  = new G4LogicalVolume(EndBracket_Solid,
+					  Frame_Material,
+					  "EndBracket_Log",
+					  0,0,0);
+
+  for (G4int i=0; i<4; i++){
+    Rotation_EndBracket.push_back(new G4RotationMatrix(0,0,0));
+    if (i<2)     Rotation_EndBracket[i]->rotateZ(-90.0*degree);
+    else         Rotation_EndBracket[i]->rotateZ(90.0*degree);
+  }
+
+  G4double Distance_EndBracketToBarCenter = Frame_InnerFullLength_X*0.5 - 0.375*inch;
+
+  Position_EndBracket.push_back (G4ThreeVector(Distance_EndBracketToBarCenter,3.0*inch,0.25*inch) );
+  Position_EndBracket.push_back (G4ThreeVector(Distance_EndBracketToBarCenter,-3.0*inch,0.25*inch) );
+  Position_EndBracket.push_back (G4ThreeVector(-Distance_EndBracketToBarCenter,3.0*inch,0.25*inch) );
+  Position_EndBracket.push_back (G4ThreeVector(-Distance_EndBracketToBarCenter,-3.0*inch,0.25*inch) );
+
+  for (G4int i = 0; i<4; i++){
+    EndBracket_Physical.push_back( new G4PVPlacement(Rotation_EndBracket.at(i),Position_EndBracket.at(i), 
+		  		EndBracket_Logical,
+		  		"EndBracket_Physical", 
+		  		CerenkovContainer_Logical, 
+		  		false,i));
+
+  }
+
+
+
+//******************************Define the Cross Bar *******************************************
+
+  G4double CrossBar_FullLength_X = 1.5*inch;
+  G4double CrossBar_FullLength_Y = Frame_FullLength_Y - 0.75*2.0*inch;
+  G4double CrossBar_FullLength_Z = 0.75*inch;
+
+  G4Box* CrossBar_Solid  = new G4Box("CrossBar_Solid",
+			     0.5 * CrossBar_FullLength_X , 
+			     0.5 * CrossBar_FullLength_Y , 
+			     0.5 * CrossBar_FullLength_Z );
+
+  CrossBar_Logical  = new G4LogicalVolume(CrossBar_Solid,
+					  Frame_Material,
+					  "CrossBar_Log",
+					  0,0,0);
+
+  G4ThreeVector Position_CrossBar_R  = G4ThreeVector((47.75-8.25)*inch,0,0.25*inch+0.625*inch);
+  G4ThreeVector Position_CrossBar_L  = G4ThreeVector(-(47.75-8.25)*inch,0,0.25*inch+0.625*inch);
+
+  CrossBarR_Physical   = new G4PVPlacement(0,Position_CrossBar_R, 
+						  CrossBar_Logical,
+						  "CrossBarR_Physical", 
+						  CerenkovContainer_Logical, 
+						  false,0);
+
+  CrossBarL_Physical   = new G4PVPlacement(0,Position_CrossBar_L, 
+						  CrossBar_Logical,
+						  "CrossBarL_Physical", 
+						  CerenkovContainer_Logical, 
+						  false,0);
+
+//******************************Define Detector Windows *******************************************
+
+  WindowThickness = 5.0*mm;
+
+  G4Box* FrontWindow_Solid  = new G4Box("FrontWindow_Solid",
+			     0.5 * Frame_FullLength_X , 
+			     0.5 * Frame_FullLength_Y , 
+			     0.5 * WindowThickness );
+
+  FrontWindow_Logical  = new G4LogicalVolume(FrontWindow_Solid,
+					  Window_Material,
+					  "FrontWindow_Log",
+					  0,0,0);
+
+  G4ThreeVector Position_FrontWindow  = G4ThreeVector(0,0,0.25*inch-(1.0*inch+2.5*mm));
+
+  FrontWindow_Physical   = new G4PVPlacement(0,Position_FrontWindow, 
+						  FrontWindow_Logical,
+						  "FrontWindow_Physical", 
+						  CerenkovContainer_Logical, 
+						  false,0);
+
+
+  G4Box* BackWindow_Solid  = new G4Box("BackWindow_Solid",
+			     0.5 * Frame_FullLength_X - 8.25*inch,
+			     0.5 * Frame_FullLength_Y , 
+			     0.5 * WindowThickness );
+
+  BackWindow_Logical  = new G4LogicalVolume(BackWindow_Solid,
+					  Window_Material,
+					  "BackWindow_Log",
+					  0,0,0);
+
+  G4ThreeVector Position_BackWindow  = G4ThreeVector(0,0,0.25*inch+1.0*inch+2.5*mm);
+
+  BackWindow_Physical   = new G4PVPlacement(0,Position_BackWindow, 
+						  BackWindow_Logical,
+						  "BackWindow_Physical", 
+						  CerenkovContainer_Logical, 
+						  false,0);
+
+
+//******************************Define Front Window Clip*******************************************
+
+  G4double FrontClip_FullLength_X = 95.5*inch;
+  G4double FrontClip_FullLength_Y = 9.5*inch;
+  G4double FrontClip_FullLength_Z = 0.38*inch;
+
+  G4double FrontClip_InnerFullLength_X = (95.5-0.75*2.0)*inch;
+  G4double FrontClip_InnerFullLength_Y = (9.5-0.75*2.0)*inch;
+  G4double FrontClip_InnerFullLength_Z = 0.38*inch+1.0*mm;  // a bit larger to avoid sharing surface with the outer which may cause vis-problem
+
+  G4Box* FrontClip_Outer  = new G4Box("FrontClip_Outer",
+			     0.5 * FrontClip_FullLength_X , 
+			     0.5 * FrontClip_FullLength_Y , 
+			     0.5 * FrontClip_FullLength_Z );
+
+  G4Box* FrontClip_Inner  = new G4Box("FrontClip_Inner",
+			     0.5 * FrontClip_InnerFullLength_X , 
+			     0.5 * FrontClip_InnerFullLength_Y , 
+			     0.5 * FrontClip_InnerFullLength_Z );
+
+  G4SubtractionSolid* FrontClip_Solid = new G4SubtractionSolid("FrontClip_Outer-FrontClip_Inner",
+					 FrontClip_Outer,
+					 FrontClip_Inner);
+
+  FrontClip_Logical  = new G4LogicalVolume(FrontClip_Solid,
+					  Frame_Material,
+					  "FrontClip_Log",
+					  0,0,0);
+
+  G4ThreeVector Position_FrontClip  = G4ThreeVector(0,0,0.25*inch -(1.0*inch+5.0*mm+0.38/2.0*inch));
+
+  FrontClip_Physical   = new G4PVPlacement(0,Position_FrontClip, 
+						  FrontClip_Logical,
+						  "FrontClip_Physical", 
+						  CerenkovContainer_Logical, 
+						  false,0);
+
+//******************************Define Back Window Clip*******************************************
+
+  G4double BackClip_FullLength_X = 95.5*inch - 8.25*2.0*inch;
+  G4double BackClip_FullLength_Y = 9.5*inch;
+  G4double BackClip_FullLength_Z = 0.38*inch;
+
+  G4double BackClip_InnerFullLength_X = 95.5*inch - 9.0*2.0*inch;
+  G4double BackClip_InnerFullLength_Y = (9.5-0.75*2.0)*inch;
+  G4double BackClip_InnerFullLength_Z = 0.38*inch+0.1*mm;  // a bit larger to avoid sharing surface with the outer which may cause vis-problem
+
+  G4Box* BackClip_Outer  = new G4Box("BackClip_Outer",
+			     0.5 * BackClip_FullLength_X , 
+			     0.5 * BackClip_FullLength_Y , 
+			     0.5 * BackClip_FullLength_Z );
+
+  G4Box* BackClip_Inner  = new G4Box("BackClip_Inner",
+			     0.5 * BackClip_InnerFullLength_X , 
+			     0.5 * BackClip_InnerFullLength_Y , 
+			     0.5 * BackClip_InnerFullLength_Z );
+
+  G4SubtractionSolid* BackClip_Solid = new G4SubtractionSolid("BackClip_Outer-BackClip_Inner",
+					 BackClip_Outer,
+					 BackClip_Inner);
+
+  BackClip_Logical  = new G4LogicalVolume(BackClip_Solid,
+					  Frame_Material,
+					  "BackClip_Log",
+					  0,0,0);
+
+  G4ThreeVector Position_BackClip  = G4ThreeVector(0,0,0.25*inch + 1.0*inch+5.0*mm+0.38/2.0*inch);
+
+  BackClip_Physical   = new G4PVPlacement(0,Position_BackClip, 
+						  BackClip_Logical,
+						  "BackClip_Physical", 
+						  CerenkovContainer_Logical, 
+						  false,0);
+
+//******************************Define Square Falange Seal*******************************************
+
+  G4double SquareFalangeSeal_FullLength_X = 8.21*inch;
+  G4double SquareFalangeSeal_FullLength_Y = 9.50*inch;
+  G4double SquareFalangeSeal_FullLength_Z = 5.0*mm;
+
+  G4Box* SquareSealOuter_Solid  = new G4Box("SquareSealOuter_Solid",
+			     0.5 * SquareFalangeSeal_FullLength_X, 
+			     0.5 * SquareFalangeSeal_FullLength_Y, 
+			     0.5 * SquareFalangeSeal_FullLength_Z);
+
+  G4Box* SquareSealInner_Solid  = new G4Box("SquareSealInner_Solid",
+			     0.5 * SquareFalangeSeal_FullLength_X - 0.75*inch, 
+			     0.5 * SquareFalangeSeal_FullLength_Y - 0.75*inch, 
+			     0.5 * SquareFalangeSeal_FullLength_Z + 0.1*mm);
+
+  G4SubtractionSolid* SquareFalangeSeal_Solid 
+               = new G4SubtractionSolid("SquareSealOuter_Solid-SquareSealInner_Solid",
+					 SquareSealOuter_Solid,
+					 SquareSealInner_Solid);
+
+  SquareFalangeSeal_Logical  = new G4LogicalVolume(SquareFalangeSeal_Solid,
+					  Window_Material,
+					  "SquareFalangeSeal_Log",
+					  0,0,0);
+
+  G4ThreeVector Position_SquareFalangeSeal_R = G4ThreeVector((47.75-8.21/2.0)*inch,
+                                                         0,
+                                                         0.25*inch + 1.0*inch+2.5*mm);
+
+  G4ThreeVector Position_SquareFalangeSeal_L = G4ThreeVector(-(47.75-8.21/2.0)*inch,
+                                                         0,
+                                                         0.25*inch + 1.0*inch+2.5*mm);
+
+  SquareFalangeSealR_Physical   = new G4PVPlacement(0,Position_SquareFalangeSeal_R, 
+						 SquareFalangeSeal_Logical,
+						 "SquareFalangeSealR_Physical", 
+						  CerenkovContainer_Logical, 
+						  false,0);
+
+  SquareFalangeSealL_Physical   = new G4PVPlacement(0,Position_SquareFalangeSeal_L, 
+						 SquareFalangeSeal_Logical,
+						 "SquareFalangeSealL_Physical", 
+						  CerenkovContainer_Logical, 
+						  false,0);
+ 
+//******************************Define Square Falange *******************************************
+
+  G4double SquareFalange_FullLength_X = 8.21*inch;
+  G4double SquareFalange_FullLength_Y = 9.50*inch;
+  G4double SquareFalange_FullLength_Z = 0.38*inch;
+
+  G4double CutOuterRadius = 5.75*0.5*inch;
+  G4double CutInnerRadius = 0.0*inch;
+  G4double CutThickness = 0.38*inch+0.1*mm;
+
+  G4Box* SquareBase_Solid  = new G4Box("SquareBase_Solid",
+			     0.5 * SquareFalange_FullLength_X, 
+			     0.5 * SquareFalange_FullLength_Y, 
+			     0.5 * SquareFalange_FullLength_Z);
+
+  G4Tubs* CylinderCut_Solid = new G4Tubs("CylinderCut_Solid",
+                                         CutInnerRadius,
+                                         CutOuterRadius,
+                                         0.5 * CutThickness,
+                                         0.0, 360.0*degree);
+
+  G4SubtractionSolid* SquareFalange_Solid = new G4SubtractionSolid("SquareBase_Solid-CylinderCut_Solid",
+					 SquareBase_Solid,
+					 CylinderCut_Solid);
+
+  SquareFalange_Logical  = new G4LogicalVolume(SquareFalange_Solid,
+					  Frame_Material,
+					  "SquareFalange_Log",
+					  0,0,0);
+
+  G4ThreeVector Position_SquareFalange_R = G4ThreeVector((47.75-8.21/2.0)*inch,
+                                                         0,
+                                                         0.25*inch + 1.0*inch+5.0*mm+0.38/2.0*inch);
+
+  G4ThreeVector Position_SquareFalange_L = G4ThreeVector(-(47.75-8.21/2.0)*inch,
+                                                         0,
+                                                         0.25*inch + 1.0*inch+5.0*mm+0.38/2.0*inch);
+
+  SquareFalangeR_Physical   = new G4PVPlacement(0,Position_SquareFalange_R, 
+						 SquareFalange_Logical,
+						 "SquareFalangeR_Physical", 
+						  CerenkovContainer_Logical, 
+						  false,0);
+
+  SquareFalangeL_Physical   = new G4PVPlacement(0,Position_SquareFalange_L, 
+						 SquareFalange_Logical,
+						 "SquareFalangeL_Physical", 
+						  CerenkovContainer_Logical, 
+						  false,0);
+
+//******************************Define PMT Housing Wall *******************************************
+
+  G4double PMTHousingWallOuterRadius = 6.63*0.5*inch;
+  G4double PMTHousingWallInnerRadius = 6.07*0.5*inch;
+  G4double PMTHousingWallLength = 3.53*inch;
+
+  G4Tubs* PMTHousingWall_Solid = new G4Tubs("PMTHousingWall_Solid",
+                                         PMTHousingWallInnerRadius,
+                                         PMTHousingWallOuterRadius,
+                                         0.5 * PMTHousingWallLength,
+                                         0.0, 360.0*degree);
+
+  PMTHousingWall_Logical  = new G4LogicalVolume(PMTHousingWall_Solid,
+					  Frame_Material,
+					  "PMTHousingWall_Log",
+					  0,0,0);
+
+  G4ThreeVector Position_PMTHousingWall_R = G4ThreeVector((47.75-8.21/2.0)*inch,
+                                             0,
+                                             0.25*inch + 1.0*inch+5.0*mm+0.38*inch+PMTHousingWallLength*0.5);
+
+  G4ThreeVector Position_PMTHousingWall_L = G4ThreeVector(-(47.75-8.21/2.0)*inch,
+                                             0,
+                                             0.25*inch + 1.0*inch+5.0*mm+0.38*inch+PMTHousingWallLength*0.5);
+
+  PMTHousingWallR_Physical   = new G4PVPlacement(0,Position_PMTHousingWall_R, 
+						 PMTHousingWall_Logical,
+						 "PMTHousingWallR_Physical", 
+						  CerenkovContainer_Logical, 
+						  false,0);
+
+  PMTHousingWallL_Physical   = new G4PVPlacement(0,Position_PMTHousingWall_L, 
+						 PMTHousingWall_Logical,
+						 "PMTHousingWallL_Physical", 
+						  CerenkovContainer_Logical, 
+						  false,0);
+
+//******************************Define PMT Housing Falange *******************************************
+
+  G4double PMTHousingFalangeOuterRadius = 7.88*0.5*inch;
+  G4double PMTHousingFalangeInnerRadius = 5.75*0.5*inch;
+  G4double PMTHousingFalangeLength = 0.75*inch;
+
+  G4Tubs* PMTHousingFalange_Solid = new G4Tubs("PMTHousingFalange_Solid",
+                                         PMTHousingFalangeInnerRadius,
+                                         PMTHousingFalangeOuterRadius,
+                                         0.5 * PMTHousingFalangeLength,
+                                         0.0, 360.0*degree);
+
+  PMTHousingFalange_Logical  = new G4LogicalVolume(PMTHousingFalange_Solid,
+					  Frame_Material,
+					  "PMTHousingFalange_Log",
+					  0,0,0);
+
+  G4ThreeVector Position_PMTHousingFalange_R = G4ThreeVector((47.75-8.21/2.0)*inch,
+                  0,
+                  0.25*inch + 1.0*inch+5.0*mm+0.38*inch+PMTHousingWallLength+PMTHousingFalangeLength*0.5);
+
+  G4ThreeVector Position_PMTHousingFalange_L = G4ThreeVector(-(47.75-8.21/2.0)*inch,
+                  0,
+                  0.25*inch + 1.0*inch+5.0*mm+0.38*inch+PMTHousingWallLength+PMTHousingFalangeLength*0.5);
+
+  PMTHousingFalangeR_Physical   = new G4PVPlacement(0,Position_PMTHousingFalange_R, 
+						 PMTHousingFalange_Logical,
+						 "PMTHousingFalangeR_Physical", 
+						  CerenkovContainer_Logical, 
+						  false,0);
+
+  PMTHousingFalangeL_Physical   = new G4PVPlacement(0,Position_PMTHousingFalange_L, 
+						 PMTHousingFalange_Logical,
+						 "PMTHousingFalangeL_Physical", 
+						  CerenkovContainer_Logical, 
+						  false,0);
+
+//******************************Define PMT Housing Lid *******************************************
+
+   G4double phiStart = 0.0;
+   G4double phiTotal = 360*degree;
+   G4int    numZPlanes = 9;
+   G4double rInner[9] = { 6.5/2.0*inch, 6.5/2.0*inch, 2.52/2.0*inch, 2.52/2.0*inch, 2.52/2.0*inch, 2.52/2.0*inch, 2.52/2.0*inch, 2.52/2.0*inch, 2.52/2.0*inch}; 
+   G4double rOuter[9] = { 7.88/2.0*inch, 7.88/2.0*inch, 7.88/2.0*inch, 7.88/2.0*inch, 2.75/2.0*inch, 2.75/2.0*inch, 3.0/2.0*inch, 3.0/2.0*inch, 2.99/2.0*inch,};
+   G4double zPlane[9] = { 0.0, 0.37*inch, 0.38*inch, 0.39*inch, 0.5*inch, 0.69*inch, 0.70*inch, 0.85*inch, 0.86*inch };
+
+   G4Polycone* PMTHousingLid_Solid = new G4Polycone("PMTHousingLid_Soild",
+                    phiStart,
+                    phiTotal,
+                    numZPlanes,
+                    zPlane,
+                    rInner,
+                    rOuter);
+
+  PMTHousingLid_Logical  = new G4LogicalVolume(PMTHousingLid_Solid,
+					  Frame_Material,
+					  "PMTHousingLid_Log",
+					  0,0,0);
+
+  G4ThreeVector Position_PMTHousingLid_R = G4ThreeVector( (47.75-8.21/2.0)*inch,
+                  0,
+              0.25*inch+1.0*inch+5.0*mm+0.38*inch+PMTHousingWallLength+PMTHousingFalangeLength);
+
+  G4ThreeVector Position_PMTHousingLid_L = G4ThreeVector( -(47.75-8.21/2.0)*inch,
+                0,
+              0.25*inch+1.0*inch+5.0*mm+0.38*inch+PMTHousingWallLength+PMTHousingFalangeLength);
+
+  PMTHousingLidR_Physical   = new G4PVPlacement(0,Position_PMTHousingLid_R, 
+						 PMTHousingLid_Logical,
+						 "PMTHousingLidR_Physical", 
+						  CerenkovContainer_Logical, 
+						  false,0);
+
+  PMTHousingLidL_Physical   = new G4PVPlacement(0,Position_PMTHousingLid_L, 
+						 PMTHousingLid_Logical,
+						 "PMTHousingLidL_Physical", 
+						  CerenkovContainer_Logical, 
+						  false,0);
+
 //******************************Define Detector Active Area*******************************************
 
   G4Box* ActiveArea_Solid  = new G4Box("CerenkoDetector_Solid",
@@ -1219,6 +1744,43 @@ G4cout << G4endl << "###### QweakSimCerenkovDetector: Setting Attributes " << G4
  //CerenkovContainerVisAtt->SetForceSolid(true);
  CerenkovContainer_Logical->SetVisAttributes(CerenkovContainerVisAtt); 
  ActiveArea_Logical->SetVisAttributes(CerenkovContainerVisAtt); 
+
+ //------------------------------------------
+ // Visual Attributes for:  Detector Housing
+ //------------------------------------------
+ G4VisAttributes* FrameVisAtt = new G4VisAttributes(grey);
+ FrameVisAtt->SetVisibility(true);
+ //FrameVisAtt->SetForceWireframe(true);
+ //FrameVisAtt->SetForceSolid(true);
+ Frame_Logical->SetVisAttributes(FrameVisAtt); 
+
+ //------------------------------------------
+ // Visual Attributes for:  Side Brackets
+ //------------------------------------------
+ G4VisAttributes* SideBracketVisAtt = new G4VisAttributes(blue);
+ SideBracketVisAtt->SetVisibility(true);
+ //SideBracketVisAtt->SetForceWireframe(true);
+ //SideBracketVisAtt->SetForceSolid(true);
+ SideBracket_Logical->SetVisAttributes(SideBracketVisAtt); 
+
+ //------------------------------------------
+ // Visual Attributes for:  End Brackets
+ //------------------------------------------
+ G4VisAttributes* EndBracketVisAtt = new G4VisAttributes(blue);
+ EndBracketVisAtt->SetVisibility(true);
+ //EndBracketVisAtt->SetForceWireframe(true);
+ //EndBracketVisAtt->SetForceSolid(true);
+ EndBracket_Logical->SetVisAttributes(EndBracketVisAtt); 
+
+ //------------------------------------------
+ // Visual Attributes for:  Detector Window Clip
+ //------------------------------------------
+ G4VisAttributes* ClipVisAtt = new G4VisAttributes(lightorange);
+ ClipVisAtt->SetVisibility(true);
+ //ClipVisAtt->SetForceWireframe(true);
+ //ClipVisAtt->SetForceSolid(true);
+ FrontClip_Logical->SetVisAttributes(ClipVisAtt); 
+ BackClip_Logical->SetVisAttributes(ClipVisAtt); 
 
  //-----------------------------------------
  // Visual Attributes for:  CerenkovDetector

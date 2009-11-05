@@ -61,6 +61,12 @@ private:
    std::vector< G4ThreeVector >      Translation_CerenkovMasterContainer;
    std::vector< G4RotationMatrix* >  Rotation_CerenkovMasterContainer;
 
+  std::vector< G4RotationMatrix* > Rotation_SideBracket;
+  std::vector< G4ThreeVector > Position_SideBracket;
+
+  std::vector< G4RotationMatrix* > Rotation_EndBracket;
+  std::vector< G4ThreeVector > Position_EndBracket;
+
   G4LogicalVolume*   CerenkovContainer_Logical; 
   G4VPhysicalVolume* CerenkovContainer_Physical; 
   G4Material*        CerenkovContainer_Material;
@@ -108,6 +114,52 @@ private:
   G4VPhysicalVolume* Cathode_Physical; 
   G4Material*        Cathode_Material;
 
+  G4LogicalVolume*   Frame_Logical; 
+  G4VPhysicalVolume* Frame_Physical; 
+  G4Material*        Frame_Material;
+
+  G4LogicalVolume*   CrossBar_Logical;
+  G4VPhysicalVolume* CrossBarR_Physical; 
+  G4VPhysicalVolume* CrossBarL_Physical; 
+
+  G4LogicalVolume*   FrontWindow_Logical; 
+  G4VPhysicalVolume* FrontWindow_Physical; 
+  G4LogicalVolume*   BackWindow_Logical; 
+  G4VPhysicalVolume* BackWindow_Physical; 
+  G4Material*        Window_Material;
+
+  G4LogicalVolume*   FrontClip_Logical; 
+  G4VPhysicalVolume* FrontClip_Physical; 
+
+  G4LogicalVolume*   BackClip_Logical; 
+  G4VPhysicalVolume* BackClip_Physical; 
+
+  G4LogicalVolume*   SquareFalange_Logical;
+  G4VPhysicalVolume* SquareFalangeR_Physical; 
+  G4VPhysicalVolume* SquareFalangeL_Physical; 
+
+  G4LogicalVolume*   SquareFalangeSeal_Logical;
+  G4VPhysicalVolume* SquareFalangeSealR_Physical; 
+  G4VPhysicalVolume* SquareFalangeSealL_Physical;
+
+  G4LogicalVolume*   PMTHousingWall_Logical;
+  G4VPhysicalVolume* PMTHousingWallR_Physical; 
+  G4VPhysicalVolume* PMTHousingWallL_Physical;
+
+  G4LogicalVolume*   PMTHousingFalange_Logical;
+  G4VPhysicalVolume* PMTHousingFalangeR_Physical; 
+  G4VPhysicalVolume* PMTHousingFalangeL_Physical;
+
+  G4LogicalVolume*   PMTHousingLid_Logical;
+  G4VPhysicalVolume* PMTHousingLidR_Physical; 
+  G4VPhysicalVolume* PMTHousingLidL_Physical;
+
+  G4LogicalVolume*   SideBracket_Logical; 
+  std::vector< G4VPhysicalVolume* >  SideBracket_Physical;
+
+  G4LogicalVolume*   EndBracket_Logical; 
+  std::vector< G4VPhysicalVolume* >  EndBracket_Physical;
+
 //   G4Box             *QuartzBar_Solid;
 //   G4Box             *PMTEntranceWindow_Solid;
 //   G4Box             *PMT_Solid;
@@ -116,6 +168,32 @@ private:
   G4double Container_FullLength_X;
   G4double Container_FullLength_Y;
   G4double Container_FullLength_Z;
+
+  G4double Frame_FullLength_X;
+  G4double Frame_FullLength_Y;
+  G4double Frame_FullLength_Z;
+
+  G4double Frame_InnerFullLength_X;
+  G4double Frame_InnerFullLength_Y;
+  G4double Frame_InnerFullLength_Z;
+
+  G4double SideBracketLength_X;
+  G4double SideBracketLength_Y;
+  G4double SideBracketLength_Z;
+
+  G4double SideBracketCutLength_X;
+  G4double SideBracketCutLength_Y;
+  G4double SideBracketCutLength_Z;
+
+  G4double EndBracketLength_X;
+  G4double EndBracketLength_Y;
+  G4double EndBracketLength_Z;
+
+  G4double EndBracketCutLength_X;
+  G4double EndBracketCutLength_Y;
+  G4double EndBracketCutLength_Z;
+
+  G4double WindowThickness;
 
   G4double ActiveArea_FullLength_X;
   G4double ActiveArea_FullLength_Y;
