@@ -183,7 +183,7 @@
 # Event generator related
 #====================================
 
-#/EventGen/SelectOctant         1
+#/EventGen/SelectOctant         3
 #/EventGen/SelectReactionType   1
 #/EventGen/SelectReactionRegion 1
    

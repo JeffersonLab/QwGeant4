@@ -135,12 +135,6 @@ void QweakSimEventAction::BeginOfEventAction(const G4Event* evt)
       TriggerScintillatorDetector_CollID = SDman->GetCollectionID("TriggerScintillatorSD/TriggerScintillatorCollection");
   }
 
-//   // check for existing CerenkovDetectorPMT Collection ID (if it's -1 it will be assigned)
-//   if (TriggerScintillatorPMT_CollID==-1) {
-//       TriggerScintillatorPMT_CollID = SDman->GetCollectionID("TriggerScintillatorPMTSD/TriggerScintillatorPMTHitCollection");
-//   }
-
-
   // check for existing CerenkovDetector Collection ID (if it's -1 it will be assigned)
   if (CerenkovDetector_CollID==-1) {
       CerenkovDetector_CollID = SDman->GetCollectionID("CerenkovDetectorSD/CerenkovDetectorCollection");

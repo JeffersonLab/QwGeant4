@@ -142,13 +142,13 @@ void QweakSimCerenkov_DetectorHit::Draw()
   if(pVVisManager)
   {
     // draw small yellow balls for the impact point
-    G4Circle circle(worldPos);
-    circle.SetScreenSize(0.01);
-    circle.SetFillStyle(G4Circle::filled);
-    G4Colour colourHit(1.,1.,0.);  // yellow
-    G4VisAttributes attribs(colourHit);
-    circle.SetVisAttributes(attribs);
-    pVVisManager->Draw(circle);
+//     G4Circle circle(worldPos);
+//     circle.SetScreenSize(0.01);
+//     circle.SetFillStyle(G4Circle::filled);
+//     G4Colour colourHit(1.,1.,0.);  // yellow
+//     G4VisAttributes attribs(colourHit);
+//     circle.SetVisAttributes(attribs);
+//     pVVisManager->Draw(circle);
 
 //     // draw/overlay a white drift cell for a hit
 //     G4Transform3D trans(cellRot.inverse(),cellPos);

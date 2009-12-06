@@ -73,7 +73,8 @@ QweakSimTriggerScintillator::QweakSimTriggerScintillator()
   Position_TriggerScintillatorContainer_Y = 328.0*cm;
 
 //jpan@nuclear.uwinnipeg.ca
-  Position_TriggerScintillatorContainer_Z = 555.0*cm; // adjusted by Jie
+  //Position_TriggerScintillatorContainer_Z = 555.0*cm; // adjusted by Jie
+  Position_TriggerScintillatorContainer_Z = 545.0*cm; // adjusted by Jie
 
   Position_TriggerScintillatorContainer  = G4ThreeVector(Position_TriggerScintillatorContainer_X,
 							 Position_TriggerScintillatorContainer_Y,
@@ -348,17 +349,3 @@ void QweakSimTriggerScintillator::SetTriggerScintillatorTiltAngle(G4double tilta
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-//=======================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//      $Revisions$  
-//      $Log: QweakSimTriggerScintillator.cc,v $
-//      Revision 1.2  2005/12/27 19:15:51  grimm
-//      - Redesign of Doxygen header containing CVS info like revision and date
-//      - Added CVS revision log at the end of file
-//
-//
-

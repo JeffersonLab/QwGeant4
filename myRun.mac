@@ -38,14 +38,14 @@
 #  2: track all primaries and their secondaries except optical photons
 #  3: track all primaries and their secondaries
 # 
-/TrackingAction/TrackingFlag 0
-#/TrackingAction/TrackingFlag 1
+#/TrackingAction/TrackingFlag 0
+/TrackingAction/TrackingFlag 1
 #/TrackingAction/TrackingFlag 2
 #/TrackingAction/TrackingFlag 3
 
 #/run/verbose 2
 #/tracking/verbose 2
-/run/beamOn 10000
+/run/beamOn 1000
 
 
 

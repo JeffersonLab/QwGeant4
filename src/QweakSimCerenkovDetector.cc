@@ -1,3 +1,8 @@
+//
+// p.wang: the components of main detector module are added in piece by piece, and holded by container. 
+// no assembly object.
+//
+
 #include "QweakSimCerenkovDetector.hh"
 
     static const G4double inch = 2.54*cm;
@@ -105,12 +110,12 @@ QweakSimCerenkovDetector::QweakSimCerenkovDetector(QweakSimUserInformation *user
   pMaterial = new QweakSimMaterial();
   pMaterial->DefineMaterials();
 
-  //CerenkovContainer_Material = pMaterial->GetMaterial("HeGas");  
+  //CerenkovContainer_Material = pMaterial->GetMaterial("Air");  
   CerenkovContainer_Material = pMaterial->GetMaterial("Air");  
   ActiveArea_Material        = pMaterial->GetMaterial("Air");
   QuartzBar_Material         = pMaterial->GetMaterial("Quartz");
   LightGuide_Material        = pMaterial->GetMaterial("Quartz");
-  PMTContainer_Material      = pMaterial->GetMaterial("Vacuum");  
+  PMTContainer_Material      = pMaterial->GetMaterial("Air"); //Vacuum 
   PMTEntranceWindow_Material = pMaterial->GetMaterial("LimeGlass");  
   PMTQuartzOpticalFilm_Material = pMaterial->GetMaterial("SiElast_Glue");  
   Cathode_Material           = pMaterial->GetMaterial("LimeGlass");  
@@ -137,9 +142,9 @@ QweakSimCerenkovDetector::QweakSimCerenkovDetector(QweakSimUserInformation *user
   ActiveArea_FullLength_Y    =    QuartzBar_FullHeight + 1.0*mm;
   ActiveArea_FullLength_Z    =    QuartzBar_FullThickness + 2.0*mm;
   
-  Container_FullLength_X     =  ActiveArea_FullLength_X + 20.0*cm;
-  Container_FullLength_Y     =  ActiveArea_FullLength_Y +  4.0*cm;
-  Container_FullLength_Z     =  ActiveArea_FullLength_Z + 10.0*cm;
+  Container_FullLength_X     =  95.6*inch;
+  Container_FullLength_Y     =  9.6*inch;
+  Container_FullLength_Z     =  14.0*inch;
 
   Chamfer_FullLength         =  120.00*cm;   
   Chamfer_FullHeight         =    7.00*mm;

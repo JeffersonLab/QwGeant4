@@ -170,7 +170,7 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
 
 //jpan@nuclear.uwinnipeg.ca
 //  experimentalHall_Material   = pMaterial->GetMaterial("Air");
-  experimentalHall_Material   = pMaterial->GetMaterial("Vacuum");
+  experimentalHall_Material   = pMaterial->GetMaterial("Air");
 
   experimentalHall_Solid = new G4Box("ExpHall_Sol",
 				     0.5* fWorldLengthInX ,
