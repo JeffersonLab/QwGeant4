@@ -43,6 +43,12 @@ QweakSimCerenkovDetector_PMTHit::QweakSimCerenkovDetector_PMTHit()
   currentPhotonEnergy = 0.;
 }
 
+QweakSimCerenkovDetector_PMTHit::QweakSimCerenkovDetector_PMTHit(G4int pmt_id)
+{
+  PMTID  = pmt_id;
+}
+
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 QweakSimCerenkovDetector_PMTHit::~QweakSimCerenkovDetector_PMTHit()
 {

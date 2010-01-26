@@ -1,9 +1,4 @@
-//=============================================================================
-// 
-//   ---------------------------
-//  | Doxygen File Information |
-//  ---------------------------
-// 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 /**
  
    \file QweakSimCerenkov_DetectorHit.cc
@@ -14,25 +9,6 @@
    \author Klaus Hans Grimm   
 
 */
-//=============================================================================
-
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2005/12/27 19:01:50 $
-//  CVS/RCS Revision: $Revision: 1.3 $
-//  Status:           $State: Exp $
-// 
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-//
-//============================================================================
-
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #include "QweakSimCerenkov_DetectorHit.hh"
@@ -131,8 +107,7 @@ const QweakSimCerenkov_DetectorHit& QweakSimCerenkov_DetectorHit::operator=(cons
 int QweakSimCerenkov_DetectorHit::operator==(const QweakSimCerenkov_DetectorHit & ) const
 {
   //return (this==&right) ? 1 : 0;
-
-return 0;
+  return 0;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -176,19 +151,3 @@ void QweakSimCerenkov_DetectorHit::Print()
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-//=======================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//      $Revisions$  
-//      $Log: QweakSimCerenkov_DetectorHit.cc,v $
-//      Revision 1.3  2005/12/27 19:01:50  grimm
-//      - Redesign of Doxygen header containing CVS info like revision and date
-//      - Added CVS revision log at the end of file
-//
-//      Revision 1.2  2005/12/26 19:55:47  grimm
-//      - added cvs info within doxygen
-//
-

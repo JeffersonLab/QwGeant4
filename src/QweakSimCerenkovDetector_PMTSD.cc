@@ -28,8 +28,9 @@ void QweakSimCerenkovDetector_PMTSD::Initialize(G4HCofThisEvent* HCE)
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-G4bool QweakSimCerenkovDetector_PMTSD::ProcessHits(G4Step* aStep,G4TouchableHistory* )
+G4bool QweakSimCerenkovDetector_PMTSD::ProcessHits_constStep(const G4Step* aStep,G4TouchableHistory* ROhist)
 {
+
   if (aStep->GetTrack()->GetDefinition() != G4OpticalPhoton::OpticalPhotonDefinition()) 
     return false;
 
@@ -43,33 +44,30 @@ G4bool QweakSimCerenkovDetector_PMTSD::ProcessHits(G4Step* aStep,G4TouchableHist
 
   if (postStepPoint->GetStepStatus() != fGeomBoundary) return false;
 
-  if( physVol->GetName().compare("Cathode_Physical")!=0 ) return false;
+  //if( physVol->GetName().compare("Cathode_Physical")!=0 ) return false;
 
   if (preStepPoint->GetStepStatus() != fGeomBoundary) return false; // Entering Geometry
-    
+
   G4double currentPhotonEnergy = aStep->GetTrack()->GetTotalEnergy();
- 
   G4int MotherCopyNo      = theTouchable->GetVolume(1)->GetCopyNo();
-
   QweakSimCerenkovDetector_PMTHit* aHit = new QweakSimCerenkovDetector_PMTHit();
-
   G4int MotherReplicaNo2  = theTouchable->GetReplicaNumber(2);        // Several MotherVolumes
 
-
+//  std::cout<<"store hit info: detector "<<MotherReplicaNo2<<"  PMTID "<<MotherCopyNo<<std::endl;
   aHit->StoreDetectorID(MotherReplicaNo2); // which octant (number to be converted) 
   aHit->StorePMTID(MotherCopyNo);          // left or right pmt
 
   aHit->StorePhotonEnergy(currentPhotonEnergy);
   G4int hitCount = CerenkovDetector_PMTHitsCollection->insert(aHit); 
   aHit->StoreHitID(hitCount);
-  aHit->SetHitValid(False);
+  //aHit->SetHitValid(False);
   myUserInfo->SetCurrentPMTHit(aHit,MotherCopyNo);
-
 
   return true;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 void QweakSimCerenkovDetector_PMTSD::EndOfEvent(G4HCofThisEvent* )
 {
 

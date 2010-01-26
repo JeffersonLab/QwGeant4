@@ -1,8 +1,4 @@
-//=============================================================================
-// 
-//   ---------------------------
-//  | Doxygen File Information |
-//  ---------------------------
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 /**
  
    \file QweakSimCerenkov_DetectorHit.hh
@@ -11,13 +7,7 @@
    \author Klaus Hans Grimm
      
 */
-//=============================================================================
-// 
-//=============================================================================
-// 
-//   ---------------------------
-//  | Doxygen Class Information |
-//  ---------------------------
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 /**
    \class QweakSimCerenkov_DetectorHit
     
@@ -26,25 +16,7 @@
    Placeholder for a long explaination
     
  */
-//=============================================================================
-//
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2005/12/27 19:22:23 $
-//  CVS/RCS Revision: $Revision: 1.3 $
-//  Status:           $State: Exp $
-// 
-// ==============================
-//  CVS/RCS Log at end of file !!
-// ==============================
-// 
-//=============================================================================
-
-  
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 #ifndef QweakSimCerenkov_DetectorHit_h
 #define QweakSimCerenkov_DetectorHit_h 
 

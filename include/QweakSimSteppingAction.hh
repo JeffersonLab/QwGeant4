@@ -17,6 +17,8 @@
 // system classes
 //class G4Step;
 
+#include "QweakSimCerenkovDetector_PMTSD.hh"
+
 class QweakSimEPEvent;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

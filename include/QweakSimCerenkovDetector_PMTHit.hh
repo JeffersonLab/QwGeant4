@@ -13,6 +13,7 @@ public:
   virtual ~QweakSimCerenkovDetector_PMTHit();
   
   QweakSimCerenkovDetector_PMTHit(const QweakSimCerenkovDetector_PMTHit &right);
+  QweakSimCerenkovDetector_PMTHit(G4int pmt_id);
   const QweakSimCerenkovDetector_PMTHit & operator=(const QweakSimCerenkovDetector_PMTHit &right);
   int operator==(const QweakSimCerenkovDetector_PMTHit &right) const;
   

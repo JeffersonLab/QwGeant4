@@ -43,15 +43,13 @@
 #endif
 
 
-
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 int main(int argc,char** argv) {
 
   //my Verbose output class
   G4VSteppingVerbose::SetInstance( new QweakSimSteppingVerbose() ); 
-  
+
   // Run manager
   G4RunManager * runManager = new G4RunManager();
 
@@ -63,15 +61,8 @@ int main(int argc,char** argv) {
 //jpan@nuclear.uwinnipeg.ca
   QweakSimEPEvent*               myEPEvent                  = new QweakSimEPEvent();
 
-
   runManager->SetUserInitialization(myQweakSimExperiment);
   runManager->SetUserInitialization(new QweakSimPhysicsList() );
-   
-
-
-
-
-
 
   // UserAction classes
   //runManager->SetUserAction( new QweakSimPrimaryGeneratorAction(myQweakSimUserInformation) );
@@ -82,11 +73,8 @@ int main(int argc,char** argv) {
   runManager->SetUserAction( new QweakSimEventAction(myQweakSimAnalysis, myQweakSimUserInformation) );
   runManager->SetUserAction( new QweakSimRunAction(myQweakSimAnalysis) );  
 
-
-
   //Initialize G4 kernel
   runManager->Initialize();
-
   G4UIsession* session = 0;
 
  if (argc==1)   // Define UI session for interactive mode.

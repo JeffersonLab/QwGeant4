@@ -57,8 +57,8 @@ void QweakSimCerenkov_DetectorSD::Initialize(G4HCofThisEvent* HCE)
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-//G4bool QweakSimCerenkovDetectorSD::ProcessHits(G4Step* aStep,G4TouchableHistory* /*ROhist*/)
-G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistory* )
+G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep,G4TouchableHistory* ROhist)
+//G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistory* )
 {
 
 //G4cout << G4endl << "###### Calling QweakSimCerenkov_DetectorSD::ProcessHits() " << G4endl << G4endl; 
@@ -131,19 +131,19 @@ G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistor
 
   
   G4int    MotherCopyNo   = theTouchable->GetVolume(1)->GetCopyNo();   // one Mother Volume
-//   G4int DetectorCopyNo    = theTouchable->GetVolume()->GetCopyNo();    // but several detectors per MV
-//   G4int DetectorReplicaNo = theTouchable->GetReplicaNumber();          // but several detectors per MV
-//   G4int MotherReplicaNo   = theTouchable->GetReplicaNumber(1);        // Several MotherVolumes
-//   G4int    MotherCopyNo2  = theTouchable->GetVolume(2)->GetCopyNo();  // Several MotherVolumes
-//   G4int MotherReplicaNo2  = theTouchable->GetReplicaNumber(2);        // Several MotherVolumes
-//
+  G4int DetectorCopyNo    = theTouchable->GetVolume()->GetCopyNo();    // but several detectors per MV
+  G4int DetectorReplicaNo = theTouchable->GetReplicaNumber();          // but several detectors per MV
+  G4int MotherReplicaNo   = theTouchable->GetReplicaNumber(1);        // Several MotherVolumes
+  G4int    MotherCopyNo2  = theTouchable->GetVolume(2)->GetCopyNo();  // Several MotherVolumes
+  G4int MotherReplicaNo2  = theTouchable->GetReplicaNumber(2);        // Several MotherVolumes
+
 
     G4cout << "%%%%%%%%%%%%%%%%%%%  Cerenkov MV    CopyNumber  :" << MotherCopyNo      << G4endl;
-//     G4cout << "%%%%%%%%%%%%%%%%%%%  Cerenkov       CopyNumber  :" << DetectorCopyNo    << G4endl;
-//     G4cout << "%%%%%%%%%%%%%%%%%%%  Cerenkov    ReplicaNumber  :" << DetectorReplicaNo << G4endl;
-//     G4cout << "%%%%%%%%%%%%%%%%%%%  Cerenkov MV ReplicaNumber  :" << MotherReplicaNo << G4endl;
-//     G4cout << "%%%%%%%%%%%%%%%%%%%  Cerenkov MV    CopyNumber2 :" << MotherCopyNo2     << G4endl;
-//     G4cout << "%%%%%%%%%%%%%%%%%%%  Cerenkov    ReplicaNumber2 :" << MotherReplicaNo2  << G4endl;
+    G4cout << "%%%%%%%%%%%%%%%%%%%  Cerenkov       CopyNumber  :" << DetectorCopyNo    << G4endl;
+    G4cout << "%%%%%%%%%%%%%%%%%%%  Cerenkov    ReplicaNumber  :" << DetectorReplicaNo << G4endl;
+    G4cout << "%%%%%%%%%%%%%%%%%%%  Cerenkov MV ReplicaNumber  :" << MotherReplicaNo << G4endl;
+    G4cout << "%%%%%%%%%%%%%%%%%%%  Cerenkov MV    CopyNumber2 :" << MotherCopyNo2     << G4endl;
+    G4cout << "%%%%%%%%%%%%%%%%%%%  Cerenkov    ReplicaNumber2 :" << MotherReplicaNo2  << G4endl;
 
 
   // get User Track Info

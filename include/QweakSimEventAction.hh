@@ -224,10 +224,15 @@ private:
   G4double rDCUPlaneWireAngle;
   G4double rDCVPlaneWireAngle;
 
-  vector <G4int>    pmtHitsLeft;
-  vector <G4int>    pmtHitsRight;
-  vector <G4double> pmtNPELeft;
-  vector <G4double> pmtNPERight;
+//   vector <G4int>    pmtHitsLeft;
+//   vector <G4int>    pmtHitsRight;
+//   vector <G4double> pmtNPELeft;
+//   vector <G4double> pmtNPERight;
+  G4int    pmtHitsLeft;
+  G4int    pmtHitsRight;
+  G4double pmtNPELeft;
+  G4double pmtNPERight;
+
 
   Int_t edgeEvent;
 

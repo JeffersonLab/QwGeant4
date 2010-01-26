@@ -45,10 +45,7 @@ G4cout << "###### Leaving QweakSimSteppingAction::QweakSimSteppingAction() " << 
 void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
 { 
 
-  //G4cout << "###### Calling QweakSimSteppingAction::UserSteppingAction() " << G4endl;
-
   fSecondary = fpSteppingManager->GetfSecondary();
-  //G4cout << " got fSecondary" << G4endl;
 
   G4Track*              theTrack     = theStep->GetTrack();
   G4StepPoint*          thePrePoint  = theStep->GetPreStepPoint();
@@ -62,20 +59,17 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
   G4ProcessManager*     pm           = particleType->GetProcessManager();
   G4int                 nprocesses   = pm->GetProcessListLength();
   G4ProcessVector*      pv           = pm->GetProcessList();  
-  G4VSteppingVerbose   *theVerbStep  = G4VSteppingVerbose::GetInstance();
+  G4VSteppingVerbose*   theVerbStep  = G4VSteppingVerbose::GetInstance();
   G4double              charge       = particleType->GetPDGCharge();
-
 
   G4int nSecAtRest       = GetNumOfAtRestSecondaries();
   G4int nSecAlong        = GetNumOfAlongStepSecondaries();
   G4int nSecPost         = GetNumOfPostStepSecondaries();
   G4int nSecTotal        = GetTotalNumOfSecondaries();
 
-
 //jpan@nuclear.uwinnipeg.ca Thu Apr 16 01:33:14 CDT 2009
 // check if it is primary
   G4int parentID = theTrack->GetParentID();
-
   if( particleType==G4Electron::ElectronDefinition() && parentID==0 ){
 
 //jpan: to account for the energy loss before the event generation,
@@ -192,22 +186,20 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
     }
   }
 
-  
-
 
 //jpan@nuclear.uwinnipeg.ca
-// I commented out the cout statements for speeding up 
+// commented out the cout statements for speeding up 
 
 //  G4cout << "Particle Name = " << particleType->GetParticleName() << G4endl;
 
 //   if(!strcmp(thePrePV->GetName(),"CerenkovDetector_Physical")){
 //!strcmp(thePrePV->GetName(),"LightGuide_PhysicalRight") || !strcmp(thePrePV->GetName(),"LightGuide_PhysicalLeft")
 
-  if(!strcmp(thePrePV->GetName(),"QuartzBar_PhysicalRight") || !strcmp(thePrePV->GetName(),"QuartzBar_PhysicalLeft")){
+  if(!strcmp(thePrePV->GetName(),"QuartzBar_PhysicalRight") ||
+     !strcmp(thePrePV->GetName(),"QuartzBar_PhysicalLeft")){
 
     myUserInfo->AddCerenkovEnergyDeposit(theStep->GetTotalEnergyDeposit());
-    
-    
+
     if(theTrack->GetParentID() > 0 && (particleType==G4Electron::ElectronDefinition() || 
 				       particleType==G4Positron::PositronDefinition() ||
 				       particleType==G4Gamma::GammaDefinition())){
@@ -241,55 +233,90 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
       //     if(!strcmp(myUserInfo->GetStoredStepVolumeName(),"CerenkovDetector_Physical") &&
       //        !strcmp(thePrePV->GetName(),"CerenkovContainer_Physical")){
       myUserInfo->StoreLocalCerenkovExitPosition(localPos);
-      
     }
   }
 
   QweakSimTrackInformation *TrackInfo = (QweakSimTrackInformation*)theTrack->GetUserInformation();
-//  G4cout << "Particle History For This Particle" << G4endl;
-//  G4cout << "Event ID = " << myUserInfo->GetPrimaryEventNumber() << G4endl;
-  //   G4cout << "Hit ID = " << myUserInfo->GetCurrentPMTHit()->GetHitID() << G4endl;
-//  for(int i = 0; i < TrackInfo->GetParticleHistoryLength(); i++){	  
-//    G4cout << "Particle "<< i <<" = " << TrackInfo->GetParticleDefinitionAtIndex(i)->GetParticleName() << std::setw(9)
-//           << " at position " << G4BestUnit(TrackInfo->GetOriginVertex(i),"Length") << std::setw(9);
-//    if(i == TrackInfo->GetParticleHistoryLength()-1)
-//      G4cout << " Parent Eng = " << theTrack->GetTotalEnergy()/MeV;
-//    else
-//      G4cout << " Parent Eng = " << TrackInfo->GetParentEnergyAtIndex(i+1)/MeV;
-//    G4cout << std::setw(18);
-//    G4cout << " Creator Process = " << TrackInfo->GetCreatorProcessAtIndex(i);
-//    G4cout << std::setw(18);
-//    G4cout << " Kinetic Energy = " <<TrackInfo->GetPrimaryKineticEnergy();
-//    G4cout << " Cerenkov Hit Energy = " << TrackInfo->GetCerenkovHitEnergyAtIndex(i) << G4endl;
-//  }
-//   if(TrackInfo->GetParticleHistoryLength() > 1 &&
-//      TrackInfo->GetParticleDefinitionAtIndex(TrackInfo->GetParticleHistoryLength()-1) == G4Gamma::GammaDefinition() &&
-//      TrackInfo->GetParticleDefinitionAtIndex(TrackInfo->GetParticleHistoryLength()-2) != G4Electron::ElectronDefinition() &&
-//      TrackInfo->GetParticleDefinitionAtIndex(TrackInfo->GetParticleHistoryLength()-2) != G4Positron::PositronDefinition())
-//     {
-//       G4cout << "Gamma Created by " << TrackInfo->GetParticleDefinitionAtIndex(TrackInfo->GetParticleHistoryLength()-2)->GetParticleName() << G4endl;
-//     }
+
+//pqwang: optical photon process
+
+  G4OpBoundaryProcessStatus boundaryStatus=Undefined;
+  static G4OpBoundaryProcess* boundary=NULL;
+
+  if(!boundary){
+//    G4ProcessManager* pm
+//      = theStep->GetTrack()->GetDefinition()->GetProcessManager();
+    G4int nprocesses = pm->GetProcessListLength();
+    G4ProcessVector* pv = pm->GetProcessList();
+    for(G4int i=0;i<nprocesses;i++){
+      if((*pv)[i]->GetProcessName()=="OpBoundary"){
+        boundary = (G4OpBoundaryProcess*)(*pv)[i];
+        break;
+      }
+    }
+  }
+
+  if(!thePostPV){
+    return;
+  }
 
   if(particleType==G4OpticalPhoton::OpticalPhotonDefinition()){
-  
-    if(!strcmp(myUserInfo->GetStoredStepVolumeName(),"PMTEntranceWindow_Physical")){
-      if(!strcmp(thePrePV->GetName(),"Cathode_Physical")){
-	
-
-	
-// 	G4int index = 0;
-// 	if(TrackInfo->GetParticleHistoryLength() < 3)
-// // 	  myUserInfo->SetPhotonFromPrimary(TrackInfo->GetParticleDefinitionAtIndex(index));
-// 	else{
-// 	  index = TrackInfo->GetParticleHistoryLength()-3;
-// // 	  myUserInfo->SetPhotonFromParticle(TrackInfo->GetParticleDefinitionAtIndex(index));
-// 	}
-
-	myUserInfo->GetCurrentPMTHit()->SetHitValid(True);
-	// 	theTrack->SetTrackStatus(fStopAndKill);
+    boundaryStatus=boundary->GetStatus();
+    if(thePostPoint->GetStepStatus()==fGeomBoundary){
+      switch(boundaryStatus){
+      case Absorption:
+        {
+          //std::cout<<"Absorption"<<std::endl;
+          break;
+        }
+      case Detection:
+        {
+          //std::cout<<"Detected a photon."<<std::endl;
+          G4SDManager* SDman = G4SDManager::GetSDMpointer();
+          G4String sdName="/CerenkovPMTSD";
+          QweakSimCerenkovDetector_PMTSD* pmtSD = (QweakSimCerenkovDetector_PMTSD*)SDman->FindSensitiveDetector(sdName);
+          if(pmtSD)
+	    {
+              //myUserInfo->GetCurrentPMTHit()->SetHitValid(True);
+	      pmtSD->ProcessHits_constStep(theStep,NULL); 
+	    }
+          break;
+        }
+      case FresnelReflection:
+        {
+          //std::cout<<"FresnelReflection"<<std::endl;
+          break;
+        }
+      case TotalInternalReflection:
+        {
+          //std::cout<<"TotalInternalReflection"<<std::endl;
+          break;
+        }
+      case SpikeReflection:
+        {
+          //std::cout<<"SpikeReflection"<<std::endl;
+          break;
+        }
+      default:
+        {
+          //std::cout<<"Undefined"<<std::endl;
+          break;
+        }
       }
-    }    
-  } 
+    }
+  }  // end of optical photon process
+
+
+//   if(particleType==G4OpticalPhoton::OpticalPhotonDefinition()){
+// 
+//     if(!strcmp(myUserInfo->GetStoredStepVolumeName(),"PMTEntranceWindow_Physical")){
+//       if(!strcmp(thePrePV->GetName(),"Cathode_Physical")){
+// 
+//       myUserInfo->GetCurrentPMTHit()->SetHitValid(True);
+// 	// 	theTrack->SetTrackStatus(fStopAndKill);
+//       }
+//     } 
+//   } 
 
   myUserInfo->StoreStepVolumeName(thePrePV->GetName()); 
 
@@ -308,18 +335,9 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
 
   if ( theStep->GetTrack()->GetCurrentStepNumber() > 100000 )
       theStep->GetTrack()->SetTrackStatus(fStopAndKill);
-
-//
-//======================================================================
-
-  // G4cout << "###### Leaving QweakSimSteppingAction::UserSteppingAction() " << G4endl;
-
-  return;
-
- //jpan@nuclear.uwinnipeg.ca
-
+      return;
 }       // end of QweakSimSteppingAction::UserSteppingAction
-                
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 G4int QweakSimSteppingAction::GetTrackVectorStartIndex()

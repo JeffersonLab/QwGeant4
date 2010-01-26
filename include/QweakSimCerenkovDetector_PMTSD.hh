@@ -23,10 +23,11 @@ public:
   ~QweakSimCerenkovDetector_PMTSD();
   
   void Initialize(G4HCofThisEvent* HCE);
-  G4bool ProcessHits(G4Step* aStep,G4TouchableHistory* ROhist);
+  G4bool ProcessHits(G4Step* aStep,G4TouchableHistory* ROhist){ProcessHits_constStep(aStep, ROhist);};
+  G4bool ProcessHits_constStep(const G4Step* aStep,G4TouchableHistory* ROhist);
   void EndOfEvent(G4HCofThisEvent* HCE);
-
   QweakSimTrajectory* GetParentTrajectory(G4int parentID);
+
 
 private:
 

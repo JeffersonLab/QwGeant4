@@ -57,15 +57,3 @@ QweakSimUserCerenkov_MainEvent::~QweakSimUserCerenkov_MainEvent()
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
-//=======================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//      $Revisions$  
-//      $Log: QweakSimUserCerenkov_MainEvent.cc,v $
-//      Revision 1.2  2005/12/27 19:16:49  grimm
-//      - Redesign of Doxygen header containing CVS info like revision and date
-//      - Added CVS revision log at the end of file
-//
-//

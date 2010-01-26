@@ -65,7 +65,7 @@ void QweakSimUserInformation::Initialize()
 
   G4ThreeVector tmp(1000,1000,1000);
   cerenkovEventExitPos = tmp;
-  
+  /*
   G4double D753WKBS20_QE[65][2] = {
     {200.0*nanometer, 0.68},
     {210.0*nanometer, 3.55},
@@ -132,7 +132,76 @@ void QweakSimUserInformation::Initialize()
     {820.0*nanometer, 0.48},
     {830.0*nanometer, 0.33},
     {840.0*nanometer, 0.18}
+  };*/
+
+  G4double D753WKBS20_QE[65][2] = {
+    {200.0*nanometer, 100},
+    {210.0*nanometer, 100},
+    {220.0*nanometer, 100},
+    {230.0*nanometer, 100},
+    {240.0*nanometer, 100},
+    {250.0*nanometer, 100},
+    {260.0*nanometer, 100},
+    {270.0*nanometer, 100},
+    {280.0*nanometer, 100},
+    {290.0*nanometer, 100},
+    {300.0*nanometer, 100},
+    {310.0*nanometer, 100},
+    {320.0*nanometer, 100},
+    {330.0*nanometer, 100},
+    {340.0*nanometer, 100},
+    {350.0*nanometer, 100},
+    {360.0*nanometer, 100},
+    {370.0*nanometer, 100},
+    {380.0*nanometer, 100},
+    {390.0*nanometer, 100},
+    {400.0*nanometer, 100},
+    {410.0*nanometer, 100},
+    {420.0*nanometer, 100},
+    {430.0*nanometer, 100},
+    {440.0*nanometer, 100},
+    {450.0*nanometer, 100},
+    {460.0*nanometer, 100},
+    {470.0*nanometer, 100},
+    {480.0*nanometer, 100},
+    {490.0*nanometer, 100},
+    {500.0*nanometer, 100},
+    {510.0*nanometer, 100},
+    {520.0*nanometer, 100},
+    {530.0*nanometer, 100},
+    {540.0*nanometer, 100},
+    {550.0*nanometer, 100},
+    {560.0*nanometer, 100},
+    {570.0*nanometer, 100},
+    {580.0*nanometer, 100},
+    {590.0*nanometer, 100},
+    {600.0*nanometer, 100},
+    {610.0*nanometer, 100},
+    {620.0*nanometer, 100},
+    {630.0*nanometer, 100},
+    {640.0*nanometer, 100},
+    {650.0*nanometer, 100},
+    {660.0*nanometer, 100},
+    {670.0*nanometer, 100},
+    {680.0*nanometer, 100},
+    {690.0*nanometer, 100},
+    {700.0*nanometer, 100},
+    {710.0*nanometer, 100},
+    {720.0*nanometer, 100},
+    {730.0*nanometer, 100},
+    {740.0*nanometer, 100},
+    {750.0*nanometer, 100},
+    {760.0*nanometer, 100},
+    {770.0*nanometer, 100},
+    {780.0*nanometer, 100},
+    {790.0*nanometer, 100},
+    {800.0*nanometer, 100},
+    {810.0*nanometer, 100},
+    {820.0*nanometer, 100},
+    {830.0*nanometer, 100},
+    {840.0*nanometer, 100}
   };
+
 
   G4double XP4572_QE[15][2] = {
     {200.0*nanometer ,  0.0} ,
