@@ -18,6 +18,8 @@
 /Target/SetCenterPositionInZ  -650.0 cm
 /Target/SetTargetCellMaterial  Aluminum
 /Target/SetTargetMaterial      H2Liquid
+#/Target/SetTargetCellMaterial  Vacuum
+#/Target/SetTargetMaterial      Vacuum
 
 #==========================
 # Detector Hut related
@@ -40,14 +42,14 @@
 #/Cerenkov/SetCerenkovMaterial Vacuum
 
 # positions to be extracted from SolidWorks
-# or by Juliette Mammei's hit distribution
 # on the vertical detector plane
  
 /Cerenkov/SetCenterPositionInX     0.0 cm
-#/Cerenkov/SetCenterPositionInY   328.0 cm 
-/Cerenkov/SetCenterPositionInY   334.0 cm
+#/Cerenkov/SetCenterPositionInY   319.0 cm 
+/Cerenkov/SetCenterPositionInY   328.0 cm
+#/Cerenkov/SetCenterPositionInY   334.0 cm
 /Cerenkov/SetCenterPositionInZ   570.0 cm
-/Cerenkov/SetTiltingAngle         0.0 degree
+/Cerenkov/SetTiltingAngle          0.0 degree
 
 
 #==================================
@@ -66,8 +68,8 @@
 #/TriggerScintillator/SetScintillatorMaterial Quartz
  
 /TriggerScintillator/SetCenterPositionInX     0.0 cm
-#/TriggerScintillator/SetCenterPositionInY   310.0 cm 
-#/TriggerScintillator/SetCenterPositionInZ   555.0 cm
+/TriggerScintillator/SetCenterPositionInY   328.0 cm 
+/TriggerScintillator/SetCenterPositionInZ   545.0 cm
 /TriggerScintillator/SetTiltingAngle          0.0 degree
 
 
@@ -186,5 +188,4 @@
 #/EventGen/SelectOctant         3
 #/EventGen/SelectReactionType   1
 #/EventGen/SelectReactionRegion 1
-   
 

@@ -97,12 +97,12 @@ void QweakSimPhysicsList::ConstructProcess()
 //  ConstructElectronNuclearProcess();
 //  ConstructDecayProcess();
 
-  ConstructEMProcess();
+//  ConstructEMProcess();
   ConstructOpticalPhotonProcess();
 //  ConstructHadronProcess();
-  //ConstructNeutronProcess();
-  ConstructPhotonNuclearProcess();
-  ConstructElectronNuclearProcess();
+//  ConstructNeutronProcess();
+//  ConstructPhotonNuclearProcess();
+//  ConstructElectronNuclearProcess();
 //  ConstructDecayProcess();
 }
 
@@ -1214,27 +1214,4 @@ void QweakSimPhysicsList::SetCuts()
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-//=======================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//      $Revisions$  
-//      $Log: QweakSimPhysicsList.cc,v $
-//      Revision 1.3  2006/05/05 21:20:32  grimm
-//      - Commented following process construction
-//
-//        //ConstructHadronProcess();
-//        //ConstructNeutronProcess();
-//        //ConstructPhotonNuclearProcess();
-//        //ConstructElectronNuclearProcess();
-//        //ConstructDecayProcess();
-//
-//      Revision 1.2  2005/12/27 19:13:55  grimm
-//      - Redesign of Doxygen header containing CVS info like revision and date
-//      - Added CVS revision log at the end of file
-//
-// 
-
 

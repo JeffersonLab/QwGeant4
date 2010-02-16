@@ -56,8 +56,8 @@ class QweakSimEPEvent {
 
   G4int kActiveOctantNumber;
 
-  G4double meanPhiAngle;
-  G4double sigmaPhiAngle;
+  G4double PhiAngle_Min;
+  G4double PhiAngle_Max;
   G4double ThetaAngle_Min;
   G4double ThetaAngle_Max;
 

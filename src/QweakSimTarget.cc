@@ -16,22 +16,6 @@
 */
 //=============================================================================
 
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2005/12/27 19:15:13 $
-//  CVS/RCS Revision: $Revision: 1.2 $
-//  Status:           $State: Exp $
-// 
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-//
-//============================================================================
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #include "QweakSimTarget.hh"
@@ -109,7 +93,7 @@ G4cout << G4endl << "###### Calling QweakSimTarget::ConstructComponent() " << G4
   G4Tubs* TargetCell_Solid    = new G4Tubs("QweakTargetCell_Sol",
 				       targetCellInnerRadiusMax+0.000001*cm, //targetCellRadiusMin, jpan@nuclear.uwinnipeg.ca
 				       targetCellOuterRadiusMax,
-				   0.5*targetCellOuterLength,
+				       0.5*targetCellOuterLength,
 				       targetCellStartingPhi,
 				       targetCellDeltaPhi);
  
@@ -137,7 +121,7 @@ G4cout << G4endl << "###### Calling QweakSimTarget::ConstructComponent() " << G4
   G4Tubs* TargetWindowFront_Solid    = new G4Tubs("TargetWindowFront_Sol",
 				       targetCellRadiusMin,
 				       targetCellInnerRadiusMax,
-				   0.5*targetCellWindowThickness,
+				       0.5*targetCellWindowThickness,
 				       targetCellStartingPhi,
 				       targetCellDeltaPhi);
  
@@ -167,7 +151,7 @@ G4cout << G4endl << "###### Calling QweakSimTarget::ConstructComponent() " << G4
   G4Tubs* TargetWindowBack_Solid    = new G4Tubs("TargetWindowBack_Sol",
 				       targetCellRadiusMin,
 				       targetCellInnerRadiusMax,
-				   0.5*targetCellWindowThickness,
+				       0.5*targetCellWindowThickness,
 				       targetCellStartingPhi,
 				       targetCellDeltaPhi);
  
@@ -189,6 +173,14 @@ G4cout << G4endl << "###### Calling QweakSimTarget::ConstructComponent() " << G4
 				       false, 
 				       0);
 
+// Set max step size for a certain volume, see
+//         http://geant4.web.cern.ch/geant4/G4UsersDocuments/UsersGuides/
+//         ForApplicationDeveloper/html/TrackingAndPhysics/thresholdVScut.html
+
+  G4double maxStep = 0.1*targetCellWindowThickness;
+  TargetWindowFront_Logical->SetUserLimits(new G4UserLimits(maxStep));
+  TargetWindowBack_Logical->SetUserLimits(new G4UserLimits(maxStep));
+
 //--------------------------------------
 
    // define target material solid volume
@@ -208,6 +200,11 @@ G4cout << G4endl << "###### Calling QweakSimTarget::ConstructComponent() " << G4
 					Target_Material,
 					"QweakTargetMaterial_Log",
 					0,0,0);
+
+  // set max step size for LH2 target
+  maxStep = 0.05*targetCellInnerLength; //step size < 20% of target length
+  TargetMaterial_Logical->SetUserLimits(new G4UserLimits(maxStep));
+
   // define Target material physical volume
   G4cout << G4endl << "###### QweakSimTarget: Define TargetMaterial_Physical " << G4endl << G4endl;
   TargetMaterial_Physical   = new G4PVPlacement(0, 
@@ -304,15 +301,3 @@ G4cout << G4endl << "###### Calling QweakSimTarget::SetTargetCenterPositionInZ()
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-//=======================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//      $Revisions$  
-//      $Log: QweakSimTarget.cc,v $
-//      Revision 1.2  2005/12/27 19:15:13  grimm
-//      - Redesign of Doxygen header containing CVS info like revision and date
-//      - Added CVS revision log at the end of file
-//
-//

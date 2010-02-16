@@ -66,28 +66,46 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 //  G4cout << "###### Calling QweakSimPrimaryGeneratorAction::GeneratePrimaries" << G4endl;
 
 //jpan@nuclear.uwinnipeg.ca
-//  
+//
   G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
   G4ParticleDefinition* particle = particleTable->FindParticle("e-");
   particleGun->SetParticleDefinition(particle);
 
   G4double PositionX_min = -2.0*mm;
   G4double PositionX_max =  2.0*mm;
-  myPositionX =  (G4UniformRand()-0.5)*(PositionX_max-PositionX_min);
+  myPositionX =  (G4UniformRand()-0.5)*(PositionX_max-PositionX_min)+(PositionX_max+PositionX_min)/2.0;
 
   G4double PositionY_min = -2.0*mm;
   G4double PositionY_max =  2.0*mm;
-  myPositionY =  (G4UniformRand()-0.5)*(PositionY_max-PositionY_min);
+  myPositionY =  (G4UniformRand()-0.5)*(PositionY_max-PositionY_min)+(PositionX_max+PositionX_min)/2.0;
 
   myPositionZ = -700.0*cm;
+
+  myNormMomentumX  = 0.0;
+  myNormMomentumY  = 0.0;
+  myNormMomentumZ  = 1.0;
+
+
+//   //   Relocate the beam gun to the Cerenkov bar to test the light distributions
+//   G4double PositionX_min = -100.0*cm;
+//   G4double PositionX_max =  100.0*cm;
+//   myPositionX =  (G4UniformRand()-0.5)*(PositionX_max-PositionX_min)+(PositionX_max+PositionX_min)/2.0;
+// 
+//   G4double PositionY_min = (328.-9.0)*cm;
+//   G4double PositionY_max = (328.+9.0)*cm;
+//   myPositionY =  (G4UniformRand()-0.5)*(PositionY_max-PositionY_min)+(PositionY_max+PositionY_min)/2.0;
+// 
+//   myPositionZ = 560.0*cm;
+// 
+//   myNormMomentumX  = 0.0;
+//   myNormMomentumY  = 0.0;
+//   myNormMomentumZ  = 1.0;
+//   //
 
   particleGun->SetParticlePosition(G4ThreeVector(myPositionX,
 						 myPositionY,
 						 myPositionZ ));
 
-  myNormMomentumX  = 0.0;
-  myNormMomentumY  = 0.0;
-  myNormMomentumZ  = 1.0;
   myNormMomentum = G4ThreeVector(myNormMomentumX, myNormMomentumY, myNormMomentumZ);
   particleGun->SetParticleMomentumDirection(myNormMomentum); 
 

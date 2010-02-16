@@ -44,10 +44,12 @@
 # Select the tracking flag
 #  0: Allow primaries only (default)
 #  1: Allow primaries and optical photons only
-#  0: track all primaries and their secondaries
+#  2: Track all particles except optical photons
+#  3: Track all primaries and their secondaries
 /TrackingAction/TrackingFlag 0
 #/TrackingAction/TrackingFlag 1
 #/TrackingAction/TrackingFlag 2
+#/TrackingAction/TrackingFlag 3
 
 #
 # Store particle trajactories for visualisation

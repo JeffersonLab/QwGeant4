@@ -67,6 +67,13 @@ private:
   std::vector< G4RotationMatrix* > Rotation_EndBracket;
   std::vector< G4ThreeVector > Position_EndBracket;
 
+  std::vector< G4RotationMatrix* > Rotation_SideBracketPad;
+  std::vector< G4ThreeVector > Position_SideBracketPad;
+
+  std::vector< G4RotationMatrix* > Rotation_EndBracketPad;
+  std::vector< G4ThreeVector > Position_EndBracketPad;
+
+
   G4LogicalVolume*   CerenkovContainer_Logical; 
   G4VPhysicalVolume* CerenkovContainer_Physical; 
   G4Material*        CerenkovContainer_Material;
@@ -160,6 +167,14 @@ private:
   G4LogicalVolume*   EndBracket_Logical; 
   std::vector< G4VPhysicalVolume* >  EndBracket_Physical;
 
+  G4LogicalVolume*   SideBracketPad_Logical; 
+  std::vector< G4VPhysicalVolume* >  SideBracketPad_Physical;
+
+  G4LogicalVolume*   EndBracketPad_Logical; 
+  std::vector< G4VPhysicalVolume* >  EndBracketPad_Physical;
+
+  G4Material*        BracketPad_Material;
+
 //   G4Box             *QuartzBar_Solid;
 //   G4Box             *PMTEntranceWindow_Solid;
 //   G4Box             *PMT_Solid;
@@ -192,6 +207,22 @@ private:
   G4double EndBracketCutLength_X;
   G4double EndBracketCutLength_Y;
   G4double EndBracketCutLength_Z;
+
+  G4double SideBracketPadLength_X;
+  G4double SideBracketPadLength_Y;
+  G4double SideBracketPadLength_Z;
+
+  G4double SideBracketPadCutLength_X;
+  G4double SideBracketPadCutLength_Y;
+  G4double SideBracketPadCutLength_Z;
+
+  G4double EndBracketPadLength_X;
+  G4double EndBracketPadLength_Y;
+  G4double EndBracketPadLength_Z;
+
+  G4double EndBracketPadCutLength_X;
+  G4double EndBracketPadCutLength_Y;
+  G4double EndBracketPadCutLength_Z;
 
   G4double WindowThickness;
 

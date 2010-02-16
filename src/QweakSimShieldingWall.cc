@@ -493,7 +493,7 @@ G4cout << G4endl << "###### Calling QweakSimShieldingWall::ConstructComponent() 
 
   // define shielding wall physical volume
   G4cout << G4endl << "###### QweakSimShieldingWall: Define ShieldingWall_Physical " << G4endl << G4endl;
-  ShieldingWallHousing_Physical   = new G4PVPlacement(0, 
+     ShieldingWallHousing_Physical   = new G4PVPlacement(0, 
 				       positionShieldingWallHousing, 
 				       "ShieldingWallHousing", 
 				       ShieldingWallHousing_Logical,

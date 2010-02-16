@@ -26,6 +26,7 @@ QweakSimCerenkovDetector::QweakSimCerenkovDetector(QweakSimUserInformation *user
     Frame_Material  = NULL;
 
     SideBracket_Logical = NULL;
+    SideBracketPad_Logical = NULL;
 
     ActiveArea_Logical         = NULL;
     ActiveArea_Physical        = NULL;
@@ -92,6 +93,10 @@ QweakSimCerenkovDetector::QweakSimCerenkovDetector(QweakSimUserInformation *user
     Rotation_SideBracket.clear();
     Position_SideBracket.clear();
 
+    SideBracketPad_Physical.clear();
+    Rotation_SideBracketPad.clear();
+    Position_SideBracketPad.clear();
+
     CerenkovMasterContainer_Physical.clear();
     CerenkovMasterContainer_Physical.resize(8);
 
@@ -122,7 +127,8 @@ QweakSimCerenkovDetector::QweakSimCerenkovDetector(QweakSimUserInformation *user
     QuartzGlue_Material        = pMaterial->GetMaterial("SiElast_Glue");
     mirror_material            = pMaterial->GetMaterial("Mirror");
     Frame_Material             = pMaterial->GetMaterial("Aluminum");
-    Window_Material             = pMaterial->GetMaterial("Tyvek");
+    Window_Material            = pMaterial->GetMaterial("Tyvek");
+    BracketPad_Material        = pMaterial->GetMaterial("Tyvek");
 
     LightGuide_FullLength      =   18.00*cm;
     LightGuide_FullWidth1      =   18.00*cm;
@@ -133,7 +139,7 @@ QweakSimCerenkovDetector::QweakSimCerenkovDetector(QweakSimUserInformation *user
     QuartzBar_FullHeight       =   18.00*cm;    // Full Y length
     QuartzBar_FullThickness    =    1.25*cm;    // Full Z length
 
-    GlueFilm_FullLength_X      =   0.001*mm;
+    GlueFilm_FullLength_X      =   0.1*mm;
     GlueFilm_FullLength_Y      =   18.00*cm;
     GlueFilm_FullLength_Z      =    1.25*cm;
 
@@ -151,7 +157,7 @@ QweakSimCerenkovDetector::QweakSimCerenkovDetector(QweakSimUserInformation *user
 
     G4double ReductionInPhotocathodeDiameter = 5*mm;
 
-    PMTQuartzOpticalFilm_Thickness=  0.001*mm;
+    PMTQuartzOpticalFilm_Thickness=  0.1*mm;
     PMTQuartzOpticalFilm_Diameter =  12.7*cm;
 
     PMTEntranceWindow_Thickness   =  1.0*mm; // assumed PMT glass thickness
@@ -219,7 +225,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
             0,0,0);
 
 
-//******************************Define Detector Outer Frame*******************************************
+//******************************Define Detector OuterFrame*************************
 
     Frame_FullLength_X = 95.5*inch;
     Frame_FullLength_Y = 9.5*inch;
@@ -318,7 +324,71 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 
     }
 
-//******************************Define End Bracket*******************************************
+//******************************Define Side Bracket Pad*******************************************
+
+    SideBracketPadLength_X = SideBracketLength_X;
+    SideBracketPadLength_Y = SideBracketCutLength_Y-0.2*mm;
+    SideBracketPadLength_Z = SideBracketCutLength_Z-0.2*mm;
+
+    SideBracketPadCutLength_X = SideBracketCutLength_X;
+    SideBracketPadCutLength_Y = SideBracketCutLength_Y-5.0*mm;
+    SideBracketPadCutLength_Z = QuartzBar_FullThickness;
+
+    G4Box* OuterSideBracketPad  = new G4Box("OuterSideBracketPad",
+                                         0.5 * SideBracketPadLength_X,
+                                         0.5 * SideBracketPadLength_Y,
+                                         0.5 * SideBracketPadLength_Z);
+
+    G4Box* InnerSideBracketPad  = new G4Box("InnerSideBracketPad",
+                                         0.5 * SideBracketPadCutLength_X,
+                                         0.5 * SideBracketPadCutLength_Y,
+                                         0.5 * SideBracketPadCutLength_Z);
+
+    G4RotationMatrix* PadCutRot = new G4RotationMatrix(0,0,0);
+    //G4ThreeVector PadCutTrans(0, 0.125*inch, -0.25*inch);
+    // (front , bottom, back)
+    G4ThreeVector PadCutTrans(0., 0.11*inch, 0.);
+
+    G4SubtractionSolid* SideBracketPad_Solid = new G4SubtractionSolid("OuterSideBracketPad-InnerSideBracketPad",
+            OuterSideBracketPad,
+            InnerSideBracketPad,
+            PadCutRot,
+            PadCutTrans);
+
+    SideBracketPad_Logical  = new G4LogicalVolume(SideBracketPad_Solid,
+            BracketPad_Material,
+            "SideBracketPad_Log",
+            0,0,0);
+
+    for (G4int i=0; i<12; i++) {
+        Rotation_SideBracketPad.push_back(new G4RotationMatrix(0,0,0));
+        if (i>=6)     Rotation_SideBracketPad[i]->rotateZ(180.0*degree);
+    }
+
+    Position_SideBracketPad.push_back (G4ThreeVector(3.0*inch,-3.5*inch,0.) );
+    Position_SideBracketPad.push_back (G4ThreeVector(-3.0*inch,-3.5*inch,0.) );
+    Position_SideBracketPad.push_back (G4ThreeVector(35.37*inch,-3.5*inch,0.) );
+    Position_SideBracketPad.push_back (G4ThreeVector(-35.37*inch,-3.5*inch,0.) );
+    Position_SideBracketPad.push_back (G4ThreeVector(43.62*inch,-3.5*inch,0.) );
+    Position_SideBracketPad.push_back (G4ThreeVector(-43.62*inch,-3.5*inch,0.) );
+    Position_SideBracketPad.push_back (G4ThreeVector(3.0*inch,3.5*inch,0.) );
+    Position_SideBracketPad.push_back (G4ThreeVector(-3.0*inch,3.5*inch,0.) );
+    Position_SideBracketPad.push_back (G4ThreeVector(35.37*inch,3.5*inch,0.) );
+    Position_SideBracketPad.push_back (G4ThreeVector(-35.37*inch,3.5*inch,0.) );
+    Position_SideBracketPad.push_back (G4ThreeVector(43.62*inch,3.5*inch,0.) );
+    Position_SideBracketPad.push_back (G4ThreeVector(-43.62*inch,3.5*inch,0.) );
+
+
+    for (G4int i = 0; i<12; i++) {
+        SideBracketPad_Physical.push_back( new G4PVPlacement(Rotation_SideBracketPad.at(i),Position_SideBracketPad.at(i),
+                                        SideBracketPad_Logical,
+                                        "SideBracketPad_Physical",
+                                        CerenkovContainer_Logical,
+                                        false,i));
+
+    }
+
+//******************************Define End Bracket *******************************************
 
     EndBracketLength_X = 1.5*inch;
     EndBracketLength_Y = 0.75*inch;
@@ -372,6 +442,63 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
                                        CerenkovContainer_Logical,
                                        false,i));
 
+    }
+
+//******************************Define End Bracket Pad*******************************************
+
+    EndBracketPadLength_X = EndBracketLength_X;
+    EndBracketPadLength_Y = EndBracketCutLength_Y-0.1*mm;
+    EndBracketPadLength_Z = EndBracketCutLength_Z-0.1*mm;
+
+    EndBracketPadCutLength_X = EndBracketPadLength_X+0.1*mm;
+    EndBracketPadCutLength_Y = EndBracketCutLength_Y-5.0*mm;
+    EndBracketPadCutLength_Z = QuartzBar_FullThickness;;
+
+    G4Box* OuterEndBracketPad  = new G4Box("OuterEndBracketPad",
+                                        0.5 * EndBracketPadLength_X,
+                                        0.5 * EndBracketPadLength_Y,
+                                        0.5 * EndBracketPadLength_Z);
+
+    G4Box* InnerEndBracketPad  = new G4Box("InnerEndBracketPad",
+                                        0.5 * EndBracketPadCutLength_X,
+                                        0.5 * EndBracketPadCutLength_Y,
+                                        0.5 * EndBracketPadCutLength_Z);
+
+    //G4RotationMatrix* cutRot = new G4RotationMatrix(0,0,0);
+    //G4ThreeVector cutTrans(0, 0.125*inch, -0.25*inch);
+
+    G4ThreeVector EndPadCutTrans(0., 0.19*inch, 0.);
+
+    G4SubtractionSolid* EndBracketPad_Solid = new G4SubtractionSolid("OuterEndBracketPad-InnerEndBracketPad",
+            OuterEndBracketPad,
+            InnerEndBracketPad,
+            PadCutRot,
+            EndPadCutTrans);
+
+    EndBracketPad_Logical  = new G4LogicalVolume(EndBracketPad_Solid,
+            BracketPad_Material,
+            "EndBracketPad_Log",
+            0,0,0);
+
+    for (G4int i=0; i<4; i++) {
+        Rotation_EndBracketPad.push_back(new G4RotationMatrix(0,0,0));
+        if (i<2)     Rotation_EndBracketPad[i]->rotateZ(-90.0*degree);
+        else         Rotation_EndBracketPad[i]->rotateZ(90.0*degree);
+    }
+
+    G4double Distance_EndBracketPadToBarCenter = Frame_InnerFullLength_X*0.5 - 0.5*inch;
+
+    Position_EndBracketPad.push_back (G4ThreeVector(Distance_EndBracketPadToBarCenter,3.0*inch,0.) );
+    Position_EndBracketPad.push_back (G4ThreeVector(Distance_EndBracketPadToBarCenter,-3.0*inch,0.) );
+    Position_EndBracketPad.push_back (G4ThreeVector(-Distance_EndBracketPadToBarCenter,3.0*inch,0.) );
+    Position_EndBracketPad.push_back (G4ThreeVector(-Distance_EndBracketPadToBarCenter,-3.0*inch,0.) );
+
+    for (G4int i = 0; i<4; i++) {
+        EndBracketPad_Physical.push_back( new G4PVPlacement(Rotation_EndBracketPad.at(i),Position_EndBracketPad.at(i),
+                                       EndBracketPad_Logical,
+                                       "EndBracketPad_Physical",
+                                       CerenkovContainer_Logical,
+                                       false,i));
     }
 
 
@@ -656,7 +783,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
             CerenkovContainer_Logical,
             false,0);
 
-//******************************Define PMT Housing Falange *******************************************
+//******************************Define PMT Housing Falange ******************
 
     G4double PMTHousingFalangeOuterRadius = 7.88*0.5*inch;
     G4double PMTHousingFalangeInnerRadius = 5.75*0.5*inch;
@@ -773,10 +900,17 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
                                         0.5 * Chamfer_FullHeight ,      // half Y length required by Geant4
                                         0.5 * Chamfer_FullThickness );
 
-    G4Box* QuartzBar_Solid  = new G4Box("QuartzBar_Solid",
-                                        0.5 * QuartzBar_FullLength,       // half X length required by Geant4
-                                        0.5 * QuartzBar_FullHeight,      // half Y length required by Geant4
-                                        0.5 * QuartzBar_FullThickness );  // half Z length required by Geant4
+//     G4Box* QuartzBar_Solid  = new G4Box("QuartzBar_Solid",
+//                                         0.5 * QuartzBar_FullLength,       // half X length required by Geant4
+//                                         0.5 * QuartzBar_FullHeight,      // half Y length required by Geant4
+//                                         0.5 * QuartzBar_FullThickness );  // half Z length required by Geant4
+
+   G4Trd* QuartzBar_Solid  = new G4Trd("QuartzBar_Solid",
+               0.5*QuartzBar_FullLength,
+               0.5*QuartzBar_FullLength,
+               0.5*QuartzBar_FullHeight+0.1*cm,
+               0.5*QuartzBar_FullHeight-0.1*cm,
+               0.5*QuartzBar_FullThickness);
 
     //Boolean Union:
     //Upper-upstream edge chamfer
@@ -1032,7 +1166,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 //****************************************************************************************************
 //******************************Define Light Guides With Chamfers And Any Sculpting*******************
 
-    G4double redfr = 1.0;//0.5;
+    G4double redfr = 1.0; //0.5
     G4double pTheta = std::atan(LightGuide_FullThickness*(1 - redfr)/(2.0*LightGuide_FullLength));
 
     G4Trap* LightGuide_Solid = new G4Trap("LightGuide_Solid",
@@ -1053,7 +1187,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
                                             0.5*LGAngCutXDim,
                                             0.5*LGAngCutYDim,
                                             0.5*LGAngCutZDim);
-    Double_t ad = 0.0;//45.0;
+    Double_t ad = 0.0; //45.0;  //0.0;
     Double_t ar = ad*4.0*std::atan(1.0)/180.0;
     Double_t dx = 0.5*LGAngCutZDim*std::cos(ar)-0.5*(LightGuide_FullThickness -
                   LGAngCutZDim*std::sin(ar))*std::tan(ar)
@@ -1221,8 +1355,8 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
             ActiveArea_Logical,
             false,0);
 
-    //****************************************************************************************************
-    //******************************Face Mirrors**********************************************************
+
+    //******************************Face Mirrors***********************
 
 //   G4Trd* LGFaceMirror_Solid = new G4Trd("LGFaceMirror_Solid",
 // 					0.1*mm,0.1*mm,
@@ -1254,17 +1388,10 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 // 				     false,
 // 				     0); // copy number for left PMTContainer
 
-//******************************Face Mirrors**********************************************************
-//****************************************************************************************************
+//******************************Face Mirrors******************
 
 
-
-
-
-
-//****************************************************************************************************
-//******************************Edge Mirrors**********************************************************
-
+//******************************Edge Mirrors******************
 
     G4Box* LGEdgeMirror_Solid = new G4Box("LGEdgeMirror_Solid",
                                           0.1*mm,0.5*LightGuide_FullWidth1,
@@ -1284,16 +1411,12 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
             "mirrorface_log2",
             0,0,0);
 
-    mirror_physical[1] = new G4PVPlacement(Transform_LGEMLeft,
-                                           mirror_logical[1],
-                                           "mirrorface_physical2",
-                                           ActiveArea_Logical,
-                                           false,
-                                           0); // copy number for left PMTContainer
-
-
-
-
+//     mirror_physical[1] = new G4PVPlacement(Transform_LGEMLeft,
+//                                            mirror_logical[1],
+//                                            "mirrorface_physical2",
+//                                            ActiveArea_Logical,
+//                                            false,
+//                                            0); // copy number for left PMTContainer
 
     Position_LGEdgeMirrorRight.setX(-1.5*GlueFilm_FullLength_X-QuartzBar_FullLength-LightGuide_FullLength-0.1*mm/std::cos(ar)+
                                     0.5*LightGuide_FullThickness*std::tan(ar)-
@@ -1309,22 +1432,20 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
             "mirrorface_log4",
             0,0,0);
 
-    mirror_physical[3] = new G4PVPlacement(Transform_LGEMRight,
-                                           mirror_logical[3],
-                                           "mirrorface_physical4",
-                                           ActiveArea_Logical,
-                                           false,
-                                           0); // copy number for left PMTContainer
+//     mirror_physical[3] = new G4PVPlacement(Transform_LGEMRight,
+//                                            mirror_logical[3],
+//                                            "mirrorface_physical4",
+//                                            ActiveArea_Logical,
+//                                            false,
+//                                            0);
 
-//******************************Edge Mirrors**********************************************************
-//****************************************************************************************************
-
-
+//******************************Edge Mirrors**************************
+//********************************************************************
 
 
-//****************************************************************************************************
-//******************************Radiator**************************************************************
 
+//*********************************************************
+//******************************Radiator*******************
 
 //   G4Box* RadiatorSolid = new G4Box("Radiator_Sol",
 // 				   0.5 * QuartzBar_FullLength,       // half X length required by Geant4
@@ -1345,8 +1466,8 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 // 					  false,
 // 					  0);
 
-//******************************Radiator**************************************************************
-//****************************************************************************************************
+//******************************Radiator****************************
+//******************************************************************
 
 
     //-----------------------------------
@@ -1622,6 +1743,63 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
                                  ActiveArea_Physical,
                                  GlueFilmLeft_OpticalSurface);
 
+// boundary optical properties between pad and quartz
+
+    G4OpticalSurface* LeftEndPad_Quartz_OpticalSurface = new G4OpticalSurface("LeftEndPadQuartzOpticalSurface");
+    G4OpticalSurface* RightEndPad_Quartz_OpticalSurface = new G4OpticalSurface("RightEndPadQuartzOpticalSurface");
+    G4OpticalSurface* SidePad_LeftLightGuide_OpticalSurface
+                                         = new G4OpticalSurface("SidePadLeftLightGuideOpticalSurface");
+    G4OpticalSurface* SidePad_RightLightGuide_OpticalSurface
+                                         = new G4OpticalSurface("SidePadRightLightGuideOpticalSurface");
+    G4OpticalSurface* SidePad_QuartzBarLeft_OpticalSurface
+                                         = new G4OpticalSurface("SidePadQuartzBarLeftOpticalSurface");
+    G4OpticalSurface* SidePad_QuartzBarRight_OpticalSurface
+                                         = new G4OpticalSurface("SidePadQuartzBarRightOpticalSurface");
+
+    for(G4int i=0; i<EndBracketPad_Physical.size();i++) {
+
+    //G4LogicalBorderSurface* LeftEndPad_Quartz_BorderSurface =
+    new G4LogicalBorderSurface("LeftEndPad_Quartz_BS",
+                                 LightGuide_PhysicalLeft,
+                                 EndBracketPad_Physical[i],
+                                 LeftEndPad_Quartz_OpticalSurface);
+
+    //G4LogicalBorderSurface* RightEndPad_Quartz_BorderSurface =
+    new G4LogicalBorderSurface("RightEndPad_Quartz_BS",
+                                 LightGuide_PhysicalRight,
+                                 EndBracketPad_Physical[i],
+                                 RightEndPad_Quartz_OpticalSurface);
+
+    }
+
+    for(G4int i=0; i<SideBracketPad_Physical.size();i++) {
+
+    //G4LogicalBorderSurface* SidePad_LeftLightGuide_BorderSurface =
+    new G4LogicalBorderSurface("SidePad_LeftLightGuide_BS",
+                                 LightGuide_PhysicalLeft,
+                                 SideBracketPad_Physical[i],
+                                 SidePad_LeftLightGuide_OpticalSurface);
+
+    //G4LogicalBorderSurface* SidePad_RightLightGuide_BorderSurface =
+    new G4LogicalBorderSurface("SidePad_RightLightGuide_BS",
+                                 LightGuide_PhysicalRight,
+                                 SideBracketPad_Physical[i],
+                                 SidePad_RightLightGuide_OpticalSurface);
+
+    //G4LogicalBorderSurface* SidePad_QuartzBarLeft_BorderSurface =
+    new G4LogicalBorderSurface("SidePad_QuartzBarLeft_BS",
+                                 QuartzBar_PhysicalLeft,
+                                 SideBracketPad_Physical[i],
+                                 SidePad_QuartzBarLeft_OpticalSurface);
+
+    //G4LogicalBorderSurface* SidePad_QuartzBarRight_BorderSurface =
+    new G4LogicalBorderSurface("SidePad_QuartzBarRight_BS",
+                                 QuartzBar_PhysicalRight,
+                                 SideBracketPad_Physical[i],
+                                 SidePad_QuartzBarRight_OpticalSurface);
+
+    }
+
     QuartzBarLeft_OpticalSurface->SetType(dielectric_dielectric);
     QuartzBarLeft_OpticalSurface->SetFinish(polished);
     QuartzBarLeft_OpticalSurface->SetPolish(0.997);
@@ -1656,6 +1834,60 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
     GlueFilmRight_OpticalSurface->SetFinish(polished);
     GlueFilmRight_OpticalSurface->SetPolish(0.9);
     GlueFilmRight_OpticalSurface->SetModel(glisur);
+
+
+//##############################################
+
+    G4OpticalSurface* BracketPad_OpticalSurface = 
+                         new G4OpticalSurface("BracketPad_Optical_Surface");
+    BracketPad_OpticalSurface->SetType(dielectric_metal);
+    BracketPad_OpticalSurface->SetFinish(ground);
+    BracketPad_OpticalSurface->SetModel(glisur);
+    new G4LogicalSkinSurface("BracketPad_SkinSurface",SideBracketPad_Logical,BracketPad_OpticalSurface);
+    new G4LogicalSkinSurface("BracketPad_SkinSurface",EndBracketPad_Logical,BracketPad_OpticalSurface);
+
+    G4double Pad_Reflectivity[nEntries]={0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.};
+    G4MaterialPropertiesTable *BracketPad_MPT = new G4MaterialPropertiesTable();
+    BracketPad_MPT->AddProperty("REFLECTIVITY",PhotonEnergy,Pad_Reflectivity,nEntries);
+    BracketPad_OpticalSurface->SetMaterialPropertiesTable(BracketPad_MPT);
+
+    LeftEndPad_Quartz_OpticalSurface->SetType(dielectric_metal);
+    LeftEndPad_Quartz_OpticalSurface->SetFinish(polished);
+    LeftEndPad_Quartz_OpticalSurface->SetPolish(0.9);
+    LeftEndPad_Quartz_OpticalSurface->SetModel(glisur);
+    LeftEndPad_Quartz_OpticalSurface->SetMaterialPropertiesTable(BracketPad_MPT);
+
+    RightEndPad_Quartz_OpticalSurface->SetType(dielectric_metal);
+    RightEndPad_Quartz_OpticalSurface->SetFinish(polished);
+    LeftEndPad_Quartz_OpticalSurface->SetPolish(0.9);
+    RightEndPad_Quartz_OpticalSurface->SetModel(glisur);
+    RightEndPad_Quartz_OpticalSurface->SetMaterialPropertiesTable(BracketPad_MPT);
+
+    SidePad_LeftLightGuide_OpticalSurface->SetType(dielectric_metal);
+    SidePad_LeftLightGuide_OpticalSurface->SetFinish(polished);
+    LeftEndPad_Quartz_OpticalSurface->SetPolish(0.9);
+    SidePad_LeftLightGuide_OpticalSurface->SetModel(glisur);
+    SidePad_LeftLightGuide_OpticalSurface->SetMaterialPropertiesTable(BracketPad_MPT);
+
+    SidePad_RightLightGuide_OpticalSurface->SetType(dielectric_metal);
+    SidePad_RightLightGuide_OpticalSurface->SetFinish(polished);
+    LeftEndPad_Quartz_OpticalSurface->SetPolish(0.9);
+    SidePad_RightLightGuide_OpticalSurface->SetModel(glisur);
+    SidePad_RightLightGuide_OpticalSurface->SetMaterialPropertiesTable(BracketPad_MPT);
+
+    SidePad_QuartzBarLeft_OpticalSurface->SetType(dielectric_metal);
+    SidePad_QuartzBarLeft_OpticalSurface->SetFinish(polished);
+    LeftEndPad_Quartz_OpticalSurface->SetPolish(0.9);
+    SidePad_QuartzBarLeft_OpticalSurface->SetModel(glisur);
+    SidePad_QuartzBarLeft_OpticalSurface->SetMaterialPropertiesTable(BracketPad_MPT);
+
+    SidePad_QuartzBarRight_OpticalSurface->SetType(dielectric_metal);
+    SidePad_QuartzBarRight_OpticalSurface->SetFinish(polished);
+    LeftEndPad_Quartz_OpticalSurface->SetPolish(0.9);
+    SidePad_QuartzBarRight_OpticalSurface->SetModel(glisur);
+    SidePad_QuartzBarRight_OpticalSurface->SetMaterialPropertiesTable(BracketPad_MPT);
+
+//#####################################################3
 
     G4MaterialPropertiesTable *quartzST = new G4MaterialPropertiesTable();
     quartzST->AddProperty("REFLECTIVITY",  PhotonEnergy , Reflectivity, nEntries);
@@ -1709,13 +1941,28 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
     Window_MPT->AddProperty("REFLECTIVITY",PhotonEnergy,Tyvek_Reflectivity,nEntries);
     Window_OpticalSurface->SetMaterialPropertiesTable(Window_MPT);
 
+// set bracket optical properties
+    G4OpticalSurface* Bracket_OpticalSurface = 
+                         new G4OpticalSurface("Bracket_Optical_Surface");
+    Bracket_OpticalSurface->SetType(dielectric_metal);
+    Bracket_OpticalSurface->SetFinish(ground);
+    Bracket_OpticalSurface->SetModel(glisur);
+    new G4LogicalSkinSurface("Bracket_SkinSurface",SideBracket_Logical,Bracket_OpticalSurface);
+    new G4LogicalSkinSurface("Bracket_SkinSurface",EndBracket_Logical,Bracket_OpticalSurface);
+
+    G4double Bracket_Reflectivity[nEntries]={0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8};
+    G4MaterialPropertiesTable *Bracket_MPT = new G4MaterialPropertiesTable();
+    Bracket_MPT->AddProperty("REFLECTIVITY",PhotonEnergy,Bracket_Reflectivity,nEntries);
+    Bracket_OpticalSurface->SetMaterialPropertiesTable(Bracket_MPT);
+
+
     //Setting Skin Optical Properties for GlueFilm
-//     G4OpticalSurface* GlueFilm_OpticalSurface = new G4OpticalSurface("GlueFilmOpticalSurface");
-//     GlueFilm_OpticalSurface->SetType(dielectric_dielectric);
-//     GlueFilm_OpticalSurface->SetFinish(polished);
-//     GlueFilm_OpticalSurface->SetPolish(0.9);
-//     GlueFilm_OpticalSurface->SetModel(glisur);
-//     new G4LogicalSkinSurface("GlueFilm_SkinSurface",QuartzGlue_Logical,GlueFilm_OpticalSurface);
+    G4OpticalSurface* GlueFilm_OpticalSurface = new G4OpticalSurface("GlueFilmOpticalSurface");
+    GlueFilm_OpticalSurface->SetType(dielectric_dielectric);
+    GlueFilm_OpticalSurface->SetFinish(polished);
+    GlueFilm_OpticalSurface->SetPolish(0.9);
+    GlueFilm_OpticalSurface->SetModel(glisur);
+    new G4LogicalSkinSurface("GlueFilm_SkinSurface",QuartzGlue_Logical,GlueFilm_OpticalSurface);
 
     //Setting the Optical Properties of PMTs
 //   G4double D753WKBS20_QE[65][2] = {
@@ -1798,7 +2045,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 //         5.51063*eV,  //225.16 nm
 //         5.90424*eV   //210.15 nm
 
-    G4double XP4572_Efficiency[nEntries]={0.0080,      //800.59 nm
+    G4double Photocathode_Efficiency[nEntries]={0.0080,      //800.59 nm
                                           0.0298,      //700.51 nm
                                           0.0638,      //600.44 nm
                                           0.1240,      //500.37 nm
@@ -1811,7 +2058,23 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
                                           0.0355       //210.15 nm
                                          };
 
-    G4double XP4572_Reflectivity[nEntries]={0., 0.,0.,0.,0.,0.,0.,0.,0.,0.,0.};
+//S20 reflectance taken from "Optics Communications, issue 180, 2000. p89–102"
+//average of 40 degree incident angle assumed
+////data below 400 nm, taken from //http://www.photek.com/support/Papers/
+//Experimental%20data%20on%20the%20reflection%20and%20transmission%20spectral%20response%20of%20photocathodes.pdf
+    G4double Photocathode_Reflectivity[nEntries]={
+                                                  0.25, //800 nm
+                                                  0.25, //700 nm
+                                                  0.25, //600 nm
+                                                  0.25, //500 nm
+                                                  0.25, //440 nm
+                                                  0.25, //400 nm
+                                                  0.25, //350 nm
+                                                  0.25, //300 nm
+                                                  0.25, //250 nm
+                                                  0.25, //225 nm
+                                                  0.25  //210 nm
+                                                  };
 
   G4OpticalSurface* Photocathode_OpticalSurface =  new G4OpticalSurface("Photocathode_OS");
   Photocathode_OpticalSurface ->SetType(dielectric_metal); 
@@ -1819,8 +2082,8 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
   Photocathode_OpticalSurface ->SetModel(glisur); 
 
     G4MaterialPropertiesTable* Photocathode_MPT = new G4MaterialPropertiesTable();
-    Photocathode_MPT->AddProperty("REFLECTIVITY", PhotonEnergy, XP4572_Reflectivity,nEntries);
-    Photocathode_MPT->AddProperty("EFFICIENCY", PhotonEnergy, XP4572_Efficiency,nEntries);
+    Photocathode_MPT->AddProperty("REFLECTIVITY", PhotonEnergy, Photocathode_Reflectivity,nEntries);
+    Photocathode_MPT->AddProperty("EFFICIENCY", PhotonEnergy, Photocathode_Efficiency,nEntries);
     Photocathode_OpticalSurface ->SetMaterialPropertiesTable(Photocathode_MPT);
 
     new G4LogicalBorderSurface("PMT_BorderSurface",
@@ -1850,6 +2113,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
     G4Colour  lightblue   ( 139/255., 208/255., 255/255.);
     G4Colour  lightorange ( 255/255., 189/255., 165/255.);
     G4Colour  khaki3    ( 205/255., 198/255., 115/255.);
+    G4Colour  brown     (178/255., 102/255., 26/255.);
 //------------------------------------------
 // Visual Attributes for:  CerenkovContainer
 //------------------------------------------
@@ -1887,6 +2151,25 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 //EndBracketVisAtt->SetForceWireframe(true);
 //EndBracketVisAtt->SetForceSolid(true);
     EndBracket_Logical->SetVisAttributes(EndBracketVisAtt);
+
+//------------------------------------------
+// Visual Attributes for:  Side Bracket Pads
+//------------------------------------------
+    G4VisAttributes* SideBracketPadVisAtt = new G4VisAttributes(brown);
+    SideBracketPadVisAtt->SetVisibility(true);
+//SideBracketPadVisAtt->SetForceWireframe(true);
+SideBracketPadVisAtt->SetForceSolid(true);
+    SideBracketPad_Logical->SetVisAttributes(SideBracketPadVisAtt);
+
+//------------------------------------------
+// Visual Attributes for:  End Bracket Pads
+//------------------------------------------
+    G4VisAttributes* EndBracketPadVisAtt = new G4VisAttributes(brown);
+    EndBracketPadVisAtt->SetVisibility(true);
+//EndBracketPadVisAtt->SetForceWireframe(true);
+EndBracketPadVisAtt->SetForceSolid(true);
+    EndBracketPad_Logical->SetVisAttributes(EndBracketPadVisAtt);
+
 
 //------------------------------------------
 // Visual Attributes for:  Detector Window Clip

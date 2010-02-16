@@ -134,6 +134,8 @@ void QweakSimUserInformation::Initialize()
     {840.0*nanometer, 0.18}
   };*/
 
+// quantum efficiency is processed in the Cerenkov detector class
+// so set it to 100% here
   G4double D753WKBS20_QE[65][2] = {
     {200.0*nanometer, 100},
     {210.0*nanometer, 100},

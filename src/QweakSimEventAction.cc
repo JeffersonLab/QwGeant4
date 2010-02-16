@@ -74,7 +74,9 @@ QweakSimEventAction::QweakSimEventAction(QweakSimAnalysis* AN, QweakSimUserInfor
     for (int iTrigger = 0; iTrigger < EVENT_ACTION_NUM_TRIGGER; iTrigger++)
         fTrigger[iTrigger] = false;
     // but set default trigger to true
-    fTrigger[kTrigger3Fold] = true;
+    //fTrigger[kTrigger3Fold] = true;
+    //fTrigger[kTriggerScint] = true;
+    fTrigger[kTriggerCer] = true;
 
 }
 

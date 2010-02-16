@@ -37,10 +37,11 @@ QweakSimEPEvent::QweakSimEPEvent()
 {
   std::cout << "###### Calling QweakSimEPEvent::QweakSimEPEvent () " << std::endl;
 
-  meanPhiAngle = 0.0*degree;
-  sigmaPhiAngle = 17.0*degree;
+  PhiAngle_Min = -16.0*degree;
+  PhiAngle_Max =  16.0*degree;
+
   ThetaAngle_Min =  4.0*degree;
-  ThetaAngle_Max = 14.0*degree;
+  ThetaAngle_Max = 13.5*degree;
 
   ReactionType = 1;
   ReactionRegion = 1;
@@ -88,14 +89,19 @@ G4double QweakSimEPEvent::GetVertexZ()
 
 G4ThreeVector QweakSimEPEvent::GetMomentumDirection(){
 
-   ThetaAngle =  ThetaAngle_Min + G4UniformRand()*(ThetaAngle_Max - ThetaAngle_Min);
-   PhiAngle =  (meanPhiAngle + ((G4UniformRand()-0.5)*2.0*sigmaPhiAngle));
+   ThetaAngle = ThetaAngle_Min + G4UniformRand()*(ThetaAngle_Max - ThetaAngle_Min);
+   PhiAngle =  PhiAngle_Min + G4UniformRand()*(PhiAngle_Max - PhiAngle_Min);
 
-   G4ThreeVector myNormMomentum(sin(ThetaAngle)*sin(PhiAngle),
-                                sin(ThetaAngle)*cos(PhiAngle),
-                                cos(ThetaAngle) );
+   G4ThreeVector myNormMomentum(sin(0.5*ThetaAngle)*cos(PhiAngle),
+                                sin(0.5*ThetaAngle)*sin(PhiAngle),
+                                cos(0.5*ThetaAngle) );
 
-   myNormMomentum.rotateZ( (kActiveOctantNumber-1)*45.0*degree);
+//  G4ThreeVector myNormMomentum(0.,0.,1.0);
+//  myNormMomentum.setTheta(ThetaAngle);
+//  myNormMomentum.setPhi(PhiAngle);
+//  myNormMomentum.unit();
+
+  myNormMomentum.rotateZ( (kActiveOctantNumber-1)*45.0*degree+90*degree);
 
    return myNormMomentum; 
 }

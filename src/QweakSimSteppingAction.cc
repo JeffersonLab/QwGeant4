@@ -92,8 +92,8 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
       G4double theStepLength = theStep->GetStepLength();
 
        //trap the particle
-        if( abs(theZ - RandomPositionZ)<=theStepLength && sqrt(theX*theX+theY*theY)<2.54*cm)
-           { 
+        if( fabs(theZ - RandomPositionZ)<=theStepLength && sqrt(theX*theX+theY*theY)<2.54*cm)
+           {
              G4double CrossSection, WeightN, Q2, E_out, theta, phi;
              G4ThreeVector MomentumDirection;
              G4double E_in = theTrack->GetKineticEnergy()/MeV;  //Event generator needs units of MeV
@@ -279,6 +279,7 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
 	    {
               //myUserInfo->GetCurrentPMTHit()->SetHitValid(True);
 	      pmtSD->ProcessHits_constStep(theStep,NULL); 
+              theTrack->SetTrackStatus(fStopAndKill);
 	    }
           break;
         }

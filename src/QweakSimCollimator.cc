@@ -16,21 +16,10 @@
 */
 //=============================================================================
 
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2005/12/28 22:40:43 $
-//  CVS/RCS Revision: $Revision: 1.10 $
-//  Status:           $State: Exp $
-// 
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-//
-//============================================================================
+// jpan:
+// collimator 1: z=-575.7895+/-7.62 cm
+//            2: z=-378.2195+/-7.50 cm
+//            3: z=-266.244+/-5.615 cm
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -49,7 +38,7 @@ QweakSimCollimator::QweakSimCollimator()
   CollimatorHousing_FullLength_Z    = 15.24*cm;
 
   BeamlineCutoutDiameter            = 8.3*cm;//8.0*cm
-  
+
   OctantCutOutFrontFullLength_Y     = 5.04*cm;//3.28*cm
   OctantCutOutFrontFullLength_X1    = 6.38*cm;//7.66*cm
   OctantCutOutFrontFullLength_X2    = 6.38*cm;//7.66*cm
@@ -89,7 +78,7 @@ void QweakSimCollimator::ConstructCollimator(G4VPhysicalVolume* MotherVolume)
 {
 
 //---------------------------------------------------------------------------------------------
-//! Creates a Collimator with 8 cutouts according to Juliette's latest design  
+//! Creates a Collimator with 8 cutouts
  /** 
 	
  \param G4VPhysicalVolume* - The physical volume in which the collimator will be placed
@@ -217,13 +206,13 @@ G4double radLoc = (OctantCutOutRadialOffset - 0.01*cm +
  
   for(int oct = 0; oct < 8; oct++){
     G4double zRot = (oct*45.0)*degree;
-     
+
     Translation.setX(std::sin(zRot)*OctantCutOutRadialOffset);
     Translation.setY(std::cos(zRot)*OctantCutOutRadialOffset);
     Translation.setZ(0.0*cm-0.01*cm);
     Rotation[2*oct] = new G4RotationMatrix(); 
     Rotation[2*oct]->rotateZ(zRot);
-    
+
     sprintf(Name,"Coll_%d_Oct_%d_1",GetCollimatorNumber(),oct+1);
     Solids[2*oct+1] =  new G4SubtractionSolid(Name,Solids[2*oct],Octant1Acceptance_p1,
 					      Rotation[2*oct],Translation); 
@@ -234,7 +223,7 @@ G4double radLoc = (OctantCutOutRadialOffset - 0.01*cm +
     Translation.setZ(0.0*cm+0.01*cm);
     Rotation[2*oct+1] = new G4RotationMatrix(); 
     Rotation[2*oct+1]->rotateZ(zRot);
-    
+
     sprintf(Name,"Coll_%d_Oct_%d_2",GetCollimatorNumber(),oct+1);
     Solids[2*oct+2] =  new G4SubtractionSolid(Name,Solids[2*oct+1],Octant1Acceptance_p2,
 					      Rotation[2*oct+1],Translation);
@@ -318,41 +307,4 @@ void QweakSimCollimator::SetCollimatorHousing_CenterPositionInZ(G4double zPos)
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-
-//=======================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//      $Revisions$  
-//      $Log: QweakSimCollimator.cc,v $
-//      Revision 1.10  2005/12/28 22:40:43  grimm
-//      Added Getter functions for retrieving Collimator position and size needed by QweakSimCollimatorSupport
-//
-//      Revision 1.9  2005/12/27 19:07:24  grimm
-//      - Redesign of Doxygen header containing CVS info like revision and date
-//      - Added CVS revision log at the end of file
-//
-//      Revision 1.8  2005/12/26 18:15:23  grimm
-//      - another test with cvs revision and data info within doxygen
-//
-//      Revision 1.7  2005/12/26 17:58:59  grimm
-//      - cvs revision and data info within doxygen
-//
-//      Revision 1.6  2005/12/26 17:53:03  grimm
-//      - new style of cvs and doxygen
-//
-//      Revision 1.5  2005/12/26 17:45:18  grimm
-//      - Put the CVS Revision changes at the end of the file
-//
-//      Revision 1.4  2005/12/26 15:28:06  grimm
-//      - Put the CVS Revision changes at the end of the file
-//
-//      Revision 1.3  2005/12/26 14:58:34  grimm
-//      - Yet another CVS test
-//
-//      Revision 1.2  2005/12/26 14:07:00  grimm
-//      - Yet another CVS tets
-//
 

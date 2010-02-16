@@ -247,7 +247,7 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   //============================================
   //
   pTarget -> ConstructComponent(experimentalHall_Physical);
-  pTarget -> SetTargetCenterPositionInZ(-650*cm);
+  pTarget -> SetTargetCenterPositionInZ(-650.0*cm);
 
 
   //================================================
@@ -392,8 +392,7 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
 //    pShieldingWall->ConstructBeamRightSideWall(experimentalHall_Physical);
 //    pShieldingWall->ConstructTopWall(experimentalHall_Physical);
 
-//only keep front wall to speed up the simulation since the electron will shower in the shielding wall
-    pShieldingWall->ConstructFrontWall(experimentalHall_Physical);
+//    pShieldingWall->ConstructFrontWall(experimentalHall_Physical);
 
 
     //===============================================
