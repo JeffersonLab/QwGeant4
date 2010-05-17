@@ -262,19 +262,19 @@ void QweakSimCollimatorSupport::ConstructSupport(G4VPhysicalVolume* MotherVolume
 
   //**********************************************************************************
   G4VisAttributes* CollimatorSupport_TopCover_VisAtt = new G4VisAttributes(blue);
-  CollimatorSupport_TopCover_VisAtt->SetVisibility(true);
+  CollimatorSupport_TopCover_VisAtt->SetVisibility(false);
   //  CollimatorSupport_TopCover_VisAtt->SetForceSolid(true);
   //  CollimatorSupport_TopCover_VisAtt->SetForceWireframe(true);
   CollimatorSupport_TopCover_Logical->SetVisAttributes(CollimatorSupport_TopCover_VisAtt); 
   //**********************************************************************************
   G4VisAttributes* CollimatorSupport_BottomCover_VisAtt = new G4VisAttributes(blue);
-  CollimatorSupport_BottomCover_VisAtt->SetVisibility(true);
+  CollimatorSupport_BottomCover_VisAtt->SetVisibility(false);
   //  CollimatorSupport_BottomCover_VisAtt->SetForceSolid(true);
   //  CollimatorSupport_BottomCover_VisAtt->SetForceWireframe(true);
   CollimatorSupport_BottomCover_Logical->SetVisAttributes(CollimatorSupport_BottomCover_VisAtt); 
   //**********************************************************************************
   G4VisAttributes* CollimatorSupport_LeftCover_VisAtt = new G4VisAttributes(blue);
-  CollimatorSupport_LeftCover_VisAtt->SetVisibility(true);
+  CollimatorSupport_LeftCover_VisAtt->SetVisibility(false);
   //  CollimatorSupport_LeftCover_VisAtt->SetVisibility(true);
   //  CollimatorSupport_LeftCover_VisAtt->SetForceSolid(true);
   //  CollimatorSupport_LeftCover_VisAtt->SetForceWireframe(true);
