@@ -21,8 +21,6 @@
 #define QweakSimCerenkov_DetectorHit_h 
 
 // system includes
-#include "cpp_include.h"
-#include "Root_include.h"
 #include "Geant4_include.hh"
 
 // user includes

@@ -44,8 +44,8 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
 // system include
-#include "cpp_include.h"
-#include "Root_include.h"
+
+#include "TObject.h"
 
 #ifndef __CINT__
 #include "Geant4_include.hh" 

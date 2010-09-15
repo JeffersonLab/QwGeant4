@@ -7,13 +7,11 @@
 name := QweakSimG4
 G4TARGET := $(name)
 G4EXLIB := true
+G4TMP := tmp
 
 G4DEBUG = 1
 
-ifndef G4INSTALL
-  G4INSTALL = ../../..
-endif
-
+G4WORKDIR = `pwd`
 
 .PHONY: all
 all: lib bin 
@@ -27,7 +25,7 @@ include $(G4INSTALL)/config/binmake.gmk
 #-------------
 #
 ROOTCFLAGS = `root-config --cflags`
-CPPFLAGS  +=  $(ROOTCFLAGS)
+CPPFLAGS  +=  $(ROOTCFLAGS) -fPIC
 LDFLAGS   += `root-config --nonew --libs`
 
 #----------------------------

@@ -50,8 +50,8 @@
 #define QweakSimUserTriggerScintillator_PMTEvent_h
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
-#include "cpp_include.h"
-#include "Root_include.h"
+
+#include "Rtypes.h"
 
 #ifndef __CINT__
 #include "Geant4_include.hh" 

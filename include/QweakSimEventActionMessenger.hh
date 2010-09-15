@@ -35,8 +35,6 @@
 #define QweakSimEventActionMessenger_h 1
 
 // system includes
-#include "cpp_include.h"
-#include "Root_include.h"
 #include "Geant4_include.hh"
 
 // user include

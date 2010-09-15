@@ -34,8 +34,6 @@
 #define QweakSimUserGEM_SingleGEMEvent_h
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
-#include "cpp_include.h"
-#include "Root_include.h"
 
 #ifndef __CINT__
 #endif

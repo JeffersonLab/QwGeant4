@@ -1,8 +1,6 @@
 #ifndef QweakSimCerenkovDetector_PMTHit_h
 #define QweakSimCerenkovDetector_PMTHit_h 
 
-#include "cpp_include.h"
-#include "Root_include.h"
 #include "Geant4_include.hh" 
 
 class QweakSimCerenkovDetector_PMTHit : public G4VHit

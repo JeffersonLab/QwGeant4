@@ -52,8 +52,8 @@
 #define QweakSimUserVDC_Config_h
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
-#include "cpp_include.h"
-#include "Root_include.h"
+
+#include "Rtypes.h"
 
 #ifndef __CINT__
 #endif

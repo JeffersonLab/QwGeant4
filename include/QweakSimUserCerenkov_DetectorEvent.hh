@@ -51,9 +51,13 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
 // system includes
-#include "cpp_include.h"
-#include "Root_include.h"
+#include <vector>
+using std::vector;
+
 // #include "QweakSimUserCerenkov_SecondaryParticleEvent.hh"
+
+#include "Rtypes.h"
+#include "TString.h"
 
 #ifndef __CINT__
 #include "Geant4_include.hh" 

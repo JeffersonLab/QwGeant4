@@ -16,7 +16,6 @@
 #ifndef QWEAKSIMEPEVENT_H
 #define QWEAKSIMEPEVENT_H
 
-#include "cpp_include.h"
 #include "Geant4_include.hh"
 #include "QweakSimEPEventMessenger.hh"
 //#include "QweakSimUserInformation.hh"

@@ -103,8 +103,8 @@ while(i != n_trajectories)
 {
 
     QweakSimTrajectory* trj = (QweakSimTrajectory*)((*trajectoryContainer)[i]);
-    cout << " Current charge of possible parent track = " <<trj->GetCharge() << "--- Parent ID = "
-	 <<  trj->GetTrackID() << endl;
+    G4cout << " Current charge of possible parent track = " <<trj->GetCharge() << "--- Parent ID = "
+	   <<  trj->GetTrackID() << G4endl;
     if(trj->GetTrackID()==parentID) return trj;
     i++;
 }

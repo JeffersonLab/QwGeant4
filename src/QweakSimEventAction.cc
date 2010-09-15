@@ -257,17 +257,17 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     n_hitCerenkov                  = CerenkovDetector_HC            -> entries();
     n_hitCerenkovPMT               = CerenkovDetectorPMT_HC         -> entries();
 
-//   cout << "Number of hit in the GEMs          = " << n_GEMhitWirePlane        << endl;
-//   cout << "Number of hit in the HDCs          = " << n_HDChitWirePlane        << endl;
-//   cout << "Number of hit in the VDCs          = " << n_VDChitWirePlane        << endl;
-//   cout << "Number of hit in the VDC DC Front  = " << n_VDChitDCFront          << endl;
-//   cout << "Number of hit in the VDC DC Back   = " << n_VDChitDCBack           << endl;
-//   cout << "Number of hit in the TS            = " << n_hitTriggerScintillator << endl;
-//   cout << "Number of hit in the Cerenkov      = " << n_hitCerenkov            << endl;
+//   G4cout << "Number of hit in the GEMs          = " << n_GEMhitWirePlane        << G4endl;
+//   G4cout << "Number of hit in the HDCs          = " << n_HDChitWirePlane        << G4endl;
+//   G4cout << "Number of hit in the VDCs          = " << n_VDChitWirePlane        << G4endl;
+//   G4cout << "Number of hit in the VDC DC Front  = " << n_VDChitDCFront          << G4endl;
+//   G4cout << "Number of hit in the VDC DC Back   = " << n_VDChitDCBack           << G4endl;
+//   G4cout << "Number of hit in the TS            = " << n_hitTriggerScintillator << G4endl;
+//   G4cout << "Number of hit in the Cerenkov      = " << n_hitCerenkov            << G4endl;
 
-    cout <<"Hits:\tGEM "<<n_GEMhitWirePlane<<",\tHDC "<<n_HDChitWirePlane<<",\tVDC "<<n_VDChitWirePlane;
-    cout <<",\tVDC_Front "<<n_VDChitDCFront<<",\tVDC_Back "<<n_VDChitDCBack<<",\tTS "<<n_hitTriggerScintillator;
-    cout <<",\tCerenkov "<<n_hitCerenkov<<"\tCerenkovPMT "<<n_hitCerenkovPMT<<endl;
+    G4cout <<"Hits:\tGEM "<<n_GEMhitWirePlane<<",\tHDC "<<n_HDChitWirePlane<<",\tVDC "<<n_VDChitWirePlane;
+    G4cout <<",\tVDC_Front "<<n_VDChitDCFront<<",\tVDC_Back "<<n_VDChitDCBack<<",\tTS "<<n_hitTriggerScintillator;
+    G4cout <<",\tCerenkov "<<n_hitCerenkov<<"\tCerenkovPMT "<<n_hitCerenkovPMT<<G4endl;
 
     // Initialize/Clear Event variables, initialize Cerenkov Detector with NoHit Flag
 //jpan@nuclear.uwinnipeg.ca
@@ -1108,7 +1108,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                     {
 // 		  pmtNPELeft[rOctantID] += myUserInfo->GetNumberOfPhotoelectronsS20(aHit->GetPhotonEnergy()*1.0e6);
                         pmtNPELeft += myUserInfo->GetNumberOfPhotoelectronsS20(aHit->GetPhotonEnergy()*1.0e6);
-                        //cout<<"pmtNPELeft: "<<pmtNPELeft<<endl;
+                        //G4cout<<"pmtNPELeft: "<<pmtNPELeft<<G4endl;
                     }
                 }
 
@@ -1120,7 +1120,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                         /*		  pmtNPERight[rOctantID] += myUserInfo->GetNumberOfPhotoelectronsS20(aHit->GetPhotonEnergy()*1.0e6);*/
 		  pmtNPERight += myUserInfo->GetNumberOfPhotoelectronsS20(aHit->GetPhotonEnergy()*1.0e6);
                         pmtHitsRight =  pmtHitsRight +1;
-                        //cout<<"pmtNPERight: "<<pmtNPERight<<endl;
+                        //G4cout<<"pmtNPERight: "<<pmtNPERight<<G4endl;
                     }
                 }
                 //------------------------------------------------------------------------

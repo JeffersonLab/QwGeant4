@@ -2,8 +2,9 @@
 #define QweakSimUserInformation_h 
 
 // system includes
-#include "cpp_include.h"
-#include "Root_include.h"
+#include <vector>
+using std::vector;
+
 #include "Geant4_include.hh" 
 #include "QweakSimCerenkovDetector_PMTHit.hh"
 #include "QweakSimUserPrimaryEvent.hh"
