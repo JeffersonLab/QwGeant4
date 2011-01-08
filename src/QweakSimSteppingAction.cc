@@ -406,14 +406,14 @@ G4double QweakSimSteppingAction::GetSecondaryParticleZOrigin(G4int idx)
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 G4ThreeVector QweakSimSteppingAction::GetSecondaryParticleOrigin(G4int idx)
 {
-  if(!fSecondary || idx >= GetTrackVectorSize() || idx < GetTrackVectorStartIndex()) return 1e6; 
+  if(!fSecondary || idx >= GetTrackVectorSize() || idx < GetTrackVectorStartIndex()) return G4ThreeVector(1e6,1e6,1e6); 
 
   return (*fSecondary)[idx]->GetPosition();
 }
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......      
 G4ThreeVector QweakSimSteppingAction::GetSecondaryParticleMomentum(G4int idx)
 {
-  if(!fSecondary || idx >= GetTrackVectorSize() || idx < GetTrackVectorStartIndex()) return 1e6; 
+  if(!fSecondary || idx >= GetTrackVectorSize() || idx < GetTrackVectorStartIndex()) return G4ThreeVector(1e6,1e6,1e6);
 
   return (*fSecondary)[idx]->GetMomentumDirection();
 }

@@ -25,7 +25,7 @@
 
 # Vis menu :
 /gui/addMenu vis Vis
-/gui/addButton vis "myVis.mac (OIX)"   "/control/execute myVis.mac"
+/gui/addButton vis "myVis.mac"   "/control/execute myVis.mac"
 
 #
 # Viewer menu :

@@ -66,7 +66,7 @@
 # Invoke the Coin3D (public OpenInventor) driver: interactive
 # Note: close Coin3D with  File->Escape and again File->Escape,
 # otherwise the root file is corrupted 
-/vis/open OIX
+/vis/open OGLIQt
 
 
 # Invoke the WIRED driver: offline display

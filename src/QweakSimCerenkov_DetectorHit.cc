@@ -22,12 +22,12 @@ QweakSimCerenkov_DetectorHit::QweakSimCerenkov_DetectorHit()
   pLogV       = 0;
   time        = 0.;
 
-  originVertexPosition            = 0.;        
-  originVertexMomentumDirection   = 0.;
+  originVertexPosition            = G4ThreeVector(0.0,0.0,0.0);
+  originVertexMomentumDirection   = G4ThreeVector(0.0,0.0,0.0);
   originVertexKineticEnergy       = 0.;
   originVertexTotalEnergy         = 0.;
 
-  currentMomentumDirection        = 0.;
+  currentMomentumDirection        = G4ThreeVector(0.0,0.0,0.0);
   currentKineticEnergy            = 0.;
   currentTotalEnergy              = 0.;
 

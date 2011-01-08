@@ -6,7 +6,8 @@
 # Create a scene handler and viewer
 #
 #/vis/open OGLIX 1280x1024-0+0
-/vis/open OIX 1000x1000-0+0
+#/vis/open OIX 1000x1000-0+0
+/vis/open OGLIQt 1000x1000-0+0
 
 #
 # Set camera properties
@@ -25,7 +26,7 @@
 /vis/viewer/set/style surface
 #/vis/viewer/set/style wireframe
 /vis/viewer/set/hiddenEdge true
-/vis/viewer/set//hiddenMarker true
+/vis/viewer/set/hiddenMarker true
 
 #
 # Color particles by name

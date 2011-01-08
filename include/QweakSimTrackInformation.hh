@@ -112,7 +112,7 @@ private:
   G4double              sourceEnergy;
   G4double              sourceTime;
   G4ThreeVector         sourceOriginPosition;
-  G4ThreeVector         sourceOriginEnergy;
+  G4double              sourceOriginEnergy;
 
   G4int                 cerenkovImpactTrackID;
   G4ParticleDefinition* cerenkovImpactDefinition;
@@ -121,7 +121,7 @@ private:
   G4double              cerenkovImpactEnergy;
   G4double              cerenkovImpactTime;
   G4ThreeVector         cerenkovImpactOriginPosition;
-  G4ThreeVector         cerenkovImpactOriginEnergy;
+  G4double              cerenkovImpactOriginEnergy;
 
 public:
 
@@ -202,7 +202,7 @@ public:
   inline G4double              GetSourceEnergy()   const {return sourceEnergy;}
   inline G4double              GetSourceTime()     const {return sourceTime;}
   inline G4ThreeVector         GetSourceOriginPosition() const {return sourceOriginPosition;}
-  inline G4ThreeVector         GetSourceOriginEnergy()   const {return sourceOriginEnergy;}
+  inline G4double              GetSourceOriginEnergy()   const {return sourceOriginEnergy;}
   //---------------------------------------------------------------------------
   
   void SetImpactTrackInformationForCerenkov(const G4Track* aTrack);
@@ -214,7 +214,7 @@ public:
   inline G4double              GetImpactEnergy()   const {return cerenkovImpactEnergy;}
   inline G4double              GetImpactTime()     const {return cerenkovImpactTime;}
   inline G4ThreeVector         GetImpactOriginPosition() const {return cerenkovImpactOriginPosition;}
-  inline G4ThreeVector         GetImpactOriginEnergy()   const {return cerenkovImpactOriginEnergy;}
+  inline G4double              GetImpactOriginEnergy()   const {return cerenkovImpactOriginEnergy;}
   //---------------------------------------------------------------------------
   
   void AddTrackInfoToCerenkovTrackHistory(const G4Track* aTrack);

@@ -38,6 +38,10 @@
     #include "G4UIXm.hh"
 #endif
 
+#ifdef G4UI_USE_QT
+    #include "G4UIQt.hh"
+#endif
+
 #ifdef G4VIS_USE
     #include "G4VisExecutive.hh"
 #endif
@@ -86,6 +90,8 @@ int main(int argc,char** argv) {
      session = new G4UIWin32();
     #elif defined(G4UI_USE_TCSH)
      session = new G4UIterminal(new G4UItcsh);
+    #elif defined(G4UI_USE_QT)
+     session = new G4UIQt(argc,argv);
     #else
       session = new G4UIterminal();
     #endif
@@ -119,7 +125,7 @@ int main(int argc,char** argv) {
       // G4UIterminal is a (dumb) terminal.
       //UI->ApplyCommand("/control/execute myVis.mac");
 
-#if defined(G4UI_USE_XM) || defined(G4UI_USE_WIN32)
+#if defined(G4UI_USE_XM) || defined(G4UI_USE_WIN32) || defined(G4UI_USE_QT)
       // Customize the G4UIXm,Win32 menubar with a macro file :
       UI->ApplyCommand("/control/execute gui.mac");
 #endif

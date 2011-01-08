@@ -49,8 +49,8 @@ QweakSimGEM_WirePlaneHit::QweakSimGEM_WirePlaneHit()
   wireplaneID = -1;
   time        = 0.;
 
-  originVertexPosition            = 0.;        
-  originVertexMomentumDirection   = 0.;
+  originVertexPosition            = G4ThreeVector(0.0,0.0,0.0);
+  originVertexMomentumDirection   = G4ThreeVector(0.0,0.0,0.0);
   originVertexKineticEnergy       = 0.;
   originVertexTotalEnergy         = 0.;
 
