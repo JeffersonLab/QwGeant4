@@ -351,16 +351,19 @@ void QweakSimPhysicsList::ConstructOpticalPhotonProcess()
       G4ProcessManager*     pManager     = particle->GetProcessManager();
       G4String              particleName = particle->GetParticleName();     
 
+//      if (theCerenkovProcess->IsApplicable(*particle)) {
+//	  pManager->AddContinuousProcess(theCerenkovProcess); // here: disable Cerenkov (part 2 of 2)
+//      }
       if (theCerenkovProcess->IsApplicable(*particle)) {
-//jpan@nuclear.uwinnipeg.ca
-	  pManager->AddContinuousProcess(theCerenkovProcess); // here: disable Cerenkov (part 2 of 2)
+	  pManager->AddProcess(theCerenkovProcess);
+	  pManager->SetProcessOrdering(theCerenkovProcess,idxPostStep);
       }
 
-      //     if (theScintillationProcess->IsApplicable(*particle)) {
-      //       pManager->AddProcess(theScintillationProcess);
-      //       pManager->SetProcessOrderingToLast(theScintillationProcess, idxAtRest);
-      //       pManager->SetProcessOrderingToLast(theScintillationProcess, idxPostStep);
-      //     }
+//      if (theScintillationProcess->IsApplicable(*particle)) {
+//          pManager->AddProcess(theScintillationProcess);
+//          pManager->SetProcessOrderingToLast(theScintillationProcess, idxAtRest);
+//          pManager->SetProcessOrderingToLast(theScintillationProcess, idxPostStep);
+//      }
 
       if (particleName == "opticalphoton") {
 
