@@ -53,18 +53,18 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
   G4StepPoint*          thePostPoint = theStep->GetPostStepPoint();
   G4VPhysicalVolume*    thePostPV    = thePostPoint->GetPhysicalVolume(); 
   G4TouchableHistory*   theTouchable = (G4TouchableHistory*)(thePrePoint->GetTouchable());
-  G4int                 ReplicaNo    = 0;
+//   G4int                 ReplicaNo    = 0;
   G4ParticleDefinition* particleType = theTrack->GetDefinition();
   G4String              particleName = theTrack->GetDefinition()->GetParticleName();
   G4ProcessManager*     pm           = particleType->GetProcessManager();
-  G4int                 nprocesses   = pm->GetProcessListLength();
-  G4ProcessVector*      pv           = pm->GetProcessList();  
-  G4VSteppingVerbose*   theVerbStep  = G4VSteppingVerbose::GetInstance();
+//   G4int                 nprocesses   = pm->GetProcessListLength();
+//   G4ProcessVector*      pv           = pm->GetProcessList();  
+//   G4VSteppingVerbose*   theVerbStep  = G4VSteppingVerbose::GetInstance();
   G4double              charge       = particleType->GetPDGCharge();
 
-  G4int nSecAtRest       = GetNumOfAtRestSecondaries();
-  G4int nSecAlong        = GetNumOfAlongStepSecondaries();
-  G4int nSecPost         = GetNumOfPostStepSecondaries();
+//   G4int nSecAtRest       = GetNumOfAtRestSecondaries();
+//   G4int nSecAlong        = GetNumOfAlongStepSecondaries();
+//   G4int nSecPost         = GetNumOfPostStepSecondaries();
   G4int nSecTotal        = GetTotalNumOfSecondaries();
 
 //jpan@nuclear.uwinnipeg.ca Thu Apr 16 01:33:14 CDT 2009
@@ -236,7 +236,7 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
     }
   }
 
-  QweakSimTrackInformation *TrackInfo = (QweakSimTrackInformation*)theTrack->GetUserInformation();
+//   QweakSimTrackInformation *TrackInfo = (QweakSimTrackInformation*)theTrack->GetUserInformation();
 
 //pqwang: optical photon process
 

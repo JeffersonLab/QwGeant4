@@ -219,9 +219,13 @@ void QweakSimPhysicsList::ConstructEMProcess()
     ////////////////////////
     //
     pManager = G4Electron::Electron()->GetProcessManager();
-    pManager->AddProcess(new G4MultipleScattering,-1, 1,1);
-    pManager->AddProcess(new G4eBremsstrahlung,   -1, 3,3);
-    pManager->AddProcess(new G4eIonisation,       -1, 2,2);
+    #if G4VERSION_NUMBER < 940
+    pManager->AddProcess(new G4MultipleScattering,  -1, 1,1);
+    #else
+    pManager->AddProcess(new G4eMultipleScattering, -1, 1,1);
+    #endif
+    pManager->AddProcess(new G4eBremsstrahlung,     -1, 3,3);
+    pManager->AddProcess(new G4eIonisation,         -1, 2,2);
 
     // see http://geant4.home.cern.ch/geant4/G4UsersDocuments/UsersGuides/PhysicsReferenceManual/html/node38.html
     // The Photoabsorption Ionization (PAI) model describes the ionization energy loss of a relativistic charged particle in matter.
@@ -261,10 +265,14 @@ void QweakSimPhysicsList::ConstructEMProcess()
     ////////////////////////
     //
     pManager = G4Positron::Positron()->GetProcessManager(); 
-    pManager->AddProcess(new G4MultipleScattering,-1, 1,1);
-    pManager->AddProcess(new G4eIonisation,       -1, 2,2);
-    pManager->AddProcess(new G4eBremsstrahlung,   -1, 3,3);
-    pManager->AddProcess(new G4eplusAnnihilation,  0,-1,4);
+    #if G4VERSION_NUMBER < 940
+    pManager->AddProcess(new G4MultipleScattering,  -1, 1,1);
+    #else
+    pManager->AddProcess(new G4eMultipleScattering, -1, 1,1);
+    #endif
+    pManager->AddProcess(new G4eIonisation,         -1, 2,2);
+    pManager->AddProcess(new G4eBremsstrahlung,     -1, 3,3);
+    pManager->AddProcess(new G4eplusAnnihilation,    0,-1,4);
 
     
     ////////////////////////
@@ -274,7 +282,11 @@ void QweakSimPhysicsList::ConstructEMProcess()
     ////////////////////////
     //
     pManager = G4MuonMinus::MuonMinus()->GetProcessManager(); 
+    #if G4VERSION_NUMBER < 940
     pManager->AddProcess(new G4MultipleScattering(),    -1, 1, 1);
+    #else
+    pManager->AddProcess(new G4MuMultipleScattering(),  -1, 1, 1);
+    #endif
     pManager->AddProcess(new G4MuIonisation(),          -1, 2, 2);
     pManager->AddProcess(new G4MuBremsstrahlung(),      -1,-1, 3);  
     pManager->AddProcess(new G4MuPairProduction(),      -1,-1, 4);
@@ -288,10 +300,14 @@ void QweakSimPhysicsList::ConstructEMProcess()
     ////////////////////////
     //
     pManager = G4MuonPlus::MuonPlus()->GetProcessManager(); 
-    pManager->AddProcess(new G4MultipleScattering(), -1, 1, 1);
-    pManager->AddProcess(new G4MuIonisation(),       -1, 2, 2);
-    pManager->AddProcess(new G4MuBremsstrahlung(),   -1,-1, 3);  
-    pManager->AddProcess(new G4MuPairProduction(),   -1,-1, 4);
+    #if G4VERSION_NUMBER < 940
+    pManager->AddProcess(new G4MultipleScattering(),  -1, 1, 1);
+    #else
+    pManager->AddProcess(new G4MuMultipleScattering(),-1, 1, 1);
+    #endif
+    pManager->AddProcess(new G4MuIonisation(),        -1, 2, 2);
+    pManager->AddProcess(new G4MuBremsstrahlung(),    -1,-1, 3);  
+    pManager->AddProcess(new G4MuPairProduction(),    -1,-1, 4);
 
     
     ////////////////////////
@@ -301,8 +317,12 @@ void QweakSimPhysicsList::ConstructEMProcess()
     ////////////////////////
     //
     pManager = G4TauMinus::TauMinus()->GetProcessManager();
-    pManager->AddProcess(new G4MultipleScattering(), -1, 1, 1);
-    pManager->AddProcess(new G4hIonisation(),        -1, 2, 2);
+    #if G4VERSION_NUMBER < 940
+    pManager->AddProcess(new G4MultipleScattering(),   -1, 1, 1);
+    #else
+    pManager->AddProcess(new G4MuMultipleScattering(),-1, 1, 1);
+    #endif
+    pManager->AddProcess(new G4hIonisation(),          -1, 2, 2);
  
    
     ////////////////////////
@@ -312,7 +332,11 @@ void QweakSimPhysicsList::ConstructEMProcess()
     ////////////////////////
     //
     pManager = G4TauPlus::TauPlus()->GetProcessManager();
-    pManager->AddProcess(new G4MultipleScattering(), -1, 1, 1);
+    #if G4VERSION_NUMBER < 940
+    pManager->AddProcess(new G4MultipleScattering(),   -1, 1, 1);
+    #else
+    pManager->AddProcess(new G4MuMultipleScattering(),-1, 1, 1);
+    #endif
     pManager->AddProcess(new G4hIonisation(),        -1, 2, 2);
 
 }
@@ -440,8 +464,12 @@ void QweakSimPhysicsList::ConstructHadronProcess()
   pManager = G4PionPlus::PionPlus()->GetProcessManager();
 
   // EM processes
-  pManager->AddProcess(new G4MultipleScattering(), -1, 1, 1);
-  pManager->AddProcess(new G4hIonisation(),        -1, 2, 2);
+  #if G4VERSION_NUMBER < 940
+  pManager->AddProcess(new G4MultipleScattering(),  -1, 1, 1);
+  #else
+  pManager->AddProcess(new G4hMultipleScattering(), -1, 1, 1);
+  #endif
+  pManager->AddProcess(new G4hIonisation(),         -1, 2, 2);
  
   // hadron elastic
   pManager->AddDiscreteProcess(theElasticProcess);
@@ -470,8 +498,12 @@ void QweakSimPhysicsList::ConstructHadronProcess()
   pManager = G4PionMinus::PionMinus()->GetProcessManager();
 
   // EM processes
-  pManager->AddProcess(new G4MultipleScattering(), -1, 1, 1);
-  pManager->AddProcess(new G4hIonisation(),        -1, 2, 2);
+  #if G4VERSION_NUMBER < 940
+  pManager->AddProcess(new G4MultipleScattering(),  -1, 1, 1);
+  #else
+  pManager->AddProcess(new G4hMultipleScattering(), -1, 1, 1);
+  #endif
+  pManager->AddProcess(new G4hIonisation(),         -1, 2, 2);
 
   // hadron elastic
   pManager->AddDiscreteProcess(theElasticProcess);
@@ -502,7 +534,11 @@ void QweakSimPhysicsList::ConstructHadronProcess()
   pManager = G4KaonPlus::KaonPlus()->GetProcessManager();
 
   // EM processes
-  pManager->AddProcess(new G4MultipleScattering(), -1, 1, 1);
+  #if G4VERSION_NUMBER < 940
+  pManager->AddProcess(new G4MultipleScattering(),  -1, 1, 1);
+  #else
+  pManager->AddProcess(new G4hMultipleScattering(), -1, 1, 1);
+  #endif
   pManager->AddProcess(new G4hIonisation(),        -1, 2, 2);
 
   // hadron elastic
@@ -525,7 +561,11 @@ void QweakSimPhysicsList::ConstructHadronProcess()
   pManager = G4KaonMinus::KaonMinus()->GetProcessManager();
 
   // EM processes
-  pManager->AddProcess(new G4MultipleScattering(), -1, 1, 1);
+  #if G4VERSION_NUMBER < 940
+  pManager->AddProcess(new G4MultipleScattering(),  -1, 1, 1);
+  #else
+  pManager->AddProcess(new G4hMultipleScattering(), -1, 1, 1);
+  #endif
   pManager->AddProcess(new G4hIonisation(),        -1, 2, 2);
 
   // hadron elastic
@@ -586,7 +626,11 @@ void QweakSimPhysicsList::ConstructHadronProcess()
   pManager = G4Proton::Proton()->GetProcessManager();
 
   // EM processes
-  pManager->AddProcess(new G4MultipleScattering(), -1, 1, 1);
+  #if G4VERSION_NUMBER < 940
+  pManager->AddProcess(new G4MultipleScattering(),  -1, 1, 1);
+  #else
+  pManager->AddProcess(new G4hMultipleScattering(), -1, 1, 1);
+  #endif
   pManager->AddProcess(new G4hIonisation(),        -1, 2, 2);
 
   // hadron elastic
@@ -616,7 +660,11 @@ void QweakSimPhysicsList::ConstructHadronProcess()
   pManager = G4AntiProton::AntiProton()->GetProcessManager();
 
   // EM processes
-  pManager->AddProcess(new G4MultipleScattering(), -1, 1, 1);
+  #if G4VERSION_NUMBER < 940
+  pManager->AddProcess(new G4MultipleScattering(),  -1, 1, 1);
+  #else
+  pManager->AddProcess(new G4hMultipleScattering(), -1, 1, 1);
+  #endif
   pManager->AddProcess(new G4hIonisation(),        -1, 2, 2);
 
   // hadron elastic
@@ -716,7 +764,11 @@ void QweakSimPhysicsList::ConstructHadronProcess()
   pManager = G4SigmaMinus::SigmaMinus()->GetProcessManager();
 
   // EM processes
-  pManager->AddProcess(new G4MultipleScattering(), -1, 1, 1);
+  #if G4VERSION_NUMBER < 940
+  pManager->AddProcess(new G4MultipleScattering(),  -1, 1, 1);
+  #else
+  pManager->AddProcess(new G4hMultipleScattering(), -1, 1, 1);
+  #endif
   pManager->AddProcess(new G4hIonisation(),        -1, 2, 2);
 
   // hadron elastic
@@ -742,7 +794,11 @@ void QweakSimPhysicsList::ConstructHadronProcess()
   pManager = G4AntiSigmaMinus::AntiSigmaMinus()->GetProcessManager();
 
   // EM processes
-  pManager->AddProcess(new G4MultipleScattering(), -1, 1, 1);
+  #if G4VERSION_NUMBER < 940
+  pManager->AddProcess(new G4MultipleScattering(),  -1, 1, 1);
+  #else
+  pManager->AddProcess(new G4hMultipleScattering(), -1, 1, 1);
+  #endif
   pManager->AddProcess(new G4hIonisation(),        -1, 2, 2);
 
   // hadron elastic
@@ -768,7 +824,11 @@ void QweakSimPhysicsList::ConstructHadronProcess()
   pManager = G4SigmaPlus::SigmaPlus()->GetProcessManager();
 
   // EM processes
-  pManager->AddProcess(new G4MultipleScattering(), -1, 1, 1);
+  #if G4VERSION_NUMBER < 940
+  pManager->AddProcess(new G4MultipleScattering(),  -1, 1, 1);
+  #else
+  pManager->AddProcess(new G4hMultipleScattering(), -1, 1, 1);
+  #endif
   pManager->AddProcess(new G4hIonisation(),        -1, 2, 2);
 
   // hadron elastic
@@ -791,7 +851,11 @@ void QweakSimPhysicsList::ConstructHadronProcess()
   pManager = G4AntiSigmaPlus::AntiSigmaPlus()->GetProcessManager();
 
   // EM processes
-  pManager->AddProcess(new G4MultipleScattering(), -1, 1, 1);
+  #if G4VERSION_NUMBER < 940
+  pManager->AddProcess(new G4MultipleScattering(),  -1, 1, 1);
+  #else
+  pManager->AddProcess(new G4hMultipleScattering(), -1, 1, 1);
+  #endif
   pManager->AddProcess(new G4hIonisation(),        -1, 2, 2);
 
   // hadron elastic
@@ -817,7 +881,11 @@ void QweakSimPhysicsList::ConstructHadronProcess()
   pManager = G4XiMinus::XiMinus()->GetProcessManager();
 
   // EM processes
-  pManager->AddProcess(new G4MultipleScattering(), -1, 1, 1);
+  #if G4VERSION_NUMBER < 940
+  pManager->AddProcess(new G4MultipleScattering(),  -1, 1, 1);
+  #else
+  pManager->AddProcess(new G4hMultipleScattering(), -1, 1, 1);
+  #endif
   pManager->AddProcess(new G4hIonisation(),        -1, 2, 2);
 
   // hadron elastic
@@ -840,7 +908,11 @@ void QweakSimPhysicsList::ConstructHadronProcess()
   pManager = G4AntiXiMinus::AntiXiMinus()->GetProcessManager();
 
   // EM processes
-  pManager->AddProcess(new G4MultipleScattering(), -1, 1, 1);
+  #if G4VERSION_NUMBER < 940
+  pManager->AddProcess(new G4MultipleScattering(),  -1, 1, 1);
+  #else
+  pManager->AddProcess(new G4hMultipleScattering(), -1, 1, 1);
+  #endif
   pManager->AddProcess(new G4hIonisation(),        -1, 2, 2);
 
   // hadron elastic
@@ -903,7 +975,11 @@ void QweakSimPhysicsList::ConstructHadronProcess()
   pManager = G4OmegaMinus::OmegaMinus()->GetProcessManager();
 
   // EM processes
-  pManager->AddProcess(new G4MultipleScattering(), -1, 1, 1);
+  #if G4VERSION_NUMBER < 940
+  pManager->AddProcess(new G4MultipleScattering(),  -1, 1, 1);
+  #else
+  pManager->AddProcess(new G4hMultipleScattering(), -1, 1, 1);
+  #endif
   pManager->AddProcess(new G4hIonisation(),        -1, 2, 2);
 
   // hadron elastic
@@ -927,7 +1003,11 @@ void QweakSimPhysicsList::ConstructHadronProcess()
   pManager = G4AntiOmegaMinus::AntiOmegaMinus()->GetProcessManager();
 
   // EM processes
-  pManager->AddProcess(new G4MultipleScattering(), -1, 1, 1);
+  #if G4VERSION_NUMBER < 940
+  pManager->AddProcess(new G4MultipleScattering(),  -1, 1, 1);
+  #else
+  pManager->AddProcess(new G4hMultipleScattering(), -1, 1, 1);
+  #endif
   pManager->AddProcess(new G4hIonisation(),        -1, 2, 2);
 
   // hadron elastic

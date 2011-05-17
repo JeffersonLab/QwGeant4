@@ -250,18 +250,18 @@ QweakSimGEM::~QweakSimGEM()
 
 void QweakSimGEM::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 {
-G4cout << G4endl << "###### Calling QweakSimGEM::ConstructComponent() " << G4endl << G4endl;
+  G4cout << G4endl << "###### Calling QweakSimGEM::ConstructComponent() " << G4endl << G4endl;
  
-// definition of a mil = inch/1000
-static const G4double mil = 0.001*2.54*cm;
+  // definition of a mil = inch/1000
+  //static const G4double mil = 0.001*2.54*cm;
 
 
-// assign material
- G4Material* GEM_MasterContainer_Material    = pMaterial->GetMaterial("Air");   
- G4Material* GEM_SubContainer_Material       = pMaterial->GetMaterial("ArCO2");   
- G4Material* GEM_Frame_Material              = pMaterial->GetMaterial("NemaG10");  
- G4Material* GEM_Foil_Material               = pMaterial->GetMaterial("Kapton"); 
- G4Material* GEM_CopperLayer_Material        = pMaterial->GetMaterial("Copper"); 
+  // assign material
+  G4Material* GEM_MasterContainer_Material    = pMaterial->GetMaterial("Air");   
+  G4Material* GEM_SubContainer_Material       = pMaterial->GetMaterial("ArCO2");   
+  G4Material* GEM_Frame_Material              = pMaterial->GetMaterial("NemaG10");  
+  G4Material* GEM_Foil_Material               = pMaterial->GetMaterial("Kapton"); 
+  G4Material* GEM_CopperLayer_Material        = pMaterial->GetMaterial("Copper"); 
 
 
   // define  solid volume of the drift chamber container

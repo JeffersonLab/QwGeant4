@@ -22,7 +22,8 @@
 #include "QweakSimEventActionMessenger.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-QweakSimEventAction::QweakSimEventAction(QweakSimAnalysis* AN, QweakSimUserInformation* myUI) {
+QweakSimEventAction::QweakSimEventAction(QweakSimAnalysis* AN, QweakSimUserInformation* myUI)
+{
 
 //---------------------------------------------------------------------------------------------
 //! Constructor of QweakSimEventAction
@@ -81,20 +82,23 @@ QweakSimEventAction::QweakSimEventAction(QweakSimAnalysis* AN, QweakSimUserInfor
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-QweakSimEventAction::~QweakSimEventAction() {
+QweakSimEventAction::~QweakSimEventAction()
+{
     // Delete the event action messenger
     if (fEventActionMessenger) delete fEventActionMessenger;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void QweakSimEventAction::ShowTrigger() {
+void QweakSimEventAction::ShowTrigger()
+{
     for (int iTrigger = 0; iTrigger < EVENT_ACTION_NUM_TRIGGER; iTrigger++)
         G4cout << (fTrigger[iTrigger]? "Enabled":"Disabled")
         << " software trigger " << fTriggerName[iTrigger] << "." << G4endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void QweakSimEventAction::SetTrigger(const G4String value, const G4bool status) {
+void QweakSimEventAction::SetTrigger(const G4String value, const G4bool status)
+{
     // No error checking here...
     //std::transform(value.begin(), value.end(), value.begin(), std::tolower);
     fTrigger[kMapTriggerMode[value]] = status;
@@ -102,9 +106,8 @@ void QweakSimEventAction::SetTrigger(const G4String value, const G4bool status) 
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void QweakSimEventAction::BeginOfEventAction(const G4Event* evt) {
-
-
+void QweakSimEventAction::BeginOfEventAction(const G4Event* /*evt*/)
+{
     G4SDManager * SDman = G4SDManager::GetSDMpointer();
 
     // check for existing GEM_WirePlane Collection ID (if it's -1 it will be assigned)
@@ -200,7 +203,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     Initialize();
 
     // Get current Event Number
-    G4int event_id = evt->GetEventID();
+    //G4int event_id = evt->GetEventID();
 
     G4HCofThisEvent * HCE = evt->GetHCofThisEvent();
 
@@ -795,8 +798,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
             // loop over DriftCell hits
             for (G4int i1=0;i1<n_VDChitDCFront;i1++) {
 
-                QweakSimVDC_DriftCellHit* aHit = (*VDC_DriftCellFront_HC)[i1];
-
+                //QweakSimVDC_DriftCellHit* aHit = (*VDC_DriftCellFront_HC)[i1];
                 //aHit->Print();
 
             } // end  for(int i1=0;i1<n_hitDCFront;i1++)
@@ -827,8 +829,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
             // loop over hits
             for (G4int i1=0;i1<n_VDChitDCBack;i1++) {
 
-                QweakSimVDC_DriftCellHit* aHit = (*VDC_DriftCellBack_HC)[i1];
-
+                //QweakSimVDC_DriftCellHit* aHit = (*VDC_DriftCellBack_HC)[i1];
                 //aHit->Print();
 
             } // end for(int i1=0;i1<n_hitBack;i1++
@@ -908,14 +909,14 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 originVertexTotalEnergy =   aHit->GetOriginVertexTotalEnergy();
                 rOriginVertexTotalEnergy = (Float_t ) originVertexTotalEnergy/MeV;
 
-// 	primaryQ2  = aHit->GetPrimaryQ2();
-// 	rPrimaryQ2  = (Float_t) primaryQ2;
+//                primaryQ2  = aHit->GetPrimaryQ2();
+//                rPrimaryQ2  = (Float_t) primaryQ2;
 //
-// 	crossSection =  aHit->GetCrossSection();
-// 	rCrossSection = (Float_t) crossSection;
+//                crossSection =  aHit->GetCrossSection();
+//                rCrossSection = (Float_t) crossSection;
 //
-// 	crossSectionWeight =  aHit->GetCrossSectionWeight();
-// 	rCrossSectionWeight = (Float_t) crossSectionWeight;
+//                crossSectionWeight =  aHit->GetCrossSectionWeight();
+//                rCrossSectionWeight = (Float_t) crossSectionWeight;
 
 
                 globalTime = aHit->GetGlobalTime();

@@ -56,7 +56,7 @@ void QweakSimGEM_WirePlaneSD::Initialize(G4HCofThisEvent* HCE)
 
 }
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-G4bool QweakSimGEM_WirePlaneSD::ProcessHits(G4Step* aStep,G4TouchableHistory* ROhist)
+G4bool QweakSimGEM_WirePlaneSD::ProcessHits(G4Step* aStep,G4TouchableHistory* /*ROhist*/)
 {
   //G4cout << G4endl << "###### Calling QweakSimGEM_WirePlaneSD::ProcessHits() " << G4endl << G4endl; 
 
@@ -93,17 +93,17 @@ G4bool QweakSimGEM_WirePlaneSD::ProcessHits(G4Step* aStep,G4TouchableHistory* RO
 //    G4cout << ">>>>>>> Particle crossing  : GEM_AnodeCopperLayer_Physical <<<<<<<<<" << G4endl;
 //    G4cout << "=============================================================" << G4endl;
 
-    G4double trackID = aStep->GetTrack()->GetTrackID();
+//     G4double trackID = aStep->GetTrack()->GetTrackID();
 //     G4cout << "====> Track ID     : " <<  trackID << G4endl;
     
-    G4double parentID = aStep->GetTrack()->GetParentID();
+//     G4double parentID = aStep->GetTrack()->GetParentID();
 //     G4cout << "====> Parent ID    : " <<  parentID << G4endl;
   
   
 
-    G4int    MotherCopyNo = theTouchable->GetVolume(1)->GetCopyNo();  // Several MotherVolumes
+//     G4int    MotherCopyNo = theTouchable->GetVolume(1)->GetCopyNo();  // Several MotherVolumes
     G4int WirePlaneCopyNo = theTouchable->GetVolume()->GetCopyNo();   // but only one WirePlane per MV
-    G4int MotherReplicaNo = theTouchable->GetReplicaNumber(1);        // Several MotherVolumes
+//     G4int MotherReplicaNo = theTouchable->GetReplicaNumber(1);        // Several MotherVolumes
 
 //pqwang@jlab.org
 //there are 3 fold MotherVolume, the GEMID must be taken from the outer container
@@ -112,7 +112,7 @@ G4bool QweakSimGEM_WirePlaneSD::ProcessHits(G4Step* aStep,G4TouchableHistory* RO
 //    G4int MotherReplicaNo2 = theTouchable->GetReplicaNumber(2);        // Several MotherVolumes
 
     G4int    MotherCopyNo3 = theTouchable->GetVolume(3)->GetCopyNo();  // Several MotherVolumes
-    G4int MotherReplicaNo3 = theTouchable->GetReplicaNumber(3);        // Several MotherVolumes
+//     G4int MotherReplicaNo3 = theTouchable->GetReplicaNumber(3);        // Several MotherVolumes
 
 //     G4cout << "%%%%%%%%%%%%%%%%%%%  WirePlane MV    CopyNumber  :" << MotherCopyNo    << G4endl;
 //     G4cout << "%%%%%%%%%%%%%%%%%%%  WirePlane       CopyNumber  :" << WirePlaneCopyNo << G4endl;
@@ -161,7 +161,7 @@ G4bool QweakSimGEM_WirePlaneSD::ProcessHits(G4Step* aStep,G4TouchableHistory* RO
 
 
 
-  G4double target_zcut = -630*cm;
+//   G4double target_zcut = -630*cm;
 
 //    if  (originVertexPosition.z()/cm > target_zcut/cm)
 //      {
@@ -175,10 +175,9 @@ G4bool QweakSimGEM_WirePlaneSD::ProcessHits(G4Step* aStep,G4TouchableHistory* RO
 //
 //      }
 
-  // get User Track Info
-  QweakSimTrackInformation* info = (QweakSimTrackInformation*) (aStep->GetTrack()->GetUserInformation());
-
-//  info->Print();
+//   // get User Track Info
+//   QweakSimTrackInformation* info = (QweakSimTrackInformation*) (aStep->GetTrack()->GetUserInformation());
+//   info->Print();
 
 //   G4double primaryQ2                      = info->GetPrimaryQ2();
 //   G4double crossSection                   = info->GetCrossSection();

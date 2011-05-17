@@ -28,7 +28,7 @@ void QweakSimCerenkovDetector_PMTSD::Initialize(G4HCofThisEvent* HCE)
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-G4bool QweakSimCerenkovDetector_PMTSD::ProcessHits_constStep(const G4Step* aStep,G4TouchableHistory* ROhist)
+G4bool QweakSimCerenkovDetector_PMTSD::ProcessHits_constStep(const G4Step* aStep,G4TouchableHistory* /*ROhist*/)
 {
 
   if (aStep->GetTrack()->GetDefinition() != G4OpticalPhoton::OpticalPhotonDefinition()) 
@@ -36,11 +36,11 @@ G4bool QweakSimCerenkovDetector_PMTSD::ProcessHits_constStep(const G4Step* aStep
 
   G4StepPoint*        preStepPoint  = aStep->GetPreStepPoint();
   G4StepPoint*        postStepPoint = aStep->GetPostStepPoint();
-  G4VPhysicalVolume*  thePrePV      = preStepPoint->GetPhysicalVolume();
-  G4VPhysicalVolume*  thePostPV     = postStepPoint->GetPhysicalVolume();
+//   G4VPhysicalVolume*  thePrePV      = preStepPoint->GetPhysicalVolume();
+//   G4VPhysicalVolume*  thePostPV     = postStepPoint->GetPhysicalVolume();
 
   G4TouchableHistory* theTouchable  = (G4TouchableHistory*)(preStepPoint->GetTouchable());
-  G4VPhysicalVolume*  physVol       = theTouchable->GetVolume();
+//   G4VPhysicalVolume*  physVol       = theTouchable->GetVolume();
 
   if (postStepPoint->GetStepStatus() != fGeomBoundary) return false;
 

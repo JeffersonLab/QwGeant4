@@ -73,7 +73,7 @@ void QweakSimHDC_WirePlaneSD::Initialize(G4HCofThisEvent* HCE)
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-G4bool QweakSimHDC_WirePlaneSD::ProcessHits(G4Step* aStep,G4TouchableHistory* ROhist)
+G4bool QweakSimHDC_WirePlaneSD::ProcessHits(G4Step* aStep,G4TouchableHistory* /*ROhist*/)
 {
   //G4cout << G4endl << "###### Calling QweakSimHDC_WirePlaneSD::ProcessHits() " << G4endl << G4endl; 
 
@@ -110,20 +110,20 @@ G4bool QweakSimHDC_WirePlaneSD::ProcessHits(G4Step* aStep,G4TouchableHistory* RO
 //     G4cout << ">>>>>>> Particle crossing  : HDC_WirePlane_Physical <<<<<<<<<" << G4endl;
 //     G4cout << "=============================================================" << G4endl;
 
-    G4double trackID = aStep->GetTrack()->GetTrackID();
+//     G4double trackID = aStep->GetTrack()->GetTrackID();
 //     G4cout << "====> Track ID     : " <<  trackID << G4endl;
     
-    G4double parentID = aStep->GetTrack()->GetParentID();
+//     G4double parentID = aStep->GetTrack()->GetParentID();
 //     G4cout << "====> Parent ID    : " <<  parentID << G4endl;
   
   
 
-    G4int    MotherCopyNo = theTouchable->GetVolume(1)->GetCopyNo();  // Several MotherVolumes
+//     G4int    MotherCopyNo = theTouchable->GetVolume(1)->GetCopyNo();  // Several MotherVolumes
     G4int WirePlaneCopyNo = theTouchable->GetVolume()->GetCopyNo();   // but only one WirePlane per MV
-    G4int MotherReplicaNo = theTouchable->GetReplicaNumber(1);        // Several MotherVolumes
+//     G4int MotherReplicaNo = theTouchable->GetReplicaNumber(1);        // Several MotherVolumes
 
     G4int    MotherCopyNo2 = theTouchable->GetVolume(2)->GetCopyNo();  // Several MotherVolumes
-    G4int MotherReplicaNo2 = theTouchable->GetReplicaNumber(2);        // Several MotherVolumes
+//     G4int MotherReplicaNo2 = theTouchable->GetReplicaNumber(2);        // Several MotherVolumes
 
 
 //     G4cout << "%%%%%%%%%%%%%%%%%%%  WirePlane MV    CopyNumber  :" << MotherCopyNo    << G4endl;
@@ -175,9 +175,8 @@ G4bool QweakSimHDC_WirePlaneSD::ProcessHits(G4Step* aStep,G4TouchableHistory* RO
   G4double      currentTotalEnergy       = preStepPoint->GetTotalEnergy();
 
   // get User Track Info
-  QweakSimTrackInformation* info = (QweakSimTrackInformation*) (aStep->GetTrack()->GetUserInformation());
-
-  // info->Print();
+  //QweakSimTrackInformation* info = (QweakSimTrackInformation*) (aStep->GetTrack()->GetUserInformation());
+  //info->Print();
 
 //   G4double primaryQ2                      = info->GetPrimaryQ2();
 //   G4double crossSection                   = info->GetCrossSection();

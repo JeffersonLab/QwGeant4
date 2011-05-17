@@ -60,15 +60,11 @@ class QweakSimMagnetFieldMap : public G4MagneticField
 {
 public:
 
-   QweakSimMagnetFieldMap();
+  QweakSimMagnetFieldMap();
   
   virtual ~QweakSimMagnetFieldMap();
 
-  void GetFieldValue( const   G4double Point[4], G4double *Bfield ) const;  
-  void GetFieldValueFromGridCell( const  G4int GridPoint_R, 
-				  const  G4int GridPoint_Phi, 
-				  const  G4int GridPoint_Z, 
-				  G4double *BFieldGridValue ) const;
+  void GetFieldValue(const G4double Point[4], G4double *Bfield) const;
 
   void InitializeGrid();
   void ReadFieldMap(const char* filename);

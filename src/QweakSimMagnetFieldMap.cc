@@ -95,16 +95,8 @@ void QweakSimMagnetFieldMap::ReadFieldMap(const char* filename)
   G4cout << "--------------------------------------------------------------------------------" << G4endl;
 
 
-  G4int r_index = 0;
-  G4int phi_index = 0;
-  G4int z_index = 0;
-  G4int oct = 0;
-  G4int ind = 0;
-
   G4int raw_R_cm = 0, raw_Z_cm = 0, raw_Phi_deg = 0;
-  G4double val_R = 0, val_Z = 0, val_Phi = 0, bx = 0, by = 0, bz = 0;
-
-  G4int nlines = 0;
+  G4double bx = 0, by = 0, bz = 0;
 
   // open the field map file
   std::ifstream inputfile;
@@ -114,7 +106,7 @@ void QweakSimMagnetFieldMap::ReadFieldMap(const char* filename)
 
     inputfile >> raw_R_cm >> raw_Z_cm >> raw_Phi_deg >> bx >> by >> bz;
 
-    ind = (G4int)((raw_Phi_deg - phiMinFromMap)/gridstepsize_phi 
+    G4int ind = (G4int)((raw_Phi_deg - phiMinFromMap)/gridstepsize_phi 
 		  + nGridPointsInPhi*(raw_R_cm - rMinFromMap)/gridstepsize_r
 		  + nGridPointsInPhi*nGridPointsInR*(raw_Z_cm - zMinFromMap)/gridstepsize_z);
 
@@ -126,11 +118,6 @@ void QweakSimMagnetFieldMap::ReadFieldMap(const char* filename)
   // close file
   inputfile.close();
 
-//   fclose(fp);
-
-  G4cout << "... done reading" << nlines << "lines" << G4endl;
-  
-  
   G4cout << G4endl << "###### Leaving QweakSimMagnetFieldMap::ReadFieldMap " << G4endl << G4endl;
 }
 
@@ -138,19 +125,6 @@ void QweakSimMagnetFieldMap::ReadFieldMap(const char* filename)
 QweakSimMagnetFieldMap::~QweakSimMagnetFieldMap()
 {
   delete BField_ANSYS ;
-}
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void QweakSimMagnetFieldMap::GetFieldValueFromGridCell( const G4int GridPoint_R,
-							const G4int GridPoint_Phi, 
-							const G4int GridPoint_Z, 
-							G4double *BFieldGridValue ) const
-{
-  // get the value of the cell ix, iy,iz
-//   BFieldGridValue[0] = BFieldGridData_X[GridPoint_R][GridPoint_Phi][GridPoint_Z]  ;
-//   BFieldGridValue[1] = BFieldGridData_Y[GridPoint_R][GridPoint_Phi][GridPoint_Z]  ;
-//   BFieldGridValue[2] = BFieldGridData_Z[GridPoint_R][GridPoint_Phi][GridPoint_Z]  ;
-
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

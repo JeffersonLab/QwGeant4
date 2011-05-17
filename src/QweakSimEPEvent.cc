@@ -309,10 +309,10 @@ G4double QweakSimEPEvent::Quasi_Elastic_Neutron(G4double E_in,
       G4double Theta_Min = 1.745329E-4;
       G4double Lamda_2 = 0.710;
       G4double M_p = 938.2796;  // proton mass in MeV
-      G4double mu = 2.793;
+//      G4double mu = 2.793;
       G4double mu_n = -1.91;
       G4double Z = 1.0;
-      G4double A = 1.0;
+//      G4double A = 1.0;
       G4double M = M_p;
 
 //    E_in units is MeV
@@ -338,7 +338,7 @@ G4double QweakSimEPEvent::Quasi_Elastic_Neutron(G4double E_in,
 
 //    Cross section
       G4double GEP_DIPOLE = 1.0/(1.0+Q2/1.E6/Lamda_2)*(1.0+Q2/1.E6/Lamda_2);
-      G4double GMP_DIPOLE = GEP_DIPOLE*mu;
+//      G4double GMP_DIPOLE = GEP_DIPOLE*mu;
       G4double GEn_DIPOLE = 0.0;
       G4double GMn_DIPOLE = GEP_DIPOLE*mu_n;
       G4double FAC = 1.0/(1.0+tau);

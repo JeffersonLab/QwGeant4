@@ -11,15 +11,15 @@ QweakSimStackingAction::~QweakSimStackingAction()
 
 //_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 G4ClassificationOfNewTrack
-QweakSimStackingAction::ClassifyNewTrack(const G4Track * aTrack)
+QweakSimStackingAction::ClassifyNewTrack(const G4Track* /*aTrack*/)
 {
 
-G4ClassificationOfNewTrack classification = fUrgent;
+  G4ClassificationOfNewTrack classification = fUrgent;
 
-    QweakSimTrackInformation* trackInfo;
+  //QweakSimTrackInformation* trackInfo;
 
- //if( (aTrack->GetDefinition()!=G4OpticalPhoton::OpticalPhotonDefinition()) ) {trackInfo->SetSourceTrackInformation(aTrack);}
-// if( aTrack->GetTrackID()>2) {trackInfo->SetSourceTrackInformation(aTrack);}
+  //if( (aTrack->GetDefinition()!=G4OpticalPhoton::OpticalPhotonDefinition()) ) {trackInfo->SetSourceTrackInformation(aTrack);}
+  //if(  aTrack->GetTrackID()>2) {trackInfo->SetSourceTrackInformation(aTrack);}
 
 
 //  if( (aTrack->GetDefinition()==G4OpticalPhoton::OpticalPhotonDefinition()) && (trackInfo->GetSourceParticle()!= G4OpticalPhoton::OpticalPhotonDefinition()) )
@@ -31,7 +31,7 @@ G4ClassificationOfNewTrack classification = fUrgent;
 //      G4cout << " Position     = " << aTrack->GetPosition()                      << G4endl;
 //  }
 //
- //trackInfo->SetSourceTrackInformation(aTrack);
+  //trackInfo->SetSourceTrackInformation(aTrack);
 
    return classification;
 

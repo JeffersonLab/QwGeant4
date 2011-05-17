@@ -226,7 +226,7 @@ QweakSimTrackingAction::~QweakSimTrackingAction()
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void QweakSimTrackingAction::PostUserTrackingAction(const G4Track* aTrack)
+void QweakSimTrackingAction::PostUserTrackingAction(const G4Track* /*aTrack*/)
 {
   //G4cout << G4endl << "###### Calling QweakSimTrackingAction::PostUserTrackingAction() " << G4endl << G4endl;
 

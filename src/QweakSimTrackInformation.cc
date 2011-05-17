@@ -296,29 +296,29 @@ void QweakSimTrackInformation::StoreCerenkovHitEnergy(G4int ind, G4double eng)
 
 G4double QweakSimTrackInformation::GetCerenkovHitEnergyAtIndex(G4int ind)
 {
-  if(CerenkovHitEnergy.size() == 0) return -1.0;
-  if(ind < 0 || ind >= CerenkovHitEnergy.size()) return CerenkovHitEnergy[0];
+  if (CerenkovHitEnergy.size() == 0) return -1.0;
+  if (ind < 0 || ind >= (G4int) CerenkovHitEnergy.size()) return CerenkovHitEnergy[0];
   return CerenkovHitEnergy[ind];
 }
 
 G4ParticleDefinition* QweakSimTrackInformation::GetParticleDefinitionAtIndex(G4int ind)
 {
-  if(ParticleHistory.size() == 0) return NULL;
-  if(ind > ParticleHistory.size()-1) return ParticleHistory[0];
+  if (ParticleHistory.size() == 0) return NULL;
+  if (ind > (G4int) ParticleHistory.size() - 1) return ParticleHistory[0];
   return ParticleHistory[ind];
 }
 
 G4double QweakSimTrackInformation::GetParentEnergyAtIndex(G4int ind)
 {
-  if(ParentEnergy.size() == 0) return -1.0;
-  if(ind > ParentEnergy.size()-1) return ParentEnergy[0];
+  if (ParentEnergy.size() == 0) return -1.0;
+  if (ind > (G4int) ParentEnergy.size() - 1) return ParentEnergy[0];
   return ParentEnergy[ind];
 }
 
 G4String QweakSimTrackInformation::GetCreatorProcessAtIndex(G4int ind)
 {
-  if(ParticleCreatorProcess.size() == 0) return "None";
-  if(ind > ParticleCreatorProcess.size()-1) return "None";
+  if (ParticleCreatorProcess.size() == 0) return "None";
+  if (ind > (G4int) ParticleCreatorProcess.size() - 1) return "None";
   return ParticleCreatorProcess[ind];  
 }
 
@@ -326,8 +326,8 @@ G4ThreeVector QweakSimTrackInformation::GetOriginVertex(G4int ind)
 {
   G4ThreeVector vec(-10000*cm,-10000*cm,-10000*cm);
 
-  if(OriginVertex.size() == 0) return vec;
-  if(ind > OriginVertex.size()-1) return vec;
+  if (OriginVertex.size() == 0) return vec;
+  if (ind > (G4int) OriginVertex.size() - 1) return vec;
   return OriginVertex[ind];  
 }
 

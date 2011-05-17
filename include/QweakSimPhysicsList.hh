@@ -54,8 +54,8 @@
 #include "Geant4_include.hh" 
 
 // #include "G4VModularPhysicsList.hh"
-#include "HadronPhysicsLHEP_PRECO_HP.hh"
-#include "LHEP_PRECO_HP.hh"
+// #include "HadronPhysicsLHEP_PRECO_HP.hh"
+// #include "LHEP_PRECO_HP.hh"
 
 // user includes
 #include "QweakSimPhysicsListMessenger.hh"

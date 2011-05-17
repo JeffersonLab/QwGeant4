@@ -187,20 +187,20 @@ else { return false;}
   G4double trackID = aStep->GetTrack()->GetTrackID();
 //   G4cout << "====> Track ID     : " <<  trackID << G4endl;
 
-  G4double parentID = aStep->GetTrack()->GetParentID();
+//   G4double parentID = aStep->GetTrack()->GetParentID();
 //   G4cout << "====> Parent ID    : " <<  parentID << G4endl;
 
   
   G4int    MotherCopyNo    = theTouchable->GetVolume(1)->GetCopyNo();   // one Mother Volume
-  G4int DriftCellCopyNo    = theTouchable->GetVolume()->GetCopyNo();    // but several Driftcells per MV
-  G4int DriftCellReplicaNo = theTouchable->GetReplicaNumber();          // but several Driftcells per MV
+//   G4int DriftCellCopyNo    = theTouchable->GetVolume()->GetCopyNo();    // but several Driftcells per MV
+//   G4int DriftCellReplicaNo = theTouchable->GetReplicaNumber();          // but several Driftcells per MV
 
 //   G4cout << "%%%%%%%%%%%%%%%%%%%%%%%   MV TriggerScintillator    CopyNumber :" <<    MotherCopyNo    << G4endl;
 //   G4cout << "%%%%%%%%%%%%%%%%%%%%%%%      TriggerScintillator    CopyNumber :" << DriftCellCopyNo    << G4endl;
 //   G4cout << "%%%%%%%%%%%%%%%%%%%%%%%      TriggerScintillator ReplicaNumber :" << DriftCellReplicaNo << G4endl;
     
-// get User Track Info
-  QweakSimTrackInformation* info = (QweakSimTrackInformation*)(aStep->GetTrack()->GetUserInformation());
+//   // Get User Track Info
+//   QweakSimTrackInformation* info = (QweakSimTrackInformation*)(aStep->GetTrack()->GetUserInformation());
 
 //   G4int    primaryTrackID                 = info->GetPrimaryTrackID();
 //   G4double primaryQ2                      = info->GetPrimaryQ2();

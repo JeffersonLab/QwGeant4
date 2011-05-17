@@ -89,7 +89,7 @@ G4bool QweakSimVDC_DriftCellBackSD::ProcessHits(G4Step* aStep,G4TouchableHistory
 {
  //  G4cout << G4endl << "###### Calling QweakSimVDC_DriftCellBackSD::ProcessHits() " << G4endl << G4endl; 
 
-  G4double charge = aStep->GetTrack()->GetDefinition()->GetPDGCharge();
+//   G4double charge = aStep->GetTrack()->GetDefinition()->GetPDGCharge();
 
 
 //   G4cout << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Charge =" << charge << G4endl;
@@ -110,7 +110,7 @@ G4bool QweakSimVDC_DriftCellBackSD::ProcessHits(G4Step* aStep,G4TouchableHistory
 
   //=====================================================================================
   G4StepPoint*        preStepPoint  = aStep->GetPreStepPoint();
-  G4StepPoint*        postStepPoint = aStep->GetPreStepPoint();
+//   G4StepPoint*        postStepPoint = aStep->GetPreStepPoint();
   G4TouchableHistory* theTouchable = (G4TouchableHistory*)(preStepPoint->GetTouchable());
   G4VPhysicalVolume*  physVol      = theTouchable->GetVolume();
   //=====================================================================================
@@ -165,10 +165,10 @@ G4bool QweakSimVDC_DriftCellBackSD::ProcessHits(G4Step* aStep,G4TouchableHistory
   G4double      currentTotalEnergy       = aStep->GetTrack()->GetTotalEnergy();
   G4ThreeVector currentMomentumDirection = aStep->GetTrack()->GetMomentumDirection();
 
-  G4double trackID = aStep->GetTrack()->GetTrackID();
+//   G4double trackID = aStep->GetTrack()->GetTrackID();
 //   G4cout << "====> Track ID     : " <<  trackID << G4endl;
 
-  G4double parentID = aStep->GetTrack()->GetParentID();
+//   G4double parentID = aStep->GetTrack()->GetParentID();
 //   G4cout << "====> Parent ID    : " <<  parentID << G4endl;
 
 
@@ -188,8 +188,8 @@ G4bool QweakSimVDC_DriftCellBackSD::ProcessHits(G4Step* aStep,G4TouchableHistory
 //   G4cout << "====> originVertexKineticEnergy [Mev] : " <<  originVertexKineticEnergy/MeV << G4endl;
 
   
-  G4int    MotherCopyNo    = theTouchable->GetVolume(1)->GetCopyNo();   // one Mother Volume
-  G4int DriftCellCopyNo    = theTouchable->GetVolume()->GetCopyNo();    // but several Driftcells per MV
+//   G4int    MotherCopyNo    = theTouchable->GetVolume(1)->GetCopyNo();   // one Mother Volume
+//   G4int DriftCellCopyNo    = theTouchable->GetVolume()->GetCopyNo();    // but several Driftcells per MV
   G4int DriftCellReplicaNo = theTouchable->GetReplicaNumber();    // but several Driftcells per MV
 
 //   G4cout << "%%%%%%%%%%%%%%%%%%%%%%%  VDC_DriftCellFront MV    CopyNumber :" <<    MotherCopyNo    << G4endl; 

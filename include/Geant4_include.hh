@@ -27,6 +27,8 @@
 //================================================
 
 
+#include "G4Version.hh"
+
 
 // Run related
 #include "G4Run.hh"
@@ -237,7 +239,13 @@
 #include "G4ComptonScattering.hh"
 #include "G4GammaConversion.hh"
 #include "G4PhotoElectricEffect.hh"
+#if G4VERSION_NUMBER < 940
 #include "G4MultipleScattering.hh"
+#else
+#include "G4eMultipleScattering.hh"
+#include "G4hMultipleScattering.hh"
+#include "G4MuMultipleScattering.hh"
+#endif
 #include "G4eIonisation.hh"
 #include "G4eBremsstrahlung.hh"
 #include "G4eplusAnnihilation.hh"
@@ -407,7 +415,6 @@
 // processes
 #include "G4ParticleTable.hh"
 #include "G4ProcessManager.hh"
-#include "G4MultipleScattering.hh"
 #include "G4hIonisation.hh"
 #include "G4HadronElasticProcess.hh"
 #include "G4PionPlusInelasticProcess.hh"

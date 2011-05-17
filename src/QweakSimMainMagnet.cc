@@ -42,9 +42,7 @@ QweakSimMainMagnet::QweakSimMainMagnet()
 {
     G4cout << G4endl << "###### Calling QweakSimMainMagnet::QweakSimMainMagnet() " << G4endl << G4endl;
 
-    static const G4double inch = 2.54*cm;
-
-     // initialize pointers here, order does NOT matter
+    // initialize pointers here, order does NOT matter
     pMaterial                            = NULL;
     MM_SingleCoilParam                   = NULL;
 
@@ -727,13 +725,13 @@ G4cout << G4endl << "###### Leaving QweakSimMainMagnet::DestroyComponent() " << 
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........
 
-void QweakSimMainMagnet::SetCenterPositionInZ(G4double myCenterPositionInZ)
+void QweakSimMainMagnet::SetCenterPositionInZ(G4double /*myCenterPositionInZ*/)
 {
-G4cout << G4endl << "###### Calling QweakSimMainMagnet::SetCenterPositionInZ() " << G4endl << G4endl;
+  G4cout << G4endl << "###### Calling QweakSimMainMagnet::SetCenterPositionInZ() " << G4endl << G4endl;
 
- //MainMagnet_MasterContainer_Physical->SetTranslation(G4ThreeVector(0.,0., myCenterPositionInZ));
+  //MainMagnet_MasterContainer_Physical->SetTranslation(G4ThreeVector(0.,0., myCenterPositionInZ));
 
-G4cout << G4endl << "###### Leaving QweakSimMainMagnet::SetCenterPositionInZ() " << G4endl << G4endl;
+  G4cout << G4endl << "###### Leaving QweakSimMainMagnet::SetCenterPositionInZ() " << G4endl << G4endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -1349,23 +1347,23 @@ void QweakSimMainMagnet::Construct_ClampPlates(G4VPhysicalVolume* MotherVolume)
 
 
     // define SingleCoil_ClampPlate logical volume
-     G4cout << G4endl << "###### QweakSimMainMagnet: Define SingleCoil_ClampPlate_Logical " << G4endl << G4endl;
+    G4cout << G4endl << "###### QweakSimMainMagnet: Define SingleCoil_ClampPlate_Logical " << G4endl << G4endl;
 
-     SingleCoil_ClampPlate_Logical  = new G4LogicalVolume(  SingleCoil_ClampPlate_Solid,
-							    SingleCoil_ClampPlate_Material,
-							    "MM_SingleCoil_ClampPlate_Logical",
+    SingleCoil_ClampPlate_Logical  = new G4LogicalVolume(   SingleCoil_ClampPlate_Solid,
+						   	    SingleCoil_ClampPlate_Material,
+						  	    "MM_SingleCoil_ClampPlate_Logical",
 							    0,
 							    0,0);
 
 
-	 G4ThreeVector* leftcenter  = new G4ThreeVector();
-	 G4ThreeVector* rightcenter = new G4ThreeVector();
+    G4ThreeVector* leftcenter  = new G4ThreeVector();
+    G4ThreeVector* rightcenter = new G4ThreeVector();
 
-	 // arbitrary gap distance: accounting for coil epoxy + wrapping etc
-	 G4double GapBetweenClampPlateAndCoil = 1.0*mm; 
+    // arbitrary gap distance: accounting for coil epoxy + wrapping etc
+    //G4double GapBetweenClampPlateAndCoil = 1.0*mm; 
 
-     // place 8 SingleCoil_ClampPlate_Logical plates into the MotherVolume (around the global Z axis)
-     for (G4int n=0; n<8; n++) {
+    // place 8 SingleCoil_ClampPlate_Logical plates into the MotherVolume (around the global Z axis)
+    for (G4int n=0; n<8; n++) {
 
 	 // set the vectors to the center of left and right clamp plate
 	 // located at 12 o'clock. The rotate these vectors to the coil 
@@ -1542,14 +1540,14 @@ void QweakSimMainMagnet::Construct_UpStreamMiniClampPlates(G4VPhysicalVolume* Mo
 
     //----------------------------------------------
 
-	 G4ThreeVector* leftcenter  = new G4ThreeVector();
-	 G4ThreeVector* rightcenter = new G4ThreeVector();
+    G4ThreeVector* leftcenter  = new G4ThreeVector();
+    G4ThreeVector* rightcenter = new G4ThreeVector();
 
-	 // arbitrary gap distance: accounting for coil epoxy + wrapping etc
-	 G4double GapBetweenClampPlateAndCoil = 1.0*mm; 
+    // arbitrary gap distance: accounting for coil epoxy + wrapping etc
+    //G4double GapBetweenClampPlateAndCoil = 1.0*mm; 
 
-     // place 8 SingleCoil_ClampPlate_Logical plates into the MotherVolume (around the global Z axis)
-     for (G4int n=0; n<8; n++) {
+    // place 8 SingleCoil_ClampPlate_Logical plates into the MotherVolume (around the global Z axis)
+    for (G4int n=0; n<8; n++) {
 
 	 // set the vectors to the center of left and right clamp plate
 	 // located at 12 o'clock. The rotate these vectors to the coil 

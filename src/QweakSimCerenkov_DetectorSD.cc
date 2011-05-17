@@ -57,14 +57,12 @@ void QweakSimCerenkov_DetectorSD::Initialize(G4HCofThisEvent* HCE)
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep,G4TouchableHistory* ROhist)
-//G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistory* )
+G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistory* /*ROhist*/)
 {
 
 //G4cout << G4endl << "###### Calling QweakSimCerenkov_DetectorSD::ProcessHits() " << G4endl << G4endl; 
 
-  G4double charge = aStep->GetTrack()->GetDefinition()->GetPDGCharge();
-
+//   G4double charge = aStep->GetTrack()->GetDefinition()->GetPDGCharge();
 //   if(charge==0. && aStep->GetTrack()->GetTotalEnergy()/MeV < 0.1) {
 //
 //     G4cout << "Return on charge = 0" << G4endl;
@@ -73,7 +71,7 @@ G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep,G4TouchableHistory
 //   }
 
   G4StepPoint*        preStepPoint  = aStep->GetPreStepPoint();
-  G4StepPoint*        postStepPoint = aStep->GetPostStepPoint();
+//   G4StepPoint*        postStepPoint = aStep->GetPostStepPoint();
   G4TouchableHistory* theTouchable = (G4TouchableHistory*)(preStepPoint->GetTouchable());
   G4VPhysicalVolume*  physVol      = theTouchable->GetVolume();
 
@@ -149,7 +147,7 @@ G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep,G4TouchableHistory
   // get User Track Info
   QweakSimTrackInformation* info = (QweakSimTrackInformation*)(aStep->GetTrack()->GetUserInformation());
 
-  G4int    primaryTrackID                 = info->GetPrimaryTrackID();
+//   G4int    primaryTrackID                 = info->GetPrimaryTrackID();
 //   G4double primaryQ2                      = info->GetPrimaryQ2();
 //   G4double crossSection                   = info->GetCrossSection();
 //   G4double crossSectionWeight             = info->GetCrossSectionWeight();

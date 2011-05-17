@@ -1703,16 +1703,21 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
     G4OpticalSurface* GlueFilmLeft_OpticalSurface = new G4OpticalSurface("GlueFilmLeftOpticalSurface");
     G4OpticalSurface* GlueFilmRight_OpticalSurface = new G4OpticalSurface("GlueFilmRightOpticalSurface");
 
+
+/* wdc: commented out unused objects
+
     G4LogicalBorderSurface* QuartzBarLeft_BorderSurface
     = new G4LogicalBorderSurface("QuartzBarLeft_BorderSurface",
                                  QuartzBar_PhysicalLeft,
                                  ActiveArea_Physical,
                                  QuartzBarLeft_OpticalSurface);
+
     G4LogicalBorderSurface* QuartzBarRight_BorderSurface
     = new G4LogicalBorderSurface("QuartzBarRight_BorderSurface",
                                  QuartzBar_PhysicalRight,
                                  ActiveArea_Physical,
                                  QuartzBarRight_OpticalSurface);
+
     G4LogicalBorderSurface* LightGuideLeft_BorderSurface
     = new G4LogicalBorderSurface("LightGuideLeft_BorderSurface",
                                  LightGuide_PhysicalLeft,
@@ -1742,6 +1747,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
                                  QuartzGlue_PhysicalLeft,
                                  ActiveArea_Physical,
                                  GlueFilmLeft_OpticalSurface);
+*/
 
 // boundary optical properties between pad and quartz
 
@@ -1756,47 +1762,54 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
     G4OpticalSurface* SidePad_QuartzBarRight_OpticalSurface
                                          = new G4OpticalSurface("SidePadQuartzBarRightOpticalSurface");
 
-    for(G4int i=0; i<EndBracketPad_Physical.size();i++) {
+    for(size_t i=0; i<EndBracketPad_Physical.size();i++) {
 
-    //G4LogicalBorderSurface* LeftEndPad_Quartz_BorderSurface =
-    new G4LogicalBorderSurface("LeftEndPad_Quartz_BS",
+
+/* wdc: commented out unused objects
+
+      G4LogicalBorderSurface* LeftEndPad_Quartz_BorderSurface =
+      new G4LogicalBorderSurface("LeftEndPad_Quartz_BS",
                                  LightGuide_PhysicalLeft,
                                  EndBracketPad_Physical[i],
                                  LeftEndPad_Quartz_OpticalSurface);
 
-    //G4LogicalBorderSurface* RightEndPad_Quartz_BorderSurface =
-    new G4LogicalBorderSurface("RightEndPad_Quartz_BS",
+      G4LogicalBorderSurface* RightEndPad_Quartz_BorderSurface =
+      new G4LogicalBorderSurface("RightEndPad_Quartz_BS",
                                  LightGuide_PhysicalRight,
                                  EndBracketPad_Physical[i],
                                  RightEndPad_Quartz_OpticalSurface);
+*/
 
     }
 
-    for(G4int i=0; i<SideBracketPad_Physical.size();i++) {
+    for(size_t i=0; i<SideBracketPad_Physical.size();i++) {
 
-    //G4LogicalBorderSurface* SidePad_LeftLightGuide_BorderSurface =
-    new G4LogicalBorderSurface("SidePad_LeftLightGuide_BS",
+/* wdc: commented out unused objects
+
+      G4LogicalBorderSurface* SidePad_LeftLightGuide_BorderSurface =
+      new G4LogicalBorderSurface("SidePad_LeftLightGuide_BS",
                                  LightGuide_PhysicalLeft,
                                  SideBracketPad_Physical[i],
                                  SidePad_LeftLightGuide_OpticalSurface);
 
-    //G4LogicalBorderSurface* SidePad_RightLightGuide_BorderSurface =
-    new G4LogicalBorderSurface("SidePad_RightLightGuide_BS",
+      G4LogicalBorderSurface* SidePad_RightLightGuide_BorderSurface =
+      new G4LogicalBorderSurface("SidePad_RightLightGuide_BS",
                                  LightGuide_PhysicalRight,
                                  SideBracketPad_Physical[i],
                                  SidePad_RightLightGuide_OpticalSurface);
 
-    //G4LogicalBorderSurface* SidePad_QuartzBarLeft_BorderSurface =
-    new G4LogicalBorderSurface("SidePad_QuartzBarLeft_BS",
+      G4LogicalBorderSurface* SidePad_QuartzBarLeft_BorderSurface =
+      new G4LogicalBorderSurface("SidePad_QuartzBarLeft_BS",
                                  QuartzBar_PhysicalLeft,
                                  SideBracketPad_Physical[i],
                                  SidePad_QuartzBarLeft_OpticalSurface);
 
-    //G4LogicalBorderSurface* SidePad_QuartzBarRight_BorderSurface =
-    new G4LogicalBorderSurface("SidePad_QuartzBarRight_BS",
+      G4LogicalBorderSurface* SidePad_QuartzBarRight_BorderSurface =
+      new G4LogicalBorderSurface("SidePad_QuartzBarRight_BS",
                                  QuartzBar_PhysicalRight,
                                  SideBracketPad_Physical[i],
                                  SidePad_QuartzBarRight_OpticalSurface);
+*/
 
     }
 
@@ -2250,7 +2263,7 @@ void QweakSimCerenkovDetector::DestroyComponent() {
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void QweakSimCerenkovDetector::SetCerenkovDetectorThickness(G4double thickness) {
+void QweakSimCerenkovDetector::SetCerenkovDetectorThickness(G4double /*thickness*/) {
     G4cout << G4endl << "###### Calling QweakSimCerenkovDetector::SetCerenkovDetectorThickness() " << G4endl << G4endl;
 
 //     G4Box *box = NULL;

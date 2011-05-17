@@ -74,21 +74,21 @@ void QweakSimVDC_WirePlaneSD::Initialize(G4HCofThisEvent* HCE)
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-G4bool QweakSimVDC_WirePlaneSD::ProcessHits(G4Step* aStep,G4TouchableHistory* ROhist)
+G4bool QweakSimVDC_WirePlaneSD::ProcessHits(G4Step* aStep,G4TouchableHistory* /*ROhist*/)
 {
   //G4cout << G4endl << "###### Calling QweakSimVDC_WirePlaneSD::ProcessHits() " << G4endl << G4endl; 
 
 
-  G4double  charge       = aStep->GetTrack()->GetDefinition()->GetPDGCharge();
+  //G4double  charge       = aStep->GetTrack()->GetDefinition()->GetPDGCharge();
   G4String  particlename = aStep->GetTrack()->GetDefinition()->GetParticleName();
 
   //G4cout << " Particle Name = " << particlename << G4endl;
 
- // aStep->GetTrack()->GetVolume()->GetName();
-//   G4cout << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Charge =" << charge << G4endl;
+  //aStep->GetTrack()->GetVolume()->GetName();
+  //G4cout << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Charge =" << charge << G4endl;
 
   // dismiss photons
- //  if(charge==0.) return false;
+  //if(charge==0.) return false;
 
 
 
@@ -168,10 +168,10 @@ else                                           { particletype = 999;}
   //G4ThreeVector currentMomentumDirection = aStep->GetTrack()->GetMomentumDirection();
   G4ThreeVector currentMomentumDirection = preStepPoint->GetMomentumDirection();
 
-    G4double trackID = aStep->GetTrack()->GetTrackID();
+//     G4double trackID = aStep->GetTrack()->GetTrackID();
 //     G4cout << "====> Track ID     : " <<  trackID << G4endl;
     
-    G4double parentID = aStep->GetTrack()->GetParentID();
+//     G4double parentID = aStep->GetTrack()->GetParentID();
 //     G4cout << "====> Parent ID    : " <<  parentID << G4endl;
   
   
@@ -228,9 +228,8 @@ else                                           { particletype = 999;}
 //   G4cout << "====> originVertexKineticEnergy [Mev] : " <<  originVertexKineticEnergy/MeV << G4endl;
 
   // get User Track Info
-  QweakSimTrackInformation* info = (QweakSimTrackInformation*) (aStep->GetTrack()->GetUserInformation());
-
-  // info->Print();
+  //QweakSimTrackInformation* info = (QweakSimTrackInformation*) (aStep->GetTrack()->GetUserInformation());
+  //info->Print();
 
 //   G4double primaryQ2                      = info->GetPrimaryQ2();
 //   G4double crossSection                   = info->GetCrossSection();

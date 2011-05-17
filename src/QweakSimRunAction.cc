@@ -58,7 +58,7 @@ void QweakSimRunAction::BeginOfRunAction(const G4Run* aRun)
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void QweakSimRunAction::EndOfRunAction(const G4Run* aRun)
+void QweakSimRunAction::EndOfRunAction(const G4Run* /*aRun*/)
 { 
 
   G4cout << G4endl << "###### Calling QweakSimRunAction::EndOfRunAction()" << G4endl << G4endl;

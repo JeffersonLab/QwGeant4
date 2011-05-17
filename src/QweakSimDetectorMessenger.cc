@@ -83,7 +83,7 @@ QweakSimDetectorMessenger::~QweakSimDetectorMessenger()
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void QweakSimDetectorMessenger::SetNewValue(G4UIcommand* command,G4String newValue)
+void QweakSimDetectorMessenger::SetNewValue(G4UIcommand* command, G4String /*newValue*/)
 { 
   
   if( command == UpdateCmd )
