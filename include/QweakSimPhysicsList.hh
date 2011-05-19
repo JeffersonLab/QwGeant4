@@ -50,28 +50,21 @@
 #define QweakSimPhysicsList_h 1
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-// system includes
-#include "Geant4_include.hh" 
+// geant4 includes
+#include "G4VUserPhysicsList.hh"
+#include "G4Decay.hh"
 
-// #include "G4VModularPhysicsList.hh"
-// #include "HadronPhysicsLHEP_PRECO_HP.hh"
-// #include "LHEP_PRECO_HP.hh"
-
-// user includes
-#include "QweakSimPhysicsListMessenger.hh"
-
-// system classes
-// class G4Cerenkov;
-// class G4Scintillation;
-// class G4OpAbsorption;
-// class G4OpRayleigh;
-// class G4OpBoundaryProcess;
+// geant4 classes
+class G4Cerenkov;
+class G4Scintillation;
+class G4OpAbsorption;
+class G4OpRayleigh;
+class G4OpBoundaryProcess;
 
 // user classes
 class QweakSimPhysicsListMessenger;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-// class QweakSimPhysicsList: public G4VModularPhysicsList
 class QweakSimPhysicsList: public G4VUserPhysicsList
 {
 public:
@@ -124,8 +117,6 @@ private:
   G4double cutForProton;
   G4double cutForAlpha;
   G4double cutForGenericIon;
-
-//   HadronPhysicsLHEP_PRECO_HP* hadPhyics;
 
   QweakSimPhysicsListMessenger* pMessenger;   
   

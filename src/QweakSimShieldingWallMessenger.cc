@@ -36,6 +36,10 @@
 
 #include "QweakSimShieldingWallMessenger.hh"
 
+// user includes
+#include "QweakSimShieldingWall.hh"
+#include "QweakSimMessengerDefinition.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 QweakSimShieldingWallMessenger::QweakSimShieldingWallMessenger(QweakSimShieldingWall* theShieldingWall)

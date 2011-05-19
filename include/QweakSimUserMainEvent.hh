@@ -43,13 +43,8 @@
 #define QweakSimUserMainEvent_h
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
-// system include
-
+// root include
 #include "TObject.h"
-
-#ifndef __CINT__
-#include "Geant4_include.hh" 
-#endif
 
 // user includes
 #include "QweakSimUserPrimaryEvent.hh"
@@ -58,16 +53,6 @@
 #include "QweakSimUserVDC_MainEvent.hh"
 #include "QweakSimUserTriggerScintillator_MainEvent.hh"
 #include "QweakSimUserCerenkov_MainEvent.hh"
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-
-// user classes
-class QweakSimUserPrimaryEvent;
-class QweakSimUserGEM_MainEvent;
-class QweakSimUserHDC_MainEvent;
-class QweakSimUserVDC_MainEvent;
-class QweakSimUserTriggerScintillator_MainEvent;
-class QweakSimUserCerenkov_MainEvent;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 class QweakSimUserMainEvent : public TObject
@@ -80,7 +65,7 @@ public:
 
   // top directoty of Root output tree:
     
-  QweakSimUserPrimaryEvent                   Primary;                // tree containing primart particle info
+  QweakSimUserPrimaryEvent                     Primary;              // tree containing primary particle info
 
   QweakSimUserGEM_MainEvent                    Region1;              // tree containing HDC info
   QweakSimUserHDC_MainEvent                    Region2;              // tree containing HDC info
@@ -95,7 +80,7 @@ public:
   // Constructor
   QweakSimUserMainEvent();
   // Destructor 
- virtual ~QweakSimUserMainEvent();
+  virtual ~QweakSimUserMainEvent();
   
   //void SetTree(TTree *data){Cerenkov.SetTree(data);};
 

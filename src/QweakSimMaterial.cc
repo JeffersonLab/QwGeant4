@@ -1,6 +1,9 @@
 
 #include "QweakSimMaterial.hh"
 
+// geant4 includes
+#include "G4NistManager.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 QweakSimMaterial::QweakSimMaterial()
@@ -900,20 +903,20 @@ G4cout << G4endl << "###### Calling QweakSimMaterial::DefineMaterials() " << G4e
 
 //   matPhotocathode->SetMaterialPropertiesTable(myMPT_Photocathode);
 
-G4cout << G4endl << "###### Leaving QweakSimMaterial::DefineMaterials() " << G4endl << G4endl;
+  G4cout << G4endl << "###### Leaving QweakSimMaterial::DefineMaterials() " << G4endl << G4endl;
 
- }
+}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 G4Material* QweakSimMaterial::GetMaterial(G4String material)
 {
-G4cout << G4endl << "###### Calling QweakSimMaterial::GetMaterial() " << G4endl << G4endl;
+  G4cout << G4endl << "###### Calling QweakSimMaterial::GetMaterial() " << G4endl << G4endl;
 
   G4Material* pttoMaterial = G4Material::GetMaterial(material); 
 
   return pttoMaterial; 
 
-G4cout << G4endl << "###### Leaving QweakSimMaterial::GetMaterial() " << G4endl << G4endl;
+  G4cout << G4endl << "###### Leaving QweakSimMaterial::GetMaterial() " << G4endl << G4endl;
 }
 

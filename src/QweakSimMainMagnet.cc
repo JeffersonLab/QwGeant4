@@ -36,6 +36,15 @@
 
 #include "QweakSimMainMagnet.hh"
 
+// geant4 includes
+#include "G4LogicalVolume.hh"
+#include "G4ThreeVector.hh"
+#include "G4RotationMatrix.hh"
+
+// user includes
+#include "QweakSimMaterial.hh"
+#include "QweakSimMagnet_CoilParameterisation.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 QweakSimMainMagnet::QweakSimMainMagnet() 

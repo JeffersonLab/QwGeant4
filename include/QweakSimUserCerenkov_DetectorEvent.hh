@@ -52,15 +52,14 @@
 
 // system includes
 #include <vector>
-using std::vector;
 
-// #include "QweakSimUserCerenkov_SecondaryParticleEvent.hh"
-
+// root includes
 #include "Rtypes.h"
 #include "TString.h"
 
+// geant4 includes
 #ifndef __CINT__
-#include "Geant4_include.hh" 
+#include "G4Types.hh"
 #endif
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
@@ -99,7 +98,7 @@ private:
   Float_t *SecPartLocalEnergy; //[SecondaryParticleCount]
   Float_t *SecPartLocalCharge; //[SecondaryParticleCount]
 
-  vector <Double_t> CerenkovPhotonEnergy;
+  std::vector <Double_t> CerenkovPhotonEnergy;
   
   Float_t HitLocalPositionX;
   Float_t HitLocalPositionY;

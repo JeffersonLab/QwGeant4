@@ -1,6 +1,11 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #include "QweakSimMagnetFieldMap.hh"
+
+// system includes
+#include <fstream>
+
+// root headers
 #include "TMath.h"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

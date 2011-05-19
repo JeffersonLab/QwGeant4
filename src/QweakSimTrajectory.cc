@@ -36,6 +36,22 @@
 
 #include "QweakSimTrajectory.hh"
 
+// geant4 includes
+#include "G4Track.hh"
+#include "G4ParticleDefinition.hh"
+#include "G4TrajectoryPoint.hh"
+#include "G4Polyline.hh"
+#include "G4ParticleTable.hh"
+#include "G4UnitsTable.hh"
+#include "G4VVisManager.hh"
+#include "G4VisAttributes.hh"
+#include "G4Gamma.hh"
+#include "G4Electron.hh"
+#include "G4Positron.hh"
+#include "G4Neutron.hh"
+#include "G4Proton.hh"
+#include "G4OpticalPhoton.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 G4Allocator<QweakSimTrajectory> myTrajectoryAllocator;

@@ -1,6 +1,14 @@
 
 #include "QweakSimStackingAction.hh"
 
+// geant4 includes
+#include "G4Track.hh"
+
+// user includes
+#include "QweakSimSteppingAction.hh"
+#include "QweakSimTrackInformation.hh"
+#include "QweakSimTrajectory.hh"
+
 //_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 QweakSimStackingAction::QweakSimStackingAction()
 {}

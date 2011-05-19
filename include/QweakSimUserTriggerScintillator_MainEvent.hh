@@ -51,20 +51,10 @@
 
 // system includes
 #include <vector>
-using std::vector;
-
-
-#ifndef __CINT__
-#include "Geant4_include.hh" 
-#endif
 
 // user include
 #include "QweakSimUserTriggerScintillator_DetectorEvent.hh"
 #include "QweakSimUserTriggerScintillator_PMTEvent.hh"
-
-// user classes
-class QweakSimUserTriggerScintillator_DetectorEvent;
-class QweakSimUserTriggerScintillator_PMTEvent;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 //class QweakSimUserMainEvent : public TObject

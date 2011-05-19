@@ -49,16 +49,9 @@
 #ifndef QweakSimTriggerScintillator_DetectorSD_h
 #define QweakSimTriggerScintillator_DetectorSD_h 
 
-// system includes
-#include "Geant4_include.hh"
-
-
-// user classes
+// user includes
+#include "QweakSimSensitiveDetectorDeclaration.hh"
 #include "QweakSimTriggerScintillator_DetectorHit.hh"
-#include "QweakSimTrackInformation.hh"
-
-// user classes
-
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 class QweakSimTriggerScintillator_DetectorSD : public G4VSensitiveDetector

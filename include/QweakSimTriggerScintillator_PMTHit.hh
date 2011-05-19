@@ -49,8 +49,8 @@
 #define QweakSimTriggerScintillator_PMTHit_h 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-// system includes
-#include "Geant4_include.hh" 
+// user includes
+#include "QweakSimHit.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 

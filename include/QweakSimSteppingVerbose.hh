@@ -51,7 +51,7 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 // system includes
-#include "Geant4_include.hh" 
+#include "G4SteppingVerbose.hh"
 
 // user classes
 class QweakSimSteppingVerbose;

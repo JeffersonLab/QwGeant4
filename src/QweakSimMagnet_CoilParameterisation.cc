@@ -36,6 +36,12 @@
 
 #include "QweakSimMagnet_CoilParameterisation.hh"
 
+// geant4 includes
+#include "G4SystemOfUnits.hh"
+#include "G4ThreeVector.hh"
+#include "G4RotationMatrix.hh"
+#include "G4VPhysicalVolume.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 QweakSimMagnet_CoilParameterisation::QweakSimMagnet_CoilParameterisation( G4double RadialDistanceToBeamLine )

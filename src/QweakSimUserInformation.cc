@@ -1,5 +1,8 @@
 #include "QweakSimUserInformation.hh"
 
+// geant4 includes
+#include "G4MaterialPropertyVector.hh"
+
 QweakSimUserInformation::QweakSimUserInformation()
 {
   cerenkovSecondaryParticleCount = 0;

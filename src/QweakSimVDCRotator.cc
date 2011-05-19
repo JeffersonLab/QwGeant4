@@ -36,6 +36,15 @@
 
 #include "QweakSimVDCRotator.hh"
 
+// geant4 includes
+#include "G4LogicalVolume.hh"
+#include "G4RotationMatrix.hh"
+
+// user includes
+#include "QweakSimMaterial.hh"
+#include "QweakSimVDC.hh"
+#include "QweakSimVDCMessenger.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 QweakSimVDCRotator::QweakSimVDCRotator(QweakSimVDC* theVDC)
 : DualVDC(theVDC)

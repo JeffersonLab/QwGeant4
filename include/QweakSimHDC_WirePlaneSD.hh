@@ -50,13 +50,11 @@
 #define QweakSimHDC_WirePlaneSD_h 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-// system includes
-#include "Geant4_include.hh" 
-
 // user includes
-#include "QweakSimHDC_WirePlaneHit.hh"
-#include "QweakSimTrackInformation.hh"
+#include "QweakSimSensitiveDetectorDeclaration.hh"
 
+// user classes
+#include "QweakSimHDC_WirePlaneHit.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 class QweakSimHDC_WirePlaneSD : public G4VSensitiveDetector

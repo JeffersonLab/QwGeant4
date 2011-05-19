@@ -18,12 +18,16 @@
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
-#include "QweakSimAnalysis.hh"
+// system includes
 #include <ctime>  //jpan@nuclear.uwinnipeg.ca for using time lib
+
+// user includes
+#include "QweakSimAnalysis.hh"
+#include "QweakSimUserMainEvent.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 QweakSimAnalysis::QweakSimAnalysis()
-{	
+{
     // Initialize 
     QweakSimG4_RootEvent    = NULL;
     QweakSimG4_RootNtuple   = NULL;

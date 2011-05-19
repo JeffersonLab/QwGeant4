@@ -49,11 +49,8 @@
 #define QweakSimHDCMessenger_h 1
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-// system includes
-#include "Geant4_include.hh" 
-
 // user includes
-#include "QweakSimHDC.hh"
+#include "QweakSimMessengerDeclaration.hh"
 
 // user classes
 class QweakSimHDC;

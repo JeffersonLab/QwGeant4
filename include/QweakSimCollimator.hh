@@ -52,17 +52,17 @@
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
-// system includes
-#include "Geant4_include.hh" 
+// geant4 includes
+#include "G4LogicalVolume.hh"
 
 // user includes
-//#include "QweakSimCollimatorMessenger.hh"
+#include "QweakSimSolids.hh"
 #include "QweakSimMaterial.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
+// user classes
 class QweakSimMaterial;
-//class QweakSimCollimatorMessenger;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 class QweakSimCollimator

@@ -19,6 +19,12 @@
 
 #include "QweakSimCerenkov_DetectorSD.hh"
 
+// user includes
+#include "QweakSimSensitiveDetectorDefinition.hh"
+#include "QweakSimCerenkov_DetectorHit.hh"
+#include "QweakSimTrackInformation.hh"
+
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 QweakSimCerenkov_DetectorSD::QweakSimCerenkov_DetectorSD(G4String name)
 :G4VSensitiveDetector(name)
@@ -37,7 +43,6 @@ QweakSimCerenkov_DetectorSD::~QweakSimCerenkov_DetectorSD()
   //G4cout << G4endl << "###### Calling QweakSimCerenkov_DetectorSD::~QweakSimCerenkov_DetectorSD() " << G4endl << G4endl; 
 
   //delete CerenkovDetector_HitsCollection;
-
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -50,8 +55,6 @@ void QweakSimCerenkov_DetectorSD::Initialize(G4HCofThisEvent* HCE)
    CerenkovDetector_CollectionID = G4SDManager::GetSDMpointer()->GetCollectionID(collectionName[0]); 
 
    HCE->AddHitsCollection(CerenkovDetector_CollectionID , CerenkovDetector_HitsCollection);
-
-
 
   //G4cout << G4endl << "###### Leaving QweakSimCerenkov_DetectorSD::Initialize() " << G4endl << G4endl; 
 }
@@ -197,7 +200,6 @@ G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistor
   
 //   G4cout << G4endl << "###### Leaving QweakSimCerenkovDetectorSD::ProcessHits() " << G4endl << G4endl; 
   
-  
   info->StoreCerenkovHitEnergy(info->GetParticleHistoryLength()-1,currentTotalEnergy);
 
   return true;
@@ -214,11 +216,8 @@ void QweakSimCerenkov_DetectorSD::EndOfEvent(G4HCofThisEvent* )
 //   G4cout << "\n-------->Hits Collection: in this event they are " << NbDCHits
 // 	 << " hits in the Drift Cells : " << G4endl;
 //   for (G4int i=0;i<NbDCHits;i++) (*DC_hitsCollection)[i]->Print();
-  
-
 
    //G4cout << G4endl << "###### Leaving QweakSimCerenkov_DetectorSD::EndOfEvent() " << G4endl << G4endl; 
-
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

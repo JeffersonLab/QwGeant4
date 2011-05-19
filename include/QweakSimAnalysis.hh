@@ -33,15 +33,13 @@
 #define QweakSimAnalysis_h 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-// system includes
-#include "Geant4_include.hh" 
+// geant4 includes
+#include "G4Types.hh"
 
+// root includes
 #include "TFile.h"
 #include "TTree.h"
 #include "TBranch.h"
-
-// user includes
-#include "QweakSimUserMainEvent.hh"
 
 // user classes
 class QweakSimUserMainEvent;
@@ -51,7 +49,7 @@ class QweakSimAnalysis {
 public:
   QweakSimAnalysis();
   virtual ~QweakSimAnalysis();
-  
+
 public:
 
   void BeginOfRun();

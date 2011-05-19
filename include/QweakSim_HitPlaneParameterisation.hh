@@ -4,24 +4,15 @@
 
 #include "globals.hh"
 #include "G4VPVParameterisation.hh"
-
-
-
-// Dummy declarations to get rid of warnings ...
-// class G4Box;
-// class G4Trd;
-// class G4Trap;
-// class G4Cons;
-// class G4Orb;
-// class G4Sphere;
-// class G4Torus;
-// class G4Para;
-// class G4Hype;
-// class G4Tubs;
-// class G4Polycone;
-// class G4Polyhedra;
-//
-// class G4VPhysicalVolume;
+#include "/data/local/include/geant4/G4Box.hh"
+#include "/data/local/include/geant4/G4Trd.hh"
+#include "/data/local/include/geant4/G4Trap.hh"
+#include "/data/local/include/geant4/G4Cons.hh"
+#include "/data/local/include/geant4/G4Para.hh"
+#include "/data/local/include/geant4/G4Tubs.hh"
+#include "/data/local/include/geant4/G4Polycone.hh"
+#include "/data/local/include/geant4/G4Polyhedra.hh"
+#include "/data/local/include/geant4/G4OpBoundaryProcess.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 

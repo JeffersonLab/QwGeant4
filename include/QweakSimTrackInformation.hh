@@ -33,13 +33,17 @@
 
 // system includes
 #include <vector>
-using std::vector;
 
-#include "Geant4_include.hh" 
+// geant4 includes
+#include "G4Allocator.hh"
+#include "G4ThreeVector.hh"
+#include "G4VUserTrackInformation.hh"
 
-// user includes
-#include "QweakSimTrackHistory.hh"
+// geant4 classes
+class G4Track;
+class G4ParticleDefinition;
 
+// user classes
 class QweakSimTrackHistory;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -75,16 +79,16 @@ private:
 //   G4double              crossSectionWeight;
 //   G4int                 primaryEventNumber;
 
-  vector <QweakSimTrackHistory*> theCerenkovTrackHistory;
+  std::vector <QweakSimTrackHistory*> theCerenkovTrackHistory;
 
-  vector <G4ThreeVector> OriginVertex;
-  vector <G4double> CerenkovHitEnergy;
-  vector <G4ParticleDefinition*> ParticleHistory;  
-  vector <G4String> ParticleCreatorProcess;
-  vector <G4double> ParentEnergy;   //Energy of parent at creation of 
-                                    //secondary.
-                                    //For the primary particle this is
-                                    //Set to the beam energy
+  std::vector <G4ThreeVector> OriginVertex;
+  std::vector <G4double> CerenkovHitEnergy;
+  std::vector <G4ParticleDefinition*> ParticleHistory;
+  std::vector <G4String> ParticleCreatorProcess;
+  std::vector <G4double> ParentEnergy;   //Energy of parent at creation of
+                                         //secondary.
+                                         //For the primary particle this is
+                                         //Set to the beam energy
   /*
   History    Parent Eenergy
   Vector     Vector

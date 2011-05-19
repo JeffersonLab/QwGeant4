@@ -36,17 +36,17 @@
 #define QweakSimPrimaryGeneratorAction_h 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-// system includes
-#include "Geant4_include.hh" 
+// geant4 includes
+#include "G4ios.hh"
+#include "G4Types.hh"
+#include "G4ThreeVector.hh"
+#include "G4VUserPrimaryGeneratorAction.hh"
 
-// user includes
-#include "QweakSimPrimaryGeneratorActionMessenger.hh"
-//#include "QweakSimUserInformation.hh"
-
+// geant4 classes
+class G4ParticleGun;
 
 // user classes
 class QweakSimPrimaryGeneratorActionMessenger;
-//class QweakSimUserInformation;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
  

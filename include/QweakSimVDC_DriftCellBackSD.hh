@@ -52,18 +52,9 @@
 #define QweakSimVDC_DriftCellBackSD_h 1
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-// system includes
-#include "Geant4_include.hh" 
-
 // user includes
-#include "QweakSimVDC.hh"
+#include "QweakSimSensitiveDetectorDeclaration.hh"
 #include "QweakSimVDC_DriftCellHit.hh"
-
-
-// system classes
-// class G4Step;
-// class G4HCofThisEvent;
-// class G4TouchableHistory;
 
 // user classes
 class QweakSimVDC;

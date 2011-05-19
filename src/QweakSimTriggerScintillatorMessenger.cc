@@ -36,6 +36,10 @@
 
 #include "QweakSimTriggerScintillatorMessenger.hh"
 
+// user includes
+#include "QweakSimTriggerScintillator.hh"
+#include "QweakSimMessengerDefinition.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 QweakSimTriggerScintillatorMessenger::QweakSimTriggerScintillatorMessenger(QweakSimTriggerScintillator* theTriggerScintillator)

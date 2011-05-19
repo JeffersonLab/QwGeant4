@@ -34,11 +34,8 @@
 #ifndef QweakSimGeometryMessenger_h
 #define QweakSimGeometryMessenger_h 1
 
-// system includes
-#include "Geant4_include.hh"
-
-// user include
-#include "QweakSimGeometry.hh"
+// user includes
+#include "QweakSimMessengerDeclaration.hh"
 
 // user classes
 class QweakSimGeometry;

@@ -51,20 +51,14 @@
 
 // system includes
 #include <vector>
-using std::vector;
 
-
+// root includes
 #include "Rtypes.h"
 
-#ifndef __CINT__
-#include "Geant4_include.hh" 
-#endif
-
-// user include
+// user includes
+#include "QweakSimUserCerenkov_DetectorEvent.hh"
 #include "QweakSimUserCerenkov_OctantEvent.hh"
-
-// user classes
-class QweakSimUserCerenkov_OctantEvent;
+#include "QweakSimUserCerenkov_PMTEvent.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 //class QweakSimUserMainEvent : public TObject
@@ -76,7 +70,7 @@ private:
 public:
 
 //jpan@nuclear.uwinnipeg.ca
-//  vector <QweakSimUserCerenkov_OctantEvent> Octant;
+//  std::vector <QweakSimUserCerenkov_OctantEvent> Octant;
   QweakSimUserCerenkov_DetectorEvent  Detector;
   QweakSimUserCerenkov_PMTEvent       PMT;
 

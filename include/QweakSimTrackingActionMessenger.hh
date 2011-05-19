@@ -49,15 +49,11 @@
 #define QweakSimTrackingActionMessenger_h 1
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-// system includes
-#include "Geant4_include.hh" 
-
 // user includes
-#include "QweakSimTrackingAction.hh"
+#include "QweakSimMessengerDeclaration.hh"
 
 // user classes
 class QweakSimTrackingAction;
-
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 class QweakSimTrackingActionMessenger: public G4UImessenger

@@ -36,6 +36,9 @@
 
 #include "QweakSimHDC_WirePlaneHit.hh"
 
+// geant4 includes
+#include "G4Circle.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 G4Allocator<QweakSimHDC_WirePlaneHit> QweakSimHDC_WirePlane_HitAllocator;

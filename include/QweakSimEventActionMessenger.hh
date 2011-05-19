@@ -34,11 +34,8 @@
 #ifndef QweakSimEventActionMessenger_h
 #define QweakSimEventActionMessenger_h 1
 
-// system includes
-#include "Geant4_include.hh"
-
-// user include
-#include "QweakSimEventAction.hh"
+// user includes
+#include "QweakSimMessengerDeclaration.hh"
 
 // user classes
 class QweakSimEventAction;

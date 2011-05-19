@@ -49,21 +49,12 @@
 #define QweakSimUserCerenkov_OctantEvent_h
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
-// system includes
-
+// root includes
 #include "Rtypes.h"
 
-#ifndef __CINT__
-#include "Geant4_include.hh" 
-#endif
-
-// user include
+// user includes
 #include "QweakSimUserCerenkov_DetectorEvent.hh"
 #include "QweakSimUserCerenkov_PMTEvent.hh"
-
-// user classes
-class QweakSimUserCerenkov_DetectorEvent;
-class QweakSimUserCerenkov_PMTEvent;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 //class QweakSimUserOctantEvent : public TObject
@@ -83,7 +74,7 @@ public:
   // Constructor
   QweakSimUserCerenkov_OctantEvent();
   // Destructor 
- virtual ~QweakSimUserCerenkov_OctantEvent();
+  virtual ~QweakSimUserCerenkov_OctantEvent();
   
 
   //void SetTree(TTree *data){  Detector.SetTree(data); };

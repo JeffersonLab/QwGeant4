@@ -17,7 +17,7 @@
     
    \brief Scans the input file for /Cerenkov/xyz commands
 
-   Placeholder for a long explaination
+   Placeholder for a long explanation
     
  */
 //=============================================================================
@@ -27,14 +27,11 @@
 #ifndef QweakSimCollimatorMessenger_h
 #define QweakSimCollimatorMessenger_h 1
 
-#include "Geant4_include.hh"
+// user includes
+#include "QweakSimMessengerDeclaration.hh"
 
+// user classes
 class QweakSimCollimator;
-
-// class G4UIdirectory;
-// class G4UIcmdWithAString;
-// class G4UIcmdWithADoubleAndUnit;
-// class G4UIcmdWithoutParameter;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 

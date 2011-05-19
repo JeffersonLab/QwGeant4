@@ -36,6 +36,10 @@
 
 #include "QweakSimPrimaryGeneratorActionMessenger.hh"
 
+// user includes
+#include "QweakSimPrimaryGeneratorAction.hh"
+#include "QweakSimMessengerDefinition.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 QweakSimPrimaryGeneratorActionMessenger::QweakSimPrimaryGeneratorActionMessenger(QweakSimPrimaryGeneratorAction* pPhys)

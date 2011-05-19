@@ -20,6 +20,11 @@
 
 #include "QweakSimGeometry.hh"
 
+// geant4 includes
+#ifdef G4LIB_USE_GDML
+#include "G4GDMLParser.hh"
+#endif
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 QweakSimGeometry::QweakSimGeometry()

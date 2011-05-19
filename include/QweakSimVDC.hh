@@ -49,16 +49,9 @@
 #define QweakSimVDC_h 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
-// system includes
-#include "Geant4_include.hh" 
-
 // user includes
-#include "QweakSimVDCMessenger.hh"
-#include "QweakSimMaterial.hh"
+#include "QweakSimSolids.hh"
 #include "QweakSimVDC_WirePlaneSD.hh"
-#include "QweakSimVDC_DriftCellFrontSD.hh"
-#include "QweakSimVDC_DriftCellBackSD.hh"
-#include "QweakSimVDC_DriftCellParameterisation.hh"
 
 // user classes
 class QweakSimVDCMessenger;

@@ -36,15 +36,9 @@
 
 // system includes
 #include <vector>
-using std::vector;
 
-// #include "QweakSimUserTriggerScintillator_SecondaryElectronEvent.hh"
-
+// root includes
 #include "Rtypes.h"
-
-#ifndef __CINT__
-#include "Geant4_include.hh" 
-#endif
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 class QweakSimUserTriggerScintillator_DetectorEvent 

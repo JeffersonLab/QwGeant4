@@ -5,6 +5,14 @@
 
 #include "QweakSimCerenkovDetector.hh"
 
+// user includes
+#include "QweakSimSolids.hh"
+#include "QweakSimCerenkovDetectorMessenger.hh"
+#include "QweakSimCerenkov_DetectorSD.hh"
+#include "QweakSimCerenkovDetector_PMTSD.hh"
+#include "QweakSimMaterial.hh"
+#include "QweakSimUserInformation.hh"
+
 static const G4double inch = 2.54*cm;
 
 QweakSimCerenkovDetector::QweakSimCerenkovDetector(QweakSimUserInformation *userInfo) {
@@ -2071,7 +2079,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
                                           0.0355       //210.15 nm
                                          };
 
-//S20 reflectance taken from "Optics Communications, issue 180, 2000. p89–102"
+//S20 reflectance taken from "Optics Communications, issue 180, 2000. p89--102"
 //average of 40 degree incident angle assumed
 ////data below 400 nm, taken from //http://www.photek.com/support/Papers/
 //Experimental%20data%20on%20the%20reflection%20and%20transmission%20spectral%20response%20of%20photocathodes.pdf

@@ -42,11 +42,14 @@
 #ifndef QweakSimGeometry_h
 #define QweakSimGeometry_h 1
 
-// system includes
-#include "Geant4_include.hh"
+// geant4 includes
+#include "G4VPhysicalVolume.hh"
 
 // user includes
 #include "QweakSimGeometryMessenger.hh"
+
+// geant4 classes
+class G4GDMLParser;
 
 // user classes
 class QweakSimGeometryMessenger;

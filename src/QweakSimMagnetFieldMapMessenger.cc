@@ -35,14 +35,10 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
 #include "QweakSimMagnetFieldMapMessenger.hh"
+
+// user includes
 #include "QweakSimMagnetFieldMap.hh"
-
-#include "G4UIdirectory.hh"
-#include "G4UIcmdWithAString.hh"
-#include "G4UIcmdWithAnInteger.hh"
-#include "G4UIcmdWithADoubleAndUnit.hh"
-#include "G4UIcmdWithoutParameter.hh"
-
+#include "QweakSimMessengerDefinition.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 QweakSimMagnetFieldMapMessenger::QweakSimMagnetFieldMapMessenger(QweakSimMagnetFieldMap* pMfield)

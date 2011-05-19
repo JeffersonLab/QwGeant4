@@ -15,6 +15,12 @@
 
 #include "QweakSimEPEvent.hh"
 
+// geant4 includes
+#include "Randomize.hh"
+
+// user includes
+#include "QweakSimEPEventMessenger.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
    const G4double QweakSimEPEvent::TargetCenterPositionZ = -650.0*cm;

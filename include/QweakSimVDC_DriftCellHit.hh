@@ -49,11 +49,8 @@
 #define QweakSimVDC_DriftCellHit_h 1
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-// system includes
-#include "Geant4_include.hh" 
-
 // user includes
-
+#include "QweakSimHit.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 class QweakSimVDC_DriftCellHit : public G4VHit

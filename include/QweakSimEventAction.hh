@@ -26,32 +26,17 @@
 
 // system includes
 #include <vector>
-using std::vector;
+#include <map>
 
-
+// root includes
 #include "Rtypes.h"
 #include "TString.h"
 
-#include "Geant4_include.hh"
-
-// user includes
-#include "QweakSimAnalysis.hh"
-#include "QweakSimUserInformation.hh"
-
-#include "QweakSimGEM_WirePlaneHit.hh"
-#include "QweakSimHDC_WirePlaneHit.hh"
-
-#include "QweakSimVDC_WirePlaneHit.hh"
-#include "QweakSimVDC_DriftCellHit.hh"
-
-#include "QweakSimTriggerScintillator_DetectorHit.hh"
-#include "QweakSimTriggerScintillator_PMTHit.hh"
-
-#include "QweakSimCerenkov_DetectorHit.hh"
-#include "QweakSimCerenkovDetector_PMTHit.hh"
-
-#include "QweakSimTrajectory.hh"
-
+// geant4 includes
+#include "G4Types.hh"
+#include "G4String.hh"
+#include "G4ThreeVector.hh"
+#include "G4UserEventAction.hh"
 
 // user classes
 class QweakSimAnalysis;

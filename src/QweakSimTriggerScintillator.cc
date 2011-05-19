@@ -19,6 +19,16 @@
 
 #include "QweakSimTriggerScintillator.hh"
 
+// geant4 includes
+#include "G4RunManager.hh"
+
+// user includes
+#include "QweakSimSolids.hh"
+#include "QweakSimMaterial.hh"
+#include "QweakSimTriggerScintillatorMessenger.hh"
+#include "QweakSimTriggerScintillator_DetectorSD.hh"
+#include "QweakSimTriggerScintillator_PMTSD.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 QweakSimTriggerScintillator::QweakSimTriggerScintillator()
 {	    	    

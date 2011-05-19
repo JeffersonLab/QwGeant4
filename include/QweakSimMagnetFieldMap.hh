@@ -49,11 +49,12 @@
 #define QweakSimMagnetFieldMap_h 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
+// geant4 includes
+#include "G4ThreeVector.hh"
+#include "G4MagneticField.hh"
+
 // system includes
 #include <vector>
-using std::vector;
-
-#include "Geant4_include.hh" 
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 class QweakSimMagnetFieldMap : public G4MagneticField

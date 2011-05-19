@@ -21,6 +21,11 @@
 
 #include "QweakSimShieldingWall.hh"
 
+// user includes
+#include "QweakSimSolids.hh"
+#include "QweakSimMaterial.hh"
+#include "QweakSimShieldingWallMessenger.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 QweakSimShieldingWall::QweakSimShieldingWall()
@@ -262,7 +267,7 @@ G4cout << G4endl << "###### Leaving QweakSimShieldingWall::DefineOctantCutOut() 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void QweakSimShieldingWall::DefineOctantCutOut_UsingACone()
 {
-G4cout << G4endl << "###### Calling QweakSimShieldingWall::DefineOctantCutOut() " << G4endl << G4endl;
+  G4cout << G4endl << "###### Calling QweakSimShieldingWall::DefineOctantCutOut() " << G4endl << G4endl;
 
   // definition of octant cut out
    OctantCutOut_Cone_Solid = new G4Cons("Octant_cut",
@@ -275,7 +280,7 @@ G4cout << G4endl << "###### Calling QweakSimShieldingWall::DefineOctantCutOut() 
 					 OctantCutOut_Cone_DeltaPhiAngle
 					 );
 
-G4cout << G4endl << "###### Leaving QweakSimShieldingWall::DefineOctantCutOut() " << G4endl << G4endl;
+  G4cout << G4endl << "###### Leaving QweakSimShieldingWall::DefineOctantCutOut() " << G4endl << G4endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

@@ -33,16 +33,8 @@
 #define QweakSimPrimaryGeneratorActionMessenger_h 1
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-// system includes
-#include "Geant4_include.hh" 
-
 // user includes
-#include "QweakSimPrimaryGeneratorAction.hh"
-
-// system classes
-// class G4UIdirectory;
-// class G4UIcmdWithAnInteger;
-// class G4UIcmdWithoutParameter;
+#include "QweakSimMessengerDeclaration.hh"
 
 // user classes
 class QweakSimPrimaryGeneratorAction;

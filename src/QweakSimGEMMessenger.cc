@@ -19,6 +19,10 @@
 
 #include "QweakSimGEMMessenger.hh"
 
+// user includes
+#include "QweakSimGEM.hh"
+#include "QweakSimMessengerDefinition.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 QweakSimGEMMessenger::QweakSimGEMMessenger(QweakSimGEM* theGEM)

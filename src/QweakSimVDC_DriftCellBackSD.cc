@@ -37,6 +37,11 @@
 
 #include "QweakSimVDC_DriftCellBackSD.hh"
 
+// user includes
+#include "QweakSimSensitiveDetectorDefinition.hh"
+#include "QweakSimVDC.hh"
+#include "QweakSimVDC_DriftCellHit.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 G4int    QweakSimVDC_DriftCellBackSD::DCNumberPerPlane  = 401;

@@ -36,6 +36,10 @@
 
 #include "QweakSimVDC_DriftCellParameterisation.hh"
 
+// geant4 includes
+#include "G4ThreeVector.hh"
+#include "G4VPhysicalVolume.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 QweakSimVDC_DriftCellParameterisation::QweakSimVDC_DriftCellParameterisation( G4int NumberOfDriftCells, G4double SpacingInX)

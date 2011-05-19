@@ -18,6 +18,10 @@
 
 #include "QweakSimGeometryMessenger.hh"
 
+// user includes
+#include "QweakSimGeometry.hh"
+#include "QweakSimMessengerDefinition.hh"
+
 // ----------------------------------------------------------------------------
 
 QweakSimGeometryMessenger::QweakSimGeometryMessenger(QweakSimGeometry* aGeometry)

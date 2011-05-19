@@ -3,20 +3,17 @@
 
 // system includes
 #include <vector>
-using std::vector;
 
-#include "Geant4_include.hh"
+// geant4 includes
+#include "G4LogicalVolume.hh"
 
-// user includes
-#include "QweakSimCerenkovDetectorMessenger.hh"
-#include "QweakSimCerenkov_DetectorSD.hh"
-#include "QweakSimCerenkovDetector_PMTSD.hh"
-// #include "QweakSimPMTEntranceWindowSD.hh"
-#include "QweakSimMaterial.hh"
-#include "QweakSimUserInformation.hh"
+// geant4 classes
+class G4SubtractionSolid;
+
 // user classes
 class QweakSimCerenkovDetectorMessenger;
-//class QweakSimMaterial;
+class QweakSimMaterial;
+class QweakSimUserInformation;
 
 class QweakSimCerenkovDetector 
 {

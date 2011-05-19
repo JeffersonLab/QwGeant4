@@ -1,9 +1,14 @@
 #ifndef QweakSimTrackHistory_h
 #define QweakSimTrackHistory_h 1
 
-// system includes
-#include "Geant4_include.hh"
+// geant4 includes
+#include "G4Types.hh"
+#include "G4String.hh"
+#include "G4ThreeVector.hh"
 
+// geant4 classes
+class G4ParticleDefinition;
+class G4Track;
 
 class QweakSimTrackHistory {
 

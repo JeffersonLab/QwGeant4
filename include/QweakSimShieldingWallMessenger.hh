@@ -49,11 +49,8 @@
 #define QweakSimShieldingWallMessenger_h 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-// system includes
-#include "Geant4_include.hh" 
-
 // user includes
-#include "QweakSimShieldingWall.hh"
+#include "QweakSimMessengerDeclaration.hh"
 
 // user classes
 class QweakSimShieldingWall;

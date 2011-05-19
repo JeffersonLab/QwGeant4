@@ -36,20 +36,13 @@
 #define QweakSimTrackingAction_h 1
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-// system includes
-#include "Geant4_include.hh" 
-
-// user includes
-#include "QweakSimUserInformation.hh"
-#include "QweakSimTrackInformation.hh"
-#include "QweakSimTrackingActionMessenger.hh"
-#include "QweakSimTrajectory.hh"
+// geant4 includes
+#include "G4Types.hh"
+#include "G4UserTrackingAction.hh"
 
 // user class
-class QweakSimTrackInformation;
 class QweakSimUserInformation;
 class QweakSimTrackingActionMessenger;
-class QweakSimTrajectory;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 class QweakSimTrackingAction : public G4UserTrackingAction

@@ -51,17 +51,11 @@
 
 // system includes
 #include <vector>
-using std::vector;
-
-#include "Geant4_include.hh"
 
 // user includes
-//#include "QweakSimMainMagnetMessenger.hh"
-#include "QweakSimMaterial.hh"
-#include "QweakSimMagnet_CoilParameterisation.hh"
+#include "QweakSimSolids.hh"
 
 // user classes
-//class QweakSimMainMagnetMessenger;
 class QweakSimMaterial;
 class QweakSimMagnet_CoilParameterisation;
 

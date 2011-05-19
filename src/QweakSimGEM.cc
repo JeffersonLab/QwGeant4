@@ -20,6 +20,13 @@
 
 #include "QweakSimGEM.hh"
 
+// geant4 includes
+#include "G4ProductionCuts.hh"
+
+// user includes
+#include "QweakSimMaterial.hh"
+#include "QweakSimGEMMessenger.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 QweakSimGEM::QweakSimGEM()

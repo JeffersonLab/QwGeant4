@@ -49,16 +49,8 @@
 #define QweakSimPhysicsListMessenger_h 1
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-// system includes
-#include "Geant4_include.hh" 
-
 // user includes
-#include "QweakSimPhysicsList.hh"
-
-
-// system classes
-// class G4UIdirectory;
-// class G4UIcmdWithAnInteger;
+#include "QweakSimMessengerDeclaration.hh"
 
 // user classes
 class QweakSimPhysicsList;

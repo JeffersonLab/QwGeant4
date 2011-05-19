@@ -1,10 +1,13 @@
 #include "QweakSimTrackHistory.hh"
 
+// geant4 includes
+#include "G4Track.hh"
+#include "G4ParticleDefinition.hh"
+
 //ClassImp(QweakSimTrackHistory)
 
 QweakSimTrackHistory::QweakSimTrackHistory()
 {
-
 } 
 
 QweakSimTrackHistory::~QweakSimTrackHistory()

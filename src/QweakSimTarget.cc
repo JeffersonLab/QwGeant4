@@ -20,6 +20,14 @@
 
 #include "QweakSimTarget.hh"
 
+// geant4 includes
+#include "G4UserLimits.hh"
+
+// user includes
+#include "QweakSimSolids.hh"
+#include "QweakSimMaterial.hh"
+#include "QweakSimTargetMessenger.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 QweakSimTarget::QweakSimTarget()

@@ -18,6 +18,10 @@
 
 #include "QweakSimEventActionMessenger.hh"
 
+// user include
+#include "QweakSimEventAction.hh"
+#include "QweakSimMessengerDefinition.hh"
+
 // ----------------------------------------------------------------------------
 
 QweakSimEventActionMessenger::QweakSimEventActionMessenger(QweakSimEventAction* anEventAction)

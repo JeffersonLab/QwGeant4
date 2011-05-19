@@ -36,6 +36,10 @@
 
 #include "QweakSimDetectorMessenger.hh"
 
+// user includes
+#include "QweakSimDetectorConstruction.hh"
+#include "QweakSimMessengerDefinition.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 QweakSimDetectorMessenger::QweakSimDetectorMessenger(QweakSimDetectorConstruction* theDetector)

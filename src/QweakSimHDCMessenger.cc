@@ -36,6 +36,10 @@
 
 #include "QweakSimHDCMessenger.hh"
 
+// user includes
+#include "QweakSimHDC.hh"
+#include "QweakSimMessengerDefinition.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 QweakSimHDCMessenger::QweakSimHDCMessenger(QweakSimHDC* theHDC)

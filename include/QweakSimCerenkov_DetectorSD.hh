@@ -31,19 +31,12 @@
 #ifndef QweakSimCerenkov_DetectorSD_h
 #define QweakSimCerenkov_DetectorSD_h 
 
-// system includes
-#include "Geant4_include.hh"
-
-
-// user classes
+// user includes
+#include "QweakSimSensitiveDetectorDeclaration.hh"
 #include "QweakSimCerenkov_DetectorHit.hh"
-#include "QweakSimTrackInformation.hh"
-
-// user classes
-
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-class QweakSimCerenkov_DetectorSD : public G4VSensitiveDetector
+class QweakSimCerenkov_DetectorSD: public G4VSensitiveDetector
 {
 
 public:
@@ -51,7 +44,7 @@ public:
   ~QweakSimCerenkov_DetectorSD();
   
   void Initialize(G4HCofThisEvent* HCE);
-  G4bool ProcessHits(G4Step* aStep,G4TouchableHistory* ROhist);
+  G4bool ProcessHits(G4Step* aStep, G4TouchableHistory* ROhist);
   void EndOfEvent(G4HCofThisEvent* HCE);
 
 private:

@@ -49,12 +49,8 @@
 #define QweakSimUserCerenkov_PMTEvent_h
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
-
+// root includes
 #include "Rtypes.h"
-
-#ifndef __CINT__
-#include "Geant4_include.hh" 
-#endif
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 class QweakSimUserCerenkov_PMTEvent 

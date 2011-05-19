@@ -20,6 +20,43 @@
 
 #include "QweakSimDetectorConstruction.hh"
 
+// geant4 includes
+#include "G4SolidStore.hh"
+#include "G4LogicalVolumeStore.hh"
+#include "G4PhysicalVolumeStore.hh"
+//
+#include "G4RunManager.hh"
+#include "G4FieldManager.hh"
+#include "G4GeometryManager.hh"
+#include "G4TransportationManager.hh"
+//
+#include "G4Mag_UsualEqRhs.hh"
+#include "G4PropagatorInField.hh"
+#include "G4ChordFinder.hh"
+#include "G4SimpleRunge.hh"
+
+
+// user includes
+#include "QweakSimSolids.hh"
+#include "QweakSimDetectorMessenger.hh"
+#include "QweakSimMaterial.hh"
+#include "QweakSimGeometry.hh"
+#include "QweakSimGeometryMessenger.hh"
+#include "QweakSimTarget.hh"
+#include "QweakSimTargetMessenger.hh"
+#include "QweakSimCollimator.hh"
+#include "QweakSimCollimatorSupport.hh"
+#include "QweakSimShieldingWall.hh"
+#include "QweakSimMainMagnet.hh"
+#include "QweakSimVDC.hh"
+#include "QweakSimVDCRotator.hh"
+#include "QweakSimHDC.hh"
+#include "QweakSimGEM.hh"
+#include "QweakSimTriggerScintillator.hh"
+#include "QweakSimCerenkovDetector.hh"
+#include "QweakSimGlobalMagnetField.hh"
+#include "QweakSimUserInformation.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 //===================================================================

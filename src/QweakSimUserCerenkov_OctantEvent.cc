@@ -20,6 +20,10 @@
 
 #include "QweakSimUserCerenkov_OctantEvent.hh"
 
+// user includes
+#include "QweakSimUserCerenkov_DetectorEvent.hh"
+#include "QweakSimUserCerenkov_PMTEvent.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
 ClassImp(QweakSimUserCerenkov_OctantEvent)

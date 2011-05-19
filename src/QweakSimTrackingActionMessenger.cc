@@ -19,6 +19,10 @@
 
 #include "QweakSimTrackingActionMessenger.hh"
 
+// user includes
+#include "QweakSimTrackingAction.hh"
+#include "QweakSimMessengerDefinition.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 QweakSimTrackingActionMessenger::QweakSimTrackingActionMessenger(QweakSimTrackingAction* myTA)

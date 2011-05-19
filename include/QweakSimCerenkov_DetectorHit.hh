@@ -20,12 +20,8 @@
 #ifndef QweakSimCerenkov_DetectorHit_h
 #define QweakSimCerenkov_DetectorHit_h 
 
-// system includes
-#include "Geant4_include.hh"
-
 // user includes
-
-// user classes
+#include "QweakSimHit.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 class QweakSimCerenkov_DetectorHit : public G4VHit

@@ -36,6 +36,10 @@
 
 #include "QweakSimPhysicsListMessenger.hh"
 
+// user includes
+#include "QweakSimPhysicsList.hh"
+#include "QweakSimMessengerDefinition.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 QweakSimPhysicsListMessenger::QweakSimPhysicsListMessenger(QweakSimPhysicsList* pPhys)

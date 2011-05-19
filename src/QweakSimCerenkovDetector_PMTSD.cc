@@ -2,6 +2,17 @@
 
 #include "QweakSimCerenkovDetector_PMTSD.hh"
 
+// geant4 includes
+#include "G4OpticalPhoton.hh"
+
+// user includes
+#include "QweakSimSensitiveDetectorDefinition.hh"
+#include "QweakSimCerenkovDetector_PMTHit.hh"
+#include "QweakSimUserInformation.hh"
+#include "QweakSimTrackInformation.hh"
+#include "QweakSimTrajectory.hh"
+
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 QweakSimCerenkovDetector_PMTSD::QweakSimCerenkovDetector_PMTSD(G4String name, QweakSimUserInformation *userInfo)
 :G4VSensitiveDetector(name)

@@ -3,14 +3,13 @@
 #define QweakSimCerenkovDetector_PMTSD_h 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-// system includes
-#include "Geant4_include.hh" 
-
 // user includes
+#include "QweakSimSensitiveDetectorDeclaration.hh"
 #include "QweakSimCerenkovDetector_PMTHit.hh"
-#include "QweakSimUserInformation.hh"
-#include "QweakSimTrackInformation.hh"
-#include "QweakSimTrajectory.hh"	
+
+// user classes
+class QweakSimTrajectory;
+class QweakSimUserInformation;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 class QweakSimCerenkovDetector_PMTSD : public G4VSensitiveDetector

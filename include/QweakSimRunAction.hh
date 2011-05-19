@@ -49,14 +49,12 @@
 #define QweakSimRunAction_h 1
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-// system includes
-#include "Geant4_include.hh" 
+// geant4 includes
+#include "G4Types.hh"
+#include "G4UserRunAction.hh"
 
-// user includes
-#include "QweakSimAnalysis.hh"
-
-// system classes
-//class G4Run;
+// geant4 classes
+class G4Run;
 
 // user classes
 class QweakSimAnalysis;

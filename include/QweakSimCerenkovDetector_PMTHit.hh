@@ -1,7 +1,8 @@
 #ifndef QweakSimCerenkovDetector_PMTHit_h
 #define QweakSimCerenkovDetector_PMTHit_h 
 
-#include "Geant4_include.hh" 
+// user includes
+#include "QweakSimHit.hh"
 
 class QweakSimCerenkovDetector_PMTHit : public G4VHit
 {

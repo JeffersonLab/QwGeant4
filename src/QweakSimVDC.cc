@@ -20,22 +20,36 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #include "QweakSimVDC.hh"
+
+// geant4 includes
+#include "G4PVParameterised.hh"
+#include "G4ProductionCuts.hh"
+#include "G4RunManager.hh"
+
+// root includes
 #include "TMath.h"
+
+// user includes
+#include "QweakSimVDCMessenger.hh"
+#include "QweakSimMaterial.hh"
+#include "QweakSimVDC_DriftCellFrontSD.hh"
+#include "QweakSimVDC_DriftCellBackSD.hh"
+#include "QweakSimVDC_DriftCellParameterisation.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 QweakSimVDC::QweakSimVDC()
 {
-G4cout << G4endl << "###### Calling QweakSimVDC::QweakVDC() " << G4endl << G4endl;
+  G4cout << G4endl << "###### Calling QweakSimVDC::QweakVDC() " << G4endl << G4endl;
 
-//===============================
-// cuts for G4Region and PAIModel
-//===============================
-fGammaCut    = 1*mm;    
-fElectronCut = 1*mm; 
-fPositronCut = 1*mm; 
+  //===============================
+  // cuts for G4Region and PAIModel
+  //===============================
+  fGammaCut    = 1*mm;
+  fElectronCut = 1*mm;
+  fPositronCut = 1*mm;
 
-fRegGasDet = NULL;
+  fRegGasDet = NULL;
 
   //========================		
   //  DriftCell Array setup	
@@ -1103,7 +1117,7 @@ G4cout << G4endl << "###### QweakSimVDC: Setting Sensitive Detectors " << G4endl
    driftChamberSD = new QweakSimVDC_WirePlaneSD("VDCWirePlaneSD");
    SDman->AddNewDetector(driftChamberSD);
    
-   // add wire plane as a sensitiv element
+   // add wire plane as a sensitive element
    VDC_WirePlane_Logical->SetSensitiveDetector(driftChamberSD);
    //***********************************************************
 
@@ -1112,7 +1126,7 @@ G4cout << G4endl << "###### QweakSimVDC: Setting Sensitive Detectors " << G4endl
    driftCellFrontSD = new QweakSimVDC_DriftCellFrontSD("VDCDriftCellFrontSD");
    SDman->AddNewDetector(driftCellFrontSD);
 
-   // add Front Drift Cell as a sensitiv element
+   // add Front Drift Cell as a sensitive element
    VDC_DriftCellFront_Logical->SetSensitiveDetector(driftCellFrontSD);
    //***********************************************************
 
@@ -1121,7 +1135,7 @@ G4cout << G4endl << "###### QweakSimVDC: Setting Sensitive Detectors " << G4endl
    driftCellBackSD = new QweakSimVDC_DriftCellBackSD("VDCDriftCellBackSD");
    SDman->AddNewDetector(driftCellBackSD);
 
-   // add Back Drift Cell as a sensitiv element
+   // add Back Drift Cell as a sensitive element
    VDC_DriftCellBack_Logical->SetSensitiveDetector(driftCellBackSD);
    //***********************************************************
 

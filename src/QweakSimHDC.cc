@@ -20,6 +20,13 @@
 
 #include "QweakSimHDC.hh"
 
+// geant4 includes
+#include "G4VisAttributes.hh"
+
+// user includes
+#include "QweakSimMaterial.hh"
+#include "QweakSimHDCMessenger.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 //===================================================================
 //	Qweak Geometry Conventions:

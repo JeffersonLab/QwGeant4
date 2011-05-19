@@ -36,6 +36,10 @@
 
 #include "QweakSimTargetMessenger.hh"
 
+// user includes
+#include "QweakSimTarget.hh"
+#include "QweakSimMessengerDefinition.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 QweakSimTargetMessenger::QweakSimTargetMessenger(QweakSimTarget* myTar)

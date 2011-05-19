@@ -21,6 +21,25 @@
 #include "QweakSimEventAction.hh"
 #include "QweakSimEventActionMessenger.hh"
 
+// geant4 includes
+#include "G4Event.hh"
+#include "G4UserEventAction.hh"
+#include "G4SDManager.hh"
+
+// user includes
+#include "QweakSimAnalysis.hh"
+#include "QweakSimUserInformation.hh"
+#include "QweakSimGEM_WirePlaneHit.hh"
+#include "QweakSimHDC_WirePlaneHit.hh"
+#include "QweakSimVDC_WirePlaneHit.hh"
+#include "QweakSimVDC_DriftCellHit.hh"
+#include "QweakSimTriggerScintillator_DetectorHit.hh"
+#include "QweakSimTriggerScintillator_PMTHit.hh"
+#include "QweakSimCerenkov_DetectorHit.hh"
+#include "QweakSimCerenkovDetector_PMTHit.hh"
+#include "QweakSimTrajectory.hh"
+#include "QweakSimUserMainEvent.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 QweakSimEventAction::QweakSimEventAction(QweakSimAnalysis* AN, QweakSimUserInformation* myUI)
 {

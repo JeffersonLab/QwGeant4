@@ -3,15 +3,11 @@
 #define QweakSimGlobalMagnetField_h 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-// system includes
-#include "Geant4_include.hh" 
-
 // user includes
-//#include "QweakSimGlobalMagnetFieldMessenger.hh"
 #include "QweakSimMagnetFieldMap.hh"
+#include "G4MagneticField.hh"
 
 // user classes
-//class QweakSimGlobalMagnetFieldMessenger;
 class QweakSimMagnetFieldMap;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

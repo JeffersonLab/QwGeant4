@@ -48,33 +48,21 @@
 #ifndef QweakSimDetectorConstruction_h
 #define QweakSimDetectorConstruction_h 1
 
-// system includes
-#include "Geant4_include.hh"
+// geant4 includes
+#include "G4VUserDetectorConstruction.hh"
 
-// user includes
-#include "QweakSimDetectorMessenger.hh"
-
-#include "QweakSimMaterial.hh"
-#include "QweakSimGeometry.hh"
-#include "QweakSimGeometryMessenger.hh"
-#include "QweakSimTarget.hh"
-#include "QweakSimTargetMessenger.hh"
-#include "QweakSimCollimator.hh"
-#include "QweakSimCollimatorSupport.hh"
-#include "QweakSimShieldingWall.hh"
-#include "QweakSimMainMagnet.hh"
-#include "QweakSimVDC.hh"
-#include "QweakSimVDCRotator.hh"
-#include "QweakSimHDC.hh"
-#include "QweakSimGEM.hh"
-#include "QweakSimTriggerScintillator.hh"
-#include "QweakSimCerenkovDetector.hh"
-#include "QweakSimGlobalMagnetField.hh"
-#include "QweakSimUserInformation.hh"
+// geant4 classes
+class G4Box;
+class G4LogicalVolume;
+class G4Material;
+class G4VisAttributes;
+class G4FieldManager;
+class G4ChordFinder;
+class G4Mag_UsualEqRhs;
+class G4MagIntegratorStepper;
 
 // user classes
 class QweakSimDetectorMessenger;
-
 class QweakSimMaterial;
 class QweakSimGeometry;
 class QweakSimGeometryMessenger;
@@ -91,6 +79,7 @@ class QweakSimGEM;
 class QweakSimTriggerScintillator;
 class QweakSimCerenkovDetector;
 class QweakSimGlobalMagnetField;
+class QweakSimUserInformation;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 

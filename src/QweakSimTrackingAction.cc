@@ -20,6 +20,16 @@
 
 #include "QweakSimTrackingAction.hh"
 
+// geant4 includes
+#include "G4TrackingManager.hh"
+#include "G4OpticalPhoton.hh"
+
+// user includes
+#include "QweakSimUserInformation.hh"
+#include "QweakSimTrackInformation.hh"
+#include "QweakSimTrackingActionMessenger.hh"
+#include "QweakSimTrajectory.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 QweakSimTrackingAction::QweakSimTrackingAction(QweakSimUserInformation* myUI)

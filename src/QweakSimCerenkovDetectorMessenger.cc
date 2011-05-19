@@ -36,6 +36,10 @@
 
 #include "QweakSimCerenkovDetectorMessenger.hh"
 
+// user includes
+#include "QweakSimCerenkovDetector.hh"
+#include "QweakSimMessengerDefinition.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 QweakSimCerenkovDetectorMessenger::QweakSimCerenkovDetectorMessenger(QweakSimCerenkovDetector* theCerenkovDetector)

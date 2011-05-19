@@ -20,6 +20,15 @@
 
 #include "QweakSimRunAction.hh"
 
+// geant4 includes
+#include "G4ios.hh"
+#include "G4Run.hh"
+#include "G4UImanager.hh"
+#include "G4VisManager.hh"
+
+// user includes
+#include "QweakSimAnalysis.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 QweakSimRunAction::QweakSimRunAction(QweakSimAnalysis* AN)
   :runID(0), analysis(AN)

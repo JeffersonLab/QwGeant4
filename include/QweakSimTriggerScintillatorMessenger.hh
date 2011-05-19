@@ -50,21 +50,10 @@
 #define QweakSimTriggerScintillatorMessenger_h 1
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-// system includes
-#include "Geant4_include.hh" 
-
 // user includes
-#include "QweakSimTriggerScintillator.hh"
+#include "QweakSimMessengerDeclaration.hh"
 
-
-// system classes
-// class G4UIdirectory;
-// class G4UIcmdWithAString;
-// class G4UIcmdWithAnInteger;
-// class G4UIcmdWithADoubleAndUnit;
-// class G4UIcmdWithoutParameter;
-
-//user classes
+// user classes
 class QweakSimTriggerScintillator;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

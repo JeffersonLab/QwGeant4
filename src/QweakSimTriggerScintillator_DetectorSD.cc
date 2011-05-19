@@ -36,6 +36,11 @@
 
 #include "QweakSimTriggerScintillator_DetectorSD.hh"
 
+// user classes
+#include "QweakSimSensitiveDetectorDefinition.hh"
+#include "QweakSimTriggerScintillator_DetectorHit.hh"
+#include "QweakSimTrackInformation.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 QweakSimTriggerScintillator_DetectorSD::QweakSimTriggerScintillator_DetectorSD(G4String name)
 :G4VSensitiveDetector(name)

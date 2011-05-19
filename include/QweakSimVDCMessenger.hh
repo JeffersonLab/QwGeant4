@@ -50,11 +50,15 @@
 #define QweakSimVDCMessenger_h 1
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-// system includes
-#include "Geant4_include.hh" 
+// geant4 includes
+#include "G4UImessenger.hh"
 
-// user includes
-#include "QweakSimVDC.hh"
+// geant4 classes
+class G4UIcommand;
+class G4UIdirectory;
+class G4UIcmdWithAString;
+class G4UIcmdWithAnInteger;
+class G4UIcmdWithADoubleAndUnit;
 
 // user classes
 class QweakSimVDC;

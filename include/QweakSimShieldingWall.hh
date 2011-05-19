@@ -53,13 +53,18 @@
 
 // system includes
 #include <vector>
-using std::vector;
 
-#include "Geant4_include.hh" 
+// geant4 includes
+#include "G4ThreeVector.hh"
 
-// user includes
-#include "QweakSimShieldingWallMessenger.hh"
-#include "QweakSimMaterial.hh"
+// geant4 classes
+class G4Cons;
+class G4Trap;
+class G4Material;
+class G4VisAttributes;
+class G4LogicalVolume;
+class G4VPhysicalVolume;
+class G4SubtractionSolid;
 
 // user classes
 class QweakSimMaterial;

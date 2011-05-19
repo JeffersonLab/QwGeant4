@@ -51,17 +51,8 @@
 #define QweakSimDetectorMessenger_h 1
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-// system includes
-#include "Geant4_include.hh" 
-
 // user includes
-#include "QweakSimDetectorConstruction.hh"
-
-// system classes
-// class G4UIdirectory;
-// class G4UIcmdWithAString;
-// class G4UIcmdWithADoubleAndUnit;
-// class G4UIcmdWithoutParameter;
+#include "QweakSimMessengerDeclaration.hh"
 
 // user classes
 class QweakSimDetectorConstruction;

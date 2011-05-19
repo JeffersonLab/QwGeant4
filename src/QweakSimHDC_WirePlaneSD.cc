@@ -36,6 +36,12 @@
 
 #include "QweakSimHDC_WirePlaneSD.hh"
 
+// user includes
+#include "QweakSimSensitiveDetectorDefinition.hh"
+#include "QweakSimHDC_WirePlaneHit.hh"
+#include "QweakSimTrackInformation.hh"
+
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 QweakSimHDC_WirePlaneSD::QweakSimHDC_WirePlaneSD(G4String name)

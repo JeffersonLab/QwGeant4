@@ -53,11 +53,14 @@
 
 // system includes
 #include <vector>
-using std::vector;
 
-#include "Geant4_include.hh" 
+// geant4 includes
+#include "G4Allocator.hh"
+#include "G4VTrajectory.hh"
 
-// user includes
+// geant4 classes
+class G4Track;
+class G4ParticleDefinition;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -71,7 +74,7 @@ class QweakSimTrajectory : public G4VTrajectory
    public:
 //--------
 
-// Constructor/Destrcutor
+// Constructor/Destructor
 
    QweakSimTrajectory();
 

@@ -16,18 +16,18 @@
 #ifndef QWEAKSIMEPEVENT_H
 #define QWEAKSIMEPEVENT_H
 
-#include "Geant4_include.hh"
-#include "QweakSimEPEventMessenger.hh"
-//#include "QweakSimUserInformation.hh"
+// geant4 includes
+#include "G4Types.hh"
+#include "G4ThreeVector.hh"
 
-//class QweakSimUserInformation;
+// user classes
 class QweakSimEPEventMessenger;
 
 class QweakSimEPEvent {
 
  private:
    //define target geometry parameter, 
-   //TODO: these parameters will be acquired from QweakSimG4Target
+   //TODO: these parameters will be acquired from QweakSimTarget
    static const G4double TargetCenterPositionZ;
    static const G4double TargetLength;
 

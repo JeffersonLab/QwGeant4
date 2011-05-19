@@ -36,6 +36,9 @@
 
 #include "QweakSimTriggerScintillator_DetectorHit.hh"
 
+// geant4 includes
+#include "G4Circle.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 G4Allocator<QweakSimTriggerScintillator_DetectorHit> QweakSimTriggerScintillator_DetectorHitAllocator;
 

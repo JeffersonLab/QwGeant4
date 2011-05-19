@@ -36,6 +36,9 @@
 
 #include "QweakSimGEM_WirePlaneHit.hh"
 
+// geant4 includes
+#include "G4Circle.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 G4Allocator<QweakSimGEM_WirePlaneHit> QweakSimGEM_WirePlane_HitAllocator;

@@ -20,6 +20,15 @@
 
 #include "QweakSimPrimaryGeneratorAction.hh"
 
+// geant4 includes
+#include "G4Event.hh"
+#include "G4ParticleGun.hh"
+#include "G4ParticleTable.hh"
+#include "Randomize.hh"
+
+// user includes
+#include "QweakSimPrimaryGeneratorActionMessenger.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 //G4int QweakSimPrimaryGeneratorAction::kActiveOctantNumber = 1;

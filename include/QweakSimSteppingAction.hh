@@ -4,19 +4,19 @@
 #define QweakSimSteppingAction_h 1
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-// system includes
-#include "Geant4_include.hh" 
-#include "QweakSimUserInformation.hh"
-#include "QweakSimSteppingVerbose.hh"
-#include "QweakSimTrackInformation.hh"
+// geant4 includes
+#include "G4Types.hh"
+#include "G4String.hh"
+#include "G4ThreeVector.hh"
+#include "G4TrackVector.hh"
+#include "G4SteppingManager.hh"
+#include "G4UserSteppingAction.hh"
 
-#include "QweakSimEPEvent.hh"
+// geant4 classes
+class G4ParticleDefinition;
 
-// system classes
-//class G4Step;
-
-#include "QweakSimCerenkovDetector_PMTSD.hh"
-
+// user classes
+class QweakSimUserInformation;
 class QweakSimEPEvent;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

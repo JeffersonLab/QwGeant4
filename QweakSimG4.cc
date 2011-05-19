@@ -16,30 +16,32 @@
 */
 //=============================================================================
 
-#include "QweakSimDetectorConstruction.hh"
-#include "QweakSimPhysicsList.hh"
-#include "QweakSimPrimaryGeneratorAction.hh"
-#include "QweakSimRunAction.hh"
-#include "QweakSimEventAction.hh"
-#include "QweakSimStackingAction.hh"		
-//#include "QweakSimSteppingAction.hh"
-//#include "QweakSimSteppingVerbose.hh"
-//#include "QweakSimAnalysis.hh"
-#include "QweakSimTrackingAction.hh"
-//#include "QweakSimTrackInformation.hh"
-//#include "QweakSimUserInformation.hh"
-
+// geant4 includes
 #include "G4RunManager.hh"
 #include "G4UImanager.hh"
 #include "G4UIterminal.hh"
 #include "G4UItcsh.hh"
 
-#ifdef G4UI_USE_XM
-    #include "G4UIXm.hh"
-#endif
+// user includes
+#include "QweakSimUserInformation.hh"
+#include "QweakSimDetectorConstruction.hh"
+#include "QweakSimPhysicsList.hh"
+#include "QweakSimPrimaryGeneratorAction.hh"
+#include "QweakSimRunAction.hh"
+#include "QweakSimEventAction.hh"
+#include "QweakSimStackingAction.hh"
+#include "QweakSimSteppingAction.hh"
+#include "QweakSimTrackingAction.hh"
+#include "QweakSimSteppingVerbose.hh"
+#include "QweakSimAnalysis.hh"
+#include "QweakSimEPEvent.hh"
 
 #ifdef G4UI_USE_QT
     #include "G4UIQt.hh"
+#endif
+
+#ifdef G4UI_USE_XM
+    #include "G4UIXm.hh"
 #endif
 
 #ifdef G4VIS_USE

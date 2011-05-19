@@ -5,9 +5,12 @@
 #include <vector>
 using std::vector;
 
-#include "Geant4_include.hh" 
+// user includes
 #include "QweakSimCerenkovDetector_PMTHit.hh"
 #include "QweakSimUserPrimaryEvent.hh"
+
+// geant4 classes
+class G4MaterialPropertyVector;
 
 class QweakSimUserInformation 
 {

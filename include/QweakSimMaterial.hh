@@ -49,21 +49,18 @@
 #define QweakSimMaterial_H 1
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-// system includes
-#include "Geant4_include.hh" 
+// geant4 includes
+#include "G4String.hh"
 
-// user includes
-
-// system classes
-//class G4Material;
-
+// geant4 classes
+class G4Material;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 class QweakSimMaterial
 { 
 public:
   QweakSimMaterial();
-  ~ QweakSimMaterial();
+  ~QweakSimMaterial();
 
 public:
   void  DefineMaterials();

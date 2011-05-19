@@ -35,11 +35,8 @@
 #define QweakSimVDC_WirePlaneHit_h 1
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-// system includes
-#include "Geant4_include.hh" 
-
 // user includes
-
+#include "QweakSimHit.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 class QweakSimVDC_WirePlaneHit : public G4VHit

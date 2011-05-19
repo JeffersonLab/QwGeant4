@@ -49,11 +49,11 @@
 #define QweakSimTriggerScintillator_PMTSD_h 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-// system includes
-#include "Geant4_include.hh" 
-
 // user includes
-#include "QweakSimTriggerScintillator_PMTHit.hh"
+#include "QweakSimSensitiveDetectorDeclaration.hh"
+
+// user classes
+class QweakSimTriggerScintillator_PMTHitsCollection;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 class QweakSimTriggerScintillator_PMTSD : public G4VSensitiveDetector

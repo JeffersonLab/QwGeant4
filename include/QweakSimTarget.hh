@@ -50,19 +50,9 @@
 #define QweakSimTarget_h 1
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-// system includes
-#include "Geant4_include.hh" 
-
-// user includes
-#include "QweakSimTargetMessenger.hh"
-#include "QweakSimMaterial.hh"
-
-// system classes
-// class G4Tubs;
-// class G4LogicalVolume;
-// class G4VPhysicalVolume;
-// class G4Material;
-// class G4VisAttributes;
+// geant4 includes
+#include "G4Material.hh"
+#include "G4LogicalVolume.hh"
 
 // user classes
 class QweakSimMaterial;

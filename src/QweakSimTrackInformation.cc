@@ -19,6 +19,13 @@
 
 #include "QweakSimTrackInformation.hh"
 
+// geant4 includes
+#include "G4Track.hh"
+#include "G4ParticleDefinition.hh"
+
+// user includes
+#include "QweakSimTrackHistory.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 // Primary Track info
 // based on http://geant4.slac.stanford.edu/Tips/index.html

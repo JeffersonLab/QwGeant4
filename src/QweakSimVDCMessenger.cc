@@ -36,6 +36,15 @@
 
 #include "QweakSimVDCMessenger.hh"
 
+// geant4 includes
+#include "G4UIdirectory.hh"
+#include "G4UIcmdWithAString.hh"
+#include "G4UIcmdWithAnInteger.hh"
+#include "G4UIcmdWithADoubleAndUnit.hh"
+
+// user includes
+#include "QweakSimVDC.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 QweakSimVDCMessenger::QweakSimVDCMessenger(QweakSimVDC* theVDC)

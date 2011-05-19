@@ -49,14 +49,9 @@
 #define QweakSimGEM_h 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
-// system includes
-#include "Geant4_include.hh" 
-
 // user includes
-#include "QweakSimGEMMessenger.hh"
-#include "QweakSimMaterial.hh"
+#include "QweakSimSolids.hh"
 #include "QweakSimGEM_WirePlaneSD.hh"
-
 
 // user classes
 class QweakSimGEMMessenger;

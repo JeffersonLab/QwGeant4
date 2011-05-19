@@ -47,19 +47,12 @@
 #ifndef QweakSimTriggerScintillator_h
 #define QweakSimTriggerScintillator_h 
 
-// system includes
-#include "Geant4_include.hh"
-
-// user includes
-#include "QweakSimTriggerScintillatorMessenger.hh"
-#include "QweakSimTriggerScintillator_DetectorSD.hh"
-#include "QweakSimTriggerScintillator_PMTSD.hh"
-// #include "QweakSimPMTEntranceWindowSD.hh"
-#include "QweakSimMaterial.hh"
+// geant4 includes
+#include "G4LogicalVolume.hh"
 
 // user classes
+class QweakSimMaterial;
 class QweakSimTriggerScintillatorMessenger;
-//class QweakSimMaterial;
 
 class QweakSimTriggerScintillator 
 {
