@@ -44,12 +44,12 @@
 
 // geant4 includes
 #include "G4VPhysicalVolume.hh"
+#ifdef G4LIB_USE_GDML
+#include "G4GDMLParser.hh"
+#endif
 
 // user includes
 #include "QweakSimGeometryMessenger.hh"
-
-// geant4 classes
-class G4GDMLParser;
 
 // user classes
 class QweakSimGeometryMessenger;

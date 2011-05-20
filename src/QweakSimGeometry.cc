@@ -23,6 +23,8 @@
 // geant4 includes
 #ifdef G4LIB_USE_GDML
 #include "G4GDMLParser.hh"
+#include "G4Material.hh"
+#include "G4Element.hh"
 #endif
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
