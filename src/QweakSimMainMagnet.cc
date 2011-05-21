@@ -811,13 +811,13 @@ void QweakSimMainMagnet::Construct_UpstreamSpider(G4VPhysicalVolume* MotherVolum
 
   
 
-  MyUpstreamSpider_LowThetaCutout_Solid[0] =  new G4UnionSolid ("Plate+LeftBottomTube",
+  MyUpstreamSpider_LowThetaCutout_Solid[0] =  new G4UnionSolid ("PlateAndLeftBottomTube",
 								UpstreamSpider_SubtractionBox_Solid,
 								UpstreamSpider_SubtractionTubeLeft_Solid, 
 								0,
 								position_LeftBottomTube); 
   
-  MyUpstreamSpider_LowThetaCutout_Solid[1] =  new G4UnionSolid ("Plate+RightBottomTube",
+  MyUpstreamSpider_LowThetaCutout_Solid[1] =  new G4UnionSolid ("PlateAndRightBottomTube",
 								UpstreamSpider_SubtractionBox_Solid,
 								UpstreamSpider_SubtractionTubeRight_Solid, 
 								0,
@@ -1288,7 +1288,7 @@ void QweakSimMainMagnet::Construct_UpstreamSpider(G4VPhysicalVolume* MotherVolum
    Rotation_RadialStrut->rotateZ(22.5*degree);
 
 
-   MyUpstreamSpider_StrutsUnion_Solid[0] =  new G4UnionSolid ("Spider+RadialStrut1",
+   MyUpstreamSpider_StrutsUnion_Solid[0] =  new G4UnionSolid ("SpiderAndRadialStrut1",
 							      MyUpstreamSpider_Solid[22], 
 							      UpstreamSpider_RadialStrut_Solid);
 

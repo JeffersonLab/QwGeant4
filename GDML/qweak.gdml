@@ -147,109 +147,109 @@
     <tube aunit="deg" deltaphi="360" lunit="mm" name="UpstreamSpider_Solid0xcd80da0" rmax="448" rmin="166.4" startphi="0" z="25.6"/>
     <box lunit="mm" name="UpstreamSpider_SubtractionBox_Solid0xcd81050" x="121.856" y="102.4" z="51.2"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="UpstreamSpider_SubtractionTubeLeft_Solid0xcd80e88" rmax="51.2" rmin="0" startphi="0" z="51.456"/>
-    <union name="Plate+LeftBottomTube0xcd7e658">
+    <union name="PlateAndLeftBottomTube0xcd7e658">
       <first ref="UpstreamSpider_SubtractionBox_Solid0xcd81050"/>
       <second ref="UpstreamSpider_SubtractionTubeLeft_Solid0xcd80e88"/>
-      <position name="Plate+LeftBottomTube0xcd7e658_pos" unit="mm" x="-60.928" y="0" z="0"/>
+      <position name="PlateAndLeftBottomTube0xcd7e658_pos" unit="mm" x="-60.928" y="0" z="0"/>
     </union>
     <subtraction name="Ring-Plate10xcd81478">
       <first ref="UpstreamSpider_Solid0xcd80da0"/>
-      <second ref="Plate+LeftBottomTube0xcd7e658"/>
+      <second ref="PlateAndLeftBottomTube0xcd7e658"/>
       <position name="Ring-Plate10xcd81478_pos" unit="mm" x="2.74311823256213e-14" y="448" z="0"/>
     </subtraction>
     <subtraction name="Ring-Plate20xcd815f0">
       <first ref="Ring-Plate10xcd81478"/>
-      <second ref="Plate+LeftBottomTube0xcd7e658"/>
+      <second ref="PlateAndLeftBottomTube0xcd7e658"/>
       <position name="Ring-Plate20xcd815f0_pos" unit="mm" x="316.783837971573" y="316.783837971573" z="0"/>
       <rotation name="Ring-Plate20xcd815f0_rot" unit="deg" x="0" y="0" z="-45"/>
     </subtraction>
     <subtraction name="Ring-Plate30xcd81768">
       <first ref="Ring-Plate20xcd815f0"/>
-      <second ref="Plate+LeftBottomTube0xcd7e658"/>
+      <second ref="PlateAndLeftBottomTube0xcd7e658"/>
       <position name="Ring-Plate30xcd81768_pos" unit="mm" x="448" y="0" z="0"/>
       <rotation name="Ring-Plate30xcd81768_rot" unit="deg" x="0" y="0" z="-90"/>
     </subtraction>
     <subtraction name="Ring-Plate40xcd818e0">
       <first ref="Ring-Plate30xcd81768"/>
-      <second ref="Plate+LeftBottomTube0xcd7e658"/>
+      <second ref="PlateAndLeftBottomTube0xcd7e658"/>
       <position name="Ring-Plate40xcd818e0_pos" unit="mm" x="316.783837971573" y="-316.783837971573" z="0"/>
       <rotation name="Ring-Plate40xcd818e0_rot" unit="deg" x="0" y="0" z="-135"/>
     </subtraction>
     <subtraction name="Ring-Plate50xcd81a58">
       <first ref="Ring-Plate40xcd818e0"/>
-      <second ref="Plate+LeftBottomTube0xcd7e658"/>
+      <second ref="PlateAndLeftBottomTube0xcd7e658"/>
       <position name="Ring-Plate50xcd81a58_pos" unit="mm" x="-8.22935469768638e-14" y="-448" z="0"/>
       <rotation name="Ring-Plate50xcd81a58_rot" unit="deg" x="0" y="0" z="180"/>
     </subtraction>
     <subtraction name="Ring-Plate60xcd81bd0">
       <first ref="Ring-Plate50xcd81a58"/>
-      <second ref="Plate+LeftBottomTube0xcd7e658"/>
+      <second ref="PlateAndLeftBottomTube0xcd7e658"/>
       <position name="Ring-Plate60xcd81bd0_pos" unit="mm" x="-316.783837971573" y="-316.783837971573" z="0"/>
       <rotation name="Ring-Plate60xcd81bd0_rot" unit="deg" x="0" y="0" z="135"/>
     </subtraction>
     <subtraction name="Ring-Plate70xcd81d48">
       <first ref="Ring-Plate60xcd81bd0"/>
-      <second ref="Plate+LeftBottomTube0xcd7e658"/>
+      <second ref="PlateAndLeftBottomTube0xcd7e658"/>
       <position name="Ring-Plate70xcd81d48_pos" unit="mm" x="-448" y="5.48623646512425e-14" z="0"/>
       <rotation name="Ring-Plate70xcd81d48_rot" unit="deg" x="0" y="0" z="90"/>
     </subtraction>
     <subtraction name="Ring-Plate80xcd81ec0">
       <first ref="Ring-Plate70xcd81d48"/>
-      <second ref="Plate+LeftBottomTube0xcd7e658"/>
+      <second ref="PlateAndLeftBottomTube0xcd7e658"/>
       <position name="Ring-Plate80xcd81ec0_pos" unit="mm" x="-316.783837971573" y="316.783837971573" z="0"/>
       <rotation name="Ring-Plate80xcd81ec0_rot" unit="deg" x="0" y="0" z="45"/>
     </subtraction>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="UpstreamSpider_SubtractionTubeRight_Solid0xcd80f70" rmax="51.2" rmin="0" startphi="0" z="51.712"/>
-    <union name="Plate+RightBottomTube0xcd811d8">
+    <union name="PlateAndRightBottomTube0xcd811d8">
       <first ref="UpstreamSpider_SubtractionBox_Solid0xcd81050"/>
       <second ref="UpstreamSpider_SubtractionTubeRight_Solid0xcd80f70"/>
-      <position name="Plate+RightBottomTube0xcd811d8_pos" unit="mm" x="60.928" y="0" z="0"/>
+      <position name="PlateAndRightBottomTube0xcd811d8_pos" unit="mm" x="60.928" y="0" z="0"/>
     </union>
     <subtraction name="Ring-Plate10xcd82038">
       <first ref="Ring-Plate80xcd81ec0"/>
-      <second ref="Plate+RightBottomTube0xcd811d8"/>
+      <second ref="PlateAndRightBottomTube0xcd811d8"/>
       <position name="Ring-Plate10xcd82038_pos" unit="mm" x="2.74311823256213e-14" y="448" z="0"/>
       <rotation name="Ring-Plate10xcd82038_rot" unit="deg" x="0" y="0" z="180"/>
     </subtraction>
     <subtraction name="Ring-Plate20xcd821b0">
       <first ref="Ring-Plate10xcd82038"/>
-      <second ref="Plate+RightBottomTube0xcd811d8"/>
+      <second ref="PlateAndRightBottomTube0xcd811d8"/>
       <position name="Ring-Plate20xcd821b0_pos" unit="mm" x="316.783837971573" y="316.783837971573" z="0"/>
       <rotation name="Ring-Plate20xcd821b0_rot" unit="deg" x="0" y="0" z="135"/>
     </subtraction>
     <subtraction name="Ring-Plate30xcd82328">
       <first ref="Ring-Plate20xcd821b0"/>
-      <second ref="Plate+RightBottomTube0xcd811d8"/>
+      <second ref="PlateAndRightBottomTube0xcd811d8"/>
       <position name="Ring-Plate30xcd82328_pos" unit="mm" x="448" y="0" z="0"/>
       <rotation name="Ring-Plate30xcd82328_rot" unit="deg" x="0" y="0" z="90"/>
     </subtraction>
     <subtraction name="Ring-Plate40xcd824a0">
       <first ref="Ring-Plate30xcd82328"/>
-      <second ref="Plate+RightBottomTube0xcd811d8"/>
+      <second ref="PlateAndRightBottomTube0xcd811d8"/>
       <position name="Ring-Plate40xcd824a0_pos" unit="mm" x="316.783837971573" y="-316.783837971573" z="0"/>
       <rotation name="Ring-Plate40xcd824a0_rot" unit="deg" x="0" y="0" z="45"/>
     </subtraction>
     <subtraction name="Ring-Plate50xcd82618">
       <first ref="Ring-Plate40xcd824a0"/>
-      <second ref="Plate+RightBottomTube0xcd811d8"/>
+      <second ref="PlateAndRightBottomTube0xcd811d8"/>
       <position name="Ring-Plate50xcd82618_pos" unit="mm" x="-8.22935469768638e-14" y="-448" z="0"/>
       <rotation name="Ring-Plate50xcd82618_rot" unit="deg" x="0" y="0" z="-1.40329551277853e-14"/>
     </subtraction>
     <subtraction name="Ring-Plate60xcd82790">
       <first ref="Ring-Plate50xcd82618"/>
-      <second ref="Plate+RightBottomTube0xcd811d8"/>
+      <second ref="PlateAndRightBottomTube0xcd811d8"/>
       <position name="Ring-Plate60xcd82790_pos" unit="mm" x="-316.783837971573" y="-316.783837971573" z="0"/>
       <rotation name="Ring-Plate60xcd82790_rot" unit="deg" x="0" y="0" z="-45"/>
     </subtraction>
     <subtraction name="Ring-Plate70xcd82908">
       <first ref="Ring-Plate60xcd82790"/>
-      <second ref="Plate+RightBottomTube0xcd811d8"/>
+      <second ref="PlateAndRightBottomTube0xcd811d8"/>
       <position name="Ring-Plate70xcd82908_pos" unit="mm" x="-448" y="5.48623646512425e-14" z="0"/>
       <rotation name="Ring-Plate70xcd82908_rot" unit="deg" x="0" y="0" z="-90"/>
     </subtraction>
     <subtraction name="Ring-Plate80xcd82a80">
       <first ref="Ring-Plate70xcd82908"/>
-      <second ref="Plate+RightBottomTube0xcd811d8"/>
+      <second ref="PlateAndRightBottomTube0xcd811d8"/>
       <position name="Ring-Plate80xcd82a80_pos" unit="mm" x="-316.783837971573" y="316.783837971573" z="0"/>
       <rotation name="Ring-Plate80xcd82a80_rot" unit="deg" x="0" y="0" z="-135"/>
     </subtraction>
@@ -289,7 +289,7 @@
       <position name="Spider-PMTRight80xcd83680_pos" unit="mm" x="359.866439935707" y="273.701236007439" z="0"/>
     </subtraction>
     <box lunit="mm" name="UpstreamSpider_RadialStrut_Solid0xcd83810" x="128" y="512" z="26.6"/>
-    <union name="Spider+RadialStrut10xcd838c8">
+    <union name="SpiderAndRadialStrut10xcd838c8">
       <first ref="Spider-PMTRight80xcd83680"/>
       <second ref="UpstreamSpider_RadialStrut_Solid0xcd83810"/>
     </union>
@@ -932,7 +932,7 @@
     </volume>
     <volume name="UpstreamSpider_Log0xcd83938">
       <materialref ref="Aluminum0x9e67320"/>
-      <solidref ref="Spider+RadialStrut10xcd838c8"/>
+      <solidref ref="SpiderAndRadialStrut10xcd838c8"/>
     </volume>
     <volume name="MM_SingleCoil_ClampPlate_Logical0xcd83ab0">
       <materialref ref="Aluminum0x9e67320"/>
