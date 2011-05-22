@@ -177,9 +177,9 @@ QweakSimVDC::QweakSimVDC()
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 QweakSimVDC::~QweakSimVDC()
 {
-  if (driftChamberSD)   delete driftChamberSD;
-  if (driftCellFrontSD) delete driftCellFrontSD;
-  if (driftCellBackSD)  delete driftCellBackSD;
+  //if (driftChamberSD)   delete driftChamberSD;
+  //if (driftCellFrontSD) delete driftCellFrontSD;
+  //if (driftCellBackSD)  delete driftCellBackSD;
 
   if (VDC_DriftCellFront_VisAtt)           delete VDC_DriftCellFront_VisAtt;
   if (VDC_DriftCellBack_VisAtt)            delete VDC_DriftCellBack_VisAtt;

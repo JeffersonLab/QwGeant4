@@ -42,34 +42,37 @@
 
 QweakSimHDC::QweakSimHDC()
 {
-G4cout << G4endl << "###### Calling QweakSimHDC::QweakHDC() " << G4endl << G4endl;
+  G4cout << G4endl << "###### Calling QweakSimHDC::QweakHDC() " << G4endl << G4endl;
 
-// initialize pointers
- HDC_MasterContainer_Logical        = NULL;
- HDC_MasterContainerFront_Physical  = NULL;
- HDC_MasterContainerBack_Physical   = NULL;
+  // initialize pointers
+  HDC_MasterContainer_Logical        = NULL;
+  HDC_MasterContainerFront_Physical  = NULL;
+  HDC_MasterContainerBack_Physical   = NULL;
 
- Rotation_HDC                 = NULL;
+  HDC_SubContainer_Physical = NULL;
+  HDC_SubContainer_Logical  = NULL;
 
- HDC_Frame_Logical      = NULL;
- HDC_Frame_Physical     = NULL;
+  Rotation_HDC              = NULL;
 
- HDC_Foil_Logical      = NULL;
- HDC_Foil_Physical     = NULL;
+  HDC_Frame_Logical      = NULL;
+  HDC_Frame_Physical     = NULL;
 
- HDC_WirePlane_Logical  = NULL;
- HDC_WirePlane_Physical = NULL;
+  HDC_Foil_Logical       = NULL;
+  HDC_Foil_Physical      = NULL;
 
-
- HDC_MasterContainer_VisAtt         = NULL;  
- HDC_SubContainer_VisAtt            = NULL;  
- HDC_Frame_VisAtt                   = NULL;
- HDC_Foil_VisAtt                    = NULL;
- HDC_WirePlane_VisAtt               = NULL;
+  HDC_WirePlane_Logical  = NULL;
+  HDC_WirePlane_Physical = NULL;
 
 
- // define target geometry value
- // Geometry taken from Norm's HDC talk in Vancouver 2005
+  HDC_MasterContainer_VisAtt         = NULL;
+  HDC_SubContainer_VisAtt            = NULL;
+  HDC_Frame_VisAtt                   = NULL;
+  HDC_Foil_VisAtt                    = NULL;
+  HDC_WirePlane_VisAtt               = NULL;
+
+
+  // define target geometry value
+  // Geometry taken from Norm's HDC talk in Vancouver 2005
 
   HDC_DriftCell_TotalThickness = 19*mm;  // Distance: 2*(HVplane to WirePlane) 
 
@@ -126,27 +129,27 @@ QweakSimHDC::~QweakSimHDC()
     if (HDC_Foil_VisAtt)                     delete HDC_Foil_VisAtt;
     if (HDC_SubContainer_VisAtt)             delete HDC_SubContainer_VisAtt;
     if (HDC_MasterContainer_VisAtt)          delete HDC_MasterContainer_VisAtt;
-    
+
     if (HDC_WirePlane_Physical)              delete HDC_WirePlane_Physical ;
-    if (HDC_WirePlane_Logical)               delete  HDC_WirePlane_Logical;
-    
-    if (HDC_Foil_Physical)                   delete  HDC_Foil_Physical;
-    if (HDC_Foil_Logical)                    delete  HDC_Foil_Logical;
-    
+    if (HDC_WirePlane_Logical)               delete HDC_WirePlane_Logical;
+
+    if (HDC_Foil_Physical)                   delete HDC_Foil_Physical;
+    if (HDC_Foil_Logical)                    delete HDC_Foil_Logical;
+
     if (HDC_Frame_Physical)                  delete HDC_Frame_Physical ;
     if (HDC_Frame_Logical)                   delete HDC_Frame_Logical ; 
-    
+
     if (HDC_SubContainer_Physical)           delete HDC_SubContainer_Physical ;
     if (HDC_SubContainer_Logical)            delete HDC_SubContainer_Logical;
-    
+
     if (HDC_MasterContainerFront_Physical)   delete HDC_MasterContainerFront_Physical ;
     if (HDC_MasterContainerBack_Physical)    delete HDC_MasterContainerBack_Physical;
     if (HDC_MasterContainer_Logical)         delete HDC_MasterContainer_Logical;
-    
+
     if (HDC_Frame_Solid)                     delete HDC_Frame_Solid;
-    
+
     if (Rotation_HDC)                        delete Rotation_HDC ;
-    
+
     if (pMaterial)                           delete pMaterial; 
     if (HDC_Messenger)                       delete HDC_Messenger;
 }
