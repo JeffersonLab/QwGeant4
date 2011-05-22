@@ -140,7 +140,7 @@ QweakSimDetectorConstruction::~QweakSimDetectorConstruction()
   if (pVDCRotator) delete pVDCRotator;
   if (pGEM)        delete pGEM;
   if (pHDC)        delete pHDC;
-  //if (pVDC) delete pVDC; // something broken here
+  if (pVDC)        delete pVDC;
 
 
   if (pCerenkovDetector)    delete pCerenkovDetector;
@@ -179,10 +179,8 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   pCollimator2         = new QweakSimCollimator();
   pCollimator3         = new QweakSimCollimator();
 
-//jpan@nuclear.uwinnipeg.ca
   pShieldingWall       = new QweakSimShieldingWall();
 
-//jpan@nuclear.uwinnipeg.ca
   pMainMagnet          = new QweakSimMainMagnet(); // QTOR Geometry (decoupled from field)
 
   pGEM                 = new QweakSimGEM();
@@ -205,8 +203,6 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   // experimentalHall_Material   = pMaterial->GetMaterial("HeGas");
   // Note: experimentalHall_Material was HeGas all the time up to 12-28-2005 !!!
 
-//jpan@nuclear.uwinnipeg.ca
-//  experimentalHall_Material   = pMaterial->GetMaterial("Air");
   experimentalHall_Material   = pMaterial->GetMaterial("Air");
 
   experimentalHall_Solid = new G4Box("ExpHall_Sol",
@@ -299,13 +295,12 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
     pMainMagnet -> Construct_UpStreamMiniClampPlates(experimentalHall_Physical);
     pMainMagnet -> Construct_CoilFrames(experimentalHall_Physical);
     pMainMagnet -> Construct_RadialMountingBlocks(experimentalHall_Physical);
-//jpan@nuclear.uwinnipeg.ca
-//    pMainMagnet -> Construct_SupportFrame(experimentalHall_Physical);
-//    pMainMagnet -> Construct_DownstreamSpider(experimentalHall_Physical);
+    pMainMagnet -> Construct_SupportFrame(experimentalHall_Physical);
+    pMainMagnet -> Construct_DownstreamSpider(experimentalHall_Physical);
   }
 
-//jpan@nuclear.uwinnipeg.ca: Fri Jun  5 12:24:18 CDT 2009
-//update collimators' geometry parameters according to the drawings from //http://qweak.jlab.org/doc-private/ShowDocument?docid=745
+  //jpan@nuclear.uwinnipeg.ca: Fri Jun  5 12:24:18 CDT 2009
+  //update collimators' geometry parameters according to the drawings from //http://qweak.jlab.org/doc-private/ShowDocument?docid=745
 
   //Collimator 1 configuration
   pCollimator1->SetCollimatorNumber(1);
@@ -397,74 +392,70 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   // create/place Collimator Support body into MotherVolume
   //================================================
   //
-    pCollimatorSupport   = new QweakSimCollimatorSupport( pCollimator1 ,pCollimator3 );
-    pCollimatorSupport -> ConstructSupport(experimentalHall_Physical);
+  pCollimatorSupport   = new QweakSimCollimatorSupport( pCollimator1 ,pCollimator3 );
+  pCollimatorSupport -> ConstructSupport(experimentalHall_Physical);
 
 
-  // #===================================================
-  // # create/place ShieldingWall body into MotherVolume
-  // #===================================================
+  //===================================================
+  // create/place ShieldingWall body into MotherVolume
+  //===================================================
+  //
+  pShieldingWall->SetCollimatorWall_FullLengthInX(670.56*cm);
+  pShieldingWall->SetCollimatorWall_FullLengthInY(670.56*cm);
+  pShieldingWall->SetCollimatorWall_FullLengthInZ( 50.0*cm);
 
-    pShieldingWall->SetCollimatorWall_FullLengthInX(670.56*cm);
-    pShieldingWall->SetCollimatorWall_FullLengthInY(670.56*cm);
-    pShieldingWall->SetCollimatorWall_FullLengthInZ( 50.0*cm);
+  pShieldingWall->SetOctantCutOut_Trap_RadialDistance  (250.75*cm);
+  pShieldingWall->SetOctantCutOut_Trap_FullLengthFront (150.00*cm);
+  pShieldingWall->SetOctantCutOut_Trap_FullLengthBack  (164.00*cm);
+  pShieldingWall->SetOctantCutOut_Trap_FullHeightFront ( 34.50*cm);
+  pShieldingWall->SetOctantCutOut_Trap_FullHeightBack  ( 30.50*cm);
+  pShieldingWall->SetOctantCutOut_Trap_PolarAngle      ( 20.57*degree);
 
-    pShieldingWall->SetOctantCutOut_Trap_RadialDistance  (250.75*cm);
-    pShieldingWall->SetOctantCutOut_Trap_FullLengthFront (150.00*cm);
-    pShieldingWall->SetOctantCutOut_Trap_FullLengthBack  (164.00*cm);
-    pShieldingWall->SetOctantCutOut_Trap_FullHeightFront ( 34.50*cm);
-    pShieldingWall->SetOctantCutOut_Trap_FullHeightBack  ( 30.50*cm);
-    pShieldingWall->SetOctantCutOut_Trap_PolarAngle      ( 20.57*degree);
+  pShieldingWall->ConstructShieldingWallHousing_UsingTrapezoids(experimentalHall_Physical);
+  pShieldingWall->SetCollimatorWall_CenterPositionInZ(355*cm);
 
-    pShieldingWall->ConstructShieldingWallHousing_UsingTrapezoids(experimentalHall_Physical);
-    pShieldingWall->SetCollimatorWall_CenterPositionInZ(355*cm);
+  pShieldingWall->SetCollimatorWallMaterial("ShieldingConcrete");
 
-    pShieldingWall->SetCollimatorWallMaterial("ShieldingConcrete");
-    //pShieldingWall->SetCollimatorWallMaterial("Lead");
-
-//jpan@nuclear.uwinnipeg.ca
-//    pShieldingWall->ConstructFrontWall(experimentalHall_Physical);
-//    pShieldingWall->ConstructBackWall(experimentalHall_Physical);
-//    pShieldingWall->ConstructBeamLeftSideWall(experimentalHall_Physical);
-//    pShieldingWall->ConstructBeamRightSideWall(experimentalHall_Physical);
-//    pShieldingWall->ConstructTopWall(experimentalHall_Physical);
-
-//    pShieldingWall->ConstructFrontWall(experimentalHall_Physical);
+  pShieldingWall->ConstructFrontWall(experimentalHall_Physical);
+  pShieldingWall->ConstructBackWall(experimentalHall_Physical);
+  pShieldingWall->ConstructBeamLeftSideWall(experimentalHall_Physical);
+  pShieldingWall->ConstructBeamRightSideWall(experimentalHall_Physical);
+  pShieldingWall->ConstructTopWall(experimentalHall_Physical);
+  pShieldingWall->ConstructFrontWall(experimentalHall_Physical);
 
 
-    //===============================================
-    // create/place Drift Chambers into MotherVolume
-    //===============================================
-    //
-    pGEM->ConstructComponent(experimentalHall_Physical);
-    pHDC->ConstructComponent(experimentalHall_Physical);
-    pVDC->ConstructComponent(experimentalHall_Physical);
+  //===============================================
+  // create/place Drift Chambers into MotherVolume
+  //===============================================
+  //
+  pGEM->ConstructComponent(experimentalHall_Physical);
+  pHDC->ConstructComponent(experimentalHall_Physical);
+  pVDC->ConstructComponent(experimentalHall_Physical);
 
-    //===============================================
-    // create/place VDC Rotator into MotherVolume
-    //===============================================
-    //
+  //===============================================
+  // create/place VDC Rotator into MotherVolume
+  //===============================================
+  //
+  pVDCRotator  = new QweakSimVDCRotator(pVDC);
+  pVDCRotator->SetMotherVolume(experimentalHall_Physical);
+  pVDCRotator->ConstructRings();
+  pVDCRotator->ConstructRails();
+  pVDCRotator->ConstructMount();
+  pVDCRotator->ConstructSliderSupport();
+  pVDCRotator->SetRotationAngleInPhi( 0.0*degree);
 
-//     pVDCRotator  = new QweakSimVDCRotator(pVDC);
-//     pVDCRotator->SetMotherVolume(experimentalHall_Physical);
-//     pVDCRotator->ConstructRings();
-//     pVDCRotator->ConstructRails();
-//     pVDCRotator->ConstructMount();
-//     pVDCRotator->ConstructSliderSupport();
-//     pVDCRotator->SetRotationAngleInPhi( 0.0*degree);
+  //=========================================
+  // create/place Cerenkov into MotherVolume
+  //=========================================
+  //
+  pCerenkovDetector->ConstructComponent(experimentalHall_Physical);
 
+  //=====================================================
+  // create/place Trigger Scintillator into MotherVolume
+  //=====================================================
+  //
+  pTriggerScintillator->ConstructComponent(experimentalHall_Physical);
 
-    //=========================================
-    // create/place Cerenkov into MotherVolume
-    //=========================================
-    //
-    pCerenkovDetector->ConstructComponent(experimentalHall_Physical);
-
-    //=====================================================
-    // create/place Trigger Scintillator into MotherVolume
-    //=====================================================
-    //
-    pTriggerScintillator->ConstructComponent(experimentalHall_Physical);
 
 //--------- Visualization attributes -------------------------------
 
@@ -474,10 +465,11 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   G4cout << G4endl << "The geometrical tree defined are : " << G4endl << G4endl;
   DumpGeometricalTree(experimentalHall_Physical);
 
-  G4cout << G4endl << "###### Leaving QweakSimDetectorConstruction::Construct() " << G4endl << G4endl;
-
 
   SetGlobalMagneticField();
+
+
+  G4cout << G4endl << "###### Leaving QweakSimDetectorConstruction::Construct() " << G4endl << G4endl;
 
   // Construct() *MUST* return the pointer of the physical World !!!
   return experimentalHall_Physical;
