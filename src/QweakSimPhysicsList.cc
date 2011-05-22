@@ -481,7 +481,7 @@ void QweakSimPhysicsList::ConstructOpticalPhotonProcess()
   theCerenkovProcess            = new G4Cerenkov("Cerenkov");
   //theScintillationProcess     = new G4Scintillation("Scintillation");
   theAbsorptionProcess          = new G4OpAbsorption();
-  theRayleighScatteringProcess  = new G4OpRayleigh();
+  //theRayleighScatteringProcess  = new G4OpRayleigh();
   theBoundaryProcess            = new G4OpBoundaryProcess();
 
   // does not exist yet
