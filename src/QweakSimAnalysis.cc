@@ -33,6 +33,9 @@ QweakSimAnalysis::QweakSimAnalysis()
     QweakSimG4_RootNtuple   = NULL;
     QweakSimG4_RootBranch   = NULL;
     QweakSimG4_RootFile     = NULL;
+
+    // Default ROOT file name
+    QweakSimG4_RootFileName = "QweakSim.root";
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
@@ -57,7 +60,7 @@ void QweakSimAnalysis::Finish()
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 void QweakSimAnalysis::BeginOfRun() 
 { 
-  QweakSimG4_RootFile = new TFile( "QweakSim.root","RECREATE","Qweak ROOT file");
+  QweakSimG4_RootFile = new TFile(QweakSimG4_RootFileName,"RECREATE","Qweak ROOT file");
 
   ConstructRootNtuple();
 

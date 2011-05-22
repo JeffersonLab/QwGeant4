@@ -35,8 +35,10 @@
 
 // geant4 includes
 #include "G4Types.hh"
+#include "G4String.hh"
 
 // root includes
+#include "TString.h"
 #include "TFile.h"
 #include "TTree.h"
 #include "TBranch.h"
@@ -59,7 +61,8 @@ public:
   void Init();
   void Finish();
 
-  void Fill_RootNtuple() {QweakSimG4_RootNtuple->Fill();}
+  void SetRootFileName(G4String name) { QweakSimG4_RootFileName = name; }
+  void Fill_RootNtuple() { QweakSimG4_RootNtuple->Fill(); }
   void AutoSaveRootNtuple();
 
   QweakSimUserMainEvent* QweakSimG4_RootEvent;
@@ -69,6 +72,7 @@ private:
 
   void ConstructRootNtuple(); 
 
+  TString  QweakSimG4_RootFileName;
   TTree*   QweakSimG4_RootNtuple;
   TBranch* QweakSimG4_RootBranch;
   TFile*   QweakSimG4_RootFile;
