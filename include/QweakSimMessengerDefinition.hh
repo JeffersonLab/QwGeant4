@@ -4,6 +4,7 @@
 // geant4 includes
 #include "G4UImessenger.hh"
 #include "G4UIdirectory.hh"
+#include "G4UIcmdWithABool.hh"
 #include "G4UIcmdWithAString.hh"
 #include "G4UIcmdWithAnInteger.hh"
 #include "G4UIcmdWithADoubleAndUnit.hh"

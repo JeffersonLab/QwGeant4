@@ -6,6 +6,7 @@
 
 // geant4 classes
 class G4UIdirectory;
+class G4UIcmdWithABool;
 class G4UIcmdWithAString;
 class G4UIcmdWithAnInteger;
 class G4UIcmdWithADoubleAndUnit;
