@@ -281,7 +281,8 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   //
   pTarget -> ConstructComponent(experimentalHall_Physical);
   pTarget -> SetTargetCenterPositionInZ(-650.0*cm);
-
+  //
+  pGeometry->AddModule(pTarget->getTargetPhysicalVolume());
 
   //================================================
   // create/place MainMagnet body into MotherVolume
@@ -297,6 +298,8 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
     pMainMagnet -> Construct_RadialMountingBlocks(experimentalHall_Physical);
     pMainMagnet -> Construct_SupportFrame(experimentalHall_Physical);
     pMainMagnet -> Construct_DownstreamSpider(experimentalHall_Physical);
+    //
+    pGeometry->AddModule(pMainMagnet->getMainMagnetPhysicalVolume());
   }
 
   //jpan@nuclear.uwinnipeg.ca: Fri Jun  5 12:24:18 CDT 2009
@@ -329,6 +332,8 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
 
   pCollimator1->SetCollimatorHousing_CenterPositionInZ(-575.7895*cm);//-575.79*cm
   pCollimator1->SetCollimatorHousingMaterial("PBA"); //housing material - Lead with 5% Antimony
+  //
+  pGeometry->AddModule(pCollimator1->getCollimatorHousingPhysicalVolume());
 
 
   //Collimator 2
@@ -358,6 +363,8 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
 
   pCollimator2->SetCollimatorHousing_CenterPositionInZ(-378.2195*cm);//-349.889*cm
   pCollimator2->SetCollimatorHousingMaterial("PBA");
+  //
+  pGeometry->AddModule(pCollimator2->getCollimatorHousingPhysicalVolume());
 
   //Collimator 3
   pCollimator3->SetCollimatorNumber(3);
@@ -386,7 +393,8 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
 
   pCollimator3->SetCollimatorHousing_CenterPositionInZ(-266.244*cm);//-264.239*cm
   pCollimator3->SetCollimatorHousingMaterial("PBA");
-
+  //
+  pGeometry->AddModule(pCollimator3->getCollimatorHousingPhysicalVolume());
 
   //================================================
   // create/place Collimator Support body into MotherVolume
@@ -394,7 +402,6 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   //
   pCollimatorSupport   = new QweakSimCollimatorSupport( pCollimator1 ,pCollimator3 );
   pCollimatorSupport -> ConstructSupport(experimentalHall_Physical);
-
 
   //===================================================
   // create/place ShieldingWall body into MotherVolume
@@ -422,7 +429,8 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   pShieldingWall->ConstructBeamRightSideWall(experimentalHall_Physical);
   pShieldingWall->ConstructTopWall(experimentalHall_Physical);
   pShieldingWall->ConstructFrontWall(experimentalHall_Physical);
-
+  //
+  pGeometry->AddModule(pShieldingWall->getShieldingWallHousingPhysicalVolume());
 
   //===============================================
   // create/place Drift Chambers into MotherVolume
@@ -431,6 +439,13 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   pGEM->ConstructComponent(experimentalHall_Physical);
   pHDC->ConstructComponent(experimentalHall_Physical);
   pVDC->ConstructComponent(experimentalHall_Physical);
+  //
+  pGeometry->AddModule(pGEM->getGEMFront_PhysicalVolume());
+  pGeometry->AddModule(pGEM->getGEMBack_PhysicalVolume());
+  pGeometry->AddModule(pHDC->getHDCFront_PhysicalVolume());
+  pGeometry->AddModule(pHDC->getHDCBack_PhysicalVolume());
+  pGeometry->AddModule(pVDC->getVDCFront_PhysicalVolume());
+  pGeometry->AddModule(pVDC->getVDCBack_PhysicalVolume());
 
   //===============================================
   // create/place VDC Rotator into MotherVolume
@@ -449,18 +464,25 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   //=========================================
   //
   pCerenkovDetector->ConstructComponent(experimentalHall_Physical);
+  //
+  pGeometry->AddModule(pCerenkovDetector->GetCerenkovDetector_PhysicalVolume());
 
   //=====================================================
   // create/place Trigger Scintillator into MotherVolume
   //=====================================================
   //
   pTriggerScintillator->ConstructComponent(experimentalHall_Physical);
+  //
+  pGeometry->AddModule(pTriggerScintillator->GetTriggerScintillator_PhysicalVolume());
 
 
-//--------- Visualization attributes -------------------------------
+  //--------- Visualization attributes -------------------------------
 
   // Invisible Volume
   experimentalHall_Logical->SetVisAttributes (G4VisAttributes::Invisible);
+
+
+  //--------- Dump geometry/materials  -------------------------------
 
   G4cout << G4endl << "The geometrical tree defined are : " << G4endl << G4endl;
   DumpGeometricalTree(experimentalHall_Physical);
