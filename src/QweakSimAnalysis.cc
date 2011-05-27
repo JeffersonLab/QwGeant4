@@ -1,17 +1,17 @@
 //=============================================================================
-// 
+//
 //   ---------------------------
 //  | Doxygen File Information |
 //  ---------------------------
-// 
+//
 /**
  
    \file QweakSimAnalysis.cc
 
-   $Revision: 1.4 $	
+   $Revision: 1.4 $
    $Date: 2006/01/06 19:12:25 $
 
-   \author Klaus Hans Grimm   
+   \author Klaus Hans Grimm
 
 */
 //=============================================================================
@@ -19,121 +19,121 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
 // system includes
-#include <ctime>  //jpan@nuclear.uwinnipeg.ca for using time lib
+#include <ctime>
+
+// geant4 includes
+#include "G4Run.hh"
 
 // user includes
 #include "QweakSimAnalysis.hh"
 #include "QweakSimUserMainEvent.hh"
+#include "QweakSimAnalysisMessenger.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 QweakSimAnalysis::QweakSimAnalysis()
+: fRootFileStem("QwSim"),fRootFileName("")
 {
-    // Initialize 
-    QweakSimG4_RootEvent    = NULL;
-    QweakSimG4_RootNtuple   = NULL;
-    QweakSimG4_RootBranch   = NULL;
-    QweakSimG4_RootFile     = NULL;
+  G4cout << "###### Calling QweakSimAnalysis::QweakSimAnalysis()" << G4endl;
 
-    // Default ROOT file name
-    QweakSimG4_RootFileName = "QweakSim.root";
+  // Initialize
+  fRootEvent    = NULL;
+  fRootNtuple   = NULL;
+  fRootBranch   = NULL;
+  fRootFile     = NULL;
+
+  // Create messenger
+  pAnalysisMessenger = new QweakSimAnalysisMessenger(this);
+
+  G4cout << "###### Leaving QweakSimAnalysis::QweakSimAnalysis()" << G4endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-QweakSimAnalysis::~QweakSimAnalysis() 
+QweakSimAnalysis::~QweakSimAnalysis()
 {
-  Finish();
+  G4cout << "###### Calling QweakSimAnalysis::QweakSimAnalysis()" << G4endl;
+
+  // Delete ROOT objects
+  if (fRootEvent)    delete fRootEvent;
+  if (fRootNtuple)   delete fRootNtuple;
+  if (fRootBranch)   delete fRootBranch;
+  if (fRootFile)     delete fRootFile;
+
+  // Delete messenger
+  if (pAnalysisMessenger) delete pAnalysisMessenger;
+
+  G4cout << "###### Leaving QweakSimAnalysis::QweakSimAnalysis()" << G4endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-void QweakSimAnalysis::Init()
-{;}                       
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-void QweakSimAnalysis::Finish()
+void QweakSimAnalysis::BeginOfRun(const G4Run* aRun)
 {
-  if (QweakSimG4_RootEvent)    delete QweakSimG4_RootEvent;
-  if (QweakSimG4_RootNtuple)   delete QweakSimG4_RootNtuple;
-  if (QweakSimG4_RootBranch)   delete QweakSimG4_RootBranch;
-  if (QweakSimG4_RootFile)     delete QweakSimG4_RootFile;
-}   
+  // Get run number
+  G4int runID = aRun->GetRunID();
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-void QweakSimAnalysis::BeginOfRun() 
-{ 
-  QweakSimG4_RootFile = new TFile(QweakSimG4_RootFileName,"RECREATE","Qweak ROOT file");
+  // Construct file name if not set explicitly
+  if (fRootFileName.size() == 0)
+    fRootFileName = fRootFileStem + "_" + Form("%d",runID) + ".root";
 
+  // Create ROOT file
+  G4cout << "###### Analysis: creating ROOT file " << fRootFileName << G4endl;
+  fRootFile = new TFile(fRootFileName,"RECREATE","Qweak ROOT file");
   ConstructRootNtuple();
-
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-void QweakSimAnalysis::EndOfRun() 
+void QweakSimAnalysis::EndOfRun(const G4Run* /*aRun*/)
 {
-
-  QweakSimG4_RootFile->Write(); // Writing the data to the ROOT file
-  QweakSimG4_RootFile->Close();
+  // Write the data to the ROOT file
+  G4cout << "###### Analysis: closing ROOT file " << fRootFileName << G4endl;
+  fRootFile->Write();
+  fRootFile->Close();
+  fRootFileName = "";
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-void QweakSimAnalysis::EndOfEvent(G4int flag) 
+void QweakSimAnalysis::EndOfEvent(G4int flag)
 {
-// This member is called at the end of every event
-  if(!flag) return;
+  // This member is called at the end of every event
+  if (!flag) return;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-void QweakSimAnalysis::ConstructRootNtuple() 
+void QweakSimAnalysis::ConstructRootNtuple()
 {
+  // Create ROOT tree
+  fRootNtuple = new TTree("QweakSimG4_Tree","Qweak Geant4 Simulation Tree");
 
-  // create ROOT tree
-
-  QweakSimG4_RootNtuple = new TTree("QweakSimG4_Tree","QweakSimG4_Tree");
-
-  // save the file after so many bytes. Avoids complete data loss after crash 
-  //QweakSimG4_RootNtuple ->SetAutoSave(1000000);  //AutoSave after every 1 Mbyte written to disk 
+  // Save the file after so many bytes. Avoids complete data loss after crash
+  //fRootNtuple ->SetAutoSave(1000000);  //AutoSave after every 1 Mbyte written to disk
 
   // Instance of data structure to be written into ROOT file
-  QweakSimG4_RootEvent  = new QweakSimUserMainEvent();
+  fRootEvent  = new QweakSimUserMainEvent();
 
-  // Create a branch with the data structure defined by QweakSimG4_Event
-
-//jpan@nuclear.uwinnipeg.ca
-//  int bufsize = 64000;
-//  int split   = 10; 
-//  int split   = 99; 
-
-  QweakSimG4_RootBranch = QweakSimG4_RootNtuple->Branch("QweakSimUserMainEvent", "QweakSimUserMainEvent", &QweakSimG4_RootEvent, 64000, 99);
-
+  // Create a branch with the data structure defined by fRootEvent
+  int bufsize = 64000;
+  int split   = 99;
+  fRootBranch = fRootNtuple->Branch("QweakSimUserMainEvent", "QweakSimUserMainEvent", &fRootEvent, bufsize, split);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
-void QweakSimAnalysis::AutoSaveRootNtuple() 
+void QweakSimAnalysis::AutoSaveRootNtuple()
 {
-    // save the current ntuple:
-    // In case your program crashes before closing the file holding this tree,
-    // the file will be automatically recovered when you will connect the file
-    // in UPDATE mode.
-    // The Tree will be recovered at the status corresponding to the last AutoSave.
-    //
-    // if option contains "SaveSelf", gDirectory->SaveSelf() is called.
-    // This allows another process to analyze the Tree while the Tree is being filled.
-    //
-    // see http://root.cern.ch/root/html/TTree.html#TTree:AutoSave
+  // save the current ntuple:
+  // In case your program crashes before closing the file holding this tree,
+  // the file will be automatically recovered when you will connect the file
+  // in UPDATE mode.
+  // The Tree will be recovered at the status corresponding to the last AutoSave.
+  //
+  // if option contains "SaveSelf", gDirectory->SaveSelf() is called.
+  // This allows another process to analyze the Tree while the Tree is being filled.
+  //
+  // see http://root.cern.ch/root/html/TTree.html#TTree:AutoSave
 
-     // QweakSimG4_RootNtuple -> AutoSave("SaveSelf");
-     QweakSimG4_RootNtuple -> AutoSave();
-     gDirectory -> Purge(); //jpan: Purge old trees
-
-//jpan@nuclear.uwinnipeg.ca
-//print the timestamp on screen, test code, add by Jie
-
-//     time_t ltime;     // calendar time  
-//     ltime=time(NULL); // get current cal time  
-//     cout<<"=====>> Data saved at "<< asctime( localtime(&ltime) ) <<G4endl;
-
+  // fRootNtuple -> AutoSave("SaveSelf");
+  fRootNtuple -> AutoSave();
+  gDirectory -> Purge(); //jpan: Purge old trees
 }
-
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
