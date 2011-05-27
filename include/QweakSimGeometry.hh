@@ -63,12 +63,28 @@ class QweakSimGeometry
     QweakSimGeometry();
    ~QweakSimGeometry();
 
-    void SetWorldVolume(G4VPhysicalVolume* worldvolume);
+    // Set world volume
+    //
+    void SetWorldVolume(G4VPhysicalVolume* worldvolume) { fWorldVolume = worldvolume; };
 
     // Reading and writing file name
     //
-    void SetReadFile(const G4String& file);
-    void SetWriteFile(const G4String& file);
+    void SetReadFile(const G4String& file)  { fReadFile = file; };
+    void SetWriteFile(const G4String& file) { fWriteFile = file; };
+
+    // Writing user or automatic modules
+    //
+    void SetWriteModuleDepth(const G4int& depth) { fModuleDepth = depth; };
+    void SetWriteModuleUser(const G4bool& flag)  { fModuleUser = flag; };
+
+    // Adding modules
+    void AddModule(G4VPhysicalVolume* physvol) {
+      #ifdef G4LIB_USE_GDML
+        if (fModuleUser)
+          if (physvol)
+            fGDMLParser.AddModule(physvol);
+      #endif
+    }
 
     // Read and write GDML files
     //
@@ -80,6 +96,14 @@ class QweakSimGeometry
     // World volume
     //
     G4VPhysicalVolume* fWorldVolume;
+
+    // Modules
+    //
+    G4int fModuleDepth;
+    G4bool fModuleUser;
+
+    // Append pointer address to names
+    G4bool fStoreReferences;
 
     // Read and write file names
     //

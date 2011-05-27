@@ -59,6 +59,8 @@ class QweakSimGeometryMessenger: public G4UImessenger
     G4UIdirectory*             theGeometryDir;
     G4UIcmdWithAString*        theReadCommand;
     G4UIcmdWithAString*        theWriteCommand;
+    G4UIcmdWithAnInteger*      theDepthCommand;
+    G4UIcmdWithABool*          theModuleCommand;
 };
 
 // ----------------------------------------------------------------------------

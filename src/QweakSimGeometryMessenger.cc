@@ -44,6 +44,18 @@ QweakSimGeometryMessenger::QweakSimGeometryMessenger(QweakSimGeometry* aGeometry
   theWriteCommand->SetDefaultValue("GDML/qweak_out.gdml");
   theWriteCommand->AvailableForStates(G4State_Idle);
 
+  theDepthCommand = new G4UIcmdWithAnInteger("/GDML/WriteDepth", this);
+  theDepthCommand->SetGuidance("Split GDML output in automatic modules");
+  theDepthCommand->SetParameterName("WriteDepth", false);
+  theDepthCommand->SetDefaultValue(2);
+  theDepthCommand->AvailableForStates(G4State_Idle);
+
+  theModuleCommand = new G4UIcmdWithABool("/GDML/WriteModule", this);
+  theModuleCommand->SetGuidance("Split GDML output in user modules");
+  theModuleCommand->SetParameterName("WriteModule", false);
+  theModuleCommand->SetDefaultValue(false);
+  theModuleCommand->AvailableForStates(G4State_Idle);
+
   G4cout << G4endl << "###### Leaving QweakSimGeometryMessenger::QweakSimGeometryMessenger() " << G4endl << G4endl;
 }
 
@@ -55,7 +67,9 @@ QweakSimGeometryMessenger::~QweakSimGeometryMessenger()
 
   if (theReadCommand)     delete theReadCommand;
   if (theWriteCommand)    delete theWriteCommand;
-  if (theGeometryDir) delete theGeometryDir;
+  if (theDepthCommand)    delete theDepthCommand;
+  if (theModuleCommand)   delete theModuleCommand;
+  if (theGeometryDir)     delete theGeometryDir;
 
   G4cout << G4endl << "###### Leaving QweakSimGeometryMessenger::~QweakSimGeometryMessenger() " << G4endl << G4endl;
 }
@@ -64,14 +78,22 @@ QweakSimGeometryMessenger::~QweakSimGeometryMessenger()
 
 void QweakSimGeometryMessenger::SetNewValue(G4UIcommand* command, G4String newValue)
 {
-  if ( command == theReadCommand )
+  if (command == theReadCommand)
   {
     theGeometry->SetReadFile(newValue);
 //    theGeometry->Read();
   }
-  if ( command == theWriteCommand )
+  if (command == theWriteCommand)
   {
     theGeometry->SetWriteFile(newValue);
     theGeometry->Write();
+  }
+  if (command == theDepthCommand)
+  {
+    theGeometry->SetWriteModuleDepth(theDepthCommand->GetNewIntValue(newValue));
+  }
+  if (command == theModuleCommand)
+  {
+    theGeometry->SetWriteModuleUser(theModuleCommand->GetNewBoolValue(newValue));
   }
 }
