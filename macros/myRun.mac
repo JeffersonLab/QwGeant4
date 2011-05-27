@@ -43,6 +43,9 @@
 #/TrackingAction/TrackingFlag 2
 #/TrackingAction/TrackingFlag 3
 
+#/Analysis/RootFileName QweakSimNew.root
+#/Analysis/RootFileStem QwSim
+
 #/run/verbose 2
 #/tracking/verbose 2
 /run/beamOn 60000
