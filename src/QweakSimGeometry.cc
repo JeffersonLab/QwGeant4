@@ -60,27 +60,6 @@ QweakSimGeometry::~QweakSimGeometry()
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void QweakSimGeometry::SetReadFile(const G4String& file)
-{
-  fReadFile = file;
-}
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-void QweakSimGeometry::SetWriteFile(const G4String& file)
-{
-  fWriteFile = file;
-}
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-void QweakSimGeometry::SetWorldVolume(G4VPhysicalVolume* worldvolume)
-{
-  fWorldVolume = worldvolume;
-}
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
 void QweakSimGeometry::Write()
 {
   G4cout << G4endl << "###### Calling QweakSimGeometry::Write() " << G4endl << G4endl;
