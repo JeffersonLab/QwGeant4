@@ -93,7 +93,12 @@ G4double QweakSimEPEvent::GetVertexZ()
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-G4ThreeVector QweakSimEPEvent::GetMomentumDirection(){
+G4ThreeVector QweakSimEPEvent::GetMomentumDirection()
+{
+   // FIXME Technically you cannot take independent phi and theta angles when working
+   // in spherical coordinates.  See for example
+   // http://hypernews.slac.stanford.edu/HyperNews/geant4/get/particles/31/2.html
+   // or more generally http://mathworld.wolfram.com/SpherePointPicking.html
 
    ThetaAngle = ThetaAngle_Min + G4UniformRand()*(ThetaAngle_Max - ThetaAngle_Min);
    PhiAngle =  PhiAngle_Min + G4UniformRand()*(PhiAngle_Max - PhiAngle_Min);

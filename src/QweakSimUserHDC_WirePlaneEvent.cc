@@ -42,7 +42,7 @@ void QweakSimUserHDC_WirePlaneEvent::Initialize()
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-void QweakSimUserHDC_WirePlaneEvent::Clear()
+void QweakSimUserHDC_WirePlaneEvent::Clear(const Option_t*)
 {
   NbOfHits = 0;
 

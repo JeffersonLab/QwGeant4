@@ -58,7 +58,7 @@ void QweakSimUserGEM_WirePlaneEvent::Initialize()
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-void QweakSimUserGEM_WirePlaneEvent::Clear()
+void QweakSimUserGEM_WirePlaneEvent::Clear(const Option_t*)
 {
   NbOfHits = 0;
 

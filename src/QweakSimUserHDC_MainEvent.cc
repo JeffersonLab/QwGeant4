@@ -51,7 +51,7 @@ QweakSimUserHDC_MainEvent::~QweakSimUserHDC_MainEvent()
 {;}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-void QweakSimUserHDC_MainEvent::Clear()
+void QweakSimUserHDC_MainEvent::Clear(const Option_t*)
 {
   ChamberFront.Clear();
   ChamberBack.Clear();

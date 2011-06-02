@@ -50,15 +50,14 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
 // root includes
-#include "Rtypes.h"
+#include "TObject.h"
 
 // user includes
 #include "QweakSimUserCerenkov_DetectorEvent.hh"
 #include "QweakSimUserCerenkov_PMTEvent.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-//class QweakSimUserOctantEvent : public TObject
-class QweakSimUserCerenkov_OctantEvent 
+class QweakSimUserCerenkov_OctantEvent : public TObject
 {
 
 private:
@@ -79,27 +78,25 @@ public:
 
   //void SetTree(TTree *data){  Detector.SetTree(data); };
   
-  // define a new Class known to ROOT  
-
-//jpan@nuclear.uwinnipeg.ca
+  // define a new Class known to ROOT
   ClassDef(QweakSimUserCerenkov_OctantEvent,1)
 
-};  // end class QweakSimCerenkov_OctantEvent 
+}; // end class QweakSimCerenkov_OctantEvent
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
-#endif 
+#endif
 
 //=======================================================================================
 //   -----------------------
 //  | CVS File Information |
 //  -----------------------
-// 
-//      $Revisions$  
+//
+//      $Revisions$
 //      $Log: QweakSimUserCerenkov_OctantEvent.hh,v $
 //      Revision 1.2  2005/12/27 19:28:38  grimm
 //      - Redesign of Doxygen header containing CVS info like revision and date
 //      - Added CVS revision log at the end of file
 //
-// 
+//
 

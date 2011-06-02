@@ -50,7 +50,7 @@ QweakSimUserGEM_MainEvent::~QweakSimUserGEM_MainEvent()
 {;}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-void QweakSimUserGEM_MainEvent::Clear()
+void QweakSimUserGEM_MainEvent::Clear(const Option_t*)
 {
   ChamberFront.Clear();
   ChamberBack.Clear();

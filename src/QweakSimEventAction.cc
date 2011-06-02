@@ -185,13 +185,13 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     G4int n_trajectories = 0;
 
     if (trajectoryContainer) n_trajectories = trajectoryContainer->entries();
-    G4cout << "QweakSimEventAction::EndOfEventAction, we have so many trajectories stored :"<< n_trajectories << G4endl;
+//    G4cout << "QweakSimEventAction::EndOfEventAction, we have so many trajectories stored :"<< n_trajectories << G4endl;
 
 
     // extract the trajectories and draw them
     if (G4VVisManager::GetConcreteInstance()) {
 
-        G4cout << "Inside G4VVisManager::GetConcreteInstance()"<< G4endl;
+//        G4cout << "Inside G4VVisManager::GetConcreteInstance()"<< G4endl;
 
         for (G4int i=0; i<n_trajectories; i++) {
 

@@ -42,7 +42,7 @@ void QweakSimUserVDC_WirePlaneEvent::Initialize()
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
-void QweakSimUserVDC_WirePlaneEvent::Clear()
+void QweakSimUserVDC_WirePlaneEvent::Clear(const Option_t*)
 {
   NbOfHits = 0;
 

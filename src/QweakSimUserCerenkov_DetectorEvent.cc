@@ -135,7 +135,7 @@ void QweakSimUserCerenkov_DetectorEvent::AddSecondaryParticleEvent(Float_t XO, F
 								   Float_t XM, Float_t YM, Float_t ZM,
 								   Float_t Eng, Float_t charge)
 {
-  G4int cnt = SecondaryParticleCount;
+  Int_t cnt = SecondaryParticleCount;
   Float_t *tmp1X = NULL;
   Float_t *tmp1Y = NULL;
   Float_t *tmp1Z = NULL;

@@ -101,10 +101,10 @@ G4bool QweakSimTriggerScintillator_DetectorSD::ProcessHits(G4Step* aStep, G4Touc
      localPos      = theTouchable->GetHistory()->GetTopTransform().TransformPoint(worldPos);
      worldMomentum = aStep->GetPreStepPoint()->GetMomentum();
 
-     G4cout << "=======================================================================================" << G4endl;
-     G4cout << ">>>>>>>          Particle entering TriggerScintillator_Physical               <<<<<<<<<" << G4endl;
-     G4cout << "  After PreStep Boundary Check: TriggerScintillator WorldPos.Z [cm]:" << worldPos.z()/cm << G4endl;
-     G4cout << "=======================================================================================" << G4endl;
+//     G4cout << "=======================================================================================" << G4endl;
+//     G4cout << ">>>>>>>          Particle entering TriggerScintillator_Physical               <<<<<<<<<" << G4endl;
+//     G4cout << "  After PreStep Boundary Check: TriggerScintillator WorldPos.Z [cm]:" << worldPos.z()/cm << G4endl;
+//     G4cout << "=======================================================================================" << G4endl;
 
  }
 else { return false;}
@@ -146,7 +146,7 @@ else { return false;}
 
 
 
-  G4cout << "-------------------------------------------------------------------------------------------------------" << G4endl;
+//  G4cout << "-------------------------------------------------------------------------------------------------------" << G4endl;
 
 //  G4ThreeVector worldPos = preStepPoint->GetPosition();
 //   G4cout << "%%%%%%%%%%%%%%%%%%%%%%%  TriggerScintillator WorldPos.X [cm]:" << worldPos.x()/cm << G4endl;
@@ -217,7 +217,7 @@ else { return false;}
 //   G4cout << " @@@@@@@@@@@@@@@@@@@@@@@ Original Track Q2                 : " << primaryQ2                       << G4endl;
 //   G4cout << " @@@@@@@@@@@@@@@@@@@@@@@ Original CrossSection Weight (ub) : " << crossSectionWeight              << G4endl;
 
- G4cout << " =====> Storing Trigger Scintillator hit information into aHit" << G4endl;
+//   G4cout << " =====> Storing Trigger Scintillator hit information into aHit" << G4endl;
 
   QweakSimTriggerScintillator_DetectorHit* aHit = new QweakSimTriggerScintillator_DetectorHit(MotherCopyNo);
    

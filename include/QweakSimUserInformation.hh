@@ -3,7 +3,6 @@
 
 // system includes
 #include <vector>
-using std::vector;
 
 // user includes
 #include "QweakSimCerenkovDetector_PMTHit.hh"
@@ -63,7 +62,7 @@ private:
   G4double *cerenkovSecondaryPartEng;
   G4double *cerenkovSecondaryPartCharge;
 
-  vector <G4double> CerenkovPhotonEnergy;
+  std::vector <G4double> CerenkovPhotonEnergy;
 
   QweakSimCerenkovDetector_PMTHit *PMTHit;
   G4int PMTSide;

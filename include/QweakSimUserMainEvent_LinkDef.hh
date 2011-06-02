@@ -60,7 +60,7 @@
 
 #pragma link C++ class QweakSimUserTriggerScintillator_MainEvent+;
 #pragma link C++ class QweakSimUserTriggerScintillator_DetectorEvent+;
-//#pragma link C++ class QweakSimUserTriggerScintillator_PMTEvent+;
+#pragma link C++ class QweakSimUserTriggerScintillator_PMTEvent+;
 
 #pragma link C++ class QweakSimUserCerenkov_MainEvent+;
 #pragma link C++ class QweakSimUserCerenkov_OctantEvent+;

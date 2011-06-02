@@ -51,14 +51,11 @@
 #define QweakSimUserPrimaryEvent_h
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
-
-#include "Rtypes.h"
-
-#ifndef __CINT__
-#endif
+// root includes
+#include "TObject.h"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-class QweakSimUserPrimaryEvent 
+class QweakSimUserPrimaryEvent : public TObject
 {
 
 private:

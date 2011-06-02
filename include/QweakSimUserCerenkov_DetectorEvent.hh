@@ -54,16 +54,11 @@
 #include <vector>
 
 // root includes
-#include "Rtypes.h"
+#include "TObject.h"
 #include "TString.h"
 
-// geant4 includes
-#ifndef __CINT__
-#include "G4Types.hh"
-#endif
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-class QweakSimUserCerenkov_DetectorEvent 
+class QweakSimUserCerenkov_DetectorEvent : public TObject
 {
 
 private:

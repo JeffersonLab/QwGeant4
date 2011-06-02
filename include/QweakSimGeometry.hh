@@ -79,11 +79,13 @@ class QweakSimGeometry
 
     // Adding modules
     void AddModule(G4VPhysicalVolume* physvol) {
-      #ifdef G4LIB_USE_GDML
-        if (fModuleUser)
-          if (physvol)
+      if (fModuleUser) {
+        if (physvol) {
+          #ifdef G4LIB_USE_GDML
             fGDMLParser.AddModule(physvol);
-      #endif
+          #endif
+        }
+      }
     }
 
     // Read and write GDML files

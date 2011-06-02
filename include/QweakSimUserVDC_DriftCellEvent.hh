@@ -49,14 +49,11 @@
 #define QweakSimUserVDC_DriftCellEvent_h
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
-
-#include "Rtypes.h"
-
-#ifndef __CINT__
-#endif
+// root includes
+#include "TObject.h"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-class QweakSimUserVDC_DriftCellEvent 
+class QweakSimUserVDC_DriftCellEvent : public TObject
 {
 
 private:

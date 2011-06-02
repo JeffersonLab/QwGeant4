@@ -50,10 +50,10 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
 // root includes
-#include "Rtypes.h"
+#include "TObject.h"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-class QweakSimUserCerenkov_PMTEvent 
+class QweakSimUserCerenkov_PMTEvent : public TObject
 {
 
 private:

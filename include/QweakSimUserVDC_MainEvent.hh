@@ -82,9 +82,8 @@
 #define QweakSimUserVDC_MainEvent_h
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
-
-#ifndef __CINT__
-#endif
+// root includes
+#include "TObject.h"
 
 // user includes
 #include "QweakSimUserVDC_Config.hh"
@@ -94,8 +93,7 @@
 class QweakSimUserVDC_SingleVDCEvent;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-//class QweakSimUserMainEvent : public TObject
-class QweakSimUserVDC_MainEvent 
+class QweakSimUserVDC_MainEvent : public TObject
 {
 
 private:
@@ -114,7 +112,7 @@ public:
   // Destructor 
   virtual ~QweakSimUserVDC_MainEvent();
   
-  void Clear();
+  void Clear(const Option_t* = 0);
   
   // define a new Class known to ROOT  
   ClassDef(QweakSimUserVDC_MainEvent,1)

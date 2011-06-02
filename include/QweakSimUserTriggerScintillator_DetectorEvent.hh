@@ -38,10 +38,10 @@
 #include <vector>
 
 // root includes
-#include "Rtypes.h"
+#include "TObject.h"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-class QweakSimUserTriggerScintillator_DetectorEvent 
+class QweakSimUserTriggerScintillator_DetectorEvent : public TObject
 {
 
 private:

@@ -53,7 +53,7 @@
 #include <vector>
 
 // root includes
-#include "Rtypes.h"
+#include "TObject.h"
 
 // user includes
 #include "QweakSimUserCerenkov_DetectorEvent.hh"
@@ -61,8 +61,7 @@
 #include "QweakSimUserCerenkov_PMTEvent.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-//class QweakSimUserMainEvent : public TObject
-class QweakSimUserCerenkov_MainEvent 
+class QweakSimUserCerenkov_MainEvent : public TObject
 {
 
 private:

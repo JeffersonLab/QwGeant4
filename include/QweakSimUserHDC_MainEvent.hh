@@ -49,9 +49,8 @@
 #define QweakSimUserHDC_MainEvent_h
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
-
-#ifndef __CINT__
-#endif
+// root includes
+#include "TObject.h"
 
 // user includes
 #include "QweakSimUserHDC_SingleHDCEvent.hh"
@@ -60,8 +59,7 @@
 class QweakSimUserHDC_SingleHDCEvent;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-//class QweakSimUserMainEvent : public TObject
-class QweakSimUserHDC_MainEvent 
+class QweakSimUserHDC_MainEvent : public TObject
 {
 
 private:
@@ -79,7 +77,7 @@ public:
   // Destructor 
  virtual ~QweakSimUserHDC_MainEvent();
   
-  void Clear();
+  void Clear(const Option_t* = 0);
   
   // define a new Class known to ROOT  
   ClassDef(QweakSimUserHDC_MainEvent,1)

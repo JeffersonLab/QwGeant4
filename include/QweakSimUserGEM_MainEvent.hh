@@ -33,9 +33,8 @@
 #define QweakSimUserGEM_MainEvent_h
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
-
-#ifndef __CINT__
-#endif
+// root includes
+#include "TObject.h"
 
 // user includes
 #include "QweakSimUserGEM_SingleGEMEvent.hh"
@@ -44,8 +43,7 @@
 class QweakSimUserGEM_SingleGEMEvent;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-//class QweakSimUserMainEvent : public TObject
-class QweakSimUserGEM_MainEvent 
+class QweakSimUserGEM_MainEvent : public TObject
 {
 
 private:
@@ -63,7 +61,7 @@ public:
   // Destructor 
   virtual ~QweakSimUserGEM_MainEvent();
   
-  void Clear();
+  void Clear(const Option_t* = 0);
   
   // define a new Class known to ROOT  
   ClassDef(QweakSimUserGEM_MainEvent,1)

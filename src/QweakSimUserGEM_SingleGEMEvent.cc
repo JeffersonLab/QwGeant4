@@ -58,7 +58,7 @@ void QweakSimUserGEM_SingleGEMEvent::Initialize()
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-void QweakSimUserGEM_SingleGEMEvent::Clear()
+void QweakSimUserGEM_SingleGEMEvent::Clear(const Option_t*)
 {
     WirePlane.Clear();
 }

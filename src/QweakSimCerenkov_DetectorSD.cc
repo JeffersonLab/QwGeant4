@@ -139,12 +139,12 @@ G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistor
   G4int MotherReplicaNo2  = theTouchable->GetReplicaNumber(2);        // Several MotherVolumes
 
 
-    G4cout << "%%%%%%%%%%%%%%%%%%%  Cerenkov MV    CopyNumber  :" << MotherCopyNo      << G4endl;
-    G4cout << "%%%%%%%%%%%%%%%%%%%  Cerenkov       CopyNumber  :" << DetectorCopyNo    << G4endl;
-    G4cout << "%%%%%%%%%%%%%%%%%%%  Cerenkov    ReplicaNumber  :" << DetectorReplicaNo << G4endl;
-    G4cout << "%%%%%%%%%%%%%%%%%%%  Cerenkov MV ReplicaNumber  :" << MotherReplicaNo << G4endl;
-    G4cout << "%%%%%%%%%%%%%%%%%%%  Cerenkov MV    CopyNumber2 :" << MotherCopyNo2     << G4endl;
-    G4cout << "%%%%%%%%%%%%%%%%%%%  Cerenkov    ReplicaNumber2 :" << MotherReplicaNo2  << G4endl;
+//    G4cout << "%%%%%%%%%%%%%%%%%%%  Cerenkov MV    CopyNumber  :" << MotherCopyNo      << G4endl;
+//    G4cout << "%%%%%%%%%%%%%%%%%%%  Cerenkov       CopyNumber  :" << DetectorCopyNo    << G4endl;
+//    G4cout << "%%%%%%%%%%%%%%%%%%%  Cerenkov    ReplicaNumber  :" << DetectorReplicaNo << G4endl;
+//    G4cout << "%%%%%%%%%%%%%%%%%%%  Cerenkov MV ReplicaNumber  :" << MotherReplicaNo << G4endl;
+//    G4cout << "%%%%%%%%%%%%%%%%%%%  Cerenkov MV    CopyNumber2 :" << MotherCopyNo2     << G4endl;
+//    G4cout << "%%%%%%%%%%%%%%%%%%%  Cerenkov    ReplicaNumber2 :" << MotherReplicaNo2  << G4endl;
 
 
   // get User Track Info

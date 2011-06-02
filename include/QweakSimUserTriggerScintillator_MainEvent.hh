@@ -52,13 +52,15 @@
 // system includes
 #include <vector>
 
-// user include
+// root includes
+#include "TObject.h"
+
+// user includes
 #include "QweakSimUserTriggerScintillator_DetectorEvent.hh"
 #include "QweakSimUserTriggerScintillator_PMTEvent.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-//class QweakSimUserMainEvent : public TObject
-class QweakSimUserTriggerScintillator_MainEvent 
+class QweakSimUserTriggerScintillator_MainEvent : public TObject
 {
 
 private:

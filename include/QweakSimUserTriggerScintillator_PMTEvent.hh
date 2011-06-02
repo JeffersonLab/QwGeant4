@@ -51,10 +51,10 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
 // root includes
-#include "Rtypes.h"
+#include "TObject.h"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-class QweakSimUserTriggerScintillator_PMTEvent 
+class QweakSimUserTriggerScintillator_PMTEvent : public TObject
 {
 
 private:

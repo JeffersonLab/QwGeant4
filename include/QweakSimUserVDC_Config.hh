@@ -52,14 +52,11 @@
 #define QweakSimUserVDC_Config_h
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
-
-#include "Rtypes.h"
-
-#ifndef __CINT__
-#endif
+// root includes
+#include "TObject.h"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-class QweakSimUserVDC_Config 
+class QweakSimUserVDC_Config : public TObject
 {
 
 private:

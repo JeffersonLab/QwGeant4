@@ -34,7 +34,7 @@ QweakSimUserVDC_MainEvent::~QweakSimUserVDC_MainEvent()
 {;}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-void QweakSimUserVDC_MainEvent::Clear()
+void QweakSimUserVDC_MainEvent::Clear(const Option_t*)
 {
   ChamberFront.Clear();
   ChamberBack.Clear();
