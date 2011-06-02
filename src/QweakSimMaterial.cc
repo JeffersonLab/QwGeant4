@@ -1,29 +1,10 @@
-
 #include "QweakSimMaterial.hh"
-
-// geant4 includes
-#include "G4NistManager.hh"
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-QweakSimMaterial::QweakSimMaterial()
-{
-G4cout << G4endl << "###### Calling QweakSimMaterial::QweakSimMaterial() " << G4endl << G4endl;
-}
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-QweakSimMaterial::~QweakSimMaterial()
-{
-G4cout << G4endl << "###### Calling/Leaving QweakSimMaterial::~QweakSimMaterial() " << G4endl << G4endl;
-}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void QweakSimMaterial::DefineMaterials()
 {
-G4cout << G4endl << "###### Calling QweakSimMaterial::DefineMaterials() " << G4endl << G4endl;
-
+  G4cout << G4endl << "###### Calling QweakSimMaterial::DefineMaterials() " << G4endl << G4endl;
 
   // Define required materials
 
@@ -31,182 +12,47 @@ G4cout << G4endl << "###### Calling QweakSimMaterial::DefineMaterials() " << G4e
   G4double Z;        // atomic number
   G4double density;  // density
 
-  G4double temperature; 
+  G4double temperature;
   G4double pressure;
   G4double fractionmass;
 
   G4String name;
   G4String symbol;
-  
-  G4int natoms; 
+
+  G4int natoms;
   G4int ncomponents;
   G4int nelements;
 
- 
+
   //
   // Define general elements
   //
 
-  // G4Element describes the properties of the atoms:
-  // atomic number, number of nucleons, atomic mass, shell energy ...
+  G4Element* elH  = fNistManager->FindOrBuildElement("H");
+  G4Element* elHe = fNistManager->FindOrBuildElement("He");
+  G4Element* elBe = fNistManager->FindOrBuildElement("Be");
+  G4Element* elB  = fNistManager->FindOrBuildElement("B");
+  G4Element* elC  = fNistManager->FindOrBuildElement("C");
+  G4Element* elN  = fNistManager->FindOrBuildElement("N");
+  G4Element* elO  = fNistManager->FindOrBuildElement("O");
+  G4Element* elF  = fNistManager->FindOrBuildElement("F");
+  G4Element* elNa = fNistManager->FindOrBuildElement("Na");
+  G4Element* elMg = fNistManager->FindOrBuildElement("Mg");
+  G4Element* elAl = fNistManager->FindOrBuildElement("Al");
+  G4Element* elSi = fNistManager->FindOrBuildElement("Si");
+  G4Element* elCl = fNistManager->FindOrBuildElement("Cl");
+  G4Element* elAr = fNistManager->FindOrBuildElement("Ar");
+  G4Element* elK  = fNistManager->FindOrBuildElement("K");
+  G4Element* elCa = fNistManager->FindOrBuildElement("Ca");
+  G4Element* elFe = fNistManager->FindOrBuildElement("Fe");
+  G4Element* elNi = fNistManager->FindOrBuildElement("Ni");
+  G4Element* elMn = fNistManager->FindOrBuildElement("Mn");
+  G4Element* elCr = fNistManager->FindOrBuildElement("Cr");
+  G4Element* elXe = fNistManager->FindOrBuildElement("Xe");
+  G4Element* elSb = fNistManager->FindOrBuildElement("Sb");
+  G4Element* elPb = fNistManager->FindOrBuildElement("Pb");
 
 
-  // see http://pcitapiww.cern.ch/asd/geant4/G4UsersDocuments/UsersGuides/ForApplicationDeveloper/html/Detector/material.html
-  //
-  // The whole list is availbale at: http://physics.nist.gov/PhysRefData/Star/Text/method.html
-  G4NistManager* man = G4NistManager::Instance();
-  man->SetVerbose(1);
-
-
-  //
-  // define pure NIST materials
-  //
-
-  //G4Material* Al = man->FindOrBuildMaterial("G4_Al");
-  //G4Material* Cu = man->FindOrBuildMaterial("G4_Cu");
-
-  //---------------------------------------------------------
-  name   = "Element_Hydrogen";
-  symbol = "H"; 
-  Z      = 1.;
-  A      = 1.00794*g/mole;
-  G4Element* __attribute__ ((unused))
-  elH = new G4Element(name, symbol, Z, A);
-  //---------------------------------------------------------
-  name   = "Element_Helium";
-  symbol = "He"; 
-  Z      = 2.;
-  A      = 4.0026*g/mole;
-  G4Element* __attribute__ ((unused))
-  elHe = new G4Element(name, symbol, Z, A);
-  //---------------------------------------------------------
-  name   = "Element_Boro";
-  symbol = "B"; 
-  Z      = 5.;
-  A      = 10.811*g/mole;
-  G4Element* __attribute__ ((unused))
-  elB = new G4Element(name, symbol, Z, A);
-  //---------------------------------------------------------
-  name   = "Element_Carbon";
-  symbol = "C"; 
-  Z      = 6.;
-  A      = 12.011*g/mole;
-  G4Element* __attribute__ ((unused))
-  elC = new G4Element(name, symbol, Z, A);
-  //---------------------------------------------------------
-  name   = "Element_Nitrogen";
-  symbol = "N"; 
-  Z      = 7.;
-  A      = 14.01*g/mole;
-  G4Element* __attribute__ ((unused))
-  elN = new G4Element(name, symbol, Z, A);
-  //---------------------------------------------------------
-  name   = "Element_Oxygen";
-  symbol = "O"; 
-  Z      = 8.;
-  A      = 16.00*g/mole;
-  G4Element* __attribute__ ((unused))
-  elO = new G4Element(name, symbol, Z, A);
-  //---------------------------------------------------------
-  name   = "Element_Fluorine";
-  symbol = "F"; 
-  Z      = 9.;
-  A      = 19.00*g/mole;
-  G4Element* __attribute__ ((unused))
-  elF = new G4Element(name, symbol, Z, A);
-  //---------------------------------------------------------
-  name   = "Element_Sodium";
-  symbol = "Na"; 
-  Z      = 11.;
-  A      = 22.99*g/mole;
-  G4Element* __attribute__ ((unused))
-  elNa = new G4Element(name, symbol, Z, A);
-  //---------------------------------------------------------
-  name   = "Element_Magnesium";
-  symbol = "Mg"; 
-  Z      = 12.;
-  A      = 24.305*g/mole;
-  G4Element* __attribute__ ((unused))
-  elMg = new G4Element(name, symbol, Z, A);
-  //---------------------------------------------------------
-  name   = "Element_Aluminum";
-  symbol = "Al"; 
-  Z      = 13.;
-  A      = 26.981539*g/mole;
-  G4Element* __attribute__ ((unused))
-  elAl = new G4Element(name, symbol, Z, A);
-  //---------------------------------------------------------
-  name   = "Element_Silicon";
-  symbol = "Si"; 
-  Z      = 14.;
-  A      = 28.09*g/mole;
-  G4Element* __attribute__ ((unused))
-  elSi  = new G4Element(name, symbol, Z, A);
-  //---------------------------------------------------------
-  name   = "Element_Chlorine";
-  symbol = "Cl"; 
-  Z      = 17.;
-  A      = 35.453*g/mole;
-  G4Element* __attribute__ ((unused))
-  elCl = new G4Element(name, symbol, Z, A);
-  //---------------------------------------------------------
-  name   = "Element_Argon";
-  symbol = "Ar"; 
-  Z      = 18.;
-  A      = 39.95*g/mole;
-  G4Element* __attribute__ ((unused))
-  elAr  = new G4Element(name, symbol, Z, A);
-  //---------------------------------------------------------
-  name   = "Element_Potassium";
-  symbol = "K"; 
-  Z      = 19.;
-  A      = 39.0983*g/mole;
-  G4Element* __attribute__ ((unused))
-  elK = new G4Element(name, symbol, Z, A);
-  //---------------------------------------------------------
-  name   = "Element_Calcium";
-  symbol = "Ca"; 
-  Z      = 20.;
-  A      = 40.08*g/mole;
-  G4Element* __attribute__ ((unused))
-  elCa = new G4Element(name, symbol, Z, A);
-  //---------------------------------------------------------
-  name   = "Element_Chromium";
-  symbol = "Cr"; 
-  Z      = 24.;
-  A      = 52.00*g/mole;
-  G4Element* __attribute__ ((unused))
-  elCr = new G4Element(name, symbol, Z, A);
-  //---------------------------------------------------------
-  name   = "Element_Magnesium";
-  symbol = "Mn"; 
-  Z      = 25.;
-  A      = 54.94*g/mole;
-  G4Element* __attribute__ ((unused))
-  elMn = new G4Element(name, symbol, Z, A);
-  //---------------------------------------------------------
-  name   = "Element_Iron";
-  symbol = "Fe";
-  Z      = 26.;
-  A      = 55.85*g/mole;
-  G4Element* __attribute__ ((unused))
-  elFe  = new G4Element(name, symbol, Z, A);
-  //---------------------------------------------------------
-  name   = "Element_Nickel";
-  symbol = "Ni";
-  Z      = 28.;
-  A      = 58.70*g/mole;
-  G4Element* __attribute__ ((unused))
-  elNi  = new G4Element(name, symbol, Z, A);
-  //---------------------------------------------------------
-  name   = "Element_Xenon";
-  symbol = "Xe";
-  Z      = 52.;
-  A      = 131.29*g/mole;
-  G4Element* __attribute__ ((unused))
-  elXe  = new G4Element(name, symbol, Z, A);
-  //---------------------------------------------------------
- 
   //
   // define simple materials
   //
@@ -214,18 +60,18 @@ G4cout << G4endl << "###### Calling QweakSimMaterial::DefineMaterials() " << G4e
   // The G4Material class describes the macroscopic properties of the matter:
   // density, state, temperature, pressure, radiation length, mean free path,
   // dE/dx ...
-  // 
+  //
   // My name convention: all materials start with matXyz
   //
   // Sorted by Z
- 
+
   // Liquid H2
   name      = "H2Liquid";
   density   = 0.0708*g/cm3;
   nelements = 1;
   G4Material* __attribute__ ((unused))
   matLiquidHydrogen = new G4Material(name, density, nelements);
-  matLiquidHydrogen -> AddElement(elH,1); 
+  matLiquidHydrogen -> AddElement(elH,1);
   matLiquidHydrogen -> GetIonisation() -> SetMeanExcitationEnergy(21.8*eV);
 
   // Helium gas
@@ -242,10 +88,10 @@ G4cout << G4endl << "###### Calling QweakSimMaterial::DefineMaterials() " << G4e
   nelements = 1;
   G4Material* __attribute__ ((unused))
   matLiquidHelium = new G4Material(name, density, nelements);
-  matLiquidHelium -> AddElement(elHe,1); 
+  matLiquidHelium -> AddElement(elHe,1);
 
 
-    // Al material
+  // Al material
   name      = "Aluminum";
   density   = 2.700*g/cm3;
   nelements = 1;
@@ -262,7 +108,6 @@ G4cout << G4endl << "###### Calling QweakSimMaterial::DefineMaterials() " << G4e
   matArgonGas = new G4Material(name,density,nelements, kStateGas, 273.15*kelvin,1.*atmosphere);
   matArgonGas -> AddElement(elAr, 1);
   //matArgonGas -> GetIonisation() -> SetMeanExcitationEnergy(188*eV);
-
 
   // Iron material
   name    = "Iron";
@@ -325,7 +170,7 @@ G4cout << G4endl << "###### Calling QweakSimMaterial::DefineMaterials() " << G4e
   G4Material* __attribute__ ((unused))
   matXe =  new G4Material(name,density, ncomponents, kStateGas,273.15*kelvin,1.*atmosphere);
   matXe -> AddElement(elXe,1);
-             
+
   // CO2 , STP
   name        = "CO2";
   density     = 1.818*mg/cm3;
@@ -335,7 +180,7 @@ G4cout << G4endl << "###### Calling QweakSimMaterial::DefineMaterials() " << G4e
   matCO2-> AddElement(elC, natoms=1);
   matCO2-> AddElement(elO, natoms=2);
   matCO2-> GetIonisation() -> SetMeanExcitationEnergy(85*eV);
-  
+
   // Water
   name        = "Water" ;
   density     = 1.000*g/cm3;
@@ -355,7 +200,7 @@ G4cout << G4endl << "###### Calling QweakSimMaterial::DefineMaterials() " << G4e
   matScint->AddElement(elC, natoms=9);
   matScint->AddElement(elH, natoms=10);
 
-  // Quartz SiO2 (e.g. Spectrosil 2000), optical properties will be added 
+  // Quartz SiO2 (e.g. Spectrosil 2000), optical properties will be added
   name        = "Quartz";
   density     = 2.200*g/cm3;
   ncomponents = 2;
@@ -372,7 +217,6 @@ G4cout << G4endl << "###### Calling QweakSimMaterial::DefineMaterials() " << G4e
   matSiO2 = new G4Material(name,density, ncomponents);
   matSiO2->AddElement(elSi, natoms=1);
   matSiO2->AddElement(elO , natoms=2);
-
 
   // SiElast_Glue  The glue used to glue together the quartz pieces
   name        = "SiElast_Glue";
@@ -437,7 +281,7 @@ G4cout << G4endl << "###### Calling QweakSimMaterial::DefineMaterials() " << G4e
   //
   //    ---  H        O  -----
   //        -N-(CH2)5-C-
-  //  
+  //
   name        = "Nylon";
   density     = 0.805*g/cm3;
   ncomponents = 4;
@@ -448,8 +292,8 @@ G4cout << G4endl << "###### Calling QweakSimMaterial::DefineMaterials() " << G4e
   matNylon -> AddElement(elO, natoms= 1);
   matNylon -> AddElement(elN, natoms= 1);
 
-  //     H H 
-  //  ---C-C--- 
+  //     H H
+  //  ---C-C---
   //     H COOCH3
   name        = "Acrylic";
   density     = 1.14*g/cm3;
@@ -460,9 +304,9 @@ G4cout << G4endl << "###### Calling QweakSimMaterial::DefineMaterials() " << G4e
   matAcrylic -> AddElement(elC, natoms= 4);
   matAcrylic -> AddElement(elO, natoms= 2);
 
-  //   
+  //
   //  Nema grade G10 or FR4
-  //  
+  //
   name        = "NemaG10";
   density     = 1.70*g/cm3;
   ncomponents = 4;
@@ -504,7 +348,6 @@ G4cout << G4endl << "###### Calling QweakSimMaterial::DefineMaterials() " << G4e
   matKapton -> AddElement(elO, fractionmass = 0.1749);
   matKapton -> GetIonisation() -> SetMeanExcitationEnergy(79.6*eV);
 
-   
   // Polyethylene
   name        = "Polyethylene";
   density     = 0.94 * g/cm3;
@@ -523,7 +366,7 @@ G4cout << G4endl << "###### Calling QweakSimMaterial::DefineMaterials() " << G4e
   matPolyacrylate -> AddElement(elH, fractionmass=0.08);
   matPolyacrylate -> AddElement(elC, fractionmass=0.60);
   matPolyacrylate -> AddElement(elO, fractionmass=0.32);
- 
+
   // VDC ArCO2 80/20
   name        = "ArCO2";
   density     = 0.0018*g/cm3; // to be checked
@@ -533,8 +376,7 @@ G4cout << G4endl << "###### Calling QweakSimMaterial::DefineMaterials() " << G4e
   matArCO2->AddMaterial(matArgonGas, fractionmass = 0.8);
   matArCO2->AddMaterial(matCO2,      fractionmass = 0.2);
 
-
-  // ShieldingConcrete(The receipe is modified 06/19/2009 by Jie pan)
+  // ShieldingConcrete (The receipe is modified 06/19/2009 by Jie pan)
   name        = "ShieldingConcrete";
   density     = 2.7*g/cm3;
   ncomponents = 6;
@@ -548,7 +390,6 @@ G4cout << G4endl << "###### Calling QweakSimMaterial::DefineMaterials() " << G4e
   matConcrete -> AddElement(elAl, fractionmass = 0.034);
   matConcrete -> GetIonisation() -> SetMeanExcitationEnergy(135.2*eV);
 
-
   // The material used in the final collimator design is Lead Antimony (~95% Lead and 5% Antimony)
   // Added June-10-09 by Jie Pan
   name        = "PBA";
@@ -559,19 +400,17 @@ G4cout << G4endl << "###### Calling QweakSimMaterial::DefineMaterials() " << G4e
   matCollimator-> AddMaterial(matPb, fractionmass = 0.955);
   matCollimator-> AddMaterial(matSb, fractionmass = 0.045);
 
-
-  // Material for the collimators: High Leaded Tin Bronze 
+  // Material for the collimators: High Leaded Tin Bronze
   // Copper Alloy No. C94300
   // see http://www/anchorbronze.com/c94300.html
   //name        = "CDA943";
   //density     = 9.29 * g/cm3;
   //ncomponents = 3;
-  //G4Material* __attribute__ ((unused)) 
+  //G4Material* __attribute__ ((unused))
   //matCollimator = new G4Material(name,density,ncomponents);
   //matCollimator-> AddMaterial(matCopper, fractionmass = 0.695);
   //matCollimator-> AddMaterial(matPb    , fractionmass = 0.25);
   //matCollimator-> AddMaterial(matSn    , fractionmass = 0.055);
-
 
   // Stainless steel (Medical Physics, Vol 25, No 10, Oct 1998)
   name        = "StainlessSteel";
@@ -585,7 +424,6 @@ G4cout << G4endl << "###### Calling QweakSimMaterial::DefineMaterials() " << G4e
   matStainlessSteel-> AddElement(elNi   , fractionmass = 0.10);
   matStainlessSteel-> AddElement(elFe   , fractionmass = 0.68);
 
-
   // TRT_CH2
   name        = "CH2";
   density     = 0.935*g/cm3;
@@ -594,7 +432,6 @@ G4cout << G4endl << "###### Calling QweakSimMaterial::DefineMaterials() " << G4e
   matCH2 = new G4Material(name, density, ncomponents);
   matCH2->AddElement(elC, natoms=1);
   matCH2->AddElement(elH, natoms=2);
-
 
   // Vacuum
   name        = "Vacuum";
@@ -607,9 +444,9 @@ G4cout << G4endl << "###### Calling QweakSimMaterial::DefineMaterials() " << G4e
   matVacuum = new G4Material("Vacuum", Z, A, density,kStateGas,temperature,pressure);
 
 
-//========================================
-// Hydrocarbones, metane and others
-//========================================
+  //========================================
+  // Hydrocarbones, metane and others
+  //========================================
 
   // CH4: Metane, STP
   name        = "Methane";
@@ -619,7 +456,7 @@ G4cout << G4endl << "###### Calling QweakSimMaterial::DefineMaterials() " << G4e
   matMetane = new G4Material(name,density,ncomponents);
   matMetane->AddElement(elC, natoms= 1) ;
   matMetane->AddElement(elH, natoms= 4) ;
- 
+
   // C3H8: Propane, STP
   name        = "Propane";
   density     = 2.005*mg/cm3 ;
@@ -628,7 +465,7 @@ G4cout << G4endl << "###### Calling QweakSimMaterial::DefineMaterials() " << G4e
   matPropane = new G4Material(name,density,ncomponents);
   matPropane->AddElement(elC, natoms= 3) ;
   matPropane->AddElement(elH, natoms= 8) ;
- 
+
   // C4H10 : iso-Butane (methylpropane), STP
   name        = "IsoButane";
   density     = 2.67*mg/cm3 ;
@@ -658,7 +495,7 @@ G4cout << G4endl << "###### Calling QweakSimMaterial::DefineMaterials() " << G4e
   matVDCGas -> AddMaterial(matEthane   , fractionmass = 0.60) ;
 
 
-  // print out Material Table
+  // Print out Material Table
   //G4cout << *(G4Material::GetMaterialTable()) << G4endl;
 
   //============================================================================================
@@ -906,17 +743,3 @@ G4cout << G4endl << "###### Calling QweakSimMaterial::DefineMaterials() " << G4e
   G4cout << G4endl << "###### Leaving QweakSimMaterial::DefineMaterials() " << G4endl << G4endl;
 
 }
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-G4Material* QweakSimMaterial::GetMaterial(G4String material)
-{
-  G4cout << G4endl << "###### Calling QweakSimMaterial::GetMaterial() " << G4endl << G4endl;
-
-  G4Material* pttoMaterial = G4Material::GetMaterial(material); 
-
-  return pttoMaterial; 
-
-  G4cout << G4endl << "###### Leaving QweakSimMaterial::GetMaterial() " << G4endl << G4endl;
-}
-
