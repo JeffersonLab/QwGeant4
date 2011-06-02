@@ -24,7 +24,7 @@
 QweakSimEPEventMessenger::QweakSimEPEventMessenger(QweakSimEPEvent* pEPEvent)
 :pQweakSimEPEvent(pEPEvent)
 {
-  G4cout << "###### Calling QweakSimEPEventMessenger::QweakSimEPEventMessenger () " << G4endl;
+  G4cout << "###### Calling QweakSimEPEventMessenger::QweakSimEPEventMessenger() " << G4endl;
 
   EventGenDir = new G4UIdirectory("/EventGen/");
   EventGenDir->SetGuidance("Event generator control");
@@ -73,14 +73,14 @@ QweakSimEPEventMessenger::QweakSimEPEventMessenger(QweakSimEPEvent* pEPEvent)
   SelectReactionRegion_Cmd->SetRange("SelectReactionRegion>=1");
   SelectReactionRegion_Cmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
-  G4cout << "###### Leavinging QweakSimEPEventMessenger::QweakSimEPEventMessenger () " << G4endl;
+  G4cout << "###### Leaving QweakSimEPEventMessenger::QweakSimEPEventMessenger() " << G4endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 QweakSimEPEventMessenger::~QweakSimEPEventMessenger()
 {
-  G4cout << "###### Calling QweakSimEPEventMessenger::~QweakSimEPEventMessenger () " << G4endl;
+  G4cout << "###### Calling QweakSimEPEventMessenger::~QweakSimEPEventMessenger() " << G4endl;
 
   delete SelectOctant_Cmd;
   delete SelectReactionType_Cmd;
@@ -88,7 +88,7 @@ QweakSimEPEventMessenger::~QweakSimEPEventMessenger()
   delete verboseCmd;
   delete EventGenDir;
 
-  G4cout << "###### Leavinging QweakSimEPEventMessenger::~QweakSimEPEventMessenger () " << G4endl;
+  G4cout << "###### Leaving QweakSimEPEventMessenger::~QweakSimEPEventMessenger() " << G4endl;
 
 }
 

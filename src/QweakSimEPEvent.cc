@@ -41,7 +41,7 @@
 //                : myUserInfo(myUI)
 QweakSimEPEvent::QweakSimEPEvent()
 {
-  std::cout << "###### Calling QweakSimEPEvent::QweakSimEPEvent () " << std::endl;
+  G4cout << "###### Calling QweakSimEPEvent::QweakSimEPEvent () " << G4endl;
 
   PhiAngle_Min = -16.0*degree;
   PhiAngle_Max =  16.0*degree;
@@ -55,7 +55,7 @@ QweakSimEPEvent::QweakSimEPEvent()
 
   EventGen_Messenger = new QweakSimEPEventMessenger(this);
 
-  std::cout << "###### Leavinging QweakSimEPEvent::QweakSimEPEvent () " << std::endl;
+  G4cout << "###### Leaving QweakSimEPEvent::QweakSimEPEvent () " << G4endl;
 } 
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -63,11 +63,11 @@ QweakSimEPEvent::QweakSimEPEvent()
 QweakSimEPEvent::~QweakSimEPEvent()
 {
 
-  std::cout << "###### Calling QweakSimEPEvent::~QweakSimEPEvent () " << std::endl;
+  G4cout << "###### Calling QweakSimEPEvent::~QweakSimEPEvent () " << G4endl;
 
  if( EventGen_Messenger) delete EventGen_Messenger;
 
-  std::cout << "###### Leavinging QweakSimEPEvent::~QweakSimEPEvent () " << std::endl;
+  G4cout << "###### Leaving QweakSimEPEvent::~QweakSimEPEvent () " << G4endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
