@@ -23,17 +23,17 @@
 /gui/addButton run "beamOn 1000" "/run/beamOn 1000"
 /gui/addButton run "beamOn 2000" "/run/beamOn 2000"
 
-# Vis menu :
-/gui/addMenu vis Vis
-/gui/addButton vis "myVis.mac"   "/control/execute myVis.mac"
-
 #
 # Viewer menu :
 /gui/addMenu   viewer Viewer
+/gui/addButton viewer "My viewer"            "/control/execute vis/myVis.mac"
+/gui/addButton viewer "X viewer"             "/control/execute vis/X.mac"
+/gui/addButton viewer "Qt viewer"            "/control/execute vis/Qt.mac"
 /gui/addButton viewer "Set style solid"      "/vis/viewer/set/style solid"
-/gui/addButton viewer "Set style wireframe"  "/vis/viewer/set/style wire"
+/gui/addButton viewer "Set style wire"       "/vis/viewer/set/style wire"
 /gui/addButton viewer "Update viewer"        "/vis/viewer/update"
 /gui/addButton viewer "Update scene"         "/vis/scene/notifyHandlers"
+/gui/addButton viewer "Reset scene"          "/control/execute vis/vis.mac"
 #
 
 # Gun menu :
