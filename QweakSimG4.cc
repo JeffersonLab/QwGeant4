@@ -90,10 +90,10 @@ int main(int argc,char** argv) {
      session = new G4UIXm(argc,argv);
     #elif defined(G4UI_USE_WIN32)
      session = new G4UIWin32();
-    #elif defined(G4UI_USE_TCSH)
-     session = new G4UIterminal(new G4UItcsh);
     #elif defined(G4UI_USE_QT)
      session = new G4UIQt(argc,argv);
+    #elif defined(G4UI_USE_TCSH)
+     session = new G4UIterminal(new G4UItcsh);
     #else
       session = new G4UIterminal();
     #endif

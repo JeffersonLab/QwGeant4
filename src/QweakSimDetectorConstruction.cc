@@ -291,7 +291,7 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   if(pMainMagnet){
     pMainMagnet -> ConstructComponent(experimentalHall_Physical);
     pMainMagnet -> SetCenterPositionInZ(0.0*cm);
-    pMainMagnet -> Construct_UpstreamSpider(experimentalHall_Physical);
+    //pMainMagnet -> Construct_UpstreamSpider(experimentalHall_Physical);
     pMainMagnet -> Construct_ClampPlates(experimentalHall_Physical);
     pMainMagnet -> Construct_UpStreamMiniClampPlates(experimentalHall_Physical);
     pMainMagnet -> Construct_CoilFrames(experimentalHall_Physical);
