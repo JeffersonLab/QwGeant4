@@ -26,7 +26,8 @@ include $(G4INSTALL)/config/binmake.gmk
 #
 ROOTCFLAGS = `root-config --cflags`
 CPPFLAGS  +=  $(ROOTCFLAGS) -fPIC
-LDFLAGS   += `root-config --nonew --libs`
+LDFLAGS   += -Wl,--no-as-needed
+LDFLAGS   += `root-config --ldflags --new --libs`
 
 #----------------------------
 # Adding OpenCascade Package
