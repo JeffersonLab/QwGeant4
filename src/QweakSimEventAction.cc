@@ -74,6 +74,8 @@ QweakSimEventAction::QweakSimEventAction(QweakSimAnalysis* AN, QweakSimUserInfor
     fEventActionMessenger = new QweakSimEventActionMessenger(this);
 
     // Initialize map from string to trigger mode
+    fTrigger.resize(kNumTriggers, false);
+    fTriggerName.resize(kNumTriggers);
     if (kMapTriggerMode.size() == 0) {
         kMapTriggerMode["all"]   = kTriggerAll;
         fTriggerName[kTriggerAll] = "all";
@@ -88,16 +90,15 @@ QweakSimEventAction::QweakSimEventAction(QweakSimAnalysis* AN, QweakSimUserInfor
         kMapTriggerMode["cer"]   = kTriggerCer;
         fTriggerName[kTriggerCer] = "cer";
     }
-    if (kMapTriggerMode.size() != EVENT_ACTION_NUM_TRIGGER)
+    if (kMapTriggerMode.size() != kNumTriggers)
         G4cout << "Number of software triggers is not defined correctly!" << G4endl;
-    // Initialize software trigger to false
-    for (int iTrigger = 0; iTrigger < EVENT_ACTION_NUM_TRIGGER; iTrigger++)
-        fTrigger[iTrigger] = false;
-    // but set default trigger to true
-    //fTrigger[kTrigger3Fold] = true;
-    //fTrigger[kTriggerScint] = true;
-    fTrigger[kTriggerCer] = true;
 
+    // Initialize software trigger to false
+    for (size_t iTrigger = 0; iTrigger < fTrigger.size(); iTrigger++)
+        fTrigger[iTrigger] = false;
+
+    // By default enable only cerenkov trigger
+    fTrigger[kTriggerCer] = true;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -110,7 +111,7 @@ QweakSimEventAction::~QweakSimEventAction()
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void QweakSimEventAction::ShowTrigger()
 {
-    for (int iTrigger = 0; iTrigger < EVENT_ACTION_NUM_TRIGGER; iTrigger++)
+    for (size_t iTrigger = 0; iTrigger < fTrigger.size(); iTrigger++)
         G4cout << (fTrigger[iTrigger]? "Enabled":"Disabled")
         << " software trigger " << fTriggerName[iTrigger] << "." << G4endl;
 }

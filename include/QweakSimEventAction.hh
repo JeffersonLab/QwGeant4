@@ -47,7 +47,8 @@ class QweakSimEventActionMessenger;
 
 enum EQweakSimTriggerMode
   { kTriggerAll, kTrigger4Fold, kTrigger3Fold,
-    kTriggerGEM, kTriggerScint, kTriggerCer };
+    kTriggerGEM, kTriggerScint, kTriggerCer,
+    kNumTriggers };
 
 class QweakSimEventAction : public G4UserEventAction
 {
@@ -77,9 +78,8 @@ private:
   QweakSimEventActionMessenger* fEventActionMessenger;
 
   // Trigger mask
-  #define EVENT_ACTION_NUM_TRIGGER 6
-  G4bool fTrigger[EVENT_ACTION_NUM_TRIGGER];
-  G4String fTriggerName[EVENT_ACTION_NUM_TRIGGER];
+  std::vector<G4bool> fTrigger;
+  std::vector<G4String> fTriggerName;
   std::map < G4String, EQweakSimTriggerMode > kMapTriggerMode;
 
 
