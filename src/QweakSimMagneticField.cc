@@ -55,10 +55,19 @@ QweakSimMagneticField::QweakSimMagneticField()
   // Messenger
   fMagneticFieldMessenger = new QweakSimMagneticFieldMessenger(this);
 
-  // TODO needs to go into messenger
+  // Default settings
   SetRotation(0.0);
   SetTranslation(0.0);
-  SetScaleFactor(1.0);
+
+  // Default field map grid (peiqing_2007.dat)
+  fMin.push_back(-250.0); fMax.push_back(250.0); fStep.push_back(2.0); fWrap.push_back(0);
+  fMin.push_back(2.0);    fMax.push_back(300.0); fStep.push_back(2.0); fWrap.push_back(0);
+  fMin.push_back(-0.5 * degree/radian); fMax.push_back(360.5 * degree/radian); fStep.push_back(1.0 * degree/radian); fWrap.push_back(2);
+
+  // Set current and scale factors
+  G4double current = 8921.0;
+  SetReferenceCurrent(current);
+  SetActualCurrent(current);
 
   G4cout << G4endl << "###### Leaving QweakSimMagneticField::QweakSimMagneticField " << G4endl << G4endl;
 }
@@ -160,17 +169,9 @@ void QweakSimMagneticField::ReadFieldMapText(const G4String& filename)
   fField->SetDebugLevel(QweakSimFieldMap<value_t,value_n>::kDebug);
 
   // Fill vector of grid min, max, and step size
-  std::vector<double> min, max, step;
-  std::vector<size_t> wrap;
-  min.push_back(-250.0); max.push_back(250.0); step.push_back(2.0); wrap.push_back(0);
-  min.push_back(2.0);    max.push_back(300.0); step.push_back(2.0); wrap.push_back(0);
-  min.push_back(-0.5 * degree/radian); max.push_back(360.5 * degree/radian); step.push_back(1.0 * degree/radian); wrap.push_back(2);
-  fField->SetDimensions(min.size());
-  fField->SetMinimumMaximumStep(min,max,step);
-  fField->SetWrapCoordinate(wrap);
-  //
-  SetRotation(90.0 * degree - 22.5 * degree);
-  SetTranslation(0.0 * cm);
+  fField->SetDimensions(fMin.size());
+  fField->SetMinimumMaximumStep(fMin,fMax,fStep);
+  fField->SetWrapCoordinate(fWrap);
 
   // Debug output
   G4cout << "Reading field grid: ";

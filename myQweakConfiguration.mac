@@ -194,5 +194,8 @@
 # Magnetic field related
 #====================================
 
-/MagneticField/Load "MainMagnet_FieldMap.dat"
-/MagneticField/SetScale 1.04
+# This is only valid for peiqing_2007.dat
+/MagneticField/SetRotation -67.5 degree
+/MagneticField/SetActualCurrent 8921.0
+/MagneticField/SetReferenceCurrent 8615.0
+/MagneticField/ReadFieldMap "MainMagnet_FieldMap.dat"

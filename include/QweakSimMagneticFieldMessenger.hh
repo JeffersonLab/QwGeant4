@@ -76,7 +76,27 @@ class QweakSimMagneticFieldMessenger: public G4UImessenger
     G4UIdirectory*             MagneticFieldDir;
 
     G4UIcmdWithAString*        ReadCmd;
+
+    G4UIcmdWithADoubleAndUnit* RotationCmd;
+    G4UIcmdWithADoubleAndUnit* TranslationCmd;
+
+    G4UIcmdWithADoubleAndUnit* MinZCmd;
+    G4UIcmdWithADoubleAndUnit* MaxZCmd;
+    G4UIcmdWithADoubleAndUnit* StepZCmd;
+
+    G4UIcmdWithADoubleAndUnit* MinRCmd;
+    G4UIcmdWithADoubleAndUnit* MaxRCmd;
+    G4UIcmdWithADoubleAndUnit* StepRCmd;
+
+    G4UIcmdWithADoubleAndUnit* MinPhiCmd;
+    G4UIcmdWithADoubleAndUnit* MaxPhiCmd;
+    G4UIcmdWithADoubleAndUnit* StepPhiCmd;
+    G4UIcmdWithAnInteger*      WrapPhiCmd;
+
     G4UIcmdWithADouble*        ScaleCmd;
+    G4UIcmdWithADouble*        RefCurrentCmd;
+    G4UIcmdWithADouble*        ActCurrentCmd;
+
     G4UIcmdWithAnInteger*      StepperCmd;
     G4UIcmdWithADoubleAndUnit* MinStepCmd;
     G4UIcmdWithoutParameter*   UpdateCmd;
