@@ -54,7 +54,7 @@
 #include "QweakSimGEM.hh"
 #include "QweakSimTriggerScintillator.hh"
 #include "QweakSimCerenkovDetector.hh"
-#include "QweakSimGlobalMagnetField.hh"
+#include "QweakSimMagneticField.hh"
 #include "QweakSimUserInformation.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -86,7 +86,7 @@ QweakSimDetectorConstruction::QweakSimDetectorConstruction(QweakSimUserInformati
   pMaterial         = NULL;
   pGeometry         = NULL;
 
-  pGlobalMagnetField = NULL;
+  pMagneticField = NULL;
 
   pTriggerScintillator  = NULL;
   pCerenkovDetector     = NULL;
@@ -135,7 +135,7 @@ QweakSimDetectorConstruction::~QweakSimDetectorConstruction()
 {
   // I'm deleting the objects in the reverse order they were created (~FILO)
 
-  if (pGlobalMagnetField) delete pGlobalMagnetField;
+  if (pMagneticField) delete pMagneticField;
 
   if (pVDCRotator) delete pVDCRotator;
   if (pGEM)        delete pGEM;
@@ -548,7 +548,7 @@ void QweakSimDetectorConstruction::SetGlobalMagneticField()
   //============================================
   //  Define the global magnet field Manager
   //============================================
-  pGlobalMagnetField = new QweakSimGlobalMagnetField();
+  pMagneticField = new QweakSimMagneticField();
 
   // Get transportation, field, and propagator  managers
   fGlobalFieldManager = G4TransportationManager::GetTransportationManager()->GetFieldManager();
@@ -563,9 +563,9 @@ void QweakSimDetectorConstruction::SetGlobalMagneticField()
   //pGlobalFieldPropagator->SetMaximumEpsilonStep(maxEps);
 
 
-  fGlobalFieldManager->SetDetectorField(pGlobalMagnetField);
+  fGlobalFieldManager->SetDetectorField(pMagneticField);
 
-  fGlobalEquation = new G4Mag_UsualEqRhs(pGlobalMagnetField);
+  fGlobalEquation = new G4Mag_UsualEqRhs(pMagneticField);
 
   // taken from one of the Geant4 presentation:
   // - If the field is calculated from a field map, a lower order stepper

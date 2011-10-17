@@ -1,33 +1,32 @@
-
 //=============================================================================
-// 
+//
 //   ---------------------------
 //  | Doxygen File Information |
 //  ---------------------------
 /**
- 
-   \file QweakSimMagnetFieldMapMessenger.hh
-   $Revision: 1.2 $	
+
+   \file QweakSimMagneticFieldMessenger.hh
+   $Revision: 1.2 $
    $Date: 2005/12/27 19:25:29 $
    \author Klaus Hans Grimm
-     
+
 */
 //=============================================================================
-// 
+//
 //=============================================================================
-// 
+//
 //   ---------------------------
 //  | Doxygen Class Information |
 //  ---------------------------
 /**
-   \class QweakSimMagnetFieldMapMessenger
-    
+   \class QweakSimMagneticFieldMessenger
+
    \brief Scans input file for /MagnetField/xyz commands
 
     Not used yet. Intended to set the StepperType and SetMinStep for the magnet fields.
 
    Placeholder for a long explaination
-    
+
  */
 //=============================================================================
 //
@@ -35,22 +34,22 @@
 //   -----------------------
 //  | CVS File Information |
 //  -----------------------
-// 
+//
 //  Last Update:      $Author: grimm $
 //  Update Date:      $Date: 2005/12/27 19:25:29 $
 //  CVS/RCS Revision: $Revision: 1.2 $
 //  Status:           $State: Exp $
-// 
+//
 // ===================================
 //  CVS Revision Log at end of file !!
 // ===================================
-// 
+//
 //=============================================================================
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
-#ifndef QweakSimMagnetFieldMapMessenger_h
-#define QweakSimMagnetFieldMapMessenger_h 1
+#ifndef QweakSimMagneticFieldMessenger_h
+#define QweakSimMagneticFieldMessenger_h 1
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -58,24 +57,27 @@
 #include "QweakSimMessengerDeclaration.hh"
 
 // user classes
-class QweakSimMagnetFieldMap;
+class QweakSimMagneticField;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-class QweakSimMagnetFieldMapMessenger: public G4UImessenger
+class QweakSimMagneticFieldMessenger: public G4UImessenger
 {
   public:
-    QweakSimMagnetFieldMapMessenger(QweakSimMagnetFieldMap* );
-   ~QweakSimMagnetFieldMapMessenger();
-    
+    QweakSimMagneticFieldMessenger(QweakSimMagneticField* );
+   ~QweakSimMagneticFieldMessenger();
+
+    void SetNewValue(G4UIcommand* command, G4String newValue);
+
   private:
 
-    QweakSimMagnetFieldMap*    fMfieldSetup;
-    
-    G4UIdirectory*             MainMagnetDir;
+    QweakSimMagneticField*     fMagneticField;
 
+    G4UIdirectory*             MagneticFieldDir;
+
+    G4UIcmdWithAString*        ReadCmd;
+    G4UIcmdWithADouble*        ScaleCmd;
     G4UIcmdWithAnInteger*      StepperCmd;
-    G4UIcmdWithADoubleAndUnit* MagFieldCmd;
     G4UIcmdWithADoubleAndUnit* MinStepCmd;
     G4UIcmdWithoutParameter*   UpdateCmd;
 
@@ -90,14 +92,11 @@ class QweakSimMagnetFieldMapMessenger: public G4UImessenger
 //   -----------------------
 //  | CVS File Information |
 //  -----------------------
-// 
-//      $Revisions$  
-//      $Log: QweakSimMagnetFieldMapMessenger.hh,v $
+//
+//      $Revisions$
+//      $Log: QweakSimMagneticFieldMessenger.hh,v $
 //      Revision 1.2  2005/12/27 19:25:29  grimm
 //      - Redesign of Doxygen header containing CVS info like revision and date
 //      - Added CVS revision log at the end of file
 //
-// 
-
-
-
+//

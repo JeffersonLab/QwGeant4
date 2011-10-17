@@ -78,7 +78,7 @@ class QweakSimHDC;
 class QweakSimGEM;
 class QweakSimTriggerScintillator;
 class QweakSimCerenkovDetector;
-class QweakSimGlobalMagnetField;
+class QweakSimMagneticField;
 class QweakSimUserInformation;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -161,11 +161,11 @@ private:
      G4double fFloorLengthInZ;
      G4double fFloorPositionInY;
 
-  //----------------------
-  // global magnet section
-  //----------------------
-  //
-  QweakSimGlobalMagnetField*      pGlobalMagnetField;
+     //----------------------
+     // global magnet section
+     //----------------------
+     //
+     QweakSimMagneticField*  pMagneticField;
 
      G4FieldManager*         fGlobalFieldManager;
      G4ChordFinder*          fGlobalChordFinder;

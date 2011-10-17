@@ -189,3 +189,10 @@
 #/EventGen/SelectReactionType   1
 #/EventGen/SelectReactionRegion 1
 
+
+#====================================
+# Magnetic field related
+#====================================
+
+/MagneticField/Load "MainMagnet_FieldMap.dat"
+/MagneticField/SetScale 1.04
