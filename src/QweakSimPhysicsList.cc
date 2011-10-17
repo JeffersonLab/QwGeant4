@@ -231,7 +231,7 @@ void QweakSimPhysicsList::ConstructProcess()
 //  ConstructElectronNuclearProcess();
 //  ConstructDecayProcess();
 
-//  ConstructEMProcess();
+  ConstructEMProcess();
   ConstructOpticalPhotonProcess();
 //  ConstructHadronProcess();
 //  ConstructNeutronProcess();
@@ -509,13 +509,16 @@ void QweakSimPhysicsList::ConstructOpticalPhotonProcess()
       G4ProcessManager*     pManager     = particle->GetProcessManager();
       G4String              particleName = particle->GetParticleName();     
 
-//      if (theCerenkovProcess->IsApplicable(*particle)) {
-//	  pManager->AddContinuousProcess(theCerenkovProcess); // here: disable Cerenkov (part 2 of 2)
-//      }
       if (theCerenkovProcess->IsApplicable(*particle)) {
-	  pManager->AddProcess(theCerenkovProcess);
-	  pManager->SetProcessOrdering(theCerenkovProcess,idxPostStep);
+	  pManager->AddContinuousProcess(theCerenkovProcess); // here: disable Cerenkov (part 2 of 2)
       }
+
+// The following will cause seg. fault. - P. Wang
+// see http://hypernews.slac.stanford.edu/HyperNews/geant4/get/phys-list/500/1.html
+//      if (theCerenkovProcess->IsApplicable(*particle)) {
+//	  pManager->AddProcess(theCerenkovProcess);
+//	  pManager->SetProcessOrdering(theCerenkovProcess,idxPostStep);
+//      }
 
 //      if (theScintillationProcess->IsApplicable(*particle)) {
 //          pManager->AddProcess(theScintillationProcess);
