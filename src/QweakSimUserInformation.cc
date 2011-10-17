@@ -1,8 +1,5 @@
 #include "QweakSimUserInformation.hh"
 
-// geant4 includes
-#include "G4MaterialPropertyVector.hh"
-
 QweakSimUserInformation::QweakSimUserInformation()
 {
   cerenkovSecondaryParticleCount = 0;
@@ -20,6 +17,7 @@ void QweakSimUserInformation::Print() const
 void QweakSimUserInformation::Initialize()
 {
 
+  TargetCenterPositionZ = -650*cm;
   PrimaryEventNumber = 0;
   ReactionType = 0;         // assign a number to which kind of reaction,e.g. 1 = elastic ep,
   PDGcode = 0;              // particle data code/number for the primary particle, e.g. 3=electron
@@ -28,6 +26,7 @@ void QweakSimUserInformation::Initialize()
   PrimaryQ2 = 0.0;
   CrossSection = 0.0;
   CrossSectionWeight = 0.0;
+  Asymmetry = 0.0;
   OriginVertexPositionX = 0.0;
   OriginVertexPositionY = 0.0;
   OriginVertexPositionZ = 0.0;

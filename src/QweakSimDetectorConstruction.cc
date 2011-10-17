@@ -173,7 +173,7 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::Construct()
 G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
 {
 
-  pTarget              = new QweakSimTarget();
+  pTarget              = new QweakSimTarget(myUserInfo);
 
   pCollimator1         = new QweakSimCollimator();
   pCollimator2         = new QweakSimCollimator();

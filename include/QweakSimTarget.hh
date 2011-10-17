@@ -28,31 +28,33 @@
     
  */
 //=============================================================================
-//
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2005/12/27 19:27:07 $
-//  CVS/RCS Revision: $Revision: 1.2 $
-//  Status:           $State: Exp $
-// 
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-// 
-//=============================================================================
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 #ifndef QweakSimTarget_h
 #define QweakSimTarget_h 1
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
+// 
 // geant4 includes
 #include "G4Material.hh"
 #include "G4LogicalVolume.hh"
+
+// system includes
+//#include "cpp_include.h"
+//#include "Root_include.h"
+//#include "Geant4_include.hh" 
+
+// user includes
+#include "QweakSimTargetMessenger.hh"
+#include "QweakSimUserInformation.hh"
+#include "QweakSimMaterial.hh"
+
+// system classes
+// class G4Tubs;
+// class G4LogicalVolume;
+// class G4VPhysicalVolume;
+// class G4Material;
+// class G4VisAttributes;
 
 // user classes
 class QweakSimMaterial;
@@ -63,16 +65,30 @@ class QweakSimTargetMessenger;
 class QweakSimTarget
 {
 public:
-  QweakSimTarget();
+  QweakSimTarget(QweakSimUserInformation *myUI);
   ~QweakSimTarget();
 
   void ConstructComponent(G4VPhysicalVolume*);
   void DestroyComponent();
+  
   void SetTargetCenterPositionInZ(G4double);
+  G4double GetTargetCenterPositionInZ();
+  
   void SetTargetMaterial(G4String);
+  G4String GetTargetMaterial();
+  
   void SetTargetCellMaterial(G4String);
+  G4String GetTargetCellMaterial();
 
-
+  void SetTargetEntranceWindowMaterial(G4String);
+  G4String GetTargetEntranceMaterial();
+  
+  void SetTargetExitWindowMaterial(G4String);
+  G4String GetTargetExitWindowMaterial();
+  
+  void SetTargetExitWindowNippleMaterial(G4String);
+  G4String GetTargetExitWindowNippleMaterial();
+  
   G4LogicalVolume*   getTargetLogicalVolume()    {return TargetMaterial_Logical;} 
   G4VPhysicalVolume* getTargetPhysicalVolume()   {return TargetMaterial_Physical;} 
 
@@ -84,51 +100,59 @@ private:
   G4VPhysicalVolume* TargetCell_Physical; 
   G4Material*        TargetCell_Material;  
 
-  G4LogicalVolume*   TargetWindowFront_Logical; 
-  G4VPhysicalVolume* TargetWindowFront_Physical; 
-  G4LogicalVolume*   TargetWindowBack_Logical; 
-  G4VPhysicalVolume* TargetWindowBack_Physical;
-
+  G4LogicalVolume*   TargetEntranceWindow_Logical; 
+  G4VPhysicalVolume* TargetEntranceWindow_Physical; 
+  G4Material*        TargetEntranceWindow_Material;  
+  
+  G4LogicalVolume*   TargetExitWindow_Logical; 
+  G4VPhysicalVolume* TargetExitWindow_Physical;
+  G4Material*        TargetExitWindow_Material;  
+  
+  G4LogicalVolume*   TargetExitWindowNipple_Logical; 
+  G4VPhysicalVolume* TargetExitWindowNipple_Physical;
+  G4Material*        TargetExitWindowNipple_Material;  
+  
+  G4LogicalVolume*   ScatteringChamberWindow_Logical; 
+  G4VPhysicalVolume* ScatteringChamberWindow_Physical; 
+  
   G4LogicalVolume*   TargetMaterial_Logical; 
   G4VPhysicalVolume* TargetMaterial_Physical; 
   G4Material*        Target_Material;  
 
-  G4double targetCellWindowThickness;
+  G4LogicalVolume*   TargetContainer_Logical; 
+  G4VPhysicalVolume* TargetContainer_Physical; 
+  G4Material*        TargetContainer_Material;  
+
+  G4double targetCellEntranceWindowThickness;
+  G4double targetCellExitWindowThickness;
+  G4double targetCellExitWindowNippleThickness;
   G4double targetCellWallThickness;
 
   G4double targetCellInnerLength;               
   G4double targetCellOuterLength;
 
-  G4double targetCellRadiusMin;
-  G4double targetCellInnerRadiusMax;
-  G4double targetCellOuterRadiusMax;
+  G4double targetCellFrontRadiusMin;
+  G4double targetCellFrontInnerRadiusMax;
+  G4double targetCellFrontOuterRadiusMax;
 
+  G4double targetCellBackRadiusMin;
+  G4double targetCellBackInnerRadiusMax;
+  G4double targetCellBackOuterRadiusMax;
+
+  G4double targetCellExitWindowNippleRadius;
+  
+  G4double ScatteringChamberWindowRadius;
+  G4double ScatteringChamberWindowThickness;
+  
   G4double targetCellStartingPhi;
   G4double targetCellDeltaPhi;
-  G4double targetCellZPos;
+  G4double targetZPos;
 
   QweakSimTargetMessenger* targetMessenger;  // pointer to the Messenger
+  QweakSimUserInformation *myUserInfo;
 
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #endif
-
-//=======================================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//      $Revisions$  
-//      $Log: QweakSimTarget.hh,v $
-//      Revision 1.2  2005/12/27 19:27:07  grimm
-//      - Redesign of Doxygen header containing CVS info like revision and date
-//      - Added CVS revision log at the end of file
-//
-//
-
-
-
-
-

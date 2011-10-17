@@ -2,14 +2,21 @@
 #define QweakSimUserInformation_h 
 
 // system includes
+//#include "cpp_include.h"
+//#include "Root_include.h"
+//#include "Geant4_include.hh" 
+
 #include <vector>
 
-// user includes
+//user includes
 #include "QweakSimCerenkovDetector_PMTHit.hh"
 #include "QweakSimUserPrimaryEvent.hh"
 
+#include "G4MaterialPropertyVector.hh"
+
 // geant4 classes
 class G4MaterialPropertyVector;
+
 
 class QweakSimUserInformation 
 {
@@ -17,17 +24,26 @@ public:
   
    QweakSimUserInformation();
   ~QweakSimUserInformation();
+  
+  G4double TargetCenterPositionZ;
+  G4double TargetLength;
+  G4double TargetEntranceWindowThickness;
+  G4double TargetExitWindowThickness;
 
+  G4int    ReactionType;         // assign a number to which kind of reaction,e.g. 1 = elastic ep,
+  G4int    ReactionRegion;
+  G4int    EvtGenStatus;
+    
 private:
 
   G4int    PrimaryEventNumber;
-  G4int    ReactionType;         // assign a number to which kind of reaction,e.g. 1 = elastic ep,
   G4int    PDGcode;              // particle data code/number for the primary particle, e.g. 3=electron
   G4int    TrackID;
   G4double GlobalTime;
   G4double PrimaryQ2;
   G4double CrossSection;
   G4double CrossSectionWeight;
+  G4double Asymmetry;
   G4double OriginVertexPositionX;
   G4double OriginVertexPositionY;
   G4double OriginVertexPositionZ;
@@ -117,6 +133,9 @@ private:
 
   void     StoreCrossSectionWeight(G4double csw)  {CrossSectionWeight = csw;}
   G4double    GetCrossSectionWeight() const {return CrossSectionWeight; }
+
+  void     StoreAsymmetry(G4double asym)  {Asymmetry = asym;}
+  G4double    GetAsymmetry() const {return Asymmetry; }
 
   void     StorePrimaryEventNumber(G4int pen)    { PrimaryEventNumber = pen; }
   G4int      GetPrimaryEventNumber() const {return PrimaryEventNumber; }
