@@ -27,6 +27,7 @@
 # Viewer menu :
 /gui/addMenu   viewer Viewer
 /gui/addButton viewer "My viewer"            "/control/execute vis/myVis.mac"
+/gui/addButton viewer "OIX viewer"           "/control/execute vis/OIX.mac"
 /gui/addButton viewer "X viewer"             "/control/execute vis/X.mac"
 /gui/addButton viewer "Qt viewer"            "/control/execute vis/Qt.mac"
 /gui/addButton viewer "Set style solid"      "/vis/viewer/set/style solid"
