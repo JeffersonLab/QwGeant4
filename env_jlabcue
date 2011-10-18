@@ -1,0 +1,8 @@
+setenv JLAB_ROOT /site/12gev_phys
+source ${JLAB_ROOT}/ce/jlab.csh
+
+setenv G4WORKDIR .
+setenv G4TMP ./tmp
+
+test -a tmp || mkdir -p tmp
+

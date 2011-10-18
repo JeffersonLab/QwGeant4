@@ -818,94 +818,12 @@ void QweakSimMainMagnet::Construct_UpstreamSpider(G4VPhysicalVolume* MotherVolum
 								position_LeftBottomTube); 
   
   MyUpstreamSpider_LowThetaCutout_Solid[1] =  new G4UnionSolid ("PlateAndRightBottomTube",
-								UpstreamSpider_SubtractionBox_Solid,
+								MyUpstreamSpider_LowThetaCutout_Solid[0],
 								UpstreamSpider_SubtractionTubeRight_Solid, 
 								0,
 								position_RightBottomTube); 
-  
-  
-  MyUpstreamSpider_LowThetaCutout_Solid[2] =  new G4UnionSolid ("final",
-								MyUpstreamSpider_LowThetaCutout_Solid[0],
-								MyUpstreamSpider_LowThetaCutout_Solid[1],
-								0,
-								 position_CutoutUnion);
-  
-
-//===================================================================================================================
-
-  
-//   UpstreamSpider_LowThetaCutoutLeft_Logical  = new G4LogicalVolume( MyUpstreamSpider_LowThetaCutout_Solid[0],
-//                                                                     UpstreamSpider_Material,
-//                                                                     "UpstreamSpider_LowThetaCutoutLeft_Logical",
-//                                                                     0,
-//                                                                     0,0);
-//
-//
-//   G4ThreeVector position_UpstreamSpider_LowThetaCutoutLeft = G4ThreeVector(0.0,
-//                                                                            70.0*cm,
-//                                                                            UpstreamSpider_CenterPositionInZ);
-//
-//
-//   UpstreamSpider_LowThetaCutoutLeft_Physical = new G4PVPlacement( 0,
-//                                                                   position_UpstreamSpider_LowThetaCutoutLeft,
-//                                                                   "UpstreamSpider_LowThetaCutoutLeft_Physical",
-//                                                                   UpstreamSpider_LowThetaCutoutLeft_Logical,
-//                                                                   MotherVolume,
-//                                                                   false,
-//                                                                   0);
-//
-//
-// //------------
-//
-//
-//   UpstreamSpider_LowThetaCutoutRight_Logical  = new G4LogicalVolume( MyUpstreamSpider_LowThetaCutout_Solid[1],
-//                                                                      UpstreamSpider_Material,
-//                                                                      "UpstreamSpider_LowThetaCutoutRight_Logical",
-//                                                                      0,
-//                                                                      0,0);
-//
-//
-//   G4ThreeVector position_UpstreamSpider_LowThetaCutoutRight = G4ThreeVector(0.0,
-//                                                                             90.0*cm,
-//                                                                             UpstreamSpider_CenterPositionInZ);
-//
-//
-//   UpstreamSpider_LowThetaCutoutRight_Physical = new G4PVPlacement( 0,
-//                                                                    position_UpstreamSpider_LowThetaCutoutRight,
-//                                                                    "UpstreamSpider_LowThetaCutoutRight_Physical",
-//                                                                    UpstreamSpider_LowThetaCutoutRight_Logical,
-//                                                                    MotherVolume,
-//                                                                    false,
-//                                                                    0);
-//
-//
-//   //------------
-//
-//   UpstreamSpider_LowThetaCutoutFinal_Logical  = new G4LogicalVolume( MyUpstreamSpider_LowThetaCutout_Solid[2],
-//                                                                      UpstreamSpider_Material,
-//                                                                      "UpstreamSpider_LowThetaCutoutFinal_Logical",
-//                                                                      0,
-//                                                                      0,0);
-//
-//
-//   G4ThreeVector position_UpstreamSpider_LowThetaCutoutFinal = G4ThreeVector(0.0,
-//                                                                             110.0*cm,
-//                                                                             UpstreamSpider_CenterPositionInZ);
-//
-//
-//   UpstreamSpider_LowThetaCutoutFinal_Physical = new G4PVPlacement( 0,
-//                                                                    position_UpstreamSpider_LowThetaCutoutFinal,
-//                                                                    "UpstreamSpider_LowThetaCutoutFinal_Physical",
-//                                                                    UpstreamSpider_LowThetaCutoutFinal_Logical,
-//                                                                    MotherVolume,
-//                                                                    false,
-//                                                                    0);
-
-//===================================================================================================================
-
 
   G4double  OctantCutOut_Box_RadialDistance = 15.50*2.56*cm + 0.5*UpstreamSpider_SubtractionBox_FullLengthInY; // radial+ 1/2*BoxDimY
-
 
 
  // octant #1 location
@@ -1050,213 +968,56 @@ void QweakSimMainMagnet::Construct_UpstreamSpider(G4VPhysicalVolume* MotherVolum
    // subtract octant hole from shielding wall
    MyUpstreamSpider_Solid[0] =  new G4SubtractionSolid ("Ring-Plate1",
 							UpstreamSpider_Solid, 
-							MyUpstreamSpider_LowThetaCutout_Solid[0],
+							MyUpstreamSpider_LowThetaCutout_Solid[1],
 							//UpstreamSpider_SubtractionBox_Solid,
-							Transform3D_Octant1_Left ); 
+							Transform3D_Octant1_Right ); 
    
    // subtract octant hole from previous G4StbtractionSolid
    MyUpstreamSpider_Solid[1] =  new G4SubtractionSolid ("Ring-Plate2",
 							MyUpstreamSpider_Solid[0], 
-							MyUpstreamSpider_LowThetaCutout_Solid[0],
+							MyUpstreamSpider_LowThetaCutout_Solid[1],
 							//UpstreamSpider_SubtractionBox_Solid,
-							Transform3D_Octant2_Left ); 
+							Transform3D_Octant2_Right ); 
    
    // subtract octant hole from previous G4StbtractionSolid
    MyUpstreamSpider_Solid[2] =  new G4SubtractionSolid ("Ring-Plate3",
 							MyUpstreamSpider_Solid[1], 
-							MyUpstreamSpider_LowThetaCutout_Solid[0],
+							MyUpstreamSpider_LowThetaCutout_Solid[1],
 							//UpstreamSpider_SubtractionBox_Solid,
-							Transform3D_Octant3_Left ); 
+							Transform3D_Octant3_Right ); 
    
    // subtract octant hole from previous G4StbtractionSolid
    MyUpstreamSpider_Solid[3] =  new G4SubtractionSolid ("Ring-Plate4",
 							MyUpstreamSpider_Solid[2], 
-							MyUpstreamSpider_LowThetaCutout_Solid[0], 
+							MyUpstreamSpider_LowThetaCutout_Solid[1], 
 							//UpstreamSpider_SubtractionBox_Solid,
-							Transform3D_Octant4_Left); 
+							Transform3D_Octant4_Right); 
    // subtract octant hole from previous G4StbtractionSolid
    MyUpstreamSpider_Solid[4] =  new G4SubtractionSolid ("Ring-Plate5",
 							MyUpstreamSpider_Solid[3], 
-							MyUpstreamSpider_LowThetaCutout_Solid[0],
+							MyUpstreamSpider_LowThetaCutout_Solid[1],
 							//UpstreamSpider_SubtractionBox_Solid,
-							Transform3D_Octant5_Left ); 
+							Transform3D_Octant5_Right ); 
    // subtract octant hole from previous G4StbtractionSolid
    MyUpstreamSpider_Solid[5] =  new G4SubtractionSolid ("Ring-Plate6",
 							MyUpstreamSpider_Solid[4],
-							MyUpstreamSpider_LowThetaCutout_Solid[0],
+							MyUpstreamSpider_LowThetaCutout_Solid[1],
 							//UpstreamSpider_SubtractionBox_Solid,
-							Transform3D_Octant6_Left ); 
+							Transform3D_Octant6_Right ); 
    // subtract octant hole from previous G4StbtractionSolid
    MyUpstreamSpider_Solid[6] =  new G4SubtractionSolid ("Ring-Plate7",
 							MyUpstreamSpider_Solid[5], 
-							MyUpstreamSpider_LowThetaCutout_Solid[0],
+							MyUpstreamSpider_LowThetaCutout_Solid[1],
 							//UpstreamSpider_SubtractionBox_Solid,
-							Transform3D_Octant7_Left ); 
+							Transform3D_Octant7_Right ); 
    // subtract octant hole from previous G4StbtractionSolid
    MyUpstreamSpider_Solid[7] =  new G4SubtractionSolid ("Ring-Plate8",
 							MyUpstreamSpider_Solid[6], 
-							MyUpstreamSpider_LowThetaCutout_Solid[0],
+							MyUpstreamSpider_LowThetaCutout_Solid[1],
 							//UpstreamSpider_SubtractionBox_Solid,
-							Transform3D_Octant8_Left ); 
+							Transform3D_Octant8_Right ); 
 
-
- // subtract octant hole from shielding wall
-   MyUpstreamSpider_Solid[8] =  new G4SubtractionSolid ("Ring-Plate1",
-						       MyUpstreamSpider_Solid[7], 
-						       MyUpstreamSpider_LowThetaCutout_Solid[1],
-						       //UpstreamSpider_SubtractionBox_Solid,
-						       Transform3D_Octant1_Right ); 
-
-  // subtract octant hole from previous G4StbtractionSolid
-   MyUpstreamSpider_Solid[9] =  new G4SubtractionSolid ("Ring-Plate2",
-						       MyUpstreamSpider_Solid[8], 
-						       MyUpstreamSpider_LowThetaCutout_Solid[1],
-						       //UpstreamSpider_SubtractionBox_Solid,
-						       Transform3D_Octant2_Right ); 
-
-   // subtract octant hole from previous G4StbtractionSolid
-   MyUpstreamSpider_Solid[10] =  new G4SubtractionSolid ("Ring-Plate3",
-						       MyUpstreamSpider_Solid[9], 
-						       MyUpstreamSpider_LowThetaCutout_Solid[1],
-						       //UpstreamSpider_SubtractionBox_Solid,
-						       Transform3D_Octant3_Right ); 
-
-   // subtract octant hole from previous G4StbtractionSolid
-   MyUpstreamSpider_Solid[11] =  new G4SubtractionSolid ("Ring-Plate4",
-						       MyUpstreamSpider_Solid[10], 
-						       MyUpstreamSpider_LowThetaCutout_Solid[1], 
-						       //UpstreamSpider_SubtractionBox_Solid,
-						       Transform3D_Octant4_Right ); 
-   // subtract octant hole from previous G4StbtractionSolid
-   MyUpstreamSpider_Solid[12] =  new G4SubtractionSolid ("Ring-Plate5",
-						       MyUpstreamSpider_Solid[11], 
-						       MyUpstreamSpider_LowThetaCutout_Solid[1],
-						       //UpstreamSpider_SubtractionBox_Solid,
-						       Transform3D_Octant5_Right ); 
-   // subtract octant hole from previous G4StbtractionSolid
-   MyUpstreamSpider_Solid[13] =  new G4SubtractionSolid ("Ring-Plate6",
-						       MyUpstreamSpider_Solid[12],
-						       MyUpstreamSpider_LowThetaCutout_Solid[1],
-						       //UpstreamSpider_SubtractionBox_Solid,
-						       Transform3D_Octant6_Right ); 
-   // subtract octant hole from previous G4StbtractionSolid
-   MyUpstreamSpider_Solid[14] =  new G4SubtractionSolid ("Ring-Plate7",
-						       MyUpstreamSpider_Solid[13], 
-						       MyUpstreamSpider_LowThetaCutout_Solid[1],
-						       //UpstreamSpider_SubtractionBox_Solid,
-						       Transform3D_Octant7_Right ); 
-   // subtract octant hole from previous G4StbtractionSolid
-   MyUpstreamSpider_Solid[15] =  new G4SubtractionSolid ("Ring-Plate8",
-						       MyUpstreamSpider_Solid[14], 
-						       MyUpstreamSpider_LowThetaCutout_Solid[1],
-						       //UpstreamSpider_SubtractionBox_Solid,
-						       Transform3D_Octant8_Right); 
-
- // octant #1 cutout
- 
-  G4ThreeVector   CutoutPositonTube[8];
- 
-  CutoutPositonTube[0].setX( 0.5*UpstreamSpider_SubtractionBox_FullLengthInX );
-  CutoutPositonTube[0].setY(OctantCutOut_Box_RadialDistance +  (-0.5*UpstreamSpider_SubtractionBox_FullLengthInY + 0.5*UpstreamSpider_SubtractionTube_MaxDiameter));
-  CutoutPositonTube[0].setZ(0.0*cm);
-  CutoutPositonTube[1].rotateZ(0*degree);
- 
- // subtract octant hole from previous G4StbtractionSolid
-   MyUpstreamSpider_Solid[16] =  new G4SubtractionSolid ("Spider-PMTRight1",
-						       MyUpstreamSpider_Solid[15], 
-						       UpstreamSpider_SubtractionTubeRight_Solid,
-						       0,
-						       CutoutPositonTube[0]);
- // octant #2 cutout
-  CutoutPositonTube[1].setX( 0.5*UpstreamSpider_SubtractionBox_FullLengthInX );
-  CutoutPositonTube[1].setY(  OctantCutOut_Box_RadialDistance + (-0.5*UpstreamSpider_SubtractionBox_FullLengthInY + 0.5*UpstreamSpider_SubtractionTube_MaxDiameter));
-  CutoutPositonTube[1].setZ(0.0*cm);
-  CutoutPositonTube[1].rotateZ(45*degree);
- 
- // subtract octant hole from previous G4StbtractionSolid
-   MyUpstreamSpider_Solid[17] =  new G4SubtractionSolid ("Spider-PMTRight2",
-						       MyUpstreamSpider_Solid[16], 
-						       UpstreamSpider_SubtractionTubeRight_Solid,
-						       0,
-						       CutoutPositonTube[1]);
-
-    // octant #3 cutout
-  CutoutPositonTube[2].setX( 0.5*UpstreamSpider_SubtractionBox_FullLengthInX );
-  CutoutPositonTube[2].setY(  OctantCutOut_Box_RadialDistance + (-0.5*UpstreamSpider_SubtractionBox_FullLengthInY + 0.5*UpstreamSpider_SubtractionTube_MaxDiameter));
-  CutoutPositonTube[2].setZ(0.0*cm);
-  CutoutPositonTube[2].rotateZ(90*degree);
- 
- // subtract octant hole from previous G4StbtractionSolid
-   MyUpstreamSpider_Solid[18] =  new G4SubtractionSolid ("Spider-PMTRight3",
-						       MyUpstreamSpider_Solid[17], 
-						       UpstreamSpider_SubtractionTubeRight_Solid,
-						       0,
-						       CutoutPositonTube[2]);
-    // octant #4 cutout
-  CutoutPositonTube[3].setX( 0.5*UpstreamSpider_SubtractionBox_FullLengthInX );
-  CutoutPositonTube[3].setY(  OctantCutOut_Box_RadialDistance + (-0.5*UpstreamSpider_SubtractionBox_FullLengthInY + 0.5*UpstreamSpider_SubtractionTube_MaxDiameter));
-  CutoutPositonTube[3].setZ(0.0*cm);
-  CutoutPositonTube[3].rotateZ(135*degree);
- 
- // subtract octant hole from previous G4StbtractionSolid
-   MyUpstreamSpider_Solid[18] =  new G4SubtractionSolid ("Spider-PMTRight4",
-						       MyUpstreamSpider_Solid[17], 
-						       UpstreamSpider_SubtractionTubeRight_Solid,
-						       0,
-						       CutoutPositonTube[3]);
-    // octant #5 cutout
-  CutoutPositonTube[4].setX( 0.5*UpstreamSpider_SubtractionBox_FullLengthInX );
-  CutoutPositonTube[4].setY(  OctantCutOut_Box_RadialDistance + (-0.5*UpstreamSpider_SubtractionBox_FullLengthInY + 0.5*UpstreamSpider_SubtractionTube_MaxDiameter));
-  CutoutPositonTube[4].setZ(0.0*cm);
-  CutoutPositonTube[4].rotateZ(180*degree);
- 
- // subtract octant hole from previous G4StbtractionSolid
-   MyUpstreamSpider_Solid[19] =  new G4SubtractionSolid ("Spider-PMTRight5",
-						       MyUpstreamSpider_Solid[18], 
-						       UpstreamSpider_SubtractionTubeRight_Solid,
-						       0,
-						       CutoutPositonTube[4]);
-
-    // octant #6 cutout
-  CutoutPositonTube[5].setX( 0.5*UpstreamSpider_SubtractionBox_FullLengthInX );
-  CutoutPositonTube[5].setY(  OctantCutOut_Box_RadialDistance + (-0.5*UpstreamSpider_SubtractionBox_FullLengthInY + 0.5*UpstreamSpider_SubtractionTube_MaxDiameter));
-  CutoutPositonTube[5].setZ(0.0*cm);
-  CutoutPositonTube[5].rotateZ(225*degree);
- 
- // subtract octant hole from previous G4StbtractionSolid
-   MyUpstreamSpider_Solid[20] =  new G4SubtractionSolid ("Spider-PMTRight6",
-						       MyUpstreamSpider_Solid[19], 
-						       UpstreamSpider_SubtractionTubeRight_Solid,
-						       0,
-						       CutoutPositonTube[5]);
-    // octant #7 cutout
-  CutoutPositonTube[6].setX( 0.5*UpstreamSpider_SubtractionBox_FullLengthInX );
-  CutoutPositonTube[6].setY(  OctantCutOut_Box_RadialDistance + (-0.5*UpstreamSpider_SubtractionBox_FullLengthInY + 0.5*UpstreamSpider_SubtractionTube_MaxDiameter));
-  CutoutPositonTube[6].setZ(0.0*cm);
-  CutoutPositonTube[6].rotateZ(270*degree);
- 
- // subtract octant hole from previous G4StbtractionSolid
-   MyUpstreamSpider_Solid[21] =  new G4SubtractionSolid ("Spider-PMTRight7",
-						       MyUpstreamSpider_Solid[20], 
-						       UpstreamSpider_SubtractionTubeRight_Solid,
-						       0,
-						       CutoutPositonTube[6]);
-
-
-    // octant #8 cutout
-  CutoutPositonTube[7].setX( 0.5*UpstreamSpider_SubtractionBox_FullLengthInX );
-  CutoutPositonTube[7].setY(  OctantCutOut_Box_RadialDistance + (-0.5*UpstreamSpider_SubtractionBox_FullLengthInY + 0.5*UpstreamSpider_SubtractionTube_MaxDiameter));
-  CutoutPositonTube[7].setZ(0.0*cm);
-  CutoutPositonTube[7].rotateZ(315*degree);
- 
- // subtract octant hole from previous G4StbtractionSolid
-   MyUpstreamSpider_Solid[22] =  new G4SubtractionSolid ("Spider-PMTRight8",
-						       MyUpstreamSpider_Solid[21], 
-						       UpstreamSpider_SubtractionTubeRight_Solid,
-						       0,
-						       CutoutPositonTube[7]);
-
-
+   /*
 // define radial strut
 
 
@@ -1294,16 +1055,13 @@ void QweakSimMainMagnet::Construct_UpstreamSpider(G4VPhysicalVolume* MotherVolum
 
 //                                                               Rotation_RadialStrut,
 //                                                               position_RadialStrut);
-
-
-
-
-
+*/
 
    // Solid of Spider is defined above. Now make a logical volume and place it in the 
    // MotherVolume of Qweak
-    UpstreamSpider_Logical  = new G4LogicalVolume( //MyUpstreamSpider_Solid[23],
-						   MyUpstreamSpider_StrutsUnion_Solid[0],
+   UpstreamSpider_Logical  = new G4LogicalVolume( //MyUpstreamSpider_Solid[7],
+						  //MyUpstreamSpider_LowThetaCutout_Solid[1],
+						   MyUpstreamSpider_Solid[7],
 						   UpstreamSpider_Material,
 						   "UpstreamSpider_Log",
 						   0,
