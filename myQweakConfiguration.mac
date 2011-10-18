@@ -198,4 +198,4 @@
 /MagneticField/SetRotation -67.5 degree
 /MagneticField/SetActualCurrent 8921.0
 /MagneticField/SetReferenceCurrent 8615.0
-/MagneticField/ReadFieldMap "MainMagnet_FieldMap.dat"
+/MagneticField/ReadFieldMap MainMagnet_FieldMap.dat
