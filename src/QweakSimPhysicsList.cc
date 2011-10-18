@@ -21,9 +21,7 @@
 
 // geant4 includes
 #include "G4Version.hh"
-#include "G4Geantino.hh"
-#include "G4ChargedGeantino.hh"
-#include "G4Gamma.hh"
+#include "G4BosonConstructor.hh"
 #include "G4LeptonConstructor.hh"
 #include "G4BaryonConstructor.hh"
 #include "G4MesonConstructor.hh"
@@ -222,58 +220,28 @@ void QweakSimPhysicsList::ConstructProcess()
 {
   AddTransportation();
 
-//jpan@nuclear.uwinnipeg.ca
-//  ConstructEMProcess();
-//  ConstructOpticalPhotonProcess();
-//  ConstructHadronProcess();
-//  //ConstructNeutronProcess();
-//  ConstructPhotonNuclearProcess();
-//  ConstructElectronNuclearProcess();
-//  ConstructDecayProcess();
-
   ConstructEMProcess();
   ConstructOpticalPhotonProcess();
-//  ConstructHadronProcess();
-//  ConstructNeutronProcess();
-//  ConstructPhotonNuclearProcess();
-//  ConstructElectronNuclearProcess();
-//  ConstructDecayProcess();
+  //ConstructHadronProcess();
+  //ConstructNeutronProcess();
+  //ConstructPhotonNuclearProcess();
+  //ConstructElectronNuclearProcess();
+  //ConstructDecayProcess();
 }
 
 void QweakSimPhysicsList::ConstructBosons()
 {
-
-  G4Geantino         ::GeantinoDefinition();
-  G4ChargedGeantino  ::ChargedGeantinoDefinition();
-  G4Gamma            ::GammaDefinition();
-  G4OpticalPhoton    ::OpticalPhotonDefinition();
+    //  Construct all bosons
+    G4BosonConstructor pConstructor;
+    pConstructor.ConstructParticle();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void QweakSimPhysicsList::ConstructLeptons()
 {
-//   G4Electron        ::ElectronDefinition();
-//   G4Positron        ::PositronDefinition();
-//
-//   G4MuonPlus        ::MuonPlusDefinition();
-//   G4MuonMinus       ::MuonMinusDefinition();
-//
-//   G4TauMinus        ::TauMinusDefinition();
-//   G4TauPlus         ::TauPlusDefinition();
-//
-//   G4NeutrinoE       ::NeutrinoEDefinition();
-//   G4AntiNeutrinoE   ::AntiNeutrinoEDefinition();
-//
-//   G4NeutrinoMu      ::NeutrinoMuDefinition();
-//   G4AntiNeutrinoMu  ::AntiNeutrinoMuDefinition();
-//
-//   G4NeutrinoTau     ::NeutrinoTauDefinition();
-//   G4AntiNeutrinoTau ::AntiNeutrinoTauDefinition();
-
-  // Construct all leptons
-  G4LeptonConstructor pConstructor;
-  pConstructor.ConstructParticle();
-
+    //  Construct all leptons
+    G4LeptonConstructor pConstructor;
+    pConstructor.ConstructParticle();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -282,7 +250,7 @@ void QweakSimPhysicsList::ConstructMesons()
     //  Construct all mesons
     G4MesonConstructor pMesonConstructor;
     pMesonConstructor.ConstructParticle();
-}	
+}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void QweakSimPhysicsList::ConstructBaryons()
@@ -290,38 +258,29 @@ void QweakSimPhysicsList::ConstructBaryons()
     //  Construct all baryons
     G4BaryonConstructor pBaryonConstructor;
     pBaryonConstructor.ConstructParticle();
-
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void QweakSimPhysicsList::ConstructShortLiveds()
 {
-    //  Construct  resonaces and quarks
+    //  Construct resonaces and quarks
     G4ShortLivedConstructor pShortLivedConstructor;
-    pShortLivedConstructor.ConstructParticle();  
+    pShortLivedConstructor.ConstructParticle();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void QweakSimPhysicsList::ConstructIons()
 {
-//  Ions
-//   G4Deuteron   ::DeuteronDefinition();
-//   G4Triton     ::TritonDefinition();
-//   G4He3        ::He3Definition();
-//   G4Alpha      ::AlphaDefinition();
-//   G4GenericIon ::GenericIonDefinition();
-//
   // Construct all ions
   G4IonConstructor pConstructor;
   pConstructor.ConstructParticle();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void QweakSimPhysicsList::AddTransportation() {
-  
+void QweakSimPhysicsList::AddTransportation()
+{
     G4VUserPhysicsList::AddTransportation();
-    
-}	
+}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void QweakSimPhysicsList::ConstructEMProcess()
@@ -344,7 +303,7 @@ void QweakSimPhysicsList::ConstructEMProcess()
     pManager->AddDiscreteProcess(new G4PhotoElectricEffect);
     pManager->AddDiscreteProcess(new G4ComptonScattering);
     pManager->AddDiscreteProcess(new G4GammaConversion);
-      
+
 
     ////////////////////////
     //                    //
@@ -371,7 +330,7 @@ void QweakSimPhysicsList::ConstructEMProcess()
     // set energy limits where 'pai' is active
     paiVDC->SetLowEnergyLimit(0.1*keV);
     paiVDC->SetHighEnergyLimit(100.0*TeV);
-    
+
     // here 0 is the highest priority in region 'gas'
     eion->AddEmModel(0,paiVDC,paiVDC,DriftCellRegion_VDC);
 
@@ -380,18 +339,18 @@ void QweakSimPhysicsList::ConstructEMProcess()
     // set energy limits where 'pai' is active
     paiGEM->SetLowEnergyLimit(0.1*keV);
     paiGEM->SetHighEnergyLimit(100.0*TeV);
-    
+
     // here 0 is the highest priority in region 'gas'
     eion->AddEmModel(0,paiGEM,paiGEM,DriftCellRegion_GEM);
 
     //eion->DumpInfo()
     //eion->PrintInfo()
 
-    
+
 
     pManager->AddProcess(eion,-1, 2, 2);
 
-   
+
     ////////////////////////
     //                    //
     //  Positron physics  //
@@ -408,7 +367,7 @@ void QweakSimPhysicsList::ConstructEMProcess()
     pManager->AddProcess(new G4eBremsstrahlung,     -1, 3,3);
     pManager->AddProcess(new G4eplusAnnihilation,    0,-1,4);
 
-    
+
     ////////////////////////
     //                    //
     //   Muon- physics    //
@@ -425,8 +384,8 @@ void QweakSimPhysicsList::ConstructEMProcess()
     pManager->AddProcess(new G4MuBremsstrahlung(),      -1,-1, 3);  
     pManager->AddProcess(new G4MuPairProduction(),      -1,-1, 4);
     pManager->AddProcess(new G4MuonMinusCaptureAtRest(), 0,-1,-1);
-  
-   
+
+
     ////////////////////////
     //                    //
     //   Muon+ physics    //
@@ -440,10 +399,10 @@ void QweakSimPhysicsList::ConstructEMProcess()
     pManager->AddProcess(new G4MuMultipleScattering(),-1, 1, 1);
     #endif
     pManager->AddProcess(new G4MuIonisation(),        -1, 2, 2);
-    pManager->AddProcess(new G4MuBremsstrahlung(),    -1,-1, 3);  
+    pManager->AddProcess(new G4MuBremsstrahlung(),    -1,-1, 3);
     pManager->AddProcess(new G4MuPairProduction(),    -1,-1, 4);
 
-    
+
     ////////////////////////
     //                    //
     //    Tau- physics    //
@@ -454,11 +413,11 @@ void QweakSimPhysicsList::ConstructEMProcess()
     #if G4VERSION_NUMBER < 940
     pManager->AddProcess(new G4MultipleScattering(),   -1, 1, 1);
     #else
-    pManager->AddProcess(new G4MuMultipleScattering(),-1, 1, 1);
+    pManager->AddProcess(new G4MuMultipleScattering(), -1, 1, 1);
     #endif
     pManager->AddProcess(new G4hIonisation(),          -1, 2, 2);
- 
-   
+
+
     ////////////////////////
     //                    //
     //    Tau+ physics    //
@@ -469,9 +428,9 @@ void QweakSimPhysicsList::ConstructEMProcess()
     #if G4VERSION_NUMBER < 940
     pManager->AddProcess(new G4MultipleScattering(),   -1, 1, 1);
     #else
-    pManager->AddProcess(new G4MuMultipleScattering(),-1, 1, 1);
+    pManager->AddProcess(new G4MuMultipleScattering(), -1, 1, 1);
     #endif
-    pManager->AddProcess(new G4hIonisation(),        -1, 2, 2);
+    pManager->AddProcess(new G4hIonisation(),          -1, 2, 2);
 
 }
 
@@ -479,7 +438,7 @@ void QweakSimPhysicsList::ConstructEMProcess()
 void QweakSimPhysicsList::ConstructOpticalPhotonProcess()
 {
   theCerenkovProcess            = new G4Cerenkov("Cerenkov");
-  //theScintillationProcess     = new G4Scintillation("Scintillation");
+  //theScintillationProces  s     = new G4Scintillation("Scintillation");
   theAbsorptionProcess          = new G4OpAbsorption();
   //theRayleighScatteringProcess  = new G4OpRayleigh();
   theBoundaryProcess            = new G4OpBoundaryProcess();
@@ -491,10 +450,10 @@ void QweakSimPhysicsList::ConstructOpticalPhotonProcess()
 //  theRayleighScatteringProcess->DumpPhysicsTable();
 
   SetVerbose(1);
-  
+
   theCerenkovProcess->SetMaxNumPhotonsPerStep(300);
   theCerenkovProcess->SetTrackSecondariesFirst(true);
-  
+
   //theScintillationProcess->SetScintillationYieldFactor(1.);
   //theScintillationProcess->SetTrackSecondariesFirst(true);
 
@@ -530,7 +489,7 @@ void QweakSimPhysicsList::ConstructOpticalPhotonProcess()
 
 	  G4cout << " AddDiscreteProcess to OpticalPhoton " << G4endl;
 	  pManager->AddDiscreteProcess(theAbsorptionProcess);
-	
+
 	// accoring to some threads in Geant4 HyperNews theRayleighScatteringProcess
 	// is only defined/valid for the medium water
 	//pManager->AddDiscreteProcess(theRayleighScatteringProcess);
@@ -540,22 +499,22 @@ void QweakSimPhysicsList::ConstructOpticalPhotonProcess()
 }
 
 void QweakSimPhysicsList::ConstructHadronProcess()
-{	
+{
 
-    G4ProcessManager*   pManager = 0;
+  G4ProcessManager*   pManager = 0;
 
-  //========================  
+  //========================
   // Hadronic elastic model
-  //========================  
+  //========================
 
   G4HadronElasticProcess* theElasticProcess = new G4HadronElasticProcess();
   G4LElastic*             theElasticModel   = new G4LElastic();
 
   theElasticProcess->RegisterMe(theElasticModel);
 
-  //==========================  
+  //==========================
   // Hadronic inelastic models
-  //==========================  
+  //==========================
 
   // Bertini cascade model: use for p,n,pi+,pi- between 0 and 9.9 GeV
   G4CascadeInterface* bertiniModel = new G4CascadeInterface();
@@ -587,11 +546,11 @@ void QweakSimPhysicsList::ConstructHadronProcess()
 
   stringModel->SetFragmentationModel(stringDecay);
 
-  QGSPModel->SetHighEnergyGenerator(stringModel);   
+  QGSPModel->SetHighEnergyGenerator(stringModel);
   QGSPModel->SetMinEnergy( 15*GeV);
   QGSPModel->SetMaxEnergy(100*TeV);
 
- 
+
   ///////////////////
   //               //
   //  pi+ physics  //
@@ -607,7 +566,7 @@ void QweakSimPhysicsList::ConstructHadronProcess()
   pManager->AddProcess(new G4hMultipleScattering(), -1, 1, 1);
   #endif
   pManager->AddProcess(new G4hIonisation(),         -1, 2, 2);
- 
+
   // hadron elastic
   pManager->AddDiscreteProcess(theElasticProcess);
 
@@ -661,7 +620,7 @@ void QweakSimPhysicsList::ConstructHadronProcess()
   // pi- absorption at rest
   G4PionMinusAbsorptionAtRest* pimAbsorb = new G4PionMinusAbsorptionAtRest();
   pManager->AddRestProcess(pimAbsorb);
-   
+
   ///////////////////
   //               //
   //  K+ physics   //
@@ -676,7 +635,7 @@ void QweakSimPhysicsList::ConstructHadronProcess()
   #else
   pManager->AddProcess(new G4hMultipleScattering(), -1, 1, 1);
   #endif
-  pManager->AddProcess(new G4hIonisation(),        -1, 2, 2);
+  pManager->AddProcess(new G4hIonisation(),         -1, 2, 2);
 
   // hadron elastic
   pManager->AddDiscreteProcess(theElasticProcess);
@@ -703,7 +662,7 @@ void QweakSimPhysicsList::ConstructHadronProcess()
   #else
   pManager->AddProcess(new G4hMultipleScattering(), -1, 1, 1);
   #endif
-  pManager->AddProcess(new G4hIonisation(),        -1, 2, 2);
+  pManager->AddProcess(new G4hIonisation(),         -1, 2, 2);
 
   // hadron elastic
   pManager->AddDiscreteProcess(theElasticProcess);
@@ -768,7 +727,7 @@ void QweakSimPhysicsList::ConstructHadronProcess()
   #else
   pManager->AddProcess(new G4hMultipleScattering(), -1, 1, 1);
   #endif
-  pManager->AddProcess(new G4hIonisation(),        -1, 2, 2);
+  pManager->AddProcess(new G4hIonisation(),         -1, 2, 2);
 
   // hadron elastic
   pManager->AddDiscreteProcess(theElasticProcess);
@@ -802,17 +761,17 @@ void QweakSimPhysicsList::ConstructHadronProcess()
   #else
   pManager->AddProcess(new G4hMultipleScattering(), -1, 1, 1);
   #endif
-  pManager->AddProcess(new G4hIonisation(),        -1, 2, 2);
+  pManager->AddProcess(new G4hIonisation(),         -1, 2, 2);
 
   // hadron elastic
   pManager->AddDiscreteProcess(theElasticProcess);
 
   // hadron inelastic
   G4AntiProtonInelasticProcess* apinelProc = new G4AntiProtonInelasticProcess();
-  G4LEAntiProtonInelastic*      LEPapModel = new G4LEAntiProtonInelastic(); 
+  G4LEAntiProtonInelastic*      LEPapModel = new G4LEAntiProtonInelastic();
                                 apinelProc->RegisterMe(LEPapModel);
 
-  G4HEAntiProtonInelastic*      HEPapModel = new G4HEAntiProtonInelastic(); 
+  G4HEAntiProtonInelastic*      HEPapModel = new G4HEAntiProtonInelastic();
                                 apinelProc->RegisterMe(HEPapModel);
 
   pManager->AddDiscreteProcess(apinelProc);
@@ -820,7 +779,7 @@ void QweakSimPhysicsList::ConstructHadronProcess()
   // anti-proton annihilation at rest
   G4AntiProtonAnnihilationAtRest* apAnnihil = new G4AntiProtonAnnihilationAtRest();
   pManager->AddRestProcess(apAnnihil);
-  
+
   ///////////////////
   //               //
   // Anti-Neutron  //
@@ -835,10 +794,10 @@ void QweakSimPhysicsList::ConstructHadronProcess()
   // hadron inelastic
   G4AntiNeutronInelasticProcess* aninelProc = new G4AntiNeutronInelasticProcess();
 
-  G4LEAntiNeutronInelastic*      LEPanModel = new G4LEAntiNeutronInelastic(); 
+  G4LEAntiNeutronInelastic*      LEPanModel = new G4LEAntiNeutronInelastic();
                                  aninelProc->RegisterMe(LEPanModel);
 
-  G4HEAntiNeutronInelastic*      HEPanModel = new G4HEAntiNeutronInelastic(); 
+  G4HEAntiNeutronInelastic*      HEPanModel = new G4HEAntiNeutronInelastic();
                                  aninelProc->RegisterMe(HEPanModel);
 
   pManager->AddDiscreteProcess(aninelProc);
@@ -862,10 +821,10 @@ void QweakSimPhysicsList::ConstructHadronProcess()
   // hadron inelastic
   G4LambdaInelasticProcess* linelProc = new G4LambdaInelasticProcess();
 
-  G4LELambdaInelastic*      LEPlModel = new G4LELambdaInelastic(); 
+  G4LELambdaInelastic*      LEPlModel = new G4LELambdaInelastic();
                             linelProc->RegisterMe(LEPlModel);
 
-  G4HELambdaInelastic*      HEPlModel = new G4HELambdaInelastic(); 
+  G4HELambdaInelastic*      HEPlModel = new G4HELambdaInelastic();
                             linelProc->RegisterMe(HEPlModel);
 
   pManager->AddDiscreteProcess(linelProc);
@@ -884,10 +843,10 @@ void QweakSimPhysicsList::ConstructHadronProcess()
   // hadron inelastic
   G4AntiLambdaInelasticProcess* alinelProc = new G4AntiLambdaInelasticProcess();
 
-  G4LEAntiLambdaInelastic*      LEPalModel = new G4LEAntiLambdaInelastic(); 
+  G4LEAntiLambdaInelastic*      LEPalModel = new G4LEAntiLambdaInelastic();
                                 alinelProc->RegisterMe(LEPalModel);
 
-  G4HEAntiLambdaInelastic*      HEPalModel = new G4HEAntiLambdaInelastic(); 
+  G4HEAntiLambdaInelastic*      HEPalModel = new G4HEAntiLambdaInelastic();
                                 alinelProc->RegisterMe(HEPalModel);
 
   pManager->AddDiscreteProcess(alinelProc);
@@ -906,7 +865,7 @@ void QweakSimPhysicsList::ConstructHadronProcess()
   #else
   pManager->AddProcess(new G4hMultipleScattering(), -1, 1, 1);
   #endif
-  pManager->AddProcess(new G4hIonisation(),        -1, 2, 2);
+  pManager->AddProcess(new G4hIonisation(),         -1, 2, 2);
 
   // hadron elastic
   pManager->AddDiscreteProcess(theElasticProcess);
@@ -914,10 +873,10 @@ void QweakSimPhysicsList::ConstructHadronProcess()
   // hadron inelastic
   G4SigmaMinusInelasticProcess* sminelProc = new G4SigmaMinusInelasticProcess();
 
-  G4LESigmaMinusInelastic*      LEPsmModel = new G4LESigmaMinusInelastic(); 
+  G4LESigmaMinusInelastic*      LEPsmModel = new G4LESigmaMinusInelastic();
                                 sminelProc->RegisterMe(LEPsmModel);
 
-  G4HESigmaMinusInelastic*      HEPsmModel = new G4HESigmaMinusInelastic(); 
+  G4HESigmaMinusInelastic*      HEPsmModel = new G4HESigmaMinusInelastic();
                                 sminelProc->RegisterMe(HEPsmModel);
 
   pManager->AddDiscreteProcess(sminelProc);
@@ -936,19 +895,19 @@ void QweakSimPhysicsList::ConstructHadronProcess()
   #else
   pManager->AddProcess(new G4hMultipleScattering(), -1, 1, 1);
   #endif
-  pManager->AddProcess(new G4hIonisation(),        -1, 2, 2);
+  pManager->AddProcess(new G4hIonisation(),         -1, 2, 2);
 
   // hadron elastic
   pManager->AddDiscreteProcess(theElasticProcess);
 
   // hadron inelastic
-  G4AntiSigmaMinusInelasticProcess* asminelProc = 
+  G4AntiSigmaMinusInelasticProcess* asminelProc =
                                   new G4AntiSigmaMinusInelasticProcess();
-  G4LEAntiSigmaMinusInelastic* LEPasmModel = 
-                                  new G4LEAntiSigmaMinusInelastic(); 
+  G4LEAntiSigmaMinusInelastic* LEPasmModel =
+                                  new G4LEAntiSigmaMinusInelastic();
   asminelProc->RegisterMe(LEPasmModel);
-  G4HEAntiSigmaMinusInelastic* HEPasmModel = 
-                                  new G4HEAntiSigmaMinusInelastic(); 
+  G4HEAntiSigmaMinusInelastic* HEPasmModel =
+                                  new G4HEAntiSigmaMinusInelastic();
   asminelProc->RegisterMe(HEPasmModel);
   pManager->AddDiscreteProcess(asminelProc);
 
@@ -966,16 +925,16 @@ void QweakSimPhysicsList::ConstructHadronProcess()
   #else
   pManager->AddProcess(new G4hMultipleScattering(), -1, 1, 1);
   #endif
-  pManager->AddProcess(new G4hIonisation(),        -1, 2, 2);
+  pManager->AddProcess(new G4hIonisation(),         -1, 2, 2);
 
   // hadron elastic
   pManager->AddDiscreteProcess(theElasticProcess);
 
   // hadron inelastic
   G4SigmaPlusInelasticProcess* spinelProc = new G4SigmaPlusInelasticProcess();
-  G4LESigmaPlusInelastic* LEPspModel = new G4LESigmaPlusInelastic(); 
+  G4LESigmaPlusInelastic* LEPspModel = new G4LESigmaPlusInelastic();
   spinelProc->RegisterMe(LEPspModel);
-  G4HESigmaPlusInelastic* HEPspModel = new G4HESigmaPlusInelastic(); 
+  G4HESigmaPlusInelastic* HEPspModel = new G4HESigmaPlusInelastic();
   spinelProc->RegisterMe(HEPspModel);
   pManager->AddDiscreteProcess(spinelProc);
 
@@ -993,19 +952,19 @@ void QweakSimPhysicsList::ConstructHadronProcess()
   #else
   pManager->AddProcess(new G4hMultipleScattering(), -1, 1, 1);
   #endif
-  pManager->AddProcess(new G4hIonisation(),        -1, 2, 2);
+  pManager->AddProcess(new G4hIonisation(),         -1, 2, 2);
 
   // hadron elastic
   pManager->AddDiscreteProcess(theElasticProcess);
 
   // hadron inelastic
-  G4AntiSigmaPlusInelasticProcess* aspinelProc = 
+  G4AntiSigmaPlusInelasticProcess* aspinelProc =
                                   new G4AntiSigmaPlusInelasticProcess();
-  G4LEAntiSigmaPlusInelastic* LEPaspModel = 
-                                  new G4LEAntiSigmaPlusInelastic(); 
+  G4LEAntiSigmaPlusInelastic* LEPaspModel =
+                                  new G4LEAntiSigmaPlusInelastic();
   aspinelProc->RegisterMe(LEPaspModel);
-  G4HEAntiSigmaPlusInelastic* HEPaspModel = 
-                                  new G4HEAntiSigmaPlusInelastic(); 
+  G4HEAntiSigmaPlusInelastic* HEPaspModel =
+                                  new G4HEAntiSigmaPlusInelastic();
   aspinelProc->RegisterMe(HEPaspModel);
   pManager->AddDiscreteProcess(aspinelProc);
 
@@ -1023,16 +982,16 @@ void QweakSimPhysicsList::ConstructHadronProcess()
   #else
   pManager->AddProcess(new G4hMultipleScattering(), -1, 1, 1);
   #endif
-  pManager->AddProcess(new G4hIonisation(),        -1, 2, 2);
+  pManager->AddProcess(new G4hIonisation(),         -1, 2, 2);
 
   // hadron elastic
   pManager->AddDiscreteProcess(theElasticProcess);
 
   // hadron inelastic
   G4XiMinusInelasticProcess* xminelProc = new G4XiMinusInelasticProcess();
-  G4LEXiMinusInelastic* LEPxmModel = new G4LEXiMinusInelastic(); 
+  G4LEXiMinusInelastic* LEPxmModel = new G4LEXiMinusInelastic();
   xminelProc->RegisterMe(LEPxmModel);
-  G4HEXiMinusInelastic* HEPxmModel = new G4HEXiMinusInelastic(); 
+  G4HEXiMinusInelastic* HEPxmModel = new G4HEXiMinusInelastic();
   xminelProc->RegisterMe(HEPxmModel);
   pManager->AddDiscreteProcess(xminelProc);
 
@@ -1050,17 +1009,17 @@ void QweakSimPhysicsList::ConstructHadronProcess()
   #else
   pManager->AddProcess(new G4hMultipleScattering(), -1, 1, 1);
   #endif
-  pManager->AddProcess(new G4hIonisation(),        -1, 2, 2);
+  pManager->AddProcess(new G4hIonisation(),         -1, 2, 2);
 
   // hadron elastic
   pManager->AddDiscreteProcess(theElasticProcess);
 
   // hadron inelastic
-  G4AntiXiMinusInelasticProcess* axminelProc = 
+  G4AntiXiMinusInelasticProcess* axminelProc =
                                   new G4AntiXiMinusInelasticProcess();
-  G4LEAntiXiMinusInelastic* LEPaxmModel = new G4LEAntiXiMinusInelastic(); 
+  G4LEAntiXiMinusInelastic* LEPaxmModel = new G4LEAntiXiMinusInelastic();
   axminelProc->RegisterMe(LEPaxmModel);
-  G4HEAntiXiMinusInelastic* HEPaxmModel = new G4HEAntiXiMinusInelastic(); 
+  G4HEAntiXiMinusInelastic* HEPaxmModel = new G4HEAntiXiMinusInelastic();
   axminelProc->RegisterMe(HEPaxmModel);
   pManager->AddDiscreteProcess(axminelProc);
 
@@ -1077,9 +1036,9 @@ void QweakSimPhysicsList::ConstructHadronProcess()
 
   // hadron inelastic
   G4XiZeroInelasticProcess* x0inelProc = new G4XiZeroInelasticProcess();
-  G4LEXiZeroInelastic* LEPx0Model = new G4LEXiZeroInelastic(); 
+  G4LEXiZeroInelastic* LEPx0Model = new G4LEXiZeroInelastic();
   x0inelProc->RegisterMe(LEPx0Model);
-  G4HEXiZeroInelastic* HEPx0Model = new G4HEXiZeroInelastic(); 
+  G4HEXiZeroInelastic* HEPx0Model = new G4HEXiZeroInelastic();
   x0inelProc->RegisterMe(HEPx0Model);
   pManager->AddDiscreteProcess(x0inelProc);
 
@@ -1095,11 +1054,11 @@ void QweakSimPhysicsList::ConstructHadronProcess()
   pManager->AddDiscreteProcess(theElasticProcess);
 
   // hadron inelastic
-  G4AntiXiZeroInelasticProcess* ax0inelProc = 
+  G4AntiXiZeroInelasticProcess* ax0inelProc =
                                 new G4AntiXiZeroInelasticProcess();
-  G4LEAntiXiZeroInelastic* LEPax0Model = new G4LEAntiXiZeroInelastic(); 
+  G4LEAntiXiZeroInelastic* LEPax0Model = new G4LEAntiXiZeroInelastic();
   ax0inelProc->RegisterMe(LEPax0Model);
-  G4HEAntiXiZeroInelastic* HEPax0Model = new G4HEAntiXiZeroInelastic(); 
+  G4HEAntiXiZeroInelastic* HEPax0Model = new G4HEAntiXiZeroInelastic();
   ax0inelProc->RegisterMe(HEPax0Model);
   pManager->AddDiscreteProcess(ax0inelProc);
 
@@ -1117,17 +1076,17 @@ void QweakSimPhysicsList::ConstructHadronProcess()
   #else
   pManager->AddProcess(new G4hMultipleScattering(), -1, 1, 1);
   #endif
-  pManager->AddProcess(new G4hIonisation(),        -1, 2, 2);
+  pManager->AddProcess(new G4hIonisation(),         -1, 2, 2);
 
   // hadron elastic
   pManager->AddDiscreteProcess(theElasticProcess);
 
   // hadron inelastic
-  G4OmegaMinusInelasticProcess* ominelProc = 
+  G4OmegaMinusInelasticProcess* ominelProc =
                                       new G4OmegaMinusInelasticProcess();
-  G4LEOmegaMinusInelastic* LEPomModel = new G4LEOmegaMinusInelastic(); 
+  G4LEOmegaMinusInelastic* LEPomModel = new G4LEOmegaMinusInelastic();
   ominelProc->RegisterMe(LEPomModel);
-  G4HEOmegaMinusInelastic* HEPomModel = new G4HEOmegaMinusInelastic(); 
+  G4HEOmegaMinusInelastic* HEPomModel = new G4HEOmegaMinusInelastic();
   ominelProc->RegisterMe(HEPomModel);
   pManager->AddDiscreteProcess(ominelProc);
 
@@ -1145,19 +1104,19 @@ void QweakSimPhysicsList::ConstructHadronProcess()
   #else
   pManager->AddProcess(new G4hMultipleScattering(), -1, 1, 1);
   #endif
-  pManager->AddProcess(new G4hIonisation(),        -1, 2, 2);
+  pManager->AddProcess(new G4hIonisation(),         -1, 2, 2);
 
   // hadron elastic
   pManager->AddDiscreteProcess(theElasticProcess);
 
   // hadron inelastic
-  G4AntiOmegaMinusInelasticProcess* aominelProc = 
+  G4AntiOmegaMinusInelasticProcess* aominelProc =
                                       new G4AntiOmegaMinusInelasticProcess();
-  G4LEAntiOmegaMinusInelastic* LEPaomModel = 
-                                      new G4LEAntiOmegaMinusInelastic(); 
+  G4LEAntiOmegaMinusInelastic* LEPaomModel =
+                                      new G4LEAntiOmegaMinusInelastic();
   aominelProc->RegisterMe(LEPaomModel);
-  G4HEAntiOmegaMinusInelastic* HEPaomModel = 
-                                      new G4HEAntiOmegaMinusInelastic(); 
+  G4HEAntiOmegaMinusInelastic* HEPaomModel =
+                                      new G4HEAntiOmegaMinusInelastic();
   aominelProc->RegisterMe(HEPaomModel);
   pManager->AddDiscreteProcess(aominelProc);
 
@@ -1243,7 +1202,7 @@ void QweakSimPhysicsList::ConstructNeutronProcess()
   theBertiniModel->SetMaxEnergy(9.9*GeV);
 
   if (HPN) {
-    // Use high precision neutron model below 20 MeV 
+    // Use high precision neutron model below 20 MeV
     theBertiniModel->SetMinEnergy(HPNLimit);
 
     G4NeutronHPInelastic*     theHPInelasticModel = new G4NeutronHPInelastic();
@@ -1326,7 +1285,7 @@ void QweakSimPhysicsList::ConstructPhotonNuclearProcess()
   // low energy part
   G4GammaNuclearReaction* lowEGammaModel = new G4GammaNuclearReaction();
                           lowEGammaModel->SetMaxEnergy(3.5*GeV);
- 
+
 //   // high energy part
 //   G4TheoFSGenerator*               highEGammaModel = new G4TheoFSGenerator();
 //   G4GeneratorPrecompoundInterface* preComModel     = new G4GeneratorPrecompoundInterface();
@@ -1341,8 +1300,8 @@ void QweakSimPhysicsList::ConstructPhotonNuclearProcess()
 //                                    highEGammaModel->SetHighEnergyGenerator(theStringModel);
 //                                    highEGammaModel->SetMinEnergy(3.*GeV);
 //                                    highEGammaModel->SetMaxEnergy(100.*TeV);
- 
-  // Now add the processes to the gamma, including e+e- pair creation, 
+
+  // Now add the processes to the gamma, including e+e- pair creation,
   // Compton scattering and photo-electric effect
 
   G4ProcessManager* pManager = G4Gamma::Gamma()->GetProcessManager();
@@ -1364,7 +1323,7 @@ void QweakSimPhysicsList::ConstructElectronNuclearProcess()
 
     pManager = G4Electron::Electron()->GetProcessManager();
 
-    // Model for e+/e- nuclear reactions 
+    // Model for e+/e- nuclear reactions
     G4ElectroNuclearReaction* theElectronReaction       = new G4ElectroNuclearReaction();
     G4ElectronNuclearProcess* theElectronNuclearProcess = new G4ElectronNuclearProcess();
 
@@ -1391,7 +1350,7 @@ void QweakSimPhysicsList::ConstructDecayProcess()
 	G4ParticleDefinition* particle = theParticleIterator->value();
 	G4ProcessManager* pManager = particle->GetProcessManager();
 
-	if (fDecayProcess.IsApplicable(*particle)) { 
+	if (fDecayProcess.IsApplicable(*particle)) {
 
 	    pManager ->AddProcess(&fDecayProcess);
 
@@ -1400,7 +1359,7 @@ void QweakSimPhysicsList::ConstructDecayProcess()
 	    pManager ->SetProcessOrdering(&fDecayProcess, idxAtRest);
 	}
     }
-}	
+}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void QweakSimPhysicsList::SetVerbose(G4int verbose)
@@ -1409,27 +1368,27 @@ void QweakSimPhysicsList::SetVerbose(G4int verbose)
   // theScintillationProcess->SetVerboseLevel(verbose);
   theAbsorptionProcess->SetVerboseLevel(verbose);
   //theRayleighScatteringProcess->SetVerboseLevel(verbose);
-  theBoundaryProcess->SetVerboseLevel(verbose);  
+  theBoundaryProcess->SetVerboseLevel(verbose);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void QweakSimPhysicsList::SetNbOfPhotonsCerenkov(G4int MaxNumber)
-{  
+{
   theCerenkovProcess->SetMaxNumPhotonsPerStep(MaxNumber);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void QweakSimPhysicsList::SetCuts()
 {
-  //G4VUserPhysicsList::SetCutsWithDefault method sets 
-  //the default cut value for all particle types 
+  //G4VUserPhysicsList::SetCutsWithDefault method sets
+  //the default cut value for all particle types
   //
 //   SetCutValue(cutForGamma, "gamma");
 //   SetCutValue(cutForElectron, "e-");
 //   SetCutValue(cutForPositron, "e+");
 
   SetCutsWithDefault();
-     
+
   if (verboseLevel>0) DumpCutValuesTable();
 }
 
