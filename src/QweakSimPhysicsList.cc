@@ -468,7 +468,7 @@ void QweakSimPhysicsList::ConstructOpticalPhotonProcess()
       G4ProcessManager*     pManager     = particle->GetProcessManager();
       G4String              particleName = particle->GetParticleName();     
 
-      #if G4VERSION_NUMBER < 941
+      #if G4VERSION_NUMBER < 910
       if (theCerenkovProcess->IsApplicable(*particle)) {
 	  pManager->AddContinuousProcess(theCerenkovProcess); // here: disable Cerenkov (part 2 of 2)
       }
