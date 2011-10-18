@@ -152,10 +152,13 @@ void QweakSimMagneticField::ReadFieldMapBinary(const G4String& filename)
 
   // Create new field map
   fField = new QweakSimFieldMap<value_t,value_n>(filename);
-  //fField->SetDebugLevel(QweakSimFieldMap<value_t,value_n>::kDebug);
+  fField->SetDebugLevel(QweakSimFieldMap<value_t,value_n>::kDebug);
 
   // Test new field map
   TestFieldMap();
+
+  // Set debug level to something reasonable
+  fField->SetDebugLevel(QweakSimFieldMap<value_t,value_n>::kWarning);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -229,6 +232,9 @@ void QweakSimMagneticField::ReadFieldMapText(const G4String& filename)
 
   // Test new field map
   TestFieldMap();
+
+  // Set debug level to something reasonable
+  fField->SetDebugLevel(QweakSimFieldMap<value_t,value_n>::kWarning);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
