@@ -122,25 +122,25 @@ QweakSimMagneticFieldMessenger::QweakSimMagneticFieldMessenger(QweakSimMagneticF
 
   MinPhiCmd = new G4UIcmdWithADoubleAndUnit("/MagneticField/SetMinPhi",this);
   MinPhiCmd->SetGuidance("Set the minimum phi of the field map grid to be read");
-  MinPhiCmd->SetParameterName("min_r",false);
-  MinPhiCmd->SetDefaultUnit("cm");
+  MinPhiCmd->SetParameterName("min_phi",false);
+  MinPhiCmd->SetDefaultUnit("degree");
   MinPhiCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
   MaxPhiCmd = new G4UIcmdWithADoubleAndUnit("/MagneticField/SetMaxPhi",this);
   MaxPhiCmd->SetGuidance("Set the maximum phi of the field map grid to be read");
-  MaxPhiCmd->SetParameterName("max_r",false);
-  MaxPhiCmd->SetDefaultUnit("cm");
+  MaxPhiCmd->SetParameterName("max_phi",false);
+  MaxPhiCmd->SetDefaultUnit("degree");
   MaxPhiCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
   StepPhiCmd = new G4UIcmdWithADoubleAndUnit("/MagneticField/SetStepPhi",this);
   StepPhiCmd->SetGuidance("Set the step phi of the field map grid to be read");
-  StepPhiCmd->SetParameterName("step_r",false);
-  StepPhiCmd->SetDefaultUnit("cm");
+  StepPhiCmd->SetParameterName("step_phi",false);
+  StepPhiCmd->SetDefaultUnit("degree");
   StepPhiCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
   WrapPhiCmd = new G4UIcmdWithAnInteger("/MagneticField/SetWrapPhi",this);
   WrapPhiCmd->SetGuidance("Set the wrap in phi of the field map grid to be read");
-  WrapPhiCmd->SetParameterName("wrap_r",false);
+  WrapPhiCmd->SetParameterName("wrap_phi",false);
   WrapPhiCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
 
