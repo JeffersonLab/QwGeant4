@@ -44,6 +44,8 @@
 #include "QweakSimGeometryMessenger.hh"
 #include "QweakSimTarget.hh"
 #include "QweakSimTargetMessenger.hh"
+#include "QweakSimBeamLine.hh"
+#include "QweakSimBeamLineMessenger.hh"
 #include "QweakSimCollimator.hh"
 #include "QweakSimCollimatorSupport.hh"
 #include "QweakSimShieldingWall.hh"
@@ -105,6 +107,7 @@ QweakSimDetectorConstruction::QweakSimDetectorConstruction(QweakSimUserInformati
   pVDCRotator        = NULL;
 
   pTarget            = NULL;
+  pBeamLine          = NULL;
   pMainMagnet        = NULL;
 
   fWorldLengthInX = 0.0*cm;
@@ -156,6 +159,7 @@ QweakSimDetectorConstruction::~QweakSimDetectorConstruction()
   if (pShieldingWall)       delete pShieldingWall;
 
   if (pTarget)              delete pTarget;
+  if (pBeamLine)            delete pBeamLine;
   if (pMainMagnet)          delete pMainMagnet;
 
   if (detectorMessenger)    delete detectorMessenger;
@@ -174,7 +178,8 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
 {
 
   pTarget              = new QweakSimTarget(myUserInfo);
-
+  pBeamLine            = new QweakSimBeamLine(myUserInfo);
+  
   pCollimator1         = new QweakSimCollimator();
   pCollimator2         = new QweakSimCollimator();
   pCollimator3         = new QweakSimCollimator();
@@ -284,6 +289,14 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   //
   pGeometry->AddModule(pTarget->getTargetPhysicalVolume());
 
+  //============================================
+  // create/place beamline body into MotherVolume
+  //============================================
+  //
+  pBeamLine -> ConstructComponent(experimentalHall_Physical);
+  pBeamLine -> SetBeamLineCenterPositionInZ(300.0*cm);
+  pGeometry->AddModule(pBeamLine->getBeamLinePhysicalVolume());
+  
   //================================================
   // create/place MainMagnet body into MotherVolume
   //================================================

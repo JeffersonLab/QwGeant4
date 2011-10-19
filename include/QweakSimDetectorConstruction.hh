@@ -28,22 +28,6 @@
 
  */
 //=============================================================================
-//
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-//
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2006/05/02 00:58:26 $
-//  CVS/RCS Revision: $Revision: 1.4 $
-//  Status:           $State: Exp $
-//
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-//
-//=============================================================================
 
 #ifndef QweakSimDetectorConstruction_h
 #define QweakSimDetectorConstruction_h 1
@@ -68,6 +52,8 @@ class QweakSimGeometry;
 class QweakSimGeometryMessenger;
 class QweakSimTarget;
 class QweakSimTargetMessenger;
+class QweakSimBeamLine;
+class QweakSimBeamLineMessenger;
 class QweakSimCollimator;
 class QweakSimCollimatorSupport;
 class QweakSimShieldingWall;
@@ -114,8 +100,9 @@ private:
   QweakSimGeometry*          pGeometry;
 
   QweakSimMaterial*          pMaterial;
-  QweakSimTarget*            pTarget;
 
+  QweakSimTarget*            pTarget;
+  QweakSimBeamLine*          pBeamLine;
 
   QweakSimCollimator*        pCollimator1;
   QweakSimCollimator*        pCollimator2;
