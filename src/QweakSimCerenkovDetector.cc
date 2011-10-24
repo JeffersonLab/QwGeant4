@@ -5,14 +5,6 @@
 
 #include "QweakSimCerenkovDetector.hh"
 
-// user includes
-#include "QweakSimSolids.hh"
-#include "QweakSimCerenkovDetectorMessenger.hh"
-#include "QweakSimCerenkov_DetectorSD.hh"
-#include "QweakSimCerenkovDetector_PMTSD.hh"
-#include "QweakSimMaterial.hh"
-#include "QweakSimUserInformation.hh"
-
 static const G4double inch = 2.54*cm;
 
 QweakSimCerenkovDetector::QweakSimCerenkovDetector(QweakSimUserInformation *userInfo) {
@@ -132,6 +124,7 @@ QweakSimCerenkovDetector::QweakSimCerenkovDetector(QweakSimUserInformation *user
     PMTQuartzOpticalFilm_Material = pMaterial->GetMaterial("SiElast_Glue");
     Cathode_Material           = pMaterial->GetMaterial("Photocathode");
     Radiator_Material          = pMaterial->GetMaterial("Lead");
+    PMT_PbShield_Material      = pMaterial->GetMaterial("Lead");
     QuartzGlue_Material        = pMaterial->GetMaterial("SiElast_Glue");
     mirror_material            = pMaterial->GetMaterial("Mirror");
     Frame_Material             = pMaterial->GetMaterial("Aluminum");
@@ -206,13 +199,10 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 //****************************************************************************************************
 //******************************Define Detector Container*********************************************
 
-    Position_CerenkovContainer_X =   0.0*cm;
-
 //jpan@nuclear.uwinnipeg.ca
-//  Position_CerenkovContainer_Y = 319.0*cm; // given by SolidWorks (or later by Juliette)
-    Position_CerenkovContainer_Y = 328.0*cm;
-
-    Position_CerenkovContainer_Z = 570.0*cm; // given by SolidWorks (or later by Juliette)
+    Position_CerenkovContainer_X =     0.0*cm;
+    Position_CerenkovContainer_Y =   335.17*cm;
+    Position_CerenkovContainer_Z =   577.875*cm;
 
     Position_CerenkovContainer  = G4ThreeVector(Position_CerenkovContainer_X,
                                   Position_CerenkovContainer_Y,
@@ -870,6 +860,45 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
             CerenkovContainer_Logical,
             false,0);
 
+//******************************Define Exo-Skelton Frame*************************
+
+    ExoSkeltonFrame_X = Frame_FullLength_X+0.2*cm;
+    ExoSkeltonFrame_Y = Frame_FullLength_Y+6.0*inch;
+    ExoSkeltonFrame_Z = 3.0*inch;
+
+    ExoSkeltonInnerFrame_X = ExoSkeltonFrame_X+0.2*mm;
+    ExoSkeltonInnerFrame_Y = Frame_FullLength_Y+0.2*cm;
+    ExoSkeltonInnerFrame_Z = ExoSkeltonFrame_Z+0.1*mm;  // a bit larger to avoid sharing surface with the outer which may cause vis-problem
+
+    G4Box* ExoSkeltonOuterFrame  = new G4Box("ExoSkeltonOuterFrame",
+                                   0.5 * ExoSkeltonFrame_X ,
+                                   0.5 * ExoSkeltonFrame_Y ,
+                                   0.5 * ExoSkeltonFrame_Z );
+
+    G4Box* ExoSkeltonInnerFrame  = new G4Box("ExoSkeltonInnerFrame",
+                                   0.5 * ExoSkeltonInnerFrame_X ,
+                                   0.5 * ExoSkeltonInnerFrame_Y ,
+                                   0.5 * ExoSkeltonInnerFrame_Z );
+
+    G4SubtractionSolid* ExoSkeltonFrame_Solid = new G4SubtractionSolid("ExoSkeltonOuterFrame-ExoSkeltonInnerFrame", ExoSkeltonOuterFrame, ExoSkeltonInnerFrame);
+
+    ExoSkeltonFrame_Logical  = new G4LogicalVolume(ExoSkeltonFrame_Solid,
+                                         Frame_Material,
+                                         "ExoSkeltonFrame_Log",
+                                         0,0,0);
+
+    G4ThreeVector Position_ExoSkeltonFrame  = G4ThreeVector(0,0,-1.0*inch);
+
+    ExoSkeltonFrame_Physical   = new G4PVPlacement(0,Position_ExoSkeltonFrame,
+                                         ExoSkeltonFrame_Logical,
+                                         "ExoSkeltonFrame_Physical",
+                                         CerenkovContainer_Logical,
+                                         false,0);
+
+
+//****************************************************************************************************
+    
+    
 //******************************Define Detector Active Area*******************************************
 
     G4Box* ActiveArea_Solid  = new G4Box("CerenkoDetector_Solid",
@@ -1455,29 +1484,61 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 //*********************************************************
 //******************************Radiator*******************
 
-//   G4Box* RadiatorSolid = new G4Box("Radiator_Sol",
-// 				   0.5 * QuartzBar_FullLength,       // half X length required by Geant4
-// 				   0.5 * QuartzBar_FullHeight,      // half Y length required by Geant4
-// 				   1.0*cm );  // half Z length required by Geant4
+  G4Box* RadiatorSolid = new G4Box("Radiator_Sol",
+				   QuartzBar_FullLength,       // half X length required by Geant4
+				   0.5*Frame_FullLength_Y, // 0.5 * QuartzBar_FullHeight,      // half Y length required by Geant4
+				   1.0*cm );  // half Z length required by Geant4
 
-//   Radiator_Logical  = new G4LogicalVolume(RadiatorSolid,
-// 					  Radiator_Material,
-// 					  "Radiator_Log",
-// 					  0,0,0);
+  Radiator_Logical  = new G4LogicalVolume(RadiatorSolid,
+					  Radiator_Material,
+					  "Radiator_Log",
+					  0,0,0);
 
-//   G4ThreeVector Position_Radiator  = G4ThreeVector(0,0,2.0*cm);//-2.0*cm);
+  G4ThreeVector Position_Radiator  = G4ThreeVector(0, 0,-5.0*cm);//-2.0*cm);
 
-//   Radiator_Physical   = new G4PVPlacement(0,Position_Radiator,
-// 					  Radiator_Logical,
-// 					  "Radiator_Physical",
-// 					  CerenkovContainer_Logical,
-// 					  false,
-// 					  0);
+  Radiator_Physical   = new G4PVPlacement(0,Position_Radiator,
+					  Radiator_Logical,
+					  "Radiator_Physical",
+					  CerenkovContainer_Logical,
+					  false,
+					  0);
 
 //******************************Radiator****************************
 //******************************************************************
 
+//******************************PMT_PbShield*******************
 
+  // Each Pb brick is 8x4x2 [inch], each PMT has 2 Pb bricks, i.e. 8x8x2 [inch]
+
+  G4Box* PMT_PbShieldSolid = new G4Box("PMT_PbShield_Sol",
+				   0.5*8.0*inch, // half X length required by Geant4
+				   0.5*8.0*inch, // half Y length required by Geant4
+				   0.5*2.0*inch );     // half Z length required by Geant4
+
+  PMT_PbShield_Logical  = new G4LogicalVolume(PMT_PbShieldSolid,
+					  Radiator_Material,
+					  "PMT_PbShield_Log",
+					  0,0,0);
+
+  G4ThreeVector Position_PMT_PbShield_Left   = G4ThreeVector(-100.0*cm-4.0*inch, 0, -6.5*cm);
+  G4ThreeVector Position_PMT_PbShield_Right  = G4ThreeVector( 100.0*cm+4.0*inch, 0, -6.5*cm);
+
+  PMT_PbShield_Physical   = new G4PVPlacement(0,Position_PMT_PbShield_Left,
+					  PMT_PbShield_Logical,
+					  "PMT_PbShield_Physical",
+					  CerenkovContainer_Logical,
+					  false,
+					  0);
+
+    PMT_PbShield_Physical   = new G4PVPlacement(0,Position_PMT_PbShield_Right,
+					  PMT_PbShield_Logical,
+					  "PMT_PbShield_Physical",
+					  CerenkovContainer_Logical,
+					  false,
+					  1);
+//******************************Radiator****************************
+
+  
     //-----------------------------------
     // define the PMTContainer
     //-----------------------------------
@@ -1655,13 +1716,13 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
     Rotation_CerenkovContainer =  new G4RotationMatrix();
     Rotation_CerenkovContainer -> rotateX(Tilting_Angle);
 
-//   CerenkovContainer_Physical   = new G4PVPlacement(Rotation_CerenkovContainer,
-//                                                    Position_CerenkovContainer,
-//                                                    "CerenkovContainer_Physical",
-//                                                    CerenkovContainer_Logical,
-//                                                    MotherVolume,
-//                                                    false,
-//                                                    0);
+  CerenkovContainer_Physical   = new G4PVPlacement(Rotation_CerenkovContainer,
+                                                   Position_CerenkovContainer,
+                                                   "CerenkovContainer_Physical",
+                                                   CerenkovContainer_Logical,
+                                                   MotherVolume,
+                                                   false,
+                                                   0);
 
 
 //----------------------------------------------
@@ -1771,54 +1832,52 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
                                          = new G4OpticalSurface("SidePadQuartzBarRightOpticalSurface");
 
     for(size_t i=0; i<EndBracketPad_Physical.size();i++) {
-
-
+      
 /* wdc: commented out unused objects
 
-      G4LogicalBorderSurface* LeftEndPad_Quartz_BorderSurface =
-      new G4LogicalBorderSurface("LeftEndPad_Quartz_BS",
+    //G4LogicalBorderSurface* LeftEndPad_Quartz_BorderSurface =
+    new G4LogicalBorderSurface("LeftEndPad_Quartz_BS",
                                  LightGuide_PhysicalLeft,
                                  EndBracketPad_Physical[i],
                                  LeftEndPad_Quartz_OpticalSurface);
 
-      G4LogicalBorderSurface* RightEndPad_Quartz_BorderSurface =
-      new G4LogicalBorderSurface("RightEndPad_Quartz_BS",
+    //G4LogicalBorderSurface* RightEndPad_Quartz_BorderSurface =
+    new G4LogicalBorderSurface("RightEndPad_Quartz_BS",
                                  LightGuide_PhysicalRight,
                                  EndBracketPad_Physical[i],
                                  RightEndPad_Quartz_OpticalSurface);
 */
-
     }
 
     for(size_t i=0; i<SideBracketPad_Physical.size();i++) {
 
 /* wdc: commented out unused objects
 
-      G4LogicalBorderSurface* SidePad_LeftLightGuide_BorderSurface =
-      new G4LogicalBorderSurface("SidePad_LeftLightGuide_BS",
+    //G4LogicalBorderSurface* SidePad_LeftLightGuide_BorderSurface =
+    new G4LogicalBorderSurface("SidePad_LeftLightGuide_BS",
                                  LightGuide_PhysicalLeft,
                                  SideBracketPad_Physical[i],
                                  SidePad_LeftLightGuide_OpticalSurface);
 
-      G4LogicalBorderSurface* SidePad_RightLightGuide_BorderSurface =
-      new G4LogicalBorderSurface("SidePad_RightLightGuide_BS",
+    //G4LogicalBorderSurface* SidePad_RightLightGuide_BorderSurface =
+    new G4LogicalBorderSurface("SidePad_RightLightGuide_BS",
                                  LightGuide_PhysicalRight,
                                  SideBracketPad_Physical[i],
                                  SidePad_RightLightGuide_OpticalSurface);
 
-      G4LogicalBorderSurface* SidePad_QuartzBarLeft_BorderSurface =
-      new G4LogicalBorderSurface("SidePad_QuartzBarLeft_BS",
+    //G4LogicalBorderSurface* SidePad_QuartzBarLeft_BorderSurface =
+    new G4LogicalBorderSurface("SidePad_QuartzBarLeft_BS",
                                  QuartzBar_PhysicalLeft,
                                  SideBracketPad_Physical[i],
                                  SidePad_QuartzBarLeft_OpticalSurface);
 
-      G4LogicalBorderSurface* SidePad_QuartzBarRight_BorderSurface =
-      new G4LogicalBorderSurface("SidePad_QuartzBarRight_BS",
+    //G4LogicalBorderSurface* SidePad_QuartzBarRight_BorderSurface =
+    new G4LogicalBorderSurface("SidePad_QuartzBarRight_BS",
                                  QuartzBar_PhysicalRight,
                                  SideBracketPad_Physical[i],
                                  SidePad_QuartzBarRight_OpticalSurface);
-*/
 
+*/
     }
 
     QuartzBarLeft_OpticalSurface->SetType(dielectric_dielectric);
@@ -2079,7 +2138,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
                                           0.0355       //210.15 nm
                                          };
 
-//S20 reflectance taken from "Optics Communications, issue 180, 2000. p89--102"
+//S20 reflectance taken from "Optics Communications, issue 180, 2000. p89–102"
 //average of 40 degree incident angle assumed
 ////data below 400 nm, taken from //http://www.photek.com/support/Papers/
 //Experimental%20data%20on%20the%20reflection%20and%20transmission%20spectral%20response%20of%20photocathodes.pdf
@@ -2135,6 +2194,18 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
     G4Colour  lightorange ( 255/255., 189/255., 165/255.);
     G4Colour  khaki3    ( 205/255., 198/255., 115/255.);
     G4Colour  brown     (178/255., 102/255., 26/255.);
+    G4Colour  darkbrown     (100/255., 50/255., 10/255.);
+
+//------------------------------------------
+// Visual Attributes for:  Radiator
+//------------------------------------------
+    G4VisAttributes* RadiatorVisAtt = new G4VisAttributes(lightblue);
+    RadiatorVisAtt->SetVisibility(true);
+    Radiator_Logical->SetVisAttributes(RadiatorVisAtt);
+    
+    G4VisAttributes* PMT_PbShieldVisAtt = new G4VisAttributes(blue);
+    PMT_PbShieldVisAtt->SetVisibility(true);
+    PMT_PbShield_Logical->SetVisAttributes(PMT_PbShieldVisAtt);    
 //------------------------------------------
 // Visual Attributes for:  CerenkovContainer
 //------------------------------------------
@@ -2146,6 +2217,13 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
     CerenkovContainer_Logical->SetVisAttributes(CerenkovContainerVisAtt);
     ActiveArea_Logical->SetVisAttributes(CerenkovContainerVisAtt);
 
+//Visual Attributes for:  Exo-Skelton
+    G4VisAttributes* ExoSkeltonFrameVisAtt = new G4VisAttributes(darkbrown);
+    ExoSkeltonFrameVisAtt->SetVisibility(true);
+//FrameVisAtt->SetForceWireframe(true);
+//FrameVisAtt->SetForceSolid(true);
+    ExoSkeltonFrame_Logical->SetVisAttributes(ExoSkeltonFrameVisAtt);
+    
 //------------------------------------------
 // Visual Attributes for:  Detector Housing
 //------------------------------------------

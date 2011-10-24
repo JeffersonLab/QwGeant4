@@ -6,14 +6,32 @@
 
 // geant4 includes
 #include "G4LogicalVolume.hh"
+#include "G4Box.hh"
+#include "G4SubtractionSolid.hh"
+#include "G4PVPlacement.hh"
+#include "G4Tubs.hh"
+#include "G4Polycone.hh"
+#include "G4Trd.hh"
+#include "G4Trap.hh"
+#include "G4OpticalSurface.hh"
+#include "G4LogicalBorderSurface.hh"
+#include "G4LogicalSkinSurface.hh"
+#include "G4SDManager.hh"
 
 // geant4 classes
 class G4SubtractionSolid;
 
+// user includes
+#include "QweakSimCerenkovDetectorMessenger.hh"
+#include "QweakSimCerenkov_DetectorSD.hh"
+#include "QweakSimCerenkovDetector_PMTSD.hh"
+// #include "QweakSimPMTEntranceWindowSD.hh"
+#include "QweakSimMaterial.hh"
+#include "QweakSimUserInformation.hh"
+
 // user classes
 class QweakSimCerenkovDetectorMessenger;
 class QweakSimMaterial;
-class QweakSimUserInformation;
 
 class QweakSimCerenkovDetector 
 {
@@ -101,6 +119,10 @@ private:
   G4LogicalVolume*   Radiator_Logical; 
   G4VPhysicalVolume* Radiator_Physical; 
   G4Material*        Radiator_Material;
+  
+  G4LogicalVolume*   PMT_PbShield_Logical; 
+  G4VPhysicalVolume* PMT_PbShield_Physical; 
+  G4Material*        PMT_PbShield_Material;
 
   G4LogicalVolume*   PMTContainer_Logical; 
   G4VPhysicalVolume* PMTContainer_PhysicalLeft; 
@@ -173,6 +195,10 @@ private:
 
   G4Material*        BracketPad_Material;
 
+  G4LogicalVolume*   ExoSkeltonFrame_Logical; 
+  G4VPhysicalVolume* ExoSkeltonFrame_Physical; 
+  G4Material*        ExoSkeltonFrame_Material;
+
 //   G4Box             *QuartzBar_Solid;
 //   G4Box             *PMTEntranceWindow_Solid;
 //   G4Box             *PMT_Solid;
@@ -182,6 +208,14 @@ private:
   G4double Container_FullLength_Y;
   G4double Container_FullLength_Z;
 
+  G4double ExoSkeltonFrame_X;
+  G4double ExoSkeltonFrame_Y;
+  G4double ExoSkeltonFrame_Z;
+
+  G4double ExoSkeltonInnerFrame_X;
+  G4double ExoSkeltonInnerFrame_Y;
+  G4double ExoSkeltonInnerFrame_Z;
+  
   G4double Frame_FullLength_X;
   G4double Frame_FullLength_Y;
   G4double Frame_FullLength_Z;
