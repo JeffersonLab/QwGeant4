@@ -37,16 +37,15 @@
 /gui/addButton viewer "Reset scene"          "/control/execute vis/vis.mac"
 #
 
-# Gun menu :
-/gui/addMenu   octant Octant
-/gui/addButton octant "Select Octant1" "/EventGen/SelectOctant 1"
-/gui/addButton octant "Select Octant2" "/EventGen/SelectOctant 2"
-/gui/addButton octant "Select Octant3" "/EventGen/SelectOctant 3"
-/gui/addButton octant "Select Octant4" "/EventGen/SelectOctant 4"
-/gui/addButton octant "Select Octant5" "/EventGen/SelectOctant 5"
-/gui/addButton octant "Select Octant6" "/EventGen/SelectOctant 6"
-/gui/addButton octant "Select Octant7" "/EventGen/SelectOctant 7"
-/gui/addButton octant "Select Octant8" "/EventGen/SelectOctant 8"
+# QTOR menu :
+/gui/addMenu   qtor QTOR
+/gui/addButton qtor "Load 2007 field map" "/control/execute macros/peiqing_2007.mac"
+/gui/addButton qtor "Load 2010_ff field map" "/control/execute macros/peiqing_2010_ff.mac"
+/gui/addButton qtor "Load 2010_zc field map" "/control/execute macros/peiqing_2010_zc.mac"
+/gui/addButton qtor "Load 2011 field map" "/control/execute macros/peiqing_2011.mac"
+#/gui/addButton qtor "Set ref. current to 8960 A" "/MagneticField/SetReferenceCurrent 8960.0"
+#/gui/addButton qtor "Set actual current to 8921 A" "/MagneticField/SetActualCurrent 8921.0"
+
 
 # Detectorhut menu :
 /gui/addMenu   detectorhut DetectorHut
@@ -76,6 +75,14 @@
 /gui/addButton trackingAction "Track primary electrons and optical photons only" "/TrackingAction/TrackingFlag 1"
 /gui/addButton trackingAction "Track all particles except optical photons" "/TrackingAction/TrackingFlag 2"
 /gui/addButton trackingAction "Track all particles" "/TrackingAction/TrackingFlag 3"
+/gui/addButton trackingAction "Select Octant1" "/EventGen/SelectOctant 1"
+/gui/addButton trackingAction "Select Octant2" "/EventGen/SelectOctant 2"
+/gui/addButton trackingAction "Select Octant3" "/EventGen/SelectOctant 3"
+/gui/addButton trackingAction "Select Octant4" "/EventGen/SelectOctant 4"
+/gui/addButton trackingAction "Select Octant5" "/EventGen/SelectOctant 5"
+/gui/addButton trackingAction "Select Octant6" "/EventGen/SelectOctant 6"
+/gui/addButton trackingAction "Select Octant7" "/EventGen/SelectOctant 7"
+/gui/addButton trackingAction "Select Octant8" "/EventGen/SelectOctant 8"
 
 # Reaction type menue
 /gui/addMenu reactionType Reaction
