@@ -2345,6 +2345,19 @@ void QweakSimCerenkovDetector::SetCerenkovDetectorMaterial(G4String materialName
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
+void QweakSimCerenkovDetector::SetPreradiatorMaterial(G4String materialName) {
+
+    G4Material* pttoMaterial = G4Material::GetMaterial(materialName);
+    if (pttoMaterial) {
+        Radiator_Logical->SetMaterial(pttoMaterial);
+    } else {
+        G4cerr << "==== ERROR: Changing Preradiator Material failed" << G4endl;
+    }
+
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 void QweakSimCerenkovDetector::DestroyComponent() {
 }
 

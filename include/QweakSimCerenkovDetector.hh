@@ -46,6 +46,7 @@ public:
   void DefineCerenkovGeometry();
   void DestroyComponent();
   void SetCerenkovDetectorMaterial(G4String materialName);
+  void SetPreradiatorMaterial(G4String materialName);
 
   void SetCerenkovDetectorCenterPositionInX(G4double xPos);
   void SetCerenkovDetectorCenterPositionInY(G4double yPos);

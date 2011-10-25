@@ -16,21 +16,6 @@
 */
 //=============================================================================
 
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2005/12/27 19:07:14 $
-//  CVS/RCS Revision: $Revision: 1.2 $
-//  Status:           $State: Exp $
-// 
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-//
-//============================================================================
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -95,6 +80,10 @@ QweakSimCerenkovDetectorMessenger::QweakSimCerenkovDetectorMessenger(QweakSimCer
   DetectorMatCmd->SetParameterName("choice",false);
   DetectorMatCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
+  PreRadiatorMatCmd = new G4UIcmdWithAString("/Cerenkov/SetPreradiatorMaterial",this);
+  PreRadiatorMatCmd->SetGuidance("Select Material of the Pre-radiator.");
+  PreRadiatorMatCmd->SetParameterName("choice",false);
+  PreRadiatorMatCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -107,6 +96,7 @@ QweakSimCerenkovDetectorMessenger::~QweakSimCerenkovDetectorMessenger()
 
   if (ContainerThicknessCmd)      delete ContainerThicknessCmd;
   if (DetectorMatCmd)             delete DetectorMatCmd;  
+  if (PreRadiatorMatCmd)          delete PreRadiatorMatCmd;  
   if (ContainerMatCmd)            delete ContainerMatCmd;
   if (TiltingAngleCmd)            delete TiltingAngleCmd;
   if (KinkAngleCmd)               delete KinkAngleCmd;
@@ -162,6 +152,13 @@ void QweakSimCerenkovDetectorMessenger::SetNewValue(G4UIcommand* command,G4Strin
      myCerenkovDetector->SetCerenkovDetectorMaterial(newValue);
    }
 
+  if( command == PreRadiatorMatCmd )
+   { 
+     G4cout << "#### Messenger: Setting PreRadiator Material to " << newValue << G4endl;
+
+     myCerenkovDetector->SetPreradiatorMaterial(newValue);
+   }
+   
   if( command == TiltingAngleCmd )
    { 
      G4cout << "#### Messenger: Setting Cerenkov Detector Tilting Angle to " << newValue << G4endl;
@@ -181,16 +178,3 @@ void QweakSimCerenkovDetectorMessenger::SetNewValue(G4UIcommand* command,G4Strin
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-//=======================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//      $Revisions$  
-//      $Log: QweakSimCerenkovDetectorMessenger.cc,v $
-//      Revision 1.2  2005/12/27 19:07:14  grimm
-//      - Redesign of Doxygen header containing CVS info like revision and date
-//      - Added CVS revision log at the end of file
-//
-// 
