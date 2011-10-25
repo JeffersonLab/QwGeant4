@@ -29,7 +29,7 @@
 // user includes
 #include "QweakSimAnalysis.hh"
 #include "QweakSimUserInformation.hh"
-#include "QweakSimGEM_WirePlaneHit.hh"
+//#include "QweakSimGEM_WirePlaneHit.hh"
 #include "QweakSimHDC_WirePlaneHit.hh"
 #include "QweakSimVDC_WirePlaneHit.hh"
 #include "QweakSimVDC_DriftCellHit.hh"
@@ -57,7 +57,7 @@ QweakSimEventAction::QweakSimEventAction(QweakSimAnalysis* AN, QweakSimUserInfor
 //---------------------------------------------------------------------------------------------
 
 
-    GEM_WirePlane_CollID                  = -1;
+    //GEM_WirePlane_CollID                  = -1;
     HDC_WirePlane_CollID                  = -1;
     VDC_WirePlane_CollID                  = -1;
     VDC_DriftCellFront_CollID             = -1;
@@ -85,8 +85,8 @@ QweakSimEventAction::QweakSimEventAction(QweakSimAnalysis* AN, QweakSimUserInfor
         fTriggerName[kTrigger3Fold] = "3fold";
         kMapTriggerMode["scint"] = kTriggerScint;
         fTriggerName[kTriggerScint] = "scint";
-        kMapTriggerMode["gem"]   = kTriggerGEM;
-        fTriggerName[kTriggerGEM] = "gem";
+        // kMapTriggerMode["gem"]   = kTriggerGEM;
+        // fTriggerName[kTriggerGEM] = "gem";
         kMapTriggerMode["cer"]   = kTriggerCer;
         fTriggerName[kTriggerCer] = "cer";
     }
@@ -131,9 +131,9 @@ void QweakSimEventAction::BeginOfEventAction(const G4Event* /*evt*/)
     G4SDManager * SDman = G4SDManager::GetSDMpointer();
 
     // check for existing GEM_WirePlane Collection ID (if it's -1 it will be assigned)
-    if (GEM_WirePlane_CollID==-1) {
-        GEM_WirePlane_CollID = SDman->GetCollectionID("GEMWirePlaneSD/GEMWirePlaneCollection");
-    }
+//     if (GEM_WirePlane_CollID==-1) {
+//         GEM_WirePlane_CollID = SDman->GetCollectionID("GEMWirePlaneSD/GEMWirePlaneCollection");
+//     }
 
     // check for existing HDC_WirePlane Collection ID (if it's -1 it will be assigned)
     if (HDC_WirePlane_CollID==-1) {
@@ -228,7 +228,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     G4HCofThisEvent * HCE = evt->GetHCofThisEvent();
 
     // initialize HitsCollection pointers
-    QweakSimGEM_WirePlane_HitsCollection*                    GEM_WirePlane_HC                   = 0;
+    // QweakSimGEM_WirePlane_HitsCollection*                    GEM_WirePlane_HC                   = 0;
     QweakSimHDC_WirePlane_HitsCollection*                    HDC_WirePlane_HC                   = 0;
     QweakSimVDC_WirePlane_HitsCollection*                    VDC_WirePlane_HC                   = 0;
     QweakSimVDC_DriftCellHitsCollection*                     VDC_DriftCellFront_HC              = 0;
@@ -241,7 +241,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     if (HCE) {
 
         // get  GEM_WirePlane Hit Collector pointer
-        GEM_WirePlane_HC       = (QweakSimGEM_WirePlane_HitsCollection*)(HCE->GetHC(GEM_WirePlane_CollID));
+        // GEM_WirePlane_HC       = (QweakSimGEM_WirePlane_HitsCollection*)(HCE->GetHC(GEM_WirePlane_CollID));
 
         // get  HDC_WirePlane Hit Collector pointer
         HDC_WirePlane_HC       = (QweakSimHDC_WirePlane_HitsCollection*)(HCE->GetHC(HDC_WirePlane_CollID));
@@ -270,7 +270,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 
 
     // Get number of entries for this event
-    n_GEMhitWirePlane              = GEM_WirePlane_HC               -> entries();
+    // n_GEMhitWirePlane              = GEM_WirePlane_HC               -> entries();
     n_HDChitWirePlane              = HDC_WirePlane_HC               -> entries();
     n_VDChitWirePlane              = VDC_WirePlane_HC               -> entries();
     n_VDChitDCFront                = VDC_DriftCellFront_HC          -> entries();
@@ -288,7 +288,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 //   G4cout << "Number of hit in the TS            = " << n_hitTriggerScintillator << G4endl;
 //   G4cout << "Number of hit in the Cerenkov      = " << n_hitCerenkov            << G4endl;
 
-    G4cout <<"Hits:\tGEM "<<n_GEMhitWirePlane<<",\tHDC "<<n_HDChitWirePlane<<",\tVDC "<<n_VDChitWirePlane;
+    // G4cout <<"Hits:\tGEM "<<n_GEMhitWirePlane<<",\tHDC "<<n_HDChitWirePlane<<",\tVDC "<<n_VDChitWirePlane;
     G4cout <<",\tVDC_Front "<<n_VDChitDCFront<<",\tVDC_Back "<<n_VDChitDCBack<<",\tTS "<<n_hitTriggerScintillator;
     G4cout <<",\tCerenkov "<<n_hitCerenkov<<"\tCerenkovPMT "<<n_hitCerenkovPMT<<G4endl;
 
@@ -394,7 +394,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     if ( fTrigger[kTriggerAll] /* Trigger on every event */
             || (fTrigger[kTrigger4Fold] && (n_VDChitWirePlane == 4) && (n_VDChitDCFront > 0) && (n_VDChitDCBack > 0) && (n_hitCerenkov > 0) ) /* 4-fold coincidence */
             || (fTrigger[kTrigger3Fold] && (n_VDChitWirePlane >= 2) && (n_VDChitDCFront > 0) && (n_VDChitDCBack > 0) ) /* 3-fold coincidence */
-            || (fTrigger[kTriggerGEM]   && (n_GEMhitWirePlane > 0) )        /* Triggering on the GEM only */
+            // || (fTrigger[kTriggerGEM]   && (n_GEMhitWirePlane > 0) )        /* Triggering on the GEM only */
             || (fTrigger[kTriggerScint] && (n_hitTriggerScintillator > 0) ) /* Qweak trigger on a hit in the trigger scintillator */
             || (fTrigger[kTriggerCer]   && (n_hitCerenkov > 0) )            /* Triggering on Main Detector */
        ) {
@@ -1987,6 +1987,8 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         // Store GEM hits into /Region1
         //==============================
 
+/* start GEM comments
+
         if (n_GEMhitWirePlane > 0) {
             //========================================
             // Store GEM Hit Information into /Region1
@@ -2211,6 +2213,8 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
             } // end of  for(int i1=0;i1<n_GEMhitWirePlane;i1++){
 
         } // end of if ( (n_GEMhitWirePlane == 1)
+
+*/  // end of GEM comments
 
 
         //===========================================================

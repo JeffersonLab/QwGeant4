@@ -426,7 +426,7 @@ G4cout << G4endl << "###### Calling QweakSimVDC::ConstructComponent() " << G4end
 					       0.5* G10Frame_InnerWidth                           - 100.0*micrometer,   // Y
 					       0.5* G10Frame_Thickness*NumberOfG10FramesInsideVDC + 100.0*micrometer);  // Z
   
-  G4cout << G4endl << "###### QweakSimGEM: Define VDC_SubContainer_Logical" << G4endl << G4endl;
+  G4cout << G4endl << "###### QweakSimVDC: Define VDC_SubContainer_Logical" << G4endl << G4endl;
   
   VDC_SubContainer_Logical  = new G4LogicalVolume(VDC_SubContainer_Solid,
 						  VDC_SubContainer_Material,

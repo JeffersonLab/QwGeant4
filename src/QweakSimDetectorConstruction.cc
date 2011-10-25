@@ -53,7 +53,7 @@
 #include "QweakSimVDC.hh"
 #include "QweakSimVDCRotator.hh"
 #include "QweakSimHDC.hh"
-#include "QweakSimGEM.hh"
+//#include "QweakSimGEM.hh"
 #include "QweakSimTriggerScintillator.hh"
 #include "QweakSimCerenkovDetector.hh"
 #include "QweakSimMagneticField.hh"
@@ -101,7 +101,7 @@ QweakSimDetectorConstruction::QweakSimDetectorConstruction(QweakSimUserInformati
 
   pShieldingWall     = NULL;
 
-  pGEM               = NULL;
+  // pGEM               = NULL;
   pHDC               = NULL;
   pVDC               = NULL;
   pVDCRotator        = NULL;
@@ -141,7 +141,7 @@ QweakSimDetectorConstruction::~QweakSimDetectorConstruction()
   if (pMagneticField) delete pMagneticField;
 
   if (pVDCRotator) delete pVDCRotator;
-  if (pGEM)        delete pGEM;
+  // if (pGEM)        delete pGEM;
   if (pHDC)        delete pHDC;
   if (pVDC)        delete pVDC;
 
@@ -188,7 +188,7 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
 
   pMainMagnet          = new QweakSimMainMagnet(); // QTOR Geometry (decoupled from field)
 
-  pGEM                 = new QweakSimGEM();
+  // pGEM                 = new QweakSimGEM();
   pHDC                 = new QweakSimHDC();
   pVDC                 = new QweakSimVDC();
 
@@ -449,12 +449,12 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   // create/place Drift Chambers into MotherVolume
   //===============================================
   //
-  pGEM->ConstructComponent(experimentalHall_Physical);
+  // pGEM->ConstructComponent(experimentalHall_Physical);
   pHDC->ConstructComponent(experimentalHall_Physical);
   pVDC->ConstructComponent(experimentalHall_Physical);
   //
-  pGeometry->AddModule(pGEM->getGEMFront_PhysicalVolume());
-  pGeometry->AddModule(pGEM->getGEMBack_PhysicalVolume());
+  //pGeometry->AddModule(pGEM->getGEMFront_PhysicalVolume());
+  //pGeometry->AddModule(pGEM->getGEMBack_PhysicalVolume());
   pGeometry->AddModule(pHDC->getHDCFront_PhysicalVolume());
   pGeometry->AddModule(pHDC->getHDCBack_PhysicalVolume());
   pGeometry->AddModule(pVDC->getVDCFront_PhysicalVolume());

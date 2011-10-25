@@ -76,20 +76,20 @@
 #=============================
 #     GEM related  (Region1)
 #============================
-/GEM/SetFrontCenterPositionInX       0.0    cm
-/GEM/SetFrontCenterPositionInY      25.0    cm
-/GEM/SetFrontCenterPositionInZ    -543.170  cm
+#/GEM/SetFrontCenterPositionInX       0.0    cm
+#/GEM/SetFrontCenterPositionInY      25.0    cm
+#/GEM/SetFrontCenterPositionInZ    -543.170  cm
 
-/GEM/SetBackCenterPositionInX        0.0    cm
-/GEM/SetBackCenterPositionInY       25.0    cm
-/GEM/SetBackCenterPositionInZ     -535.0    cm
+#/GEM/SetBackCenterPositionInX        0.0    cm
+#/GEM/SetBackCenterPositionInY       25.0    cm
+#/GEM/SetBackCenterPositionInZ     -535.0    cm
 
-/GEM/SetFrontChamberRotationAngleInPhi    90.0   degree
-/GEM/SetBackChamberRotationAngleInPhi     90.0   degree
+#/GEM/SetFrontChamberRotationAngleInPhi    90.0   degree
+#/GEM/SetBackChamberRotationAngleInPhi     90.0   degree
 
-/GEM/SetMasterContainerMaterial     Air
-/GEM/SetSubContainerMaterial        ArCO2
-/GEM/SetFrameMaterial               NemaG10
+#/GEM/SetMasterContainerMaterial     Air
+#/GEM/SetSubContainerMaterial        ArCO2
+#/GEM/SetFrameMaterial               NemaG10
 
 # /GEM/SetFoilMaterial                Kapton
 

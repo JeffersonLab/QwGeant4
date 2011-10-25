@@ -288,7 +288,7 @@ void QweakSimPhysicsList::ConstructEMProcess()
 
     const G4RegionStore* theRegionStore = G4RegionStore::GetInstance();
     G4Region* DriftCellRegion_VDC = theRegionStore->GetRegion("DriftCellRegion_VDC");
-    G4Region* DriftCellRegion_GEM = theRegionStore->GetRegion("DriftCellRegion_GEM");
+    // G4Region* DriftCellRegion_GEM = theRegionStore->GetRegion("DriftCellRegion_GEM");
 
 
     G4ProcessManager*   pManager = 0;
@@ -335,13 +335,13 @@ void QweakSimPhysicsList::ConstructEMProcess()
     eion->AddEmModel(0,paiVDC,paiVDC,DriftCellRegion_VDC);
 
 
-    G4PAIModel*     paiGEM = new G4PAIModel(G4Electron::ElectronDefinition(),"PAIModel");
+    // G4PAIModel*     paiGEM = new G4PAIModel(G4Electron::ElectronDefinition(),"PAIModel");
     // set energy limits where 'pai' is active
-    paiGEM->SetLowEnergyLimit(0.1*keV);
-    paiGEM->SetHighEnergyLimit(100.0*TeV);
+    // paiGEM->SetLowEnergyLimit(0.1*keV);
+    // paiGEM->SetHighEnergyLimit(100.0*TeV);
 
     // here 0 is the highest priority in region 'gas'
-    eion->AddEmModel(0,paiGEM,paiGEM,DriftCellRegion_GEM);
+    // eion->AddEmModel(0,paiGEM,paiGEM,DriftCellRegion_GEM);
 
     //eion->DumpInfo()
     //eion->PrintInfo()

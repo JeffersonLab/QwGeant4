@@ -61,7 +61,7 @@ class QweakSimMainMagnet;
 class QweakSimVDC;
 class QweakSimVDCRotator;
 class QweakSimHDC;
-class QweakSimGEM;
+// class QweakSimGEM;
 class QweakSimTriggerScintillator;
 class QweakSimCerenkovDetector;
 class QweakSimMagneticField;
@@ -117,7 +117,7 @@ private:
 
   QweakSimVDC*                  pVDC;
   QweakSimHDC*                  pHDC;
-  QweakSimGEM*                  pGEM;
+  //QweakSimGEM*                  pGEM;
 
   QweakSimVDCRotator*           pVDCRotator;
 
