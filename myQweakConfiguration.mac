@@ -44,12 +44,12 @@
 # positions to be extracted from SolidWorks
 # on the vertical detector plane
  
-/Cerenkov/SetCenterPositionInX     0.0 cm
+/Cerenkov/SetCenterPositionInX      0.0 cm
 #/Cerenkov/SetCenterPositionInY   319.0 cm 
-/Cerenkov/SetCenterPositionInY   328.0 cm
-#/Cerenkov/SetCenterPositionInY   334.0 cm
-/Cerenkov/SetCenterPositionInZ   570.0 cm
-/Cerenkov/SetTiltingAngle          0.0 degree
+/Cerenkov/SetCenterPositionInY    328.0 cm
+#/Cerenkov/SetCenterPositionInY   335.0 cm
+/Cerenkov/SetCenterPositionInZ    577.0 cm
+/Cerenkov/SetTiltingAngle           0.0 degree
 
 
 #==================================
@@ -77,11 +77,11 @@
 #     GEM related  (Region1)
 #============================
 /GEM/SetFrontCenterPositionInX       0.0    cm
-/GEM/SetFrontCenterPositionInY      20.0    cm
+/GEM/SetFrontCenterPositionInY      25.0    cm
 /GEM/SetFrontCenterPositionInZ    -543.170  cm
 
 /GEM/SetBackCenterPositionInX        0.0    cm
-/GEM/SetBackCenterPositionInY       20.0    cm
+/GEM/SetBackCenterPositionInY       25.0    cm
 /GEM/SetBackCenterPositionInZ     -535.0    cm
 
 /GEM/SetFrontChamberRotationAngleInPhi    90.0   degree

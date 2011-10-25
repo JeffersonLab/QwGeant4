@@ -144,11 +144,11 @@ fRegGasDet = NULL;
   AluFrame_InnerWidth       =  GEMFrame_InnerWidth;
 
   GEM_CenterFront_XPos        =    0.0*cm;
-  GEM_CenterFront_YPos        =   20.0*cm; //15.0*cm; 
+  GEM_CenterFront_YPos        =   25.0*cm; //15.0*cm; 
   GEM_CenterFront_ZPos        = -543.170*cm; // Allena's keepout info 
 
   GEM_CenterBack_XPos        =    0.0*cm;
-  GEM_CenterBack_YPos        =   20.0*cm; //17.0*cm; 
+  GEM_CenterBack_YPos        =   25.0*cm; //17.0*cm; 
   GEM_CenterBack_ZPos        = -535.0*cm; 
 
   
