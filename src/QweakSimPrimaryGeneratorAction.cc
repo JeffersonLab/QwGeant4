@@ -34,9 +34,8 @@
 //G4int QweakSimPrimaryGeneratorAction::kActiveOctantNumber = 1;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-//QweakSimPrimaryGeneratorAction::QweakSimPrimaryGeneratorAction( QweakSimUserInformation* myUI)
-//  : myUserInfo(myUI)
-QweakSimPrimaryGeneratorAction::QweakSimPrimaryGeneratorAction( )
+
+QweakSimPrimaryGeneratorAction::QweakSimPrimaryGeneratorAction( QweakSimUserInformation* myUI)
 {
 
   G4cout << "###### Calling QweakSimPrimaryGeneratorAction::QweakSimPrimaryGeneratorAction " << G4endl;
@@ -44,6 +43,8 @@ QweakSimPrimaryGeneratorAction::QweakSimPrimaryGeneratorAction( )
   myNormMomentumX  = 0.0;
   myNormMomentumY  = 0.0;
   myNormMomentumZ  = 0.0;
+  
+  myUserInfo = myUI;
  
   // get my messenger
   myMessenger = new QweakSimPrimaryGeneratorActionMessenger(this);
@@ -88,8 +89,8 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   G4double PositionY_max =  2.0*mm;
   myPositionY =  (G4UniformRand()-0.5)*(PositionY_max-PositionY_min)+(PositionX_max+PositionX_min)/2.0;
 
-  myPositionZ = -700.0*cm;
-
+  myPositionZ = myUserInfo->TargetCenterPositionZ -30.0*cm;
+  
   myNormMomentumX  = 0.0;
   myNormMomentumY  = 0.0;
   myNormMomentumZ  = 1.0;

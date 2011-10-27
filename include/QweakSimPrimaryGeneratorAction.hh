@@ -42,6 +42,8 @@
 #include "G4ThreeVector.hh"
 #include "G4VUserPrimaryGeneratorAction.hh"
 
+#include "QweakSimUserInformation.hh"
+
 // geant4 classes
 class G4ParticleGun;
 
@@ -53,8 +55,8 @@ class QweakSimPrimaryGeneratorActionMessenger;
 class QweakSimPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
 {
 public:
-   //QweakSimPrimaryGeneratorAction( QweakSimUserInformation* myUI);    
-   QweakSimPrimaryGeneratorAction( );    
+   QweakSimPrimaryGeneratorAction( QweakSimUserInformation* myUI);    
+   //QweakSimPrimaryGeneratorAction( );    
   ~QweakSimPrimaryGeneratorAction();
   
 public:
@@ -73,7 +75,7 @@ private:
 
   G4ParticleGun*                      particleGun;
 
-  //QweakSimUserInformation*            myUserInfo;
+  QweakSimUserInformation*            myUserInfo;
 
   QweakSimPrimaryGeneratorActionMessenger* myMessenger;  // pointer to the Messenger
 

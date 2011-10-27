@@ -71,8 +71,8 @@ int main(int argc,char** argv) {
   runManager->SetUserInitialization(new QweakSimPhysicsList() );
 
   // UserAction classes
-  //runManager->SetUserAction( new QweakSimPrimaryGeneratorAction(myQweakSimUserInformation) );
-  runManager->SetUserAction( new QweakSimPrimaryGeneratorAction( ) );
+  runManager->SetUserAction( new QweakSimPrimaryGeneratorAction(myQweakSimUserInformation) );
+  //runManager->SetUserAction( new QweakSimPrimaryGeneratorAction( ) );
   runManager->SetUserAction( new QweakSimSteppingAction(myQweakSimUserInformation, myEPEvent));
   runManager->SetUserAction( new QweakSimStackingAction() );
   runManager->SetUserAction( new QweakSimTrackingAction(myQweakSimUserInformation) );
