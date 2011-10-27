@@ -65,7 +65,7 @@ int main(int argc,char** argv) {
   QweakSimAnalysis*              myQweakSimAnalysis         = new QweakSimAnalysis();
 
 //jpan@nuclear.uwinnipeg.ca
-  QweakSimEPEvent*               myEPEvent                  = new QweakSimEPEvent();
+  QweakSimEPEvent*               myEPEvent                  = new QweakSimEPEvent(myQweakSimUserInformation);
 
   runManager->SetUserInitialization(myQweakSimExperiment);
   runManager->SetUserInitialization(new QweakSimPhysicsList() );

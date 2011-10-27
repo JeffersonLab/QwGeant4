@@ -57,6 +57,7 @@ private:
 
   QweakSimEPEvent *myEvent;
   G4double RandomPositionZ;
+  G4double targetCenterPositionZ;
 
 };
 

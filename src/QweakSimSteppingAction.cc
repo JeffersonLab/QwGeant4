@@ -51,6 +51,7 @@ G4cout << "###### Calling QweakSimSteppingAction::QweakSimSteppingAction() " << 
 
   evtGenStatus = 0;
   RandomPositionZ = myEvent->GetVertexZ();
+  targetCenterPositionZ = myUserInfo->TargetCenterPositionZ;
 
 //  std::ofstream EventDataFile("Event.dat", std::ios::out);
 
@@ -98,7 +99,7 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
     G4double theY = thePosition.getY();
     G4double theZ = thePosition.getZ();
 
-   if( theZ > -650*cm+35*cm*0.5+5*(2.54*cm*0.001) || sqrt(theX*theX+theY*theY)>2.54*cm) 
+   if( theZ > targetCenterPositionZ+35*cm*0.5+5*(2.54*cm*0.001) || sqrt(theX*theX+theY*theY)>2.54*cm) 
     {
        evtGenStatus = 0;
        RandomPositionZ = myEvent->GetVertexZ();

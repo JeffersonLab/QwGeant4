@@ -20,6 +20,9 @@
 #include "G4Types.hh"
 #include "G4ThreeVector.hh"
 
+// user includes
+#include "QweakSimUserInformation.hh"
+
 // user classes
 class QweakSimEPEventMessenger;
 
@@ -28,7 +31,7 @@ class QweakSimEPEvent {
  private:
    //define target geometry parameter, 
    //TODO: these parameters will be acquired from QweakSimTarget
-   static const G4double TargetCenterPositionZ;
+
    static const G4double TargetLength;
 
    // definition of a mil = inch/1000
@@ -67,11 +70,12 @@ class QweakSimEPEvent {
   G4ThreeVector GetMomentumDirection();
 
   QweakSimEPEventMessenger *EventGen_Messenger;
+  QweakSimUserInformation *myUserInfo;
 
  public:
 
-  //QweakSimEPEvent(QweakSimUserInformation* myUI);
-  QweakSimEPEvent();
+  QweakSimEPEvent(QweakSimUserInformation* myUI);
+  //QweakSimEPEvent();
   virtual ~QweakSimEPEvent();
 
   void SetActiveOctantNumber(G4int kaot) { kActiveOctantNumber = kaot; };

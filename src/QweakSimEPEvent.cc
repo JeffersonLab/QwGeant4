@@ -23,7 +23,6 @@
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-   const G4double QweakSimEPEvent::TargetCenterPositionZ = -650.0*cm;
    const G4double QweakSimEPEvent::TargetLength = 35.0*cm;
 
    // definition of a mil = inch/1000
@@ -37,9 +36,7 @@
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-//QweakSimEPEvent::QweakSimEPEvent( QweakSimUserInformation* myUI)
-//                : myUserInfo(myUI)
-QweakSimEPEvent::QweakSimEPEvent()
+QweakSimEPEvent::QweakSimEPEvent( QweakSimUserInformation* myUI)
 {
   G4cout << "###### Calling QweakSimEPEvent::QweakSimEPEvent () " << G4endl;
 
@@ -53,6 +50,7 @@ QweakSimEPEvent::QweakSimEPEvent()
   ReactionRegion = 1;
   kActiveOctantNumber = 1;  //default octant 1, choose from [1,8]
 
+  myUserInfo = myUI;
   EventGen_Messenger = new QweakSimEPEventMessenger(this);
 
   G4cout << "###### Leaving QweakSimEPEvent::QweakSimEPEvent () " << G4endl;
@@ -76,17 +74,17 @@ G4double QweakSimEPEvent::GetVertexZ()
 {
 
    if(ReactionRegion==1) // target
-     myPositionZ =  TargetCenterPositionZ + (G4UniformRand()-0.5)*TargetLength;
+     myPositionZ =  myUserInfo->TargetCenterPositionZ + (G4UniformRand()-0.5)*TargetLength;
 
        // select the front window or back window by ReactionRegion
    else if(ReactionRegion == 2) //front entrance window
-     myPositionZ =  TargetCenterPositionZ - 0.5*TargetLength - TargetWindowThickness*G4UniformRand();
+     myPositionZ =  myUserInfo->TargetCenterPositionZ - 0.5*TargetLength - TargetWindowThickness*G4UniformRand();
 
    else if(ReactionRegion == 3) //back exit window
-     myPositionZ =  TargetCenterPositionZ + 0.5*TargetLength + TargetWindowThickness*G4UniformRand();
+     myPositionZ =  myUserInfo->TargetCenterPositionZ + 0.5*TargetLength + TargetWindowThickness*G4UniformRand();
 
    else
-     myPositionZ =  TargetCenterPositionZ + (G4UniformRand()-0.5)*TargetLength; //default region
+     myPositionZ =  myUserInfo->TargetCenterPositionZ + (G4UniformRand()-0.5)*TargetLength; //default region
 
   return myPositionZ;
 }

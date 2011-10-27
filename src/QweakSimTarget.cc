@@ -107,7 +107,8 @@ QweakSimTarget::QweakSimTarget(QweakSimUserInformation *myUI)
     targetCellStartingPhi =  0.0*deg;
     targetCellDeltaPhi    = 360*deg;
 
-    targetZPos        = -650.0*cm - 3.77*cm;
+    //targetZPos        = -650.0*cm - 3.77*cm;
+    targetZPos        = myUserInfo->TargetCenterPositionZ; //-650.0*cm;
 
     ScatteringChamberWindowRadius = 0.5*23.5*inch;
     ScatteringChamberWindowThickness = 30*mil;
