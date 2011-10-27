@@ -61,6 +61,7 @@ public:
   
 public:
 
+  void SetBeamRasteringRegion(G4double X_min, G4double X_max, G4double Y_min, G4double Y_max);
   void GeneratePrimaries(G4Event* anEvent);
   void ResetNtupleEventCounter() {myEventCounter = 0;}
   void SetNtupleEventCounter(G4int cnt) {myEventCounter = cnt;}
@@ -79,6 +80,11 @@ private:
 
   QweakSimPrimaryGeneratorActionMessenger* myMessenger;  // pointer to the Messenger
 
+  G4double PositionX_min;
+  G4double PositionX_max;
+  G4double PositionY_min;
+  G4double PositionY_max;
+	
   G4double myPositionX;
   G4double myPositionY;
   G4double myPositionZ;

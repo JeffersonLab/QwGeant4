@@ -13,6 +13,14 @@
 #/PrimaryEvent/SelectOctant 1	
 
 #==========================
+# Set beam rastering region
+#==========================
+/PrimaryEvent/SetRasterXmin 1.0 mm
+/PrimaryEvent/SetRasterXmax 1.0 mm
+/PrimaryEvent/SetRasterYmin 1.0 mm
+/PrimaryEvent/SetRasterYmax 1.0 mm
+
+#==========================
 # Target related
 #==========================
 /Target/SetCenterPositionInZ  -650.0 cm

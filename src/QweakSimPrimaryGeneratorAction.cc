@@ -39,7 +39,12 @@ QweakSimPrimaryGeneratorAction::QweakSimPrimaryGeneratorAction( QweakSimUserInfo
 {
 
   G4cout << "###### Calling QweakSimPrimaryGeneratorAction::QweakSimPrimaryGeneratorAction " << G4endl;
-
+  
+  PositionX_min = -1.0*mm;
+  PositionX_max =  1.0*mm;
+  PositionY_min = -1.0*mm;
+  PositionY_max =  1.0*mm;
+  
   myNormMomentumX  = 0.0;
   myNormMomentumY  = 0.0;
   myNormMomentumZ  = 0.0;
@@ -81,14 +86,8 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   G4ParticleDefinition* particle = particleTable->FindParticle("e-");
   particleGun->SetParticleDefinition(particle);
 
-  G4double PositionX_min = -2.0*mm;
-  G4double PositionX_max =  2.0*mm;
   myPositionX =  (G4UniformRand()-0.5)*(PositionX_max-PositionX_min)+(PositionX_max+PositionX_min)/2.0;
-
-  G4double PositionY_min = -2.0*mm;
-  G4double PositionY_max =  2.0*mm;
   myPositionY =  (G4UniformRand()-0.5)*(PositionY_max-PositionY_min)+(PositionX_max+PositionX_min)/2.0;
-
   myPositionZ = myUserInfo->TargetCenterPositionZ -30.0*cm;
   
   myNormMomentumX  = 0.0;
@@ -130,4 +129,21 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
+// defaule 2 mm x 2 mm raster
+void QweakSimPrimaryGeneratorAction::SetBeamRasteringRegion(G4double X_min=-1.0*mm, 
+							    G4double X_max=1.0*mm, 
+							    G4double Y_min=-1.0*mm, 
+							    G4double Y_max=1.0*mm)
+{
+  if (X_max<X_min)
+      X_max = X_min;
+  if (Y_max<Y_min)
+      Y_max = Y_min;
+  
+  PositionX_min = X_min;
+  PositionX_max = X_max;
+  PositionY_min = Y_min;
+  PositionY_max = Y_max;
+}
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

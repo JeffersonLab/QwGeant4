@@ -16,22 +16,6 @@
 */
 //=============================================================================
 
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2006/05/05 21:33:44 $
-//  CVS/RCS Revision: $Revision: 1.3 $
-//  Status:           $State: Exp $
-// 
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-//
-//============================================================================
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #include "QweakSimPrimaryGeneratorActionMessenger.hh"
@@ -46,7 +30,7 @@ QweakSimPrimaryGeneratorActionMessenger::QweakSimPrimaryGeneratorActionMessenger
 :pPrimaryGeneratorAction(pPhys)
 {
   Dir = new G4UIdirectory("/PrimaryEvent/");
-  Dir->SetGuidance("UI commands of this example");
+  Dir->SetGuidance("Primary event control");
  
   verboseCmd = new G4UIcmdWithAnInteger("/PrimaryEvent/verbose",this);  
   verboseCmd->SetGuidance("set verbose for primary generator");
@@ -67,6 +51,38 @@ QweakSimPrimaryGeneratorActionMessenger::QweakSimPrimaryGeneratorActionMessenger
   InitEventCounterCmd->SetRange("StartingEvent>=0");
   InitEventCounterCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
+  SetRasterXmin_Cmd = new G4UIcmdWithADoubleAndUnit("/PrimaryEvent/SetRasterXmin",this);
+  SetRasterXmin_Cmd->SetGuidance("Set beam rastering region (x min.)");
+  SetRasterXmin_Cmd->SetParameterName("Xmin",true);
+  SetRasterXmin_Cmd->SetUnitCategory("Length");
+  SetRasterXmin_Cmd->SetDefaultValue(-1.0*mm);
+  //SetRasterXmin_Cmd->SetRange("Xmin>=-10");
+  SetRasterXmin_Cmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+
+  SetRasterXmax_Cmd = new G4UIcmdWithADoubleAndUnit("/PrimaryEvent/SetRasterXmax",this);
+  SetRasterXmax_Cmd->SetGuidance("Set beam rastering region (x max.)");
+  SetRasterXmax_Cmd->SetParameterName("Xmax",true);
+  SetRasterXmax_Cmd->SetUnitCategory("Length");
+  SetRasterXmax_Cmd->SetDefaultValue(-1.0*mm);
+  //SetRasterXmax_Cmd->SetRange("Xmax<=10");
+  SetRasterXmax_Cmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+  
+  SetRasterYmin_Cmd = new G4UIcmdWithADoubleAndUnit("/PrimaryEvent/SetRasterYmin",this);
+  SetRasterYmin_Cmd->SetGuidance("Set beam rastering region (y min.)");
+  SetRasterYmin_Cmd->SetParameterName("Ymin",true);
+  SetRasterYmin_Cmd->SetUnitCategory("Length");
+  SetRasterYmin_Cmd->SetDefaultValue(-1.0*mm);
+  //SetRasterYmin_Cmd->SetRange("Ymin>=-10");
+  SetRasterYmin_Cmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+  
+  SetRasterYmax_Cmd = new G4UIcmdWithADoubleAndUnit("/PrimaryEvent/SetRasterYmax",this);
+  SetRasterYmax_Cmd->SetGuidance("Set beam rastering region (y max.)");
+  SetRasterYmax_Cmd->SetParameterName("Ymax",true);
+  SetRasterYmax_Cmd->SetUnitCategory("Length");
+  SetRasterYmax_Cmd->SetDefaultValue(-1.0*mm);
+  //SetRasterYmax_Cmd->SetRange("Ymax<10");
+  SetRasterYmax_Cmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+  
   SelectOctant_Cmd = new G4UIcmdWithAnInteger("/PrimaryEvent/SelectOctant",this);
   SelectOctant_Cmd->SetGuidance("Select octant for primaries");
   SelectOctant_Cmd->SetParameterName("SelectOctant",true);
@@ -79,6 +95,10 @@ QweakSimPrimaryGeneratorActionMessenger::QweakSimPrimaryGeneratorActionMessenger
 
 QweakSimPrimaryGeneratorActionMessenger::~QweakSimPrimaryGeneratorActionMessenger()
 {
+  delete SetRasterXmin_Cmd;
+  delete SetRasterXmax_Cmd;
+  delete SetRasterYmin_Cmd;
+  delete SetRasterYmax_Cmd;
   delete SelectOctant_Cmd;
   delete InitEventCounterCmd;
   delete verboseCmd;
@@ -99,6 +119,41 @@ void QweakSimPrimaryGeneratorActionMessenger::SetNewValue(G4UIcommand* command, 
   if( command == InitEventCounterCmd )
     { pPrimaryGeneratorAction->SetNtupleEventCounter(InitEventCounterCmd->GetNewIntValue(newValue)); }
 
+  if( command == SetRasterXmin_Cmd )
+    { 
+      G4cout << "#### Messenger: Setting Raster min. X to " << newValue << G4endl;
+      Xmin = SetRasterXmin_Cmd->GetNewDoubleValue(newValue);
+      pPrimaryGeneratorAction->SetBeamRasteringRegion(Xmin, Xmax, Ymin, Ymax); 
+    }
+    
+  if( command == SetRasterXmin_Cmd )
+    { 
+      G4cout << "#### Messenger: Setting Raster min. X to " << newValue << G4endl;
+      Xmin = SetRasterXmin_Cmd->GetNewDoubleValue(newValue);
+      pPrimaryGeneratorAction->SetBeamRasteringRegion(Xmin, Xmax, Ymin, Ymax); 
+    }
+
+  if( command == SetRasterXmax_Cmd )
+    { 
+      G4cout << "#### Messenger: Setting Raster max. X to " << newValue << G4endl;
+      Xmax = SetRasterXmax_Cmd->GetNewDoubleValue(newValue);
+      pPrimaryGeneratorAction->SetBeamRasteringRegion(Xmin, Xmax, Ymin, Ymax); 
+    }
+
+  if( command == SetRasterYmin_Cmd )
+    { 
+      G4cout << "#### Messenger: Setting Raster min. Y to " << newValue << G4endl;
+      Ymin = SetRasterYmin_Cmd->GetNewDoubleValue(newValue);
+      pPrimaryGeneratorAction->SetBeamRasteringRegion(Xmin, Xmax, Ymin, Ymax); 
+    }
+    
+  if( command == SetRasterYmax_Cmd )
+    { 
+      G4cout << "#### Messenger: Setting Raster max. Y to " << newValue << G4endl;
+      Ymax = SetRasterYmax_Cmd->GetNewDoubleValue(newValue);
+      pPrimaryGeneratorAction->SetBeamRasteringRegion(Xmin, Xmax, Ymin, Ymax); 
+    }
+    
   if( command == SelectOctant_Cmd )
     { 
       pPrimaryGeneratorAction->SetActiveOctant(SelectOctant_Cmd->GetNewIntValue(newValue)); 
@@ -109,18 +164,3 @@ void QweakSimPrimaryGeneratorActionMessenger::SetNewValue(G4UIcommand* command, 
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-//=======================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//      $Revisions$  
-//      $Log: QweakSimPrimaryGeneratorActionMessenger.cc,v $
-//      Revision 1.3  2006/05/05 21:33:44  grimm
-//      Added /PrimaryEvent/SelectOctant  #octant . This defines the octant of the generated tracks.
-//
-//      Revision 1.2  2005/12/27 19:14:20  grimm
-//      - Redesign of Doxygen header containing CVS info like revision and date
-//      - Added CVS revision log at the end of file
-//
-//
