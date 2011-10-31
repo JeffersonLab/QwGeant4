@@ -15,10 +15,10 @@
 #==========================
 # Set beam rastering region
 #==========================
-/PrimaryEvent/SetRasterXmin 1.0 mm
-/PrimaryEvent/SetRasterXmax 1.0 mm
-/PrimaryEvent/SetRasterYmin 1.0 mm
-/PrimaryEvent/SetRasterYmax 1.0 mm
+/PrimaryEvent/SetRasterXmin 2.0 mm
+/PrimaryEvent/SetRasterXmax 2.0 mm
+/PrimaryEvent/SetRasterYmin 2.0 mm
+/PrimaryEvent/SetRasterYmax 2.0 mm
 
 #==========================
 # Target related
@@ -59,6 +59,7 @@
 /Cerenkov/SetCenterPositionInZ    577.0 cm
 /Cerenkov/SetTiltingAngle           0.0 degree
 
+/Cerenkov/SetPreradiatorMaterial Vacuum
 
 #==================================
 #  Trigger Scintillator related

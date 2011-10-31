@@ -20,6 +20,7 @@
 
 // user includes
 #include "QweakSimEPEventMessenger.hh"
+#include "../include/QweakSimEPEvent.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -98,21 +99,36 @@ G4ThreeVector QweakSimEPEvent::GetMomentumDirection()
    // http://hypernews.slac.stanford.edu/HyperNews/geant4/get/particles/31/2.html
    // or more generally http://mathworld.wolfram.com/SpherePointPicking.html
 
-   ThetaAngle = ThetaAngle_Min + G4UniformRand()*(ThetaAngle_Max - ThetaAngle_Min);
-   PhiAngle =  PhiAngle_Min + G4UniformRand()*(PhiAngle_Max - PhiAngle_Min);
+   // I added in code to do the dependent angle generation. Howerver, this is a topic for debate. 
+   // - Either dependent or independent angles should finally be related to absolute rate calculation.
+   // - Both of two methods can be correct, if they are processed in a correct MC way.
+   // (Peiqing, 2011 Oct. 31)
 
-   G4ThreeVector myNormMomentum(sin(0.5*ThetaAngle)*cos(PhiAngle),
-                                sin(0.5*ThetaAngle)*sin(PhiAngle),
-                                cos(0.5*ThetaAngle) );
+    PhiAngle =  PhiAngle_Min + G4UniformRand()*(PhiAngle_Max - PhiAngle_Min);
+    G4double cosPhi = cos(PhiAngle);
+    G4double sinPhi = sin(PhiAngle);
+    
+    /*
+    ThetaAngle = ThetaAngle_Min + G4UniformRand()*(ThetaAngle_Max - ThetaAngle_Min);
+    G4double cosTheta = cos(ThetaAngle);
+    G4double sinTheta = sin(ThetaAngle);
+    */
 
-//  G4ThreeVector myNormMomentum(0.,0.,1.0);
-//  myNormMomentum.setTheta(ThetaAngle);
-//  myNormMomentum.setPhi(PhiAngle);
-//  myNormMomentum.unit();
+    G4double cosThetaMax = cos(ThetaAngle_Max);
+    G4double cosThetaMin = cos(ThetaAngle_Min);   
+    G4double cosTheta = cosThetaMin + G4UniformRand()*(cosThetaMax - cosThetaMin);
+    G4double sinTheta = sqrt(1. - cosTheta * cosTheta);
+    ThetaAngle = acos(cosTheta);
+    
+    G4double ux= sinTheta * cosPhi;
+    G4double uy= sinTheta * sinPhi;
+    G4double uz =cosTheta;
 
-  myNormMomentum.rotateZ( (kActiveOctantNumber-1)*45.0*degree+90*degree);
+    G4ThreeVector myNormMomentum(ux,uy,uz);
+       
+    myNormMomentum.rotateZ( (kActiveOctantNumber-1)*45.0*degree+90*degree);
 
-   return myNormMomentum; 
+    return myNormMomentum; 
 }
 
 

@@ -221,7 +221,7 @@ void QweakSimPhysicsList::ConstructProcess()
   AddTransportation();
 
   ConstructEMProcess();
-  ConstructOpticalPhotonProcess();
+  //ConstructOpticalPhotonProcess();
   //ConstructHadronProcess();
   //ConstructNeutronProcess();
   //ConstructPhotonNuclearProcess();

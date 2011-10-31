@@ -55,7 +55,7 @@ QweakSimPrimaryGeneratorActionMessenger::QweakSimPrimaryGeneratorActionMessenger
   SetRasterXmin_Cmd->SetGuidance("Set beam rastering region (x min.)");
   SetRasterXmin_Cmd->SetParameterName("Xmin",true);
   SetRasterXmin_Cmd->SetUnitCategory("Length");
-  SetRasterXmin_Cmd->SetDefaultValue(-1.0*mm);
+  SetRasterXmin_Cmd->SetDefaultValue(-2.0*mm);
   //SetRasterXmin_Cmd->SetRange("Xmin>=-10");
   SetRasterXmin_Cmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
@@ -63,7 +63,7 @@ QweakSimPrimaryGeneratorActionMessenger::QweakSimPrimaryGeneratorActionMessenger
   SetRasterXmax_Cmd->SetGuidance("Set beam rastering region (x max.)");
   SetRasterXmax_Cmd->SetParameterName("Xmax",true);
   SetRasterXmax_Cmd->SetUnitCategory("Length");
-  SetRasterXmax_Cmd->SetDefaultValue(-1.0*mm);
+  SetRasterXmax_Cmd->SetDefaultValue(2.0*mm);
   //SetRasterXmax_Cmd->SetRange("Xmax<=10");
   SetRasterXmax_Cmd->AvailableForStates(G4State_PreInit,G4State_Idle);
   
@@ -71,7 +71,7 @@ QweakSimPrimaryGeneratorActionMessenger::QweakSimPrimaryGeneratorActionMessenger
   SetRasterYmin_Cmd->SetGuidance("Set beam rastering region (y min.)");
   SetRasterYmin_Cmd->SetParameterName("Ymin",true);
   SetRasterYmin_Cmd->SetUnitCategory("Length");
-  SetRasterYmin_Cmd->SetDefaultValue(-1.0*mm);
+  SetRasterYmin_Cmd->SetDefaultValue(-2.0*mm);
   //SetRasterYmin_Cmd->SetRange("Ymin>=-10");
   SetRasterYmin_Cmd->AvailableForStates(G4State_PreInit,G4State_Idle);
   
@@ -79,7 +79,7 @@ QweakSimPrimaryGeneratorActionMessenger::QweakSimPrimaryGeneratorActionMessenger
   SetRasterYmax_Cmd->SetGuidance("Set beam rastering region (y max.)");
   SetRasterYmax_Cmd->SetParameterName("Ymax",true);
   SetRasterYmax_Cmd->SetUnitCategory("Length");
-  SetRasterYmax_Cmd->SetDefaultValue(-1.0*mm);
+  SetRasterYmax_Cmd->SetDefaultValue(2.0*mm);
   //SetRasterYmax_Cmd->SetRange("Ymax<10");
   SetRasterYmax_Cmd->AvailableForStates(G4State_PreInit,G4State_Idle);
   

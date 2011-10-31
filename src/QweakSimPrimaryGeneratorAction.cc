@@ -129,11 +129,11 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-// defaule 2 mm x 2 mm raster
-void QweakSimPrimaryGeneratorAction::SetBeamRasteringRegion(G4double X_min=-1.0*mm, 
-							    G4double X_max=1.0*mm, 
-							    G4double Y_min=-1.0*mm, 
-							    G4double Y_max=1.0*mm)
+// defaule 4 mm x 4 mm raster
+void QweakSimPrimaryGeneratorAction::SetBeamRasteringRegion(G4double X_min=-2.0*mm, 
+							    G4double X_max= 2.0*mm, 
+							    G4double Y_min=-2.0*mm, 
+							    G4double Y_max= 2.0*mm)
 {
   if (X_max<X_min)
       X_max = X_min;
