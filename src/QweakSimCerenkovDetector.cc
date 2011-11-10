@@ -131,6 +131,10 @@ QweakSimCerenkovDetector::QweakSimCerenkovDetector(QweakSimUserInformation *user
     Window_Material            = pMaterial->GetMaterial("Tyvek");
     BracketPad_Material        = pMaterial->GetMaterial("Tyvek");
 
+    Position_CerenkovContainer_X =     0.0*cm;
+    Position_CerenkovContainer_Y =   335.17*cm;
+    Position_CerenkovContainer_Z =   577.88*cm;
+    
     LightGuide_FullLength      =   18.00*cm;
     LightGuide_FullWidth1      =   18.00*cm;
     LightGuide_FullWidth2      =   18.00*cm;
@@ -200,10 +204,6 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 //******************************Define Detector Container*********************************************
 
 //jpan@nuclear.uwinnipeg.ca
-    Position_CerenkovContainer_X =     0.0*cm;
-    Position_CerenkovContainer_Y =   335.17*cm;
-    Position_CerenkovContainer_Z =   577.875*cm;
-
     Position_CerenkovContainer  = G4ThreeVector(Position_CerenkovContainer_X,
                                   Position_CerenkovContainer_Y,
                                   Position_CerenkovContainer_Z);

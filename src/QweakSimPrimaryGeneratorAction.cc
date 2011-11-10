@@ -40,10 +40,10 @@ QweakSimPrimaryGeneratorAction::QweakSimPrimaryGeneratorAction( QweakSimUserInfo
 
   G4cout << "###### Calling QweakSimPrimaryGeneratorAction::QweakSimPrimaryGeneratorAction " << G4endl;
   
-  PositionX_min = -1.0*mm;
-  PositionX_max =  1.0*mm;
-  PositionY_min = -1.0*mm;
-  PositionY_max =  1.0*mm;
+  PositionX_min = -2.0*mm;
+  PositionX_max =  2.0*mm;
+  PositionY_min = -2.0*mm;
+  PositionY_max =  2.0*mm;
   
   myNormMomentumX  = 0.0;
   myNormMomentumY  = 0.0;
@@ -87,7 +87,7 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   particleGun->SetParticleDefinition(particle);
 
   myPositionX =  (G4UniformRand()-0.5)*(PositionX_max-PositionX_min)+(PositionX_max+PositionX_min)/2.0;
-  myPositionY =  (G4UniformRand()-0.5)*(PositionY_max-PositionY_min)+(PositionX_max+PositionX_min)/2.0;
+  myPositionY =  (G4UniformRand()-0.5)*(PositionY_max-PositionY_min)+(PositionY_max+PositionY_min)/2.0;
   myPositionZ = myUserInfo->TargetCenterPositionZ -30.0*cm;
   
   myNormMomentumX  = 0.0;

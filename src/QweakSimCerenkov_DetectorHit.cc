@@ -142,12 +142,16 @@ void QweakSimCerenkov_DetectorHit::Draw()
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void QweakSimCerenkov_DetectorHit::Print()
 {
-//   G4cout << " CerenkovDetector[" << DetectorID << "] : time " << time/ns
-//          << " (nsec) --- local (x,y,z) [cm] " 
-// 	 << localPos.x()/cm << ", " 
-// 	 << localPos.y()/cm << ", " 
-// 	 << localPos.z()/cm << ", " 
-// 	 << G4endl;
+  G4cout << " CerenkovDetector[" << DetectorID << "] : time " << time/ns
+         << " (nsec) --- local (x,y,z) [cm] " 
+	 << localPos.x()/cm << ", " 
+	 << localPos.y()/cm << ", " 
+	 << localPos.z()/cm << ", " 
+	 << "--- world (x,y,z) [cm] "
+	 << worldPos.x()/cm << ", " 
+	 << worldPos.y()/cm << ", " 
+	 << worldPos.z()/cm << ", "
+	 << G4endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

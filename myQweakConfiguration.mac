@@ -15,10 +15,10 @@
 #==========================
 # Set beam rastering region
 #==========================
-/PrimaryEvent/SetRasterXmin 2.0 mm
-/PrimaryEvent/SetRasterXmax 2.0 mm
-/PrimaryEvent/SetRasterYmin 2.0 mm
-/PrimaryEvent/SetRasterYmax 2.0 mm
+/PrimaryEvent/SetRasterXmin -2.0 mm
+/PrimaryEvent/SetRasterXmax  2.0 mm
+/PrimaryEvent/SetRasterYmin -2.0 mm
+/PrimaryEvent/SetRasterYmax  2.0 mm
 
 #==========================
 # Target related
@@ -53,10 +53,8 @@
 # on the vertical detector plane
  
 /Cerenkov/SetCenterPositionInX      0.0 cm
-#/Cerenkov/SetCenterPositionInY   319.0 cm 
-/Cerenkov/SetCenterPositionInY    328.0 cm
-#/Cerenkov/SetCenterPositionInY   335.0 cm
-/Cerenkov/SetCenterPositionInZ    577.0 cm
+/Cerenkov/SetCenterPositionInY   335.17 cm
+/Cerenkov/SetCenterPositionInZ   577.88 cm
 /Cerenkov/SetTiltingAngle           0.0 degree
 
 /Cerenkov/SetPreradiatorMaterial Vacuum
