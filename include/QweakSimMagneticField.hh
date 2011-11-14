@@ -119,7 +119,7 @@ class QweakSimMagneticField: public G4MagneticField
     void ReadFieldMapBinary(const G4String& filename);
 
     /// Test the field map
-    void TestFieldMap() const;
+    void TestFieldMap(const G4double point[4], const G4double exact[3]) const;
 
   private:
 

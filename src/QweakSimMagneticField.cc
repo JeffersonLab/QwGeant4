@@ -99,17 +99,23 @@ void QweakSimMagneticField::ReadFieldMap(const G4String& filename)
     ReadFieldMapBinary(filename);
   }
 
+  // Test new field map
+  G4double point1[4] = {100.0 * cm, 0.0 * cm, 100.0 * cm, 0.0};
+  G4double exact1[3] = {-0.0499845 * kilogauss, 3.28516 * kilogauss, -0.0112704 * kilogauss};
+  TestFieldMap(point1,exact1);
+  G4double point2[4] = {0.0 * cm, 100.0 * cm, 100.0 * cm, 0.0};
+  G4double exact2[3] = {-3.28505 * kilogauss, -0.0030823 * kilogauss, 0.0014373 * kilogauss};
+  TestFieldMap(point2,exact2);
+  G4double point3[4] = {100.0 * cm, 100.0 * cm, 100.0 * cm, 0.0};
+  G4double exact3[3] = {-0.838069 * kilogauss, 0.836675 * kilogauss, 0.00004997 * kilogauss};
+  TestFieldMap(point3,exact3);
+
   G4cout << G4endl << "###### Leaving QweakSimMagneticField::ReadFieldMap() " << G4endl << G4endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void QweakSimMagneticField::TestFieldMap() const
+void QweakSimMagneticField::TestFieldMap(const G4double point[4], const G4double exact[3]) const
 {
-  // Test field value at exact grid point (r = 100*cm, z = 100*cm, phi = 22.5*degree)
-  //G4double point[4] = {38.2683432 * cm, 92.3879533 * cm, 100.0 * cm, 0.0};
-  G4double point[4] = {100.0 * cm, 0.0 * cm, 100.0 * cm, 0.0};
-  G4double exact[3] = {-0.0499845 * kilogauss, 3.28516 * kilogauss, -0.0112704 * kilogauss};
-
   // Calculate field value
   G4cout << "Calculating test field value at cartesian position "
     << "(" << point[0]/cm << "," << point[1]/cm << "," << point[2]/cm << ") cm "
@@ -153,9 +159,6 @@ void QweakSimMagneticField::ReadFieldMapBinary(const G4String& filename)
   // Create new field map
   fField = new QweakSimFieldMap<value_t,value_n>(filename);
   fField->SetDebugLevel(QweakSimFieldMap<value_t,value_n>::kDebug);
-
-  // Test new field map
-  TestFieldMap();
 
   // Set debug level to something reasonable
   fField->SetDebugLevel(QweakSimFieldMap<value_t,value_n>::kWarning);
@@ -230,9 +233,6 @@ void QweakSimMagneticField::ReadFieldMapText(const G4String& filename)
   // Close file
   inputfile.close();
 
-  // Test new field map
-  TestFieldMap();
-
   // Set debug level to something reasonable
   fField->SetDebugLevel(QweakSimFieldMap<value_t,value_n>::kWarning);
 }
@@ -244,6 +244,7 @@ void QweakSimMagneticField::GetFieldValue(const G4double point[4], G4double *fie
   G4double z   = point[2];
   G4double r   = sqrt(point[0] * point[0] + point[1] * point[1]);
   G4double phi = atan2(point[1], point[0]);
+  if (phi < 0.0) phi += 360.0 * degree;
 
   // Retrieve field value
   field[0] = 0.0;
