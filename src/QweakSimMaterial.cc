@@ -72,7 +72,7 @@ void QweakSimMaterial::DefineMaterials()
   G4Material* __attribute__ ((unused))
   matLiquidHydrogen = new G4Material(name, density, nelements);
   matLiquidHydrogen -> AddElement(elH,1);
-  matLiquidHydrogen -> GetIonisation() -> SetMeanExcitationEnergy(21.8*eV);
+  //matLiquidHydrogen -> GetIonisation() -> SetMeanExcitationEnergy(21.8*eV);
 
   // Helium gas
   name      = "HeGas";

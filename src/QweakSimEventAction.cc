@@ -528,10 +528,12 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
             rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
             rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
 
-            OriginVertexPhiAngle = atan2(-1.0*rOriginVertexMomentumDirectionY, -1.0*rOriginVertexMomentumDirectionX)+ 90.0*degree;
+            OriginVertexPhiAngle = atan2(rOriginVertexMomentumDirectionY, rOriginVertexMomentumDirectionX);
             rOriginVertexPhiAngle = OriginVertexPhiAngle/degree;
 
-            OriginVertexThetaAngle = atan2( rOriginVertexMomentumDirectionY, rOriginVertexMomentumDirectionZ);
+	    OriginVertexThetaAngle = atan2(sqrt(rOriginVertexMomentumDirectionY*rOriginVertexMomentumDirectionY
+		                           +rOriginVertexMomentumDirectionX*rOriginVertexMomentumDirectionX), 
+		                            rOriginVertexMomentumDirectionZ);
             rOriginVertexThetaAngle = OriginVertexThetaAngle/degree;
 
             originVertexKineticEnergy = aHit->GetOriginVertexKineticEnergy();
@@ -914,10 +916,12 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
                 rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
 
-                OriginVertexPhiAngle = atan2(-1.0*rOriginVertexMomentumDirectionY, -1.0*rOriginVertexMomentumDirectionX)+ 90.0*degree;
+		OriginVertexPhiAngle = atan2(rOriginVertexMomentumDirectionY, rOriginVertexMomentumDirectionX);
                 rOriginVertexPhiAngle = OriginVertexPhiAngle/degree;
 
-                OriginVertexThetaAngle = atan2( rOriginVertexMomentumDirectionY, rOriginVertexMomentumDirectionZ);
+		OriginVertexThetaAngle = atan2(sqrt(rOriginVertexMomentumDirectionY*rOriginVertexMomentumDirectionY
+		                               +rOriginVertexMomentumDirectionX*rOriginVertexMomentumDirectionX), 
+		                                rOriginVertexMomentumDirectionZ);
                 rOriginVertexThetaAngle = OriginVertexThetaAngle/degree;
 
                 originVertexKineticEnergy =   aHit->GetOriginVertexKineticEnergy();
@@ -1237,10 +1241,12 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
                 rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
 
-                OriginVertexPhiAngle = atan2(-1.0*rOriginVertexMomentumDirectionY, -1.0*rOriginVertexMomentumDirectionX)+ 90.0*degree;
+                OriginVertexPhiAngle = atan2(rOriginVertexMomentumDirectionY, rOriginVertexMomentumDirectionX);
                 rOriginVertexPhiAngle = OriginVertexPhiAngle/degree;
 
-                OriginVertexThetaAngle = atan2( rOriginVertexMomentumDirectionY, rOriginVertexMomentumDirectionZ);
+		OriginVertexThetaAngle = atan2(sqrt(rOriginVertexMomentumDirectionY*rOriginVertexMomentumDirectionY
+		                               +rOriginVertexMomentumDirectionX*rOriginVertexMomentumDirectionX), 
+		                                rOriginVertexMomentumDirectionZ);
                 rOriginVertexThetaAngle = OriginVertexThetaAngle/degree;
 
                 originVertexKineticEnergy = aHit->GetOriginVertexKineticEnergy();
@@ -2269,10 +2275,12 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
                 rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
 
-                OriginVertexPhiAngle = atan2(-1.0*rOriginVertexMomentumDirectionY, -1.0*rOriginVertexMomentumDirectionX) + 90.0*degree;
+                OriginVertexPhiAngle = atan2(rOriginVertexMomentumDirectionY, rOriginVertexMomentumDirectionX);
                 rOriginVertexPhiAngle = OriginVertexPhiAngle/degree;
 
-                OriginVertexThetaAngle = atan2( rOriginVertexMomentumDirectionY, rOriginVertexMomentumDirectionZ);
+		OriginVertexThetaAngle = atan2(sqrt(rOriginVertexMomentumDirectionY*rOriginVertexMomentumDirectionY
+		                               +rOriginVertexMomentumDirectionX*rOriginVertexMomentumDirectionX), 
+		                               rOriginVertexMomentumDirectionZ);
                 rOriginVertexThetaAngle = OriginVertexThetaAngle/degree;
 
                 originVertexKineticEnergy =   aHit->GetOriginVertexKineticEnergy();

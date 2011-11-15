@@ -71,7 +71,7 @@ int main(int argc,char** argv) {
   runManager->SetUserInitialization(new QweakSimPhysicsList() );
 
   // UserAction classes
-  runManager->SetUserAction( new QweakSimPrimaryGeneratorAction(myQweakSimUserInformation) );
+  runManager->SetUserAction( new QweakSimPrimaryGeneratorAction(myQweakSimUserInformation, myEPEvent) );
   //runManager->SetUserAction( new QweakSimPrimaryGeneratorAction( ) );
   runManager->SetUserAction( new QweakSimSteppingAction(myQweakSimUserInformation, myEPEvent));
   runManager->SetUserAction( new QweakSimStackingAction() );
@@ -85,6 +85,7 @@ int main(int argc,char** argv) {
 
  if (argc==1)   // Define UI session for interactive mode.
  {
+
      // G4UIterminal is a (dumb) terminal.
     #if defined(G4UI_USE_XM)
      session = new G4UIXm(argc,argv);

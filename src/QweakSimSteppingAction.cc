@@ -50,9 +50,9 @@ G4cout << "###### Calling QweakSimSteppingAction::QweakSimSteppingAction() " << 
   myEvent = myEPEvent;
 
   evtGenStatus = 0;
-  RandomPositionZ = myEvent->GetVertexZ();
   targetCenterPositionZ = myUserInfo->TargetCenterPositionZ;
-
+  //RandomPositionZ = myEvent->GetVertexZ();
+  
 //  std::ofstream EventDataFile("Event.dat", std::ios::out);
 
 G4cout << "###### Leaving QweakSimSteppingAction::QweakSimSteppingAction() " << G4endl;
@@ -84,28 +84,34 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
 //   G4int nSecAlong        = GetNumOfAlongStepSecondaries();
 //   G4int nSecPost         = GetNumOfPostStepSecondaries();
   G4int nSecTotal        = GetTotalNumOfSecondaries();
+  
+  //RandomPositionZ = myEvent->GetVertexZ();
+  RandomPositionZ = myUserInfo->GetOriginVertexPositionZ();
 
+  
 //jpan@nuclear.uwinnipeg.ca Thu Apr 16 01:33:14 CDT 2009
 // check if it is primary
+         
   G4int parentID = theTrack->GetParentID();
   if( particleType==G4Electron::ElectronDefinition() && parentID==0 ){
 
 //jpan: to account for the energy loss before the event generation,
 //      force to change primary momentum direction here
 
+  if(myUserInfo->GetPrimaryEventNumber() %2!=0){
+    
     //scattering only occur inside reaction region of the target, only occur once
     G4ThreeVector thePosition = theTrack->GetPosition();
     G4double theX = thePosition.getX();
     G4double theY = thePosition.getY();
     G4double theZ = thePosition.getZ();
 
-   if( theZ > targetCenterPositionZ+35*cm*0.5+5*(2.54*cm*0.001) || sqrt(theX*theX+theY*theY)>2.54*cm) 
-    {
-       evtGenStatus = 0;
-       RandomPositionZ = myEvent->GetVertexZ();
-    }
+//    if( theZ > targetCenterPositionZ+35*cm*0.5+5*(2.54*cm*0.001) || sqrt(theX*theX+theY*theY)>2.54*cm) 
+//     {
+//        evtGenStatus = 0;
+//     }
 
-    if(evtGenStatus == 0){
+    if( myUserInfo->EvtGenStatus == 0){
 
       G4double theStepLength = theStep->GetStepLength();
 
@@ -116,18 +122,17 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
              G4ThreeVector MomentumDirection;
              G4double E_in = theTrack->GetKineticEnergy()/MeV;  //Event generator needs units of MeV
              myEvent->GetanEvent(E_in, CrossSection, WeightN, Q2, E_out, MomentumDirection, theta, phi);
-             theTrack->SetKineticEnergy(E_out*MeV);
-             theTrack->SetMomentumDirection(MomentumDirection);
+             //theTrack->SetKineticEnergy(E_out*MeV);
+             //theTrack->SetMomentumDirection(MomentumDirection);
 
-             evtGenStatus = 1;
-             myEventCounter = myEventCounter + 1;
-
-             // set track info
-            theTrack->SetVertexPosition(thePosition);
-            theTrack->SetVertexMomentumDirection(MomentumDirection);
-            theTrack->SetVertexKineticEnergy(E_out);
-
-            //fill user info
+	     myUserInfo->EvtGenStatus = 1;
+	     
+	     // set track info
+            //theTrack->SetVertexPosition(thePosition);
+            //theTrack->SetVertexMomentumDirection(MomentumDirection);
+            //theTrack->SetVertexKineticEnergy(E_out);
+	     
+	     //fill user info
              myUserInfo->StoreTrackID(theTrack->GetTrackID());
              myUserInfo->StoreGlobalTime(theTrack->GetGlobalTime());
              myUserInfo->StoreOriginVertexPositionX(theX);
@@ -143,12 +148,12 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
              myUserInfo->StorePrimaryQ2(Q2*0.000001); //in units of GeV^2
              myUserInfo->StoreCrossSection(CrossSection);
              myUserInfo->StoreCrossSectionWeight(WeightN);
-             myUserInfo->StorePrimaryEventNumber(myEventCounter);
+             //myUserInfo->StorePrimaryEventNumber(myEventCounter);
              myUserInfo->StoreReactionType(myEvent->GetReactionType());
              myUserInfo->StorePDGcode(3);
 
              // print the stored values
-//             G4cout << "*********** myEventCounter = " << myEventCounter << G4endl;
+             //std::cout << "*********** myEventCounter = " << myEventCounter << std::endl;
 
 // std::ofstream EventDataFile("Event.dat", std::ios::app);
 // EventDataFile << "Event: "<<myEventCounter<<std::endl;
@@ -160,10 +165,17 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
 // EventDataFile << "Material: "<<theTrack->GetMaterial()<<std::endl;
  
 //             myUserInfo->Print();
+	     
+	       theTrack->SetTrackStatus(fStopAndKill);
+
+	     
+	  }
+
       }
     }
   }
 
+	     
 //now this is handled in the TrackingAction with the control of the tracking flag
 //  else  //secondary, umcomment to disregard all secondaries to speed up the primary particle simulation
 //   { 

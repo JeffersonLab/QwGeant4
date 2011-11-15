@@ -23,7 +23,7 @@
 #==========================
 # Target related
 #==========================
-/Target/SetCenterPositionInZ  -650.0 cm
+/Target/SetCenterPositionInZ  -652.67 cm
 /Target/SetTargetCellMaterial  Aluminum
 /Target/SetTargetMaterial      H2Liquid
 #/Target/SetTargetCellMaterial  Vacuum
@@ -202,7 +202,7 @@
 #====================================
 
 # This is only valid for peiqing_2007.dat
-/MagneticField/SetRotation -67.5 degree
-/MagneticField/SetActualCurrent 8921.0
-/MagneticField/SetReferenceCurrent 8615.0
-/MagneticField/ReadFieldMap MainMagnet_FieldMap.dat
+#/MagneticField/SetRotation -67.5 degree
+#/MagneticField/SetActualCurrent 8921.0
+#/MagneticField/SetReferenceCurrent 8615.0
+#/MagneticField/ReadFieldMap MainMagnet_FieldMap.dat

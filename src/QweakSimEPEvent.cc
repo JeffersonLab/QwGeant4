@@ -107,20 +107,23 @@ G4ThreeVector QweakSimEPEvent::GetMomentumDirection()
     PhiAngle =  PhiAngle_Min + G4UniformRand()*(PhiAngle_Max - PhiAngle_Min);
     G4double cosPhi = cos(PhiAngle);
     G4double sinPhi = sin(PhiAngle);
+
+    G4double cosTheta;
+    G4double sinTheta;
     
 #ifndef PHI_DEPENDENT_THETA    
     ThetaAngle = ThetaAngle_Min + G4UniformRand()*(ThetaAngle_Max - ThetaAngle_Min);
-    G4double cosTheta = cos(ThetaAngle);
-    G4double sinTheta = sin(ThetaAngle);
  
 #else
     G4double cosThetaMax = cos(ThetaAngle_Max);
     G4double cosThetaMin = cos(ThetaAngle_Min);   
-    G4double cosTheta = cosThetaMin + G4UniformRand()*(cosThetaMax - cosThetaMin);
-    G4double sinTheta = sqrt(1. - cosTheta * cosTheta);
+    cosTheta = cosThetaMin + G4UniformRand()*(cosThetaMax - cosThetaMin);
+    sinTheta = sqrt(1. - cosTheta * cosTheta);
     ThetaAngle = acos(cosTheta);
 #endif
-    
+
+    cosTheta = cos(ThetaAngle);
+    sinTheta = sin(ThetaAngle);
     G4double ux= sinTheta * cosPhi;
     G4double uy= sinTheta * sinPhi;
     G4double uz =cosTheta;

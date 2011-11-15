@@ -35,7 +35,7 @@
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-QweakSimPrimaryGeneratorAction::QweakSimPrimaryGeneratorAction( QweakSimUserInformation* myUI)
+QweakSimPrimaryGeneratorAction::QweakSimPrimaryGeneratorAction( QweakSimUserInformation* myUI, QweakSimEPEvent* myEPEvent)
 {
 
   G4cout << "###### Calling QweakSimPrimaryGeneratorAction::QweakSimPrimaryGeneratorAction " << G4endl;
@@ -50,7 +50,8 @@ QweakSimPrimaryGeneratorAction::QweakSimPrimaryGeneratorAction( QweakSimUserInfo
   myNormMomentumZ  = 0.0;
   
   myUserInfo = myUI;
- 
+  myEvent = myEPEvent;
+   
   // get my messenger
   myMessenger = new QweakSimPrimaryGeneratorActionMessenger(this);
 
@@ -85,14 +86,38 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
   G4ParticleDefinition* particle = particleTable->FindParticle("e-");
   particleGun->SetParticleDefinition(particle);
-
-  myPositionX =  (G4UniformRand()-0.5)*(PositionX_max-PositionX_min)+(PositionX_max+PositionX_min)/2.0;
-  myPositionY =  (G4UniformRand()-0.5)*(PositionY_max-PositionY_min)+(PositionY_max+PositionY_min)/2.0;
-  myPositionZ = myUserInfo->TargetCenterPositionZ -30.0*cm;
   
-  myNormMomentumX  = 0.0;
-  myNormMomentumY  = 0.0;
-  myNormMomentumZ  = 1.0;
+  G4double E_beam;
+  G4int myEventCounter = myUserInfo->GetPrimaryEventNumber();
+  if ( myEventCounter%2==0)
+  {
+    //std::cout << "###### QweakSimPrimaryGeneratorAction::Generate Test Primaries: " << myEventCounter<<std::endl;
+    myPositionX =  (G4UniformRand()-0.5)*(PositionX_max-PositionX_min)+(PositionX_max+PositionX_min)/2.0;
+    myPositionY =  (G4UniformRand()-0.5)*(PositionY_max-PositionY_min)+(PositionY_max+PositionY_min)/2.0;
+    myPositionZ = myUserInfo->TargetCenterPositionZ -30.0*cm;
+
+    myNormMomentumX  = 0.0;
+    myNormMomentumY  = 0.0;
+    myNormMomentumZ  = 1.0;
+    
+    E_beam = 1.165*GeV;
+
+    myUserInfo->StoreOriginVertexPositionZ(myEvent->GetVertexZ());
+    myUserInfo->EvtGenStatus = 0;
+  }
+  else
+  {
+    //std::cout << "###### QweakSimPrimaryGeneratorAction::Generate Normal Primaries: " << myEventCounter<< std::endl;
+    myPositionX = myUserInfo->GetOriginVertexPositionX();
+    myPositionY = myUserInfo->GetOriginVertexPositionY();
+    myPositionZ = myUserInfo->GetOriginVertexPositionZ();
+    	
+    myNormMomentumX  = myUserInfo->GetOriginVertexMomentumDirectionX();
+    myNormMomentumY  = myUserInfo->GetOriginVertexMomentumDirectionY();
+    myNormMomentumZ  = myUserInfo->GetOriginVertexMomentumDirectionZ();
+    
+    E_beam = myUserInfo->GetOriginVertexKineticEnergy();
+  }
 
 
 //   //   Relocate the beam gun to the Cerenkov bar to test the light distributions
@@ -118,10 +143,11 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   myNormMomentum = G4ThreeVector(myNormMomentumX, myNormMomentumY, myNormMomentumZ);
   particleGun->SetParticleMomentumDirection(myNormMomentum); 
 
-  particleGun->SetParticleEnergy(1.165*GeV);
+  particleGun->SetParticleEnergy(E_beam);
 
   // finally : fire !!!
   particleGun->GeneratePrimaryVertex(anEvent);
+  myUserInfo->StorePrimaryEventNumber(myEventCounter+1);
 
 //  G4cout << "###### Leaving QweakSimPrimaryGeneratorAction::GeneratePrimaries" << G4endl;
 

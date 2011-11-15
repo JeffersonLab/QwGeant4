@@ -221,7 +221,7 @@ void QweakSimPhysicsList::ConstructProcess()
   AddTransportation();
 
   ConstructEMProcess();
-  //ConstructOpticalPhotonProcess();
+  ConstructOpticalPhotonProcess();
   //ConstructHadronProcess();
   //ConstructNeutronProcess();
   //ConstructPhotonNuclearProcess();
@@ -438,7 +438,7 @@ void QweakSimPhysicsList::ConstructEMProcess()
 void QweakSimPhysicsList::ConstructOpticalPhotonProcess()
 {
   theCerenkovProcess            = new G4Cerenkov("Cerenkov");
-  //theScintillationProces  s     = new G4Scintillation("Scintillation");
+  //theScintillationProcess     = new G4Scintillation("Scintillation");
   theAbsorptionProcess          = new G4OpAbsorption();
   //theRayleighScatteringProcess  = new G4OpRayleigh();
   theBoundaryProcess            = new G4OpBoundaryProcess();
