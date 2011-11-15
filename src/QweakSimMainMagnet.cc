@@ -1212,7 +1212,7 @@ void QweakSimMainMagnet::Construct_UpStreamMiniClampPlates(G4VPhysicalVolume* Mo
     G4cout << G4endl << "###### QweakSimMainMagnet: Define MainMagnet_MiniClampPlate_Solid " << G4endl << G4endl;
 
 
-    G4Box* SingleCoil_MiniClampPlate_Solid = new G4Box("MM_SingleCoil_ClampPlate_Solid",
+    G4Box* SingleCoil_MiniClampPlate_Solid = new G4Box("MM_SingleCoil_MiniClampPlate_Solid",
 						       0.5 * MiniClampPlate_FullLength_X , 
 						       0.5 * MiniClampPlate_FullLength_Y , 
 						       0.5 * MiniClampPlate_FullLength_Z );

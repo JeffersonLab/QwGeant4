@@ -2013,8 +2013,8 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
     Window_OpticalSurface->SetType(dielectric_metal);
     Window_OpticalSurface->SetFinish(ground);
     Window_OpticalSurface->SetModel(glisur);
-    new G4LogicalSkinSurface("Window_SkinSurface",FrontWindow_Logical,Window_OpticalSurface);
-    new G4LogicalSkinSurface("Window_SkinSurface",BackWindow_Logical,Window_OpticalSurface);
+    new G4LogicalSkinSurface("FrontWindow_SkinSurface",FrontWindow_Logical,Window_OpticalSurface);
+    new G4LogicalSkinSurface("BackWindow_SkinSurface",BackWindow_Logical,Window_OpticalSurface);
 
     G4double Tyvek_Reflectivity[nEntries]={0.95,0.95,0.95,0.95,0.95,0.95,0.95,0.90,0.90,0.85,0.85};
     G4MaterialPropertiesTable *Window_MPT = new G4MaterialPropertiesTable();
@@ -2027,8 +2027,8 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
     Bracket_OpticalSurface->SetType(dielectric_metal);
     Bracket_OpticalSurface->SetFinish(ground);
     Bracket_OpticalSurface->SetModel(glisur);
-    new G4LogicalSkinSurface("Bracket_SkinSurface",SideBracket_Logical,Bracket_OpticalSurface);
-    new G4LogicalSkinSurface("Bracket_SkinSurface",EndBracket_Logical,Bracket_OpticalSurface);
+    new G4LogicalSkinSurface("SideBracket_SkinSurface",SideBracket_Logical,Bracket_OpticalSurface);
+    new G4LogicalSkinSurface("EndBracket_SkinSurface",EndBracket_Logical,Bracket_OpticalSurface);
 
     G4double Bracket_Reflectivity[nEntries]={0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8,0.8};
     G4MaterialPropertiesTable *Bracket_MPT = new G4MaterialPropertiesTable();

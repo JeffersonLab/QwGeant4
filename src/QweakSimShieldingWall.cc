@@ -872,7 +872,7 @@ void QweakSimShieldingWall::ConstructFrontWall(G4VPhysicalVolume* MotherVolume)
 
 
   // Cut in the the front wall due to lead box (shielding the beam line)
-  G4Box* FrontWallBeamCutout_Solid    = new G4Box("FrontWall_Sol",
+  G4Box* FrontWallBeamCutout_Solid    = new G4Box("FrontWallBeamCutout_Sol",
 					       0.5 * FrontWallBeamCutout_FullLength_X ,    // half X length required by Geant4
 					       0.5 * FrontWallBeamCutout_FullLength_Y ,    // half Y length required by Geant4
 					       0.5 * FrontWallBeamCutout_FullLength_Z );   // half Z length required by Geant4
@@ -935,7 +935,7 @@ void QweakSimShieldingWall::ConstructBackWall(G4VPhysicalVolume* MotherVolume)
 
 
   // Cut in the the Back wall due to lead box (shielding the beam line)
-  G4Box* BackWallBeamCutout_Solid    = new G4Box("BackWall_Sol",
+  G4Box* BackWallBeamCutout_Solid    = new G4Box("BackWallBeamCutout_Sol",
 					       0.5 * BackWallBeamCutout_FullLength_X ,    // half X length required by Geant4
 					       0.5 * BackWallBeamCutout_FullLength_Y ,    // half Y length required by Geant4
 					       0.5 * BackWallBeamCutout_FullLength_Z );   // half Z length required by Geant4
