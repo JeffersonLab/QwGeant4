@@ -30,7 +30,7 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 QweakSimGeometry::QweakSimGeometry()
-: fStoreReferences(false)
+: fStoreReferences(true)
 {
   G4cout << G4endl << "###### Calling QweakSimGeometry::QweakSimGeometry() " << G4endl << G4endl;
 
@@ -89,8 +89,9 @@ G4VPhysicalVolume* QweakSimGeometry::Read()
   G4cout << G4endl << "###### Calling QweakSimGeometry::Read() " << G4endl << G4endl;
 
 #ifdef G4LIB_USE_GDML
-  fGDMLParser.SetOverlapCheck(false);
+  fGDMLParser.SetOverlapCheck(true);
   fGDMLParser.Read(fReadFile);
+  fGDMLParser.StripNamePointers();
 
   G4cout << *(G4Element::GetElementTable()) << G4endl;
   G4cout << *(G4Material::GetMaterialTable()) << G4endl;

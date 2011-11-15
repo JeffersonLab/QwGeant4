@@ -1923,8 +1923,8 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
     BracketPad_OpticalSurface->SetType(dielectric_metal);
     BracketPad_OpticalSurface->SetFinish(ground);
     BracketPad_OpticalSurface->SetModel(glisur);
-    new G4LogicalSkinSurface("BracketPad_SkinSurface",SideBracketPad_Logical,BracketPad_OpticalSurface);
-    new G4LogicalSkinSurface("BracketPad_SkinSurface",EndBracketPad_Logical,BracketPad_OpticalSurface);
+    new G4LogicalSkinSurface("SideBracketPad_SkinSurface",SideBracketPad_Logical,BracketPad_OpticalSurface);
+    new G4LogicalSkinSurface("EndBracketPad_SkinSurface",EndBracketPad_Logical,BracketPad_OpticalSurface);
 
     G4double Pad_Reflectivity[nEntries]={0.,0.,0.,0.,0.,0.,0.,0.,0.,0.,0.};
     G4MaterialPropertiesTable *BracketPad_MPT = new G4MaterialPropertiesTable();
