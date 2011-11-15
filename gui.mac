@@ -5,7 +5,7 @@
 #
 # File :
 /gui/addMenu   file File
-/gui/addButton file "Load expterimental configurations"   "/control/execute myQweakConfiguration.mac"
+/gui/addButton file "Load experimental configurations"   "/control/execute myQweakConfiguration.mac"
 /gui/addButton file Continue continue
 /gui/addButton file Exit "exit"
 #
@@ -33,6 +33,11 @@
 /gui/addButton viewer "Qt viewer"            "/control/execute vis/Qt.mac"
 /gui/addButton viewer "Set style solid"      "/vis/viewer/set/style solid"
 /gui/addButton viewer "Set style wire"       "/vis/viewer/set/style wire"
+/gui/addButton viewer "Hide tracks behind objects" "/vis/viewer/set/hiddenMarker true"
+/gui/addButton viewer "Show tracks behind objects" "/vis/viewer/set/hiddenMarker false"
+/gui/addButton viewer "Front view"           "/vis/viewer/set/viewpointThetaPhi 180 0 deg"
+/gui/addButton viewer "Back view"            "/vis/viewer/set/viewpointThetaPhi 0 0 deg"
+/gui/addButton viewer "Side view"            "/vis/viewer/set/viewpointThetaPhi 90 180 deg"
 /gui/addButton viewer "Update viewer"        "/vis/viewer/update"
 /gui/addButton viewer "Update scene"         "/vis/scene/notifyHandlers"
 /gui/addButton viewer "Reset scene"          "/control/execute vis/vis.mac"
