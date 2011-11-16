@@ -130,7 +130,7 @@ G4ThreeVector QweakSimEPEvent::GetMomentumDirection()
 
     G4ThreeVector myNormMomentum(ux,uy,uz);
        
-    myNormMomentum.rotateZ( (kActiveOctantNumber-1)*45.0*degree+90*degree);
+    myNormMomentum.rotateZ( (kActiveOctantNumber-1)*45.0*degree);
 
     return myNormMomentum; 
 }

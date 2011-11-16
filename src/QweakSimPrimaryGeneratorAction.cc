@@ -100,7 +100,7 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     myNormMomentumY  = 0.0;
     myNormMomentumZ  = 1.0;
     
-    E_beam = 1.165*GeV;
+    E_beam = 1.162*GeV;
 
     myUserInfo->StoreOriginVertexPositionZ(myEvent->GetVertexZ());
     myUserInfo->EvtGenStatus = 0;
