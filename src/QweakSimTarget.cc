@@ -145,7 +145,7 @@ void QweakSimTarget::ConstructComponent(G4VPhysicalVolume* MotherVolume)
     G4Tubs* TargetContainer_Solid    = new G4Tubs("TargetContainer_Sol",
             0, //targetCellRadiusMin, jpan@nuclear.uwinnipeg.ca
             ScatteringChamberWindowRadius+0.1*cm,
-            0.5*targetCellOuterLength+21.0*cm,
+            0.5*targetCellOuterLength+50.0*cm,
             targetCellStartingPhi,
             targetCellDeltaPhi);
 
