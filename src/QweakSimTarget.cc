@@ -83,8 +83,8 @@ QweakSimTarget::QweakSimTarget(QweakSimUserInformation *myUI)
 
     // define target geometry values
 
-    //targetCellEntranceWindowThickness =  5*mil;
-    targetCellEntranceWindowThickness =  0.89*mm;
+    targetCellEntranceWindowThickness =  5*mil;
+    //targetCellEntranceWindowThickness =  0.89*mm;
     targetCellExitWindowThickness =  20*mil;
     targetCellExitWindowNippleThickness =  5*mil;
     targetCellWallThickness   = 10.0*mil;
@@ -111,7 +111,7 @@ QweakSimTarget::QweakSimTarget(QweakSimUserInformation *myUI)
     targetZPos        = myUserInfo->TargetCenterPositionZ; //-650.0*cm;
 
     ScatteringChamberWindowRadius = 0.5*23.5*inch;
-    ScatteringChamberWindowThickness = 30*mil;
+    ScatteringChamberWindowThickness = 35*mil;
 
     myUserInfo->TargetLength = targetCellInnerLength;
     myUserInfo->TargetEntranceWindowThickness = targetCellEntranceWindowThickness;
@@ -140,7 +140,7 @@ void QweakSimTarget::ConstructComponent(G4VPhysicalVolume* MotherVolume)
     G4ThreeVector positionTarget = G4ThreeVector(0,0,0);
     G4ThreeVector positionTargetEntranceWindow = G4ThreeVector(0,0,-0.5*targetCellInnerLength - 0.5*targetCellEntranceWindowThickness);
     G4ThreeVector positionTargetExitWindow = G4ThreeVector(0,0, 0.5*targetCellInnerLength + 0.5*targetCellExitWindowThickness);
-    G4ThreeVector positionScatteringChamberWindow = G4ThreeVector(0,0,0.5*targetCellInnerLength + 0.5*targetCellExitWindowThickness + 20.0*cm);
+    G4ThreeVector positionScatteringChamberWindow = G4ThreeVector(0,0,0.5*targetCellInnerLength + 0.5*targetCellExitWindowThickness + 45.0*cm); // Peiqing: should be located at z=-583.41 cm
 
     G4Tubs* TargetContainer_Solid    = new G4Tubs("TargetContainer_Sol",
             0, //targetCellRadiusMin, jpan@nuclear.uwinnipeg.ca

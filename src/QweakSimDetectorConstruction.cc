@@ -200,9 +200,9 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
 
   //--------- Definitions of Solids, Logical Volumes, Physical Volumes ---------
 
-  fWorldLengthInX =  15.0*m;
-  fWorldLengthInY =  15.0*m;
-  fWorldLengthInZ =  30.0*m;
+  fWorldLengthInX =  10.0*m;
+  fWorldLengthInY =  10.0*m;
+  fWorldLengthInZ =  20.0*m;
 
 
   // experimentalHall_Material   = pMaterial->GetMaterial("HeGas");

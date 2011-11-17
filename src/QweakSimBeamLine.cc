@@ -86,7 +86,7 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
     G4Tubs* BeamLineContainer_Solid    = new G4Tubs("BeamLineContainer_Sol",
             0, //RadiusMin
             5.0*cm, //RadiusMax, BeamlineCutoutDiameter = 8.3*cm
-            900*cm, //length
+            870*cm, //length
             0, //StartingPhi,
             360*degree); //DeltaPhi
 
@@ -110,7 +110,7 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
     G4Tubs* BeamPipe_Solid    = new G4Tubs("BeamPipe_Sol",
             3*cm,
             4*cm,
-            900*cm,
+            870*cm,
             0,
             360*degree);
 

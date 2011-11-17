@@ -94,27 +94,24 @@ G4double QweakSimEPEvent::GetVertexZ()
 
 G4ThreeVector QweakSimEPEvent::GetMomentumDirection()
 {
-   // FIXME Technically you cannot take independent phi and theta angles when working
-   // in spherical coordinates.  See for example
-   // http://hypernews.slac.stanford.edu/HyperNews/geant4/get/particles/31/2.html
-   // or more generally http://mathworld.wolfram.com/SpherePointPicking.html
 
-   // I added in code to do the dependent angle generation. Howerver, this is a topic for debate. 
-   // - Either dependent or independent angles should finally be related to absolute rate calculation.
-   // - Both of two methods can be correct, if they are processed in a correct MC way.
-   // (Peiqing, 2011 Oct. 31)
-
+   // Generate flat phi distribution
     PhiAngle =  PhiAngle_Min + G4UniformRand()*(PhiAngle_Max - PhiAngle_Min);
     G4double cosPhi = cos(PhiAngle);
     G4double sinPhi = sin(PhiAngle);
 
     G4double cosTheta;
     G4double sinTheta;
-    
-#ifndef PHI_DEPENDENT_THETA    
+
+#define PHI_DEPENDENT_THETA     
+#ifndef PHI_DEPENDENT_THETA
+    // Generate flat theta distribution
     ThetaAngle = ThetaAngle_Min + G4UniformRand()*(ThetaAngle_Max - ThetaAngle_Min);
  
 #else
+   // Generate uniform distribution on spherical surface. See for example
+   // http://hypernews.slac.stanford.edu/HyperNews/geant4/get/particles/31/2.html
+   // or more generally http://mathworld.wolfram.com/SpherePointPicking.html   
     G4double cosThetaMax = cos(ThetaAngle_Max);
     G4double cosThetaMin = cos(ThetaAngle_Min);   
     cosTheta = cosThetaMin + G4UniformRand()*(cosThetaMax - cosThetaMin);
