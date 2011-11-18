@@ -53,6 +53,8 @@ ShieldingWallHousing_Material = NULL;
  // See report of Yongjuang : http://www.jlab.org/~yl0094a/Qweak_SCIN/status_report/status_09152005.html
  // values are for z=380cm (start wall) and z=430cm (end wall)
 
+ // z= 300 - 380 cm, thickness = 80 cm
+ 
  OctantCutOut_Trap_RadialDistance   = 250.75*cm;
  OctantCutOut_Trap_FullLengthFront  = 150.0*cm;
  OctantCutOut_Trap_FullLengthBack   = 164.0*cm;
@@ -77,7 +79,7 @@ ShieldingWallHousing_Material = NULL;
  // define wall geometry values
  ShieldingWallHousing_FullLength_X = 264*inch;    // Full X length (264")
  ShieldingWallHousing_FullLength_Y = 264*inch;    // Full Y length 
- ShieldingWallHousing_FullLength_Z =  50.0*cm;    // Full Z length 
+ ShieldingWallHousing_FullLength_Z =  40.0*cm;    // Full Z length 
  
 
  ShieldingWallHousing_UpStreamWall_ZPosition = 340.0*cm;// 330.0*cm;  
