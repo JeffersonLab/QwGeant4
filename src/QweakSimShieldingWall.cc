@@ -53,17 +53,18 @@ ShieldingWallHousing_Material = NULL;
  // See report of Yongjuang : http://www.jlab.org/~yl0094a/Qweak_SCIN/status_report/status_09152005.html
  // values are for z=380cm (start wall) and z=430cm (end wall)
 
+ // Update the z location.  - Peiqing 2011 Nov.
  // z= 300 - 380 cm, thickness = 80 cm
  
- OctantCutOut_Trap_RadialDistance   = 250.75*cm;
+ OctantCutOut_Trap_RadialDistance   = 230.66*cm; // 250.75*cm;
  OctantCutOut_Trap_FullLengthFront  = 150.0*cm;
  OctantCutOut_Trap_FullLengthBack   = 164.0*cm;
- OctantCutOut_Trap_PolarAngle       = 20.57*degree; 
+ OctantCutOut_Trap_PolarAngle       = 22.5*degree; // 20.57*degree; 
  //OctantCutOut_Trap_FullHeightFront  =  34.0*cm; // SW
  //OctantCutOut_Trap_FullHeightBack   =  28.1*cm; // SW
 
- OctantCutOut_Trap_FullHeightFront  =  17.25*2.0*cm; 
- OctantCutOut_Trap_FullHeightBack   =  15.25*2.0*cm; 
+ OctantCutOut_Trap_FullHeightFront  =  65.73*cm; // 17.25*2.0*cm; 
+ OctantCutOut_Trap_FullHeightBack   =  65.73*cm; // 15.25*2.0*cm; 
 
  //---------------------------
  // Conical cutouts are not used anymore for the Shielding Wall

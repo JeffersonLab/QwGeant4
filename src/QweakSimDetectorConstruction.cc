@@ -447,12 +447,14 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   pShieldingWall->SetCollimatorWall_FullLengthInY(670.56*cm);
   pShieldingWall->SetCollimatorWall_FullLengthInZ( 40.0*cm);
 
-  pShieldingWall->SetOctantCutOut_Trap_RadialDistance  (250.75*cm);
+  // TODO: update it according to CAD drawings. I only enlarged aperture
+  // so that the shielding wall will not define the acceptance.
+  pShieldingWall->SetOctantCutOut_Trap_RadialDistance  (230.66*cm); // (250.75*cm);
   pShieldingWall->SetOctantCutOut_Trap_FullLengthFront (150.00*cm);
   pShieldingWall->SetOctantCutOut_Trap_FullLengthBack  (164.00*cm);
-  pShieldingWall->SetOctantCutOut_Trap_FullHeightFront ( 34.50*cm);
-  pShieldingWall->SetOctantCutOut_Trap_FullHeightBack  ( 30.50*cm);
-  pShieldingWall->SetOctantCutOut_Trap_PolarAngle      ( 20.57*degree);
+  pShieldingWall->SetOctantCutOut_Trap_FullHeightFront (65.73*cm);  // ( 34.50*cm);
+  pShieldingWall->SetOctantCutOut_Trap_FullHeightBack  (65.73*cm);  // ( 30.50*cm);
+  pShieldingWall->SetOctantCutOut_Trap_PolarAngle      (22.5*degree); // ( 20.57*degree);
 
   pShieldingWall->ConstructShieldingWallHousing_UsingTrapezoids(experimentalHall_Physical);
   pShieldingWall->SetCollimatorWall_CenterPositionInZ(340*cm);
