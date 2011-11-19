@@ -19,6 +19,21 @@
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
+//
+// Updated to the geometry definition from geant3. This is the as-designed shielding wall.
+// 
+// The vertices for the window openings are (x, y, z)
+// 
+// front face: (197.85, +/- 67.95, 300)
+// front face: (263.65, +/- 79.95, 300)
+// 
+// back face: (232.45, +/- 79.635, 380)
+// back face: (291.75, +/- 90.45, 380) 
+//
+// -- Peiqing  2011 Nov 12
+//
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 #include "QweakSimShieldingWall.hh"
 
 // user includes
@@ -56,15 +71,17 @@ ShieldingWallHousing_Material = NULL;
  // Update the z location.  - Peiqing 2011 Nov.
  // z= 300 - 380 cm, thickness = 80 cm
  
- OctantCutOut_Trap_RadialDistance   = 230.66*cm; // 250.75*cm;
- OctantCutOut_Trap_FullLengthFront  = 150.0*cm;
- OctantCutOut_Trap_FullLengthBack   = 164.0*cm;
- OctantCutOut_Trap_PolarAngle       = 22.5*degree; // 20.57*degree; 
- //OctantCutOut_Trap_FullHeightFront  =  34.0*cm; // SW
- //OctantCutOut_Trap_FullHeightBack   =  28.1*cm; // SW
+ OctantCutOut_Trap_RadialDistance   = 246.425*cm;
+ OctantCutOut_Trap_PolarAngle       = -21.40*degree;
+ OctantCutOut_Trap_AzimuthalAngle   = 90.0*degree;
 
- OctantCutOut_Trap_FullHeightFront  =  65.73*cm; // 17.25*2.0*cm; 
- OctantCutOut_Trap_FullHeightBack   =  65.73*cm; // 15.25*2.0*cm; 
+ OctantCutOut_Trap_FullHeightFront  =  65.8*cm;
+ OctantCutOut_Trap_FullLengthFront_Outer  = 79.95*2.0*cm;
+ OctantCutOut_Trap_FullLengthFront_Inner  = 67.95*2.0*cm;
+ 
+ OctantCutOut_Trap_FullHeightBack   =  59.3*cm;
+ OctantCutOut_Trap_FullLengthBack_Outer  = 90.45*2.0*cm;
+ OctantCutOut_Trap_FullLengthBack_Inner  = 79.635*2.0*cm;
 
  //---------------------------
  // Conical cutouts are not used anymore for the Shielding Wall
@@ -242,28 +259,28 @@ G4cout << G4endl << "###### Calling QweakSimShieldingWall::DefineOctantCutOut() 
   // definition of octant cut out
    OctantCutOut_Trap_Solid = new G4Trap("Octant_cut",
 				    0.5 * ShieldingWallHousing_FullLength_Z +0.1*mm,    // Half-length along the z-axis
-				    OctantCutOut_Trap_PolarAngle,            // Polar angle of the line joining the centres of the 
+				    OctantCutOut_Trap_PolarAngle,                        // Polar angle of the line joining the centres of the 
 					                                // faces at -/+pDz
-				    0.00*degree,                        // Azimuthal angle of the line joining the centre  of the 
+				    OctantCutOut_Trap_AzimuthalAngle,       // Azimuthal angle of the line joining the centre  of the 
 					                                // face at -pDz to the centre of the face at +pDz
-				    0.5 * OctantCutOut_Trap_FullLengthFront, // Half-length along y of the face at -pDz  
-				    0.5 * OctantCutOut_Trap_FullHeightFront, // Half-length along x of the side at y=-pDy1 of the face 
+				    0.5*OctantCutOut_Trap_FullHeightFront, // Half-length along y of the face at -pDz  
+				    0.5*OctantCutOut_Trap_FullLengthFront_Outer, // Half-length along x of the side at y=-pDy1 of the face 
 					                                // at -pDz
-				    0.5 * OctantCutOut_Trap_FullHeightFront, // Half-length along x of the side at y=+pDy1 of the face 
+				    0.5*OctantCutOut_Trap_FullLengthFront_Inner, // Half-length along x of the side at y=+pDy1 of the face 
 					                                // at -pDz
-				    0.00*degree,                        // Angle with respect to the y axis from the centre of the  
+				    0.0*degree,                        // Angle with respect to the y axis from the centre of the  
 					                                // side at y=-pDy1 to the centre at y=+pDy1 of the face 
 					                                // at -pDz
-				    0.5 * OctantCutOut_Trap_FullLengthBack,  // Half-length along y of the face at +pDz
-				    0.5 * OctantCutOut_Trap_FullHeightBack,   // Half-length along x of the side at y=-pDy2 of the face 
+				    0.5*OctantCutOut_Trap_FullHeightBack,  // Half-length along y of the face at +pDz
+				    0.5*OctantCutOut_Trap_FullLengthBack_Outer,   // Half-length along x of the side at y=-pDy2 of the face 
 					                                // at +pDz
-				    0.5 * OctantCutOut_Trap_FullHeightBack,   // Half-length along x of the side at y=+pDy2 of the face 
+				    0.5*OctantCutOut_Trap_FullLengthBack_Inner,   // Half-length along x of the side at y=+pDy2 of the face 
 					                                // at +pDz             
-				    0.00*degree                         // Angle with respect to the y axis from the centre of the 
+				    0.0*degree                         // Angle with respect to the y axis from the centre of the 
 					                                // side at y=-pDy2 to the centre at y=+pDy2 of the face 
 					                                // at +pDz
   				    );
-
+   
 G4cout << G4endl << "###### Leaving QweakSimShieldingWall::DefineOctantCutOut() " << G4endl << G4endl;
 }
 
@@ -331,7 +348,8 @@ G4cout << G4endl << "###### Calling QweakSimShieldingWall::ConstructComponent() 
   Translation_Octant1.setY(sin(Angle_Octant1)*OctantCutOut_Trap_RadialDistance);
   Translation_Octant1.setZ(0.0*cm);
     
-  Rotation_Octant1.rotateZ(Angle_Octant1);
+  //Rotation_Octant1.rotateZ(Angle_Octant1);
+  Rotation_Octant1.rotateZ(Angle_Octant1+90*degree);
   
   G4Transform3D Transform3D_Octant1(Rotation_Octant1,Translation_Octant1); 
 
@@ -345,7 +363,7 @@ G4cout << G4endl << "###### Calling QweakSimShieldingWall::ConstructComponent() 
   Translation_Octant2.setY(sin(Angle_Octant2)*OctantCutOut_Trap_RadialDistance);
   Translation_Octant2.setZ(0.0*cm);
     
-  Rotation_Octant2.rotateZ(Angle_Octant2);
+  Rotation_Octant2.rotateZ(Angle_Octant2+90*degree);
   
   G4Transform3D Transform3D_Octant2(Rotation_Octant2,Translation_Octant2); 
 
@@ -359,7 +377,7 @@ G4cout << G4endl << "###### Calling QweakSimShieldingWall::ConstructComponent() 
   Translation_Octant3.setY(sin(Angle_Octant3)*OctantCutOut_Trap_RadialDistance);
   Translation_Octant3.setZ(0.0*cm);
     
-  Rotation_Octant3.rotateZ(Angle_Octant3);
+  Rotation_Octant3.rotateZ(Angle_Octant3+90*degree);
   
   G4Transform3D Transform3D_Octant3(Rotation_Octant3,Translation_Octant3); 
 
@@ -373,7 +391,7 @@ G4cout << G4endl << "###### Calling QweakSimShieldingWall::ConstructComponent() 
   Translation_Octant4.setY(sin(Angle_Octant4)*OctantCutOut_Trap_RadialDistance);
   Translation_Octant4.setZ(0.0*cm);
     
-  Rotation_Octant4.rotateZ(Angle_Octant4);
+  Rotation_Octant4.rotateZ(Angle_Octant4+90*degree);
   
   G4Transform3D Transform3D_Octant4(Rotation_Octant4,Translation_Octant4); 
 
@@ -388,7 +406,7 @@ G4cout << G4endl << "###### Calling QweakSimShieldingWall::ConstructComponent() 
   Translation_Octant5.setY(sin(Angle_Octant5)*OctantCutOut_Trap_RadialDistance);
   Translation_Octant5.setZ(0.0*cm);
     
-  Rotation_Octant5.rotateZ(Angle_Octant5);
+  Rotation_Octant5.rotateZ(Angle_Octant5+90*degree);
   
   G4Transform3D Transform3D_Octant5(Rotation_Octant5,Translation_Octant5); 
 
@@ -403,7 +421,7 @@ G4cout << G4endl << "###### Calling QweakSimShieldingWall::ConstructComponent() 
   Translation_Octant6.setY(sin(Angle_Octant6)*OctantCutOut_Trap_RadialDistance);
   Translation_Octant6.setZ(0.0*cm);
     
-  Rotation_Octant6.rotateZ(Angle_Octant6);
+  Rotation_Octant6.rotateZ(Angle_Octant6+90*degree);
   
   G4Transform3D Transform3D_Octant6(Rotation_Octant6,Translation_Octant6); 
 
@@ -418,7 +436,7 @@ G4cout << G4endl << "###### Calling QweakSimShieldingWall::ConstructComponent() 
   Translation_Octant7.setY(sin(Angle_Octant7)*OctantCutOut_Trap_RadialDistance);
   Translation_Octant7.setZ(0.0*cm);
     
-  Rotation_Octant7.rotateZ(Angle_Octant7);
+  Rotation_Octant7.rotateZ(Angle_Octant7+90*degree);
   
   G4Transform3D Transform3D_Octant7(Rotation_Octant7,Translation_Octant7);
 
@@ -432,7 +450,7 @@ G4cout << G4endl << "###### Calling QweakSimShieldingWall::ConstructComponent() 
   Translation_Octant8.setY(sin(Angle_Octant8)*OctantCutOut_Trap_RadialDistance);
   Translation_Octant8.setZ(0.0*cm);
     
-  Rotation_Octant8.rotateZ(Angle_Octant8);
+  Rotation_Octant8.rotateZ(Angle_Octant8+90*degree);
   
   G4Transform3D Transform3D_Octant8(Rotation_Octant8,Translation_Octant8);
 
@@ -568,17 +586,33 @@ G4cout << "###### Calling QweakSimShieldingWall::SetOctantCutOut_RadialDistance(
   OctantCutOut_Trap_RadialDistance = myRadialDistance;
 }
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void QweakSimShieldingWall::SetOctantCutOut_Trap_FullLengthFront(G4double myFullLengthFront)
+void QweakSimShieldingWall::SetOctantCutOut_Trap_FullLengthFront_Outer(G4double myFullLengthFront)
 {
-G4cout << "###### Calling QweakSimShieldingWall::SetOctantCutOut_FullLengthFront() " << G4endl << G4endl;
-  OctantCutOut_Trap_FullLengthFront = myFullLengthFront;
+G4cout << "###### Calling QweakSimShieldingWall::SetOctantCutOut_FullLengthFront_Outer() " << G4endl << G4endl;
+  OctantCutOut_Trap_FullLengthFront_Outer = myFullLengthFront;
 }
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void QweakSimShieldingWall::SetOctantCutOut_Trap_FullLengthBack(G4double myFullLengthBack)
+void QweakSimShieldingWall::SetOctantCutOut_Trap_FullLengthFront_Inner(G4double myFullLengthFront)
 {
-G4cout << "###### Calling QweakSimShieldingWall::SetOctantCutOut_FullLengthBack() " << G4endl << G4endl;
-  OctantCutOut_Trap_FullLengthBack = myFullLengthBack;
+G4cout << "###### Calling QweakSimShieldingWall::SetOctantCutOut_FullLengthFront_Inner() " << G4endl << G4endl;
+  OctantCutOut_Trap_FullLengthFront_Inner = myFullLengthFront;
 }
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+void QweakSimShieldingWall::SetOctantCutOut_Trap_FullLengthBack_Outer(G4double myFullLengthBack)
+{
+G4cout << "###### Calling QweakSimShieldingWall::SetOctantCutOut_FullLengthBack_Outer() " << G4endl << G4endl;
+  OctantCutOut_Trap_FullLengthBack_Outer = myFullLengthBack;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+void QweakSimShieldingWall::SetOctantCutOut_Trap_FullLengthBack_Inner(G4double myFullLengthBack)
+{
+G4cout << "###### Calling QweakSimShieldingWall::SetOctantCutOut_FullLengthBack_Inner() " << G4endl << G4endl;
+  OctantCutOut_Trap_FullLengthBack_Inner = myFullLengthBack;
+}
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void QweakSimShieldingWall::SetOctantCutOut_Trap_FullHeightFront(G4double myFullHeightFront)
 {
@@ -597,6 +631,14 @@ void QweakSimShieldingWall::SetOctantCutOut_Trap_PolarAngle(G4double myPolarAngl
 G4cout << "###### Calling QweakSimShieldingWall::SetOctantCutOut_PolarAngle() " << G4endl << G4endl;
   OctantCutOut_Trap_PolarAngle = myPolarAngle;
 }
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+void QweakSimShieldingWall::SetOctantCutOut_Trap_AzimuthalAngle(G4double myAzimuthalAngle)
+{
+G4cout << "###### Calling QweakSimShieldingWall::SetOctantCutOut_AzimuthalAngle() " << G4endl << G4endl;
+  OctantCutOut_Trap_AzimuthalAngle = myAzimuthalAngle;
+}
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void QweakSimShieldingWall::SetCollimatorWall_FullLengthInX(G4double myFullLengthInX)
 {

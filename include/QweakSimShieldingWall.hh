@@ -29,22 +29,6 @@
     
  */
 //=============================================================================
-//
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2006/04/26 20:02:17 $
-//  CVS/RCS Revision: $Revision: 1.4 $
-//  Status:           $State: Exp $
-// 
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-// 
-//=============================================================================
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 #ifndef QweakSimShieldingWall_h
@@ -89,12 +73,17 @@ public:
 
   void DefineOctantCutOut_UsingATrapezoid();
   void SetOctantCutOut_Trap_RadialDistance(G4double);
-  void SetOctantCutOut_Trap_FullLengthFront(G4double);
-  void SetOctantCutOut_Trap_FullLengthBack(G4double);
-  void SetOctantCutOut_Trap_FullHeightFront(G4double);
-  void SetOctantCutOut_Trap_FullHeightBack(G4double);
-  void SetOctantCutOut_Trap_PolarAngle(G4double);
 
+  void SetOctantCutOut_Trap_PolarAngle(G4double);
+  void SetOctantCutOut_Trap_AzimuthalAngle(G4double);
+  
+  void SetOctantCutOut_Trap_FullHeightFront(G4double);  
+  void SetOctantCutOut_Trap_FullLengthFront_Outer(G4double);
+  void SetOctantCutOut_Trap_FullLengthFront_Inner(G4double);
+  
+  void SetOctantCutOut_Trap_FullHeightBack(G4double);
+  void SetOctantCutOut_Trap_FullLengthBack_Outer(G4double);
+  void SetOctantCutOut_Trap_FullLengthBack_Inner(G4double);
 
   void DefineOctantCutOut_UsingACone();
   void SetOctantCutOut_Cone_FrontInnerDiameter(G4double fid) {OctantCutOut_Cone_FrontInnerDiameter = fid;}
@@ -156,11 +145,16 @@ private:
   G4double ShieldingWallHousing_CenterZPosition;
 
   G4double OctantCutOut_Trap_RadialDistance;
-  G4double OctantCutOut_Trap_FullLengthFront;
-  G4double OctantCutOut_Trap_FullLengthBack;
-  G4double OctantCutOut_Trap_FullHeightFront;
-  G4double OctantCutOut_Trap_FullHeightBack;
   G4double OctantCutOut_Trap_PolarAngle;
+  G4double OctantCutOut_Trap_AzimuthalAngle;
+  
+  G4double OctantCutOut_Trap_FullHeightFront;
+  G4double OctantCutOut_Trap_FullLengthFront_Outer;
+  G4double OctantCutOut_Trap_FullLengthFront_Inner;
+
+  G4double OctantCutOut_Trap_FullHeightBack;
+  G4double OctantCutOut_Trap_FullLengthBack_Outer;
+  G4double OctantCutOut_Trap_FullLengthBack_Inner;
 
   G4double OctantCutOut_Cone_FrontInnerDiameter;
   G4double OctantCutOut_Cone_FrontOuterDiameter;
@@ -298,22 +292,4 @@ private:
 
 #endif
 
-//=======================================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//      $Revisions$  
-//      $Log: QweakSimShieldingWall.hh,v $
-//      Revision 1.4  2006/04/26 20:02:17  grimm
-//      The shielding wall has been extended to a shielding detector hut
-//
-//      Revision 1.3  2006/01/18 20:20:14  grimm
-//      Added visibility functions: ShowShieldingWall(), HideShieldingWall()
-//
-//      Revision 1.2  2005/12/27 19:26:40  grimm
-//      - Redesign of Doxygen header containing CVS info like revision and date
-//      - Added CVS revision log at the end of file
-//
-//
 
