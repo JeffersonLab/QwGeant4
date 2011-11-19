@@ -77,6 +77,8 @@ class QweakSimMagneticFieldMessenger: public G4UImessenger
 
     G4UIcmdWithAString*        ReadCmd;
 
+    G4UIcmdWith3VectorAndUnit* PrintCmd;
+
     G4UIcmdWithADoubleAndUnit* RotationCmd;
     G4UIcmdWithADoubleAndUnit* TranslationCmd;
 

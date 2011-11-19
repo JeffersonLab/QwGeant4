@@ -42,6 +42,9 @@ class QweakSimMagneticField: public G4MagneticField
     /// Get the field value
     void GetFieldValue(const G4double point[4], G4double *field) const;
 
+    /// Print the field value
+    void PrintFieldValue(const G4double point[4]) const;
+
 
     /// Set the scale factor
     void SetScaleFactor(const double scalefactor) {

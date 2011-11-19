@@ -53,6 +53,14 @@ QweakSimMagneticFieldMessenger::QweakSimMagneticFieldMessenger(QweakSimMagneticF
   ReadCmd->SetDefaultValue("MainMagnet_FieldMap.dat");
   ReadCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
+
+  PrintCmd = new G4UIcmdWith3VectorAndUnit("/MagneticField/PrintValue",this);
+  PrintCmd->SetGuidance("Print the magnetic field value for specified position");
+  PrintCmd->SetParameterName("x","y","z",false);
+  PrintCmd->SetDefaultValue(G4ThreeVector(0.0,0.0,0.0));
+  PrintCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+
+
   RefCurrentCmd = new G4UIcmdWithADouble("/MagneticField/SetReferenceCurrent",this);
   RefCurrentCmd->SetGuidance("Set reference current of read field map");
   RefCurrentCmd->SetParameterName("current",false);
@@ -228,6 +236,14 @@ void QweakSimMagneticFieldMessenger::SetNewValue(G4UIcommand* command,G4String n
     fMagneticField->SetRotation(RotationCmd->GetNewDoubleValue(newValue));
   } else if (command == TranslationCmd) {
     fMagneticField->SetTranslation(TranslationCmd->GetNewDoubleValue(newValue));
+  } else if (command == PrintCmd) {
+    G4ThreeVector vector = PrintCmd->GetNew3VectorValue(newValue);
+    G4double point[4];
+    point[0] = vector.x();
+    point[1] = vector.y();
+    point[2] = vector.z();
+    point[3] = 0.0;
+    fMagneticField->PrintFieldValue(point);
   } else if (command == ReadCmd) {
     fMagneticField->ReadFieldMap(newValue);
   }

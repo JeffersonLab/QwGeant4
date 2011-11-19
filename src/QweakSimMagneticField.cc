@@ -238,6 +238,25 @@ void QweakSimMagneticField::ReadFieldMapText(const G4String& filename)
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+void QweakSimMagneticField::PrintFieldValue(const G4double point[4]) const
+{
+  G4double field[3];
+  GetFieldValue(point,field);
+
+  // Calculate field value
+  G4cout << "Calculating test field value at cartesian position "
+    << "(" << point[0]/cm << "," << point[1]/cm << "," << point[2]/cm << ") cm "
+    << G4endl;
+  G4double value[3] = {0.0, 0.0, 0.0};
+  GetFieldValue(point,value);
+
+  // Output
+  G4cout << "  Value = "
+    << "(" << value[0]/kilogauss << ", " << value[1]/kilogauss << ", " << value[2]/kilogauss << ") kG."
+    << G4endl;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void QweakSimMagneticField::GetFieldValue(const G4double point[4], G4double *field) const
 {
   // Convert from cartesian to cylindrical coordinates
