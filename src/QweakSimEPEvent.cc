@@ -41,6 +41,8 @@ QweakSimEPEvent::QweakSimEPEvent( QweakSimUserInformation* myUI)
 {
   G4cout << "###### Calling QweakSimEPEvent::QweakSimEPEvent () " << G4endl;
 
+  Isotropy = 1;
+  
   PhiAngle_Min = -16.0*degree;
   PhiAngle_Max =  16.0*degree;
 
@@ -103,24 +105,27 @@ G4ThreeVector QweakSimEPEvent::GetMomentumDirection()
     G4double cosTheta;
     G4double sinTheta;
 
-#define PHI_DEPENDENT_THETA     
-#ifndef PHI_DEPENDENT_THETA
     // Generate flat theta distribution
-    ThetaAngle = ThetaAngle_Min + G4UniformRand()*(ThetaAngle_Max - ThetaAngle_Min);
- 
-#else
+    if (Isotropy == 0) {
+        ThetaAngle = ThetaAngle_Min + G4UniformRand()*(ThetaAngle_Max - ThetaAngle_Min);
+	cosTheta = cos(ThetaAngle);
+        sinTheta = sin(ThetaAngle);
+    }
+    
    // Generate uniform distribution on spherical surface. See for example
    // http://hypernews.slac.stanford.edu/HyperNews/geant4/get/particles/31/2.html
-   // or more generally http://mathworld.wolfram.com/SpherePointPicking.html   
-    G4double cosThetaMax = cos(ThetaAngle_Max);
-    G4double cosThetaMin = cos(ThetaAngle_Min);   
-    cosTheta = cosThetaMin + G4UniformRand()*(cosThetaMax - cosThetaMin);
-    sinTheta = sqrt(1. - cosTheta * cosTheta);
-    ThetaAngle = acos(cosTheta);
-#endif
-
-    cosTheta = cos(ThetaAngle);
-    sinTheta = sin(ThetaAngle);
+   // or more generally http://mathworld.wolfram.com/SpherePointPicking.html       
+    else if (Isotropy == 1) {
+        G4double cosThetaMax = cos(ThetaAngle_Max);
+        G4double cosThetaMin = cos(ThetaAngle_Min);   
+        cosTheta = cosThetaMin + G4UniformRand()*(cosThetaMax - cosThetaMin);
+        sinTheta = sqrt(1. - cosTheta * cosTheta);
+        ThetaAngle = acos(cosTheta);
+    }
+    else {
+        std::cerr<<"Warning: unkown isotropy type, use type 0 instead."<<std::endl;
+    }
+    
     G4double ux= sinTheta * cosPhi;
     G4double uy= sinTheta * sinPhi;
     G4double uz =cosTheta;

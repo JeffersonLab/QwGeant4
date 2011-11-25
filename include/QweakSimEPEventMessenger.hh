@@ -54,6 +54,7 @@ private:
   G4UIcmdWithAnInteger*    SelectReactionType_Cmd;
   G4UIcmdWithAnInteger*    SelectReactionRegion_Cmd;
   G4UIcmdWithAnInteger*    SelectOctant_Cmd;
+  G4UIcmdWithAnInteger*    SelectIsotropy_Cmd;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

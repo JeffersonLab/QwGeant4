@@ -58,6 +58,7 @@ class QweakSimEPEvent {
 
   G4int kActiveOctantNumber;
 
+  G4int Isotropy;
   G4double PhiAngle_Min;
   G4double PhiAngle_Max;
   G4double ThetaAngle_Min;
@@ -81,6 +82,9 @@ class QweakSimEPEvent {
   void SetActiveOctantNumber(G4int kaot) { kActiveOctantNumber = kaot; };
   G4int GetActiveOctantNumber( ) {return kActiveOctantNumber;};
 
+  void SetIsotropy(G4int isot) { Isotropy = isot; };
+  G4int GetIsotropy( ) {return Isotropy;};
+  
   void  SetReactionType(G4int rt) { ReactionType = rt;};
   G4int GetReactionType() {return ReactionType; };
 

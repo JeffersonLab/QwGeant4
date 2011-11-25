@@ -43,6 +43,15 @@ QweakSimEPEventMessenger::QweakSimEPEventMessenger(QweakSimEPEvent* pEPEvent)
   SelectOctant_Cmd->SetRange("SelectOctant>=1 && SelectOctant<=8");
   SelectOctant_Cmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
+// Isotropy:     0 - uniform phi angle and uniform theta angle, independent to each other
+//               1 - uniform in any solid angle (i.e. uniform phi, but phi-denendent theta)
+  SelectIsotropy_Cmd = new G4UIcmdWithAnInteger("/EventGen/SelectIsotropy",this);
+  SelectIsotropy_Cmd->SetGuidance("Select isotropy for generator");
+  SelectIsotropy_Cmd->SetParameterName("SelectIsotropy",true);
+  SelectIsotropy_Cmd->SetDefaultValue(1);
+  SelectIsotropy_Cmd->SetRange("SelectIsotropy>=0 && SelectIsotropy<=1");
+  SelectIsotropy_Cmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+  
 //    ReactionType:            1 - LH2 elastic
 //                             2 - Al window elastic
 //                             3 - Al window quasi-elastic proton
@@ -83,6 +92,7 @@ QweakSimEPEventMessenger::~QweakSimEPEventMessenger()
   G4cout << "###### Calling QweakSimEPEventMessenger::~QweakSimEPEventMessenger() " << G4endl;
 
   delete SelectOctant_Cmd;
+  delete SelectIsotropy_Cmd;
   delete SelectReactionType_Cmd;
   delete SelectReactionRegion_Cmd;
   delete verboseCmd;
@@ -102,7 +112,11 @@ void QweakSimEPEventMessenger::SetNewValue(G4UIcommand* command, G4String newVal
       G4cout << "% % ===> Changing active octant number to: "<<newValue<< G4endl;
       pQweakSimEPEvent->SetActiveOctantNumber(SelectOctant_Cmd->GetNewIntValue(newValue)); 
     }
-
+  if( command == SelectIsotropy_Cmd )
+    { 
+      G4cout << "% % ===> Changing isotropy to: "<<newValue<< G4endl;
+      pQweakSimEPEvent->SetIsotropy(SelectIsotropy_Cmd->GetNewIntValue(newValue)); 
+    }
   if( command == SelectReactionType_Cmd )
     { 
       G4cout << "% % ===> Changing reaction type to: "<<newValue<< G4endl;
