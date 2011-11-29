@@ -34,6 +34,9 @@ QweakSimCerenkov_DetectorHit::QweakSimCerenkov_DetectorHit()
   primaryQ2                       = 0.;
   crossSection                    = 0.;
   crossSectionWeight              = 0.;
+
+  particleName                    = "None";
+  particleType                    = -1;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -75,6 +78,9 @@ QweakSimCerenkov_DetectorHit::QweakSimCerenkov_DetectorHit(const QweakSimCerenko
   currentMomentumDirection = right.currentMomentumDirection;
   currentKineticEnergy     = right.currentKineticEnergy;
   currentTotalEnergy       = right.currentTotalEnergy;
+    
+  particleName             = right.particleName;
+  particleType             = right.particleType;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -101,6 +107,9 @@ const QweakSimCerenkov_DetectorHit& QweakSimCerenkov_DetectorHit::operator=(cons
   currentKineticEnergy     = right.currentKineticEnergy;
   currentTotalEnergy       = right.currentTotalEnergy;
 
+  particleName             = right.particleName;
+  particleType             = right.particleType;
+  
   return *this;
 }
 

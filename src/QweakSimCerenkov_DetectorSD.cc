@@ -130,6 +130,10 @@ G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistor
 
   G4double trackID = aStep->GetTrack()->GetTrackID();
 
+   G4ParticleDefinition*  fpParticleDefinition = aStep->GetTrack()->GetDefinition();
+   G4String ParticleName         = fpParticleDefinition->GetParticleName();
+   G4int PDGCharge            = fpParticleDefinition->GetPDGCharge();
+   G4int PDGEncoding          = fpParticleDefinition->GetPDGEncoding();
   
   G4int    MotherCopyNo   = theTouchable->GetVolume(1)->GetCopyNo();   // one Mother Volume
   G4int DetectorCopyNo    = theTouchable->GetVolume()->GetCopyNo();    // but several detectors per MV
@@ -182,6 +186,9 @@ G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistor
 //   aHit->StoreCrossSection(crossSection);
 //   aHit->StoreCrossSectionWeight(crossSectionWeight);
 
+  aHit->StoreParticleName(ParticleName);
+  aHit->StoreParticleType(PDGEncoding);
+  
   // check if it is first touch
   if(!(aHit->GetLogVolume()))
     {

@@ -16,22 +16,6 @@
 */
 //=============================================================================
 
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2006/01/06 21:43:04 $
-//  CVS/RCS Revision: $Revision: 1.3 $
-//  Status:           $State: Exp $
-// 
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-//
-//============================================================================
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
 #include "QweakSimUserCerenkov_DetectorEvent.hh"
@@ -239,23 +223,3 @@ void QweakSimUserCerenkov_DetectorEvent::AddSecondaryParticleEvent(Float_t XO, F
 }
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
-//=======================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//      $Revisions$  
-//      $Log: QweakSimUserCerenkov_DetectorEvent.cc,v $
-//      Revision 1.3  2006/01/06 21:43:04  grimm
-//       Added initialization of:
-//
-//        ParticleName                   = "None";
-//        ParticleType                   = -1;
-//        TotalEnergy                    = 0.;
-//        KineticEnergy                  = 0.;
-//
-//      Revision 1.2  2005/12/27 19:16:42  grimm
-//      - Redesign of Doxygen header containing CVS info like revision and date
-//      - Added CVS revision log at the end of file
-//
-//
