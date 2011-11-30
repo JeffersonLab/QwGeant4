@@ -143,14 +143,16 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
              myUserInfo->StoreOriginVertexMomentumDirectionZ(MomentumDirection.getZ());
              myUserInfo->StoreOriginVertexThetaAngle(theta);
              myUserInfo->StoreOriginVertexPhiAngle(phi);
-             myUserInfo->StoreOriginVertexKineticEnergy(theTrack->GetKineticEnergy());
-             myUserInfo->StoreOriginVertexTotalEnergy(theTrack->GetTotalEnergy());
+             //myUserInfo->StoreOriginVertexKineticEnergy(theTrack->GetKineticEnergy());
+             //myUserInfo->StoreOriginVertexTotalEnergy(theTrack->GetTotalEnergy());
+	     myUserInfo->StoreOriginVertexKineticEnergy(E_out - 0.511*MeV);
+             myUserInfo->StoreOriginVertexTotalEnergy(E_out);
              myUserInfo->StorePrimaryQ2(Q2*0.000001); //in units of GeV^2
              myUserInfo->StoreCrossSection(CrossSection);
              myUserInfo->StoreCrossSectionWeight(WeightN);
              //myUserInfo->StorePrimaryEventNumber(myEventCounter);
              myUserInfo->StoreReactionType(myEvent->GetReactionType());
-             myUserInfo->StorePDGcode(3);
+             myUserInfo->StorePDGcode(theTrack->GetDefinition()->GetPDGEncoding());
 
              // print the stored values
              //std::cout << "*********** myEventCounter = " << myEventCounter << std::endl;

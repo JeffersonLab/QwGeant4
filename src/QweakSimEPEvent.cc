@@ -384,6 +384,354 @@ G4double QweakSimEPEvent::Quasi_Elastic_Neutron(G4double E_in,
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+// G4double QweakSimEPEvent::Sigma_EEPrime(G4double E_in,
+//                                         G4double Theta,
+//                                         G4double &fWeightN,
+//                                         G4double &Q2,
+//                                         G4double &E_out)
+
+G4double QweakSimEPEvent::Sigma_EEPrime(G4double eni, G4double eprime, G4double theta)
+{
+
+// Peiqing, Nov 28, 2011
+// This is adopted from QWGEANT3 SUBROUTINE SIGMA_EEPRIME (ENI,EPRIME,THETA,WVAL,SIGMA_EEP)
+// 
+//	Calculates the differential cross section for inelastic
+//	ep scattering into unit solid angle and scattered
+//	electron energy EPRIME.  The cross section is
+//	returned in microbarns/sr/GeV.
+
+      G4double w2,q2,xval1[51],xvalL[51];
+      G4double sigT,sigL,epsilon;
+      G4int i;
+
+      G4double t2,epmax,xneu,gamma;
+ 
+      G4double mp = 0.9382727;
+      G4double mp2 = mp*mp;   
+      G4double pi = 3.141593;
+      G4double alpha = 1.0/137.036;
+      G4double mpion = 0.135;
+    
+      G4double xval[101]={ 0,
+       0.12286E+01,0.15200E+01,0.15053E+01,0.16960E+01,0.16466E+01,
+       0.14055E+01,0.12247E+00,0.22000E+00,0.84591E-01,0.90400E-01,
+       0.16956E+00,0.29002E+00,0.74046E+01,0.65122E+01,0.58506E+01,
+       0.16990E+01,0.45729E+01,0.53546E+03,-.97628E+03,0.82539E+05,
+       0.29494E+01,0.20352E+01,0.12422E+00,0.19560E+01,0.22333E+01,
+       -.32484E+00,0.24212E+00,0.57737E-01,0.30497E+01,0.63111E+01,
+       0.37579E+00,0.41100E+01,0.20668E-01,0.45490E+03,0.54493E-01,
+       0.22565E+01,0.40369E+01,0.43734E+00,0.65625E+00,0.36182E+00,
+       0.55216E-01,0.41789E+00,0.18104E+00,0.91306E+00,0.18116E+01,
+       0.24152E+03,0.19329E+01,0.38000E+00,0.28732E+01,-.53116E+00,
+       0.00000E+00,0.00000E+00,0.00000E+00,0.00000E+00,0.00000E+00,
+       0.00000E+00,0.00000E+00,0.00000E+00,0.00000E+00,0.00000E+00,
+       0.00000E+00,0.00000E+00,0.99495E+01,0.70370E-02,0.16172E+01,
+       0.00000E+00,0.00000E+00,0.00000E+00,0.00000E+00,0.00000E+00,
+       0.20782E+05,0.79523E+04,0.54933E+00,0.00000E+00,0.68629E+01,
+       0.10369E+01,0.88112E+00,0.00000E+00,0.35659E+03,0.20281E-02,
+       0.40336E+02,0.00000E+00,0.45242E+00,0.20000E-01,0.28691E+00,
+       0.00000E+00,0.25115E+03,0.10663E+01,0.55422E+01,0.30350E+00,
+       0.10541E+01,0.20527E+01,0.00000E+00,0.00000E+00,0.13055E+02,
+       0.27997E+01,0.39546E+00,0.46372E+00,0.49972E+01,0.00000E+00};
+
+// Check that we are not above maximum allowed E assuming threshold W=Mp+Mpi
+      t2 = theta/2.0;
+      G4double sin_t2 = sin(t2);
+      G4double tan_t2 = tan(t2);
+      G4double sin2_t2 = sin_t2*sin_t2;
+      G4double tan2_t2 = tan_t2*tan_t2;
+      G4double sigma_eep = 0.0;
+      epmax = eni-mpion*(1.0+0.5*mpion/mp);
+      epmax = epmax/(1.0+(2.0*eni/mp)*sin2_t2);
+      if (eprime>=epmax) 
+        return 0; 
+
+// Calculate Q**2, W**2, epsilon, gamma
+      q2 = 4.0*eni*eprime*sin2_t2;
+      xneu = eni-eprime;
+      w2 = mp2 + 2.0*mp*xneu - q2;
+      epsilon = 1.0/(1.0+2.0*(1.0+xneu*xneu/q2)*tan2_t2);
+      gamma = alpha*eprime*(w2-mp2)/((2.0*pi)*(2.0*pi));
+      gamma = gamma/(q2*mp*eni*(1.0-epsilon));
+      // wval = sqrt(w2);
+
+      for (i=1;i<=50;i++)
+      {
+        xval1[i] = xval[i];
+        xvalL[i] = xval[50+i];
+        if(i<=12) 
+	  xvalL[i] = xval1[i];
+      }
+      
+      xvalL[43] = xval1[47];
+      xvalL[44] = xval1[48];
+      xvalL[50] = xval1[50];
+ 
+      sigT = ResMod507(1,w2,q2,&xval1[0]);
+      sigL = ResMod507(2,w2,q2,&xvalL[0]);
+      sigma_eep=sigT+epsilon*sigL;
+      sigma_eep=sigma_eep*gamma;
+
+      return sigma_eep;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+
+G4double QweakSimEPEvent::ResMod507(G4int sf, G4double w2, G4double q2, G4double* xval)
+{
+      G4double xb,mass[8],width[8];
+      G4double height[8],rescoef[7][5];
+      G4double nr_coef[4][5],sigr[8],sig_nr;
+      G4double intwidth[8],k,kcm,kr[8],kcmr[8],ppicm,ppi2cm;
+      G4double petacm,ppicmr[8],ppi2cmr[8],petacmr[8],epicmr[8],epi2cmr[8];
+      G4double eetacmr[8],epicm,epi2cm,eetacm,br[8][4],ang[8];
+      G4double pgam[8],pwid[8][4],x0[8],q20;
+      G4double sig_res,t,xpr[3],m0;
+      G4int i,j,num;
+
+      G4double xt,p1,p2,p3;
+
+      G4double mp = 0.9382727;
+      G4double mpi = 0.135;
+      G4double meta = 0.547;
+      G4double mp2 = mp*mp;
+      G4double w = sqrt(w2);
+      //wdif[1] = w - (mp + mpi);
+      //wdif[2] = w - (mp + 2.*mpi);
+
+      m0 = 0.125;
+      if(sf==2) 
+	m0 = xval[49];
+
+      if(sf==1) 
+      {
+        q20 = 0.05;
+      }
+      else
+      {
+        q20 = 0.300;
+      }
+   
+//   single pion branching ratios
+      br[1][1] = 1.0;      //   P33(1232)       
+      br[2][1] = 0.45;     //   S11(1535)   
+      br[3][1] = 0.65;     //   D13(1520)
+      br[4][1] = 0.65;     //   F15(1680)
+      br[5][1] = 0.4;      //   S11(1650)
+      br[6][1] = 0.65;     //   P11(1440) roper 
+      br[7][1] = 0.50;     //   F37(1950)
+
+//  eta branching ratios
+      br[1][3] = 0.0;      // !!!  P33(1232)
+      br[2][3] = 0.45;     // !!!  S11(1535) 
+      br[3][3] = 0.0;      // !!!  D13(1520)
+      br[4][3] = 0.0;      // !!!  F15(1680)
+      br[5][3] = 0.1;      // !!!  S11(1650)
+      br[6][3] = 0.0;      // !!!  P11(1440) roper   
+      br[7][3] = 0.0;      // !!!  F37(1950)
+
+//  2-pion branching ratios
+      for (i=1;i<=7;i++)
+      {
+        br[i][2] = 1.-br[i][1]-br[i][3];
+      }
+
+//   Meson angular momentum
+      ang[1] = 1.;      //  P33(1232)
+      ang[2] = 0.;      //  S11(1535)
+      ang[3] = 2.;      //  D13(1520)
+      ang[4] = 3.;      //  F15(1680)
+      ang[5] = 0.;      //  S15(1650)
+      ang[6] = 1.;      //  P11(1440) roper   
+      ang[7] = 3.;      //  F37(1950)
+
+      for( i=1;i<=7;i++)     // resonance damping parameter
+        {
+	  x0[i] = 0.145;
+	}
+
+      x0[1] = 0.130;
+
+      for (i=1;i<=7;i++)
+      {
+        br[i][2] = 1.-br[i][1]-br[i][3];
+      }         
+    
+      // dip = 1./((1.+q2/0.71)*(1.+q2/0.71));         //  Dipole parameterization
+      // mon = 1./(1.+q2/0.71);
+
+      xb = q2/(q2+w2-mp2);
+      xpr[1] = 1.+(w2-(mp+mpi)*(mp+mpi))/(q2+q20);
+      xpr[1] = 1./xpr[1];
+      xpr[2] = 1.+(w2-(mp+mpi+mpi)*(mp+mpi+mpi))/(q2+q20);
+      xpr[2] = 1./xpr[2];
+
+      t = log(log((q2+m0)/0.330*0.330)/log(m0/0.330*0.330));
+
+//    Calculate kinematics needed for threshold Relativistic B-W
+
+      k = (w2 - mp2)/2./mp;
+      kcm = (w2-mp2)/2./w;
+
+      epicm = (w2 + mpi*mpi -mp2 )/2./w;
+      ppicm = sqrt(fmax(0.0,(epicm*epicm - mpi*mpi)));
+      epi2cm = (w2 + (2.*mpi)*(2.*mpi) -mp2 )/2./w;
+      ppi2cm = sqrt(fmax(0.0,(epi2cm*epi2cm - (2.*mpi)*(2.*mpi))));
+      eetacm = (w2 + meta*meta -mp2 )/2./w;
+      petacm =  sqrt(fmax(0.0,(eetacm*eetacm - meta*meta)));
+
+      num = 0;
+
+      for (i=1;i<=6;i++)            //  Read in resonance masses
+      {
+        num = num + 1;
+        mass[i] = xval[i];
+      }
+      
+      for (i=1;i<=6;i++)            //  Read in resonance widths
+      {
+	num = num + 1;
+        intwidth[i] = xval[num];
+        width[i] = intwidth[i];
+      }
+
+      if(sf==2)         //  Put in 4th resonance region 
+      {
+        mass[7] = xval[43];
+        intwidth[7] = xval[44];
+        width[7] = intwidth[7];
+      }
+      else
+      {
+        mass[7] = xval[47];
+        intwidth[7] = xval[48];
+        width[7] = intwidth[7];
+      }
+
+      for (i=1;i<=7;i++)
+      {
+        kr[i] = (mass[i]*mass[i]-mp2)/2./mp;
+        kcmr[i] = (mass[i]*mass[i]-mp2)/2./mass[i];
+        epicmr[i] = (mass[i]*mass[i] + mpi*mpi -mp2 )/2./mass[i];
+        ppicmr[i] = sqrt(fmax(0.0,(epicmr[i]*epicmr[i] - mpi*mpi)));
+        epi2cmr[i] = (mass[i]*mass[i] + (2.*mpi)*(2.*mpi) -mp2 )/2./mass[i];
+        ppi2cmr[i] = sqrt(fmax(0.0,(epi2cmr[i]*epi2cmr[i] - (2.*mpi)*(2.*mpi))));
+        eetacmr[i] = (mass[i]*mass[i] + meta*meta -mp2 )/2./mass[i];
+        petacmr[i] =  sqrt(fmax(0.0,(eetacmr[i]*eetacmr[i] - meta*meta)));
+
+        // Calculate partial widths
+        pwid[i][1] = intwidth[i]*pow(ppicm/ppicmr[i],(2.*ang[i]+1.))
+                     *pow((ppicmr[i]*ppicmr[i]+x0[i]*x0[i])/(ppicm*ppicm+x0[i]*x0[i]),ang[i]);
+        // 1-pion decay mode
+
+        pwid[i][2] = intwidth[i]*pow(ppi2cm/ppi2cmr[i],(2.*ang[i]+4.))
+                     *pow((ppi2cmr[i]*ppi2cmr[i]+x0[i]*x0[i])/(ppi2cm*ppi2cm+x0[i]*x0[i]),(ang[i]+2));   
+        // 2-pion decay mode
+
+        pwid[i][2] = w/mass[i]*pwid[i][2];
+        pwid[i][3] = 0.;         // !!!  eta decay mode
+
+        if(i==2 || i==5) 
+	{
+          pwid[i][3]=intwidth[i]*pow(petacm/petacmr[i],(2.*ang[i]+1.))
+	            *pow((petacmr[i]*petacmr[i]+x0[i]*x0[i])/(petacm*petacm+x0[i]*x0[i]),ang[i]);
+          // eta decay only for S11's 
+	}
+
+        pgam[i] = (kcm/kcmr[i])*(kcm/kcmr[i])*(kcmr[i]*kcmr[i]+x0[i]*x0[i])/(kcm*kcm+x0[i]*x0[i]);
+        pgam[i] = intwidth[i]*pgam[i];
+        width[i] = br[i][1]*pwid[i][1]+br[i][2]*pwid[i][2]+br[i][3]*pwid[i][3];
+      }
+ //    End resonance kinematics and Widths calculations
+
+ //    Begin resonance Q^2 dependence calculations         
+      for (i=1;i<=6;i++)
+      {
+        for (j=1;j<=4;j++)
+	{
+          num = num + 1;
+          rescoef[i][j]=xval[num];
+	}
+
+        if(sf==1)
+	{
+          height[i] = rescoef[i][1]*(1.+rescoef[i][2]*q2/(1.+rescoef[i][3]*q2))/ pow(1.+q2/0.91,rescoef[i][4]);
+	}
+        else
+	{
+          height[i] = rescoef[i][1]*q2/(1.+rescoef[i][2]*q2)*exp(-1.*rescoef[i][3]*q2);
+	}
+
+        height[i] = height[i]*height[i];
+      }
+
+
+      if(sf==2)      //  4th resonance region 
+      {
+        height[7] = xval[45]*q2/(1.+xval[46]*q2)*exp(-1.*xval[47]*q2);
+      }
+      else
+      {
+        height[7] = xval[49]/(1.+q2/0.91); 
+      }
+
+      height[7] = height[7]*height[7];
+
+//    End resonance Q^2 dependence calculations 
+     
+      for (i=1;i<=3;i++)        //  Non-Res coefficients 
+      {
+        for (j=1;j<=4;j++)
+	{
+          num = num + 1;
+          nr_coef[i][j]=xval[num];
+	}
+      }
+
+//   Calculate Breit-Wigners for all resonances  
+
+      sig_res = 0.0;
+      for (i=1;i<=7;i++)
+      {
+         sigr[i] = width[i]*pgam[i]/((w2 - mass[i]*mass[i])*(w2 - mass[i]*mass[i]) 
+	            + (mass[i]*width[i])*(mass[i]*width[i]));
+         sigr[i] = height[i]*kr[i]/k*kcmr[i]/kcm*sigr[i]/intwidth[i];
+         sig_res = sig_res + sigr[i];
+      }
+      sig_res = sig_res*w;
+
+//    Finish resonances / start non-res background calculation
+
+      sig_nr = 0.;
+      if(sf==1)
+      {
+        xt = (q2+xval[37])/(w2-1.15+q2+xval[37]);
+        p2 = xval[38]*exp(-1.*xval[39]*q2)+xval[40]*log(q2/xval[41]+1.);
+        p3 = xval[42]*exp(-1.*xval[43]*q2)+xval[44]*log(q2/xval[45]+1.);
+        p1 = xval[46]*(1.+xval[50]*q2/(1.+0.534*q2)); 
+
+        sig_nr = p1*pow(xt,p2)*pow(1.-xt,p3);
+      }
+      else if(sf==2)
+      {
+
+        for (i=1;i<=1;i++)
+	{
+          sig_nr = sig_nr + nr_coef[i][1]*pow(1.-xpr[i],(nr_coef[i][3]+nr_coef[i][2]*t)) /(1.-xb)/(q2+q20)
+                   *pow(q2/(q2+q20), nr_coef[i][4]) *pow(xpr[i],(xval[41]+xval[42]*t));
+	}
+      }
+      
+      G4double sig = sig_res + sig_nr;   
+      return sig;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 //jpan@nuclear.uwinnipeg.ca
 //     To determine the energy of the electron incident on the scattering
 //     vertex inside the target, the energy loss up to the scattering

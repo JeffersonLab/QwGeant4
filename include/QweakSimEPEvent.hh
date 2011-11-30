@@ -69,7 +69,9 @@ class QweakSimEPEvent {
   G4double myPositionZ;
 
   G4ThreeVector GetMomentumDirection();
-
+  G4double ResMod507(G4int sf,G4double w2,G4double q2,G4double *xval);
+  G4double Sigma_EEPrime(G4double eni,G4double eprime,G4double theta);
+  
   QweakSimEPEventMessenger *EventGen_Messenger;
   QweakSimUserInformation *myUserInfo;
 
