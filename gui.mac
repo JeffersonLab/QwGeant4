@@ -96,6 +96,7 @@
 /gui/addButton reactionType "2 - Elastic Al" "/EventGen/SeletReactionType 2"
 /gui/addButton reactionType "3 - Quasi-elastic Al (proton)" "/EventGen/SeletReactionType 3"
 /gui/addButton reactionType "4 - Quasi-elastic Al (neutron)" "/EventGen/SeletReactionType 4"
+/gui/addButton reactionType "5 - Inelastic LH2" "/EventGen/SeletReactionType 5"
 
 # Reaction region menue
 /gui/addMenu reactionRegion ReactionRegion

@@ -160,6 +160,7 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
        Mass = Z*M_p+(A-Z)*M_n;
        fCrossSection = Elastic_Cross_Section_Proton(E_in, ThetaAngle, fWeightN, Q2, E_out);
       }
+      
    else if(ReactionType==2) // Aluminum window
       {
        A = 27.0;
@@ -184,7 +185,12 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
        fCrossSection = Quasi_Elastic_Neutron(E_in, ThetaAngle, fWeightN, Q2, E_out);
       }
 
-
+   else if(ReactionType==5) // Delta resonances
+      {
+       fCrossSection = Delta_Resonance(E_in, ThetaAngle, fWeightN, Q2, E_out);
+       //std::cout<<E_in<<" "<<ThetaAngle/degree<<" "<<fWeightN<<" "<<Q2<<" "<<E_out<<std::endl;
+      }
+      
 }
 
 
@@ -385,13 +391,41 @@ G4double QweakSimEPEvent::Quasi_Elastic_Neutron(G4double E_in,
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-// G4double QweakSimEPEvent::Sigma_EEPrime(G4double E_in,
-//                                         G4double Theta,
-//                                         G4double &fWeightN,
-//                                         G4double &Q2,
-//                                         G4double &E_out)
+// Inelastic generator interface
+// Peiqing, Nov 30,2011
 
-G4double QweakSimEPEvent::Sigma_EEPrime(G4double eni, G4double eprime, G4double theta)
+G4double QweakSimEPEvent::Delta_Resonance(G4double E_in,
+                                          G4double Theta,
+                                          G4double &fWeightN,
+                                          G4double &Q2,
+                                          G4double &E_out)
+{
+  G4double E_beam = 1165.0;    // maximum energy (beam energy) in MeV
+  G4double M_electron = 0.511;  // minimum energy (electron mass) in MeV
+  
+  // G4double Theta_Min = 1.745329E-4;
+  if (Theta<Theta_Min)
+      Theta = Theta_Min;
+
+  // Generate flat energy distribution of outgoing electron      
+  E_out =  M_electron + G4UniformRand()*(E_beam - M_electron);
+
+  // TODO: total energy phase space should be reduced to improve the efficiency.
+  G4double xsect = Sigma_EEPrime(E_in/1000.0, E_out/1000.0, Theta, Q2);  // ub/sr/GeV 
+  fWeightN = xsect*sin(Theta)*(E_beam - M_electron)/1000.0;
+  
+  if(xsect == 0)  // if E > E_max, reject the event
+  {
+     E_out = 0.0;
+     Q2 = 0.0;
+  }
+  
+  return xsect;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+G4double QweakSimEPEvent::Sigma_EEPrime(G4double eni, G4double eprime, G4double theta, G4double &q2)
 {
 
 // Peiqing, Nov 28, 2011
@@ -402,7 +436,7 @@ G4double QweakSimEPEvent::Sigma_EEPrime(G4double eni, G4double eprime, G4double 
 //	electron energy EPRIME.  The cross section is
 //	returned in microbarns/sr/GeV.
 
-      G4double w2,q2,xval1[51],xvalL[51];
+      G4double w2,xval1[51],xvalL[51];
       G4double sigT,sigL,epsilon;
       G4int i;
 

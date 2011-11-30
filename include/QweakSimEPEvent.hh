@@ -70,7 +70,7 @@ class QweakSimEPEvent {
 
   G4ThreeVector GetMomentumDirection();
   G4double ResMod507(G4int sf,G4double w2,G4double q2,G4double *xval);
-  G4double Sigma_EEPrime(G4double eni,G4double eprime,G4double theta);
+  G4double Sigma_EEPrime(G4double eni,G4double eprime,G4double theta, G4double &q2);
   
   QweakSimEPEventMessenger *EventGen_Messenger;
   QweakSimUserInformation *myUserInfo;
@@ -120,6 +120,12 @@ class QweakSimEPEvent {
                                   G4double &fWeightN,
                                   G4double &Q2,
                                   G4double &E_out);
+  
+  G4double Delta_Resonance(G4double E_in,
+                           G4double Theta,
+                           G4double &fWeightN,
+                           G4double &Q2,
+                           G4double &E_out);
 
 };
 
