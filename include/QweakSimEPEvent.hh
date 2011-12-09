@@ -101,7 +101,8 @@ class QweakSimEPEvent {
                   G4double &E_out,
                   G4ThreeVector &MomentumDirection,
                   G4double &theta,
-                  G4double &phi);
+                  G4double &phi,
+		  G4double &Asymmetry);
 
   G4double Elastic_Cross_Section_Proton( G4double E_in,
                                          G4double Theta,
@@ -126,6 +127,12 @@ class QweakSimEPEvent {
                            G4double &fWeightN,
                            G4double &Q2,
                            G4double &E_out);
+  
+  G4double GetAsymmetry_EP(G4double theta, G4double energy);
+  G4double GetAsymmetry_EN(G4double theta, G4double energy);
+  G4double GetAsymmetry_AL(G4double theta, G4double energy);
+  G4double GetAsymmetry_Be(G4double theta, G4double energy);
+  G4double GetAsymmetry_Pi(G4double Q2_pi);
 
 };
 

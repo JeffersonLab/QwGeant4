@@ -119,9 +119,10 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
         if( fabs(theZ - RandomPositionZ)<=theStepLength && sqrt(theX*theX+theY*theY)<2.54*cm)
            {
              G4double CrossSection, WeightN, Q2, E_out, theta, phi;
+	     G4double Asymmetry;
              G4ThreeVector MomentumDirection;
              G4double E_in = theTrack->GetKineticEnergy()/MeV;  //Event generator needs units of MeV
-             myEvent->GetanEvent(E_in, CrossSection, WeightN, Q2, E_out, MomentumDirection, theta, phi);
+             myEvent->GetanEvent(E_in, CrossSection, WeightN, Q2, E_out, MomentumDirection, theta, phi, Asymmetry);
              //theTrack->SetKineticEnergy(E_out*MeV);
              //theTrack->SetMomentumDirection(MomentumDirection);
 

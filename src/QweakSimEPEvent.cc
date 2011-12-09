@@ -147,7 +147,8 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
                                  G4double &E_out,
                                  G4ThreeVector &MomentumDirection,
                                  G4double &theta,
-                                 G4double &phi)
+                                 G4double &phi,
+				 G4double &Asymmetry)
 {
    MomentumDirection = GetMomentumDirection();
    theta = ThetaAngle/degree;
@@ -159,6 +160,7 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
        Z = 1.0;
        Mass = Z*M_p+(A-Z)*M_n;
        fCrossSection = Elastic_Cross_Section_Proton(E_in, ThetaAngle, fWeightN, Q2, E_out);
+       Asymmetry = GetAsymmetry_EP(ThetaAngle, E_in);
       }
       
    else if(ReactionType==2) // Aluminum window
@@ -167,6 +169,7 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
        Z = 13.0;
        Mass = Z*M_p+(A-Z)*M_n;
        fCrossSection = Elastic_Cross_Section_Aluminum(E_in, ThetaAngle, fWeightN, Q2, E_out);
+       Asymmetry = GetAsymmetry_AL(ThetaAngle, E_in);
       }
 
    else if(ReactionType==3) // Aluminum window quasi-elastic proton (assume free proton)
@@ -175,6 +178,7 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
        Z = 1.0;   
        Mass = M_p;    
        fCrossSection = Elastic_Cross_Section_Proton(E_in, ThetaAngle, fWeightN, Q2, E_out);
+       Asymmetry = GetAsymmetry_EP(ThetaAngle, E_in);
       }
 
    else if(ReactionType==4) // Aluminum window quasi-elastic neutron (assume free neutron)
@@ -183,12 +187,14 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
        Z = 1.0;   // Z needs to be set to 1 for neutron quasi elastic scattering
        Mass = M_n;    
        fCrossSection = Quasi_Elastic_Neutron(E_in, ThetaAngle, fWeightN, Q2, E_out);
+       Asymmetry = GetAsymmetry_EN(ThetaAngle, E_in);
       }
 
    else if(ReactionType==5) // Delta resonances
       {
        fCrossSection = Delta_Resonance(E_in, ThetaAngle, fWeightN, Q2, E_out);
        //std::cout<<E_in<<" "<<ThetaAngle/degree<<" "<<fWeightN<<" "<<Q2<<" "<<E_out<<std::endl;
+       Asymmetry = GetAsymmetry_Pi(Q2);
       }
       
 }
@@ -763,7 +769,195 @@ G4double QweakSimEPEvent::ResMod507(G4int sf, G4double w2, G4double q2, G4double
       return sig;
 }
 
+////....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+//
+// ---------------------------------------------------------
+//      Calculates the asymmetry weighting factor for elastic
+//      scattering from the proton.  Asymmetry returned in ppm
+// ---------------------------------------------------------
+
+G4double QweakSimEPEvent::GetAsymmetry_EP(G4double theta, G4double energy)
+{
+
+    const G4double Mp=0.938;
+    const G4double gf=0.0000116637;
+    const G4double alpha=1./137.;
+    const G4double s2tw=0.231;
+    const G4double s2tw_low=0.2387;
+    const G4double qwp=0.0713;
+    const G4double qwn=-0.988;
+    const G4double NT=14.;
+    const G4double ZT=13.;
+
+//     Radiative correction factors [from Musolf's Phys. Rep. 1994]
+    const G4double rpv=-0.054;
+    const G4double rnv=-0.0143;
+    const G4double rt0a=0.0;
+    const G4double rt1a=-0.23;
+    const G4double r0a=0.023;
+
+//     Check for minimum theta
+    const G4double theta_min = 1.745329E-4;
+    if (theta<theta_min)
+        theta = theta_min;
+
+//     The energy is in MeV after the cross section subroutine -
+//     change back to GeV
+    energy=energy/1000.0;
+
+//     Calculate Q2
+    G4double Q2_ep=4*energy*energy*sin(theta/2.0)*sin(theta/2.0);
+    Q2_ep=Q2_ep/(1.0+2.0*energy/Mp*sin(theta/2.0)*sin(theta/2.0));
+
+//     Proton Asymmetry
+//     Kinematic Factors
+    G4double tau=Q2_ep/4.0/(Mp*Mp);
+    G4double epsilon=1.0/(1.0+2.0*(1.0+tau)*tan(theta/2.0)*tan(theta/2.0));
+    G4double epsilonp=sqrt(tau*(1.0+tau)*(1.0-epsilon*epsilon));
+
+//     Form factor calculations
+//     Form Factors: Electromagetic
+    G4double gvd=1.0/( (1.0+Q2_ep/0.71)*(1.0+Q2_ep/0.71) );
+    G4double gepg=gvd;
+    G4double gmpg=2.793*gvd;
+    G4double geng=1.91*tau*gvd/(1.+5.6*tau);
+    G4double gmng=-1.91*gvd;
+
+//    Form Factors: Neutral-weak, Axial
+//     Assume: Gs_E,M=0, G8_A,Gs_A=0
+    G4double gad=1/((1.0+Q2_ep/1.001/1.001)*(1.0+Q2_ep/1.001/1.001));
+    G4double gsa=-0.12/((1.+Q2_ep/1.06/1.06)*(1.+Q2_ep/1.06/1.06));
+    G4double gt1a=1.2695/((1+Q2_ep/1.001/1.001)*(1+Q2_ep/1.001/1.001));
+    G4double g8a=0.0;
+    gsa=0.0;
+
+//      Use SM radiative correction factors
+//      Since we use SM values for Qw(p) and Qw(n)
+//      we no longer need the radiative corrections
+//      on those quantities.
+//       gepz=(1.-4.*s2tw)*(1.+rpv)*gepg-(1.+rnv)*geng
+//       gmpz=(1.-4.*s2tw)*(1.+rpv)*gmpg-(1.+rnv)*gmng
+
+    G4double gepz=qwp*gepg+qwn*geng;
+    G4double gmpz=qwp*gmpg+qwn*gmng;
+    G4double gapz=-(1.0+rt1a)*gt1a;
+
+    G4double asym=-gf/(4.0*pi*alpha*sqrt(2.0))*Q2_ep*1e6;
+    asym=asym/(epsilon*gepg*gepg+tau*gmpg*gmpg);
+    asym=asym*(epsilon*gepg*gepz+tau*gmpg*gmpz-(1.0-4.0*s2tw_low)*epsilonp*gmpg*gapz);
+
+    return asym;
+}
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+
+//---------------------------------------------------------
+//     Calculates the asymmetry weighting factor for elastic
+//     e-Al scattering using a formula from Donnelly.  Returns
+//     the asymmetry in units of ppm.
+//
+//    Qw(p) value from J. Erler, Phys. Rev. D72, 073003 (2005)
+//    Qw(n) value from using C_1u and C_1d values from PDG2008
+//
+//---------------------------------------------------------
+
+G4double QweakSimEPEvent::GetAsymmetry_AL (G4double theta, G4double energy)
+{
+//     Needed constants
+    const G4double Mp=0.938;
+    const G4double gf=0.0000116637;
+    const G4double alpha=1./137.;
+    const G4double qwp=0.0713;
+    const G4double qwn=-0.988;
+    const G4double NT=14.;
+    const G4double ZT=13.;
+
+//     The energy is in MeV after the cross section subroutine -
+//     change back to GeV
+    energy = energy/1000.0;
+
+//     Claculate Q2
+    G4double Q2=4*energy*energy*sin(theta/2.)*sin(theta/2.);
+
+//     Correction for Coulomb distortion for Al
+    Q2=Q2*(1.+(3.*ZT*0.197/137./(2.*energy*2.98)))*(1.+(3.*ZT*0.197/137./(2.*energy*2.98)));
+
+//     Aluminum Asymmetry
+    G4double asym=-gf/(4.*pi*alpha*sqrt(2.))*1e6*Q2*(qwp+qwn*NT/ZT);
+
+    return asym;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+//---------------------------------------------------------
+//     Calculates the asymmetry weighting factor for elastic
+//     e-Be scattering using a formula from Donnelly.  Returns
+//     the asymmetry in units of ppm.
+//
+//    Qw(p) value from J. Erler, Phys. Rev. D72, 073003 (2005)
+//    Qw(n) value from using C_1u and C_1d values from PDG2008
+//
+//---------------------------------------------------------
+
+G4double QweakSimEPEvent::GetAsymmetry_Be (G4double theta, G4double energy)
+{
+    const G4double Mp=0.938;
+    const G4double gf=0.0000116637;
+    const G4double alpha=1./137.;
+    const G4double qwp=0.0713;
+    const G4double qwn=-0.988;
+    const G4double NT=5.;
+    const G4double ZT=4.;
+
+//     The energy is in MeV after the cross section subroutine -
+//     change back to GeV
+    energy = energy/1000.;
+
+//     Claculate Q2
+    G4double Q2=4*energy*energy*sin(theta/2.)*sin(theta/2.);
+    Q2=Q2/(1.+2.*energy/(9.*Mp)*sin(theta/2.)*sin(theta/2.));
+
+//     Correction for Coulomb distortion for Al
+    Q2=Q2*(1.+(3./2.*sqrt(3./5.)*ZT*0.197/137./(energy*1.77)))*(1.+(3./2.*sqrt(3./5.)*ZT*0.197/137./(energy*1.77)));
+
+//     Beryllium Asymmetry
+    G4double asym=-gf/(4.*pi*alpha*sqrt(2.))*1e6*Q2*(qwp+qwn*NT/ZT);
+
+    return asym;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+//    Calculates the asymmetry weighting factor for elastic
+//    scattering from the neutron.
+
+G4double QweakSimEPEvent::GetAsymmetry_EN(G4double theta, G4double energy)
+{
+  return 0;
+};
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+//
+//---------------------------------------------------------
+//    Calculates the asymmetry weighting factor for inelastic
+//    scattering from the proton.  The simple approximation
+//    		A_LR = -100 (ppm/GeV^2) * Q^2
+//    is used.  Returns asymmetry in units of ppm.
+//    Reference:
+//    H.-W. Hammer and D. Drechsel, Z. Phys. A353, 321-331 (1995)
+//
+//---------------------------------------------------------
+
+G4double QweakSimEPEvent::GetAsymmetry_Pi(G4double Q2_pi)
+{
+//     Inelastic Asymmetry
+    G4double asym=-100*Q2_pi;
+    return asym;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 //jpan@nuclear.uwinnipeg.ca
