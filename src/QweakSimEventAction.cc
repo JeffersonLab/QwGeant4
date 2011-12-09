@@ -414,6 +414,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         G4double PrimaryQ2 = myUserInfo->GetPrimaryQ2();
         G4double CrossSection = myUserInfo->GetCrossSection();
         G4double CrossSectionWeight = myUserInfo->GetCrossSectionWeight();
+	G4double Asymmetry = myUserInfo->GetAsymmetry();
         G4double OriginVertexPositionX = myUserInfo->GetOriginVertexPositionX();
         G4double OriginVertexPositionY = myUserInfo->GetOriginVertexPositionY();
         G4double OriginVertexPositionZ = myUserInfo->GetOriginVertexPositionZ();
@@ -440,6 +441,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         analysis->fRootEvent->Primary.StorePrimaryQ2((Float_t) PrimaryQ2);
         analysis->fRootEvent->Primary.StoreCrossSection((Float_t) CrossSection);
         analysis->fRootEvent->Primary.StoreCrossSectionWeight((Float_t) CrossSectionWeight);
+	analysis->fRootEvent->Primary.StoreAsymmetry((Float_t) Asymmetry);
         analysis->fRootEvent->Primary.StorePrimaryEventNumber((Int_t) PrimaryEventNumber);
         analysis->fRootEvent->Primary.StoreReactionType((Int_t) ReactionType);
         analysis->fRootEvent->Primary.StorePDGcode((Int_t) PDGcode);
@@ -2485,6 +2487,9 @@ void QweakSimEventAction::Initialize() {
     crossSectionWeight = 0.0;
     rCrossSectionWeight = 0.0;
 
+    asymmetry = 0.0;
+    rAsymmetry = 0.0;
+    
     primaryEventNumber = 0;
     rPrimaryEventNumber = 0;
 

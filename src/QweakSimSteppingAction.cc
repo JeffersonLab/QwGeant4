@@ -151,6 +151,7 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
              myUserInfo->StorePrimaryQ2(Q2*0.000001); //in units of GeV^2
              myUserInfo->StoreCrossSection(CrossSection);
              myUserInfo->StoreCrossSectionWeight(WeightN);
+	     myUserInfo->StoreAsymmetry ( Asymmetry );
              //myUserInfo->StorePrimaryEventNumber(myEventCounter);
              myUserInfo->StoreReactionType(myEvent->GetReactionType());
              myUserInfo->StorePDGcode(theTrack->GetDefinition()->GetPDGEncoding());

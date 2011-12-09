@@ -29,22 +29,6 @@
     
  */
 //=============================================================================
-//
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2005/12/27 19:30:45 $
-//  CVS/RCS Revision: $Revision: 1.2 $
-//  Status:           $State: Exp $
-// 
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-// 
-//=============================================================================
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 #ifndef QweakSimUserPrimaryEvent_h
@@ -80,6 +64,7 @@ private:
   Float_t PrimaryQ2;
   Float_t CrossSection;
   Float_t CrossSectionWeight;
+  Float_t Asymmetry;
 
   Int_t   PrimaryEventNumber;
 
@@ -141,16 +126,17 @@ public:
   void     StoreCrossSectionWeight(Float_t csw)  {CrossSectionWeight = csw;}
   Float_t    GetCrossSectionWeight() const {return CrossSectionWeight; }
 
+  void     StoreAsymmetry(Float_t asym)  {Asymmetry = asym;}
+  Float_t    GetAsymmetry() const {return Asymmetry; }
+
   void     StorePrimaryEventNumber(Int_t pen)    { PrimaryEventNumber = pen; }
   Int_t      GetPrimaryEventNumber() const {return PrimaryEventNumber; }
-  //-----------------
 
   void     StoreReactionType(Int_t rt)  { ReactionType = rt; }
   Int_t      GetReactionType() const {return ReactionType; }
 
   void     StorePDGcode(Int_t code)  { PDGcode = code; }
   Int_t      GetPDGcode() const {return PDGcode; }
-
 
 
   // define a new Class known to ROOT  
@@ -161,17 +147,4 @@ public:
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
 #endif 
-
-//=======================================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//      $Revisions$  
-//      $Log: QweakSimUserPrimaryEvent.hh,v $
-//      Revision 1.2  2005/12/27 19:30:45  grimm
-//      - Redesign of Doxygen header containing CVS info like revision and date
-//      - Added CVS revision log at the end of file
-//
-// 
 

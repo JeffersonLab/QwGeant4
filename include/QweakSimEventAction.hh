@@ -203,6 +203,9 @@ private:
   G4double  crossSectionWeight;
   Float_t  rCrossSectionWeight;
 
+  G4double  asymmetry;
+  Float_t  rAsymmetry;
+  
   G4int  primaryEventNumber;
   Int_t rPrimaryEventNumber;
 

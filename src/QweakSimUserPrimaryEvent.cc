@@ -60,6 +60,7 @@ void QweakSimUserPrimaryEvent::Initialize()
   PrimaryQ2                      = 0.0;
   CrossSection                   = 0.0;
   CrossSectionWeight             = 0.0;
+  Asymmetry                      = 0.0;
 
   PDGcode                        = 0;
 
