@@ -202,6 +202,9 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 // jpan@nuclear.uwinnipeg.ca
+//     calculate proton cross sections using the dipole fits to the form factors.
+//     Angles are restricted to be greater than .01 deg to avoid
+//     division by 0 when evaluating the Mott cross section.
 
 G4double QweakSimEPEvent::Elastic_Cross_Section_Proton(G4double E_in,
                                                        G4double Theta,
@@ -209,22 +212,18 @@ G4double QweakSimEPEvent::Elastic_Cross_Section_Proton(G4double E_in,
                                                        G4double &Q2,
                                                        G4double &E_out)
 {
-//     calculate proton cross sections using the dipole fits to the form factors.
-     
-//     Angles are restricted to be greater than .01 deg to avoid
-//     division by 0 when evaluating the Mott cross section.
       G4double Lamda_2 = 0.710;
       G4double M_p = 938.2796;  // proton mass in MeV
       G4double mu = 2.793;
       G4double Z = 1.0;
       G4double A = 1.0;
       G4double M = M_p*A;
+      G4double hbarc = 197.3269718;  // in MeV fm 
+      G4double alpha = 1.0/137.035999074;
+      G4double CC = hbarc*alpha/2.0;  // 0.719982242379
 
 //    E_in units is MeV
 
-//     The Mott cross section blows up at small Theta.  For
-//     the purposes of this routine, we arbitrarily restrict
-//     angles to be greater than a minimum.
       if (Theta<Theta_Min)
          Theta = Theta_Min;
 
@@ -233,15 +232,14 @@ G4double QweakSimEPEvent::Elastic_Cross_Section_Proton(G4double E_in,
       G4double T2THE = STH*STH/CTH/CTH;
       G4double ETA = 1.0+2.0*E_in*STH*STH/M;
       E_out = E_in/ETA;
-//    MeV^2
-      Q2 = 4.0*E_in*E_out*STH*STH;
+      Q2 = 4.0*E_in*E_out*STH*STH;   // MeV^2
       G4double tau = Q2/4.0/M/M;
-//    Mott scatering
-      G4double CrossSection = (Z*0.72/E_in*CTH/STH/STH)*(Z*0.72/E_in*CTH/STH/STH)/ETA;
+//    Mott scatering cross-section, including recoil correction
+      G4double CrossSection = (Z*CC/E_in*CTH/STH/STH)*(Z*CC/E_in*CTH/STH/STH)/ETA;
 //    Units: ub/sr
       G4double Mott = CrossSection*10000.0;
 //    Cross section
-      G4double GEP_DIPOLE = 1.0/(1.0+Q2/1.E6/Lamda_2)*(1.0+Q2/1.E6/Lamda_2);
+      G4double GEP_DIPOLE = 1.0/(1.0+Q2/1.E6/Lamda_2)/(1.0+Q2/1.E6/Lamda_2);
       G4double GMP_DIPOLE = GEP_DIPOLE*mu;
       G4double FAC = 1.0/(1.0+tau);
 
@@ -252,6 +250,7 @@ G4double QweakSimEPEvent::Elastic_Cross_Section_Proton(G4double E_in,
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 // jpan@nuclear.uwinnipeg.ca
+//     calculate Aluminum elastic cross sections
 
 G4double QweakSimEPEvent::Elastic_Cross_Section_Aluminum(G4double E_in,
                                                          G4double Theta,
@@ -259,10 +258,6 @@ G4double QweakSimEPEvent::Elastic_Cross_Section_Aluminum(G4double E_in,
                                                          G4double &Q2,
                                                          G4double &E_out)
 {
-//     calculate Aluminum elastic cross sections
-     
-//     incident angles are restricted to be greater than .01 deg to avoid
-//     division by 0 when evaluating the Mott cross section.
       G4double Theta_Min = 1.745329E-4;
       G4double M_p = 938.2796;  // proton mass in MeV
       G4double Z = 13.0;
@@ -285,10 +280,7 @@ G4double QweakSimEPEvent::Elastic_Cross_Section_Aluminum(G4double E_in,
       G4double Gamma_mu = 20.7;  // Gamma/mu
 
       if (Theta<Theta_Min)
-//     The Mott cross section blows up at small Theta. For
-//     the purposes of this routine, we arbitrarily restrict
-//     angles to be greater than a minimum.
-         Theta = Theta_Min;
+           Theta = Theta_Min;
 
 //    E_in unit is MeV, q2 unit is fm^(-2)   
       G4double CTH = cos(Theta/2.0);
@@ -336,6 +328,7 @@ G4double QweakSimEPEvent::Elastic_Cross_Section_Aluminum(G4double E_in,
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 //jpan@nuclear.uwinnipeg.ca Sat Apr 18 11:28:18 CDT 2009
+//     In this subroutine units are MeV
 
 G4double QweakSimEPEvent::Quasi_Elastic_Neutron(G4double E_in,
                                                 G4double Theta,
@@ -344,11 +337,6 @@ G4double QweakSimEPEvent::Quasi_Elastic_Neutron(G4double E_in,
                                                 G4double &E_out)
 {
 //  cout<<"===>>>>Calling Quasi_Elastic_Neutron"<<endl;
-
-//     Angles are restricted to be greater than .01 deg to avoid
-//     division by 0 when evaluating the Mott cross section.
-//     In this subroutine units are MeV
-
       G4double Theta_Min = 1.745329E-4;
       G4double Lamda_2 = 0.710;
       G4double M_p = 938.2796;  // proton mass in MeV
@@ -359,10 +347,7 @@ G4double QweakSimEPEvent::Quasi_Elastic_Neutron(G4double E_in,
       G4double M = M_p;
 
 //    E_in units is MeV
-
-//     The Mott cross section blows up at small Theta.  For
-//     the purposes of this routine, we arbitrarily restrict
-//     angles to be greater than a minimum.
+      
       if (Theta<Theta_Min)
          Theta = Theta_Min;
 
