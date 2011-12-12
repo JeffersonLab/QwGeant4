@@ -68,6 +68,7 @@ QweakSimEPEventMessenger::QweakSimEPEventMessenger(QweakSimEPEvent* pEPEvent)
   SelectReactionType_Cmd->SetGuidance("3 - Al quasi-elastic (proton)");
   SelectReactionType_Cmd->SetGuidance("4 - Al quasi-elastic (neutron)");
   SelectReactionType_Cmd->SetGuidance("5 - LH2 inelastic (delta resonance)");
+  SelectReactionType_Cmd->SetGuidance("6 - Moller scattering");
   SelectReactionType_Cmd->SetParameterName("SelectReactionType",true);
   SelectReactionType_Cmd->SetDefaultValue(1);
   SelectReactionType_Cmd->SetRange("SelectReactionType>=1");

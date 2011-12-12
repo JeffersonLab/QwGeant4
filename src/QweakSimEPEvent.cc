@@ -196,7 +196,16 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
        //std::cout<<E_in<<" "<<ThetaAngle/degree<<" "<<fWeightN<<" "<<Q2<<" "<<E_out<<std::endl;
        Asymmetry = GetAsymmetry_Pi(Q2);
       }
-      
+   else if(ReactionType==6) // Moller scattering
+      {
+	//  Peiqing, Dec 12, 2011
+	//  Small angle recoil electrons are directly dumped for now.
+       G4double E_recoil;
+       G4double ThetaRecoil;
+       fCrossSection = Moller_Scattering(E_in, ThetaAngle, E_out, 
+					 E_recoil, ThetaRecoil, 
+                                         Q2, fWeightN, Asymmetry);
+      }      
 }
 
 
@@ -752,6 +761,49 @@ G4double QweakSimEPEvent::ResMod507(G4int sf, G4double w2, G4double q2, G4double
       
       G4double sig = sig_res + sig_nr;   
       return sig;
+}
+
+
+////....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+//
+//     Peiqing, Dec. 11, 2011, Moller elastic scattering
+//
+//     kinematic relations and cross section formulae 
+//     are from Wagner, et al. NIMA294 (1990) 541-548 
+//     and Arrington, et al. NIMA311 (1992) 39-48, etc.
+
+G4double QweakSimEPEvent::Moller_Scattering(G4double E_in, G4double theta1, 
+                                            G4double &E_out1, G4double &E_out2, G4double &theta2, 
+                                            G4double &q2, G4double &fWeightN, G4double &asymmetry)
+{
+      G4double alpha = 1.0/137.036;
+      G4double G_F = 1.166e-11;     // Fermi constant in MeV^(-2)
+      G4double M_electron = 0.511;  // Incident Electron mass in MeV
+      G4double sin2_theta_W = 0.02381;  // sin2_theta_W at 0.026 GeV, taken from E158
+
+      G4double theta_CM = 2.0*atan(tan(theta1)*sqrt((E_in+M_electron)/(2.*M_electron)));
+      E_out1 = M_electron+(E_in-M_electron)*(cos(theta_CM/2.0)*cos(theta_CM/2.0));
+      E_out2 = E_in - E_out1 + M_electron;
+      theta2 = atan(2.0*M_electron/(E_in+M_electron)/tan(theta1));
+      G4double momentum = sqrt(E_out1*E_out1 - M_electron*M_electron);
+      // compute q2 in MeV^2
+      //q2 = 4.0*E_in*momentum*sin(theta1/2.0)*sin(theta1/2.0);
+      q2 = 2*M_electron*(M_electron+E_in)*sin(theta_CM/2.0)*sin(theta_CM/2.0);  
+    
+  //  calculate Moller cross-section (units are ub/sr)
+      G4double Xsect = pow((1+cos(theta_CM))*(3+cos(theta_CM)*cos(theta_CM)),2); 
+      // Xsect = pow(alpha/2.0/M_electron,2)*Xsect/pow(sin(theta_CM),4); // alpha^2/(4m^2) = 0.199 b/Sr
+      Xsect = (1.99e4)*Xsect/pow(sin(theta_CM),4);
+      fWeightN = Xsect*sin(theta1);
+      asymmetry = -M_electron*E_in*(G_F/(sqrt(2.0)*alpha*3.1415927))
+                  *16*sin(theta_CM)*sin(theta_CM)/(3+cos(theta_CM)*cos(theta_CM))*(1-4*sin2_theta_W);
+      asymmetry = asymmetry*1e6;  // in [ppm]
+
+      //std::cout<<"E_in  E1  E2  theta1  theta2  Xsect  Weight  Q2  asym"<<std::endl;
+      //std::cout<<E_in<<"  "<<E_out1<<"  "<<E_out2<<"  "<<theta1*180/3.14<<"  "
+      //         <<theta2*180/3.14<<"  "<<Xsect<<"  "<<fWeightN<<"  "<<q2*1e-6<<"  "<<asymmetry<<std::endl;
+      
+      return Xsect;
 }
 
 ////....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

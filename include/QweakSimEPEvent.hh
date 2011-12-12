@@ -128,6 +128,10 @@ class QweakSimEPEvent {
                            G4double &Q2,
                            G4double &E_out);
   
+  G4double Moller_Scattering(G4double E_in, G4double theta1, 
+                             G4double &E_out1, G4double &E_out2, G4double &theta2, 
+                             G4double &q2, G4double &fWeightN, G4double &asymmetry);
+  
   G4double GetAsymmetry_EP(G4double theta, G4double energy);
   G4double GetAsymmetry_EN(G4double theta, G4double energy);
   G4double GetAsymmetry_AL(G4double theta, G4double energy);
