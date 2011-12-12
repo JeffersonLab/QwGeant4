@@ -52,6 +52,11 @@ void QweakSimMaterial::DefineMaterials()
   G4Element* elSb = fNistManager->FindOrBuildElement("Sb");
   G4Element* elPb = fNistManager->FindOrBuildElement("Pb");
 
+  // Let's get Tungsten.  This is not the alooy to be used
+  // but it is fine for a test.
+
+  G4Element* elW = fNistManager->FindOrBuildElement("W");
+
 
   //
   // define simple materials

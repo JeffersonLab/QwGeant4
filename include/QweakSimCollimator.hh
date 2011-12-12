@@ -99,6 +99,21 @@ private:
   G4double OctantCutOutRadialOffset;
   G4double BeamlineCutoutDiameter;
 
+  // W-Plug
+
+  G4LogicalVolume*   WPlug_Logical_US;
+  G4VPhysicalVolume* WPlug_Physical_US;
+  G4LogicalVolume*   WPlug_Logical_DS;
+  G4VPhysicalVolume* WPlug_Physical_DS;
+
+  G4LogicalVolume*   WPlug_Logical_US_Vac;
+  G4VPhysicalVolume* WPlug_Physical_US_Vac;
+  G4LogicalVolume*   WPlug_Logical_DS_Vac;
+  G4VPhysicalVolume* WPlug_Physical_DS_Vac;
+
+  G4Material*        WPlug_Material;  
+  G4Material*        WPlug_Material_Vac;  
+
 public:
     //!Constructor
   QweakSimCollimator();

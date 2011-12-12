@@ -53,12 +53,27 @@ QweakSimCollimator::QweakSimCollimator()
   OctantCutOutDeltaPhiAngle         = 2.0*16.61*degree;//2.0*16.344*degree
   OctantCutOutRadialOffset          = 0.0*cm;
 
+  // W-Plug
 
+  WPlug_Logical_US      = NULL;
+  WPlug_Physical_US     = NULL;
+  WPlug_Logical_DS      = NULL;
+  WPlug_Physical_DS     = NULL;
+  WPlug_Logical_US_Vac  = NULL;
+  WPlug_Physical_DS_Vac = NULL;
+  WPlug_Material        = NULL;  
+  WPlug_Material_Vac    = NULL;
+  
   //Collimator_Messenger = new QweakSimCollimatorMessenger(this);
 
  // get access to material definition
   pMaterial = new QweakSimMaterial();
   pMaterial->DefineMaterials();
+
+  // WPlug Material
+
+  WPlug_Material = pMaterial->GetMaterial("G4_W");  // For now...I thought this was an alloy....
+  WPlug_Material_Vac = pMaterial->GetMaterial("Vacuum");  
 
 }
 
@@ -86,12 +101,12 @@ void QweakSimCollimator::ConstructCollimator(G4VPhysicalVolume* MotherVolume)
  */
 //---------------------------------------------------------------------------------------------
 
-    G4double PI                                = 3.14159265359; //probably defined 
-                                                              //somewhere else, but
-                                                              //what the heck
+    G4double PI                                = 3.14159265359;     //probably defined 
+                                                                    //somewhere else, but
+                                                                    //what the heck
 
   // assign material
- G4Material* CollimatorHousing_Material = pMaterial->GetMaterial("PBA"); 
+    G4Material* CollimatorHousing_Material = pMaterial->GetMaterial("PBA"); 
 
 
   std::vector< G4SubtractionSolid* >  Solids;
@@ -147,14 +162,14 @@ void QweakSimCollimator::ConstructCollimator(G4VPhysicalVolume* MotherVolume)
 //			      CollimatorHousing_FullLength_Z/2.0)*180/PI*degree;
 
   G4double theta  = std::atan((OctantCutOutBackFullLength_Y-OctantCutOutFrontFullLength_Y                            +OctantCutOutBackOuterDiameter-OctantCutOutFrontOuterDiameter)/
-                     CollimatorHousing_FullLength_Z/2.0)*180/PI*degree; 
-//Theta here should be defined as the polar angle of the line joining the centres of the faces at +/-Dz of the trapezoid - corrected by Jie Pan 2009/06/17
+			      CollimatorHousing_FullLength_Z/2.0)*180/PI*degree; 
+  //Theta here should be defined as the polar angle of the line joining the centres of the faces at +/-Dz of the trapezoid - corrected by Jie Pan 2009/06/17
 
   G4double phi    = 90.0*degree;
   G4double alpha1 = 0.0*degree;
   G4double alpha2 = 0.0*degree;
   
-G4double radLoc = (OctantCutOutRadialOffset - 0.01*cm +
+  G4double radLoc = (OctantCutOutRadialOffset - 0.01*cm +
 		     (OctantCutOutFrontOuterDiameter+
 		      OctantCutOutFrontFullLength_Y + 
 		      std::tan(theta)*CollimatorHousing_FullLength_Z)/2.0);
@@ -268,6 +283,98 @@ G4double radLoc = (OctantCutOutRadialOffset - 0.01*cm +
   CollimatorHousing_Logical->SetVisAttributes(CollimatorHousingVisAtt); 
   //**********************************************************************************
 
+  // Let Tungsten plug!!!!
+
+  
+  // W-Plug position
+
+  G4ThreeVector positionWPlug_US = G4ThreeVector(0, 0, -575.7895*cm); 
+  G4ThreeVector positionWPlug_DS = G4ThreeVector(0, 0, -568.1695*cm); 
+  
+  
+  G4Cons *WPlug_Solid_US = new G4Cons("WPlug_Sol_US",
+				      0.747*cm,
+				      4.20*cm,
+				      0.987*cm,
+				      4.20*cm,  // 4.20  
+				      7.62*cm,  // 7.62
+				      0,
+				      360*degree);    
+  
+  G4Cons *WPlug_Solid_US_Vac = new G4Cons("WPlug_Sol_US_Vac",
+					  0.0*cm,
+					  0.747*cm,
+					  0.0*cm,
+					  0.987*cm,  // 4.20  
+					  7.62*cm,  // 7.62
+					  0,
+					  360*degree);    
+  
+  G4Cons *WPlug_Solid_DS = new G4Cons("WPlug_Sol_DS",
+				      0.0*cm,
+				      4.987*cm,
+				      0.0*cm,
+				      1.077*cm,
+				      7.62*cm,
+				      0,
+				      360*degree);    
+  G4Cons *WPlug_Solid_DS_Vac = new G4Cons("WPlug_Sol_DS_Vac",
+					  0.987*cm,
+					  4.20*cm,
+					  1.077*cm,
+					  4.20*cm,
+					  7.62*cm,
+					  0,
+					  360*degree);      
+  
+  WPlug_Logical_US = new G4LogicalVolume(WPlug_Solid_US,
+					 WPlug_Material,
+					 "WPlug_Logical_US");
+  
+  WPlug_Logical_DS = new G4LogicalVolume(WPlug_Solid_DS,
+					 WPlug_Material,
+					 "WPlug_Logical_DS");
+  WPlug_Logical_US_Vac = new G4LogicalVolume(WPlug_Solid_US_Vac,
+					     WPlug_Material_Vac,
+					     "WPlug_Logical_US_Vac");
+  
+  WPlug_Logical_DS_Vac = new G4LogicalVolume(WPlug_Solid_DS_Vac,
+					     WPlug_Material_Vac,
+					     "WPlug_Logical_DS_Vac");
+  
+  
+  WPlug_Physical_US = new G4PVPlacement(0,                  // rotation
+					positionWPlug_US,   // plug position
+					"WPlugContainer_US",
+					WPlug_Logical_US,
+					MotherVolume,
+					false,
+					0); 
+  
+  WPlug_Physical_DS = new G4PVPlacement(0,                  // rotation
+					positionWPlug_DS,   // plug position
+					"WPlugContainer_DS",
+					WPlug_Logical_DS,
+					MotherVolume,
+					false,
+					0);
+  WPlug_Physical_US_Vac = new G4PVPlacement(0,                  // rotation
+					    positionWPlug_US,   // plug position
+					    "WPlugContainer_US_Vac",
+					    WPlug_Logical_US_Vac,
+					    MotherVolume,
+					    false,
+					    0); 
+  
+  WPlug_Physical_DS_Vac = new G4PVPlacement(0,                  // rotation
+					    positionWPlug_DS,   // plug position
+					    "WPlugContainer_DS_Vac",
+					    WPlug_Logical_DS_Vac,
+					    MotherVolume,
+					    false,
+					    0);
+  
+  
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
