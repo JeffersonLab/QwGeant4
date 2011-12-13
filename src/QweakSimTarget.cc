@@ -91,7 +91,7 @@ QweakSimTarget::QweakSimTarget(QweakSimUserInformation *myUI)
 
     targetCellExitWindowNippleRadius = 0.5*0.622*inch;
 
-    targetCellInnerLength     = 35.0*cm;
+    targetCellInnerLength     = 34.346*cm;
     targetCellOuterLength     = targetCellInnerLength
                                 + targetCellEntranceWindowThickness
                                 + targetCellExitWindowThickness;  // Full length of Target

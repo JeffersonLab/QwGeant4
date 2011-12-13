@@ -24,7 +24,7 @@
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-   const G4double QweakSimEPEvent::TargetLength = 35.0*cm;
+   const G4double QweakSimEPEvent::TargetLength = 34.346*cm;
 
    // definition of a mil = inch/1000
    const G4double QweakSimEPEvent::mil = 0.001*2.54*cm;

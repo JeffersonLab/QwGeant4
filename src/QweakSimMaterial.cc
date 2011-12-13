@@ -72,7 +72,7 @@ void QweakSimMaterial::DefineMaterials()
 
   // Liquid H2
   name      = "H2Liquid";
-  density   = 0.0708*g/cm3;
+  density   = 0.071287*g/cm3; // From Greg, this is the density at 20 k and 32.5 psia
   nelements = 1;
   G4Material* __attribute__ ((unused))
   matLiquidHydrogen = new G4Material(name, density, nelements);
