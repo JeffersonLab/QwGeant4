@@ -206,8 +206,9 @@ G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistor
   CerenkovDetector_HitsCollection->insert(aHit); 
   
 //   G4cout << G4endl << "###### Leaving QweakSimCerenkovDetectorSD::ProcessHits() " << G4endl << G4endl; 
-  
-  info->StoreCerenkovHitEnergy(info->GetParticleHistoryLength()-1,currentTotalEnergy);
+
+// Peiqing: comment this disable geting secondary info
+//  info->StoreCerenkovHitEnergy(info->GetParticleHistoryLength()-1,currentTotalEnergy);
 
   return true;
 }

@@ -218,7 +218,6 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 
 //-----------------------------------------------------------------------------
 
-
     // preset variables for hit collection
     Initialize();
 
@@ -267,7 +266,6 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         // get  CerenkovDetectorPMT Hit Collector pointer
         CerenkovDetectorPMT_HC = (QweakSimCerenkovDetector_PMTHitsCollection*)(HCE->GetHC(CerenkovDetectorPMT_CollID));
     }
-
 
     // Get number of entries for this event
     // n_GEMhitWirePlane              = GEM_WirePlane_HC               -> entries();
@@ -375,7 +373,6 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 
     analysis->fRootEvent->TriggerScintillator.Detector.Initialize();
     analysis->fRootEvent->TriggerScintillator.Detector.StoreDetectorHasBeenHit(0);
-
     //-------------------------------------------------------------------------------------------------
 
     //#########################################################################################################################
@@ -398,7 +395,6 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
             || (fTrigger[kTriggerScint] && (n_hitTriggerScintillator > 0) ) /* Qweak trigger on a hit in the trigger scintillator */
             || (fTrigger[kTriggerCer]   && (n_hitCerenkov > 0) )            /* Triggering on Main Detector */
        ) {
-
 
         //========================================
         // Store Primary Information into /Primary
@@ -451,7 +447,6 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         //===========================================
         // Store Number Of Hits of each Detector
         //===========================================
-
 
         // Store Number of Hits for: UPlane DriftCell of Front Chamber
         analysis->fRootEvent->Region3.ChamberFront.DriftCell.StoreUDriftCellNbOfHits(n_VDChitDCFront);
@@ -877,7 +872,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 
                 rOctantID = G4IndexToOctantNumber[ (Int_t) aHit->GetDetectorID()];
 
-                // aHit->Print();
+                //aHit->Print();
 
                 // get local position of hit
                 localPosition  = aHit->GetLocalPosition();
@@ -1054,44 +1049,43 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 analysis->fRootEvent->Cerenkov.Detector.StoreKineticEnergy(rkineticEnergy);
 
                 //-----------------------------------------------------------------------------
-
-//jpan@nuclear.uwinnipeg.ca
-
-
-                for (int sec = 0; sec < myUserInfo->GetCerenkovSecondaryParticleCount(); sec++) {
-
-                    SecondaryParticleOrigin = myUserInfo->GetCerenkovSecondaryParticleOrigin(sec);
-                    rSecondaryPartOriginX = (Float_t) SecondaryParticleOrigin.x()/cm;
-                    rSecondaryPartOriginY = (Float_t) SecondaryParticleOrigin.y()/cm;
-                    rSecondaryPartOriginZ = (Float_t) SecondaryParticleOrigin.z()/cm;
-
-                    SecondaryParticleMomentum = myUserInfo->GetCerenkovSecondaryParticleMomentum(sec);
-                    rSecondaryPartMomentumX = (Float_t) SecondaryParticleMomentum.x()/MeV;
-                    rSecondaryPartMomentumY = (Float_t) SecondaryParticleMomentum.y()/MeV;
-                    rSecondaryPartMomentumZ = (Float_t) SecondaryParticleMomentum.z()/MeV;
-
-                    rSecondaryPartEnergy = (Float_t) myUserInfo->GetCerenkovSecondaryParticleEnergy(sec)/MeV;
-                    rSecondaryPartCharge = (Float_t) myUserInfo->GetCerenkovSecondaryParticleCharge(sec);
-
-//jpan@nuclear.uwinnipeg.ca
-//		 analysis->fRootEvent->Cerenkov.Octant[rOctantID].Detector.AddSecondaryParticleEvent(rSecondaryPartOriginX,
-//												     rSecondaryPartOriginY,
-//												     rSecondaryPartOriginZ,
-//												     rSecondaryPartMomentumX,
-//												     rSecondaryPartMomentumY,
-//												     rSecondaryPartMomentumZ,
-//												     rSecondaryPartEnergy,
-//												     rSecondaryPartCharge);
-
-                    analysis->fRootEvent->Cerenkov.Detector.AddSecondaryParticleEvent(rSecondaryPartOriginX,
-                            rSecondaryPartOriginY,
-                            rSecondaryPartOriginZ,
-                            rSecondaryPartMomentumX,
-                            rSecondaryPartMomentumY,
-                            rSecondaryPartMomentumZ,
-                            rSecondaryPartEnergy,
-                            rSecondaryPartCharge);
-                } // end for
+//
+// Peiqing: comment out the followings for speeding up
+//
+//                 for (int sec = 0; sec < myUserInfo->GetCerenkovSecondaryParticleCount(); sec++) {
+// 
+//                     SecondaryParticleOrigin = myUserInfo->GetCerenkovSecondaryParticleOrigin(sec);
+//                     rSecondaryPartOriginX = (Float_t) SecondaryParticleOrigin.x()/cm;
+//                     rSecondaryPartOriginY = (Float_t) SecondaryParticleOrigin.y()/cm;
+//                     rSecondaryPartOriginZ = (Float_t) SecondaryParticleOrigin.z()/cm;
+// 
+//                     SecondaryParticleMomentum = myUserInfo->GetCerenkovSecondaryParticleMomentum(sec);
+//                     rSecondaryPartMomentumX = (Float_t) SecondaryParticleMomentum.x()/MeV;
+//                     rSecondaryPartMomentumY = (Float_t) SecondaryParticleMomentum.y()/MeV;
+//                     rSecondaryPartMomentumZ = (Float_t) SecondaryParticleMomentum.z()/MeV;
+// 
+//                     rSecondaryPartEnergy = (Float_t) myUserInfo->GetCerenkovSecondaryParticleEnergy(sec)/MeV;
+//                     rSecondaryPartCharge = (Float_t) myUserInfo->GetCerenkovSecondaryParticleCharge(sec);
+// 
+// //jpan@nuclear.uwinnipeg.ca
+// //		 analysis->fRootEvent->Cerenkov.Octant[rOctantID].Detector.AddSecondaryParticleEvent(rSecondaryPartOriginX,
+// //												     rSecondaryPartOriginY,
+// //												     rSecondaryPartOriginZ,
+// //												     rSecondaryPartMomentumX,
+// //												     rSecondaryPartMomentumY,
+// //												     rSecondaryPartMomentumZ,
+// //												     rSecondaryPartEnergy,
+// //												     rSecondaryPartCharge);
+// 
+//                     analysis->fRootEvent->Cerenkov.Detector.AddSecondaryParticleEvent(rSecondaryPartOriginX,
+//                             rSecondaryPartOriginY,
+//                             rSecondaryPartOriginZ,
+//                             rSecondaryPartMomentumX,
+//                             rSecondaryPartMomentumY,
+//                             rSecondaryPartMomentumZ,
+//                             rSecondaryPartEnergy,
+//                             rSecondaryPartCharge);
+//                 } // end for (int sec = 0; sec < myUserInfo->GetCerenkovSecondaryParticleCount(); sec++)
                 //-----------------------------------------------------------------------------
 
                 //--------------------------------------------------------------------------------------------
@@ -2231,7 +2225,6 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         // Store Trigger Scintillator hits into /TriggerScintillator
         //===========================================================
 
-
         if (n_hitTriggerScintillator >0) {
 
             // loop over hits
@@ -2402,7 +2395,6 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 
 //  G4cout << "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" << G4endl;
 
-
         // Finally fill our event ntuple
         analysis->FillRootNtuple();
 
@@ -2430,7 +2422,6 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         analysis->AutoSaveRootNtuple();
 
 //=======================================================================
-
 
 } // end of  QweakSimEventAction::EndOfEventAction()
 

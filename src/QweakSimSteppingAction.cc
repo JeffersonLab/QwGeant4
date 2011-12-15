@@ -169,16 +169,12 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
 // EventDataFile << "Material: "<<theTrack->GetMaterial()<<std::endl;
  
 //             myUserInfo->Print();
-	     
-	       theTrack->SetTrackStatus(fStopAndKill);
-
-	     
+	       theTrack->SetTrackStatus(fStopAndKill);     
 	  }
 
       }
     }
   }
-
 	     
 //now this is handled in the TrackingAction with the control of the tracking flag
 //  else  //secondary, umcomment to disregard all secondaries to speed up the primary particle simulation
@@ -189,36 +185,43 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
 
 //jpan@nuclear.uwinnipeg
 //kill a track if it is in collimators or shielding wall
-  if(thePrePV->GetName()=="CollimatorHousing" || thePrePV->GetName()=="ShieldingWallHousing"){
-  theTrack->SetTrackStatus(fStopAndKill); return;
-  }
+//   if(thePrePV->GetName()=="CollimatorHousing" || thePrePV->GetName()=="ShieldingWallHousing"){
+//   theTrack->SetTrackStatus(fStopAndKill); return;
+//   }
 
-  QweakSimTrackInformation* info = (QweakSimTrackInformation*)(theTrack->GetUserInformation());
-
-  for(G4int i = GetTrackVectorSize()-nSecTotal; i < GetTrackVectorSize(); i++){
-
-    if((*fSecondary)[i]->GetUserInformation()==0){
-      QweakSimTrackInformation* infoNew = new QweakSimTrackInformation(info);
-
-      infoNew->StoreParticleDefinition(GetSecondaryParticleDefinition(i));
-      infoNew->StoreParentEnergy(theTrack->GetTotalEnergy());
-      infoNew->StorePrimaryKineticEnergy(GetSecondaryParticleKineticEnergy(i));
-      infoNew->StoreCerenkovHitEnergy(-1,-1.0*MeV);
-      infoNew->StoreCreatorProcess(GetSecondaryCreatorProcessName(i));
-      infoNew->StoreOriginVertex(GetSecondaryParticleOrigin(i));
-      (*fSecondary)[i]->SetUserInformation(infoNew);
-    } 
-
-    if(particleType==G4Electron::ElectronDefinition() && theTrack->GetParentID() == 0 &&
-//        !strcmp(thePrePV->GetName(),"CerenkovDetector_Physical")){
-       (!strcmp(thePrePV->GetName(),"QuartzBar_PhysicalRight") || !strcmp(thePrePV->GetName(),"QuartzBar_PhysicalLeft") )){
-      if(GetSecondaryParticleDefinition(i) == G4OpticalPhoton::OpticalPhotonDefinition() &&
-	 GetSecondaryParticleTotalEnergy(i)/eV <= 4.9594){
-	myUserInfo->IncrementCerenkovOpticalPhotonCount();
-	myUserInfo->StoreCerenkovPhotonEnergy(GetSecondaryParticleTotalEnergy(i)); 
-      }  
-    }
-  }
+// Peiqing : storing secondary information makes the simulation very slow
+//           I commented them out. Uncomment them only in case we really
+//           want to spend time to study the details of secondaries.
+//
+//  QweakSimTrackInformation* info = (QweakSimTrackInformation*)(theTrack->GetUserInformation());
+// 
+//   for(G4int i = GetTrackVectorSize()-nSecTotal; i < GetTrackVectorSize(); i++)
+//   {
+//     if((*fSecondary)[i]->GetUserInformation()==0)
+//     {
+//       QweakSimTrackInformation* infoNew = new QweakSimTrackInformation(info);
+// 
+//       infoNew->StoreParticleDefinition(GetSecondaryParticleDefinition(i));
+//       infoNew->StoreParentEnergy(theTrack->GetTotalEnergy());
+//       infoNew->StorePrimaryKineticEnergy(GetSecondaryParticleKineticEnergy(i));
+//       infoNew->StoreCerenkovHitEnergy(-1,-1.0*MeV);
+//       infoNew->StoreCreatorProcess(GetSecondaryCreatorProcessName(i));
+//       infoNew->StoreOriginVertex(GetSecondaryParticleOrigin(i));
+//       (*fSecondary)[i]->SetUserInformation(infoNew);
+//     } 
+// 
+//     if(particleType==G4Electron::ElectronDefinition() && theTrack->GetParentID() == 0 &&
+// //        !strcmp(thePrePV->GetName(),"CerenkovDetector_Physical")){
+//        (!strcmp(thePrePV->GetName(),"QuartzBar_PhysicalRight") || !strcmp(thePrePV->GetName(),"QuartzBar_PhysicalLeft") ))
+//     {
+//       if(GetSecondaryParticleDefinition(i) == G4OpticalPhoton::OpticalPhotonDefinition() &&
+// 	 GetSecondaryParticleTotalEnergy(i)/eV <= 4.9594)
+//       {
+// 	myUserInfo->IncrementCerenkovOpticalPhotonCount();
+// 	myUserInfo->StoreCerenkovPhotonEnergy(GetSecondaryParticleTotalEnergy(i)); 
+//       }  
+//     }
+//  }
 
 
 //jpan@nuclear.uwinnipeg.ca
@@ -229,47 +232,47 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
 //   if(!strcmp(thePrePV->GetName(),"CerenkovDetector_Physical")){
 //!strcmp(thePrePV->GetName(),"LightGuide_PhysicalRight") || !strcmp(thePrePV->GetName(),"LightGuide_PhysicalLeft")
 
-  if(!strcmp(thePrePV->GetName(),"QuartzBar_PhysicalRight") ||
-     !strcmp(thePrePV->GetName(),"QuartzBar_PhysicalLeft")){
+// Peiqing:  commented out the followings for speeding up
+//
+//   if(!strcmp(thePrePV->GetName(),"QuartzBar_PhysicalRight") || !strcmp(thePrePV->GetName(),"QuartzBar_PhysicalLeft"))
+//   {
+// 
+//     myUserInfo->AddCerenkovEnergyDeposit(theStep->GetTotalEnergyDeposit());
+// 
+//     if(theTrack->GetParentID() > 0 && (particleType==G4Electron::ElectronDefinition() || 
+// 				       particleType==G4Positron::PositronDefinition() ||
+// 				       particleType==G4Gamma::GammaDefinition())){
+// 	
+// //       if(!strcmp(myUserInfo->GetStoredStepVolumeName(),"CerenkovContainer_Physical") &&
+// 	 // 	 !strcmp(thePrePV->GetName(),"CerenkovDetector_Physical")
+// // 	 ){
+// 
+//       if(!strcmp(myUserInfo->GetStoredStepVolumeName(),"ActiveArea_Physical")){
+// 		
+// 	myUserInfo->StoreCerenkovSecondaryParticleInfo(theTrack->GetVertexPosition(),
+// 						       theTrack->GetMomentum(),
+// 						       theTrack->GetTotalEnergy(),
+// 						       charge);
+//       }
+//     }
+//   }
 
-    myUserInfo->AddCerenkovEnergyDeposit(theStep->GetTotalEnergyDeposit());
-
-    if(theTrack->GetParentID() > 0 && (particleType==G4Electron::ElectronDefinition() || 
-				       particleType==G4Positron::PositronDefinition() ||
-				       particleType==G4Gamma::GammaDefinition())){
-	
-//       if(!strcmp(myUserInfo->GetStoredStepVolumeName(),"CerenkovContainer_Physical") &&
-	 // 	 !strcmp(thePrePV->GetName(),"CerenkovDetector_Physical")
-// 	 ){
-
-      if(!strcmp(myUserInfo->GetStoredStepVolumeName(),"ActiveArea_Physical")){
-		
-	myUserInfo->StoreCerenkovSecondaryParticleInfo(theTrack->GetVertexPosition(),
-						       theTrack->GetMomentum(),
-						       theTrack->GetTotalEnergy(),
-						       charge);
-      }
-    }
-  }
-
-
-
-  if(particleType==G4Electron::ElectronDefinition()){
-
+  if(particleType==G4Electron::ElectronDefinition())
+  {
     G4ThreeVector worldPos = thePrePoint->GetPosition();
     G4ThreeVector localPos = theTouchable->GetHistory()->GetTopTransform().TransformPoint(worldPos);
 
     if((!strcmp(myUserInfo->GetStoredStepVolumeName(),"QuartzBar_PhysicalRight") || 
 	!strcmp(myUserInfo->GetStoredStepVolumeName(),"QuartzBar_PhysicalLeft")) &&
        (!strcmp(thePrePV->GetName(),"ActiveArea_Physical") || 
-	!strcmp(thePrePV->GetName(),"CerenkovMasterContainer_Physical"))){
-	 
+	!strcmp(thePrePV->GetName(),"CerenkovMasterContainer_Physical")))
+    {
       //     if(!strcmp(myUserInfo->GetStoredStepVolumeName(),"CerenkovDetector_Physical") &&
       //        !strcmp(thePrePV->GetName(),"CerenkovContainer_Physical")){
       myUserInfo->StoreLocalCerenkovExitPosition(localPos);
     }
   }
-
+  
 //   QweakSimTrackInformation *TrackInfo = (QweakSimTrackInformation*)theTrack->GetUserInformation();
 
 //pqwang: optical photon process

@@ -155,9 +155,9 @@
 
 QweakSimPhysicsList::QweakSimPhysicsList() : G4VUserPhysicsList()
 {
-  //defaultCutValue = 1.0*cm;
+  defaultCutValue = 1.0*cm;
 
-   defaultCutValue     = 1.0*micrometer;
+  // defaultCutValue     = 1.0*micrometer;
 
   //********************************************
   //Added for low energy hadronic tests 04/27/06
@@ -173,11 +173,7 @@ QweakSimPhysicsList::QweakSimPhysicsList() : G4VUserPhysicsList()
   theRayleighScatteringProcess = 0;
   theBoundaryProcess           = 0;
 
-  
-
-
   pMessenger = new QweakSimPhysicsListMessenger(this);
-
   SetVerboseLevel(2);
 
 //   hadPhyics = new HadronPhysicsLHEP_PRECO_HP("hadron");

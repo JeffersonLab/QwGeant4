@@ -785,7 +785,7 @@ G4double QweakSimEPEvent::Moller_Scattering(G4double E_in, G4double theta1,
       E_out1 = M_electron+(E_in-M_electron)*(cos(theta_CM/2.0)*cos(theta_CM/2.0));
       E_out2 = E_in - E_out1 + M_electron;
       theta2 = atan(2.0*M_electron/(E_in+M_electron)/tan(theta1));
-      G4double momentum = sqrt(E_out1*E_out1 - M_electron*M_electron);
+      //G4double momentum = sqrt(E_out1*E_out1 - M_electron*M_electron);
       // compute q2 in MeV^2
       //q2 = 4.0*E_in*momentum*sin(theta1/2.0)*sin(theta1/2.0);
       q2 = 2*M_electron*(M_electron+E_in)*sin(theta_CM/2.0)*sin(theta_CM/2.0);  
@@ -819,19 +819,19 @@ G4double QweakSimEPEvent::GetAsymmetry_EP(G4double theta, G4double energy)
     const G4double Mp=0.938;
     const G4double gf=0.0000116637;
     const G4double alpha=1./137.;
-    const G4double s2tw=0.231;
+    //const G4double s2tw=0.231;
     const G4double s2tw_low=0.2387;
     const G4double qwp=0.0713;
     const G4double qwn=-0.988;
-    const G4double NT=14.;
-    const G4double ZT=13.;
+    //const G4double NT=14.;
+    //const G4double ZT=13.;
 
 //     Radiative correction factors [from Musolf's Phys. Rep. 1994]
-    const G4double rpv=-0.054;
-    const G4double rnv=-0.0143;
-    const G4double rt0a=0.0;
+    //const G4double rpv=-0.054;
+    //const G4double rnv=-0.0143;
+    //const G4double rt0a=0.0;
     const G4double rt1a=-0.23;
-    const G4double r0a=0.023;
+    //const G4double r0a=0.023;
 
 //     Check for minimum theta
     const G4double theta_min = 1.745329E-4;
@@ -862,11 +862,11 @@ G4double QweakSimEPEvent::GetAsymmetry_EP(G4double theta, G4double energy)
 
 //    Form Factors: Neutral-weak, Axial
 //     Assume: Gs_E,M=0, G8_A,Gs_A=0
-    G4double gad=1/((1.0+Q2_ep/1.001/1.001)*(1.0+Q2_ep/1.001/1.001));
-    G4double gsa=-0.12/((1.+Q2_ep/1.06/1.06)*(1.+Q2_ep/1.06/1.06));
+    //G4double gad=1/((1.0+Q2_ep/1.001/1.001)*(1.0+Q2_ep/1.001/1.001));
+    //G4double gsa=-0.12/((1.+Q2_ep/1.06/1.06)*(1.+Q2_ep/1.06/1.06));
     G4double gt1a=1.2695/((1+Q2_ep/1.001/1.001)*(1+Q2_ep/1.001/1.001));
-    G4double g8a=0.0;
-    gsa=0.0;
+    //G4double g8a=0.0;
+    //gsa=0.0;
 
 //      Use SM radiative correction factors
 //      Since we use SM values for Qw(p) and Qw(n)
@@ -902,7 +902,6 @@ G4double QweakSimEPEvent::GetAsymmetry_EP(G4double theta, G4double energy)
 G4double QweakSimEPEvent::GetAsymmetry_AL (G4double theta, G4double energy)
 {
 //     Needed constants
-    const G4double Mp=0.938;
     const G4double gf=0.0000116637;
     const G4double alpha=1./137.;
     const G4double qwp=0.0713;
@@ -972,7 +971,7 @@ G4double QweakSimEPEvent::GetAsymmetry_Be (G4double theta, G4double energy)
 G4double QweakSimEPEvent::GetAsymmetry_EN(G4double theta, G4double energy)
 {
   return 0;
-};
+}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 //
