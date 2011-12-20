@@ -123,7 +123,7 @@ QweakSimCerenkovDetector::QweakSimCerenkovDetector(QweakSimUserInformation *user
     PMTEntranceWindow_Material = pMaterial->GetMaterial("LimeGlass");
     PMTQuartzOpticalFilm_Material = pMaterial->GetMaterial("SiElast_Glue");
     Cathode_Material           = pMaterial->GetMaterial("Photocathode");
-    Radiator_Material          = pMaterial->GetMaterial("Lead");
+    Radiator_Material          = pMaterial->GetMaterial("PBA");
     PMT_PbShield_Material      = pMaterial->GetMaterial("Lead");
     QuartzGlue_Material        = pMaterial->GetMaterial("SiElast_Glue");
     mirror_material            = pMaterial->GetMaterial("Mirror");
@@ -1483,10 +1483,12 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 
 //*********************************************************
 //******************************Radiator*******************
+    
+  G4double Radiator_FullWidth = 8.62*inch;
 
   G4Box* RadiatorSolid = new G4Box("Radiator_Sol",
-				   QuartzBar_FullLength,       // half X length required by Geant4
-				   0.5*Frame_FullLength_Y, // 0.5 * QuartzBar_FullHeight,      // half Y length required by Geant4
+				   QuartzBar_FullLength,   // half X length required by Geant4
+				   0.5*Radiator_FullWidth, // 0.5*Frame_FullLength_Y // half Y length required by Geant4
 				   1.0*cm );  // half Z length required by Geant4
 
   Radiator_Logical  = new G4LogicalVolume(RadiatorSolid,
@@ -1516,7 +1518,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 				   0.5*2.0*inch );     // half Z length required by Geant4
 
   PMT_PbShield_Logical  = new G4LogicalVolume(PMT_PbShieldSolid,
-					  Radiator_Material,
+					  PMT_PbShield_Material,
 					  "PMT_PbShield_Log",
 					  0,0,0);
 

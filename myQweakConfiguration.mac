@@ -57,7 +57,7 @@
 /Cerenkov/SetCenterPositionInZ   577.88 cm
 /Cerenkov/SetTiltingAngle           0.0 degree
 
-/Cerenkov/SetPreradiatorMaterial Vacuum
+/Cerenkov/SetPreradiatorMaterial PBA
 
 #==================================
 #  Trigger Scintillator related
