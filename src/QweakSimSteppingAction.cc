@@ -120,7 +120,7 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
            {
              G4double CrossSection, WeightN, Q2, E_out, theta, phi;
 	     G4double Asymmetry;
-             G4ThreeVector MomentumDirection;
+             G4ThreeVector MomentumDirection = theTrack->GetMomentumDirection();
              G4double E_in = theTrack->GetKineticEnergy()/MeV;  //Event generator needs units of MeV
              myEvent->GetanEvent(E_in, CrossSection, WeightN, Q2, E_out, MomentumDirection, theta, phi, Asymmetry);
              //theTrack->SetKineticEnergy(E_out*MeV);

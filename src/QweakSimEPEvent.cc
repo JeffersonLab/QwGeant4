@@ -150,10 +150,28 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
                                  G4double &phi,
 				 G4double &Asymmetry)
 {
-   MomentumDirection = GetMomentumDirection();
-   theta = ThetaAngle/degree;
-   phi = PhiAngle/degree;
 
+
+   if(ReactionType==0) //straight-through beam
+      {
+       fCrossSection = 1.0;
+       fWeightN = 1.0;
+       Q2 = 0.0;
+       E_out = E_in;
+       //MomentumDirection = G4ThreeVector(0.0,0.0,1.0);
+       //theta = 0.0;
+       //phi = 0.0;
+       theta = MomentumDirection.theta()/degree;
+       phi = MomentumDirection.phi()/degree;
+       Asymmetry = 0.0;
+      }
+   else
+      {
+	MomentumDirection = GetMomentumDirection();
+        theta = ThetaAngle/degree;
+        phi = PhiAngle/degree;
+      }
+    
    if(ReactionType==1) //LH2 target
       {
        A = 1.0;

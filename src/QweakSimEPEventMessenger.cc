@@ -63,6 +63,7 @@ QweakSimEPEventMessenger::QweakSimEPEventMessenger(QweakSimEPEvent* pEPEvent)
 
   SelectReactionType_Cmd = new G4UIcmdWithAnInteger("/EventGen/SeletReactionType",this);
   SelectReactionType_Cmd->SetGuidance("Select reaction type");
+  SelectReactionType_Cmd->SetGuidance("0 - Straight-through beam");
   SelectReactionType_Cmd->SetGuidance("1 - LH2 elastic (default)");
   SelectReactionType_Cmd->SetGuidance("2 - Al elastic");
   SelectReactionType_Cmd->SetGuidance("3 - Al quasi-elastic (proton)");
@@ -71,7 +72,7 @@ QweakSimEPEventMessenger::QweakSimEPEventMessenger(QweakSimEPEvent* pEPEvent)
   SelectReactionType_Cmd->SetGuidance("6 - Moller scattering");
   SelectReactionType_Cmd->SetParameterName("SelectReactionType",true);
   SelectReactionType_Cmd->SetDefaultValue(1);
-  SelectReactionType_Cmd->SetRange("SelectReactionType>=1");
+  SelectReactionType_Cmd->SetRange("SelectReactionType>=0");
   SelectReactionType_Cmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
   SelectReactionRegion_Cmd = new G4UIcmdWithAnInteger("/EventGen/SeletReactionRegion",this);
