@@ -1122,32 +1122,25 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 
                 //------------------------------------------------------------------------
                 if ( (aHit->GetPMTID() == 0) ) { // left PMT
-                    //pmtHitsLeft[rOctantID] =  pmtHitsLeft[rOctantID] +1;
-                    pmtHitsLeft =  pmtHitsLeft +1;
                     //if(aHit->IsHitValid())
                     {
-// 		  pmtNPELeft[rOctantID] += myUserInfo->GetNumberOfPhotoelectronsS20(aHit->GetPhotonEnergy()*1.0e6);
+                        pmtHitsLeft =  pmtHitsLeft +1;
                         pmtNPELeft += myUserInfo->GetNumberOfPhotoelectronsS20(aHit->GetPhotonEnergy()*1.0e6);
-                        //G4cout<<"pmtNPELeft: "<<pmtNPELeft<<G4endl;
+                        // G4cout<<"pmtNPELeft: "<<pmtNPELeft<<G4endl;
                     }
                 }
 
                 if (  (aHit->GetPMTID() == 1)  ) { // right PMT
-                    //pmtHitsRight[rOctantID] =  pmtHitsRight[rOctantID] +1;
-                    pmtHitsRight =  pmtHitsRight +1;
                     //if(aHit->IsHitValid())
                     {
-                        /*		  pmtNPERight[rOctantID] += myUserInfo->GetNumberOfPhotoelectronsS20(aHit->GetPhotonEnergy()*1.0e6);*/
-		  pmtNPERight += myUserInfo->GetNumberOfPhotoelectronsS20(aHit->GetPhotonEnergy()*1.0e6);
                         pmtHitsRight =  pmtHitsRight +1;
-                        //G4cout<<"pmtNPERight: "<<pmtNPERight<<G4endl;
+                        pmtNPERight += myUserInfo->GetNumberOfPhotoelectronsS20(aHit->GetPhotonEnergy()*1.0e6);
+                        // G4cout<<"pmtNPERight: "<<pmtNPERight<<G4endl;
                     }
                 }
                 //------------------------------------------------------------------------
 
-
             } // end for(int i1=0;i1<n_hitCerenkovPMT;i1++)
-
         } //end if (n_hitCerenkov >0)
 
 
@@ -2534,15 +2527,26 @@ void QweakSimEventAction::Initialize() {
     // be converted in intuitive octant numbers. Octant #1 is at 12o'clock
     // So here I define some sort of lookup table:
 
-    G4IndexToOctantNumber[6] = 0; // 12o'clock octant
-    G4IndexToOctantNumber[7] = 1;
-    G4IndexToOctantNumber[0] = 2;
-    G4IndexToOctantNumber[1] = 3;
-    G4IndexToOctantNumber[2] = 4;
-    G4IndexToOctantNumber[3] = 5;
-    G4IndexToOctantNumber[4] = 6;
-    G4IndexToOctantNumber[5] = 7;
-
+    // Peiqing, Dec. 20, 2011, 
+    // Qweak global octant # - detector copy #
+    //                     1 - 0
+    //                     2 - 7
+    //                     3 - 6
+    //                     4 - 5
+    //                     5 - 4
+    //                     6 - 3
+    //                     7 - 2
+    //                     8 - 1
+    
+    G4IndexToOctantNumber[0] = 1;
+    G4IndexToOctantNumber[1] = 8;
+    G4IndexToOctantNumber[2] = 7;
+    G4IndexToOctantNumber[3] = 6;
+    G4IndexToOctantNumber[4] = 5;
+    G4IndexToOctantNumber[5] = 4;
+    G4IndexToOctantNumber[6] = 3;
+    G4IndexToOctantNumber[7] = 2;
+    
     detectorID = 0;
     octantID   = 0;
     rOctantID   = 0;

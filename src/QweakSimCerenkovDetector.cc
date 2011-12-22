@@ -2047,99 +2047,35 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
     new G4LogicalSkinSurface("GlueFilm_SkinSurface",QuartzGlue_Logical,GlueFilm_OpticalSurface);
 
     //Setting the Optical Properties of PMTs
-//   G4double D753WKBS20_QE[65][2] = {
-//     {200.0*nanometer, 0.68},
-//     {210.0*nanometer, 3.55},
-//     {220.0*nanometer, 7.40},
-//     {230.0*nanometer, 10.4},
-//     {240.0*nanometer, 14.6},
-//     {250.0*nanometer, 17.8},
-//     {260.0*nanometer, 20.6},
-//     {270.0*nanometer, 22.6},
-//     {280.0*nanometer, 22.4},
-//     {290.0*nanometer, 21.8},
-//     {300.0*nanometer, 21.1},
-//     {310.0*nanometer, 20.5},
-//     {320.0*nanometer, 19.7},
-//     {330.0*nanometer, 19.2},
-//     {340.0*nanometer, 18.4},
-//     {350.0*nanometer, 18.0},
-//     {360.0*nanometer, 18.2},
-//     {370.0*nanometer, 18.8},
-//     {380.0*nanometer, 18.3},
-//     {390.0*nanometer, 17.6},
-//     {400.0*nanometer, 17.7},
-//     {410.0*nanometer, 17.6},
-//     {420.0*nanometer, 17.5},
-//     {430.0*nanometer, 17.1},
-//     {440.0*nanometer, 16.7},
-//     {450.0*nanometer, 15.8},
-//     {460.0*nanometer, 15.0},
-//     {470.0*nanometer, 14.4},
-//     {480.0*nanometer, 13.7},
-//     {490.0*nanometer, 13.1},
-//     {500.0*nanometer, 12.4},
-//     {510.0*nanometer, 11.7},
-//     {520.0*nanometer, 11.0},
-//     {530.0*nanometer, 10.4},
-//     {540.0*nanometer, 9.77},
-//     {550.0*nanometer, 9.15},
-//     {560.0*nanometer, 8.53},
-//     {570.0*nanometer, 7.95},
-//     {580.0*nanometer, 7.39},
-//     {590.0*nanometer, 6.87},
-//     {600.0*nanometer, 6.38},
-//     {610.0*nanometer, 5.90},
-//     {620.0*nanometer, 5.45},
-//     {630.0*nanometer, 5.07},
-//     {640.0*nanometer, 4.71},
-//     {650.0*nanometer, 4.39},
-//     {660.0*nanometer, 4.10},
-//     {670.0*nanometer, 3.79},
-//     {680.0*nanometer, 3.51},
-//     {690.0*nanometer, 3.25},
-//     {700.0*nanometer, 2.98},
-//     {710.0*nanometer, 2.68},
-//     {720.0*nanometer, 2.40},
-//     {730.0*nanometer, 2.13},
-//     {740.0*nanometer, 1.88},
-//     {750.0*nanometer, 1.65},
-//     {760.0*nanometer, 1.47},
-//     {770.0*nanometer, 1.30},
-//     {780.0*nanometer, 1.13},
-//     {790.0*nanometer, 0.96},
-//     {800.0*nanometer, 0.80},
-//     {810.0*nanometer, 0.65},
-//     {820.0*nanometer, 0.48},
-//     {830.0*nanometer, 0.33},
-//     {840.0*nanometer, 0.18}
-//   };
 
-//         1.54986*eV,  //800.59 nm
-//         1.77127*eV,  //700.51 nm
-//         2.06648*eV,  //600.44 nm
-//         2.47978*eV,  //500.37 nm
-//         2.8178*eV,   //440.34 nm
-//         3.09973*eV,  //400.29 nm
-//         3.5424*eV,   //350.27 nm
-//         4.13297*eV,  //300.22 nm
-//         4.95956*eV,  //250.18 nm
-//         5.51063*eV,  //225.16 nm
-//         5.90424*eV   //210.15 nm
+    // peiqing, Dec. 20, 2011
+    // if QE is processed in EventAction, set it to 100% here
+//     G4double Photocathode_Efficiency[nEntries]={0.0080,      //800.59 nm
+//                                           0.0298,      //700.51 nm
+//                                           0.0638,      //600.44 nm
+//                                           0.1240,      //500.37 nm
+//                                           0.1670,      //440.34 nm
+//                                           0.1770,      //400.29 nm
+//                                           0.1800,      //350.27 nm
+//                                           0.2110,      //300.22 nm
+//                                           0.1780,      //250.18 nm
+//                                           0.0890,      //225.16 nm
+//                                           0.0355       //210.15 nm
+//                                          };
 
-    G4double Photocathode_Efficiency[nEntries]={0.0080,      //800.59 nm
-                                          0.0298,      //700.51 nm
-                                          0.0638,      //600.44 nm
-                                          0.1240,      //500.37 nm
-                                          0.1670,      //440.34 nm
-                                          0.1770,      //400.29 nm
-                                          0.1800,      //350.27 nm
-                                          0.2110,      //300.22 nm
-                                          0.1780,      //250.18 nm
-                                          0.0890,      //225.16 nm
-                                          0.0355       //210.15 nm
+        G4double Photocathode_Efficiency[nEntries]={1,      //800.59 nm
+                                          1,      //700.51 nm
+                                          1,      //600.44 nm
+                                          1,      //500.37 nm
+                                          1,      //440.34 nm
+                                          1,      //400.29 nm
+                                          1,      //350.27 nm
+                                          1,      //300.22 nm
+                                          1,      //250.18 nm
+                                          1,      //225.16 nm
+                                          1       //210.15 nm
                                          };
-
+					 
 //S20 reflectance taken from "Optics Communications, issue 180, 2000. p89–102"
 //average of 40 degree incident angle assumed
 ////data below 400 nm, taken from //http://www.photek.com/support/Papers/

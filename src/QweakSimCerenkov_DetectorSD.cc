@@ -65,14 +65,19 @@ G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistor
 
 //G4cout << G4endl << "###### Calling QweakSimCerenkov_DetectorSD::ProcessHits() " << G4endl << G4endl; 
 
-//   G4double charge = aStep->GetTrack()->GetDefinition()->GetPDGCharge();
-//   if(charge==0. && aStep->GetTrack()->GetTotalEnergy()/MeV < 0.1) {
-//
-//     G4cout << "Return on charge = 0" << G4endl;
-//
-//     return false;
-//   }
+  G4double charge = aStep->GetTrack()->GetDefinition()->GetPDGCharge();
+  if(charge==0. && aStep->GetTrack()->GetTotalEnergy()/MeV < 0.1) {
 
+    //G4cout << "Return on charge = 0" << G4endl;
+    return false;
+  }
+
+  if( aStep->GetTrack()->GetDefinition()->GetParticleName() == "opticalphoton") {
+
+    //std::cout << "Return on optical photon" << std::endl;
+    return false;
+  }
+  
   G4StepPoint*        preStepPoint  = aStep->GetPreStepPoint();
 //   G4StepPoint*        postStepPoint = aStep->GetPostStepPoint();
   G4TouchableHistory* theTouchable = (G4TouchableHistory*)(preStepPoint->GetTouchable());
