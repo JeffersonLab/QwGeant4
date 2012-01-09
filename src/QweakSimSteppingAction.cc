@@ -145,7 +145,8 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
              myUserInfo->StoreOriginVertexThetaAngle(theta);
              myUserInfo->StoreOriginVertexPhiAngle(phi);
              //myUserInfo->StoreOriginVertexKineticEnergy(theTrack->GetKineticEnergy());
-             //myUserInfo->StoreOriginVertexTotalEnergy(theTrack->GetTotalEnergy());
+             //myUserInfo->StoreOriginVertexTotalEnergy(theTrack->GetTotalEnergy());     
+	     myUserInfo->StorePreScatteringKineticEnergy(E_in);
 	     myUserInfo->StoreOriginVertexKineticEnergy(E_out - 0.511*MeV);
              myUserInfo->StoreOriginVertexTotalEnergy(E_out);
              myUserInfo->StorePrimaryQ2(Q2*0.000001); //in units of GeV^2

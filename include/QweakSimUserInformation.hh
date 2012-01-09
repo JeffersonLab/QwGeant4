@@ -52,6 +52,7 @@ private:
   G4double OriginVertexMomentumDirectionX;
   G4double OriginVertexMomentumDirectionY;
   G4double OriginVertexMomentumDirectionZ;
+  G4double PreScatteringKineticEnergy;
   G4double OriginVertexKineticEnergy;
   G4double OriginVertexTotalEnergy;
 
@@ -119,6 +120,10 @@ private:
   void     StoreOriginVertexPhiAngle(G4double phi)  { OriginVertexPhiAngle = phi; }
   G4double    GetOriginVertexPhiAngle() const {return OriginVertexPhiAngle;}
   //-----------------
+  
+  void     StorePreScatteringKineticEnergy(G4double ekin) { PreScatteringKineticEnergy = ekin; }
+  G4double    GetPreScatteringKineticEnergy() const {return PreScatteringKineticEnergy;}
+  
   void     StoreOriginVertexKineticEnergy(G4double ekin) { OriginVertexKineticEnergy = ekin; }
   G4double    GetOriginVertexKineticEnergy() const {return OriginVertexKineticEnergy;}
 

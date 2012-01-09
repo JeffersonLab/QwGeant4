@@ -419,6 +419,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         G4double OriginVertexMomentumDirectionX = myUserInfo->GetOriginVertexMomentumDirectionX();
         G4double OriginVertexMomentumDirectionY = myUserInfo->GetOriginVertexMomentumDirectionY();
         G4double OriginVertexMomentumDirectionZ = myUserInfo->GetOriginVertexMomentumDirectionZ();
+	G4double PreScatteringKineticEnergy = myUserInfo->GetPreScatteringKineticEnergy();
         G4double OriginVertexKineticEnergy = myUserInfo->GetOriginVertexKineticEnergy();
         G4double OriginVertexTotalEnergy = myUserInfo->GetOriginVertexTotalEnergy();
 
@@ -432,6 +433,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         analysis->fRootEvent->Primary.StoreOriginVertexMomentumDirectionZ((Float_t) OriginVertexMomentumDirectionZ);
         analysis->fRootEvent->Primary.StoreOriginVertexThetaAngle((Float_t) OriginVertexThetaAngle);
         analysis->fRootEvent->Primary.StoreOriginVertexPhiAngle((Float_t) OriginVertexPhiAngle);
+	analysis->fRootEvent->Primary.StorePreScatteringKineticEnergy((Float_t) PreScatteringKineticEnergy);
         analysis->fRootEvent->Primary.StoreOriginVertexKineticEnergy((Float_t) OriginVertexKineticEnergy);
         analysis->fRootEvent->Primary.StoreOriginVertexTotalEnergy((Float_t) OriginVertexTotalEnergy);
         analysis->fRootEvent->Primary.StorePrimaryQ2((Float_t) PrimaryQ2);

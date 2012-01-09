@@ -58,6 +58,7 @@ private:
   Float_t OriginVertexThetaAngle;
   Float_t OriginVertexPhiAngle;
 
+  Float_t PreScatteringKineticEnergy;
   Float_t OriginVertexKineticEnergy;
   Float_t OriginVertexTotalEnergy;
 
@@ -111,6 +112,9 @@ public:
   void     StoreOriginVertexPhiAngle(Float_t phi)  { OriginVertexPhiAngle = phi; }
   Float_t    GetOriginVertexPhiAngle() const {return OriginVertexPhiAngle;}
   //-----------------
+  void     StorePreScatteringKineticEnergy(Float_t ekin) { PreScatteringKineticEnergy = ekin; }
+  Float_t    GetPreScatteringKineticEnergy() const {return PreScatteringKineticEnergy;}
+  
   void     StoreOriginVertexKineticEnergy(Float_t ekin) { OriginVertexKineticEnergy = ekin; }
   Float_t    GetOriginVertexKineticEnergy() const {return OriginVertexKineticEnergy;}
 
