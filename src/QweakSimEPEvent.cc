@@ -973,7 +973,7 @@ G4double QweakSimEPEvent::GetAsymmetry_Be (G4double theta, G4double energy)
     G4double Q2=4*energy*energy*sin(theta/2.)*sin(theta/2.);
     Q2=Q2/(1.+2.*energy/(9.*Mp)*sin(theta/2.)*sin(theta/2.));
 
-//     Correction for Coulomb distortion for Al
+//     Correction for Coulomb distortion
     Q2=Q2*(1.+(3./2.*sqrt(3./5.)*ZT*0.197/137./(energy*1.77)))*(1.+(3./2.*sqrt(3./5.)*ZT*0.197/137./(energy*1.77)));
 
 //     Beryllium Asymmetry
@@ -988,7 +988,82 @@ G4double QweakSimEPEvent::GetAsymmetry_Be (G4double theta, G4double energy)
 
 G4double QweakSimEPEvent::GetAsymmetry_EN(G4double theta, G4double energy)
 {
-  return 0;
+  
+    const G4double Mp=0.938;
+    const G4double gf=0.0000116637;
+    const G4double alpha=1./137.;
+    //const G4double s2tw=0.231;
+    const G4double s2tw_low=0.2387;
+    const G4double qwp=0.0713;
+    const G4double qwn=-0.988;
+    //const G4double NT=14.;
+    //const G4double ZT=13.;
+
+//     Radiative correction factors [from Musolf's Phys. Rep. 1994]
+    //const G4double rpv=-0.054;
+    //const G4double rnv=-0.0143;
+    //const G4double rt0a=0.0;
+    const G4double rt1a=-0.23;
+    //const G4double r0a=0.023;
+
+//     Check for minimum theta
+    const G4double theta_min = 1.745329E-4;
+    if (theta<theta_min)
+        theta = theta_min;
+
+//     The energy is in MeV after the cross section subroutine -
+//     change back to GeV
+    energy=energy/1000.0;
+
+//     Calculate Q2
+    G4double Q2_ep=4*energy*energy*sin(theta/2.0)*sin(theta/2.0);
+    Q2_ep=Q2_ep/(1.0+2.0*energy/Mp*sin(theta/2.0)*sin(theta/2.0));
+
+//     Proton Asymmetry
+//     Kinematic Factors
+    G4double tau=Q2_ep/4.0/(Mp*Mp);
+    G4double epsilon=1.0/(1.0+2.0*(1.0+tau)*tan(theta/2.0)*tan(theta/2.0));
+    G4double epsilonp=sqrt(tau*(1.0+tau)*(1.0-epsilon*epsilon));
+
+//     Form factor calculations
+//     Form Factors: Electromagetic
+    G4double gvd=1.0/( (1.0+Q2_ep/0.71)*(1.0+Q2_ep/0.71) );
+    G4double gepg=gvd;
+    G4double gmpg=2.793*gvd;
+    G4double geng=1.91*tau*gvd/(1.+5.6*tau);
+    G4double gmng=-1.91*gvd;
+    G4double gesg= 0;
+    G4double gmsg= 0;
+
+//    Form Factors: Neutral-weak, Axial
+//     Assume: Gs_E,M=0, G8_A,Gs_A=0
+    //G4double gad=1/((1.0+Q2_ep/1.001/1.001)*(1.0+Q2_ep/1.001/1.001));
+    //G4double gsa=-0.12/((1.+Q2_ep/1.06/1.06)*(1.+Q2_ep/1.06/1.06));
+    G4double gt1a=1.2695/((1+Q2_ep/1.001/1.001)*(1+Q2_ep/1.001/1.001));
+    //G4double g8a=0.0;
+    //gsa=0.0;
+
+//      Use SM radiative correction factors
+//      Since we use SM values for Qw(p) and Qw(n)
+//      we no longer need the radiative corrections
+//      on those quantities.
+//       gepz=(1.-4.*s2tw)*(1.+rpv)*gepg-(1.+rnv)*geng
+//       gmpz=(1.-4.*s2tw)*(1.+rpv)*gmpg-(1.+rnv)*gmng
+
+    G4double gepz=qwp*gepg+qwn*geng;
+    G4double gmpz=qwp*gmpg+qwn*gmng;
+    G4double gapz=-(1.0+rt1a)*gt1a;
+
+    G4double asym=-gf/(4.0*pi*alpha*sqrt(2.0))*Q2_ep*1e6;
+    //asym=asym/(epsilon*gepg*gepg+tau*gmpg*gmpg);
+    //asym=asym*(epsilon*gepg*gepz+tau*gmpg*gmpz-(1.0-4.0*s2tw_low)*epsilonp*gmpg*gapz);
+    G4double Ap = 0;
+    G4double An = qwn*(epsilon*gepg*geng+tau*gmpg*gmng)/(epsilon*gepg*gepg+tau*gmng*gmng);
+    G4double As = 0;
+    G4double Ae = 0;
+    asym=asym*(Ap+An+As+Ae);
+
+    return asym;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
