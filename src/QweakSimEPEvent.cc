@@ -989,7 +989,7 @@ G4double QweakSimEPEvent::GetAsymmetry_Be (G4double theta, G4double energy)
 G4double QweakSimEPEvent::GetAsymmetry_EN(G4double theta, G4double energy)
 {
   
-    const G4double Mp=0.938;
+    const G4double Mn= 0.939565; // Mp=0.938;
     const G4double gf=0.0000116637;
     const G4double alpha=1./137.;
     //const G4double s2tw=0.231;
@@ -1017,11 +1017,11 @@ G4double QweakSimEPEvent::GetAsymmetry_EN(G4double theta, G4double energy)
 
 //     Calculate Q2
     G4double Q2_ep=4*energy*energy*sin(theta/2.0)*sin(theta/2.0);
-    Q2_ep=Q2_ep/(1.0+2.0*energy/Mp*sin(theta/2.0)*sin(theta/2.0));
+    Q2_ep=Q2_ep/(1.0+2.0*energy/Mn*sin(theta/2.0)*sin(theta/2.0));
 
 //     Proton Asymmetry
 //     Kinematic Factors
-    G4double tau=Q2_ep/4.0/(Mp*Mp);
+    G4double tau=Q2_ep/4.0/(Mn*Mn);
     G4double epsilon=1.0/(1.0+2.0*(1.0+tau)*tan(theta/2.0)*tan(theta/2.0));
     G4double epsilonp=sqrt(tau*(1.0+tau)*(1.0-epsilon*epsilon));
 
@@ -1050,20 +1050,23 @@ G4double QweakSimEPEvent::GetAsymmetry_EN(G4double theta, G4double energy)
 //       gepz=(1.-4.*s2tw)*(1.+rpv)*gepg-(1.+rnv)*geng
 //       gmpz=(1.-4.*s2tw)*(1.+rpv)*gmpg-(1.+rnv)*gmng
 
-    G4double gepz=qwp*gepg+qwn*geng;
-    G4double gmpz=qwp*gmpg+qwn*gmng;
     G4double gapz=-(1.0+rt1a)*gt1a;
+    
+//     G4double gepz=qwp*gepg+qwn*geng;
+//     G4double gmpz=qwp*gmpg+qwn*gmng;   
+//     G4double asym=-gf/(4.0*pi*alpha*sqrt(2.0))*Q2_ep*1e6;
+//     asym=asym/(epsilon*gepg*gepg+tau*gmpg*gmpg);
+//     asym=asym*(epsilon*gepg*gepz+tau*gmpg*gmpz-(1.0-4.0*s2tw_low)*epsilonp*gmpg*gapz);
+//     //std::cout<<"asym_proton="<<asym<<std::endl;
 
-    G4double asym=-gf/(4.0*pi*alpha*sqrt(2.0))*Q2_ep*1e6;
-    //asym=asym/(epsilon*gepg*gepg+tau*gmpg*gmpg);
-    //asym=asym*(epsilon*gepg*gepz+tau*gmpg*gmpz-(1.0-4.0*s2tw_low)*epsilonp*gmpg*gapz);
-    G4double Ap = 0;
-    G4double An = qwn*(epsilon*gepg*geng+tau*gmpg*gmng)/(epsilon*gepg*gepg+tau*gmng*gmng);
-    G4double As = 0;
-    G4double Ae = 0;
-    asym=asym*(Ap+An+As+Ae);
+    G4double genz=qwp*geng+qwn*gepg;
+    G4double gmnz=qwp*gmng+qwn*gmpg;
+    G4double asym_neutron = -gf/(4.0*pi*alpha*sqrt(2.0))*Q2_ep*1e6;
+    asym_neutron =asym_neutron /(epsilon*geng*geng+tau*gmng*gmng);
+    asym_neutron =asym_neutron *(epsilon*geng*genz+tau*gmng*gmnz-(1.0-4.0*s2tw_low)*epsilonp*gmng*gapz);
+    //std::cout<<"asym_neutron="<<asym_neutron<<std::endl<<std::endl;
 
-    return asym;
+    return asym_neutron;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
