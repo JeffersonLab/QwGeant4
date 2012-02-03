@@ -429,11 +429,10 @@ G4double QweakSimEPEvent::Delta_Resonance(G4double E_in,
   E_out =  M_electron + G4UniformRand()*(E_beam - M_electron);
 
   // TODO: total energy phase space should be reduced to improve the efficiency.
-  G4double xsect = Sigma_EEPrime(E_in/1000.0, E_out/1000.0, Theta, Q2);  // ub/sr/GeV 
-  fWeightN = xsect*sin(Theta)*(E_beam - M_electron)/1000.0;
-
-  std::cout<<"Q2="<<Q2<<std::endl;
-  
+  G4double xsect = Sigma_EEPrime(E_in/1000.0, E_out/1000.0, Theta, Q2);  // ub/sr/GeV, return Q2 in MeV^2
+  xsect = xsect*(E_beam - M_electron)/1000.0;
+  fWeightN = xsect*sin(Theta);
+ 
   if(xsect == 0)  // if E > E_max, reject the event
   {
      E_out = 0.0;
