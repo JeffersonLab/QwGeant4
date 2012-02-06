@@ -55,6 +55,11 @@ private:
   G4UIcmdWithAnInteger*    SelectReactionRegion_Cmd;
   G4UIcmdWithAnInteger*    SelectOctant_Cmd;
   G4UIcmdWithAnInteger*    SelectIsotropy_Cmd;
+  
+  G4UIcmdWithADoubleAndUnit* ThetaMinLimitCmd;
+  G4UIcmdWithADoubleAndUnit* ThetaMaxLimitCmd;
+  G4UIcmdWithADoubleAndUnit* PhiMinLimitCmd;
+  G4UIcmdWithADoubleAndUnit* PhiMaxLimitCmd;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

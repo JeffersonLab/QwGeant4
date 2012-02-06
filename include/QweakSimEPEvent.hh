@@ -87,6 +87,18 @@ class QweakSimEPEvent {
   void SetIsotropy(G4int isot) { Isotropy = isot; };
   G4int GetIsotropy( ) {return Isotropy;};
   
+  void SetThetaAngle_Min(G4double ang) {ThetaAngle_Min = ang;};
+  G4double GetThetaAngle_Min() {return ThetaAngle_Min;};
+
+  void SetThetaAngle_Max(G4double ang) {ThetaAngle_Max = ang;};
+  G4double GetThetaAngle_Max() {return ThetaAngle_Max;};
+
+  void SetPhiAngle_Min(G4double ang) {PhiAngle_Min = ang;};
+  G4double GetPhiAngle_Min() {return PhiAngle_Min;};
+
+  void SetPhiAngle_Max(G4double ang) {PhiAngle_Max = ang;};
+  G4double GetPhiAngle_Max() {return PhiAngle_Max;};
+  
   void  SetReactionType(G4int rt) { ReactionType = rt;};
   G4int GetReactionType() {return ReactionType; };
 

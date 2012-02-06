@@ -84,6 +84,34 @@ QweakSimEPEventMessenger::QweakSimEPEventMessenger(QweakSimEPEvent* pEPEvent)
   SelectReactionRegion_Cmd->SetDefaultValue(1);
   SelectReactionRegion_Cmd->SetRange("SelectReactionRegion>=1");
   SelectReactionRegion_Cmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+  
+  ThetaMinLimitCmd =  new G4UIcmdWithADoubleAndUnit("/EventGen/SetThetaMin",this);
+  ThetaMinLimitCmd->SetGuidance("Set the minimum theta angle of event generator"); 
+  ThetaMinLimitCmd->SetParameterName("ThetaMin",true);
+  ThetaMinLimitCmd->SetUnitCategory("Angle");
+  ThetaMinLimitCmd->SetDefaultUnit("degree");
+  ThetaMinLimitCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+
+  ThetaMaxLimitCmd =  new G4UIcmdWithADoubleAndUnit("/EventGen/SetThetaMax",this);
+  ThetaMaxLimitCmd->SetGuidance("Set the maximum theta angle of event generator"); 
+  ThetaMaxLimitCmd->SetParameterName("ThetaMax",true);
+  ThetaMaxLimitCmd->SetUnitCategory("Angle");
+  ThetaMaxLimitCmd->SetDefaultUnit("degree");
+  ThetaMaxLimitCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+
+  PhiMinLimitCmd =  new G4UIcmdWithADoubleAndUnit("/EventGen/SetPhiMin",this);
+  PhiMinLimitCmd->SetGuidance("Set the minimum theta angle of event generator"); 
+  PhiMinLimitCmd->SetParameterName("PhiMin",true);
+  PhiMinLimitCmd->SetUnitCategory("Angle");
+  PhiMinLimitCmd->SetDefaultUnit("degree");
+  PhiMinLimitCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+
+  PhiMaxLimitCmd =  new G4UIcmdWithADoubleAndUnit("/EventGen/SetPhiMax",this);
+  PhiMaxLimitCmd->SetGuidance("Set the maximum theta angle of event generator"); 
+  PhiMaxLimitCmd->SetParameterName("PhiMax",true);
+  PhiMaxLimitCmd->SetUnitCategory("Angle");
+  PhiMaxLimitCmd->SetDefaultUnit("degree");
+  PhiMaxLimitCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
   G4cout << "###### Leaving QweakSimEPEventMessenger::QweakSimEPEventMessenger() " << G4endl;
 }
@@ -99,6 +127,10 @@ QweakSimEPEventMessenger::~QweakSimEPEventMessenger()
   delete SelectReactionType_Cmd;
   delete SelectReactionRegion_Cmd;
   delete verboseCmd;
+  delete ThetaMinLimitCmd;
+  delete ThetaMaxLimitCmd;
+  delete PhiMinLimitCmd;
+  delete PhiMaxLimitCmd;
   delete EventGenDir;
 
   G4cout << "###### Leaving QweakSimEPEventMessenger::~QweakSimEPEventMessenger() " << G4endl;
@@ -130,6 +162,30 @@ void QweakSimEPEventMessenger::SetNewValue(G4UIcommand* command, G4String newVal
     { 
       G4cout << "% % ===> Changing reaction region to: "<<newValue<< G4endl;
       pQweakSimEPEvent->SetReactionRegion(SelectReactionRegion_Cmd->GetNewIntValue(newValue)); 
+    }
+    
+  if( command == ThetaMinLimitCmd )
+    { 
+      G4cout << "% % ===> Changing theta minimum to: "<<newValue<< G4endl;
+      pQweakSimEPEvent->SetThetaAngle_Min(ThetaMinLimitCmd->GetNewDoubleValue(newValue)); 
+    }
+
+  if( command == ThetaMaxLimitCmd )
+    { 
+      G4cout << "% % ===> Changing theta maximum to: "<<newValue<< G4endl;
+      pQweakSimEPEvent->SetThetaAngle_Max(ThetaMaxLimitCmd->GetNewDoubleValue(newValue)); 
+    }
+
+  if( command == PhiMinLimitCmd )
+    { 
+      G4cout << "% % ===> Changing phi minimum to: "<<newValue<< G4endl;
+      pQweakSimEPEvent->SetPhiAngle_Min(PhiMinLimitCmd->GetNewDoubleValue(newValue)); 
+    }
+
+  if( command == PhiMaxLimitCmd )
+    { 
+      G4cout << "% % ===> Changing phi maximum to: "<<newValue<< G4endl;
+      pQweakSimEPEvent->SetPhiAngle_Max(PhiMaxLimitCmd->GetNewDoubleValue(newValue)); 
     }
 
 }

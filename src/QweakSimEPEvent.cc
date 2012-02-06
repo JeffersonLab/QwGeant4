@@ -167,7 +167,7 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
       }
    else
       {
-	MomentumDirection = GetMomentumDirection();
+        MomentumDirection = GetMomentumDirection();
         theta = ThetaAngle/degree;
         phi = PhiAngle/degree;
       }
@@ -429,8 +429,12 @@ G4double QweakSimEPEvent::Delta_Resonance(G4double E_in,
   E_out =  M_electron + G4UniformRand()*(E_beam - M_electron);
 
   // TODO: total energy phase space should be reduced to improve the efficiency.
-  G4double xsect = Sigma_EEPrime(E_in/1000.0, E_out/1000.0, Theta, Q2);  // ub/sr/GeV, return Q2 in MeV^2
+  G4double xsect = Sigma_EEPrime(E_in/1000.0, E_out/1000.0, Theta, Q2);  // ub/sr/GeV
+  Q2 = Q2*1e6;  // convert to MeV^2 for Q2
+
+  //std::cout<<"Q2="<<Q2<<" xsect="<<xsect<<std::endl;
   xsect = xsect*(E_beam - M_electron)/1000.0;
+  //std::cout<<"xsect*1.165 = "<<xsect<<std::endl;
   fWeightN = xsect*sin(Theta);
  
   if(xsect == 0)  // if E > E_max, reject the event
@@ -509,8 +513,6 @@ G4double QweakSimEPEvent::Sigma_EEPrime(G4double eni, G4double eprime, G4double 
       gamma = alpha*eprime*(w2-mp2)/((2.0*pi)*(2.0*pi));
       gamma = gamma/(q2*mp*eni*(1.0-epsilon));
       // wval = sqrt(w2);
-
-      q2 = q2*1e6;  // convert to MeV^2 for Q2
       
       for (i=1;i<=50;i++)
       {
@@ -1087,6 +1089,7 @@ G4double QweakSimEPEvent::GetAsymmetry_EN(G4double theta, G4double energy)
 G4double QweakSimEPEvent::GetAsymmetry_Pi(G4double Q2_pi)
 {
 //     Inelastic Asymmetry
+    Q2_pi = Q2_pi/1e6;
     G4double asym=-100*Q2_pi;
     return asym;
 }
