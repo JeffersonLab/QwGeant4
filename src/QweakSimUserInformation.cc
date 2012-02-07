@@ -225,8 +225,8 @@ void QweakSimUserInformation::Initialize()
     {660.0*nanometer ,  0.1}
   };
 
-  PMTQE_XP4572      = new G4MaterialPropertyVector();
-  PMTQED753WKBS20   = new G4MaterialPropertyVector();
+  PMTQE_XP4572      = new G4PhysicsOrderedFreeVector();
+  PMTQED753WKBS20   = new G4PhysicsOrderedFreeVector();
   G4double E_value;
 
   for (G4int kk=0; kk<65 ; kk++) 
@@ -234,22 +234,22 @@ void QweakSimUserInformation::Initialize()
       if(kk < 15 ){
 	E_value= 2*pi*hbarc/( XP4572_QE[kk][0] *nanometer);
 	G4cout << "E_value " << kk << " = " << E_value << " QE = " << XP4572_QE[kk][1] << G4endl;
-	PMTQE_XP4572->AddElement(E_value, XP4572_QE[kk][1]/100.);
+	PMTQE_XP4572->InsertValues(E_value, XP4572_QE[kk][1]/100.);
       }
       
       E_value= 2*pi*hbarc/( D753WKBS20_QE[kk][0] *nanometer);
-      PMTQED753WKBS20->AddElement(E_value, D753WKBS20_QE[kk][1]/100.);
+      PMTQED753WKBS20->InsertValues(E_value, D753WKBS20_QE[kk][1]/100.);
     }
 }
 
 G4double QweakSimUserInformation::GetNumberOfPhotoelectrons(G4double eng)
 {
-  return PMTQE_XP4572->GetProperty(eng);
+  return PMTQE_XP4572->Value(eng);
 }
 
 G4double QweakSimUserInformation::GetNumberOfPhotoelectronsS20(G4double eng)
 {
-  return PMTQED753WKBS20->GetProperty(eng);  
+  return PMTQED753WKBS20->Value(eng);
 }
 
 void QweakSimUserInformation::StoreCerenkovSecondaryParticleInfo(G4ThreeVector ev,

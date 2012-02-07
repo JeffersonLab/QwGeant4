@@ -12,10 +12,7 @@
 #include "QweakSimCerenkovDetector_PMTHit.hh"
 #include "QweakSimUserPrimaryEvent.hh"
 
-#include "G4MaterialPropertyVector.hh"
-
-// geant4 classes
-class G4MaterialPropertyVector;
+#include "G4PhysicsOrderedFreeVector.hh"
 
 
 class QweakSimUserInformation 
@@ -69,8 +66,8 @@ private:
   G4int    cerenkovSecondaryPositronCount;
   G4int    cerenkovOpticalPhotonCount;
 
-  G4MaterialPropertyVector* PMTQE_XP4572;
-  G4MaterialPropertyVector* PMTQED753WKBS20;
+  G4PhysicsOrderedFreeVector* PMTQE_XP4572;
+  G4PhysicsOrderedFreeVector* PMTQED753WKBS20;
 
   G4String StepVolumeName;
   G4ThreeVector cerenkovEventExitPos;
