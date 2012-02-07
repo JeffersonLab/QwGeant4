@@ -16,8 +16,10 @@ G4WORKDIR = `pwd`
 .PHONY: all
 all: lib bin 
 
-include $(G4INSTALL)/config/architecture.gmk
 # Standard G4 compilation:
+ifndef G4SYSTEM
+  G4SYSTEM = Linux-g++
+endif
 include $(G4INSTALL)/config/binmake.gmk
 
 #-------------
