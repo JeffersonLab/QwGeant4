@@ -48,6 +48,7 @@ class QweakSimEPEvent {
 
    G4double Mass;
 
+   G4int TypeSetting;
    G4int ReactionType;     // 1 - LH2 elastic
                            // 2 - Al window elastic
                            // 3 - Al window quasi-elastic proton
@@ -99,7 +100,7 @@ class QweakSimEPEvent {
   void SetPhiAngle_Max(G4double ang) {PhiAngle_Max = ang;};
   G4double GetPhiAngle_Max() {return PhiAngle_Max;};
   
-  void  SetReactionType(G4int rt) { ReactionType = rt;};
+  void  SetReactionType(G4int rt) { ReactionType = rt; TypeSetting = rt;};
   G4int GetReactionType() {return ReactionType; };
 
   void  SetReactionRegion(G4int rr) { ReactionRegion = rr; };

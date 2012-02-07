@@ -92,7 +92,7 @@
 
 # Reaction type menue
 /gui/addMenu reactionType Reaction
-/gui/addButton reactionType "0 - Straight-through beam" "/EventGen/SeletReactionType 0"
+/gui/addButton reactionType "0 - Combination of all reactions" "/EventGen/SeletReactionType 0"
 /gui/addButton reactionType "1 - Elastic LH2" "/EventGen/SeletReactionType 1"
 /gui/addButton reactionType "2 - Elastic Al" "/EventGen/SeletReactionType 2"
 /gui/addButton reactionType "3 - Quasi-elastic Al (proton)" "/EventGen/SeletReactionType 3"

@@ -49,6 +49,7 @@ QweakSimEPEvent::QweakSimEPEvent( QweakSimUserInformation* myUI)
   ThetaAngle_Min =  4.0*degree;
   ThetaAngle_Max = 13.5*degree;
 
+  TypeSetting = 1;
   ReactionType = 1;
   ReactionRegion = 1;
   kActiveOctantNumber = 1;  //default octant 1, choose from [1,8]
@@ -88,7 +89,7 @@ G4double QweakSimEPEvent::GetVertexZ()
 
    else
      myPositionZ =  myUserInfo->TargetCenterPositionZ + (G4UniformRand()-0.5)*TargetLength; //default region
-
+     
   return myPositionZ;
 }
 
@@ -152,26 +153,42 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
 {
 
 
-   if(ReactionType==0) //straight-through beam
+//    if(ReactionType==0) //straight-through beam
+//       {
+//        fCrossSection = 1.0;
+//        fWeightN = 1.0;
+//        Q2 = 0.0;
+//        E_out = E_in;
+//        //MomentumDirection = G4ThreeVector(0.0,0.0,1.0);
+//        //theta = 0.0;
+//        //phi = 0.0;
+//        theta = MomentumDirection.theta()/degree;
+//        phi = MomentumDirection.phi()/degree;
+//        Asymmetry = 0.0;
+//       }
+//    else
+//       {
+//         MomentumDirection = GetMomentumDirection();
+//         theta = ThetaAngle/degree;
+//         phi = PhiAngle/degree;
+//       }
+
+    MomentumDirection = GetMomentumDirection();
+    theta = ThetaAngle/degree;
+    phi = PhiAngle/degree;
+
+   if(ReactionType==0 || TypeSetting==0) // combination of all process, Random int [1,6]
       {
-       fCrossSection = 1.0;
-       fWeightN = 1.0;
-       Q2 = 0.0;
-       E_out = E_in;
-       //MomentumDirection = G4ThreeVector(0.0,0.0,1.0);
-       //theta = 0.0;
-       //phi = 0.0;
-       theta = MomentumDirection.theta()/degree;
-       phi = MomentumDirection.phi()/degree;
-       Asymmetry = 0.0;
+	TypeSetting = 0;
+        ReactionType = G4int(G4UniformRand()*5.0+1.0+0.5);
       }
    else
       {
-        MomentumDirection = GetMomentumDirection();
-        theta = ThetaAngle/degree;
-        phi = PhiAngle/degree;
+        TypeSetting = ReactionType;
       }
-    
+
+   //std::cout<<"ReactionType: "<<ReactionType<<", TypeSetting: "<<TypeSetting<<std::endl;
+
    if(ReactionType==1) //LH2 target
       {
        A = 1.0;

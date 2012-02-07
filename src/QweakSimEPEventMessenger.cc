@@ -63,7 +63,7 @@ QweakSimEPEventMessenger::QweakSimEPEventMessenger(QweakSimEPEvent* pEPEvent)
 
   SelectReactionType_Cmd = new G4UIcmdWithAnInteger("/EventGen/SeletReactionType",this);
   SelectReactionType_Cmd->SetGuidance("Select reaction type");
-  SelectReactionType_Cmd->SetGuidance("0 - Straight-through beam");
+  SelectReactionType_Cmd->SetGuidance("0 - Combination of all reactions");
   SelectReactionType_Cmd->SetGuidance("1 - LH2 elastic (default)");
   SelectReactionType_Cmd->SetGuidance("2 - Al elastic");
   SelectReactionType_Cmd->SetGuidance("3 - Al quasi-elastic (proton)");
