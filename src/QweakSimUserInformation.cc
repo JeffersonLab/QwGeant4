@@ -244,12 +244,16 @@ void QweakSimUserInformation::Initialize()
 
 G4double QweakSimUserInformation::GetNumberOfPhotoelectrons(G4double eng)
 {
-  return PMTQE_XP4572->Value(eng);
+  //return PMTQE_XP4572->Value(eng);
+  G4bool isOutRange;
+  return PMTQE_XP4572->GetValue(eng,isOutRange);
 }
 
 G4double QweakSimUserInformation::GetNumberOfPhotoelectronsS20(G4double eng)
 {
-  return PMTQED753WKBS20->Value(eng);
+  //return PMTQED753WKBS20->Value(eng);
+  G4bool isOutRange;
+  return PMTQED753WKBS20->GetValue(eng,isOutRange);
 }
 
 void QweakSimUserInformation::StoreCerenkovSecondaryParticleInfo(G4ThreeVector ev,
