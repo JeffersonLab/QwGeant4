@@ -2050,31 +2050,31 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 
     // peiqing, Dec. 20, 2011
     // if QE is processed in EventAction, set it to 100% here
-//     G4double Photocathode_Efficiency[nEntries]={0.0080,      //800.59 nm
-//                                           0.0298,      //700.51 nm
-//                                           0.0638,      //600.44 nm
-//                                           0.1240,      //500.37 nm
-//                                           0.1670,      //440.34 nm
-//                                           0.1770,      //400.29 nm
-//                                           0.1800,      //350.27 nm
-//                                           0.2110,      //300.22 nm
-//                                           0.1780,      //250.18 nm
-//                                           0.0890,      //225.16 nm
-//                                           0.0355       //210.15 nm
-//                                          };
-
-        G4double Photocathode_Efficiency[nEntries]={1,      //800.59 nm
-                                          1,      //700.51 nm
-                                          1,      //600.44 nm
-                                          1,      //500.37 nm
-                                          1,      //440.34 nm
-                                          1,      //400.29 nm
-                                          1,      //350.27 nm
-                                          1,      //300.22 nm
-                                          1,      //250.18 nm
-                                          1,      //225.16 nm
-                                          1       //210.15 nm
+    G4double Photocathode_Efficiency[nEntries]={0.0080,      //800.59 nm
+                                          0.0298,      //700.51 nm
+                                          0.0638,      //600.44 nm
+                                          0.1240,      //500.37 nm
+                                          0.1670,      //440.34 nm
+                                          0.1770,      //400.29 nm
+                                          0.1800,      //350.27 nm
+                                          0.2110,      //300.22 nm
+                                          0.1780,      //250.18 nm
+                                          0.0890,      //225.16 nm
+                                          0.0355       //210.15 nm
                                          };
+
+//         G4double Photocathode_Efficiency[nEntries]={1,      //800.59 nm
+//                                           1,      //700.51 nm
+//                                           1,      //600.44 nm
+//                                           1,      //500.37 nm
+//                                           1,      //440.34 nm
+//                                           1,      //400.29 nm
+//                                           1,      //350.27 nm
+//                                           1,      //300.22 nm
+//                                           1,      //250.18 nm
+//                                           1,      //225.16 nm
+//                                           1       //210.15 nm
+//                                          };
 					 
 //S20 reflectance taken from "Optics Communications, issue 180, 2000. p89–102"
 //average of 40 degree incident angle assumed

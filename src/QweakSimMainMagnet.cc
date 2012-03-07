@@ -14,23 +14,6 @@
    \author Klaus Hans Grimm   
 
 */
-//=============================================================================
-
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2006/01/20 21:14:33 $
-//  CVS/RCS Revision: $Revision: 1.8 $
-//  Status:           $State: Exp $
-// 
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-//
-//============================================================================
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -83,6 +66,22 @@ QweakSimMainMagnet::QweakSimMainMagnet()
     UpstreamSpider_LowThetaCutoutFinal_Physical  = NULL;
 
     //---
+    Angle_Lintel.clear();
+    Angle_Lintel.resize(8);
+
+    Rotation_Lintel.clear();
+    Rotation_Lintel.resize(8);
+
+    Translation_Lintel.clear();
+    Translation_Lintel.resize(8);
+    
+    Lintel_Logical                   = NULL;
+    Lintel_Material                  = NULL;
+    
+    Lintel_Physical.clear();
+    Lintel_Physical.resize(8);
+    
+    //---
     Angle_SingleCoil.clear();
     Angle_SingleCoil.resize(8);
 
@@ -129,6 +128,9 @@ QweakSimMainMagnet::QweakSimMainMagnet()
 
     SingleCoil_VisAtt = NULL;
     SingleCoil_VisAtt = new G4VisAttributes();
+    
+    Lintel_VisAtt = NULL;
+    Lintel_VisAtt = new G4VisAttributes();
 
     //---
 
@@ -379,6 +381,7 @@ QweakSimMainMagnet::QweakSimMainMagnet()
   SingleCoil_FramePlate_Material           = pMaterial->GetMaterial("Aluminum"); 
   SingleCoil_RadialMountingBlock_Material  = pMaterial->GetMaterial("Aluminum");
   SupportFrame_Material                    = pMaterial->GetMaterial("Aluminum");
+  Lintel_Material                          = pMaterial->GetMaterial("PBA");
   
   // define MainMagnet_MasterContainer geometry values
   // The MainMagnet_MasterContainer contains everything related to the MiniTorus
@@ -554,9 +557,12 @@ QweakSimMainMagnet::QweakSimMainMagnet()
   
   DownstreamSpider_RadialSlab_CenterPositionInR    =  34.250*2.54*cm +0.5*DownstreamSpider_RadialSlab_FullLength_Y;
   DownstreamSpider_RadialSlab_CenterPositionInZ    =  87.680*2.54*cm; // original: 87.688
-      
-
-
+  
+  Lintel_FullLength_X = 70.0*cm;
+  Lintel_FullLength_Y = 16.0*cm;
+  Lintel_FullLength_Z = 10.0*cm;
+  Lintel_CenterPositionInR = -129.39*cm;
+  Lintel_Tilt_Angle = -20.0*degree;
   //===============================================================================
 
   G4cout << G4endl << "###### Leaving QweakSimMainMagnet::QweakSimMainMagnet " << G4endl << G4endl;
@@ -710,14 +716,58 @@ G4cout << G4endl << "###### Calling QweakSimMainMagnet::ConstructComponent() " <
      } // end of  for (G4int n=0; n<8; n++)
 
 
+    // Lintel geometry
+    // Lintels are 16 cm high x 70 cm wide x 10 cm deep and are pitched
+    // forward toward the beamline at an angle ~20 degrees.
+    G4cout << G4endl << "###### QweakSimMainMagnet: Define Lintels." << G4endl << G4endl;
 
+    G4Box* Lintel_Solid    = new G4Box("Lintel_Solid",
+					0.5 * Lintel_FullLength_X,    // horizontal 70 cm
+					0.5 * Lintel_FullLength_Y,    // vertical   16 cm
+					0.5 * Lintel_FullLength_Z );  // length     10 cm
+    
+     
+    Lintel_Logical  = new G4LogicalVolume( Lintel_Solid,
+					Lintel_Material,
+                                        "Lintel_Logical",
+					0,
+					0,0);
+
+     // place 8 lintels into the MotherVolume
+     for (G4int n=0; n<8; n++) {
+
+	 Angle_Lintel[n] = n*45.0*degree;
+
+	 Rotation_Lintel[n] = new G4RotationMatrix();
+	 Rotation_Lintel[n]->rotateZ(Angle_Lintel[n]);
+	 Rotation_Lintel[n]->rotateX(Lintel_Tilt_Angle);
+	 Rotation_Lintel[n]->rotateY(0.0*degree);
+	 
+	 Translation_Lintel[n].setX(sin(Angle_Lintel[n])*Lintel_CenterPositionInR);
+	 Translation_Lintel[n].setY(cos(Angle_Lintel[n])*Lintel_CenterPositionInR);
+	 Translation_Lintel[n].setZ(-66.8*cm);
+
+	 Lintel_Physical[n] =  new G4PVPlacement( Rotation_Lintel[n],
+						Translation_Lintel[n],
+						"Lintel_Physical",
+						Lintel_Logical,
+						MotherVolume,
+						false,
+						n);
+
+     } // end of place lintels
+     
      G4Colour copper ( 184/255., 115/255., 51/255.);	
-
+     G4Colour  mangenta  (237/255.,173/255.,255/255.);
+     
      SingleCoil_VisAtt -> SetColor(copper); 
      SingleCoil_VisAtt -> SetVisibility(true);
      SingleCoil_Plate_Logical -> SetVisAttributes(SingleCoil_VisAtt); 
      SingleCoil_Wing_Logical  -> SetVisAttributes(SingleCoil_VisAtt); 
 
+     Lintel_VisAtt -> SetColor(mangenta); 
+     Lintel_VisAtt -> SetVisibility(true);
+     Lintel_Logical -> SetVisAttributes(Lintel_VisAtt); 
 
  G4cout << G4endl << "###### Leaving QweakSimMainMagnet::ConstructComponent() " << G4endl << G4endl;
  
@@ -1194,7 +1244,7 @@ void QweakSimMainMagnet::Construct_ClampPlates(G4VPhysicalVolume* MotherVolume)
 
      G4Colour blue      (0.,0.,1.);
      G4Colour aluminium ( 169/255., 172/255., 182/255.);
-     G4Colour copper ( 184/255., 115/255., 51/255.);	
+     G4Colour copper ( 184/255., 115/255., 51/255.);
 
      SingleCoil_ClampPlate_VisAtt -> SetColor(aluminium); 
      SingleCoil_ClampPlate_VisAtt -> SetVisibility(true);

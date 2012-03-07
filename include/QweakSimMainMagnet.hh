@@ -26,23 +26,6 @@
    Placeholder for a long explaination
 
  */
-//=============================================================================
-//
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-//
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2006/01/18 20:19:05 $
-//  CVS/RCS Revision: $Revision: 1.7 $
-//  Status:           $State: Exp $
-//
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-//
-//=============================================================================
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 #ifndef QweakSimMainMagnet_h
@@ -422,6 +405,20 @@ private:
       G4LogicalVolume*                    DownstreamSpider_Logical;
       G4VPhysicalVolume*                  DownstreamSpider_Physical;
 
+      // for lintels, Peiqing Mar. 2012 
+      G4double Lintel_FullLength_X;
+      G4double Lintel_FullLength_Y;
+      G4double Lintel_FullLength_Z;
+      G4double Lintel_CenterPositionInR;
+      G4double Lintel_Tilt_Angle;
+      G4LogicalVolume*   Lintel_Logical;
+      G4Material*        Lintel_Material;
+      std::vector< G4VPhysicalVolume* > Lintel_Physical;
+      std::vector< G4ThreeVector >      Translation_Lintel;
+      std::vector< G4double >           Angle_Lintel;
+      std::vector< G4RotationMatrix* >  Rotation_Lintel;
+      G4VisAttributes* Lintel_VisAtt;
+      
       G4VisAttributes* DownstreamSpider_VisAtt;
 
       //------
@@ -442,42 +439,11 @@ private:
       std::vector< G4RotationMatrix* >    Rotation_DownstreamSpider_RadialSlab;
 
       G4VisAttributes* DownstreamSpider_RadialSlab_VisAtt;
+      
 
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #endif
-
-//=======================================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-//
-//      $Revisions$
-//      $Log: QweakSimMainMagnet.hh,v $
-//      Revision 1.7  2006/01/18 20:19:05  grimm
-//      Added downstream support structure and downstream spider
-//
-//      Revision 1.6  2006/01/13 00:28:42  grimm
-//      Added Construct_RadialMountingBlocks()
-//
-//      Revision 1.5  2006/01/12 20:24:43  grimm
-//      Included the 5" thick frame holder in which the coil is embedded. The whole code of coil placements had to be rewritten.
-//      The coils are now placed directly into the MotherVolume and not in SingleCoil_MasterContainer (obsolete now like the function ConstructCoils() ).
-//      The position and dimensions of the UpstreamMiniClamps and the big ClampPlates have been updated according to SolidWorks.
-//
-//      Revision 1.4  2005/12/29 02:50:42  grimm
-//      Added upstream Mini Clamps including a chamfer according to drawings.
-//      Included only the chamfer which avoids an overlap of the mini clamps at the given radius.
-//
-//      Revision 1.3  2005/12/28 23:08:15  grimm
-//      Added the large clamp plates attached to both sides of each coil.
-//      Dimensions and location are chosen rather arbirary, must be updated with SolidWorks information.
-//
-//      Revision 1.2  2005/12/27 19:25:37  grimm
-//      - Redesign of Doxygen header containing CVS info like revision and date
-//      - Added CVS revision log at the end of file
-//
-//
 
