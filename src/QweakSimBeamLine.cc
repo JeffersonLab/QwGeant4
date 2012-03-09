@@ -39,15 +39,30 @@ QweakSimBeamLine::QweakSimBeamLine(QweakSimUserInformation *myUI)
 
     myUserInfo = myUI;
 
-    BeamLineContainer_Logical      = NULL;
-    BeamLineContainer_Physical     = NULL;
-    BeamLineContainer_Material     = NULL;
+    //BeamLineContainer_Logical      = NULL;
+    //BeamLineContainer_Physical     = NULL;
 
-    BeamPipe_Logical  = NULL;
-    BeamPipe_Physical = NULL;
-    BeamPipe_Material         = NULL;
-
-
+    R1_Pipe_Logical= NULL;
+    R1_Flange_Logical= NULL;
+    DS_R1_Pipe_Logical= NULL;
+    DS_R1_Flange_Logical= NULL;
+    DS_R1_Bellow_Logical= NULL;
+    R2_Pipe_Logical= NULL;
+    R2_Flange_Logical= NULL;
+    DS_R2_Pipe_Logical= NULL;
+    R2_RotatorPipe_Logical= NULL;
+    R3_Pipe_Logical= NULL;
+    R3_Flange_Logical= NULL;
+    DS_R3_Pipe_Logical = NULL;
+    R3_US_Wall_Pipe_Logical= NULL;
+    Sub_LeadBox_in_Wall_Logical= NULL;
+    R3_Wall_Pipe_Logical= NULL;
+    Sub_LeadBox_Extent_Logical= NULL;
+    DS_18inch_Pipe1_Logical= NULL;
+    DS_18inch_Pipe2_Logical= NULL;
+    DS_24inch_Pipe_Logical= NULL;
+    DS_24inch_Pipe_Flange_Logical= NULL;
+    
     // definition of a mil = inch/1000
     // static const G4double mil = 0.001*2.54*cm;
     // static const G4double inch = 2.54*cm;
@@ -55,9 +70,10 @@ QweakSimBeamLine::QweakSimBeamLine(QweakSimUserInformation *myUI)
     pMaterial = new QweakSimMaterial();
     pMaterial->DefineMaterials();
 
-    BeamLineContainer_Material      = pMaterial->GetMaterial("Vacuum");
-    BeamPipe_Material               = pMaterial->GetMaterial("Lead");
-
+    //BeamLineContainer_Material      = pMaterial->GetMaterial("Vacuum");
+    BeamPipe_Material               = pMaterial->GetMaterial("Aluminum");
+    Shield_Material                 = pMaterial->GetMaterial("Lead");
+    
     // define geometry values
 
     beamlineMessenger = new QweakSimBeamLineMessenger(this);
@@ -80,52 +96,32 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 
     // define BeamLine position
 
-    G4ThreeVector positionBeamLine = G4ThreeVector(0,0,0);
+//    G4ThreeVector positionBeamLine = G4ThreeVector(0,0,0);
     G4ThreeVector positionBeamPipe = G4ThreeVector(0,0,0);
 
-    G4Tubs* BeamLineContainer_Solid    = new G4Tubs("BeamLineContainer_Sol",
-            0, //RadiusMin
-            32*cm, //5.0*cm, //RadiusMax, BeamlineCutoutDiameter = 8.3*cm
-            870*cm, //length
-            0, //StartingPhi,
-            360*degree); //DeltaPhi
-
-    BeamLineContainer_Logical  = new G4LogicalVolume(BeamLineContainer_Solid,
-            BeamLineContainer_Material,
-            "BeamLineContainer_Log",
-            0,0,0);
-
-    BeamLineContainer_Physical   = new G4PVPlacement(0,
-            positionBeamLine,
-            "BeamLineContainer",
-            BeamLineContainer_Logical,
-            MotherVolume,
-            false,
-            0);
+//     G4Tubs* BeamLineContainer_Solid    = new G4Tubs("BeamLineContainer_Sol",
+//             0, //RadiusMin
+//             32*cm, //5.0*cm, //RadiusMax, BeamlineCutoutDiameter = 8.3*cm
+//             870*cm, //length
+//             0, //StartingPhi,
+//             360*degree); //DeltaPhi
+// 
+//     BeamLineContainer_Logical  = new G4LogicalVolume(BeamLineContainer_Solid,
+//             BeamLineContainer_Material,
+//             "BeamLineContainer_Log",
+//             0,0,0);
+// 
+//     BeamLineContainer_Physical   = new G4PVPlacement(0,
+//             positionBeamLine,
+//             "BeamLineContainer",
+//             BeamLineContainer_Logical,
+//             MotherVolume,
+//             false,
+//             0);
 
 //--------------------------------------
     // define beampipe solid volume
-    G4cout << G4endl << "###### QweakSimBeamLine: Define BeamPipe_Solid " << G4endl << G4endl;
-
-    G4Tubs* BeamPipe_Solid    = new G4Tubs("BeamPipe_Sol",
-            3*cm,
-            4*cm,
-            10*cm,
-            0,
-            360*degree);
-
-    BeamPipe_Logical  = new G4LogicalVolume(BeamPipe_Solid,
-            BeamPipe_Material,
-            "QweakBeamPipe_Log",
-            0,0,0);
-
-    BeamPipe_Physical   = new G4PVPlacement(0,
-            positionBeamPipe,
-            "QweakBeamPipe",
-            BeamPipe_Logical,
-            MotherVolume, // BeamLineContainer_Physical,
-            false,
-            0);
+    G4cout << G4endl << "###### QweakSimBeamLine: Define Beam Pipe" << G4endl << G4endl;
 
     // define R1 - GEM Region pipe
     G4double collimator_center = -422.0195*cm;
@@ -221,12 +217,12 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             360*degree);
 
     G4LogicalVolume* DS_R1_Bellow_Logical  = new G4LogicalVolume(DS_R1_Bellow_Solid,
-            BeamPipe_Material,
+            Shield_Material,
             "DS_R1_Bellow_Log",
             0,0,0);
 
     new G4PVPlacement(0,
-            G4ThreeVector(0,0,collimator_center-27.15035*cm),
+            G4ThreeVector(0,0,collimator_center+28.8*cm),
             "DS_R1_Bellow",
             DS_R1_Bellow_Logical,
             MotherVolume,
@@ -320,8 +316,8 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
     
     // define R3 - inside collimator pipe
     G4Tubs* R3_Pipe_Solid    = new G4Tubs("R3_Pipe_Solid",
-            12.7381*cm,         
-	    13.6525*cm,
+            10.0711*cm,           
+	    10.9479*cm,
             5.615*cm,
             0,
             360*degree);
@@ -338,12 +334,33 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             MotherVolume,
             false,
             0);
-    
-    // define R3 - inside collimator flange
-    G4Tubs* R3_Flange_Solid    = new G4Tubs("R3_Flange_Solid",
-            10.9479*cm,           
+
+    // define R3 - after collimator pipe
+    G4Tubs* DS_R3_Pipe_Solid    = new G4Tubs("DS_R3_Pipe_Solid",
+            12.7381*cm,             
 	    13.6525*cm,
-            0.4572*cm,
+            256.8575*cm,
+            0,
+            360*degree);
+
+    G4LogicalVolume* DS_R3_Pipe_Logical  = new G4LogicalVolume(DS_R3_Pipe_Solid,
+            BeamPipe_Material,
+            "DS_R3_Pipe_Log",
+            0,0,0);
+
+    new G4PVPlacement(0,
+            G4ThreeVector(0,0,-3.9065*cm),
+            "DS_R3_Pipe",
+            DS_R3_Pipe_Logical,
+            MotherVolume,
+            false,
+            0);
+    
+    // define R3 - flange
+    G4Tubs* R3_Flange_Solid    = new G4Tubs("R3_Flange_Solid",
+            13.6525*cm,             
+	    22.86*cm,
+            1.4224*cm,
             0,
             360*degree);
 
@@ -353,13 +370,116 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             0,0,0);
 
     new G4PVPlacement(0,
-            G4ThreeVector(0,0,collimator_center+43.8005*cm-5.1578*cm),
+            G4ThreeVector(0,0,251.5286*cm),
             "R3_Flange",
             R3_Flange_Logical,
             MotherVolume,
             false,
             0);
+
+    // define R3 - before shield wall
+    G4Tubs* R3_US_Wall_Pipe_Solid    = new G4Tubs("R3_US_Wall_Pipe_Solid",
+            21.9075*cm,             
+	    22.86*cm,
+            23.5245*cm,
+            0,
+            360*degree);
+
+    G4LogicalVolume* R3_US_Wall_Pipe_Logical  = new G4LogicalVolume(R3_US_Wall_Pipe_Solid,
+            BeamPipe_Material,
+            "R3_US_Wall_Pipe_Log",
+            0,0,0);
+
+    new G4PVPlacement(0,
+            G4ThreeVector(0,0,276.4755*cm),
+            "R3_US_Wall_Pipe",
+            R3_US_Wall_Pipe_Logical,
+            MotherVolume,
+            false,
+            0);
+
+    // define 2" lead box in the shield wall
+    G4Box* LeadBox_in_Wall_Solid    = new G4Box("LeadBox_in_Wall_Solid",
+            27.94*cm,               
+	    27.94*cm,
+            40*cm);
+
+    G4Tubs* R3_Wall_Pipe_Vacuum_Solid    = new G4Tubs("R3_Wall_Pipe_Vacuum_Solid",
+            0.0*cm,
+	    (22.86+0.1)*cm,
+            (40.0+0.1)*cm,
+            0,
+            360*degree);
+	
+    G4SubtractionSolid* Sub_LeadBox_in_Wall_Solid = new G4SubtractionSolid("LeadBox_in_Wall_Solid - R3_Wall_Pipe_Vacuum_Solid", 
+								   LeadBox_in_Wall_Solid, 
+								   R3_Wall_Pipe_Vacuum_Solid);
     
+    G4LogicalVolume* Sub_LeadBox_in_Wall_Logical  = new G4LogicalVolume(Sub_LeadBox_in_Wall_Solid,
+            Shield_Material,
+            "Sub_LeadBox_in_Wall_Log",
+            0,0,0);
+
+    new G4PVPlacement(0,
+            G4ThreeVector(0,0,340.0*cm),
+            "Sub_LeadBox_in_Wall",
+            Sub_LeadBox_in_Wall_Logical,
+            MotherVolume,
+            false,
+            0);
+    
+    // define R3 - pipe in shield wall
+    G4Tubs* R3_Wall_Pipe_Solid    = new G4Tubs("R3_Wall_Pipe_Solid",
+            21.9075*cm,
+	    22.86*cm,
+            40.0*cm,
+            0,
+            360*degree);
+
+    G4LogicalVolume* R3_Wall_Pipe_Logical  = new G4LogicalVolume(R3_Wall_Pipe_Solid,
+            BeamPipe_Material,
+            "R3_Wall_Pipe_Log",
+            0,0,0);
+
+    new G4PVPlacement(0,
+            G4ThreeVector(0,0,340.0*cm),
+            "R3_Wall_Pipe",
+            R3_Wall_Pipe_Logical,
+            MotherVolume,
+            false,
+            0);
+        
+    // define 2" lead box, extends only to Z=622.625
+    G4Box* LeadBox_Extent_Solid    = new G4Box("LeadBox_Extent_Solid",
+            27.94*cm,           
+	    27.94*cm,
+            121.3125*cm);
+
+    G4Tubs* DS_18inch_Pipe1_Vacuum_Solid    = new G4Tubs("DS_18inch_Pipe1_Vacuum_Solid",
+            0.0*cm,
+	    (22.86+0.1)*cm,
+            (121.3125+0.1)*cm,
+            0,
+            360*degree);
+    
+    G4SubtractionSolid* Sub_LeadBox_Extent_Solid = new G4SubtractionSolid("LeadBox_Extent_Solid - DS_18inch_Pipe1_Vacuum_Solid", 
+								   LeadBox_Extent_Solid, 
+								   DS_18inch_Pipe1_Vacuum_Solid);
+
+    G4LogicalVolume* Sub_LeadBox_Extent_Logical  = new G4LogicalVolume(Sub_LeadBox_Extent_Solid,
+            Shield_Material,
+            "Sub_LeadBox_Extent_Log",
+            0,0,0);
+
+    new G4PVPlacement(0,
+            G4ThreeVector(0,0,501.3125*cm),
+            "Sub_LeadBox_Extent",
+            Sub_LeadBox_Extent_Logical,
+            MotherVolume,
+            false,
+            0);
+    
+
     // define Downstream 18" pipe within lead box
     G4Tubs* DS_18inch_Pipe1_Solid    = new G4Tubs("DS_18inch_Pipe1_Solid",
             21.9075*cm,
@@ -422,6 +542,27 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             MotherVolume,
             false,
             0);
+
+    // define Downstream 24" pipe flange
+    G4Tubs* DS_24inch_Pipe_Flange_Solid    = new G4Tubs("DS_24inch_Pipe_Flange_Solid",
+            22.86*cm,
+            29.5275*cm, 
+	    1.4224*cm,
+            0,
+            360*degree);
+
+    G4LogicalVolume* DS_24inch_Pipe_Flange_Logical  = new G4LogicalVolume(DS_24inch_Pipe_Flange_Solid,
+            BeamPipe_Material,
+            "DS_24inch_Pipe_Flange_Log",
+            0,0,0);
+
+    new G4PVPlacement(0,
+            G4ThreeVector(0,0,(637.761+1.4224)*cm),
+            "DS_24inch_Pipe",
+            DS_24inch_Pipe_Flange_Logical,
+            MotherVolume,
+            false,
+            0);
     
 //--------------------------------------
 
@@ -432,25 +573,42 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
     G4Colour  blue      (   0/255.,   0/255., 255/255.);
     G4Colour  magenta   ( 255/255.,   0/255., 255/255.);
     G4Colour  grey      ( 127/255., 127/255., 127/255.);
+    G4Colour  lightgrey (  220/255., 220/255., 220/255.);
     G4Colour  lightblue   ( 139/255., 208/255., 255/255.);
     G4Colour  lightorange ( 255/255., 189/255., 165/255.);
     G4Colour  khaki3    ( 205/255., 198/255., 115/255.);
     G4Colour  brown     (178/255., 102/255., 26/255.);
     
-    G4VisAttributes* BeamLineContainer_VisAtt = new G4VisAttributes(red);
-    BeamLineContainer_VisAtt -> SetVisibility(false);
-    //BeamLineContainer_VisAtt -> SetForceWireframe(true);
-    BeamLineContainer_Logical -> SetVisAttributes(BeamLineContainer_VisAtt);
 
 
-    G4VisAttributes* BeamPipe_VisAtt = new G4VisAttributes(red);
-    BeamPipe_VisAtt -> SetVisibility(true);
+    G4VisAttributes* Shield_VisAtt = new G4VisAttributes(brown);
+    Shield_VisAtt -> SetVisibility(true);
     //BeamPipe_VisAtt -> SetForceWireframe(true);
-    BeamPipe_Logical -> SetVisAttributes(BeamPipe_VisAtt);
-
-
+    DS_R1_Bellow_Logical -> SetVisAttributes(Shield_VisAtt);
+    Sub_LeadBox_in_Wall_Logical->SetVisAttributes(Shield_VisAtt);
+    Sub_LeadBox_Extent_Logical->SetVisAttributes(Shield_VisAtt);
     G4cout << G4endl << "###### Leaving QweakSimBeamLine::ConstructComponent() " << G4endl << G4endl;
 
+    G4VisAttributes* Pipe_VisAtt = new G4VisAttributes(lightgrey);
+    Pipe_VisAtt -> SetVisibility(true);
+    R1_Pipe_Logical->SetVisAttributes(Pipe_VisAtt);
+    R1_Flange_Logical->SetVisAttributes(Pipe_VisAtt);
+    DS_R1_Pipe_Logical->SetVisAttributes(Pipe_VisAtt);
+    DS_R1_Flange_Logical->SetVisAttributes(Pipe_VisAtt);
+    R2_Pipe_Logical->SetVisAttributes(Pipe_VisAtt);
+    R2_Flange_Logical->SetVisAttributes(Pipe_VisAtt);
+    DS_R2_Pipe_Logical->SetVisAttributes(Pipe_VisAtt);
+    R2_RotatorPipe_Logical->SetVisAttributes(Pipe_VisAtt);
+    R3_Pipe_Logical->SetVisAttributes(Pipe_VisAtt);
+    R3_Flange_Logical->SetVisAttributes(Pipe_VisAtt);
+    DS_R3_Pipe_Logical->SetVisAttributes(Pipe_VisAtt);
+    R3_US_Wall_Pipe_Logical->SetVisAttributes(Pipe_VisAtt);
+    R3_Wall_Pipe_Logical->SetVisAttributes(Pipe_VisAtt);
+    DS_18inch_Pipe1_Logical->SetVisAttributes(Pipe_VisAtt);
+    DS_18inch_Pipe2_Logical->SetVisAttributes(Pipe_VisAtt);
+    DS_24inch_Pipe_Logical->SetVisAttributes(Pipe_VisAtt);
+    DS_24inch_Pipe_Flange_Logical->SetVisAttributes(Pipe_VisAtt);
+    
 } // end of  QweakSimBeamLine::ConstructComponent()
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -461,12 +619,31 @@ void QweakSimBeamLine::SetBeamLineMaterial(G4String materialName)
     G4Material* pttoMaterial = G4Material::GetMaterial(materialName);
     if (pttoMaterial)
     {
-        G4cout << "==== Changing BeamLine Material: Looking up Material  " << G4endl;
-        BeamPipe_Logical->SetMaterial(pttoMaterial);
-        G4cout << "==== Changing BeamLine Material:  Now the BeamLine is made of " << materialName << G4endl;
+        G4cout << "==== Changing Beam Pipe Material: Looking up Material  " << G4endl;
+        R1_Pipe_Logical->SetMaterial(pttoMaterial);
+	R1_Flange_Logical->SetMaterial(pttoMaterial);
+	DS_R1_Pipe_Logical->SetMaterial(pttoMaterial);
+	DS_R1_Flange_Logical->SetMaterial(pttoMaterial);
+	//DS_R1_Bellow_Logical->SetMaterial(pttoMaterial);
+	R2_Pipe_Logical->SetMaterial(pttoMaterial);
+	R2_Flange_Logical->SetMaterial(pttoMaterial);
+	DS_R2_Pipe_Logical->SetMaterial(pttoMaterial);
+	R2_RotatorPipe_Logical->SetMaterial(pttoMaterial);
+	R3_Pipe_Logical->SetMaterial(pttoMaterial);
+	R3_Flange_Logical->SetMaterial(pttoMaterial);
+	DS_R3_Pipe_Logical->SetMaterial(pttoMaterial);
+	R3_US_Wall_Pipe_Logical->SetMaterial(pttoMaterial);
+	//Sub_LeadBox_in_Wall_Logical->SetMaterial(pttoMaterial);
+	R3_Wall_Pipe_Logical->SetMaterial(pttoMaterial);
+	//Sub_LeadBox_Extent_Logical->SetMaterial(pttoMaterial);
+	DS_18inch_Pipe1_Logical->SetMaterial(pttoMaterial);
+	DS_18inch_Pipe2_Logical->SetMaterial(pttoMaterial);
+	DS_24inch_Pipe_Logical->SetMaterial(pttoMaterial);
+	DS_24inch_Pipe_Flange_Logical->SetMaterial(pttoMaterial);
+        G4cout << "==== Changing Beam Pipe Material:  Now the BeamLine is made of " << materialName << G4endl;
     }
     else {
-        G4cerr << "==== ERROR: Changing BeamLine Material failed" << G4endl;
+        G4cerr << "==== ERROR: Changing Beam Pipe Material failed" << G4endl;
     }
 
 }
@@ -484,7 +661,7 @@ void QweakSimBeamLine::SetBeamLineCenterPositionInZ(G4double zPos)
     G4cout << G4endl << "###### Calling QweakSimBeamLine::SetBeamLineCenterPositionInZ() " << G4endl << G4endl;
 
     beamline_ZPos = zPos;
-    BeamLineContainer_Physical->SetTranslation(G4ThreeVector(0.,0., zPos));
+    //BeamLineContainer_Physical->SetTranslation(G4ThreeVector(0.,0., zPos));
 }
 
 G4double QweakSimBeamLine::GetBeamLineCenterPositionInZ()

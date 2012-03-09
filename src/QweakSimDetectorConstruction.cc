@@ -299,8 +299,8 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   //============================================
   //
   pBeamLine -> ConstructComponent(experimentalHall_Physical);
-  pBeamLine -> SetBeamLineCenterPositionInZ(300.0*cm);
-  pGeometry->AddModule(pBeamLine->getBeamLinePhysicalVolume());
+  //pBeamLine -> SetBeamLineCenterPositionInZ(300.0*cm);
+  //pGeometry->AddModule(pBeamLine->getBeamLinePhysicalVolume());
   
   //================================================
   // create/place MainMagnet body into MotherVolume
@@ -367,7 +367,7 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   pCollimator2->SetOctantCutOutBackFullLength_X1(18.37*cm);
   pCollimator2->SetOctantCutOutBackFullLength_X2(18.37*cm);
 
-  pCollimator2->SetBeamlineCutoutDiameter(13.50*cm);
+  pCollimator2->SetBeamlineCutoutDiameter(27.0*cm);
 
 //   pCollimator2->SetOctantCutOutFrontInnerDiameter(57.12*cm);
 //   pCollimator2->SetOctantCutOutFrontOuterDiameter(71.62*cm);

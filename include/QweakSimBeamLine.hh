@@ -72,21 +72,41 @@ public:
   void SetBeamLineMaterial(G4String);
   G4String GetBeamLineMaterial();
   
-  G4LogicalVolume*   getBeamLineLogicalVolume()    {return BeamLineContainer_Logical;} 
-  G4VPhysicalVolume* getBeamLinePhysicalVolume()   {return BeamLineContainer_Physical;} 
+  //G4LogicalVolume*   getBeamLineLogicalVolume()    {return BeamLineContainer_Logical;} 
+  //G4VPhysicalVolume* getBeamLinePhysicalVolume()   {return BeamLineContainer_Physical;} 
   
 private:
 
   QweakSimMaterial* pMaterial;
 
-  G4LogicalVolume*   BeamPipe_Logical; 
-  G4VPhysicalVolume* BeamPipe_Physical; 
+  //G4LogicalVolume*   BeamLineContainer_Logical; 
+  //G4VPhysicalVolume* BeamLineContainer_Physical; 
+  //G4Material*        BeamLineContainer_Material;  
+
   G4Material*        BeamPipe_Material;  
-
-  G4LogicalVolume*   BeamLineContainer_Logical; 
-  G4VPhysicalVolume* BeamLineContainer_Physical; 
-  G4Material*        BeamLineContainer_Material;  
-
+  G4Material*        Shield_Material;
+    
+  G4LogicalVolume*   R1_Pipe_Logical;
+  G4LogicalVolume*   R1_Flange_Logical;
+  G4LogicalVolume*   DS_R1_Pipe_Logical;
+  G4LogicalVolume*   DS_R1_Flange_Logical;
+  G4LogicalVolume*   DS_R1_Bellow_Logical;
+  G4LogicalVolume*   R2_Pipe_Logical;
+  G4LogicalVolume*   R2_Flange_Logical;
+  G4LogicalVolume*   DS_R2_Pipe_Logical;
+  G4LogicalVolume*   R2_RotatorPipe_Logical;
+  G4LogicalVolume*   R3_Pipe_Logical;
+  G4LogicalVolume*   R3_Flange_Logical;
+  G4LogicalVolume*   DS_R3_Pipe_Logical;
+  G4LogicalVolume*   R3_US_Wall_Pipe_Logical;
+  G4LogicalVolume*   Sub_LeadBox_in_Wall_Logical;
+  G4LogicalVolume*   R3_Wall_Pipe_Logical;
+  G4LogicalVolume*   Sub_LeadBox_Extent_Logical;
+  G4LogicalVolume*   DS_18inch_Pipe1_Logical;
+  G4LogicalVolume*   DS_18inch_Pipe2_Logical;
+  G4LogicalVolume*   DS_24inch_Pipe_Logical;
+  G4LogicalVolume*   DS_24inch_Pipe_Flange_Logical;
+	
   G4double beamline_ZPos;
   
   QweakSimBeamLineMessenger* beamlineMessenger;  // pointer to the Messenger
