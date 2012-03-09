@@ -95,29 +95,7 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 
 
     // define BeamLine position
-
-//    G4ThreeVector positionBeamLine = G4ThreeVector(0,0,0);
     G4ThreeVector positionBeamPipe = G4ThreeVector(0,0,0);
-
-//     G4Tubs* BeamLineContainer_Solid    = new G4Tubs("BeamLineContainer_Sol",
-//             0, //RadiusMin
-//             32*cm, //5.0*cm, //RadiusMax, BeamlineCutoutDiameter = 8.3*cm
-//             870*cm, //length
-//             0, //StartingPhi,
-//             360*degree); //DeltaPhi
-// 
-//     BeamLineContainer_Logical  = new G4LogicalVolume(BeamLineContainer_Solid,
-//             BeamLineContainer_Material,
-//             "BeamLineContainer_Log",
-//             0,0,0);
-// 
-//     BeamLineContainer_Physical   = new G4PVPlacement(0,
-//             positionBeamLine,
-//             "BeamLineContainer",
-//             BeamLineContainer_Logical,
-//             MotherVolume,
-//             false,
-//             0);
 
 //--------------------------------------
     // define beampipe solid volume
@@ -147,9 +125,9 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
     
     // define R1 - GEM Region flange
     G4Tubs* R1_Flange_Solid    = new G4Tubs("R1_Flange_Solid",
-            2.0447*cm,   
-	    2.413*cm,
-            24.9174*cm,
+            2.413*cm,     
+	    4.445*cm,
+            0.8*cm,
             0,
             360*degree);
 

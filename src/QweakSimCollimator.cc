@@ -55,14 +55,10 @@ QweakSimCollimator::QweakSimCollimator()
 
   // W-Plug
 
-  WPlug_Logical_US      = NULL;
-  WPlug_Physical_US     = NULL;
-  WPlug_Logical_DS      = NULL;
-  WPlug_Physical_DS     = NULL;
-  WPlug_Logical_US_Vac  = NULL;
-  WPlug_Physical_DS_Vac = NULL;
-  WPlug_Material        = NULL;  
-  WPlug_Material_Vac    = NULL;
+  WPlug_US_Logical      = NULL;
+  WPlug_US_Physical     = NULL;
+  WPlug_DS_Logical      = NULL;
+  WPlug_DS_Physical     = NULL;
   
   //Collimator_Messenger = new QweakSimCollimatorMessenger(this);
 
@@ -269,9 +265,75 @@ void QweakSimCollimator::ConstructCollimator(G4VPhysicalVolume* MotherVolume)
 						   0);
   //**********************************************************************************
 
+  // define W plug
+  G4Cons *WPlug_Solid_US = new G4Cons("WPlug_Solid_US",
+				      0.7455*cm,
+				      4.14*cm,
+				      0.8763*cm,
+				      4.14*cm,  // 4.20  
+				      4.13766*cm,  // 7.62
+				      0,
+				      360*degree);    
+  
+  G4Cons *WPlug_Solid_US_Vac = new G4Cons("WPlug_Solid_US_Vac",
+					  0.0*cm,
+					  0.7455*cm,
+					  0.0*cm,
+					  0.8763*cm,  // 4.20  
+					  4.14*cm,  // 7.62
+					  0,
+					  360*degree);  
+  
+  G4SubtractionSolid* WPlug_US_Solid = new G4SubtractionSolid("WPlug_Solid_US - WPlug_Solid_US_Vac", 
+								   WPlug_Solid_US, 
+								   WPlug_Solid_US_Vac);
+    
+  
+  G4Tubs *WPlug_Solid_DS = new G4Tubs("WPlug_Solid_DS",
+				      1.905*cm,
+				      4.2*cm,
+				      6.34*cm,
+				      0,
+				      360*degree);    
+  G4Tubs *WPlug_Solid_DS_Vac = new G4Tubs("WPlug_Solid_DS_Vac",
+					  0,
+					  1.905*cm,
+					  6.34*cm,
+					  0,
+					  360*degree);    
+  
+  G4SubtractionSolid* WPlug_DS_Solid = new G4SubtractionSolid("WPlug_Solid_DS - WPlug_Solid_DS_Vac", 
+								   WPlug_Solid_DS, 
+								   WPlug_Solid_DS_Vac);
+  
+  WPlug_US_Logical = new G4LogicalVolume(WPlug_US_Solid,
+					 WPlug_Material,
+					 "WPlug_US_Logical");
+  
+  WPlug_DS_Logical = new G4LogicalVolume(WPlug_DS_Solid,
+					 WPlug_Material,
+					 "WPlug_DS_Logical");
+  
+  WPlug_US_Physical = new G4PVPlacement(0,                  // rotation
+					G4ThreeVector(0,0*cm,-575.7895*cm-3.5*cm),   // plug position
+					"WPlugContainer_US",
+					WPlug_US_Logical,
+					MotherVolume,
+					false,
+					0); 
+  
+  WPlug_DS_Physical = new G4PVPlacement(0,                  // rotation
+					G4ThreeVector(0,0*cm,-575.7895*cm+6.98*cm),   // plug position
+					"WPlugContainer_DS",
+					WPlug_DS_Logical,
+					MotherVolume,
+					false,
+					0);  
+
 
   //**********************************************************************************
   //Make it pretty...
+  G4Colour  red   (1.,0.,0.);
   G4Colour  blue      (0.,0.,1.);
   G4Colour  mangenta  (237/255.,173/255.,255/255.);
   G4Colour  mangenta1 (104/255., 49/255., 94/255.);
@@ -281,99 +343,14 @@ void QweakSimCollimator::ConstructCollimator(G4VPhysicalVolume* MotherVolume)
   //CollimatorHousingVisAtt->SetForceSolid(true);//comment out by Jie
 //   CollimatorHousingVisAtt->SetForceWireframe(true);
   CollimatorHousing_Logical->SetVisAttributes(CollimatorHousingVisAtt); 
-  //**********************************************************************************
 
-  // Let Tungsten plug!!!!
-
-  
-  // W-Plug position
-
-  G4ThreeVector positionWPlug_US = G4ThreeVector(0, 0, -575.7895*cm); 
-  G4ThreeVector positionWPlug_DS = G4ThreeVector(0, 0, -568.1695*cm); 
-  
-  
-  G4Cons *WPlug_Solid_US = new G4Cons("WPlug_Sol_US",
-				      0.747*cm,
-				      4.20*cm,
-				      0.987*cm,
-				      4.20*cm,  // 4.20  
-				      7.62*cm,  // 7.62
-				      0,
-				      360*degree);    
-  
-  G4Cons *WPlug_Solid_US_Vac = new G4Cons("WPlug_Sol_US_Vac",
-					  0.0*cm,
-					  0.747*cm,
-					  0.0*cm,
-					  0.987*cm,  // 4.20  
-					  7.62*cm,  // 7.62
-					  0,
-					  360*degree);    
-  
-  G4Cons *WPlug_Solid_DS = new G4Cons("WPlug_Sol_DS",
-				      0.0*cm,
-				      4.987*cm,
-				      0.0*cm,
-				      1.077*cm,
-				      7.62*cm,
-				      0,
-				      360*degree);    
-  G4Cons *WPlug_Solid_DS_Vac = new G4Cons("WPlug_Sol_DS_Vac",
-					  0.987*cm,
-					  4.20*cm,
-					  1.077*cm,
-					  4.20*cm,
-					  7.62*cm,
-					  0,
-					  360*degree);      
-  
-  WPlug_Logical_US = new G4LogicalVolume(WPlug_Solid_US,
-					 WPlug_Material,
-					 "WPlug_Logical_US");
-  
-  WPlug_Logical_DS = new G4LogicalVolume(WPlug_Solid_DS,
-					 WPlug_Material,
-					 "WPlug_Logical_DS");
-  WPlug_Logical_US_Vac = new G4LogicalVolume(WPlug_Solid_US_Vac,
-					     WPlug_Material_Vac,
-					     "WPlug_Logical_US_Vac");
-  
-  WPlug_Logical_DS_Vac = new G4LogicalVolume(WPlug_Solid_DS_Vac,
-					     WPlug_Material_Vac,
-					     "WPlug_Logical_DS_Vac");
-  
-  
-  WPlug_Physical_US = new G4PVPlacement(0,                  // rotation
-					positionWPlug_US,   // plug position
-					"WPlugContainer_US",
-					WPlug_Logical_US,
-					MotherVolume,
-					false,
-					0); 
-  
-  WPlug_Physical_DS = new G4PVPlacement(0,                  // rotation
-					positionWPlug_DS,   // plug position
-					"WPlugContainer_DS",
-					WPlug_Logical_DS,
-					MotherVolume,
-					false,
-					0);
-  WPlug_Physical_US_Vac = new G4PVPlacement(0,                  // rotation
-					    positionWPlug_US,   // plug position
-					    "WPlugContainer_US_Vac",
-					    WPlug_Logical_US_Vac,
-					    MotherVolume,
-					    false,
-					    0); 
-  
-  WPlug_Physical_DS_Vac = new G4PVPlacement(0,                  // rotation
-					    positionWPlug_DS,   // plug position
-					    "WPlugContainer_DS_Vac",
-					    WPlug_Logical_DS_Vac,
-					    MotherVolume,
-					    false,
-					    0);
-  
+    G4VisAttributes* WPlug_VisAtt = new G4VisAttributes(red);
+    WPlug_VisAtt -> SetVisibility(true);
+    //BeamPipe_VisAtt -> SetForceWireframe(true);
+    WPlug_US_Logical -> SetVisAttributes(WPlug_VisAtt);
+    WPlug_US_Logical->SetVisAttributes(WPlug_VisAtt);
+    WPlug_DS_Logical -> SetVisAttributes(WPlug_VisAtt);
+    WPlug_DS_Logical->SetVisAttributes(WPlug_VisAtt);
   
 }
 
