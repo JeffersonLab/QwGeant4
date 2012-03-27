@@ -16,22 +16,10 @@ G4WORKDIR = `pwd`
 .PHONY: all
 all: lib bin 
 
-# Geant4 build system changed in version 4.9.5
-ifneq ($(G4VERSION),)
-  GEANT_VERSION := $(shell echo $(G4VERSION) | sed -e 's/\.//g')
-else
-  GEANT_VERSION := 494
-endif
-ifeq ($(shell test $(GEANT_VERSION) -lt "495" && echo "version < 4.9.4"),)
-  ifeq ($(G4INCLUDE),)
-    $(warning The Geant4 build system has changed in version 4.9.5.)
-    $(warning Make sure you source $$G4INSTALL/build/geant4make.csh before running make!)
-  else
-    $(warning Please ignore messages related to $(G4INCLUDE))
-  endif
-endif
-
 # Standard G4 compilation:
+ifndef G4SYSTEM
+  G4SYSTEM = Linux-g++
+endif
 include $(G4INSTALL)/config/binmake.gmk
 
 #-------------
@@ -42,6 +30,13 @@ ROOTCFLAGS = `root-config --cflags`
 CPPFLAGS  +=  $(ROOTCFLAGS) -fPIC
 LDFLAGS   += -Wl,--no-as-needed
 LDFLAGS   += `root-config --ldflags --new --libs`
+
+#-------------
+# Adding Xerces Package
+#-------------
+#
+CPPFLAGS  += -I$(XERCESCROOT)/include
+LDFLAGS   += -L$(XERCESCROOT)/lib
 
 #----------------------------
 # Adding OpenCascade Package
