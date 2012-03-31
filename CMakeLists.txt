@@ -11,7 +11,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 # Load Geant4 through Find and Use files (the Geant4_DIR directory is where
 # the Geant4 cmake Find and Use files can be found)
 set(Geant4_DIR $ENV{G4INSTALL}/build)
-find_package(Geant4 REQUIRED)
+find_package(Geant4 REQUIRED COMPONENTS gdml qt ui_all vis_all)
 include(${Geant4_USE_FILE})
 
 # Load ROOT and setup include directory
@@ -20,17 +20,18 @@ include_directories(${ROOT_INCLUDE_DIR})
 
 # Create ROOT dictionary
 ROOT_GENERATE_DICTIONARY(${CMAKE_CURRENT_SOURCE_DIR}/src/QweakSimUserMainEvent_Dict
-	${CMAKE_CURRENT_SOURCE_DIR}/include/QweakSimUser*.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/include/QweakSimUser*Event.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/include/QweakSimUser*Config.hh
 	LINKDEF ${CMAKE_CURRENT_SOURCE_DIR}/include/*_LinkDef.hh)
-add_custom_target(dict ALL DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/src/QweakSimUserMainEvent_Dict.cxx)
+add_custom_target(dict DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/src/QweakSimUserMainEvent_Dict.cxx)
 
 # Add the project include directory and put all source files in my_project_sources
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
-file(GLOB my_project_sources ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc ${CMAKE_CURRENT_SOURCE_DIR}/src/QweakSimUserMainEvent_Dict.cc)
+file(GLOB my_project_sources ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc ${CMAKE_CURRENT_SOURCE_DIR}/src/QweakSimUserMainEvent_Dict.cxx)
 
 # Add the target executables
-add_executable(QweakSimG4   QweakSimG4.cc   ${my_project_sources})
-add_executable(QweakSimRoot QweakSimRoot.cc ${my_project_sources})
+add_executable(QweakSimG4   QweakSimG4.cc   ${my_project_sources} ${CMAKE_CURRENT_SOURCE_DIR}/src/QweakSimUserMainEvent_Dict.cxx)
+add_executable(QweakSimRoot QweakSimRoot.cc ${my_project_sources} ${CMAKE_CURRENT_SOURCE_DIR}/src/QweakSimUserMainEvent_Dict.cxx)
 
 # Link the ROOT and Geant4 libraries
 target_link_libraries(QweakSimG4   ${Geant4_LIBRARIES} ${ROOT_LIBRARIES})
