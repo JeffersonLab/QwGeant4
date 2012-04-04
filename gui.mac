@@ -90,6 +90,21 @@
 /gui/addButton trackingAction "Select Octant7" "/EventGen/SelectOctant 7"
 /gui/addButton trackingAction "Select Octant8" "/EventGen/SelectOctant 8"
 
+# Trigger menu
+/gui/addMenu   trigger Trigger
+/gui/addButton trigger "Show trigger config" "/Trigger/Show"
+/gui/addButton trigger "Enable on all events" "/Trigger/Enable all"
+/gui/addButton trigger "Enable on 4 VDC planes and CER" "/Trigger/Enable 4fold"
+/gui/addButton trigger "Enable on 3 VDC planes" "/Trigger/Enable 3fold"
+/gui/addButton trigger "Enable on TS" "/Trigger/Enable scint"
+/gui/addButton trigger "Enable on CER" "/Trigger/Enable cer"
+/gui/addButton trigger "Disable on all events" "/Trigger/Disable all"
+/gui/addButton trigger "Disable on 4 VDC planes and CER" "/Trigger/Disable 4fold"
+/gui/addButton trigger "Disable on 3 VDC planes" "/Trigger/Disable 3fold"
+/gui/addButton trigger "Disable on TS" "/Trigger/Disable scint"
+/gui/addButton trigger "Disable on CER" "/Trigger/Disable cer"
+
+
 # Reaction type menue
 /gui/addMenu reactionType Reaction
 /gui/addButton reactionType "0 - Combination of all reactions" "/EventGen/SeletReactionType 0"

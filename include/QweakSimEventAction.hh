@@ -47,7 +47,7 @@ class QweakSimEventActionMessenger;
 
 enum EQweakSimTriggerMode
   { kTriggerAll, kTrigger4Fold, kTrigger3Fold,
-    kTriggerGEM, kTriggerScint, kTriggerCer,
+    kTriggerScint, kTriggerCer,
     kNumTriggers };
 
 class QweakSimEventAction : public G4UserEventAction

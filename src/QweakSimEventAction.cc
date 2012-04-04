@@ -391,7 +391,6 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     if ( fTrigger[kTriggerAll] /* Trigger on every event */
             || (fTrigger[kTrigger4Fold] && (n_VDChitWirePlane == 4) && (n_VDChitDCFront > 0) && (n_VDChitDCBack > 0) && (n_hitCerenkov > 0) ) /* 4-fold coincidence */
             || (fTrigger[kTrigger3Fold] && (n_VDChitWirePlane >= 2) && (n_VDChitDCFront > 0) && (n_VDChitDCBack > 0) ) /* 3-fold coincidence */
-            // || (fTrigger[kTriggerGEM]   && (n_GEMhitWirePlane > 0) )        /* Triggering on the GEM only */
             || (fTrigger[kTriggerScint] && (n_hitTriggerScintillator > 0) ) /* Qweak trigger on a hit in the trigger scintillator */
             || (fTrigger[kTriggerCer]   && (n_hitCerenkov > 0) )            /* Triggering on Main Detector */
        ) {
