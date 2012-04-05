@@ -53,7 +53,7 @@ G4cout << "###### Calling QweakSimSteppingAction::QweakSimSteppingAction() " << 
   targetCenterPositionZ = myUserInfo->TargetCenterPositionZ;
   //RandomPositionZ = myEvent->GetVertexZ();
   
-//  std::ofstream EventDataFile("Event.dat", std::ios::out);
+  //std::ofstream EventDataFile("Event.dat", std::ios::out);
 
 G4cout << "###### Leaving QweakSimSteppingAction::QweakSimSteppingAction() " << G4endl;
 
@@ -163,6 +163,7 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
 // std::ofstream EventDataFile("Event.dat", std::ios::app);
 // EventDataFile << "Event: "<<myEventCounter<<std::endl;
 // EventDataFile << "E_in : "<<E_in<<std::endl;
+// EventDataFile <<E_in<<std::endl;
 // EventDataFile << "E_out: "<<E_out<<std::endl;
 // EventDataFile << "StepLength: "<<theStepLength/mm<<" mm"<<std::endl;
 // EventDataFile << "myTrack ID: "<<theTrack->GetTrackID()<<std::endl;

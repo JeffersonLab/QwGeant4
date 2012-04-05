@@ -89,7 +89,7 @@ G4double QweakSimEPEvent::GetVertexZ()
 
    else
      myPositionZ =  myUserInfo->TargetCenterPositionZ + (G4UniformRand()-0.5)*TargetLength; //default region
-     
+
   return myPositionZ;
 }
 
