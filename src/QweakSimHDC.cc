@@ -74,7 +74,8 @@ QweakSimHDC::QweakSimHDC()
   // define target geometry value
   // Geometry taken from Norm's HDC talk in Vancouver 2005
 
-  HDC_DriftCell_TotalThickness = 19*mm;  // Distance: 2*(HVplane to WirePlane) 
+  HDC_DriftCell_TotalThickness = 19.8*mm;  // Distance: 2*(HVplane to WirePlane)
+  // updated 2012-04-09 wdconinc based on input Mark Pitt
 
   HDCFrame_Thickness        =  17.20*cm; // Allena's keepout info
 
@@ -97,12 +98,14 @@ QweakSimHDC::QweakSimHDC()
   AluFrame_InnerWidth       =  HDCFrame_InnerWidth;
 
   HDC_CenterFront_XPos        =    0.0*cm;
-  HDC_CenterFront_YPos        =   60.0*cm; 
-  HDC_CenterFront_ZPos        = -336.987*cm; //-325.459*cm;  // Allena's keepout info 
+  HDC_CenterFront_YPos        =   51.0*cm;
+  HDC_CenterFront_ZPos        = -337.355*cm; //-325.459*cm;  // Allena's keepout info
+  // updated 2012-04-09 wdconinc based on input Mark Pitt
 
   HDC_CenterBack_XPos        =    0.0*cm;
-  HDC_CenterBack_YPos        =   60.0*cm; 
-  HDC_CenterBack_ZPos        = -296.675*cm; // -285.459*cm; 
+  HDC_CenterBack_YPos        =   54.9*cm;
+  HDC_CenterBack_ZPos        = -294.655*cm;
+  // updated 2012-04-09 wdconinc based on input Mark Pitt
 
   HDC_RotationAngleInPhi     =   0.0*degree;   // normally 0.0*degree = 12 o'clock = octant 1
   
@@ -338,12 +341,14 @@ static const G4double mil = 0.001*2.54*cm;
 					  0,0,0);
 
   // Z Location of the foils in the HDC stack in units of a quarter full drift cell height (=1.9mm /4)
-  G4double HDC_Foil_PositionIndexInZ[10] = { -17.0 , -13.0 , -9.0 , -5.0 , -1.0 , 1.0 , 5.0 , 9.0 , 13.0 , 17.0 };
- 
+  //G4double HDC_Foil_PositionIndexInZ[10] = { -17.0 , -13.0 , -9.0 , -5.0 , -1.0 , 1.0 , 5.0 , 9.0 , 13.0 , 17.0 };
+  // updated 2012-04-09 wdconinc based on input Mark Pitt
+  G4double HDC_Foil_PositionIndexInZ[9] = { -14.0 , -12.0 , -8.0 , -4.0 , 0.0 , 4.0 , 8.0 , 12.0 , 14.0 };
+
   // define foil physical
   G4cout << G4endl << "###### QweakSimHDC: Define HDC_Foil_Physical" << G4endl << G4endl;
 
-  for( G4int index = 0; index < 10; index++){
+  for( G4int index = 0; index < 9; index++){
       
       new G4PVPlacement(0, 
 			G4ThreeVector(0. , 0. , HDC_Foil_PositionIndexInZ[index]*1/4*HDC_DriftCell_TotalThickness ), 
@@ -375,10 +380,12 @@ static const G4double mil = 0.001*2.54*cm;
 					       "HDC_WirePlane_Log",
 					       0,0,0);
   
- // Z Location of the wire planes in the HDC stack in units of a quarter full drift cell height (=1.9mm /4)
-  G4double HDC_WirePlane_PositionIndexInZ[6] = { -11.0 , -7.0 , -3.0 , 3.0 , 7.0 , 11.0 };
+  // Z Location of the wire planes in the HDC stack in units of a quarter full drift cell height (=1.9mm /4)
+  //G4double HDC_WirePlane_PositionIndexInZ[6] = { -11.0 , -7.0 , -3.0 , 3.0 , 7.0 , 11.0 };
+  // updated 2012-04-09 wdconinc based on input Mark Pitt
+  G4double HDC_WirePlane_PositionIndexInZ[6] = { -10.0 , -6.0 , -2.0 , 2.0 , 6.0 , 10.0 };
 
- // define wire planes physical
+  // define wire planes physical
   G4cout << G4endl << "###### QweakSimHDC: Define HDC_WirePlane_Physical" << G4endl << G4endl;
 
   for( G4int index = 0; index < 6; index++){

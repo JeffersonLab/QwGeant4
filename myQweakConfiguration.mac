@@ -103,13 +103,13 @@
 #=============================
 #    HDC related  (Region2)
 #============================
-/HDC/SetFrontCenterPositionInX       0.0    cm
-/HDC/SetFrontCenterPositionInY      48.0    cm
-/HDC/SetFrontCenterPositionInZ    -325.459  cm
+/HDC/SetFrontCenterPositionInX      -0.276  cm
+/HDC/SetFrontCenterPositionInY      51.104  cm
+/HDC/SetFrontCenterPositionInZ    -337.355  cm
 
-/HDC/SetBackCenterPositionInX        0.0    cm
-/HDC/SetBackCenterPositionInY       54.0    cm
-/HDC/SetBackCenterPositionInZ     -285.459  cm
+/HDC/SetBackCenterPositionInX       -0.141  cm
+/HDC/SetBackCenterPositionInY       54.872  cm
+/HDC/SetBackCenterPositionInZ     -294.677  cm
 
 /HDC/SetRotationAngleInPhi           90.0   degree
 
@@ -128,9 +128,9 @@
 # The Back VDC will automatically repositioned relative to the Front VDC
 #/VDC/SetMeanTrackAngle            20.57 degree
 #/VDC/SetFrontBackDistance         50.0  cm 
-/VDC/SetFrontCenterPositionInX     0.0  cm
-/VDC/SetFrontCenterPositionInY   276.165  cm
-/VDC/SetFrontCenterPositionInZ   443.92  cm
+/VDC/SetFrontCenterPositionInX     -0.08  cm
+/VDC/SetFrontCenterPositionInY    272.255 cm
+/VDC/SetFrontCenterPositionInZ    444.61  cm
 
 #/VDC/SetVDC_SubContainerMaterial   Vacuum
 /VDC/SetVDC_SubContainerMaterial   Ar-C2H6_40-60

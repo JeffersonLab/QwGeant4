@@ -102,7 +102,8 @@ QweakSimVDC::QweakSimVDC()
   VDC_CenterFront_ZPos        = 443.920*cm; //480.0*cm;   // SW: 330.0 +107.0
   //VDC_CenterFront_ZPos        = -700*cm;   // for testing
 
-  VDC_FrontBackDistance       = 40.0*cm; // center to center
+  VDC_FrontBackDistance       = 53.18*cm; // center to center
+  // updated 2012-04-09 by wdconinc based on qwanalysis geometry
 
   MeanTrackAngle             =  24.43*degree;  //20.57*degree;  // also tilting angle of VDcs  // 
   VDC_RotationAngleInPhi     =   0.0*degree;   // normally 0.0*degree = 12 o'clock = octant 1
