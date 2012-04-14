@@ -206,3 +206,15 @@
 #/MagneticField/SetActualCurrent 8921.0
 #/MagneticField/SetReferenceCurrent 8615.0
 #/MagneticField/ReadFieldMap MainMagnet_FieldMap.dat
+
+#====================================
+# Random seed handling
+#====================================
+
+# Inform the RunManager to systematically save the seed
+/random/setSavingFlag 1
+# Copy the following command line to your user macro and uncomment it 
+# to use the seeds of the last event in last run
+#/random/resetEngineFrom currentEvent.rndm
+# Or use specific seeds from file 'myseed.rndm', for example 
+#/random/resetEngineFrom myseed.rndm
