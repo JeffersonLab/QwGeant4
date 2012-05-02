@@ -40,15 +40,16 @@ QweakSimPrimaryGeneratorAction::QweakSimPrimaryGeneratorAction( QweakSimUserInfo
 
   G4cout << "###### Calling QweakSimPrimaryGeneratorAction::QweakSimPrimaryGeneratorAction " << G4endl;
   
-  PositionX_min = -2.0*mm;
-  PositionX_max =  2.0*mm;
-  PositionY_min = -2.0*mm;
-  PositionY_max =  2.0*mm;
-  
-  myNormMomentumX  = 0.0;
-  myNormMomentumY  = 0.0;
-  myNormMomentumZ  = 0.0;
-  
+  fPositionX = 0.0*mm;
+  fPositionY = 0.0*mm;
+  fNormMomentumX = 0.0*mrad;
+  fNormMomentumY = 0.0*mrad;
+
+  fPositionX_min = -2.0*mm;
+  fPositionX_max =  2.0*mm;
+  fPositionY_min = -2.0*mm;
+  fPositionY_max =  2.0*mm;
+
   myUserInfo = myUI;
   myEvent = myEPEvent;
    
@@ -89,16 +90,18 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   
   G4double E_beam;
   G4int myEventCounter = myUserInfo->GetPrimaryEventNumber();
+  G4double myPositionX, myPositionY, myPositionZ;
+  G4double myNormMomentumX, myNormMomentumY, myNormMomentumZ;
   if ( myEventCounter%2==0)
   {
     //std::cout << "###### QweakSimPrimaryGeneratorAction::Generate Test Primaries: " << myEventCounter<<std::endl;
-    myPositionX =  (G4UniformRand()-0.5)*(PositionX_max-PositionX_min)+(PositionX_max+PositionX_min)/2.0;
-    myPositionY =  (G4UniformRand()-0.5)*(PositionY_max-PositionY_min)+(PositionY_max+PositionY_min)/2.0;
+    myPositionX =  fPositionX + (G4UniformRand()-0.5)*(fPositionX_max-fPositionX_min)+(fPositionX_max+fPositionX_min)/2.0;
+    myPositionY =  fPositionY + (G4UniformRand()-0.5)*(fPositionY_max-fPositionY_min)+(fPositionY_max+fPositionY_min)/2.0;
     myPositionZ = myUserInfo->TargetCenterPositionZ -30.0*cm;
 
-    myNormMomentumX  = 0.0;
-    myNormMomentumY  = 0.0;
-    myNormMomentumZ  = 1.0;
+    myNormMomentumX  = tan(fNormMomentumX);
+    myNormMomentumY  = tan(fNormMomentumY);
+    myNormMomentumZ  = sqrt(1.0 - myNormMomentumX * myNormMomentumX - myNormMomentumY * myNormMomentumY);
     
     E_beam = 1.160*GeV;
 
@@ -140,8 +143,9 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 						 myPositionY,
 						 myPositionZ ));
 
-  myNormMomentum = G4ThreeVector(myNormMomentumX, myNormMomentumY, myNormMomentumZ);
-  particleGun->SetParticleMomentumDirection(myNormMomentum); 
+  particleGun->SetParticleMomentumDirection(G4ThreeVector(myNormMomentumX,
+                                                          myNormMomentumY,
+                                                          myNormMomentumZ));
 
   particleGun->SetParticleEnergy(E_beam);
 
@@ -151,25 +155,6 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 
 //  G4cout << "###### Leaving QweakSimPrimaryGeneratorAction::GeneratePrimaries" << G4endl;
 
-}
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-// defaule 4 mm x 4 mm raster
-void QweakSimPrimaryGeneratorAction::SetBeamRasteringRegion(G4double X_min=-2.0*mm, 
-							    G4double X_max= 2.0*mm, 
-							    G4double Y_min=-2.0*mm, 
-							    G4double Y_max= 2.0*mm)
-{
-  if (X_max<X_min)
-      X_max = X_min;
-  if (Y_max<Y_min)
-      Y_max = Y_min;
-  
-  PositionX_min = X_min;
-  PositionX_max = X_max;
-  PositionY_min = Y_min;
-  PositionY_max = Y_max;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

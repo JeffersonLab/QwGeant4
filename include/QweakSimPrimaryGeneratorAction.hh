@@ -57,19 +57,34 @@ class QweakSimPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
 {
 public:
    QweakSimPrimaryGeneratorAction( QweakSimUserInformation* myUI, QweakSimEPEvent* myEPEvent);    
-   //QweakSimPrimaryGeneratorAction( );    
   ~QweakSimPrimaryGeneratorAction();
   
 public:
 
-  void SetBeamRasteringRegion(G4double X_min, G4double X_max, G4double Y_min, G4double Y_max);
+  void SetBeamPositionX(G4double x) { fPositionX = x; };
+  void SetBeamPositionY(G4double y) { fPositionY = y; };
+  void SetBeamDirectionX(G4double x) { fNormMomentumX = x; };
+  void SetBeamDirectionY(G4double y) { fNormMomentumY = y; };
+
+  void SetBeamRasteringRegion(G4double X_min = -2.0*mm,
+                              G4double X_max =  2.0*mm,
+                              G4double Y_min = -2.0*mm,
+                              G4double Y_max =  2.0*mm) {
+    if (X_max < X_min) X_max = X_min;
+    if (Y_max < Y_min) Y_max = Y_min;
+    fPositionX_min = X_min;
+    fPositionX_max = X_max;
+    fPositionY_min = Y_min;
+    fPositionY_max = Y_max;
+  }
+
   void GeneratePrimaries(G4Event* anEvent);
   void ResetNtupleEventCounter() {myEventCounter = 0;}
   void SetNtupleEventCounter(G4int cnt) {myEventCounter = cnt;}
   void SetActiveOctant(G4int noct) {
-      G4cout << "%%==> Changing Active Octant to: " << noct << G4endl;
-      kActiveOctantNumber = noct;
-      }
+    G4cout << "%%==> Changing Active Octant to: " << noct << G4endl;
+    kActiveOctantNumber = noct;
+  }
 
   G4int             myEventCounter;
   
@@ -83,22 +98,17 @@ private:
 
   QweakSimPrimaryGeneratorActionMessenger* myMessenger;  // pointer to the Messenger
 
-  G4double PositionX_min;
-  G4double PositionX_max;
-  G4double PositionY_min;
-  G4double PositionY_max;
-	
-  G4double myPositionX;
-  G4double myPositionY;
-  G4double myPositionZ;
+  G4double fPositionX;
+  G4double fPositionY;
+  G4double fNormMomentumX;
+  G4double fNormMomentumY;
 
-  G4double      myNormMomentumX;
-  G4double      myNormMomentumY;
-  G4double      myNormMomentumZ;
-  G4ThreeVector myNormMomentum;
+  G4double fPositionX_min;
+  G4double fPositionX_max;
+  G4double fPositionY_min;
+  G4double fPositionY_max;
 
   G4int kActiveOctantNumber;
-
 
 };
 

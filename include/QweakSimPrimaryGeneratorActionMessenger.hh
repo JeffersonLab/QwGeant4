@@ -59,11 +59,16 @@ private:
   G4UIcmdWithAnInteger*    InitEventCounterCmd;
   G4UIcmdWithAnInteger*    SelectOctant_Cmd;
 
+  G4UIcmdWithADoubleAndUnit*    SetPositionX_Cmd;
+  G4UIcmdWithADoubleAndUnit*    SetPositionY_Cmd;
+  G4UIcmdWithADoubleAndUnit*    SetDirectionX_Cmd;
+  G4UIcmdWithADoubleAndUnit*    SetDirectionY_Cmd;
+
   G4UIcmdWithADoubleAndUnit*    SetRasterXmin_Cmd;
   G4UIcmdWithADoubleAndUnit*    SetRasterXmax_Cmd;
   G4UIcmdWithADoubleAndUnit*    SetRasterYmin_Cmd;
   G4UIcmdWithADoubleAndUnit*    SetRasterYmax_Cmd;
-    
+
   G4double Xmin;
   G4double Xmax;
   G4double Ymin;
