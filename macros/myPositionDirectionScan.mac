@@ -10,13 +10,20 @@
 /Trigger/Enable cer
 /Trigger/Show
 
-/PrimaryEvent/SelectOctant 1
-/PrimaryEvent/SetBeamPositionX 0.0 mm
-/PrimaryEvent/SetBeamPositionY 0.0 mm
-/PrimaryEvent/SetBeamDirectionX 0.6 mrad
-/PrimaryEvent/SetBeamDirectionY 0.0 mrad
+#/PrimaryEvent/SelectOctant 3
+#/PrimaryEvent/SetBeamPositionX 0.0 mm
+#/PrimaryEvent/SetBeamPositionY 0.0 mm
+#/PrimaryEvent/SetBeamDirectionX 0.0 mrad
 
-/Analysis/RootFileName Octant1_DirectionX_urad.root
+/control/alias oct 3
+/control/alias x 0.0
+/control/alias y 0.0
 
-/run/beamOn 100000
+/control/loop macros/myPositionDirectionScan.loop y -0.6 0.6 0.3
+
+#/PrimaryEvent/SetBeamDirectionY -0.6 mrad
+
+#/Analysis/RootFileName Octant3_DirectionY_{}urad.root
+
+#/run/beamOn 100000
 
