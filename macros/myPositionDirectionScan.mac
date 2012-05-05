@@ -1,0 +1,22 @@
+/control/execute myQweakConfiguration.mac
+/control/execute macros/peiqing_2011.mac
+
+/TrackingAction/TrackingFlag 0
+
+/EventGen/SeletReactionRegion 1
+/EventGen/SeletReactionType 1
+
+/Trigger/Disable all
+/Trigger/Enable cer
+/Trigger/Show
+
+/PrimaryEvent/SelectOctant 1
+/PrimaryEvent/SetBeamPositionX 0.0 mm
+/PrimaryEvent/SetBeamPositionY 0.0 mm
+/PrimaryEvent/SetBeamDirectionX 0.6 mrad
+/PrimaryEvent/SetBeamDirectionY 0.0 mrad
+
+/Analysis/RootFileName Octant1_DirectionX_urad.root
+
+/run/beamOn 100000
+
