@@ -107,17 +107,17 @@
 
 # Reaction type menue
 /gui/addMenu reactionType Reaction
-/gui/addButton reactionType "0 - Combination of all reactions" "/EventGen/SeletReactionType 0"
-/gui/addButton reactionType "1 - Elastic LH2" "/EventGen/SeletReactionType 1"
-/gui/addButton reactionType "2 - Elastic Al" "/EventGen/SeletReactionType 2"
-/gui/addButton reactionType "3 - Quasi-elastic Al (proton)" "/EventGen/SeletReactionType 3"
-/gui/addButton reactionType "4 - Quasi-elastic Al (neutron)" "/EventGen/SeletReactionType 4"
-/gui/addButton reactionType "5 - Inelastic LH2" "/EventGen/SeletReactionType 5"
-/gui/addButton reactionType "6 - Moller scattering" "/EventGen/SeletReactionType 6"
+/gui/addButton reactionType "0 - Combination of all reactions" "/EventGen/SelectReactionType 0"
+/gui/addButton reactionType "1 - Elastic LH2" "/EventGen/SelectReactionType 1"
+/gui/addButton reactionType "2 - Elastic Al" "/EventGen/SelectReactionType 2"
+/gui/addButton reactionType "3 - Quasi-elastic Al (proton)" "/EventGen/SelectReactionType 3"
+/gui/addButton reactionType "4 - Quasi-elastic Al (neutron)" "/EventGen/SelectReactionType 4"
+/gui/addButton reactionType "5 - Inelastic LH2" "/EventGen/SelectReactionType 5"
+/gui/addButton reactionType "6 - Moller scattering" "/EventGen/SelectReactionType 6"
 
 # Reaction region menue
 /gui/addMenu reactionRegion ReactionRegion
-/gui/addButton reactionRegion "1 - Target" "/EventGen/SeletReactionRegion 1"
-/gui/addButton reactionRegion "2 - Entrance target window" "/EventGen/SeletReactionRegion 2"
-/gui/addButton reactionRegion "3 - Exit target window" "/EventGen/SeletReactionRegion 3"
+/gui/addButton reactionRegion "1 - Target" "/EventGen/SelectReactionRegion 1"
+/gui/addButton reactionRegion "2 - Entrance target window" "/EventGen/SelectReactionRegion 2"
+/gui/addButton reactionRegion "3 - Exit target window" "/EventGen/SelectReactionRegion 3"
 

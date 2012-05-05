@@ -61,7 +61,7 @@ QweakSimEPEventMessenger::QweakSimEPEventMessenger(QweakSimEPEvent* pEPEvent)
 //                             2 - entrance window
 //                             3 - exit window
 
-  SelectReactionType_Cmd = new G4UIcmdWithAnInteger("/EventGen/SeletReactionType",this);
+  SelectReactionType_Cmd = new G4UIcmdWithAnInteger("/EventGen/SelectReactionType",this);
   SelectReactionType_Cmd->SetGuidance("Select reaction type");
   SelectReactionType_Cmd->SetGuidance("0 - Combination of all reactions");
   SelectReactionType_Cmd->SetGuidance("1 - LH2 elastic (default)");
@@ -75,7 +75,7 @@ QweakSimEPEventMessenger::QweakSimEPEventMessenger(QweakSimEPEvent* pEPEvent)
   SelectReactionType_Cmd->SetRange("SelectReactionType>=0");
   SelectReactionType_Cmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
-  SelectReactionRegion_Cmd = new G4UIcmdWithAnInteger("/EventGen/SeletReactionRegion",this);
+  SelectReactionRegion_Cmd = new G4UIcmdWithAnInteger("/EventGen/SelectReactionRegion",this);
   SelectReactionRegion_Cmd->SetGuidance("Select reaction region");
   SelectReactionRegion_Cmd->SetGuidance("1 - target (default)");
   SelectReactionRegion_Cmd->SetGuidance("2 - entrance target window");

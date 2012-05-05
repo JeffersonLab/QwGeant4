@@ -3,8 +3,8 @@
 
 /TrackingAction/TrackingFlag 0
 
-/EventGen/SeletReactionRegion 1
-/EventGen/SeletReactionType 1
+/EventGen/SelectReactionRegion 1
+/EventGen/SelectReactionType 1
 
 /Trigger/Disable all
 /Trigger/Enable cer
