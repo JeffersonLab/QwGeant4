@@ -1,12 +1,12 @@
 /PrimaryEvent/SelectOctant {oct}
-/PrimaryEvent/SetBeamPositionX 0.0 mm
-/PrimaryEvent/SetBeamPositionY 0.0 mm
-/PrimaryEvent/SetBeamDirectionX {x} mrad
-/PrimaryEvent/SetBeamDirectionY {y} mrad
+/PrimaryEvent/SetBeamPositionX {posy} mm
+/PrimaryEvent/SetBeamPositionY {posx} mm
+/PrimaryEvent/SetBeamDirectionX {anglex} mrad
+/PrimaryEvent/SetBeamDirectionY {angley} mrad
 
-/control/multiply a {x} 1000
-/control/multiply b {y} 1000
+/control/multiply x {anglex} 1000
+/control/multiply y {angley} 1000
 
-/Analysis/RootFileName Octant{oct}_DirectionX_{a}urad_DirctionY_{b}urad.root
+/Analysis/RootFileName rootfiles/Octant{oct}_PositionX_{posx}mm_PositionY_{posy}mm_DirectionX_{x}urad_DirectionY_{y}urad.root
 
-/run/beamOn 100000
+/run/beamOn 80000
