@@ -40,10 +40,7 @@ QweakSimPrimaryGeneratorAction::QweakSimPrimaryGeneratorAction( QweakSimUserInfo
 
   G4cout << "###### Calling QweakSimPrimaryGeneratorAction::QweakSimPrimaryGeneratorAction " << G4endl;
   
-  fPositionX = 0.0*mm;
-  fPositionY = 0.0*mm;
-  fNormMomentumX = 0.0*mrad;
-  fNormMomentumY = 0.0*mrad;
+
 
   fPositionX_min = -2.0*mm;
   fPositionX_max =  2.0*mm;
@@ -95,12 +92,12 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   if ( myEventCounter%2==0)
   {
     //std::cout << "###### QweakSimPrimaryGeneratorAction::Generate Test Primaries: " << myEventCounter<<std::endl;
-    myPositionX =  fPositionX + (G4UniformRand()-0.5)*(fPositionX_max-fPositionX_min)+(fPositionX_max+fPositionX_min)/2.0;
-    myPositionY =  fPositionY + (G4UniformRand()-0.5)*(fPositionY_max-fPositionY_min)+(fPositionY_max+fPositionY_min)/2.0;
+    myPositionX =  myUserInfo->GetBeamPositionX() + (G4UniformRand()-0.5)*(fPositionX_max-fPositionX_min)+(fPositionX_max+fPositionX_min)/2.0;
+    myPositionY =  myUserInfo->GetBeamPositionY() + (G4UniformRand()-0.5)*(fPositionY_max-fPositionY_min)+(fPositionY_max+fPositionY_min)/2.0;
     myPositionZ = myUserInfo->TargetCenterPositionZ -30.0*cm;
 
-    myNormMomentumX  = tan(fNormMomentumX);
-    myNormMomentumY  = tan(fNormMomentumY);
+    myNormMomentumX  = tan(myUserInfo->GetNormMomentumX());
+    myNormMomentumY  = tan(myUserInfo->GetNormMomentumY());
     myNormMomentumZ  = sqrt(1.0 - myNormMomentumX * myNormMomentumX - myNormMomentumY * myNormMomentumY);
     
     E_beam = 1.160*GeV;

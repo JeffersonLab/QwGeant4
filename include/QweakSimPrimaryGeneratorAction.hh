@@ -51,6 +51,10 @@ class G4ParticleGun;
 // user classes
 class QweakSimPrimaryGeneratorActionMessenger;
 
+//infomation class
+class QweakSimUserInformation;
+class QweakSimEPEvent;
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
  
 class QweakSimPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
@@ -61,10 +65,6 @@ public:
   
 public:
 
-  void SetBeamPositionX(G4double x) { fPositionX = x; };
-  void SetBeamPositionY(G4double y) { fPositionY = y; };
-  void SetBeamDirectionX(G4double x) { fNormMomentumX = x; };
-  void SetBeamDirectionY(G4double y) { fNormMomentumY = y; };
 
   void SetBeamRasteringRegion(G4double X_min = -2.0*mm,
                               G4double X_max =  2.0*mm,
@@ -85,6 +85,8 @@ public:
     G4cout << "%%==> Changing Active Octant to: " << noct << G4endl;
     kActiveOctantNumber = noct;
   }
+  
+  QweakSimUserInformation* GetUserInfo() const { return myUserInfo; };
 
   G4int             myEventCounter;
   
@@ -97,11 +99,6 @@ private:
   QweakSimEPEvent* myEvent;
 
   QweakSimPrimaryGeneratorActionMessenger* myMessenger;  // pointer to the Messenger
-
-  G4double fPositionX;
-  G4double fPositionY;
-  G4double fNormMomentumX;
-  G4double fNormMomentumY;
 
   G4double fPositionX_min;
   G4double fPositionX_max;

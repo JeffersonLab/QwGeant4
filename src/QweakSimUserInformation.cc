@@ -19,6 +19,11 @@ void QweakSimUserInformation::Print() const
 void QweakSimUserInformation::Initialize()
 {
 
+  fPositionX = 0.0*mm;
+  fPositionY = 0.0*mm;
+  fNormMomentumX = 0.0*mrad;
+  fNormMomentumY = 0.0*mrad;
+  
   TargetCenterPositionZ = -650*cm;
   PrimaryEventNumber = 0;
   ReactionType = 0;         // assign a number to which kind of reaction,e.g. 1 = elastic ep,

@@ -152,25 +152,25 @@ void QweakSimPrimaryGeneratorActionMessenger::SetNewValue(G4UIcommand* command, 
     {
       G4cout << "#### Messenger: Setting Beam Position in X to " << newValue << G4endl;
       G4double x = SetPositionX_Cmd->GetNewDoubleValue(newValue);
-      pPrimaryGeneratorAction->SetBeamPositionX(x);
+      pPrimaryGeneratorAction->GetUserInfo()->SetBeamPositionX(x);
     }
   if( command == SetPositionY_Cmd )
     {
       G4cout << "#### Messenger: Setting Beam Position in Y to " << newValue << G4endl;
       G4double y = SetPositionY_Cmd->GetNewDoubleValue(newValue);
-      pPrimaryGeneratorAction->SetBeamPositionY(y);
+      pPrimaryGeneratorAction->GetUserInfo()->SetBeamPositionY(y);
     }
   if( command == SetDirectionX_Cmd )
     {
       G4cout << "#### Messenger: Setting Beam Direction in X to " << newValue << G4endl;
       G4double x = SetPositionX_Cmd->GetNewDoubleValue(newValue);
-      pPrimaryGeneratorAction->SetBeamDirectionX(x);
+      pPrimaryGeneratorAction->GetUserInfo()->SetBeamDirectionX(x);
     }
   if( command == SetDirectionY_Cmd )
     {
       G4cout << "#### Messenger: Setting Beam Direction in Y to " << newValue << G4endl;
       G4double y = SetPositionX_Cmd->GetNewDoubleValue(newValue);
-      pPrimaryGeneratorAction->SetBeamDirectionY(y);
+      pPrimaryGeneratorAction->GetUserInfo()->SetBeamDirectionY(y);
     }
 
 

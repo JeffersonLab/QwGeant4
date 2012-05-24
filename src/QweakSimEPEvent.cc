@@ -20,7 +20,7 @@
 
 // user includes
 #include "QweakSimEPEventMessenger.hh"
-#include "../include/QweakSimEPEvent.hh"
+#include "QweakSimUserInformation.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -99,7 +99,7 @@ G4ThreeVector QweakSimEPEvent::GetMomentumDirection()
 {
 
    // Generate flat phi distribution
-    PhiAngle =  PhiAngle_Min + G4UniformRand()*(PhiAngle_Max - PhiAngle_Min);
+    G4double PhiAngle =  PhiAngle_Min + G4UniformRand()*(PhiAngle_Max - PhiAngle_Min);
     G4double cosPhi = cos(PhiAngle);
     G4double sinPhi = sin(PhiAngle);
 
@@ -108,7 +108,7 @@ G4ThreeVector QweakSimEPEvent::GetMomentumDirection()
 
     // Generate flat theta distribution
     if (Isotropy == 0) {
-        ThetaAngle = ThetaAngle_Min + G4UniformRand()*(ThetaAngle_Max - ThetaAngle_Min);
+        G4double ThetaAngle = ThetaAngle_Min + G4UniformRand()*(ThetaAngle_Max - ThetaAngle_Min);
 	cosTheta = cos(ThetaAngle);
         sinTheta = sin(ThetaAngle);
     }
@@ -121,7 +121,7 @@ G4ThreeVector QweakSimEPEvent::GetMomentumDirection()
         G4double cosThetaMin = cos(ThetaAngle_Min);   
         cosTheta = cosThetaMin + G4UniformRand()*(cosThetaMax - cosThetaMin);
         sinTheta = sqrt(1. - cosTheta * cosTheta);
-        ThetaAngle = acos(cosTheta);
+        G4double ThetaAngle = acos(cosTheta);
     }
     else {
         std::cerr<<"Warning: unkown isotropy type, use type 0 instead."<<std::endl;
@@ -146,36 +146,29 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
                                  G4double &fWeightN,
                                  G4double &Q2,
                                  G4double &E_out,
-                                 G4ThreeVector &MomentumDirection,
+                                 G4ThreeVector &OutgoingMomentumDirection,
                                  G4double &theta,
                                  G4double &phi,
 				 G4double &Asymmetry)
 {
 
+    // incoming momentum
+    G4ThreeVector IncomingMomentumDirection = myUserInfo->GetNormMomentum();
+    
+    G4double IncomingMomentumDirectionMag = IncomingMomentumDirection.mag();
 
-//    if(ReactionType==0) //straight-through beam
-//       {
-//        fCrossSection = 1.0;
-//        fWeightN = 1.0;
-//        Q2 = 0.0;
-//        E_out = E_in;
-//        //MomentumDirection = G4ThreeVector(0.0,0.0,1.0);
-//        //theta = 0.0;
-//        //phi = 0.0;
-//        theta = MomentumDirection.theta()/degree;
-//        phi = MomentumDirection.phi()/degree;
-//        Asymmetry = 0.0;
-//       }
-//    else
-//       {
-//         MomentumDirection = GetMomentumDirection();
-//         theta = ThetaAngle/degree;
-//         phi = PhiAngle/degree;
-//       }
+    
+    // outgoing momentum
+    OutgoingMomentumDirection = GetMomentumDirection();
+    theta = OutgoingMomentumDirection.theta()/degree;
+    phi = OutgoingMomentumDirection.phi()/degree;
+    
+    // relative theta angle
+    
+    G4double dot = OutgoingMomentumDirection.dot(IncomingMomentumDirection);
+    
+    G4double RelativeThetaAngle = acos(dot/IncomingMomentumDirectionMag);    
 
-    MomentumDirection = GetMomentumDirection();
-    theta = ThetaAngle/degree;
-    phi = PhiAngle/degree;
 
    if(ReactionType==0 || TypeSetting==0) // combination of all process, Random int [1,6]
       {
@@ -194,8 +187,8 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
        A = 1.0;
        Z = 1.0;
        Mass = Z*M_p+(A-Z)*M_n;
-       fCrossSection = Elastic_Cross_Section_Proton(E_in, ThetaAngle, fWeightN, Q2, E_out);
-       Asymmetry = GetAsymmetry_EP(ThetaAngle, E_in);
+       fCrossSection = Elastic_Cross_Section_Proton(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
+       Asymmetry = GetAsymmetry_EP(RelativeThetaAngle, E_in);
       }
       
    else if(ReactionType==2) // Aluminum window
@@ -203,8 +196,8 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
        A = 27.0;
        Z = 13.0;
        Mass = Z*M_p+(A-Z)*M_n;
-       fCrossSection = Elastic_Cross_Section_Aluminum(E_in, ThetaAngle, fWeightN, Q2, E_out);
-       Asymmetry = GetAsymmetry_AL(ThetaAngle, E_in);
+       fCrossSection = Elastic_Cross_Section_Aluminum(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
+       Asymmetry = GetAsymmetry_AL(RelativeThetaAngle, E_in);
       }
 
    else if(ReactionType==3) // Aluminum window quasi-elastic proton (assume free proton)
@@ -212,8 +205,8 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
        A = 1.0;
        Z = 1.0;   
        Mass = M_p;    
-       fCrossSection = Elastic_Cross_Section_Proton(E_in, ThetaAngle, fWeightN, Q2, E_out);
-       Asymmetry = GetAsymmetry_EP(ThetaAngle, E_in);
+       fCrossSection = Elastic_Cross_Section_Proton(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
+       Asymmetry = GetAsymmetry_EP(RelativeThetaAngle, E_in);
       }
 
    else if(ReactionType==4) // Aluminum window quasi-elastic neutron (assume free neutron)
@@ -221,13 +214,13 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
        A = 1.0;
        Z = 1.0;   // Z needs to be set to 1 for neutron quasi elastic scattering
        Mass = M_n;    
-       fCrossSection = Quasi_Elastic_Neutron(E_in, ThetaAngle, fWeightN, Q2, E_out);
-       Asymmetry = GetAsymmetry_EN(ThetaAngle, E_in);
+       fCrossSection = Quasi_Elastic_Neutron(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
+       Asymmetry = GetAsymmetry_EN(RelativeThetaAngle, E_in);
       }
 
    else if(ReactionType==5) // Delta resonances
       {
-       fCrossSection = Delta_Resonance(E_in, ThetaAngle, fWeightN, Q2, E_out);
+       fCrossSection = Delta_Resonance(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
        //std::cout<<E_in<<" "<<ThetaAngle/degree<<" "<<fWeightN<<" "<<Q2<<" "<<E_out<<std::endl;
        Asymmetry = GetAsymmetry_Pi(Q2);
       }
@@ -237,7 +230,7 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
 	//  Small angle recoil electrons are directly dumped for now.
        G4double E_recoil;
        G4double ThetaRecoil;
-       fCrossSection = Moller_Scattering(E_in, ThetaAngle, E_out, 
+       fCrossSection = Moller_Scattering(E_in, RelativeThetaAngle, E_out, 
 					 E_recoil, ThetaRecoil, 
                                          Q2, fWeightN, Asymmetry);
       }      
@@ -288,7 +281,7 @@ G4double QweakSimEPEvent::Elastic_Cross_Section_Proton(G4double E_in,
       G4double FAC = 1.0/(1.0+tau);
 
       G4double Sigma_Dipole = Mott*(GEP_DIPOLE*GEP_DIPOLE*FAC+tau*GMP_DIPOLE*GMP_DIPOLE*(FAC+2.*T2THE));
-      fWeightN = Sigma_Dipole*sin(ThetaAngle);
+      fWeightN = Sigma_Dipole*sin(Theta);
       return Sigma_Dipole;
 }
 
@@ -366,7 +359,7 @@ G4double QweakSimEPEvent::Elastic_Cross_Section_Aluminum(G4double E_in,
 
 //  EventDataFile<<"SigmaMott="<<SigmaMott<<"  "<<"SigmaMott*F_2="<<SigmaMott*F_2<<"  "<<"weight_n="<<SigmaMott*F_2*sin(Theta)<<G4endl;
       G4double Xsect = SigmaMott*F_2;
-      fWeightN = Xsect*sin(ThetaAngle);
+      fWeightN = Xsect*sin(Theta);
       return Xsect;
 }
 
@@ -420,7 +413,7 @@ G4double QweakSimEPEvent::Quasi_Elastic_Neutron(G4double E_in,
 //      G4double Sigma_Dipole = Z*Sigma_Dipole_p + (A-Z)*Sigma_Dipole_n;
 
 //  cout<<"===>>>>leaving Quasi_Elastic_Neutron"<<endl;
-      fWeightN = Sigma_Dipole_n*sin(ThetaAngle);
+      fWeightN = Sigma_Dipole_n*sin(Theta);
       return Sigma_Dipole_n;
 }
 

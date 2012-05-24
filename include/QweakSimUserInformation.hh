@@ -14,6 +14,8 @@
 
 #include "G4PhysicsOrderedFreeVector.hh"
 
+#include "QweakSimPrimaryGeneratorAction.hh"
+
 
 class QweakSimUserInformation 
 {
@@ -30,8 +32,31 @@ public:
   G4int    ReactionType;         // assign a number to which kind of reaction,e.g. 1 = elastic ep,
   G4int    ReactionRegion;
   G4int    EvtGenStatus;
+  
+  //setter functions
+  void SetBeamPositionX(G4double x) { fPositionX = x; };
+  void SetBeamPositionY(G4double y) { fPositionY = y; };
+  void SetBeamDirectionX(G4double x) { fNormMomentumX = x; };
+  void SetBeamDirectionY(G4double y) { fNormMomentumY = y; };
+  
+  //getter functions 
+  G4double    GetBeamPositionX() const {return fPositionX;};
+  G4double    GetBeamPositionY() const {return fPositionY;};
+  
+  G4double    GetNormMomentumX() const {return fNormMomentumX;};
+  G4double    GetNormMomentumY() const {return fNormMomentumY;};
+  G4ThreeVector GetNormMomentum() const {
+    return G4ThreeVector(fNormMomentumX,fNormMomentumY,sqrt(1-fNormMomentumX*fNormMomentumX-fNormMomentumY*fNormMomentumY));
+  }
+
+  
     
 private:
+  
+  G4double fPositionX;
+  G4double fPositionY;
+  G4double fNormMomentumX;
+  G4double fNormMomentumY;
 
   G4int    PrimaryEventNumber;
   G4int    PDGcode;              // particle data code/number for the primary particle, e.g. 3=electron

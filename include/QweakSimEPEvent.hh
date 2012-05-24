@@ -20,11 +20,9 @@
 #include "G4Types.hh"
 #include "G4ThreeVector.hh"
 
-// user includes
-#include "QweakSimUserInformation.hh"
-
 // user classes
 class QweakSimEPEventMessenger;
+class QweakSimUserInformation;
 
 class QweakSimEPEvent {
 
@@ -65,8 +63,6 @@ class QweakSimEPEvent {
   G4double ThetaAngle_Min;
   G4double ThetaAngle_Max;
 
-  G4double ThetaAngle;
-  G4double PhiAngle;
   G4double myPositionZ;
 
   G4ThreeVector GetMomentumDirection();
