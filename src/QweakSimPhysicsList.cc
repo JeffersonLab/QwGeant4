@@ -444,8 +444,6 @@ void QweakSimPhysicsList::ConstructOpticalPhotonProcess()
 //  theAbsorptionProcess->DumpPhysicsTable();
 //  theRayleighScatteringProcess->DumpPhysicsTable();
 
-  SetVerbose(1);
-
   theCerenkovProcess->SetMaxNumPhotonsPerStep(300);
   theCerenkovProcess->SetTrackSecondariesFirst(true);
 
