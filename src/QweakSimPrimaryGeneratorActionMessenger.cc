@@ -29,6 +29,11 @@
 QweakSimPrimaryGeneratorActionMessenger::QweakSimPrimaryGeneratorActionMessenger(QweakSimPrimaryGeneratorAction* pPhys)
 :pPrimaryGeneratorAction(pPhys)
 {
+  Xmin = 0.0;
+  Xmax = 0.0;
+  Ymin = 0.0;
+  Ymax = 0.0;
+
   Dir = new G4UIdirectory("/PrimaryEvent/");
   Dir->SetGuidance("Primary event control");
  

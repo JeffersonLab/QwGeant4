@@ -66,8 +66,9 @@ QweakSimMagneticField::QweakSimMagneticField()
 
   // Set current and scale factors
   G4double current = 8921.0;
-  SetReferenceCurrent(current);
-  SetActualCurrent(current);
+  fActualCurrent = current;
+  fReferenceCurrent = current;
+  fScaleFactor = 1.0;
 
   G4cout << G4endl << "###### Leaving QweakSimMagneticField::QweakSimMagneticField " << G4endl << G4endl;
 }

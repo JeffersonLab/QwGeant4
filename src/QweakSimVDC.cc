@@ -117,6 +117,7 @@ QweakSimVDC::QweakSimVDC()
   DriftCell_FullHeight       =  70.0*cm;
   DriftCell_FullThickness    =   2.54*cm; 
   DriftCell_WireAngleFront   =  65.57; // 63.43*degree; // (90-26.57)*degree
+  DriftCell_WireAngleBack    =  180.0 - DriftCell_WireAngleFront;
 
   DriftCell_MasterContainer_FullThickness    =    6.0*cm;   //extral large value
   DriftCell_MasterContainer_FullHeight       =   85.00*cm;  //extral large value
