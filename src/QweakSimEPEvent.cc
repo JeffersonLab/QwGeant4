@@ -52,7 +52,7 @@ QweakSimEPEvent::QweakSimEPEvent( QweakSimUserInformation* myUI)
   TypeSetting = 1;
   ReactionType = 1;
   ReactionRegion = 1;
-  kActiveOctantNumber = 1;  //default octant 1, choose from [1,8]
+  kActiveOctantNumber = 0;  //default octant all, choose from [0,8]
 
   myUserInfo = myUI;
   EventGen_Messenger = new QweakSimEPEventMessenger(this);
@@ -98,8 +98,9 @@ G4double QweakSimEPEvent::GetVertexZ()
 G4ThreeVector QweakSimEPEvent::GetMomentumDirection()
 {
 
-   // Generate flat phi distribution
+    // Generate flat phi distribution
     G4double PhiAngle =  PhiAngle_Min + G4UniformRand()*(PhiAngle_Max - PhiAngle_Min);
+    if (kActiveOctantNumber == 0) PhiAngle += (G4RandFlat::shootInt(8) * 45.0 * degree);
     G4double cosPhi = cos(PhiAngle);
     G4double sinPhi = sin(PhiAngle);
 
@@ -133,7 +134,8 @@ G4ThreeVector QweakSimEPEvent::GetMomentumDirection()
 
     G4ThreeVector myNormMomentum(ux,uy,uz);
        
-    myNormMomentum.rotateZ( (kActiveOctantNumber-1)*45.0*degree);
+    if (kActiveOctantNumber > 0)
+      myNormMomentum.rotateZ( (kActiveOctantNumber-1)*45.0*degree);
 
     return myNormMomentum; 
 }

@@ -37,10 +37,10 @@ QweakSimEPEventMessenger::QweakSimEPEventMessenger(QweakSimEPEvent* pEPEvent)
   verboseCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
   SelectOctant_Cmd = new G4UIcmdWithAnInteger("/EventGen/SelectOctant",this);
-  SelectOctant_Cmd->SetGuidance("Select octant for primaries");
+  SelectOctant_Cmd->SetGuidance("Select octant for primaries (zero for all)");
   SelectOctant_Cmd->SetParameterName("SelectOctant",true);
-  SelectOctant_Cmd->SetDefaultValue(1);
-  SelectOctant_Cmd->SetRange("SelectOctant>=1 && SelectOctant<=8");
+  SelectOctant_Cmd->SetDefaultValue(0);
+  SelectOctant_Cmd->SetRange("SelectOctant>=0 && SelectOctant<=8");
   SelectOctant_Cmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
 // Isotropy:     0 - uniform phi angle and uniform theta angle, independent to each other
