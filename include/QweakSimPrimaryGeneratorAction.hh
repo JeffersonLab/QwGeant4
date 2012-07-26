@@ -40,6 +40,8 @@
 #include "G4ios.hh"
 #include "G4Types.hh"
 #include "G4ThreeVector.hh"
+#include "G4ParticleGun.hh"
+#include "G4ParticleTable.hh"
 #include "G4VUserPrimaryGeneratorAction.hh"
 
 #include "QweakSimUserInformation.hh"
@@ -86,6 +88,15 @@ public:
     kActiveOctantNumber = noct;
   }
   
+  void SetParticleType(G4String type = "e-") {
+    G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
+    G4ParticleDefinition* particle = particleTable->FindParticle(type);
+    if (particleGun && particle) {
+      G4cout << "###### Setting particle type to " << type << G4endl;
+      particleGun->SetParticleDefinition(particle);
+    }
+  }
+
   QweakSimUserInformation* GetUserInfo() const { return myUserInfo; };
 
   G4int             myEventCounter;

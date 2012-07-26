@@ -37,7 +37,6 @@
 
 QweakSimPrimaryGeneratorAction::QweakSimPrimaryGeneratorAction( QweakSimUserInformation* myUI, QweakSimEPEvent* myEPEvent)
 {
-
   G4cout << "###### Calling QweakSimPrimaryGeneratorAction::QweakSimPrimaryGeneratorAction " << G4endl;
   
 
@@ -58,6 +57,7 @@ QweakSimPrimaryGeneratorAction::QweakSimPrimaryGeneratorAction( QweakSimUserInfo
 
   G4int n_particle = 1;
   particleGun = new G4ParticleGun(n_particle);
+  SetParticleType("e-");
 
   G4cout << "###### Leaving QweakSimPrimaryGeneratorAction::QweakSimPrimaryGeneratorAction " << G4endl;
   
@@ -78,12 +78,6 @@ QweakSimPrimaryGeneratorAction::~QweakSimPrimaryGeneratorAction()
 void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 { 
 //  G4cout << "###### Calling QweakSimPrimaryGeneratorAction::GeneratePrimaries" << G4endl;
-
-//jpan@nuclear.uwinnipeg.ca
-//
-  G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
-  G4ParticleDefinition* particle = particleTable->FindParticle("e-");
-  particleGun->SetParticleDefinition(particle);
   
   G4double E_beam;
   G4int myEventCounter = myUserInfo->GetPrimaryEventNumber();

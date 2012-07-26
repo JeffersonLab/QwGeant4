@@ -49,6 +49,12 @@ QweakSimPrimaryGeneratorActionMessenger::QweakSimPrimaryGeneratorActionMessenger
   //resetCmd->AvailableForStates(G4State_PreInit,G4State_Idle);  
   resetCmd->AvailableForStates(G4State_Idle);  
 
+  SetParticleType_Cmd = new G4UIcmdWithAString("/PrimaryEvent/SetParticleType",this);
+  SetParticleType_Cmd->SetGuidance("set particle type for primary generator");
+  SetParticleType_Cmd->SetParameterName("type",true);
+  SetParticleType_Cmd->SetDefaultValue("e-");
+  SetParticleType_Cmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+
   InitEventCounterCmd = new G4UIcmdWithAnInteger("/PrimaryEvent/StartingEvent",this);
   InitEventCounterCmd->SetGuidance("set starting event count for primary generator");
   InitEventCounterCmd->SetParameterName("StartingEvent",true);
@@ -152,6 +158,8 @@ void QweakSimPrimaryGeneratorActionMessenger::SetNewValue(G4UIcommand* command, 
   if( command == InitEventCounterCmd )
     { pPrimaryGeneratorAction->SetNtupleEventCounter(InitEventCounterCmd->GetNewIntValue(newValue)); }
 
+  if( command == SetParticleType_Cmd )
+    { pPrimaryGeneratorAction->SetParticleType(newValue); }
 
   if( command == SetPositionX_Cmd )
     {
