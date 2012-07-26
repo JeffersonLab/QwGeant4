@@ -218,3 +218,13 @@
 #/random/resetEngineFrom currentEvent.rndm
 # Or use specific seeds from file 'myseed.rndm', for example 
 #/random/resetEngineFrom myseed.rndm
+
+#=====================================
+# Pion Wall related
+#=====================================
+
+# Comment out the line below to leave the Pion Wall in (defaults to 4" thick)
+/PionWall/Disable
+
+# Uncomment the following line to change the Pion Wall thickness to 2"
+#/PionWall/SetThicknessInZ 5.08 cm

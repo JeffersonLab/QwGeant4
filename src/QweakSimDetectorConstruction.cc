@@ -54,6 +54,7 @@
 #include "QweakSimCollimator.hh"
 #include "QweakSimCollimatorSupport.hh"
 #include "QweakSimShieldingWall.hh"
+#include "QweakSimPionWall.hh"
 #include "QweakSimMainMagnet.hh"
 #include "QweakSimVDC.hh"
 #include "QweakSimVDCRotator.hh"
@@ -105,6 +106,8 @@ QweakSimDetectorConstruction::QweakSimDetectorConstruction(QweakSimUserInformati
 
 
   pShieldingWall     = NULL;
+  
+  pPionWall          = NULL;
 
   // pGEM               = NULL;
   pHDC               = NULL;
@@ -162,6 +165,8 @@ QweakSimDetectorConstruction::~QweakSimDetectorConstruction()
 
 
   if (pShieldingWall)       delete pShieldingWall;
+  
+  if (pPionWall)            delete pPionWall;
 
   if (pTarget)              delete pTarget;
   if (pBeamLine)            delete pBeamLine;
@@ -190,6 +195,8 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   pCollimator3         = new QweakSimCollimator();
 
   pShieldingWall       = new QweakSimShieldingWall();
+  
+  pPionWall            = new QweakSimPionWall();
 
   pMainMagnet          = new QweakSimMainMagnet(); // QTOR Geometry (decoupled from field)
 
@@ -473,6 +480,12 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   pShieldingWall->ConstructFrontWall(experimentalHall_Physical);
   //
   pGeometry->AddModule(pShieldingWall->getShieldingWallHousingPhysicalVolume());
+
+  //===================================================
+  // create/place Pion Wall body into MotherVolume
+  //===================================================
+  //
+  pPionWall->ConstructPionWall(experimentalHall_Physical);
 
   //===============================================
   // create/place Drift Chambers into MotherVolume

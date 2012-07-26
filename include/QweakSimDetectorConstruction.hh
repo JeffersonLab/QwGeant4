@@ -57,6 +57,7 @@ class QweakSimBeamLineMessenger;
 class QweakSimCollimator;
 class QweakSimCollimatorSupport;
 class QweakSimShieldingWall;
+class QweakSimPionWall;
 class QweakSimMainMagnet;
 class QweakSimVDC;
 class QweakSimVDCRotator;
@@ -111,6 +112,8 @@ private:
   QweakSimCollimatorSupport* pCollimatorSupport;
 
   QweakSimShieldingWall*     pShieldingWall;
+ 
+  QweakSimPionWall*          pPionWall;
 
   QweakSimMainMagnet*        pMainMagnet;
 
