@@ -281,12 +281,6 @@ void QweakSimPhysicsList::AddTransportation()
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void QweakSimPhysicsList::ConstructEMProcess()
 {
-
-    const G4RegionStore* theRegionStore = G4RegionStore::GetInstance();
-    G4Region* DriftCellRegion_VDC = theRegionStore->GetRegion("DriftCellRegion_VDC");
-    // G4Region* DriftCellRegion_GEM = theRegionStore->GetRegion("DriftCellRegion_GEM");
-
-
     G4ProcessManager*   pManager = 0;
 
     /////////////////////
@@ -316,7 +310,11 @@ void QweakSimPhysicsList::ConstructEMProcess()
     pManager->AddProcess(new G4eBremsstrahlung,     -1, 3,3);
     pManager->AddProcess(new G4eIonisation,         -1, 2,2);
 
-/*    
+/*
+    const G4RegionStore* theRegionStore = G4RegionStore::GetInstance();
+
+    G4Region* DriftCellRegion_VDC = theRegionStore->GetRegion("DriftCellRegion_VDC");
+
     // see http://geant4.home.cern.ch/geant4/G4UsersDocuments/UsersGuides/PhysicsReferenceManual/html/node38.html
     // The Photoabsorption Ionization (PAI) model describes the ionization energy loss of a relativistic charged particle in matter.
     G4eIonisation* eion = new G4eIonisation();
@@ -331,6 +329,8 @@ void QweakSimPhysicsList::ConstructEMProcess()
     // here 0 is the highest priority in region 'gas'
     eion->AddEmModel(0,paiVDC,paiVDC,DriftCellRegion_VDC);
 
+
+    // G4Region* DriftCellRegion_GEM = theRegionStore->GetRegion("DriftCellRegion_GEM");
 
     // G4PAIModel*     paiGEM = new G4PAIModel(G4Electron::ElectronDefinition(),"PAIModel");
     // set energy limits where 'pai' is active

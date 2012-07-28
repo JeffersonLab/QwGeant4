@@ -224,7 +224,7 @@ void QweakSimMagneticField::ReadFieldMapText(const G4String& filename)
 
     // Transform units into fieldmap system of units
     double  coord[3] = { z/cm, r/cm, phi/radian };
-    value_t field[3] = { b[0]/tesla, b[1]/tesla, b[2]/tesla };
+    value_t field[3] = { value_t(b[0]/tesla), value_t(b[1]/tesla), value_t(b[2]/tesla) };
 
     // Store into fieldmap
     fField->Set(coord,field);

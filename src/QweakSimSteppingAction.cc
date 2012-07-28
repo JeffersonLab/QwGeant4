@@ -78,20 +78,20 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
 //   G4int                 nprocesses   = pm->GetProcessListLength();
 //   G4ProcessVector*      pv           = pm->GetProcessList();  
 //   G4VSteppingVerbose*   theVerbStep  = G4VSteppingVerbose::GetInstance();
-  G4double              charge       = particleType->GetPDGCharge();
+//   G4double              charge       = particleType->GetPDGCharge();
 
 //   G4int nSecAtRest       = GetNumOfAtRestSecondaries();
 //   G4int nSecAlong        = GetNumOfAlongStepSecondaries();
 //   G4int nSecPost         = GetNumOfPostStepSecondaries();
-  G4int nSecTotal        = GetTotalNumOfSecondaries();
-  
+//   G4int nSecTotal        = GetTotalNumOfSecondaries();
+
   //RandomPositionZ = myEvent->GetVertexZ();
   RandomPositionZ = myUserInfo->GetOriginVertexPositionZ();
 
-  
+
 //jpan@nuclear.uwinnipeg.ca Thu Apr 16 01:33:14 CDT 2009
 // check if it is primary
-         
+
   G4int parentID = theTrack->GetParentID();
   if( particleType==G4Electron::ElectronDefinition() && parentID==0 ){
 

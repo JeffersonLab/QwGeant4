@@ -122,7 +122,6 @@ G4ThreeVector QweakSimEPEvent::GetMomentumDirection()
         G4double cosThetaMin = cos(ThetaAngle_Min);   
         cosTheta = cosThetaMin + G4UniformRand()*(cosThetaMax - cosThetaMin);
         sinTheta = sqrt(1. - cosTheta * cosTheta);
-        G4double ThetaAngle = acos(cosTheta);
     }
     else {
         std::cerr<<"Warning: unkown isotropy type, use type 0 instead."<<std::endl;
@@ -1049,8 +1048,8 @@ G4double QweakSimEPEvent::GetAsymmetry_EN(G4double theta, G4double energy)
     G4double gmpg=2.793*gvd;
     G4double geng=1.91*tau*gvd/(1.+5.6*tau);
     G4double gmng=-1.91*gvd;
-    G4double gesg= 0;
-    G4double gmsg= 0;
+    //G4double gesg= 0;
+    //G4double gmsg= 0;
 
 //    Form Factors: Neutral-weak, Axial
 //     Assume: Gs_E,M=0, G8_A,Gs_A=0

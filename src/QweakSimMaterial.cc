@@ -30,17 +30,17 @@ void QweakSimMaterial::DefineMaterials()
 
   G4Element* elH  = fNistManager->FindOrBuildElement("H");
   G4Element* elHe = fNistManager->FindOrBuildElement("He");
-  G4Element* elBe = fNistManager->FindOrBuildElement("Be");
-  G4Element* elB  = fNistManager->FindOrBuildElement("B");
+  //G4Element* elBe = fNistManager->FindOrBuildElement("Be");
+  //G4Element* elB  = fNistManager->FindOrBuildElement("B");
   G4Element* elC  = fNistManager->FindOrBuildElement("C");
   G4Element* elN  = fNistManager->FindOrBuildElement("N");
   G4Element* elO  = fNistManager->FindOrBuildElement("O");
-  G4Element* elF  = fNistManager->FindOrBuildElement("F");
-  G4Element* elNa = fNistManager->FindOrBuildElement("Na");
-  G4Element* elMg = fNistManager->FindOrBuildElement("Mg");
+  //G4Element* elF  = fNistManager->FindOrBuildElement("F");
+  //G4Element* elNa = fNistManager->FindOrBuildElement("Na");
+  //G4Element* elMg = fNistManager->FindOrBuildElement("Mg");
   G4Element* elAl = fNistManager->FindOrBuildElement("Al");
   G4Element* elSi = fNistManager->FindOrBuildElement("Si");
-  G4Element* elCl = fNistManager->FindOrBuildElement("Cl");
+  //G4Element* elCl = fNistManager->FindOrBuildElement("Cl");
   G4Element* elAr = fNistManager->FindOrBuildElement("Ar");
   G4Element* elK  = fNistManager->FindOrBuildElement("K");
   G4Element* elCa = fNistManager->FindOrBuildElement("Ca");
@@ -49,13 +49,13 @@ void QweakSimMaterial::DefineMaterials()
   G4Element* elMn = fNistManager->FindOrBuildElement("Mn");
   G4Element* elCr = fNistManager->FindOrBuildElement("Cr");
   G4Element* elXe = fNistManager->FindOrBuildElement("Xe");
-  G4Element* elSb = fNistManager->FindOrBuildElement("Sb");
-  G4Element* elPb = fNistManager->FindOrBuildElement("Pb");
+  //G4Element* elSb = fNistManager->FindOrBuildElement("Sb");
+  //G4Element* elPb = fNistManager->FindOrBuildElement("Pb");
 
   // Let's get Tungsten.  This is not the alooy to be used
   // but it is fine for a test.
 
-  G4Element* elW = fNistManager->FindOrBuildElement("W");
+  //G4Element* elW = fNistManager->FindOrBuildElement("W");
 
 
   //

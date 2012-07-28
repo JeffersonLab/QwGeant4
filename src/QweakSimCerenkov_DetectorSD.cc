@@ -136,16 +136,16 @@ G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistor
   G4double trackID = aStep->GetTrack()->GetTrackID();
 
    G4ParticleDefinition*  fpParticleDefinition = aStep->GetTrack()->GetDefinition();
-   G4String ParticleName         = fpParticleDefinition->GetParticleName();
-   G4int PDGCharge            = fpParticleDefinition->GetPDGCharge();
+   G4String ParticleName      = fpParticleDefinition->GetParticleName();
+//   G4double PDGCharge         = fpParticleDefinition->GetPDGCharge();
    G4int PDGEncoding          = fpParticleDefinition->GetPDGEncoding();
-  
+
   G4int    MotherCopyNo   = theTouchable->GetVolume(1)->GetCopyNo();   // one Mother Volume
-  G4int DetectorCopyNo    = theTouchable->GetVolume()->GetCopyNo();    // but several detectors per MV
-  G4int DetectorReplicaNo = theTouchable->GetReplicaNumber();          // but several detectors per MV
-  G4int MotherReplicaNo   = theTouchable->GetReplicaNumber(1);        // Several MotherVolumes
-  G4int    MotherCopyNo2  = theTouchable->GetVolume(2)->GetCopyNo();  // Several MotherVolumes
-  G4int MotherReplicaNo2  = theTouchable->GetReplicaNumber(2);        // Several MotherVolumes
+//  G4int DetectorCopyNo    = theTouchable->GetVolume()->GetCopyNo();    // but several detectors per MV
+//  G4int DetectorReplicaNo = theTouchable->GetReplicaNumber();          // but several detectors per MV
+//  G4int MotherReplicaNo   = theTouchable->GetReplicaNumber(1);        // Several MotherVolumes
+//  G4int    MotherCopyNo2  = theTouchable->GetVolume(2)->GetCopyNo();  // Several MotherVolumes
+//  G4int MotherReplicaNo2  = theTouchable->GetReplicaNumber(2);        // Several MotherVolumes
 
 
 //    G4cout << "%%%%%%%%%%%%%%%%%%%  Cerenkov MV    CopyNumber  :" << MotherCopyNo      << G4endl;
@@ -157,7 +157,7 @@ G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistor
 
 
   // get User Track Info
-  QweakSimTrackInformation* info = (QweakSimTrackInformation*)(aStep->GetTrack()->GetUserInformation());
+//  QweakSimTrackInformation* info = (QweakSimTrackInformation*)(aStep->GetTrack()->GetUserInformation());
 
 //   G4int    primaryTrackID                 = info->GetPrimaryTrackID();
 //   G4double primaryQ2                      = info->GetPrimaryQ2();
