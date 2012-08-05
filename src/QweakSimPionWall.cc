@@ -185,11 +185,11 @@ void QweakSimPionWall::SetDisabled()
 {
   // Disables the Pion Wall by changing the material to air, 
   // moving the wall 5m into the floor and hiding it.
-  PionWall_VisAtt->SetVisibility(false);
+  PionWall_VisAtt->SetVisibility(true);
   SetPionWall_Material("Air");
   PionWall_Physical->SetTranslation(G4ThreeVector(PionWall_CenterXPosition,
-                                                  PionWall_CenterYPosition - 500*cm,
-                                                  PionWall_CenterZPosition));
+                                                  PionWall_CenterYPosition,
+                                                  PionWall_CenterZPosition + 400*cm));
 
 }
 
