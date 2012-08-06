@@ -27,60 +27,74 @@
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-QweakSimCerenkovDetectorMessenger::QweakSimCerenkovDetectorMessenger(QweakSimCerenkovDetector* theCerenkovDetector)
-:myCerenkovDetector(theCerenkovDetector)
-{ 
+QweakSimCerenkovDetectorMessenger::QweakSimCerenkovDetectorMessenger(QweakSimCerenkovDetector* theCerenkovDetector, G4int octant)
+:myCerenkovDetector(theCerenkovDetector),fOctant(octant)
+{
+  //Added Cerenkov octant number to the command list. The messenger is now dependent on the octant number.
+  //K. Bartlett Aug 6, 2012
 
-  Dir = new G4UIdirectory("/Cerenkov/");
+  //Dir = new G4UIdirectory("/Cerenkov/");
+  G4String cerenkov = "/Cerenkov" + G4UIcommand::ConvertToString(octant+1);
+
+  Dir = new  G4UIdirectory(G4String("/Cerenkov" + cerenkov + "/"));
   Dir -> SetGuidance("Cerenkov Detector control.");
-       
-  ContainerThicknessCmd =  new G4UIcmdWithADoubleAndUnit("/Cerenkov/SetThickness",this);
+
+  //ContainerThicknessCmd =  new G4UIcmdWithADoubleAndUnit("/Cerenkov/SetThickness",this);
+  ContainerThicknessCmd =  new G4UIcmdWithADoubleAndUnit(G4String("/Cerenkov" + cerenkov + "/SetThickness"),this);
   ContainerThicknessCmd->SetGuidance("Set the thickness (length in Z) of the Cherenkov container"); 
   ContainerThicknessCmd->SetParameterName("Size",true);
   ContainerThicknessCmd->SetUnitCategory("Length");
   ContainerThicknessCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
-  ContainerZPositionCmd =  new G4UIcmdWithADoubleAndUnit("/Cerenkov/SetCenterPositionInZ",this);
+  //ContainerZPositionCmd =  new G4UIcmdWithADoubleAndUnit("/Cerenkov/SetCenterPositionInZ",this);
+  ContainerZPositionCmd =  new G4UIcmdWithADoubleAndUnit(G4String("/Cerenkov"+ cerenkov + "/SetCenterPositionInZ"),this);
   ContainerZPositionCmd->SetGuidance("Set the Z position of the Cerenkov container center"); 
   ContainerZPositionCmd->SetParameterName("Size",true);
   ContainerZPositionCmd->SetUnitCategory("Length");
   ContainerZPositionCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
-  ContainerYPositionCmd =  new G4UIcmdWithADoubleAndUnit("/Cerenkov/SetCenterPositionInY",this);
+  //ContainerYPositionCmd =  new G4UIcmdWithADoubleAndUnit("/Cerenkov/SetCenterPositionInY",this);
+  ContainerYPositionCmd =  new G4UIcmdWithADoubleAndUnit(G4String("/Cerenkov" + cerenkov + "/SetCenterPositionInY"),this);
   ContainerYPositionCmd->SetGuidance("Set the Y position of the Cerenkov container center"); 
   ContainerYPositionCmd->SetParameterName("Size",true);
   ContainerYPositionCmd->SetUnitCategory("Length");
   ContainerYPositionCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
-  ContainerXPositionCmd =  new G4UIcmdWithADoubleAndUnit("/Cerenkov/SetCenterPositionInX",this);
+  //ContainerXPositionCmd =  new G4UIcmdWithADoubleAndUnit("/Cerenkov/SetCenterPositionInX",this);
+  ContainerXPositionCmd =  new G4UIcmdWithADoubleAndUnit(G4String("/Cerenkov" + cerenkov + "/SetCenterPositionInX"),this);
   ContainerXPositionCmd->SetGuidance("Set the X position of the Cerenkov container center"); 
   ContainerXPositionCmd->SetParameterName("Size",true);
   ContainerXPositionCmd->SetUnitCategory("Length");
   ContainerXPositionCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
-  TiltingAngleCmd =  new G4UIcmdWithADoubleAndUnit("/Cerenkov/SetTiltingAngle",this);
+  //TiltingAngleCmd =  new G4UIcmdWithADoubleAndUnit("/Cerenkov/SetTiltingAngle",this);
+  TiltingAngleCmd =  new G4UIcmdWithADoubleAndUnit(G4String("/Cerenkov" + cerenkov + "/SetTiltingAngle"),this);
   TiltingAngleCmd->SetGuidance("Set the tilting angle of the Cerenkov Detector"); 
   TiltingAngleCmd->SetParameterName("Angle",true);
   TiltingAngleCmd->SetDefaultUnit("degree");
   TiltingAngleCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
-  KinkAngleCmd =  new G4UIcmdWithADoubleAndUnit("/Cerenkov/SetKinkAngle",this);
+  //KinkAngleCmd =  new G4UIcmdWithADoubleAndUnit("/Cerenkov/SetKinkAngle",this);
+  KinkAngleCmd =  new G4UIcmdWithADoubleAndUnit(G4String("/Cerenkov" + cerenkov + "/SetKinkAngle"),this);
   KinkAngleCmd->SetGuidance("Set the kink angle for the V-shape "); 
   KinkAngleCmd->SetParameterName("Angle",true);
   KinkAngleCmd->SetDefaultUnit("degree");
   KinkAngleCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
-  ContainerMatCmd = new G4UIcmdWithAString("/Cerenkov/SetContainerMaterial",this);
+  //ContainerMatCmd = new G4UIcmdWithAString("/Cerenkov/SetContainerMaterial",this);
+  ContainerMatCmd = new G4UIcmdWithAString(G4String("/Cerenkov" + cerenkov + "/SetContainerMaterial"),this);
   ContainerMatCmd->SetGuidance("Select Material of the Cerenkov Container.");
   ContainerMatCmd->SetParameterName("choice",false);
   ContainerMatCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
-  DetectorMatCmd = new G4UIcmdWithAString("/Cerenkov/SetCerenkovMaterial",this);
+  //DetectorMatCmd = new G4UIcmdWithAString("/Cerenkov/SetCerenkovMaterial",this);
+  DetectorMatCmd = new G4UIcmdWithAString(G4String("/Cerenkov" + cerenkov + "/SetCerenkovMaterial"),this);
   DetectorMatCmd->SetGuidance("Select Material of the Cerenkov Detector.");
   DetectorMatCmd->SetParameterName("choice",false);
   DetectorMatCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
-  PreRadiatorMatCmd = new G4UIcmdWithAString("/Cerenkov/SetPreradiatorMaterial",this);
+  //PreRadiatorMatCmd = new G4UIcmdWithAString("/Cerenkov/SetPreradiatorMaterial",this);
+  PreRadiatorMatCmd = new G4UIcmdWithAString(G4String("/Cerenkov" + cerenkov + "/SetPreradiatorMaterial"),this);
   PreRadiatorMatCmd->SetGuidance("Select Material of the Pre-radiator.");
   PreRadiatorMatCmd->SetParameterName("choice",false);
   PreRadiatorMatCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
@@ -108,7 +122,7 @@ QweakSimCerenkovDetectorMessenger::~QweakSimCerenkovDetectorMessenger()
 void QweakSimCerenkovDetectorMessenger::SetNewValue(G4UIcommand* command,G4String newValue)
 { 
   G4cout << "#### Calling QweakSimCerenkovDetectorMessenger::SetNewValue() " << newValue << G4endl;
-
+   
   if( command == ContainerThicknessCmd )
    {
      G4cout << "#### Messenger: Setting CerenkovDetector Container Thickness to " << newValue << G4endl;
@@ -119,22 +133,22 @@ void QweakSimCerenkovDetectorMessenger::SetNewValue(G4UIcommand* command,G4Strin
   if( command == ContainerXPositionCmd )
    {
      G4cout << "#### Messenger: Setting CerenkovDetector Container X position to " << newValue << G4endl;
-
-     myCerenkovDetector->SetCerenkovDetectorCenterPositionInX(ContainerXPositionCmd->GetNewDoubleValue(newValue));
+     
+     myCerenkovDetector->SetCerenkovDetectorCenterPositionInX(ContainerXPositionCmd->GetNewDoubleValue(newValue), fOctant);
    }
 
   if( command == ContainerYPositionCmd )
   {
       G4cout << "#### Messenger: Setting CerenkovDetector Container Y position to " << newValue << G4endl;
       
-      myCerenkovDetector->SetCerenkovDetectorCenterPositionInY(ContainerYPositionCmd->GetNewDoubleValue(newValue));
+      myCerenkovDetector->SetCerenkovDetectorCenterPositionInY(ContainerYPositionCmd->GetNewDoubleValue(newValue), fOctant);
    }
   
   if( command == ContainerZPositionCmd )
   {
       G4cout << "#### Messenger: Setting CerenkovDetector Container Z position to " << newValue << G4endl;
 
-      myCerenkovDetector->SetCerenkovDetectorCenterPositionInZ(ContainerZPositionCmd->GetNewDoubleValue(newValue));
+      myCerenkovDetector->SetCerenkovDetectorCenterPositionInZ(ContainerZPositionCmd->GetNewDoubleValue(newValue), fOctant);
   }
   
   

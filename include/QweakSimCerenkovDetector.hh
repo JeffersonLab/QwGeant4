@@ -29,7 +29,8 @@ class G4SubtractionSolid;
 #include "QweakSimMaterial.hh"
 #include "QweakSimUserInformation.hh"
 
-// user classes
+
+		// user classes
 class QweakSimCerenkovDetectorMessenger;
 class QweakSimMaterial;
 
@@ -48,9 +49,9 @@ public:
   void SetCerenkovDetectorMaterial(G4String materialName);
   void SetPreradiatorMaterial(G4String materialName);
 
-  void SetCerenkovDetectorCenterPositionInX(G4double xPos);
-  void SetCerenkovDetectorCenterPositionInY(G4double yPos);
-  void SetCerenkovDetectorCenterPositionInZ(G4double zPos) ;
+  void SetCerenkovDetectorCenterPositionInX(G4double xPos, G4int octant);
+  void SetCerenkovDetectorCenterPositionInY(G4double yPos, G4int octant);
+  void SetCerenkovDetectorCenterPositionInZ(G4double zPos, G4int octant);
   void SetCerenkovDetectorTiltAngle(G4double tiltangle);
   void SetCerenkovDetectorThickness(G4double thickness);
 
@@ -66,7 +67,7 @@ private:
 
   QweakSimUserInformation *myUserInfo;
 
-  QweakSimCerenkovDetectorMessenger* CerenkovDetectorMessenger;  // pointer to the Messenger
+ std::vector< QweakSimCerenkovDetectorMessenger* >  CerenkovDetectorMessenger;  // pointer to the Messenger
 
   QweakSimMaterial*  pMaterial;
 
@@ -383,11 +384,10 @@ private:
  // pointer to the sensitive detector
   G4VSensitiveDetector* CerenkovDetectorSD;
   G4VSensitiveDetector* CerenkovDetector_PMTSD;
-
-  G4double Position_CerenkovContainer_X;
-  G4double Position_CerenkovContainer_Y;
-  G4double Position_CerenkovContainer_Z;
-
+  //Cerenkov Position variable now a vector for eight positions
+  std::vector< G4double > Position_CerenkovContainer_X;
+  std::vector< G4double > Position_CerenkovContainer_Y;
+  std::vector< G4double > Position_CerenkovContainer_Z;
 
 };
 #endif

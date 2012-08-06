@@ -45,14 +45,15 @@ class QweakSimCerenkovDetector;
 class QweakSimCerenkovDetectorMessenger: public G4UImessenger
 {
   public:
-    QweakSimCerenkovDetectorMessenger(QweakSimCerenkovDetector*);
+    QweakSimCerenkovDetectorMessenger(QweakSimCerenkovDetector*, G4int octant = 1);
    ~QweakSimCerenkovDetectorMessenger();
-    
+    G4int GetOctant() {return fOctant;}
     void SetNewValue(G4UIcommand*, G4String);
     
 private:
   QweakSimCerenkovDetector*            myCerenkovDetector;
   
+  G4int fOctant;
   G4UIdirectory*             Dir;
 
   G4UIcmdWithAString*        ContainerMatCmd;

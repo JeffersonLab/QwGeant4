@@ -46,18 +46,43 @@
 #
 #/Cerenkov/SetCerenkovMaterial HeGas
 #/Cerenkov/SetCerenkovMaterial SiO2
-/Cerenkov/SetCerenkovMaterial Quartz
+/Cerenkov/Cerenkov1/SetCerenkovMaterial Quartz
 #/Cerenkov/SetCerenkovMaterial Vacuum
 
 # positions to be extracted from SolidWorks
 # on the vertical detector plane
  
-/Cerenkov/SetCenterPositionInX      0.0 cm
-/Cerenkov/SetCenterPositionInY   335.17 cm
-/Cerenkov/SetCenterPositionInZ   577.88 cm
-/Cerenkov/SetTiltingAngle           0.0 degree
+#/Cerenkov/SetCenterPositionInX      0.0 cm
+#/Cerenkov/SetCenterPositionInY   335.17 cm
+#/Cerenkov/SetCenterPositionInZ   577.88 cm
+/Cerenkov/Cerenkov1/SetTiltingAngle           0.0 degree
 
-/Cerenkov/SetPreradiatorMaterial PBA
+/Cerenkov/Cerenkov1/SetPreradiatorMaterial PBA
+
+#Move Cerenkov Detectors to actual position 
+/Cerenkov/Cerenkov1/SetCenterPositionInY  334.724 cm
+/Cerenkov/Cerenkov1/SetCenterPositionInZ  576.665 cm
+
+/Cerenkov/Cerenkov2/SetCenterPositionInY  334.742 cm
+/Cerenkov/Cerenkov2/SetCenterPositionInZ  576.705 cm
+
+/Cerenkov/Cerenkov3/SetCenterPositionInY  334.738 cm
+/Cerenkov/Cerenkov3/SetCenterPositionInZ  577.020 cm
+
+/Cerenkov/Cerenkov4/SetCenterPositionInY  335.036 cm
+/Cerenkov/Cerenkov4/SetCenterPositionInZ  577.425 cm
+
+/Cerenkov/Cerenkov5/SetCenterPositionInY  335.074 cm
+/Cerenkov/Cerenkov5/SetCenterPositionInZ  577.515 cm
+
+/Cerenkov/Cerenkov6/SetCenterPositionInY  335.252 cm
+/Cerenkov/Cerenkov6/SetCenterPositionInZ  577.955 cm
+
+/Cerenkov/Cerenkov7/SetCenterPositionInY  335.224 cm
+/Cerenkov/Cerenkov7/SetCenterPositionInZ  577.885 cm
+
+/Cerenkov/Cerenkov8/SetCenterPositionInY  334.888 cm
+/Cerenkov/Cerenkov8/SetCenterPositionInZ  577.060 cm
 
 #==================================
 #  Trigger Scintillator related
@@ -205,7 +230,7 @@
 #/MagneticField/SetRotation -67.5 degree
 #/MagneticField/SetActualCurrent 8921.0
 #/MagneticField/SetReferenceCurrent 8615.0
-#/MagneticField/ReadFieldMap MainMagnet_FieldMap.dat
+/MagneticField/ReadFieldMap peiqing_2011.dat 
 
 #====================================
 # Random seed handling
