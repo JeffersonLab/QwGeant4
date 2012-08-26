@@ -104,7 +104,7 @@ public:
 
   void DestroyComponent();
 
-  void     SetCollimatorHousing_CenterPositionInZ(G4double zpos);
+  void     SetCollimatorHousing_CenterPositionInZ(G4double zPos);
   G4double GetCollimatorHousing_CenterPositionInZ()     { return CollimatorHousing_CenterZPosition;}
 
   void SetCollimatorHousingMaterial(G4String);
