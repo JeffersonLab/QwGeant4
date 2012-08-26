@@ -3,7 +3,6 @@
 /**
  
    \file QweakSimCollimatorMessenger.hh
-   \file QweakSimCollimatorMessenger.cc
    
    \version 1.0
    \date  Wednesday 23 November 2005 , 23:17

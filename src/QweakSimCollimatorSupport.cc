@@ -300,7 +300,7 @@ void QweakSimCollimatorSupport::SetCollimatorSupportMaterial(G4String materialNa
 //! Sets the material of the Collimator Support
  /*!	
 	
- \param G4String - Name of the material defined in class QweakSimG4Material
+ \param materialName Name of the material defined in class QweakSimG4Material
     
  */
 //---------------------------------------------------------------------------------------------

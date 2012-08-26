@@ -48,8 +48,8 @@ QweakSimEventAction::QweakSimEventAction(QweakSimAnalysis* AN, QweakSimUserInfor
 //! Constructor of QweakSimEventAction
     /*!
 
-    \param  QweakSimAnalysis*          - class containing the Geamt4 hit data structure
-    \param  QweakSimUserInformation*   - class containing user information like Q2 for this event or QE of some PMTs
+    \param  AN     class containing the Geamt4 hit data structure
+    \param  myUI   class containing user information like Q2 for this event or QE of some PMTs
                                          which is needed for processing/saving hit information
 
 

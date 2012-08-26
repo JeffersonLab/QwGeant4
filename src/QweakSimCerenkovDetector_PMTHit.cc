@@ -1,7 +1,7 @@
 // 
 /**
  
-   \file QweakSimCerenkov_PMTHit.cc
+   \file QweakSimCerenkovDetector_PMTHit.cc
 
    $Revision: 1.3 $	
    $Date: 2005/12/27 19:01:50 $

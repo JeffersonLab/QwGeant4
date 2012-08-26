@@ -90,14 +90,14 @@ void QweakSimCollimator::ConstructCollimator(G4VPhysicalVolume* MotherVolume)
 
 //---------------------------------------------------------------------------------------------
 //! Creates a Collimator with 8 cutouts
- /** 
-	
- \param G4VPhysicalVolume* - The physical volume in which the collimator will be placed
-    
+ /**
+
+ \param MotherVolume The physical volume in which the collimator will be placed
+
  */
 //---------------------------------------------------------------------------------------------
 
-    G4double PI                                = 3.14159265359;     //probably defined 
+    G4double PI                                = 3.14159265359;     //probably defined
                                                                     //somewhere else, but
                                                                     //what the heck
 
@@ -361,7 +361,7 @@ void QweakSimCollimator::SetCollimatorHousingMaterial(G4String materialName)
 //! Sets the material of the Collimator Housing
  /*!	
 	
- \param G4String - Name of the material defined in class QweakSimG4Material
+ \param materialName Name of the material defined in class QweakSimG4Material
     
  */
 //---------------------------------------------------------------------------------------------
@@ -380,7 +380,7 @@ void QweakSimCollimator::SetCollimatorHousing_CenterPositionInZ(G4double zPos)
 //! Sets the Z position of the Collimator Housing Center
  /*!	
 	
- \param G4Double - Z position along beam line
+ \param zPos Z position along beam line
     
  */
 //---------------------------------------------------------------------------------------------
