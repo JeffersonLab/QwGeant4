@@ -230,7 +230,11 @@
 #/MagneticField/SetRotation -67.5 degree
 #/MagneticField/SetActualCurrent 8921.0
 #/MagneticField/SetReferenceCurrent 8615.0
-/MagneticField/ReadFieldMap peiqing_2011.dat 
+#/MagneticField/ReadFieldMap peiqing_2007.dat 
+
+# The preferred way to load a field map is to use
+# the macros in macros/peiqing_*.mac
+/control/execute peiqing_2011.mac
 
 #====================================
 # Random seed handling
