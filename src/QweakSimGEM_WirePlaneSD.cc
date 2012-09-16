@@ -98,10 +98,10 @@ G4bool QweakSimGEM_WirePlaneSD::ProcessHits(G4Step* aStep,G4TouchableHistory* /*
 //    G4cout << ">>>>>>> Particle crossing  : GEM_AnodeCopperLayer_Physical <<<<<<<<<" << G4endl;
 //    G4cout << "=============================================================" << G4endl;
 
-//     G4double trackID = aStep->GetTrack()->GetTrackID();
+//     G4int trackID = aStep->GetTrack()->GetTrackID();
 //     G4cout << "====> Track ID     : " <<  trackID << G4endl;
     
-//     G4double parentID = aStep->GetTrack()->GetParentID();
+//     G4int parentID = aStep->GetTrack()->GetParentID();
 //     G4cout << "====> Parent ID    : " <<  parentID << G4endl;
   
   

@@ -133,7 +133,7 @@ G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistor
   G4double      currentTotalEnergy       = aStep->GetTrack()->GetTotalEnergy();
   G4ThreeVector currentMomentumDirection = aStep->GetTrack()->GetMomentumDirection();
 
-  G4double trackID = aStep->GetTrack()->GetTrackID();
+  G4int trackID = aStep->GetTrack()->GetTrackID();
 
    G4ParticleDefinition*  fpParticleDefinition = aStep->GetTrack()->GetDefinition();
    G4String ParticleName      = fpParticleDefinition->GetParticleName();
@@ -180,16 +180,12 @@ G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistor
 
   aHit->StoreOriginVertexPosition(originVertexPosition);
   aHit->StoreOriginVertexKineticEnergy(originVertexKineticEnergy);
-  aHit->StoreOriginVertexTotalEnergy(originVertexKineticEnergy);   // beware: total.neq.kinetic (testing only)
+  aHit->StoreOriginVertexTotalEnergy(originVertexKineticEnergy);   /// \todo beware: total.neq.kinetic (testing only)
   aHit->StoreOriginVertexMomentumDirection(originVertexMomentumDirection);
 
   aHit->StoreMomentumDirection(currentMomentumDirection);
   aHit->StoreKineticEnergy(currentKineticEnergy);
   aHit->StoreTotalEnergy(currentTotalEnergy);
-
-//   aHit->StorePrimaryQ2(primaryQ2);
-//   aHit->StoreCrossSection(crossSection);
-//   aHit->StoreCrossSectionWeight(crossSectionWeight);
 
   aHit->StoreParticleName(ParticleName);
   aHit->StoreParticleType(PDGEncoding);
@@ -219,7 +215,6 @@ G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistor
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-//void QweakSimCerenkovDetectorSD::EndOfEvent(G4HCofThisEvent*  HCE)
 void QweakSimCerenkov_DetectorSD::EndOfEvent(G4HCofThisEvent* )
 {
   //G4cout << G4endl << "###### Calling QweakSimCerenkov_DetectorSD::EndOfEvent() " << G4endl << G4endl; 

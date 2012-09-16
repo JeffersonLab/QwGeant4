@@ -22,9 +22,9 @@
 /**
    \class QweakSimUserCerenkov_DetectorEvent 
     
-   \brief ROOT Subtree structure for Cerenkov DetectorEvent
+   \ingroup root
 
-   Placeholder for a long explaination
+   \brief ROOT Subtree structure for Cerenkov DetectorEvent
     
  */
 //=============================================================================
@@ -63,76 +63,106 @@ class QweakSimUserCerenkov_DetectorEvent : public TObject
 
 private:
 
-//   TTree   *DataTree;
-//   TBranch *secondaryElectronBranch;
+  Int_t   DetectorID; ///< ID of the detector in which this hit was registered
+  Int_t   TrackID;    ///< ID of the track from which this hit was generated
 
-  Int_t   DetectorID;
+  Float_t GlobalTimeOfHit;      ///< Global time when this hit was generated (ns)
 
-  Float_t TrackID;
-  Float_t GlobalTimeOfHit;
+  Int_t HasBeenHit;             ///< Has this detector been hit? 0 = no, 5 = yes
+  Int_t EdgeEventFlag;          ///< Was the distance between hit and exit position below 1.5 cm? 0 = no, 1 = yes
+  Int_t NbOfHits;               ///< Number of hits in this detector
 
-  Int_t HasBeenHit;
-  Int_t EdgeEventFlag;
-  Int_t NbOfHits;
-  Int_t SecondaryParticleCount;
-  Int_t SecondaryElectronCount;
-  Int_t SecondaryPhotonCount;  
-  Int_t SecondaryPositronCount;
-  Int_t OpticalPhotonCount;
+  Int_t SecondaryParticleCount; ///< Number of secondary particles
+  Int_t SecondaryElectronCount; ///< Number of secondary electrons
+  Int_t SecondaryPhotonCount;   ///< Number of secondary photons
+  Int_t SecondaryPositronCount; ///< Number of secondary positrons
 
-//   QweakSimUserCerenkov_SecondaryParticleEvent *secondaryElectronEvent;
+  Int_t OpticalPhotonCount;     ///< Number of optical photons
 
-  Float_t *SecPartLocalOriginX; //[SecondaryParticleCount]
-  Float_t *SecPartLocalOriginY; //[SecondaryParticleCount]
-  Float_t *SecPartLocalOriginZ; //[SecondaryParticleCount]
+  /// \name Position in local coordinates of original vertex of the secondary in this event
+  /// The global coordinates are defined in the \ref local_coordinate_system.
+  //@{
+  std::vector<Float_t> SecPartLocalOriginX;
+  std::vector<Float_t> SecPartLocalOriginY;
+  std::vector<Float_t> SecPartLocalOriginZ;
+  //@}
 
-  Float_t *SecPartLocalMomentumX; //[SecondaryParticleCount]
-  Float_t *SecPartLocalMomentumY; //[SecondaryParticleCount]
-  Float_t *SecPartLocalMomentumZ; //[SecondaryParticleCount]
+  /// \name Momentum in local coordinates of original vertex of the secondary in this event
+  /// The global coordinates are defined in the \ref local_coordinate_system.
+  //@{
+  std::vector<Float_t> SecPartLocalMomentumX;
+  std::vector<Float_t> SecPartLocalMomentumY;
+  std::vector<Float_t> SecPartLocalMomentumZ;
+  //@}
 
-  Float_t *SecPartLocalEnergy; //[SecondaryParticleCount]
-  Float_t *SecPartLocalCharge; //[SecondaryParticleCount]
+  std::vector<Float_t> SecPartLocalEnergy;
+  std::vector<Float_t> SecPartLocalType;
 
-  std::vector <Double_t> CerenkovPhotonEnergy;
+  std::vector<Double_t> CerenkovPhotonEnergy;
   
-  Float_t HitLocalPositionX;
-  Float_t HitLocalPositionY;
-  Float_t HitLocalPositionZ;
-  Float_t HitLocalExitPositionX;
-  Float_t HitLocalExitPositionY;
-  Float_t HitLocalExitPositionZ;
-  Float_t HitGlobalPositionX;
-  Float_t HitGlobalPositionY;
-  Float_t HitGlobalPositionZ;
+  /// \name Position of the hit in local coordinates (cm)
+  /// The local coordinates are defined in the \ref local_coordinate_system.
+  //@{
+  std::vector<Float_t> HitLocalPositionX; ///< (cm)
+  std::vector<Float_t> HitLocalPositionY; ///< (cm)
+  std::vector<Float_t> HitLocalPositionZ; ///< (cm)
+  //@}
 
-  Float_t OriginVertexPositionX;
-  Float_t OriginVertexPositionY;
-  Float_t OriginVertexPositionZ;
+  /// \name Position where the track exits the volume in local coordinates (cm)
+  /// The local coordinates are defined in the \ref local_coordinate_system.
+  //@{
+  Float_t HitLocalExitPositionX; ///< (cm)
+  Float_t HitLocalExitPositionY; ///< (cm)
+  Float_t HitLocalExitPositionZ; ///< (cm)
+  //@}
 
+  /// \name Position of the hit in global coordinates
+  /// The global coordinates are defined in the \ref global_coordinate_system.
+  //@{
+  Float_t HitGlobalPositionX;    ///< (cm)
+  Float_t HitGlobalPositionY;    ///< (cm)
+  Float_t HitGlobalPositionZ;    ///< (cm)
+  //@}
+
+  /// \name Position in global coordinates of original vertex of the track from which this hit was generated
+  /// The global coordinates are defined in the \ref global_coordinate_system.
+  //@{
+  Float_t OriginVertexPositionX; ///< (cm)
+  Float_t OriginVertexPositionY; ///< (cm)
+  Float_t OriginVertexPositionZ; ///< (cm)
+  //@}
+
+  /// \name Direction in global coordinates of original vertex of the track from which this hit was generated
+  /// The global coordinates are defined in the \ref global_coordinate_system.
+  //@{
   Float_t OriginVertexMomentumDirectionX;
   Float_t OriginVertexMomentumDirectionY;
   Float_t OriginVertexMomentumDirectionZ;
-
-  Float_t OriginVertexThetaAngle;
-  Float_t OriginVertexPhiAngle;
+  Float_t OriginVertexThetaAngle;       ///< (degrees)
+  Float_t OriginVertexPhiAngle;         ///< (degrees)
+  //@}
 
   Float_t OriginVertexKineticEnergy;
   Float_t OriginVertexTotalEnergy;
 
-  Float_t LocalVertexTotalEnergy;
+  /// \name Direction of the hit in global coordinates
+  /// The global coordinates are defined in the \ref global_coordinate_system.
+  //@{
+  Float_t GlobalThetaAngle;     ///< (degrees)
+  Float_t GlobalPhiAngle;       ///< (degrees, but 90 degrees rotated to keep things interesting)
+  //@}
 
-//   Float_t PrimaryQ2;
-//   Float_t CrossSection;
-//   Float_t CrossSectionWeight;
+  /// \name Particle name and type at the hit
+  //@{
+  TString ParticleName;         ///< Name of the particle type of this hit
+  Int_t   ParticleType;         ///< \ref Lund_type of the particle type of this hit
+  //@}
 
-  Float_t GlobalPhiAngle;
-  Float_t GlobalThetaAngle;
-
-  TString ParticleName;
-  Int_t   ParticleType;
-
-  Float_t TotalEnergy;
-  Float_t KineticEnergy;
+  /// \name Total and kinetic energy of the track at the hit
+  //@{
+  Float_t TotalEnergy;          ///< (MeV)
+  Float_t KineticEnergy;        ///< (MeV)
+  //@}
 
 public:
   
@@ -141,15 +171,15 @@ public:
   // Destructor 
   virtual ~QweakSimUserCerenkov_DetectorEvent();
 
-   void Initialize();
+  void Initialize();
 
   //-----------------
   void     StoreDetectorID(Int_t did)  { DetectorID = did; }
-  Int_t    GetDetectorID() const {return DetectorID;}
+  Int_t      GetDetectorID() const {return DetectorID;}
   //-----------------
 
-  void     StoreTrackID(Float_t tid)  { TrackID = tid; }
-  Float_t    GetTrackID() const {return TrackID;}
+  void     StoreTrackID(Int_t tid)  { TrackID = tid; }
+  Int_t      GetTrackID() const {return TrackID;}
 
   void     StoreParticleName(TString pn)    { ParticleName = pn; }
   TString    GetParticleName() const {return  ParticleName;}
@@ -175,14 +205,14 @@ public:
   void     StoreDetectorNbOfHits(Int_t nd)      { NbOfHits = nd; }
   Int_t      GetDetectorNbOfHits() const {return  NbOfHits;}
   //-----------------
-  void     StoreDetectorLocalPositionX(Float_t lx)   { HitLocalPositionX = lx; }
-  Float_t    GetDetectorLocalPositionX() const {return HitLocalPositionX;}
+  void     StoreDetectorLocalPositionX(Float_t lx)   { HitLocalPositionX.push_back(lx); }
+  std::vector<Float_t>    GetDetectorLocalPositionX() const {return HitLocalPositionX;}
 
-  void     StoreDetectorLocalPositionY(Float_t ly)   { HitLocalPositionY = ly; }
-  Float_t    GetDetectorLocalPositionY() const {return HitLocalPositionY;}
+  void     StoreDetectorLocalPositionY(Float_t ly)   { HitLocalPositionY.push_back(ly); }
+  std::vector<Float_t>    GetDetectorLocalPositionY() const {return HitLocalPositionY;}
 
-  void     StoreDetectorLocalPositionZ(Float_t lz)   { HitLocalPositionZ = lz; }
-  Float_t    GetDetectorLocalPositionZ() const {return HitLocalPositionZ;}
+  void     StoreDetectorLocalPositionZ(Float_t lz)   { HitLocalPositionZ.push_back(lz); }
+  std::vector<Float_t>    GetDetectorLocalPositionZ() const {return HitLocalPositionZ;}
   //-----------------
   void     StoreDetectorLocalExitPositionX(Float_t lx)   { HitLocalExitPositionX = lx; }
   Float_t    GetDetectorLocalExitPositionX() const {return HitLocalExitPositionX;}
@@ -231,25 +261,7 @@ public:
 
   void     StoreOriginVertexTotalEnergy(Float_t etot) { OriginVertexTotalEnergy = etot; }
   Float_t    GetOriginVertexTotalEnergy() const {return OriginVertexTotalEnergy;}
-
-  void     StoreDetectorLocalVertexTotalEnergy(Float_t etot) { LocalVertexTotalEnergy = etot; };
-  Float_t    GetDetectorLocalVertexTotalEnergy() {return LocalVertexTotalEnergy;};
   //----------------
-
-//   void     StorePrimaryQ2(Float_t pq2)  { PrimaryQ2 = pq2; }
-//   Float_t    GetPrimaryQ2() const {return PrimaryQ2; }
-//   //-----------------
-// 
-//   void     StoreCrossSection(Float_t cs)
-//    {     CrossSection = cs;}
-// 
-//   void     StoreCrossSectionWeight(Float_t csw)
-//    {     CrossSectionWeight = csw;}
-// 
-// 
-//   Float_t    GetCrossSectionWeight() const {return CrossSectionWeight; }
-  //-----------------
-
   void     StoreGlobalThetaAngle(Float_t theta) { GlobalThetaAngle = theta; }
   Float_t    GetGlobalThetaAngle() const  {return GlobalThetaAngle;}
 
@@ -259,7 +271,7 @@ public:
 
   void AddSecondaryParticleEvent(Float_t XO, Float_t YO, Float_t ZO,
 				 Float_t XM, Float_t YM, Float_t ZM,
-				 Float_t Eng, Float_t Charge);
+				 Float_t energy, Int_t type);
 
   void     StoreEdgeEventFlag(Int_t flag) {EdgeEventFlag = flag;};
   Int_t    GetEdgeEventFlag() {return EdgeEventFlag;};

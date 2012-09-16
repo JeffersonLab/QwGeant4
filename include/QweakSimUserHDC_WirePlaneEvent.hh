@@ -23,9 +23,9 @@
 /**
    \class QweakSimUserHDC_WirePlaneEvent
     
-   \brief ROOT Subtree structure for HDC WirePlaneEvent
+   \ingroup root
 
-   Placeholder for a long explaination
+   \brief ROOT Subtree structure for HDC WirePlaneEvent
     
  */
 //=============================================================================
@@ -47,53 +47,75 @@ class QweakSimUserHDC_WirePlaneEvent : public TObject
 
 private:
 
-  Int_t            NbOfHits;
+  std::vector <Int_t>   TrackID;                ///< ID of the track from which this hit was generated
+  std::vector <Float_t> GlobalTimeOfHit;        ///< Global time when this hit was generated
 
-  std::vector <Int_t>   TrackID;
-  std::vector <Float_t> GlobalTimeOfHit;
+  Int_t   NbOfHits;             ///< Number of hits in this plane
+  Int_t   PlaneHasBeenHit;      ///< Has this plane been hit? 0 = no, 5 = yes
 
-  Int_t   PlaneHasBeenHit;
-
+  /// \name Position of the hit in local coordinates
+  /// The local coordinates are defined in the \ref local_coordinate_system.
+  //@{
   std::vector <Float_t> PlaneLocalPositionX;
   std::vector <Float_t> PlaneLocalPositionY;
   std::vector <Float_t> PlaneLocalPositionZ;
+  ///@}
   
+  /// \name Position of the hit in global coordinates
+  /// The global coordinates are defined in the \ref global_coordinate_system.
+  //@{
   std::vector <Float_t> PlaneGlobalPositionX;
   std::vector <Float_t> PlaneGlobalPositionY;
   std::vector <Float_t> PlaneGlobalPositionZ;
+  //@}
 
+  /// \name Momentum of the hit in local coordinates
+  /// The local coordinates are defined in the \ref local_coordinate_system.
+  //@{
   std::vector <Float_t> PlaneLocalMomentumX;
   std::vector <Float_t> PlaneLocalMomentumY;
   std::vector <Float_t> PlaneLocalMomentumZ;
+  //@}
 
+  /// \name Momentum of the hit in global coordinates
+  /// The global coordinates are defined in the \ref global_coordinate_system.
+  //@{
   std::vector <Float_t> PlaneGlobalMomentumX;
   std::vector <Float_t> PlaneGlobalMomentumY;
   std::vector <Float_t> PlaneGlobalMomentumZ;
+  std::vector <Float_t> GlobalPhiAngle;
+  std::vector <Float_t> GlobalThetaAngle;
+  //@}
 
+  /// \name Position in global coordinates of original vertex of the track from which this hit was generated
+  /// The global coordinates are defined in the \ref global_coordinate_system.
+  //@{
   std::vector <Float_t> OriginVertexPositionX;
   std::vector <Float_t> OriginVertexPositionY;
   std::vector <Float_t> OriginVertexPositionZ;
+  //@}
 
+  /// \name Direction in global coordinates of original vertex of the track from which this hit was generated
+  /// The global coordinates are defined in the \ref global_coordinate_system.
+  //@{
   std::vector <Float_t> OriginVertexMomentumDirectionX;
   std::vector <Float_t> OriginVertexMomentumDirectionY;
   std::vector <Float_t> OriginVertexMomentumDirectionZ;
+  std::vector <Float_t> OriginVertexThetaAngle; ///< (degrees)
+  std::vector <Float_t> OriginVertexPhiAngle;   ///< (degrees)
+  //@}
 
-  std::vector <Float_t> OriginVertexThetaAngle;
-  std::vector <Float_t> OriginVertexPhiAngle;
+  /// \name Total and kinetic energy at the original vertex of the track from which this hit was generated
+  //@{
+  std::vector <Float_t> OriginVertexTotalEnergy;        ///< (MeV)
+  std::vector <Float_t> OriginVertexKineticEnergy;      ///< (MeV)
+  //@}
 
-  std::vector <Float_t> OriginVertexKineticEnergy;
-  std::vector <Float_t> OriginVertexTotalEnergy;
-
-//   Float_t PrimaryQ2;
-//   Float_t CrossSection;
-//   Float_t CrossSectionWeight;
-//   Int_t   PrimaryEventNumber;
-
-  std::vector <Float_t> GlobalPhiAngle;
-  std::vector <Float_t> GlobalThetaAngle;
-
-  std::vector <Float_t> TotalEnergy;
-  std::vector <Float_t> KineticEnergy;
+  /// \name Total and kinetic energy of the track at the hit
+  //@{
+  std::vector <Float_t> TotalEnergy;    ///< (MeV)
+  std::vector <Float_t> KineticEnergy;  ///< (MeV)
+  //@}
 
 public:
   
@@ -138,9 +160,7 @@ public:
 
   void     StorePlaneGlobalPositionZ(Float_t gz)   { PlaneGlobalPositionZ.push_back(gz); }
   std::vector <Float_t>    GetPlaneGlobalPositionZ() const {return PlaneGlobalPositionZ;}
-
   //-----------------
-
   void     StorePlaneLocalMomentumX(Float_t lpx)   { PlaneLocalMomentumX.push_back(lpx); }
   std::vector <Float_t>    GetPlaneLocalMomentumX() const {return  PlaneLocalMomentumX;}
 
@@ -158,7 +178,6 @@ public:
 
   void     StorePlaneGlobalMomentumZ(Float_t gpz)   { PlaneGlobalMomentumZ.push_back(gpz); }
   std::vector <Float_t>    GetPlaneGlobalMomentumZ() const {return  PlaneGlobalMomentumZ;}
-
   //-----------------
   void     StoreOriginVertexPositionX(Float_t vx)   { OriginVertexPositionX.push_back(vx); }
   std::vector <Float_t>    GetOriginVertexPositionX() const {return OriginVertexPositionX;}
@@ -190,25 +209,12 @@ public:
   void     StoreOriginVertexTotalEnergy(Float_t etot) { OriginVertexTotalEnergy.push_back(etot); }
   std::vector <Float_t>    GetOriginVertexTotalEnergy() const {return OriginVertexTotalEnergy;}
   //-----------------
-//   void     StorePrimaryQ2(Float_t pq2)  { PrimaryQ2 = pq2; }
-//   Float_t    GetPrimaryQ2() const {return PrimaryQ2; }
-// 
-//   void     StoreCrossSection(Float_t cs)  {CrossSection = cs;}
-//   Float_t    GetCrossSection() const {return CrossSection; }
-// 
-//   void     StoreCrossSectionWeight(Float_t csw)  {CrossSectionWeight = csw;}
-//   Float_t    GetCrossSectionWeight() const {return CrossSectionWeight; }
-// 
-//   void     StorePrimaryEventNumber(Int_t pen)    { PrimaryEventNumber = pen; }
-//   Int_t      GetPrimaryEventNumber() const {return PrimaryEventNumber; }
-  //-----------------
   void     StoreGlobalThetaAngle(Float_t theta) { GlobalThetaAngle.push_back(theta); }
   std::vector <Float_t>    GetGlobalThetaAngle() const  {return GlobalThetaAngle;}
   
   void     StoreGlobalPhiAngle(Float_t phi)  { GlobalPhiAngle.push_back(phi); }
   std::vector <Float_t>    GetGlobalPhiAngle() const {return GlobalPhiAngle;}
   //-----------------
-
   void     StoreTotalEnergy(Float_t te)   { TotalEnergy.push_back(te); }
   std::vector <Float_t>    GetTotalEnergy() const {return TotalEnergy;}
   

@@ -30,9 +30,7 @@ ClassImp(QweakSimUserCerenkov_OctantEvent)
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 QweakSimUserCerenkov_OctantEvent::QweakSimUserCerenkov_OctantEvent()
-{
- 
-} 
+{;}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 QweakSimUserCerenkov_OctantEvent::~QweakSimUserCerenkov_OctantEvent()

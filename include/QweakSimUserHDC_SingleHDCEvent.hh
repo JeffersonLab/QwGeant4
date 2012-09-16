@@ -22,9 +22,9 @@
 /**
    \class QweakSimUserHDC_SingleHDCEvent
     
-   \brief ROOT Subtree structure for HDC SingleHDCEvent
+   \ingroup root
 
-   Placeholder for a long explaination
+   \brief ROOT Subtree structure for HDC SingleHDCEvent
     
  */
 //=============================================================================
@@ -62,17 +62,14 @@ class QweakSimUserHDC_WirePlaneEvent;
 class QweakSimUserHDC_SingleHDCEvent : public TObject
 {
 
-private:
-
-
 public:
 
-  QweakSimUserHDC_WirePlaneEvent  WirePlane1;
-  QweakSimUserHDC_WirePlaneEvent  WirePlane2;
-  QweakSimUserHDC_WirePlaneEvent  WirePlane3;
-  QweakSimUserHDC_WirePlaneEvent  WirePlane4;
-  QweakSimUserHDC_WirePlaneEvent  WirePlane5;
-  QweakSimUserHDC_WirePlaneEvent  WirePlane6;
+  QweakSimUserHDC_WirePlaneEvent  WirePlane1; //< HDC wire chamber plane 1 hit information
+  QweakSimUserHDC_WirePlaneEvent  WirePlane2; //< HDC wire chamber plane 2 hit information
+  QweakSimUserHDC_WirePlaneEvent  WirePlane3; //< HDC wire chamber plane 3 hit information
+  QweakSimUserHDC_WirePlaneEvent  WirePlane4; //< HDC wire chamber plane 4 hit information
+  QweakSimUserHDC_WirePlaneEvent  WirePlane5; //< HDC wire chamber plane 5 hit information
+  QweakSimUserHDC_WirePlaneEvent  WirePlane6; //< HDC wire chamber plane 6 hit information
 
 public:
     

@@ -21,9 +21,9 @@
 /**
    \class QweakSimUserGEM_WirePlaneEvent
     
-   \brief ROOT Subtree structure for GEM WirePlaneEvent
+   \ingroup root
 
-   Placeholder for a long explaination
+   \brief ROOT Subtree structure for GEM WirePlaneEvent
     
  */
 
@@ -44,15 +44,19 @@ class QweakSimUserGEM_WirePlaneEvent : public TObject
 
 private:
 
-  Int_t            NbOfHits;
-  std::vector <Int_t>   TrackID;
-  std::vector <Float_t> GlobalTimeOfHit;
+  std::vector <Int_t>   TrackID;                ///< ID of the track from which this hit was generated
+  std::vector <Float_t> GlobalTimeOfHit;        ///< Global time when this hit was generated
 
-  Int_t   PlaneHasBeenHit;
+  Int_t NbOfHits;                               ///< Number of hits in this plane
+  Int_t PlaneHasBeenHit;                        ///< Has this plane been hit? 0 = no, 5 = yes
 
+  /// \name Position of the hit in local coordinates
+  /// The local coordinates are defined in the \ref local_coordinate_system.
+  //@{
   std::vector <Float_t> PlaneLocalPositionX;
   std::vector <Float_t> PlaneLocalPositionY;
   std::vector <Float_t> PlaneLocalPositionZ;
+  //@}
   
   std::vector <Float_t> PlaneGlobalPositionX;
   std::vector <Float_t> PlaneGlobalPositionY;
@@ -66,24 +70,26 @@ private:
   std::vector <Float_t> PlaneGlobalMomentumY;
   std::vector <Float_t> PlaneGlobalMomentumZ;
 
+  /// \name Position in global coordinates of original vertex of the track from which this hit was generated
+  /// The global coordinates are defined in the \ref global_coordinate_system.
+  //@{
   std::vector <Float_t> OriginVertexPositionX;
   std::vector <Float_t> OriginVertexPositionY;
   std::vector <Float_t> OriginVertexPositionZ;
+  //@}
 
+  /// \name Direction in global coordinates of original vertex of the track from which this hit was generated
+  /// The global coordinates are defined in the \ref global_coordinate_system.
+  //@{
   std::vector <Float_t> OriginVertexMomentumDirectionX;
   std::vector <Float_t> OriginVertexMomentumDirectionY;
   std::vector <Float_t> OriginVertexMomentumDirectionZ;
-
   std::vector <Float_t> OriginVertexThetaAngle;
   std::vector <Float_t> OriginVertexPhiAngle;
+  //@}
 
   std::vector <Float_t> OriginVertexKineticEnergy;
   std::vector <Float_t> OriginVertexTotalEnergy;
-
-//   Float_t PrimaryQ2;
-//   Float_t CrossSection;
-//   Float_t CrossSectionWeight;
-//   Int_t   PrimaryEventNumber;
 
   std::vector <Float_t> GlobalPhiAngle;
   std::vector <Float_t> GlobalThetaAngle;
@@ -186,18 +192,6 @@ public:
 
   void     StoreOriginVertexTotalEnergy(Float_t etot) { OriginVertexTotalEnergy.push_back(etot); }
   std::vector <Float_t>    GetOriginVertexTotalEnergy() const {return OriginVertexTotalEnergy;}
-  //-----------------
-//   void     StorePrimaryQ2(Float_t pq2)  { PrimaryQ2 = pq2; }
-//   Float_t    GetPrimaryQ2() const {return PrimaryQ2; }
-// 
-//   void     StoreCrossSection(Float_t cs)  {CrossSection = cs;}
-//   Float_t    GetCrossSection() const {return CrossSection; }
-// 
-//   void     StoreCrossSectionWeight(Float_t csw)  {CrossSectionWeight = csw;}
-//   Float_t    GetCrossSectionWeight() const {return CrossSectionWeight; }
-// 
-//   void     StorePrimaryEventNumber(Int_t pen)    { PrimaryEventNumber = pen; }
-//   Int_t      GetPrimaryEventNumber() const {return PrimaryEventNumber; }
   //-----------------
   void     StoreGlobalThetaAngle(Float_t theta) { GlobalThetaAngle.push_back(theta); }
   std::vector <Float_t>    GetGlobalThetaAngle() const  {return GlobalThetaAngle;}

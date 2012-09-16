@@ -189,10 +189,10 @@ else { return false;}
   G4double      currentTotalEnergy       = aStep->GetTrack()->GetTotalEnergy();
   G4ThreeVector currentMomentumDirection = aStep->GetTrack()->GetMomentumDirection();
 
-  G4double trackID = aStep->GetTrack()->GetTrackID();
+  G4int trackID = aStep->GetTrack()->GetTrackID();
 //   G4cout << "====> Track ID     : " <<  trackID << G4endl;
 
-//   G4double parentID = aStep->GetTrack()->GetParentID();
+//   G4int parentID = aStep->GetTrack()->GetParentID();
 //   G4cout << "====> Parent ID    : " <<  parentID << G4endl;
 
   
@@ -235,16 +235,12 @@ else { return false;}
 
   aHit->StoreOriginVertexPosition(originVertexPosition);
   aHit->StoreOriginVertexKineticEnergy(originVertexKineticEnergy);
-  aHit->StoreOriginVertexTotalEnergy(originVertexKineticEnergy);   // beware: total.neq.kinetic (testing only)
+  aHit->StoreOriginVertexTotalEnergy(originVertexKineticEnergy);   /// \todo beware: total.neq.kinetic (testing only)
   aHit->StoreOriginVertexMomentumDirection(originVertexMomentumDirection);
 
   aHit->StoreMomentumDirection(currentMomentumDirection);
   aHit->StoreKineticEnergy(currentKineticEnergy);
   aHit->StoreTotalEnergy(currentTotalEnergy);
-
-//   aHit->StorePrimaryQ2(primaryQ2);
-//   aHit->StoreCrossSection(crossSection);
-//   aHit->StoreCrossSectionWeight(crossSectionWeight);
 
   // check if it is first touch
   if(!(aHit->GetLogVolume()))

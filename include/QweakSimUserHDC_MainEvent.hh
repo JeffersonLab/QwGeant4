@@ -21,9 +21,9 @@
 /**
    \class QweakSimUserHDC_MainEvent
     
-   \brief ROOT Subtree structure for HDC MainEvent
+   \ingroup root
 
-   Placeholder for a long explaination
+   \brief ROOT Subtree structure for HDC MainEvent
     
  */
 //=============================================================================
@@ -62,24 +62,21 @@ class QweakSimUserHDC_SingleHDCEvent;
 class QweakSimUserHDC_MainEvent : public TObject
 {
 
-private:
-
-
 public:
 
-  QweakSimUserHDC_SingleHDCEvent  ChamberFront;
-  QweakSimUserHDC_SingleHDCEvent  ChamberBack;
+  QweakSimUserHDC_SingleHDCEvent  ChamberFront; ///< Front HDC wire chamber hit information
+  QweakSimUserHDC_SingleHDCEvent  ChamberBack;  ///< Back HDC wire chamber hit information
 
 public:
     
   // Constructor
   QweakSimUserHDC_MainEvent();
   // Destructor 
- virtual ~QweakSimUserHDC_MainEvent();
+  virtual ~QweakSimUserHDC_MainEvent();
   
   void Clear(const Option_t* = 0);
   
-  // define a new Class known to ROOT  
+  // define a new Class known to ROOT
   ClassDef(QweakSimUserHDC_MainEvent,1)
 
 };  // end class QweakSimHDC_MainEvent 

@@ -21,11 +21,11 @@
 /**
    \class QweakSimUserPrimaryEvent
     
-   \brief tores the PrimaryEvent information into the ROOT file for each event.
+   \ingroup root
+
+   \brief Stores the PrimaryEvent information into the ROOT file for each event.
 
           Primary.xyz
-
-   Placeholder for a long explaination
     
  */
 //=============================================================================
@@ -44,33 +44,40 @@ class QweakSimUserPrimaryEvent : public TObject
 
 private:
 
-  Int_t   TrackID;
-  Float_t GlobalTime;
+  Int_t   TrackID;      ///< ID of the primary track in this event
+  Float_t GlobalTime;   ///< Time of primary interaction, starting 30 cm in front of the target, see \ref target_energy_loss (ns)
 
-  Float_t OriginVertexPositionX;
-  Float_t OriginVertexPositionY;
-  Float_t OriginVertexPositionZ;
+  /// \name Position of the primary vertex in global coordinates
+  /// The global coordinates are defined in the \ref global_coordinate_system.
+  //@{
+  Float_t OriginVertexPositionX;        ///< (mm)
+  Float_t OriginVertexPositionY;        ///< (mm)
+  Float_t OriginVertexPositionZ;        ///< (mm)
+  //@}
 
+  /// \name Direction right after the primary vertex in global coordinates
+  /// The global coordinates are defined in the \ref global_coordinate_system.
+  //@{
   Float_t OriginVertexMomentumDirectionX;
   Float_t OriginVertexMomentumDirectionY;
   Float_t OriginVertexMomentumDirectionZ;
+  Float_t OriginVertexThetaAngle;       ///< (degrees)
+  Float_t OriginVertexPhiAngle;         ///< (degrees)
+  //@}
 
-  Float_t OriginVertexThetaAngle;
-  Float_t OriginVertexPhiAngle;
+  Float_t PreScatteringKineticEnergy;   ///< Kinetic energy right before the primary vertex (after external target energy loss)
+  Float_t OriginVertexKineticEnergy;    ///< Kinetic energy right after the primary vertex
+  Float_t OriginVertexTotalEnergy;      ///< Total energy right after the primary vertex
 
-  Float_t PreScatteringKineticEnergy;
-  Float_t OriginVertexKineticEnergy;
-  Float_t OriginVertexTotalEnergy;
+  Float_t PrimaryQ2;            ///< Momentum transfer Q^2 for this event (GeV<sup>2</sup>)
+  Float_t CrossSection;         ///< Cross section weight for events with these kinematics, assuming isotropic spherical picking (isotropy = 1, see \ref isotropy)
+  Float_t CrossSectionWeight;   ///< Modified cross section weight for events with these kimematics, assuming flat-theta picking (isotropy = 0, see \ref isotropy)
+  Float_t Asymmetry;            ///< Asymmetry for events with these kinematics
 
-  Float_t PrimaryQ2;
-  Float_t CrossSection;
-  Float_t CrossSectionWeight;
-  Float_t Asymmetry;
+  Int_t   PrimaryEventNumber;   ///< The primary event number (increments by two due to target energy loss simulation)
 
-  Int_t   PrimaryEventNumber;
-
-  Int_t   ReactionType;         // assign a number to which kind of reaction,e.g. 1 = elastic ep, 2= e+p-> e'+p+pi,etc
-  Int_t   PDGcode;              // particle data book code/number for the primary particle, e.g. 3=electron
+  Int_t   ReactionType;         ///< \ref The reaction_type used for this event, e.g. elastic ep = 1, e+p -> e'+p+pi = 2
+  Int_t   PDGcode;              ///< \ref The Lund_type of the primary particle, e.g. electron = 11
 
 public:
   

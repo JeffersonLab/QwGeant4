@@ -44,11 +44,8 @@ ClassImp(QweakSimUserCerenkov_MainEvent)
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 QweakSimUserCerenkov_MainEvent::QweakSimUserCerenkov_MainEvent()
 {
-
-//jpan@nuclear.uwinnipeg.ca
-//   Octant.clear();
-//   Octant.resize(8);
-
+    //Octant.clear();
+    //Octant.resize(8);
 } 
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....

@@ -22,9 +22,9 @@
 /**
    \class QweakSimUserTriggerScintillator_MainEvent
     
-   \brief ROOT Subtree structure for Trigger Scintillator MainEvent
+   \ingroup root
 
-   Placeholder for a long explaination
+   \brief ROOT Subtree structure for Trigger Scintillator MainEvent
     
  */
 //=============================================================================
@@ -62,26 +62,18 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 class QweakSimUserTriggerScintillator_MainEvent : public TObject
 {
-
-private:
-
 public:
 
-//jpan@nuclear.uwinnipeg.ca
-//  vector <QweakSimUserTriggerScintillator_DetectorEvent>  Detector;
-  QweakSimUserTriggerScintillator_DetectorEvent  Detector;
-
-//  QweakSimUserTriggerScintillator_PMTEvent       PMT;
+  //vector <QweakSimUserTriggerScintillator_DetectorEvent>  Detector;
+  QweakSimUserTriggerScintillator_DetectorEvent  Detector;      ///< Detector event in the trigger scintillator
+  QweakSimUserTriggerScintillator_PMTEvent       PMT;           ///< PMT event in the trigger scintillator
 
 public:
     
   // Constructor
   QweakSimUserTriggerScintillator_MainEvent();
   // Destructor 
- virtual ~QweakSimUserTriggerScintillator_MainEvent();
-  
-
-  //void SetTree(TTree *data){  Detector.SetTree(data); };
+  virtual ~QweakSimUserTriggerScintillator_MainEvent();
   
   // define a new Class known to ROOT  
   ClassDef(QweakSimUserTriggerScintillator_MainEvent,1)

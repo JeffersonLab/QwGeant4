@@ -86,15 +86,7 @@ G4bool QweakSimVDC_WirePlaneSD::ProcessHits(G4Step* aStep,G4TouchableHistory* /*
 
   //G4double  charge       = aStep->GetTrack()->GetDefinition()->GetPDGCharge();
   G4String  particlename = aStep->GetTrack()->GetDefinition()->GetParticleName();
-
-  //G4cout << " Particle Name = " << particlename << G4endl;
-
-  //aStep->GetTrack()->GetVolume()->GetName();
-  //G4cout << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Charge =" << charge << G4endl;
-
-  // dismiss photons
-  //if(charge==0.) return false;
-
+  G4int     particletype = aStep->GetTrack()->GetDefinition()->GetPDGEncoding();
 
 
 
@@ -119,49 +111,21 @@ G4bool QweakSimVDC_WirePlaneSD::ProcessHits(G4Step* aStep,G4TouchableHistory* /*
   if(   (strcmp(physVol->GetName(),"VDC_UPlane_Physical")==0)  || (strcmp(physVol->GetName(),"VDC_VPlane_Physical")==0) ) {
 
 
-      if(   (strcmp(physVol->GetName(),"VDC_UPlane_Physical")==0) ) 
-      {
+//      if(   (strcmp(physVol->GetName(),"VDC_UPlane_Physical")==0) )
+//      {
 // 	  G4cout << "=============================================================" << G4endl;
 // 	  G4cout << ">>>>>>> Particle crossing  : VDC_UPlane_Physical <<<<<<<<<" << G4endl;
 // 	  G4cout << "=============================================================" << G4endl;
-      }
+//      }
 
 
-      if(   (strcmp(physVol->GetName(),"VDC_VPlane_Physical")==0) ) 
-      {
+//      if(   (strcmp(physVol->GetName(),"VDC_VPlane_Physical")==0) )
+//      {
 // 	  G4cout << "=============================================================" << G4endl;
 // 	  G4cout << ">>>>>>> Particle crossing  : VDC_VPlane_Physical <<<<<<<<<" << G4endl;
 // 	  G4cout << "=============================================================" << G4endl;
-      }
+//      }
       
-
-// custom assignment of particles to numbers similar to Geant3
-// (workaround of non working TString leaf comparison of ParticleName)
-// 
-
-      G4int particletype;
-
-//      => Lesson learned today : String Switch Statements are not possible in C++  !!!
-//
-//       switch ( particlename.c_str() ){ particlename.
-//       case 'e-':
-//           particletype = 1;
-//           break;
-//       case 'e+':
-//           particletype = 2;
-//           break;
-//       case 'gamma':
-//           particletype = 1;
-//           break;
-//       default:
-//           particletype = 999;
-//
-//       } // end switch
-
-     if ( (strcmp(particlename,"e-")    ==0) ) { particletype = 1;} 
-else if ( (strcmp(particlename,"e+")    ==0) ) { particletype = 2;}
-else if ( (strcmp(particlename,"gamma") ==0) ) { particletype = 3;}
-else                                           { particletype = 999;}
 
   //G4double      currentKineticEnergy     = aStep->GetTrack()->GetKineticEnergy();
   G4double      currentKineticEnergy     = preStepPoint->GetKineticEnergy();
@@ -173,10 +137,10 @@ else                                           { particletype = 999;}
   //G4ThreeVector currentMomentumDirection = aStep->GetTrack()->GetMomentumDirection();
   G4ThreeVector currentMomentumDirection = preStepPoint->GetMomentumDirection();
 
-//     G4double trackID = aStep->GetTrack()->GetTrackID();
+//     G4int trackID = aStep->GetTrack()->GetTrackID();
 //     G4cout << "====> Track ID     : " <<  trackID << G4endl;
     
-//     G4double parentID = aStep->GetTrack()->GetParentID();
+//     G4int parentID = aStep->GetTrack()->GetParentID();
 //     G4cout << "====> Parent ID    : " <<  parentID << G4endl;
   
   

@@ -76,16 +76,20 @@ QweakSimPrimaryGeneratorAction::~QweakSimPrimaryGeneratorAction()
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
-{ 
-//  G4cout << "###### Calling QweakSimPrimaryGeneratorAction::GeneratePrimaries" << G4endl;
+{
+  /** \page target_energy_loss target energy loss
+   * Pre-scattering (external) target energy loss is simulated by throwing one primary particle
+   * starting at 30 cm upstream of the target and letting it propagate to the actual z vertex position
+   * in the target.  A second primary particle is then thrown with the angle and transverse position
+   * of the first primary at that point.  Event time starts when the first primary is thrown.
+   * \todo need to double-check that position and momentum are properly transferred to second primary
+   */
   
   G4double E_beam;
   G4int myEventCounter = myUserInfo->GetPrimaryEventNumber();
   G4double myPositionX, myPositionY, myPositionZ;
   G4double myNormMomentumX, myNormMomentumY, myNormMomentumZ;
-  if ( myEventCounter%2==0)
-  {
-    //std::cout << "###### QweakSimPrimaryGeneratorAction::Generate Test Primaries: " << myEventCounter<<std::endl;
+  if (myEventCounter%2 == 0) {
     myPositionX =  myUserInfo->GetBeamPositionX() + (G4UniformRand()-0.5)*(fPositionX_max-fPositionX_min)+(fPositionX_max+fPositionX_min)/2.0;
     myPositionY =  myUserInfo->GetBeamPositionY() + (G4UniformRand()-0.5)*(fPositionY_max-fPositionY_min)+(fPositionY_max+fPositionY_min)/2.0;
     myPositionZ = myUserInfo->TargetCenterPositionZ -30.0*cm;
@@ -101,7 +105,6 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   }
   else
   {
-    //std::cout << "###### QweakSimPrimaryGeneratorAction::Generate Normal Primaries: " << myEventCounter<< std::endl;
     myPositionX = myUserInfo->GetOriginVertexPositionX();
     myPositionY = myUserInfo->GetOriginVertexPositionY();
     myPositionZ = myUserInfo->GetOriginVertexPositionZ();

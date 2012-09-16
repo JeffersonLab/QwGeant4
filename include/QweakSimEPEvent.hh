@@ -47,30 +47,24 @@ class QweakSimEPEvent {
    G4double Mass;
 
    G4int TypeSetting;
-   G4int ReactionType;     // 1 - LH2 elastic
-                           // 2 - Al window elastic
-                           // 3 - Al window quasi-elastic proton
-                           // 4 - Al window quasi-elastic neutron
-   G4int ReactionRegion;   // 1 - LH2 target
-                           // 2 - entrance window
-                           // 3 - exit window
+   G4int ReactionType;          ///< \ref reaction_type used for event generation
+   G4int ReactionRegion;        ///< \ref reaction_region used for event generation
+   G4int kActiveOctantNumber;   ///< Active octant number in the simulation, 0 will enable all octants
 
-  G4int kActiveOctantNumber;
+   G4int Isotropy;              ///< \ref isotropy used for event generation
+   G4double PhiAngle_Min;
+   G4double PhiAngle_Max;
+   G4double ThetaAngle_Min;
+   G4double ThetaAngle_Max;
 
-  G4int Isotropy;
-  G4double PhiAngle_Min;
-  G4double PhiAngle_Max;
-  G4double ThetaAngle_Min;
-  G4double ThetaAngle_Max;
+   G4double myPositionZ;
 
-  G4double myPositionZ;
+   G4ThreeVector GetMomentumDirection();
+   G4double ResMod507(G4int sf,G4double w2,G4double q2,G4double *xval);
+   G4double Sigma_EEPrime(G4double eni,G4double eprime,G4double theta, G4double &q2);
 
-  G4ThreeVector GetMomentumDirection();
-  G4double ResMod507(G4int sf,G4double w2,G4double q2,G4double *xval);
-  G4double Sigma_EEPrime(G4double eni,G4double eprime,G4double theta, G4double &q2);
-  
-  QweakSimEPEventMessenger *EventGen_Messenger;
-  QweakSimUserInformation *myUserInfo;
+   QweakSimEPEventMessenger *EventGen_Messenger;
+   QweakSimUserInformation *myUserInfo;
 
  public:
 

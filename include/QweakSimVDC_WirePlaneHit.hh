@@ -50,11 +50,8 @@ class QweakSimVDC_WirePlaneHit : public G4VHit
       const QweakSimVDC_WirePlaneHit& operator=(const QweakSimVDC_WirePlaneHit &right);
       int operator==(const QweakSimVDC_WirePlaneHit &right) const;
 
-      inline void *operator new(size_t);
-      inline void operator delete(void *aHit);
-
-	  inline float x();
-	  inline float y();
+      void *operator new(size_t);
+      void operator delete(void *aHit);
 
       virtual void Draw();
       virtual void Print();
@@ -90,64 +87,64 @@ private:
 
 public:
 
-  inline void  StoreVDCID(G4int vdc_ID)  { vdcID = vdc_ID; }
-  inline G4int   GetVDCID() const { return vdcID; }
+  void  StoreVDCID(G4int vdc_ID)  { vdcID = vdc_ID; }
+  G4int   GetVDCID() const { return vdcID; }
   
-  inline void  StoreWirePlaneID(G4int wireplane_ID) { wireplaneID = wireplane_ID; }
-  inline G4int   GetWirePlaneID()      const { return wireplaneID; }
+  void  StoreWirePlaneID(G4int wireplane_ID) { wireplaneID = wireplane_ID; }
+  G4int   GetWirePlaneID()      const { return wireplaneID; }
   //------  
-  inline void     StoreGlobalTime(G4double t)    { time = t; }
-  inline G4double   GetGlobalTime() const { return time; }
+  void     StoreGlobalTime(G4double t)    { time = t; }
+  G4double   GetGlobalTime() const { return time; }
   //------
-  inline void          StoreLocalPosition(G4ThreeVector lxyz) { localPos = lxyz; }
-  inline G4ThreeVector   GetLocalPosition()      const { return localPos; }
+  void          StoreLocalPosition(G4ThreeVector lxyz) { localPos = lxyz; }
+  G4ThreeVector   GetLocalPosition()      const { return localPos; }
   
-  inline void          StoreWorldPosition(G4ThreeVector gxyz) {  worldPos = gxyz; }
-  inline G4ThreeVector   GetWorldPosition()       const { return worldPos; }
+  void          StoreWorldPosition(G4ThreeVector gxyz) {  worldPos = gxyz; }
+  G4ThreeVector   GetWorldPosition()       const { return worldPos; }
   //------
-  inline void          StoreLocalMomentum(G4ThreeVector lpxyz) { localMomentum = lpxyz; }
-  inline G4ThreeVector   GetLocalMomentum()      const {  return localMomentum; }
+  void          StoreLocalMomentum(G4ThreeVector lpxyz) { localMomentum = lpxyz; }
+  G4ThreeVector   GetLocalMomentum()      const {  return localMomentum; }
   
-  inline void          StoreWorldMomentum(G4ThreeVector gpxyz) { worldMomentum = gpxyz; }
-  inline G4ThreeVector   GetWorldMomentum()       const { return worldMomentum; }
+  void          StoreWorldMomentum(G4ThreeVector gpxyz) { worldMomentum = gpxyz; }
+  G4ThreeVector   GetWorldMomentum()       const { return worldMomentum; }
   //------
-  inline void          StoreOriginVertexPosition(G4ThreeVector xyz) { originVertexPosition = xyz; }
-  inline G4ThreeVector   GetOriginVertexPosition()     const { return originVertexPosition; }
+  void          StoreOriginVertexPosition(G4ThreeVector xyz) { originVertexPosition = xyz; }
+  G4ThreeVector   GetOriginVertexPosition()     const { return originVertexPosition; }
   
-  inline void          StoreOriginVertexMomentumDirection(G4ThreeVector pxyz) { originVertexMomentumDirection = pxyz; }
-  inline G4ThreeVector   GetOriginVertexMomentumDirection()      const { return originVertexMomentumDirection; }
+  void          StoreOriginVertexMomentumDirection(G4ThreeVector pxyz) { originVertexMomentumDirection = pxyz; }
+  G4ThreeVector   GetOriginVertexMomentumDirection()      const { return originVertexMomentumDirection; }
   
-  inline void     StoreOriginVertexKineticEnergy(G4double ekin) { originVertexKineticEnergy = ekin; }
-  inline G4double   GetOriginVertexKineticEnergy() const { return originVertexKineticEnergy; }
+  void     StoreOriginVertexKineticEnergy(G4double ekin) { originVertexKineticEnergy = ekin; }
+  G4double   GetOriginVertexKineticEnergy() const { return originVertexKineticEnergy; }
   
-  inline void     StoreOriginVertexTotalEnergy(G4double et) { originVertexTotalEnergy = et; }
-  inline G4double   GetOriginVertexTotalEnergy() const { return originVertexTotalEnergy; }
+  void     StoreOriginVertexTotalEnergy(G4double et) { originVertexTotalEnergy = et; }
+  G4double   GetOriginVertexTotalEnergy() const { return originVertexTotalEnergy; }
 
   //------
-  inline void     StorePrimaryEventNumber(G4int en)   { primaryEventNumber = en; }
-  inline G4int      GetPrimaryEventNumber() const { return  primaryEventNumber; }
+  void     StorePrimaryEventNumber(G4int en)   { primaryEventNumber = en; }
+  G4int      GetPrimaryEventNumber() const { return  primaryEventNumber; }
   //------
-  inline void     StorePrimaryQ2(G4double q2)   { primaryQ2 = q2; }
-  inline G4double   GetPrimaryQ2() const { return primaryQ2; }
+  void     StorePrimaryQ2(G4double q2)   { primaryQ2 = q2; }
+  G4double   GetPrimaryQ2() const { return primaryQ2; }
 
-  inline void     StoreCrossSection(G4double cs)  {crossSection = cs;}
-  inline G4double   GetCrossSection() const {return crossSection;}
+  void     StoreCrossSection(G4double cs)  {crossSection = cs;}
+  G4double   GetCrossSection() const {return crossSection;}
 
-  inline void     StoreCrossSectionWeight(G4double csw)  {crossSectionWeight = csw;}
-  inline G4double   GetCrossSectionWeight() const {return crossSectionWeight;}
+  void     StoreCrossSectionWeight(G4double csw)  {crossSectionWeight = csw;}
+  G4double   GetCrossSectionWeight() const {return crossSectionWeight;}
 
 
-  inline void     StoreParticleName(G4String pn)   {particleName = pn;}
-  inline G4String   GetParticleName() const {return particleName;}
+  void     StoreParticleName(G4String pn)   {particleName = pn;}
+  G4String   GetParticleName() const {return particleName;}
 
-  inline void     StoreParticleType(G4int pt)   {particleType = pt;}
-  inline G4int   GetParticleType() const {return particleType;}
+  void     StoreParticleType(G4int pt)   {particleType = pt;}
+  G4int   GetParticleType() const {return particleType;}
 
-  inline void     StoreKineticEnergy(G4double ekin) { currentKineticEnergy  = ekin; }
-  inline G4double   GetKineticEnergy() const { return currentKineticEnergy; }
+  void     StoreKineticEnergy(G4double ekin) { currentKineticEnergy  = ekin; }
+  G4double   GetKineticEnergy() const { return currentKineticEnergy; }
 
-  inline void     StoreTotalEnergy(G4double etot) { currentTotalEnergy  = etot; }
-  inline G4double   GetTotalEnergy() const { return currentTotalEnergy; }
+  void     StoreTotalEnergy(G4double etot) { currentTotalEnergy  = etot; }
+  G4double   GetTotalEnergy() const { return currentTotalEnergy; }
 
 
   };

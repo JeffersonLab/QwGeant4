@@ -22,15 +22,15 @@
 //  ---------------------------
 /**
    \class QweakSimUserVDC_WirePlaneEvent
+
+   \ingroup root
     
-   \brief Stores the data structure related to a VDC WirePlane Hit into the ROOT file for each event
+   \brief ROOT Subtree structure for VDC WirePlaneEvent
 
    Region3.ChamberFront.WirePlane.xyz
 
-   Region3.ChamberBack.WirePlane.xyz	
-   
-   Placeholder for a long explaination
-    
+   Region3.ChamberBack.WirePlane.xyz
+
  */
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
@@ -51,59 +51,81 @@ class QweakSimUserVDC_WirePlaneEvent : public TObject
 
 private:
 
-  Int_t            NbOfHits;
+  std::vector <Int_t>   TrackID;                ///< ID of the track from which this hit was generated
+  std::vector <Float_t> GlobalTimeOfHit;        ///< Global time when this hit was generated
 
-  std::vector <Int_t>   TrackID;
-  std::vector <Float_t> GlobalTimeOfHit;
-
-  Int_t   HasBeenHit;
+  Int_t NbOfHits;                               ///< Number of hits in this plane
+  Int_t HasBeenHit;                             ///< Has this plane been hit? 0 = no, 5 = yes
  
-  std::vector <Float_t> LocalPositionX;
-  std::vector <Float_t> LocalPositionY;
-  std::vector <Float_t> LocalPositionZ;
+  /// \name Position of the hit in local coordinates
+  /// The local coordinates are defined in the \ref local_coordinate_system.
+  //@{
+  std::vector <Float_t> LocalPositionX; ///< (cm)
+  std::vector <Float_t> LocalPositionY; ///< (cm)
+  std::vector <Float_t> LocalPositionZ; ///< (cm)
+  //@}
   
-  std::vector <Float_t> GlobalPositionX;
-  std::vector <Float_t> GlobalPositionY;
-  std::vector <Float_t> GlobalPositionZ;
+  /// \name Position of the hit in global coordinates
+  /// The global coordinates are defined in the \ref global_coordinate_system.
+  //@{
+  std::vector <Float_t> GlobalPositionX; ///< (cm)
+  std::vector <Float_t> GlobalPositionY; ///< (cm)
+  std::vector <Float_t> GlobalPositionZ; ///< (cm)
+  //@}
 
+  /// \name Momentum at the hit in local coordinates
+  /// The local coordinates are defined in the \ref local_coordinate_system.
+  //@{
+  std::vector <Float_t> LocalMomentumX; ///< (MeV)
+  std::vector <Float_t> LocalMomentumY; ///< (MeV)
+  std::vector <Float_t> LocalMomentumZ; ///< (MeV)
+  //@}
 
-  std::vector <Float_t> LocalMomentumX;
-  std::vector <Float_t> LocalMomentumY;
-  std::vector <Float_t> LocalMomentumZ;
+  /// \name Momentum of the hit in global coordinates
+  /// The global coordinates are defined in the \ref global_coordinate_system.
+  //@{
+  std::vector <Float_t> GlobalMomentumX; ///< (MeV)
+  std::vector <Float_t> GlobalMomentumY; ///< (MeV)
+  std::vector <Float_t> GlobalMomentumZ; ///< (MeV)
+  std::vector <Float_t> GlobalThetaAngle;///< (degrees)
+  std::vector <Float_t> GlobalPhiAngle;  ///< (degrees, but 90 degrees rotated to keep things interesting)
+  //@}
 
-  std::vector <Float_t> GlobalMomentumX;
-  std::vector <Float_t> GlobalMomentumY;
-  std::vector <Float_t> GlobalMomentumZ;
+  /// \name Position in global coordinates of original vertex of the track from which this hit was generated
+  /// The global coordinates are defined in the \ref global_coordinate_system.
+  //@{
+  std::vector <Float_t> OriginVertexPositionX; ///< (cm)
+  std::vector <Float_t> OriginVertexPositionY; ///< (cm)
+  std::vector <Float_t> OriginVertexPositionZ; ///< (cm)
+  //@}
 
-  std::vector <Float_t> GlobalPhiAngle;
-  std::vector <Float_t> GlobalThetaAngle;
-
-
-
-  std::vector <Float_t> OriginVertexPositionX;
-  std::vector <Float_t> OriginVertexPositionY;
-  std::vector <Float_t> OriginVertexPositionZ;
-
+  /// \name Direction in global coordinates of original vertex of the track from which this hit was generated
+  /// The global coordinates are defined in the \ref global_coordinate_system.
+  //@{
   std::vector <Float_t> OriginVertexMomentumDirectionX;
   std::vector <Float_t> OriginVertexMomentumDirectionY;
   std::vector <Float_t> OriginVertexMomentumDirectionZ;
+  std::vector <Float_t> OriginVertexThetaAngle; ///< (degrees)
+  std::vector <Float_t> OriginVertexPhiAngle;   ///< (degrees)
+  //@}
 
-  std::vector <Float_t> OriginVertexThetaAngle;
-  std::vector <Float_t> OriginVertexPhiAngle;
+  /// \name Total and kinetic energy at the original vertex of the track from which this hit was generated
+  //@{
+  std::vector <Float_t> OriginVertexTotalEnergy;        ///< (MeV)
+  std::vector <Float_t> OriginVertexKineticEnergy;      ///< (MeV)
+  //@}
 
-  std::vector <Float_t> OriginVertexKineticEnergy;
-  std::vector <Float_t> OriginVertexTotalEnergy;
+  /// \name Particle name and type at the hit
+  //@{
+  std::vector <TString> ParticleName; ///< Name of the particle that caused this hit
+  std::vector <Int_t>   ParticleType; ///< \ref Lund_type of the particle that caused this hit (until r4757 this used the \ref geant3_type of the particle)
+  //@}
 
-//   Float_t PrimaryQ2;
-//   Float_t CrossSection;
-//   Float_t CrossSectionWeight;
-//   Int_t   PrimaryEventNumber;
-
-  std::vector <TString> ParticleName;
-  std::vector <Int_t>   ParticleType;
-
-  std::vector <Float_t> TotalEnergy;
-  std::vector <Float_t> KineticEnergy;
+  /// \name Total and kinetic energy of the track at the hit
+  //@{
+  std::vector <Float_t> TotalEnergy;    ///< (MeV)
+  std::vector <Float_t> KineticEnergy;  ///< (MeV)
+  //@}
 
 public:
   
@@ -188,7 +210,6 @@ public:
   std::vector <Float_t>    GetGlobalPhiAngle() const {return GlobalPhiAngle;}
 
   //-----------------
-  //-----------------
   void     StoreOriginVertexPositionX(Float_t vx)   { OriginVertexPositionX.push_back(vx); }
   std::vector <Float_t>    GetOriginVertexPositionX() const {return OriginVertexPositionX;}
 
@@ -218,18 +239,6 @@ public:
 
   void     StoreOriginVertexTotalEnergy(Float_t etot) { OriginVertexTotalEnergy.push_back(etot); }
   std::vector <Float_t>    GetOriginVertexTotalEnergy() const {return OriginVertexTotalEnergy;}
-  //-----------------
-//   void     StorePrimaryQ2(Float_t pq2)  { PrimaryQ2 = pq2; }
-//   Float_t    GetPrimaryQ2() const {return PrimaryQ2; }
-// 
-//   void     StoreCrossSection(Float_t cs)  {CrossSection = cs;}
-//   Float_t    GetCrossSection() const {return CrossSection; }
-// 
-//   void     StoreCrossSectionWeight(Float_t csw)  {CrossSectionWeight = csw;}
-//   Float_t    GetCrossSectionWeight() const {return CrossSectionWeight; }
-// 
-//   void     StorePrimaryEventNumber(Int_t pen)    { PrimaryEventNumber = pen; }
-//   Int_t      GetPrimaryEventNumber() const {return PrimaryEventNumber; }
   //-----------------
 
   // define a new Class known to ROOT  

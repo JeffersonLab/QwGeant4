@@ -22,7 +22,7 @@
 /**
    \class QweakSimUserVDC_MainEvent
     
-   \brief Defines the Top Root tree structure for storing VDC events.
+   \brief ROOT Subtree structure for HDC MainEvent
 
     A VDC Event contains the information of the DriftCell geometry, and stores
     events for the Front VDC and Back VDC:
@@ -58,6 +58,8 @@
 /**
    \class QweakSimUserVDC_MainEvent
     
+   \ingroup root
+
    \brief Defines the Top Root tree structure for storing VDC events.
 
     A VDC Event contains the information of the DriftCell geometry, and stores
@@ -68,9 +70,7 @@
     Region3.ChamberFront.
 
     Region3.ChamberBack.
-   
-   Placeholder for a long explaination
-    
+
  */
 //=============================================================================
 // 
@@ -95,15 +95,11 @@ class QweakSimUserVDC_SingleVDCEvent;
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 class QweakSimUserVDC_MainEvent : public TObject
 {
-
-private:
-
-
 public:
 
-  QweakSimUserVDC_Config          Config;
-  QweakSimUserVDC_SingleVDCEvent  ChamberFront;
-  QweakSimUserVDC_SingleVDCEvent  ChamberBack;
+  QweakSimUserVDC_Config          Config;       ///< Drift chamber configuration information
+  QweakSimUserVDC_SingleVDCEvent  ChamberFront; ///< Front chamber hit information
+  QweakSimUserVDC_SingleVDCEvent  ChamberBack;  ///< Back chamber hit information
 
 public:
     

@@ -21,9 +21,9 @@
 /**
    \class QweakSimUserGEM_MainEvent
     
-   \brief ROOT Subtree structure for GEM MainEvent
+   \ingroup root
 
-   Placeholder for a long explaination
+   \brief ROOT Subtree structure for GEM MainEvent
     
  */
 //=============================================================================
@@ -46,13 +46,10 @@ class QweakSimUserGEM_SingleGEMEvent;
 class QweakSimUserGEM_MainEvent : public TObject
 {
 
-private:
-
-
 public:
 
-  QweakSimUserGEM_SingleGEMEvent  ChamberFront;
-  QweakSimUserGEM_SingleGEMEvent  ChamberBack;
+  QweakSimUserGEM_SingleGEMEvent  ChamberFront; ///< Front GEM chamber hit information
+  QweakSimUserGEM_SingleGEMEvent  ChamberBack;  ///< Back GEM chamber hit information
 
 public:
     

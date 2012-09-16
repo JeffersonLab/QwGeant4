@@ -170,10 +170,10 @@ G4bool QweakSimVDC_DriftCellBackSD::ProcessHits(G4Step* aStep,G4TouchableHistory
   G4double      currentTotalEnergy       = aStep->GetTrack()->GetTotalEnergy();
   G4ThreeVector currentMomentumDirection = aStep->GetTrack()->GetMomentumDirection();
 
-//   G4double trackID = aStep->GetTrack()->GetTrackID();
+//   G4int trackID = aStep->GetTrack()->GetTrackID();
 //   G4cout << "====> Track ID     : " <<  trackID << G4endl;
 
-//   G4double parentID = aStep->GetTrack()->GetParentID();
+//   G4int parentID = aStep->GetTrack()->GetParentID();
 //   G4cout << "====> Parent ID    : " <<  parentID << G4endl;
 
 

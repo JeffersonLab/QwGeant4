@@ -76,19 +76,27 @@ QweakSimEPEvent::~QweakSimEPEvent()
 
 G4double QweakSimEPEvent::GetVertexZ()
 {
+  /** \page reaction_region reaction region
+   * There are a number of pre-set reaction regions.  These do not automatically set the
+   * reaction type, so don't expect aluminum exit window simulations by setting reaction
+   * region to 3...
+   * \li 1: target
+   * \li 2: front entrance window
+   * \li 3: back exit window
+   * \li else: target
+   */
 
-   if(ReactionRegion==1) // target
-     myPositionZ =  myUserInfo->TargetCenterPositionZ + (G4UniformRand()-0.5)*TargetLength;
+  if (ReactionRegion == 1) // target
+    myPositionZ =  myUserInfo->TargetCenterPositionZ + (G4UniformRand()-0.5)*TargetLength;
 
-       // select the front window or back window by ReactionRegion
-   else if(ReactionRegion == 2) //front entrance window
-     myPositionZ =  myUserInfo->TargetCenterPositionZ - 0.5*TargetLength - TargetWindowThickness*G4UniformRand();
+  else if (ReactionRegion == 2) // front entrance window
+    myPositionZ =  myUserInfo->TargetCenterPositionZ - 0.5*TargetLength - TargetWindowThickness*G4UniformRand();
 
-   else if(ReactionRegion == 3) //back exit window
-     myPositionZ =  myUserInfo->TargetCenterPositionZ + 0.5*TargetLength + TargetWindowThickness*G4UniformRand();
+  else if(ReactionRegion == 3) // back exit window
+    myPositionZ =  myUserInfo->TargetCenterPositionZ + 0.5*TargetLength + TargetWindowThickness*G4UniformRand();
 
-   else
-     myPositionZ =  myUserInfo->TargetCenterPositionZ + (G4UniformRand()-0.5)*TargetLength; //default region
+  else
+    myPositionZ =  myUserInfo->TargetCenterPositionZ + (G4UniformRand()-0.5)*TargetLength; //default region
 
   return myPositionZ;
 }
@@ -100,39 +108,49 @@ G4ThreeVector QweakSimEPEvent::GetMomentumDirection()
 
     // Generate flat phi distribution
     G4double PhiAngle =  PhiAngle_Min + G4UniformRand()*(PhiAngle_Max - PhiAngle_Min);
+    // If active octant = 0, all octants are used
     if (kActiveOctantNumber == 0) PhiAngle += (G4RandFlat::shootInt(8) * 45.0 * degree);
     G4double cosPhi = cos(PhiAngle);
     G4double sinPhi = sin(PhiAngle);
 
+
+    /** \page isotropy isotropy
+     * The cross section used for weighting Monte Carlo events depends on how those
+     * events are thrown.  There are two options in the Qweak Monte Carlo:
+     * \li isotropy = 0: flat theta distribution, requires a modified weight for the cross section -> QweakSimUserPrimaryEvent::CrossSectionWeight
+     * \li isotropy = 1: uniform spherical theta/phi distribution, use regular cross section -> QweakSimUserPrimaryEvent::CrossSection
+     * \li else: not defined
+     */
+
     G4double cosTheta;
     G4double sinTheta;
 
-    // Generate flat theta distribution
     if (Isotropy == 0) {
-        G4double ThetaAngle = ThetaAngle_Min + G4UniformRand()*(ThetaAngle_Max - ThetaAngle_Min);
-	cosTheta = cos(ThetaAngle);
-        sinTheta = sin(ThetaAngle);
-    }
-    
-   // Generate uniform distribution on spherical surface. See for example
-   // http://hypernews.slac.stanford.edu/HyperNews/geant4/get/particles/31/2.html
-   // or more generally http://mathworld.wolfram.com/SpherePointPicking.html       
-    else if (Isotropy == 1) {
-        G4double cosThetaMax = cos(ThetaAngle_Max);
-        G4double cosThetaMin = cos(ThetaAngle_Min);   
-        cosTheta = cosThetaMin + G4UniformRand()*(cosThetaMax - cosThetaMin);
-        sinTheta = sqrt(1. - cosTheta * cosTheta);
-    }
-    else {
-        std::cerr<<"Warning: unkown isotropy type, use type 0 instead."<<std::endl;
-    }
-    
-    G4double ux= sinTheta * cosPhi;
-    G4double uy= sinTheta * sinPhi;
-    G4double uz =cosTheta;
+      // Generate flat theta distribution
+      G4double ThetaAngle = ThetaAngle_Min + G4UniformRand()*(ThetaAngle_Max - ThetaAngle_Min);
+      cosTheta = cos(ThetaAngle);
+      sinTheta = sin(ThetaAngle);
 
+    } else if (Isotropy == 1) {
+      // Generate uniform distribution on spherical surface. See for example
+      // http://hypernews.slac.stanford.edu/HyperNews/geant4/get/particles/31/2.html
+      // or more generally http://mathworld.wolfram.com/SpherePointPicking.html
+      G4double cosThetaMax = cos(ThetaAngle_Max);
+      G4double cosThetaMin = cos(ThetaAngle_Min);
+      cosTheta = cosThetaMin + G4UniformRand()*(cosThetaMax - cosThetaMin);
+      sinTheta = sqrt(1. - cosTheta * cosTheta);
+
+    } else {
+      G4cerr << "Warning: unkown isotropy type.  Pick 0 or 1." << G4endl;
+    }
+    
+
+    G4double ux = sinTheta * cosPhi;
+    G4double uy = sinTheta * sinPhi;
+    G4double uz = cosTheta;
     G4ThreeVector myNormMomentum(ux,uy,uz);
        
+    // Rotate the momentum to the active octant (if octant = 0 all octants are used)
     if (kActiveOctantNumber > 0)
       myNormMomentum.rotateZ( (kActiveOctantNumber-1)*45.0*degree);
 
@@ -182,6 +200,17 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
       }
 
    //std::cout<<"ReactionType: "<<ReactionType<<", TypeSetting: "<<TypeSetting<<std::endl;
+
+   /** \page reaction_type reaction type
+    * There are a number of reaction types implemented in the Qweak Monte Carlo:
+    * \li 0: random selection of some of these reaction types
+    * \li 1: elastic scattering from hydrogen (see QweakSimEPEvent::Elastic_Cross_Section_Proton)
+    * \li 2: elastic scattering from aluminum (see QweakSimEPEvent::Elastic_Cross_Section_Aluminum)
+    * \li 3: quasi-elastic scattering from proton in aluminum (see QweakSimEPEvent::Elastic_Cross_Section_Proton)
+    * \li 4: quasi-elastic scattering from neutron in aluminum (see QweakSimEPEvent::Quasi_Elastic_Neutron)
+    * \li 5: Delta resonance (see QweakSimEPEvent::Delta_Resonance)
+    * \li 6: Moller scattering (see QweakSimEPEvent::Moller_Scattering)
+    */
 
    if(ReactionType==1) //LH2 target
       {

@@ -22,9 +22,9 @@
 /**
    \class QweakSimUserGEM_SingleGEMEvent
     
-   \brief ROOT Subtree structure for SingleGEMEvent
+   \ingroup root
 
-   Placeholder for a long explaination
+   \brief ROOT Subtree structure for SingleGEMEvent
     
  */
 //=============================================================================
@@ -52,7 +52,7 @@ private:
 
 public:
 
-  QweakSimUserGEM_WirePlaneEvent  WirePlane;
+  QweakSimUserGEM_WirePlaneEvent  WirePlane;    ///< GEM wire plane hit information
 
 public:
     

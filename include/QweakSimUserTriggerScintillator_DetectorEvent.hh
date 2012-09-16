@@ -21,9 +21,9 @@
 /**
    \class QweakSimUserTriggerScintillator_DetectorEvent
     
-   \brief ROOT Subtree structure for Trigger Scintillator DetectorEvent
+   \ingroup root
 
-   Placeholder for a long explaination
+   \brief ROOT Subtree structure for Trigger Scintillator DetectorEvent
     
  */
 //=============================================================================
@@ -46,73 +46,82 @@ class QweakSimUserTriggerScintillator_DetectorEvent : public TObject
 
 private:
 
-//   TTree   *DataTree;
-//   TBranch *secondaryElectronBranch;
+  /// \todo add DetectorID
+  Int_t TrackID;                ///< ID of the track from which this hit was generated
 
-  Float_t TrackID;
-  Float_t GlobalTimeOfHit;
+  Float_t GlobalTimeOfHit;      ///< Global time when this hit was generated
 
-  Int_t HasBeenHit;
-  Int_t EdgeEventFlag;
-  Int_t NbOfHits;
+  Int_t HasBeenHit;             ///< Has this detector been hit? 0 = no, 5 = yes
+  Int_t EdgeEventFlag;          ///< (not used)
+  Int_t NbOfHits;               ///< Number of hits in this detector
   Int_t SecondaryElectronCount;
 
-//   QweakSimUserTriggerScintillator_SecondaryElectronEvent *secondaryElectronEvent;
 
-//   Float_t *SecElecLocalOriginX; //[SecondaryElectronCount]
-//   Float_t *SecElecLocalOriginY; //[SecondaryElectronCount]
-//   Float_t *SecElecLocalOriginZ; //[SecondaryElectronCount]
-//
-//   Float_t *SecElecLocalMomentumX; //[SecondaryElectronCount]
-//   Float_t *SecElecLocalMomentumY; //[SecondaryElectronCount]
-//   Float_t *SecElecLocalMomentumZ; //[SecondaryElectronCount]
-//
-//   Float_t *SecElecLocalEnergy; //[SecondaryElectronCount]
+  std::vector <Float_t> SecElecLocalOriginX;
+  std::vector <Float_t> SecElecLocalOriginY;
+  std::vector <Float_t> SecElecLocalOriginZ;
 
+  std::vector <Float_t> SecElecLocalMomentumX;
+  std::vector <Float_t> SecElecLocalMomentumY;
+  std::vector <Float_t> SecElecLocalMomentumZ;
 
-
-//   vector <Float_t> SecElecLocalOriginX; //[SecondaryElectronCount]
-//   vector <Float_t> SecElecLocalOriginY; //[SecondaryElectronCount]
-//   vector <Float_t> SecElecLocalOriginZ; //[SecondaryElectronCount]
-//
-//   vector <Float_t> SecElecLocalMomentumX; //[SecondaryElectronCount]
-//   vector <Float_t> SecElecLocalMomentumY; //[SecondaryElectronCount]
-//   vector <Float_t> SecElecLocalMomentumZ; //[SecondaryElectronCount]
-//
-//   vector <Float_t> SecElecLocalEnergy; //[SecondaryElectronCount]
+  std::vector <Float_t> SecElecLocalEnergy;
   
+  /// \name Position of the hit in local coordinates (cm)
+  /// The local coordinates are defined in the \ref local_coordinate_system.
+  //@{
   Float_t HitLocalPositionX;
   Float_t HitLocalPositionY;
   Float_t HitLocalPositionZ;
+  //@}
+
+  /// \name Position where the hit exits the detector in local coordinates (cm)
+  /// The local coordinates are defined in the \ref local_coordinate_system.
+  //@{
   Float_t HitLocalExitPositionX;
   Float_t HitLocalExitPositionY;
   Float_t HitLocalExitPositionZ;
+  //@}
+
+  /// \name Position of the hit in global coordinates (cm)
+  /// The global coordinates are defined in the \ref global_coordinate_system.
+  //@{
   Float_t HitGlobalPositionX;
   Float_t HitGlobalPositionY;
   Float_t HitGlobalPositionZ;
+  //@}
 
+  /// \name Position in global coordinates of original vertex of the track from which this hit was generated
+  /// The global coordinates are defined in the \ref global_coordinate_system.
+  //@{
   Float_t OriginVertexPositionX;
   Float_t OriginVertexPositionY;
   Float_t OriginVertexPositionZ;
+  //@}
 
+  /// \name Direction in global coordinates of original vertex of the track from which this hit was generated
+  /// The global coordinates are defined in the \ref global_coordinate_system.
+  //@{
   Float_t OriginVertexMomentumDirectionX;
   Float_t OriginVertexMomentumDirectionY;
   Float_t OriginVertexMomentumDirectionZ;
+  Float_t OriginVertexThetaAngle;       ///< (degrees)
+  Float_t OriginVertexPhiAngle;         ///< (degrees)
+  //@}
 
-  Float_t OriginVertexThetaAngle;
-  Float_t OriginVertexPhiAngle;
-
+  /// \name Original vertex kinetic and total energy of the track from which this hit was generated (where the track started)
+  //@{
   Float_t OriginVertexKineticEnergy;
   Float_t OriginVertexTotalEnergy;
-
   Float_t LocalVertexTotalEnergy;
+  //@}
 
-//   Float_t PrimaryQ2;
-//   Float_t CrossSection;
-//   Float_t CrossSectionWeight;
-
-  Float_t GlobalPhiAngle;
-  Float_t GlobalThetaAngle;
+  /// \name Direction of the hit in global coordinates
+  /// The global coordinates are defined in the \ref global_coordinate_system.
+  //@{
+  Float_t GlobalThetaAngle;     ///< (degrees)
+  Float_t GlobalPhiAngle;       ///< (degrees, but 90 degrees rotated to keep things interesting)
+  //@}
 
 
 public:
@@ -122,12 +131,11 @@ public:
   // Destructor 
   virtual ~QweakSimUserTriggerScintillator_DetectorEvent();
 
-  //void SetTree(TTree *data);
   void Initialize();
 
   //-----------------
-  void     StoreTrackID(Float_t tid)  { TrackID = tid; }
-  Float_t    GetTrackID() const {return TrackID;}
+  void     StoreTrackID(Int_t tid)  { TrackID = tid; }
+  Int_t      GetTrackID() const {return TrackID;}
 
   void     StoreGlobalTimeOfHit(Float_t gtime) { GlobalTimeOfHit = gtime; }
   Float_t    GetGloablTimeOfHit()  const {return GlobalTimeOfHit;}
@@ -197,18 +205,6 @@ public:
 
   void     StoreDetectorLocalVertexTotalEnergy(Float_t etot) { LocalVertexTotalEnergy = etot; };
   Float_t    GetDetectorLocalVertexTotalEnergy() {return LocalVertexTotalEnergy;};
-  //----------------
-/*
-  void     StorePrimaryQ2(Float_t pq2)  { PrimaryQ2 = pq2; }
-  Float_t    GetPrimaryQ2() const {return PrimaryQ2; }
-  //-----------------
-  void     StoreCrossSection(Float_t cs)   {CrossSection = cs;}
-  Float_t    GetCrossSection() const {return CrossSection; }
-
-  void     StoreCrossSectionWeight(Float_t csw)   {CrossSectionWeight = csw;}
-  Float_t    GetCrossSectionWeight() const {return CrossSectionWeight; }*/
-  //-----------------
-
 
   void     StoreGlobalThetaAngle(Float_t theta) { GlobalThetaAngle = theta; }
   Float_t    GetGlobalThetaAngle() const  {return GlobalThetaAngle;}
@@ -217,12 +213,12 @@ public:
   Float_t    GetGlobalPhiAngle() const {return GlobalPhiAngle;}
 
 
-//   void AddSecondaryElectronEvent(Float_t XO, Float_t YO, Float_t ZO,
-//                                  Float_t XM, Float_t YM, Float_t ZM,
-//                                  Float_t Eng);
-//
-//   void     StoreEdgeEventFlag(Int_t flag) {EdgeEventFlag = flag;};
-//   Int_t    GetEdgeEventFlag() {return EdgeEventFlag;};
+  void AddSecondaryElectronEvent(Float_t XO, Float_t YO, Float_t ZO,
+      Float_t XM, Float_t YM, Float_t ZM,
+      Float_t energy);
+
+  void     StoreEdgeEventFlag(Int_t flag) {EdgeEventFlag = flag;};
+  Int_t    GetEdgeEventFlag() {return EdgeEventFlag;};
 
   // define a new Class known to ROOT  
   ClassDef(QweakSimUserTriggerScintillator_DetectorEvent,1)

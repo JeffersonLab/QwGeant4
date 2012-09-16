@@ -150,7 +150,7 @@ void QweakSimEventAction::BeginOfEventAction(const G4Event* /*evt*/)
         VDC_DriftCellFront_CollID = SDman->GetCollectionID("VDCDriftCellFrontSD/DriftCellFrontCollection");
     }
 
-// check for existing VDC_DriftCellBack Collection ID (if it's -1 it will be assigned)
+    // check for existing VDC_DriftCellBack Collection ID (if it's -1 it will be assigned)
     if (VDC_DriftCellBack_CollID==-1) {
         VDC_DriftCellBack_CollID = SDman->GetCollectionID("VDCDriftCellBackSD/DriftCellBackCollection");
     }
@@ -186,31 +186,13 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     G4int n_trajectories = 0;
 
     if (trajectoryContainer) n_trajectories = trajectoryContainer->entries();
-//    G4cout << "QweakSimEventAction::EndOfEventAction, we have so many trajectories stored :"<< n_trajectories << G4endl;
-
 
     // extract the trajectories and draw them
     if (G4VVisManager::GetConcreteInstance()) {
 
-//        G4cout << "Inside G4VVisManager::GetConcreteInstance()"<< G4endl;
-
         for (G4int i=0; i<n_trajectories; i++) {
 
             QweakSimTrajectory* trj = (QweakSimTrajectory*) ((*(evt->GetTrajectoryContainer()))[i]);
-
-            //trj->SetForceNoDrawTrajectory(false);
-
-
-//           if( trj->GetParticleDefinition() == G4OpticalPhoton ::OpticalPhotonDefinition() ){
-//               //trj->SetForceDrawTrajectory(true);
-//               trj->SetForceNoDrawTrajectory(true);
-//           }
-//           else {
-//               trj->SetForceNoDrawTrajectory(false);
-//	  }
-//
-
-            //  trj->ShowTrajectory();
             trj->DrawTrajectory(50);
 
         }
@@ -227,7 +209,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     G4HCofThisEvent * HCE = evt->GetHCofThisEvent();
 
     // initialize HitsCollection pointers
-    // QweakSimGEM_WirePlane_HitsCollection*                    GEM_WirePlane_HC                   = 0;
+    //QweakSimGEM_WirePlane_HitsCollection*                    GEM_WirePlane_HC                   = 0;
     QweakSimHDC_WirePlane_HitsCollection*                    HDC_WirePlane_HC                   = 0;
     QweakSimVDC_WirePlane_HitsCollection*                    VDC_WirePlane_HC                   = 0;
     QweakSimVDC_DriftCellHitsCollection*                     VDC_DriftCellFront_HC              = 0;
@@ -240,7 +222,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     if (HCE) {
 
         // get  GEM_WirePlane Hit Collector pointer
-        // GEM_WirePlane_HC       = (QweakSimGEM_WirePlane_HitsCollection*)(HCE->GetHC(GEM_WirePlane_CollID));
+        //GEM_WirePlane_HC       = (QweakSimGEM_WirePlane_HitsCollection*)(HCE->GetHC(GEM_WirePlane_CollID));
 
         // get  HDC_WirePlane Hit Collector pointer
         HDC_WirePlane_HC       = (QweakSimHDC_WirePlane_HitsCollection*)(HCE->GetHC(HDC_WirePlane_CollID));
@@ -278,36 +260,17 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     n_hitCerenkov                  = CerenkovDetector_HC            -> entries();
     n_hitCerenkovPMT               = CerenkovDetectorPMT_HC         -> entries();
 
-//   G4cout << "Number of hit in the GEMs          = " << n_GEMhitWirePlane        << G4endl;
-//   G4cout << "Number of hit in the HDCs          = " << n_HDChitWirePlane        << G4endl;
-//   G4cout << "Number of hit in the VDCs          = " << n_VDChitWirePlane        << G4endl;
-//   G4cout << "Number of hit in the VDC DC Front  = " << n_VDChitDCFront          << G4endl;
-//   G4cout << "Number of hit in the VDC DC Back   = " << n_VDChitDCBack           << G4endl;
-//   G4cout << "Number of hit in the TS            = " << n_hitTriggerScintillator << G4endl;
-//   G4cout << "Number of hit in the Cerenkov      = " << n_hitCerenkov            << G4endl;
-
-    // G4cout <<"Hits:\tGEM "<<n_GEMhitWirePlane<<",\tHDC "<<n_HDChitWirePlane<<",\tVDC "<<n_VDChitWirePlane;
     G4cout <<",\tVDC_Front "<<n_VDChitDCFront<<",\tVDC_Back "<<n_VDChitDCBack<<",\tTS "<<n_hitTriggerScintillator;
     G4cout <<",\tCerenkov "<<n_hitCerenkov<<"\tCerenkovPMT "<<n_hitCerenkovPMT<<G4endl;
 
     // Initialize/Clear Event variables, initialize Cerenkov Detector with NoHit Flag
-    /*   for (int noctant=0;noctant<8;noctant++) {
-    	analysis->fRootEvent->Cerenkov.Octant[noctant].Detector.Initialize();
-    	analysis->fRootEvent->Cerenkov.Octant[noctant].PMT.Initialize();
-    	analysis->fRootEvent->Cerenkov.Octant[noctant].Detector.StoreDetectorHasBeenHit(0);
-       }*/
     analysis->fRootEvent->Cerenkov.Detector.Initialize();
     analysis->fRootEvent->Cerenkov.PMT.Initialize();
-    analysis->fRootEvent->Cerenkov.Detector.StoreDetectorHasBeenHit(0);
 
     //-------------------------------------------------------------------------------
     // Initialize/Clear Event variables in Region 1
     analysis->fRootEvent->Region1.ChamberFront.WirePlane.Initialize();
     analysis->fRootEvent->Region1.ChamberBack.WirePlane.Initialize();
-    //
-    // initialize Region 1 readout plane with NoHit Flag
-    analysis->fRootEvent->Region1.ChamberFront.WirePlane.StorePlaneHasBeenHit(0);
-    analysis->fRootEvent->Region1.ChamberBack.WirePlane.StorePlaneHasBeenHit(0);
     //-----------------------------------------------------------------------------------------
 
 
@@ -326,58 +289,36 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     analysis->fRootEvent->Region2.ChamberBack.WirePlane4.Initialize();
     analysis->fRootEvent->Region2.ChamberBack.WirePlane5.Initialize();
     analysis->fRootEvent->Region2.ChamberBack.WirePlane6.Initialize();
-    //
-    // initialize Region 2 wire planes (6: xuv x'u'v') with NoHit Flag
-    //
-    analysis->fRootEvent->Region2.ChamberFront.WirePlane1.StorePlaneHasBeenHit(0);
-    analysis->fRootEvent->Region2.ChamberFront.WirePlane2.StorePlaneHasBeenHit(0);
-    analysis->fRootEvent->Region2.ChamberFront.WirePlane3.StorePlaneHasBeenHit(0);
-    analysis->fRootEvent->Region2.ChamberFront.WirePlane4.StorePlaneHasBeenHit(0);
-    analysis->fRootEvent->Region2.ChamberFront.WirePlane5.StorePlaneHasBeenHit(0);
-    analysis->fRootEvent->Region2.ChamberFront.WirePlane6.StorePlaneHasBeenHit(0);
-    //
-    analysis->fRootEvent->Region2.ChamberBack.WirePlane1.StorePlaneHasBeenHit(0);
-    analysis->fRootEvent->Region2.ChamberBack.WirePlane2.StorePlaneHasBeenHit(0);
-    analysis->fRootEvent->Region2.ChamberBack.WirePlane3.StorePlaneHasBeenHit(0);
-    analysis->fRootEvent->Region2.ChamberBack.WirePlane4.StorePlaneHasBeenHit(0);
-    analysis->fRootEvent->Region2.ChamberBack.WirePlane5.StorePlaneHasBeenHit(0);
-    analysis->fRootEvent->Region2.ChamberBack.WirePlane6.StorePlaneHasBeenHit(0);
+
     //-------------------------------------------------------------------------------------------------
 
 
     //-------------------------------------------------------------------------------------------------
     // initialize Region 3 wire planes (2: u,v ) with NoHit Flag
-    analysis->fRootEvent->Region3.ChamberFront.WirePlaneU.StoreHasBeenHit(0);
-    analysis->fRootEvent->Region3.ChamberFront.WirePlaneV.StoreHasBeenHit(0);
+    analysis->fRootEvent->Region3.ChamberFront.WirePlaneU.Initialize();
+    analysis->fRootEvent->Region3.ChamberFront.WirePlaneV.Initialize();
     //
-    analysis->fRootEvent->Region3.ChamberBack.WirePlaneU.StoreHasBeenHit(0);
-    analysis->fRootEvent->Region3.ChamberBack.WirePlaneV.StoreHasBeenHit(0);
+    analysis->fRootEvent->Region3.ChamberBack.WirePlaneU.Initialize();
+    analysis->fRootEvent->Region3.ChamberBack.WirePlaneV.Initialize();
 
     //
     // initialize DriftCells with NoHit Flag
-    analysis->fRootEvent->Region3.ChamberFront.DriftCell.StoreUDriftCellHasBeenHit(0);
-    analysis->fRootEvent->Region3.ChamberFront.DriftCell.StoreVDriftCellHasBeenHit(0);
+    analysis->fRootEvent->Region3.ChamberFront.DriftCell.Initialize();
     //
-    analysis->fRootEvent->Region3.ChamberFront.DriftCell.StoreUDriftCellHasBeenHit(0);
-    analysis->fRootEvent->Region3.ChamberFront.DriftCell.StoreVDriftCellHasBeenHit(0);
+    analysis->fRootEvent->Region3.ChamberBack.DriftCell.Initialize();
     //----------------------------------------------------------------------------------------------------
 
 //---------------------------------------------------------------------------------------------
 
     // Initialize/Clear Event variables, initialize TriggerScintillator with NoHit Flag
-//jpan@nuclear.uwinnipeg.ca
 //    for (int ndet=0;ndet<2;ndet++) {
 //	analysis->fRootEvent->TriggerScintillator.Detector[ndet].Initialize();
-//	analysis->fRootEvent->TriggerScintillator.Detector[ndet].StoreDetectorHasBeenHit(0);
 //    }
-
     analysis->fRootEvent->TriggerScintillator.Detector.Initialize();
-    analysis->fRootEvent->TriggerScintillator.Detector.StoreDetectorHasBeenHit(0);
     //-------------------------------------------------------------------------------------------------
 
     //#########################################################################################################################
     //#########################################################################################################################
-    //
     //
     //                                 ================================================================
     //                                  The Main "Software DAQ Trigger": setting the coincidence level
@@ -456,9 +397,6 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         analysis->fRootEvent->Region3.ChamberFront.DriftCell.StoreVDriftCellNbOfHits(n_VDChitDCBack);
 
         // Store Number of Hits for: Cerenkov Detector
-        //analysis->fRootEvent->Cerenkov.Detector.StoreDetectorNbOfHits(n_hitCerenkov);
-
-//jpan@nuclear.uwinnipeg.ca
         analysis->fRootEvent->Cerenkov.Detector.StoreDetectorNbOfHits(n_hitCerenkov);
 
         //==========================================================================================================
@@ -468,10 +406,10 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         // Store VDC Hit Information into /Region3
         //========================================
 
-        int VDC_ChamberFront_UPlane_NbOfHits = 0;
-        int VDC_ChamberFront_VPlane_NbOfHits = 0;
-        int VDC_ChamberBack_UPlane_NbOfHits = 0;
-        int VDC_ChamberBack_VPlane_NbOfHits = 0;
+        int VDC_Chamber_Plane_NbOfHits[2][2];
+        for (int chamber = 0; chamber < 2; chamber++)
+          for (int plane = 0; plane < 2; plane++)
+            VDC_Chamber_Plane_NbOfHits[chamber][plane] = 0;
 
         // loop over wire plane hits
         for (int i1=0;i1<n_VDChitWirePlane;i1++) {
@@ -479,332 +417,142 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
             // get hit pointer for each hit
             QweakSimVDC_WirePlaneHit* aHit = (*VDC_WirePlane_HC)[i1];
 
-            //aHit->Print();
+            if (print_VDC_WirePlaneHit) aHit->Print();
 
             // get local position of hit
             localPosition  = aHit->GetLocalPosition();
-            rLocalPositionX = (Float_t) localPosition.x()/cm;
-            rLocalPositionY = (Float_t) localPosition.y()/cm;
-            rLocalPositionZ = (Float_t) localPosition.z()/cm;
+            rLocalPositionX = (Float_t) localPosition.x() / cm;
+            rLocalPositionY = (Float_t) localPosition.y() / cm;
+            rLocalPositionZ = (Float_t) localPosition.z() / cm;
 
             // get world position of hit
             globalPosition  = aHit->GetWorldPosition();
-            rGlobalPositionX = (Float_t) globalPosition.x()/cm;
-            rGlobalPositionY = (Float_t) globalPosition.y()/cm;
-            rGlobalPositionZ = (Float_t) globalPosition.z()/cm;
+            rGlobalPositionX = (Float_t) globalPosition.x() / cm;
+            rGlobalPositionY = (Float_t) globalPosition.y() / cm;
+            rGlobalPositionZ = (Float_t) globalPosition.z() / cm;
 
             // get local Momentum of hit
             localMomentum  = aHit->GetLocalMomentum();
-            rLocalMomentumX = (Float_t) localMomentum.x()/MeV;
-            rLocalMomentumY = (Float_t) localMomentum.y()/MeV;
-            rLocalMomentumZ = (Float_t) localMomentum.z()/MeV;
+            rLocalMomentumX = (Float_t) localMomentum.x() / MeV;
+            rLocalMomentumY = (Float_t) localMomentum.y() / MeV;
+            rLocalMomentumZ = (Float_t) localMomentum.z() / MeV;
 
             // get world Momentum of hit
             globalMomentum  = aHit->GetWorldMomentum();
-            rGlobalMomentumX = (Float_t) globalMomentum.x()/MeV;
-            rGlobalMomentumY = (Float_t) globalMomentum.y()/MeV;
-            rGlobalMomentumZ = (Float_t) globalMomentum.z()/MeV;
-
+            rGlobalMomentumX = (Float_t) globalMomentum.x() / MeV;
+            rGlobalMomentumY = (Float_t) globalMomentum.y() / MeV;
+            rGlobalMomentumZ = (Float_t) globalMomentum.z() / MeV;
+            rGlobalThetaAngle = (Float_t) globalMomentum.theta() / degree;
+            rGlobalPhiAngle   = (Float_t) globalMomentum.phi() / degree - 90.0;
 
             // get total Energy of hit
-            totalEnergy     = aHit->GetTotalEnergy();
-            rtotalEnergy     = (Float_t) totalEnergy/MeV;
+            rTotalEnergy     = (Float_t) aHit->GetTotalEnergy() / MeV;
 
             // get kinetic Energy of hit
-            kineticEnergy     = aHit->GetKineticEnergy();
-            rkineticEnergy     = (Float_t) kineticEnergy/MeV;
+            rKineticEnergy     = (Float_t) aHit->GetKineticEnergy() / MeV;
 
 
             originVertexPosition  = aHit->GetOriginVertexPosition();
-            rOriginVertexPositionX      = (Float_t) originVertexPosition.x()/cm;
-            rOriginVertexPositionY      = (Float_t) originVertexPosition.y()/cm;
-            rOriginVertexPositionZ      = (Float_t) originVertexPosition.z()/cm;
+            rOriginVertexPositionX      = (Float_t) originVertexPosition.x() / cm;
+            rOriginVertexPositionY      = (Float_t) originVertexPosition.y() / cm;
+            rOriginVertexPositionZ      = (Float_t) originVertexPosition.z() / cm;
 
 
             originVertexMomentumDirection = aHit->GetOriginVertexMomentumDirection();
             rOriginVertexMomentumDirectionX = (Float_t) originVertexMomentumDirection.x();
             rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
             rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
+            rOriginVertexPhiAngle   = (Float_t) originVertexMomentumDirection.phi() / degree;
+            rOriginVertexThetaAngle = (Float_t) originVertexMomentumDirection.theta() / degree;
 
-            OriginVertexPhiAngle = atan2(rOriginVertexMomentumDirectionY, rOriginVertexMomentumDirectionX);
-            rOriginVertexPhiAngle = OriginVertexPhiAngle/degree;
+            rOriginVertexKineticEnergy = (Float_t) aHit->GetOriginVertexKineticEnergy() / MeV;
+            rOriginVertexTotalEnergy   = (Float_t) aHit->GetOriginVertexTotalEnergy() / MeV;
 
-	    OriginVertexThetaAngle = atan2(sqrt(rOriginVertexMomentumDirectionY*rOriginVertexMomentumDirectionY
-		                           +rOriginVertexMomentumDirectionX*rOriginVertexMomentumDirectionX), 
-		                            rOriginVertexMomentumDirectionZ);
-            rOriginVertexThetaAngle = OriginVertexThetaAngle/degree;
+            rGlobalTime = (Float_t) aHit->GetGlobalTime() / ns;
 
-            originVertexKineticEnergy = aHit->GetOriginVertexKineticEnergy();
-            rOriginVertexKineticEnergy = (Float_t ) originVertexKineticEnergy/MeV;
-            originVertexTotalEnergy = aHit->GetOriginVertexTotalEnergy();
-            rOriginVertexTotalEnergy = (Float_t ) originVertexTotalEnergy/MeV;
+            rParticleName = TString(aHit->GetParticleName());
+            rParticleType = (Int_t) aHit->GetParticleType();
 
-//       primaryQ2  = aHit->GetPrimaryQ2();
-//       rPrimaryQ2  = (Float_t) primaryQ2;
-//
-//       crossSection = aHit->GetCrossSection();
-//       rCrossSection = (Float_t) crossSection;
-//
-//       crossSectionWeight = aHit->GetCrossSectionWeight();
-//       rCrossSectionWeight = (Float_t) crossSectionWeight;
-//
-//       primaryEventNumber = aHit->GetPrimaryEventNumber();
-//       rPrimaryEventNumber = (Int_t) primaryEventNumber;
+            //-----------------------------------
+            int iVDCID = aHit->GetVDCID();
+            QweakSimUserVDC_SingleVDCEvent* single_vdc_event = 0;
+            if (iVDCID == 0)
+              single_vdc_event = &(analysis->fRootEvent->Region3.ChamberFront);
+            if (iVDCID == 1)
+              single_vdc_event = &(analysis->fRootEvent->Region3.ChamberBack);
 
-
-            globalTime = aHit->GetGlobalTime();
-            rGlobalTime = (Float_t) globalTime/ns;
-
-            GlobalThetaAngle = globalMomentum.theta();
-            rGlobalThetaAngle = (Float_t) GlobalThetaAngle/degree;
-
-            GlobalPhiAngle   = globalMomentum.phi() -90.0*degree;
-            rGlobalPhiAngle   = (Float_t) GlobalPhiAngle/degree;
-
-//       G4cout <<"%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << G4endl;
-//       G4cout <<"  Global Theta Angle =  " << GlobalThetaAngle / degree << G4endl;
-//       G4cout <<"  Global Phi   Angle =  " << GlobalPhiAngle   / degree << G4endl;
-//       G4cout <<"%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << G4endl;
-
-
-            particleName = aHit->GetParticleName();
-            rParticleName = TString(particleName);
-
-            particleType = aHit->GetParticleType();
-            rParticleType = (Int_t) particleType;
-
-//       G4cout <<" VDC wire Plane was hit by  =  " <<  particleName << G4endl;
-//       G4cout <<" VDC wire Plane was hit by  =  " << rParticleName << G4endl;
-
-            //----------------------------------
-            // Hit in Front VDC, First WirePlane
-            //----------------------------------
-            if ((aHit->GetVDCID()==0) && (aHit->GetWirePlaneID()==0)) {
-
-                VDC_ChamberFront_UPlane_NbOfHits++;
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneU.StoreNbOfHits(VDC_ChamberFront_UPlane_NbOfHits);
-
-                // mark wire plane as been hit
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneU.StoreHasBeenHit(5);
-
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneU.StoreParticleName(rParticleName);
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneU.StoreParticleType(rParticleType);
-
-                // store total+kinetic energy of hit
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneU.StoreTotalEnergy(rtotalEnergy);
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneU.StoreKineticEnergy(rkineticEnergy);
-
-                // store origin vertex info
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneU.StoreOriginVertexPositionX(rOriginVertexPositionX);
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneU.StoreOriginVertexPositionY(rOriginVertexPositionY);
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneU.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
-
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneU.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneU.StoreOriginVertexTotalEnergy(rOriginVertexKineticEnergy);
-
-// 	analysis->fRootEvent->Region3.ChamberFront.WirePlane.StorePrimaryQ2(rPrimaryQ2);
-// 	analysis->fRootEvent->Region3.ChamberFront.WirePlane.StoreCrossSection(rCrossSection);
-// 	analysis->fRootEvent->Region3.ChamberFront.WirePlane.StoreCrossSectionWeight(rCrossSectionWeight);
-// 	analysis->fRootEvent->Region3.ChamberFront.WirePlane.StorePrimaryEventNumber(rPrimaryEventNumber);
-
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneU.StoreGlobalTimeOfHit(rGlobalTime);
-
-                // store wire plane hit position
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneU.StoreLocalPositionX(rLocalPositionX);
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneU.StoreLocalPositionY(rLocalPositionY);
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneU.StoreLocalPositionZ(rLocalPositionZ);
-
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneU.StoreGlobalPositionX(rGlobalPositionX);
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneU.StoreGlobalPositionY(rGlobalPositionY);
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneU.StoreGlobalPositionZ(rGlobalPositionZ);
-
-                // store wire plane hit momentum
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneU.StoreLocalMomentumX(rLocalMomentumX);
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneU.StoreLocalMomentumY(rLocalMomentumY);
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneU.StoreLocalMomentumZ(rLocalMomentumZ);
-
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneU.StoreGlobalMomentumX(rGlobalMomentumX);
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneU.StoreGlobalMomentumY(rGlobalMomentumY);
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneU.StoreGlobalMomentumZ(rGlobalMomentumZ);
-
-                // store global track angles Phi and Theta
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneU.StoreGlobalPhiAngle(rGlobalPhiAngle);
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneU.StoreGlobalThetaAngle(rGlobalThetaAngle);
-
+            //-----------------------------------
+            if (single_vdc_event == 0) {
+                G4cerr << "VDC hit with incorrect chamber ID." << G4endl;
+                break;
             }
 
+            //-----------------------------------
+            int iWirePlaneID = aHit->GetWirePlaneID();
+            QweakSimUserVDC_WirePlaneEvent* wire_plane_event = 0;
+            if (iWirePlaneID == 0)
+              wire_plane_event = &(single_vdc_event->WirePlaneU);
+            if (iWirePlaneID == 1)
+              wire_plane_event = &(single_vdc_event->WirePlaneV);
 
-            //----------------------------------
-            // Hit in Front VDC, Second WirePlane
-            //----------------------------------
-            if ((aHit->GetVDCID()==0) && (aHit->GetWirePlaneID()==1)) { // Front VDC, Back Wireplane
-
-                VDC_ChamberFront_VPlane_NbOfHits++;
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneV.StoreNbOfHits(VDC_ChamberFront_VPlane_NbOfHits);
-
-                // mark wire plane as been hit
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneV.StoreHasBeenHit(5);
-
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneV.StoreParticleName(rParticleName);
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneV.StoreParticleType(rParticleType);
-
-                // store total+kinetic energy of hit
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneV.StoreTotalEnergy(rtotalEnergy);
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneV.StoreKineticEnergy(rkineticEnergy);
-
-                // store origin vertex info
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneV.StoreOriginVertexPositionX(rOriginVertexPositionX);
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneV.StoreOriginVertexPositionY(rOriginVertexPositionY);
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneV.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
-
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneV.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneV.StoreOriginVertexTotalEnergy(rOriginVertexKineticEnergy);
-
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneV.StoreGlobalTimeOfHit(rGlobalTime);
-
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneV.StoreLocalPositionX(rLocalPositionX);
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneV.StoreLocalPositionY(rLocalPositionY);
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneV.StoreLocalPositionZ(rLocalPositionZ);
-
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneV.StoreGlobalPositionX(rGlobalPositionX);
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneV.StoreGlobalPositionY(rGlobalPositionY);
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneV.StoreGlobalPositionZ(rGlobalPositionZ);
-
-
-                // store wire plane hit momentum
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneV.StoreLocalMomentumX(rLocalMomentumX);
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneV.StoreLocalMomentumY(rLocalMomentumY);
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneV.StoreLocalMomentumZ(rLocalMomentumZ);
-
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneV.StoreGlobalMomentumX(rGlobalMomentumX);
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneV.StoreGlobalMomentumY(rGlobalMomentumY);
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneV.StoreGlobalMomentumZ(rGlobalMomentumZ);
-
-                // store global track angles Phi and Theta
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneV.StoreGlobalPhiAngle(rGlobalPhiAngle);
-                analysis->fRootEvent->Region3.ChamberFront.WirePlaneV.StoreGlobalThetaAngle(rGlobalThetaAngle);
-
+            //-----------------------------------
+            if (wire_plane_event == 0) {
+                G4cerr << "VDC hit with incorrect plane ID." << G4endl;
+                break;
             }
 
+            //-----------------------------------
+            VDC_Chamber_Plane_NbOfHits[iVDCID][iWirePlaneID]++;
+            wire_plane_event->StoreNbOfHits(VDC_Chamber_Plane_NbOfHits[iVDCID][iWirePlaneID]);
 
-            //----------------------------------
-            // Hit in Back VDC, First WirePlane
-            //----------------------------------
-            if ((aHit->GetVDCID()==1) && (aHit->GetWirePlaneID()==0)) {
+            // mark wire plane as been hit
+            wire_plane_event->StoreHasBeenHit(5);
 
-                VDC_ChamberBack_UPlane_NbOfHits++;
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneU.StoreNbOfHits(VDC_ChamberBack_UPlane_NbOfHits);
+            wire_plane_event->StoreParticleName(rParticleName);
+            wire_plane_event->StoreParticleType(rParticleType);
 
-                // mark wire plane as been hit
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneU.StoreHasBeenHit(5);
+            // store total+kinetic energy of hit
+            wire_plane_event->StoreTotalEnergy(rTotalEnergy);
+            wire_plane_event->StoreKineticEnergy(rKineticEnergy);
 
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneU.StoreParticleName(rParticleName);
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneU.StoreParticleType(rParticleType);
+            // store origin vertex info
+            wire_plane_event->StoreOriginVertexPositionX(rOriginVertexPositionX);
+            wire_plane_event->StoreOriginVertexPositionY(rOriginVertexPositionY);
+            wire_plane_event->StoreOriginVertexPositionZ(rOriginVertexPositionZ);
 
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneU.StoreOriginVertexPositionX(rOriginVertexPositionX);
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneU.StoreOriginVertexPositionY(rOriginVertexPositionY);
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneU.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
+            wire_plane_event->StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);
+            wire_plane_event->StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);
+            wire_plane_event->StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
+            wire_plane_event->StoreOriginVertexPhiAngle(rOriginVertexPhiAngle);
+            wire_plane_event->StoreOriginVertexThetaAngle(rOriginVertexThetaAngle);
 
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneU.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneU.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneU.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
+            wire_plane_event->StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
+            wire_plane_event->StoreOriginVertexTotalEnergy(rOriginVertexKineticEnergy);
 
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneU.StoreOriginVertexPhiAngle( rOriginVertexPhiAngle );
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneU.StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
+            wire_plane_event->StoreGlobalTimeOfHit(rGlobalTime);
 
-                // store total+kinetic energy of hit
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneU.StoreTotalEnergy(rtotalEnergy);
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneU.StoreKineticEnergy(rkineticEnergy);
+            // store wire plane hit position
+            wire_plane_event->StoreLocalPositionX(rLocalPositionX);
+            wire_plane_event->StoreLocalPositionY(rLocalPositionY);
+            wire_plane_event->StoreLocalPositionZ(rLocalPositionZ);
 
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneU.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneU.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
-// 	analysis->fRootEvent->Region3.ChamberBack.WirePlane.StorePrimaryQ2(rPrimaryQ2);
-// 	analysis->fRootEvent->Region3.ChamberBack.WirePlane.StoreCrossSection(rCrossSection);
-// 	analysis->fRootEvent->Region3.ChamberBack.WirePlane.StoreCrossSectionWeight(rCrossSectionWeight);
-// 	analysis->fRootEvent->Region3.ChamberBack.WirePlane.StorePrimaryEventNumber(rPrimaryEventNumber);
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneU.StoreGlobalTimeOfHit(rGlobalTime);
+            wire_plane_event->StoreGlobalPositionX(rGlobalPositionX);
+            wire_plane_event->StoreGlobalPositionY(rGlobalPositionY);
+            wire_plane_event->StoreGlobalPositionZ(rGlobalPositionZ);
 
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneU.StoreLocalPositionX(rLocalPositionX);
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneU.StoreLocalPositionY(rLocalPositionY);
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneU.StoreLocalPositionZ(rLocalPositionZ);
+            // store wire plane hit momentum
+            wire_plane_event->StoreLocalMomentumX(rLocalMomentumX);
+            wire_plane_event->StoreLocalMomentumY(rLocalMomentumY);
+            wire_plane_event->StoreLocalMomentumZ(rLocalMomentumZ);
 
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneU.StoreGlobalPositionX(rGlobalPositionX);
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneU.StoreGlobalPositionY(rGlobalPositionY);
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneU.StoreGlobalPositionZ(rGlobalPositionZ);
+            wire_plane_event->StoreGlobalMomentumX(rGlobalMomentumX);
+            wire_plane_event->StoreGlobalMomentumY(rGlobalMomentumY);
+            wire_plane_event->StoreGlobalMomentumZ(rGlobalMomentumZ);
 
+            // store global track angles Phi and Theta
+            wire_plane_event->StoreGlobalPhiAngle(rGlobalPhiAngle);
+            wire_plane_event->StoreGlobalThetaAngle(rGlobalThetaAngle);
 
-                // store wire plane hit momentum
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneU.StoreLocalMomentumX(rLocalMomentumX);
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneU.StoreLocalMomentumY(rLocalMomentumY);
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneU.StoreLocalMomentumZ(rLocalMomentumZ);
-
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneU.StoreGlobalMomentumX(rGlobalMomentumX);
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneU.StoreGlobalMomentumY(rGlobalMomentumY);
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneU.StoreGlobalMomentumZ(rGlobalMomentumZ);
-
-                // store global track angles Phi and Theta
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneU.StoreGlobalPhiAngle(rGlobalPhiAngle);
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneU.StoreGlobalThetaAngle(rGlobalThetaAngle);
-
-
-            }
-
-
-            //----------------------------------
-            // Hit in Back VDC, Second WirePlane
-            //----------------------------------
-            if ((aHit->GetVDCID()==1) && (aHit->GetWirePlaneID()==1)) {
-
-                VDC_ChamberBack_VPlane_NbOfHits++;
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneV.StoreNbOfHits(VDC_ChamberBack_VPlane_NbOfHits);
-
-                // mark wire plane as been hit
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneV.StoreHasBeenHit(5);
-
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneV.StoreParticleName(rParticleName);
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneV.StoreParticleType(rParticleType);
-
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneV.StoreOriginVertexPositionX(rOriginVertexPositionX);
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneV.StoreOriginVertexPositionY(rOriginVertexPositionY);
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneV.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
-
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneV.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneV.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneV.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
-
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneV.StoreOriginVertexPhiAngle( rOriginVertexPhiAngle );
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneV.StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
-
-                // store total+kinetic energy of hit
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneV.StoreTotalEnergy(rtotalEnergy);
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneV.StoreKineticEnergy(rkineticEnergy);
-
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneV.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneV.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
-
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneV.StoreGlobalTimeOfHit(rGlobalTime);
-
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneV.StoreLocalPositionX(rLocalPositionX);
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneV.StoreLocalPositionY(rLocalPositionY);
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneV.StoreLocalPositionZ(rLocalPositionZ);
-
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneV.StoreGlobalPositionX(rGlobalPositionX);
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneV.StoreGlobalPositionY(rGlobalPositionY);
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneV.StoreGlobalPositionZ(rGlobalPositionZ);
-
-                // store wire plane hit momentum
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneV.StoreLocalMomentumX(rLocalMomentumX);
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneV.StoreLocalMomentumY(rLocalMomentumY);
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneV.StoreLocalMomentumZ(rLocalMomentumZ);
-
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneV.StoreGlobalMomentumX(rGlobalMomentumX);
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneV.StoreGlobalMomentumY(rGlobalMomentumY);
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneV.StoreGlobalMomentumZ(rGlobalMomentumZ);
-
-                // store global track angles Phi and Theta
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneV.StoreGlobalPhiAngle(rGlobalPhiAngle);
-                analysis->fRootEvent->Region3.ChamberBack.WirePlaneV.StoreGlobalThetaAngle(rGlobalThetaAngle);
-            }
         }
 
 //=========================================================================================================
@@ -815,12 +563,12 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         if (n_VDChitDCFront) {
 
             // loop over DriftCell hits
-            for (G4int i1=0;i1<n_VDChitDCFront;i1++) {
+            for (G4int i1 = 0; i1 < n_VDChitDCFront; i1++) {
 
-                //QweakSimVDC_DriftCellHit* aHit = (*VDC_DriftCellFront_HC)[i1];
-                //aHit->Print();
+                QweakSimVDC_DriftCellHit* aHit = (*VDC_DriftCellFront_HC)[i1];
+                if (print_VDC_DriftCellHit) aHit->Print();
 
-            } // end  for(int i1=0;i1<n_hitDCFront;i1++)
+            } // end for (G4int i1 = 0; i1 < n_VDChitDCFront; i1++)
 
 
             // Extract the DriftCell Config from the 1st DC hit
@@ -848,8 +596,8 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
             // loop over hits
             for (G4int i1=0;i1<n_VDChitDCBack;i1++) {
 
-                //QweakSimVDC_DriftCellHit* aHit = (*VDC_DriftCellBack_HC)[i1];
-                //aHit->Print();
+                QweakSimVDC_DriftCellHit* aHit = (*VDC_DriftCellBack_HC)[i1];
+                if (print_VDC_DriftCellHit) aHit->Print();
 
             } // end for(int i1=0;i1<n_hitBack;i1++
 
@@ -871,146 +619,72 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 
                 QweakSimCerenkov_DetectorHit* aHit = (*CerenkovDetector_HC)[i1];
 
-                rOctantID = G4IndexToOctantNumber[ (Int_t) aHit->GetDetectorID()];
+                octantID = G4IndexToOctantNumber[ (Int_t) aHit->GetDetectorID()];
 
-                //aHit->Print();
+                if (print_Cerenkov_DetectorHit) aHit->Print();
 
                 // get local position of hit
                 localPosition  = aHit->GetLocalPosition();
-                rLocalPositionX = (Float_t) localPosition.x()/cm;
-                rLocalPositionY = (Float_t) localPosition.y()/cm;
-                rLocalPositionZ = (Float_t) localPosition.z()/cm;
+                rLocalPositionX = (Float_t) localPosition.x() / cm;
+                rLocalPositionY = (Float_t) localPosition.y() / cm;
+                rLocalPositionZ = (Float_t) localPosition.z() / cm;
 
                 // get world position of hit
                 globalPosition  = aHit->GetWorldPosition();
-                rGlobalPositionX = (Float_t) globalPosition.x()/cm;
-                rGlobalPositionY = (Float_t) globalPosition.y()/cm;
-                rGlobalPositionZ = (Float_t) globalPosition.z()/cm;
+                rGlobalPositionX = (Float_t) globalPosition.x() / cm;
+                rGlobalPositionY = (Float_t) globalPosition.y() / cm;
+                rGlobalPositionZ = (Float_t) globalPosition.z() / cm;
 
                 // get local Momentum of hit
                 localMomentum  = aHit->GetLocalMomentum();
-                rLocalMomentumX = (Float_t) localMomentum.x()/MeV;
-                rLocalMomentumY = (Float_t) localMomentum.y()/MeV;
-                rLocalMomentumZ = (Float_t) localMomentum.z()/MeV;
+                rLocalMomentumX = (Float_t) localMomentum.x() / MeV;
+                rLocalMomentumY = (Float_t) localMomentum.y() / MeV;
+                rLocalMomentumZ = (Float_t) localMomentum.z() / MeV;
 
                 // get world Momentum of hit
                 globalMomentum  = aHit->GetWorldMomentum();
-                rGlobalMomentumX = (Float_t) globalMomentum.x()/MeV;
-                rGlobalMomentumY = (Float_t) globalMomentum.y()/MeV;
-                rGlobalMomentumZ = (Float_t) globalMomentum.z()/MeV;
+                rGlobalMomentumX = (Float_t) globalMomentum.x() / MeV;
+                rGlobalMomentumY = (Float_t) globalMomentum.y() / MeV;
+                rGlobalMomentumZ = (Float_t) globalMomentum.z() / MeV;
+                rGlobalThetaAngle = (Float_t) globalMomentum.theta() / degree;
+                rGlobalPhiAngle   = (Float_t) globalMomentum.phi() / degree - 90.0;
 
                 localExitPosition = myUserInfo->GetLocalCerenkovExitPosition();
-                rLocalExitPositionX = (Float_t) localExitPosition.x()/cm;
-                rLocalExitPositionY = (Float_t) localExitPosition.y()/cm;
-                rLocalExitPositionZ = (Float_t) localExitPosition.z()/cm;
+                rLocalExitPositionX = (Float_t) localExitPosition.x() / cm;
+                rLocalExitPositionY = (Float_t) localExitPosition.y() / cm;
+                rLocalExitPositionZ = (Float_t) localExitPosition.z() / cm;
 
                 originVertexPosition  = aHit->GetOriginVertexPosition();
-                rOriginVertexPositionX      = (Float_t) originVertexPosition.x()/cm;
-                rOriginVertexPositionY      = (Float_t) originVertexPosition.y()/cm;
-                rOriginVertexPositionZ      = (Float_t) originVertexPosition.z()/cm;
+                rOriginVertexPositionX      = (Float_t) originVertexPosition.x() / cm;
+                rOriginVertexPositionY      = (Float_t) originVertexPosition.y() / cm;
+                rOriginVertexPositionZ      = (Float_t) originVertexPosition.z() / cm;
 
                 originVertexMomentumDirection = aHit->GetOriginVertexMomentumDirection();
                 rOriginVertexMomentumDirectionX = (Float_t) originVertexMomentumDirection.x();
                 rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
                 rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
+                rOriginVertexPhiAngle   = (Float_t) originVertexMomentumDirection.phi() / degree;
+                rOriginVertexThetaAngle = (Float_t) originVertexMomentumDirection.theta() / degree;
 
-		OriginVertexPhiAngle = atan2(rOriginVertexMomentumDirectionY, rOriginVertexMomentumDirectionX);
-                rOriginVertexPhiAngle = OriginVertexPhiAngle/degree;
+                rOriginVertexKineticEnergy = (Float_t) aHit->GetOriginVertexKineticEnergy() / MeV;
+                rOriginVertexTotalEnergy   = (Float_t) aHit->GetOriginVertexTotalEnergy() / MeV;
 
-		OriginVertexThetaAngle = atan2(sqrt(rOriginVertexMomentumDirectionY*rOriginVertexMomentumDirectionY
-		                               +rOriginVertexMomentumDirectionX*rOriginVertexMomentumDirectionX), 
-		                                rOriginVertexMomentumDirectionZ);
-                rOriginVertexThetaAngle = OriginVertexThetaAngle/degree;
+                rGlobalTime = (Float_t) aHit->GetGlobalTime() / ns;
 
-                originVertexKineticEnergy =   aHit->GetOriginVertexKineticEnergy();
-                rOriginVertexKineticEnergy = (Float_t ) originVertexKineticEnergy/MeV;
-                originVertexTotalEnergy = aHit->GetOriginVertexTotalEnergy();
-                rOriginVertexTotalEnergy = (Float_t ) originVertexTotalEnergy/MeV;
-
-                originVertexTotalEnergy =   aHit->GetOriginVertexTotalEnergy();
-                rOriginVertexTotalEnergy = (Float_t ) originVertexTotalEnergy/MeV;
-
-//                primaryQ2  = aHit->GetPrimaryQ2();
-//                rPrimaryQ2  = (Float_t) primaryQ2;
-//
-//                crossSection =  aHit->GetCrossSection();
-//                rCrossSection = (Float_t) crossSection;
-//
-//                crossSectionWeight =  aHit->GetCrossSectionWeight();
-//                rCrossSectionWeight = (Float_t) crossSectionWeight;
-
-
-                globalTime = aHit->GetGlobalTime();
-                rGlobalTime = (Float_t) globalTime/ns;
-
-
-                GlobalThetaAngle = globalMomentum.theta();
-                rGlobalThetaAngle = (Float_t) GlobalThetaAngle/degree;
-
-                GlobalPhiAngle   = globalMomentum.phi() -90.0*degree;
-                rGlobalPhiAngle   = (Float_t) GlobalPhiAngle/degree;
-
-
-                particleName = aHit->GetParticleName();
-                rParticleName = TString(particleName);
-
-                particleType = aHit->GetParticleType();
-                rParticleType = (Int_t) particleType;
+                rParticleName = TString(aHit->GetParticleName());
+                rParticleType = (Int_t) aHit->GetParticleType();
 
                 // get total Energy of hit
-                totalEnergy     = aHit->GetTotalEnergy();
-                rtotalEnergy     = (Float_t) totalEnergy/MeV;
+                rTotalEnergy     = (Float_t) aHit->GetTotalEnergy() / MeV;
 
                 // get kinetic Energy of hit
-                kineticEnergy     = aHit->GetKineticEnergy();
-                rkineticEnergy     = (Float_t) kineticEnergy/MeV;
+                rKineticEnergy     = (Float_t) aHit->GetKineticEnergy() / MeV;
 
 
                 // 	      edgeEvent = myUserInfo->GetEdgeEventDetected();
 
                 //==========================================================
-
-//jpan@nuclear.uwinnipeg.ca
-
-// 	     analysis->fRootEvent->Cerenkov.Octant[rOctantID].Detector.StoreDetectorID(rOctantID);
-// 	     analysis->fRootEvent->Cerenkov.Octant[rOctantID].Detector.StoreDetectorHasBeenHit(5);
-// 	     analysis->fRootEvent->Cerenkov.Octant[rOctantID].Detector.StoreParticleName(rParticleName);
-// 	     analysis->fRootEvent->Cerenkov.Octant[rOctantID].Detector.StoreParticleType(rParticleType);
-// 	     analysis->fRootEvent->Cerenkov.Octant[rOctantID].Detector.StoreGlobalTimeOfHit(rGlobalTime);
-// 	     analysis->fRootEvent->Cerenkov.Octant[rOctantID].Detector.StoreOriginVertexPositionX(rOriginVertexPositionX);
-// 	     analysis->fRootEvent->Cerenkov.Octant[rOctantID].Detector.StoreOriginVertexPositionY(rOriginVertexPositionY);
-// 	     analysis->fRootEvent->Cerenkov.Octant[rOctantID].Detector.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
-// 	     analysis->fRootEvent->Cerenkov.Octant[rOctantID].Detector.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
-// 	     analysis->fRootEvent->Cerenkov.Octant[rOctantID].Detector.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
-// 	     analysis->fRootEvent->Cerenkov.Octant[rOctantID].Detector.StorePrimaryQ2(rPrimaryQ2);
-// 	     analysis->fRootEvent->Cerenkov.Octant[rOctantID].Detector.StoreCrossSectionWeight(rCrossSectionWeight);
-// 	     analysis->fRootEvent->Cerenkov.Octant[rOctantID].Detector.StoreDetectorLocalPositionX(rLocalPositionX);
-// 	     analysis->fRootEvent->Cerenkov.Octant[rOctantID].Detector.StoreDetectorLocalPositionY(rLocalPositionY);
-// 	     analysis->fRootEvent->Cerenkov.Octant[rOctantID].Detector.StoreDetectorLocalPositionZ(rLocalPositionZ);
-// 	     analysis->fRootEvent->Cerenkov.Octant[rOctantID].Detector.StoreDetectorLocalExitPositionX(rLocalExitPositionX);
-// 	     analysis->fRootEvent->Cerenkov.Octant[rOctantID].Detector.StoreDetectorLocalExitPositionY(rLocalExitPositionY);
-// 	     analysis->fRootEvent->Cerenkov.Octant[rOctantID].Detector.StoreDetectorLocalExitPositionZ(rLocalExitPositionZ);
-// 	     analysis->fRootEvent->Cerenkov.Octant[rOctantID].Detector.StoreDetectorGlobalPositionX(rGlobalPositionX);
-// 	     analysis->fRootEvent->Cerenkov.Octant[rOctantID].Detector.StoreDetectorGlobalPositionY(rGlobalPositionY);
-// 	     analysis->fRootEvent->Cerenkov.Octant[rOctantID].Detector.StoreDetectorGlobalPositionZ(rGlobalPositionZ);
-// 	     analysis->fRootEvent->Cerenkov.Octant[rOctantID].Detector.StoreDetectorLocalVertexTotalEnergy((Float_t ) aHit->GetTotalEnergy()/MeV);
-//
-// 	     // store global track angles Phi and Theta
-// 	     analysis->fRootEvent->Cerenkov.Octant[rOctantID].Detector.StoreGlobalPhiAngle(rGlobalPhiAngle);
-// 	     analysis->fRootEvent->Cerenkov.Octant[rOctantID].Detector.StoreGlobalThetaAngle(rGlobalThetaAngle);
-//
-// 	     // store total+kinetic energy of a hit
-// 	     analysis->fRootEvent->Cerenkov.Octant[rOctantID].Detector.StoreTotalEnergy(rtotalEnergy);
-// 	     analysis->fRootEvent->Cerenkov.Octant[rOctantID].Detector.StoreKineticEnergy(rkineticEnergy);
-//
-// 	     //-----------------------------------------------------------------------------
-//
-// 	     for(int cp = 0; cp < myUserInfo->GetCerenkovOpticalPhotonCount(); cp ++){
-// 	       analysis->fRootEvent->Cerenkov.Octant[rOctantID].Detector.StoreCerenkovPhotonEnergy((Double_t)myUserInfo->GetCerenkovPhotonEnergyAtIndex(cp));
-// 	     }
-
-
-                analysis->fRootEvent->Cerenkov.Detector.StoreDetectorID(rOctantID);
+                analysis->fRootEvent->Cerenkov.Detector.StoreDetectorID(octantID);
                 analysis->fRootEvent->Cerenkov.Detector.StoreDetectorHasBeenHit(5);
                 analysis->fRootEvent->Cerenkov.Detector.StoreParticleName(rParticleName);
                 analysis->fRootEvent->Cerenkov.Detector.StoreParticleType(rParticleType);
@@ -1021,15 +695,12 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 analysis->fRootEvent->Cerenkov.Detector.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);
                 analysis->fRootEvent->Cerenkov.Detector.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);
                 analysis->fRootEvent->Cerenkov.Detector.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
-                analysis->fRootEvent->Cerenkov.Detector.StoreOriginVertexPhiAngle( rOriginVertexPhiAngle );
-                analysis->fRootEvent->Cerenkov.Detector.StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
+                analysis->fRootEvent->Cerenkov.Detector.StoreOriginVertexPhiAngle(rOriginVertexPhiAngle);
+                analysis->fRootEvent->Cerenkov.Detector.StoreOriginVertexThetaAngle(rOriginVertexThetaAngle);
 
                 analysis->fRootEvent->Cerenkov.Detector.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
                 analysis->fRootEvent->Cerenkov.Detector.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
 
-// 	     analysis->fRootEvent->Cerenkov.Detector.StorePrimaryQ2(rPrimaryQ2);
-// 	     analysis->fRootEvent->Cerenkov.Detector.StoreCrossSection(rCrossSection);
-// 	     analysis->fRootEvent->Cerenkov.Detector.StoreCrossSectionWeight(rCrossSectionWeight);
                 analysis->fRootEvent->Cerenkov.Detector.StoreDetectorLocalPositionX(rLocalPositionX);
                 analysis->fRootEvent->Cerenkov.Detector.StoreDetectorLocalPositionY(rLocalPositionY);
                 analysis->fRootEvent->Cerenkov.Detector.StoreDetectorLocalPositionZ(rLocalPositionZ);
@@ -1039,15 +710,14 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 analysis->fRootEvent->Cerenkov.Detector.StoreDetectorGlobalPositionX(rGlobalPositionX);
                 analysis->fRootEvent->Cerenkov.Detector.StoreDetectorGlobalPositionY(rGlobalPositionY);
                 analysis->fRootEvent->Cerenkov.Detector.StoreDetectorGlobalPositionZ(rGlobalPositionZ);
-                analysis->fRootEvent->Cerenkov.Detector.StoreDetectorLocalVertexTotalEnergy((Float_t ) aHit->GetTotalEnergy()/MeV);
 
                 // store global track angles Phi and Theta
                 analysis->fRootEvent->Cerenkov.Detector.StoreGlobalPhiAngle(rGlobalPhiAngle);
                 analysis->fRootEvent->Cerenkov.Detector.StoreGlobalThetaAngle(rGlobalThetaAngle);
 
                 // store total+kinetic energy of a hit
-                analysis->fRootEvent->Cerenkov.Detector.StoreTotalEnergy(rtotalEnergy);
-                analysis->fRootEvent->Cerenkov.Detector.StoreKineticEnergy(rkineticEnergy);
+                analysis->fRootEvent->Cerenkov.Detector.StoreTotalEnergy(rTotalEnergy);
+                analysis->fRootEvent->Cerenkov.Detector.StoreKineticEnergy(rKineticEnergy);
 
                 //-----------------------------------------------------------------------------
 //
@@ -1068,16 +738,6 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 //                     rSecondaryPartEnergy = (Float_t) myUserInfo->GetCerenkovSecondaryParticleEnergy(sec)/MeV;
 //                     rSecondaryPartCharge = (Float_t) myUserInfo->GetCerenkovSecondaryParticleCharge(sec);
 // 
-// //jpan@nuclear.uwinnipeg.ca
-// //		 analysis->fRootEvent->Cerenkov.Octant[rOctantID].Detector.AddSecondaryParticleEvent(rSecondaryPartOriginX,
-// //												     rSecondaryPartOriginY,
-// //												     rSecondaryPartOriginZ,
-// //												     rSecondaryPartMomentumX,
-// //												     rSecondaryPartMomentumY,
-// //												     rSecondaryPartMomentumZ,
-// //												     rSecondaryPartEnergy,
-// //												     rSecondaryPartCharge);
-// 
 //                     analysis->fRootEvent->Cerenkov.Detector.AddSecondaryParticleEvent(rSecondaryPartOriginX,
 //                             rSecondaryPartOriginY,
 //                             rSecondaryPartOriginZ,
@@ -1097,8 +757,6 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 else
                     edgeEvent = 0;
 
-//jpan@nuclear.uwinnipeg.ca
-//	     analysis->fRootEvent->Cerenkov.Octant[rOctantID].Detector.StoreEdgeEventFlag(edgeEvent);
                 analysis->fRootEvent->Cerenkov.Detector.StoreEdgeEventFlag(edgeEvent);
 
                 // G4cout << "Edge Event Flag = " << edgeEvent << G4endl;
@@ -1113,13 +771,12 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         // Store Number of Photoelectrons of Cerenkov Detector hits
         //=========================================================
 
-        if (n_hitCerenkov >0) {
+        if (n_hitCerenkovPMT >0) {
             // loop over hits
             for (int i1=0;i1<n_hitCerenkovPMT;i1++) {
 
                 QweakSimCerenkovDetector_PMTHit* aHit = (*CerenkovDetectorPMT_HC)[i1];
-                rOctantID = G4IndexToOctantNumber[(Int_t) aHit->GetDetectorID()];
-                //rOctantID = G4IndexToOctantNumber[6];
+                octantID = G4IndexToOctantNumber[(Int_t) aHit->GetDetectorID()];
 
                 //------------------------------------------------------------------------
                 if ( (aHit->GetPMTID() == 0) ) { // left PMT
@@ -1142,27 +799,18 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 //------------------------------------------------------------------------
 
             } // end for(int i1=0;i1<n_hitCerenkovPMT;i1++)
-        } //end if (n_hitCerenkov >0)
+        } //end if (n_hitCerenkovPMT >0)
 
 
         //---------------------------------------------
         // store number of hits for left and right PMT
         //---------------------------------------------
-//jpan@nuclear.uwinnipeg.ca
-//        for (int noctant=0; noctant<8; noctant++) {
-// 	analysis->fRootEvent->Cerenkov.Octant[noctant].PMT.StorePMTLeftNbOfHits(pmtHitsLeft[noctant]);
-// 	analysis->fRootEvent->Cerenkov.Octant[noctant].PMT.StorePMTRightNbOfHits(pmtHitsRight[noctant]);
-// 	analysis->fRootEvent->Cerenkov.Octant[noctant].PMT.StorePMTTotalNbOfHits(pmtHitsLeft[noctant] + pmtHitsRight[noctant]);
-// 	analysis->fRootEvent->Cerenkov.Octant[noctant].PMT.StorePMTLeftNbOfPEs(pmtNPELeft[noctant]);
-// 	analysis->fRootEvent->Cerenkov.Octant[noctant].PMT.StorePMTRightNbOfPEs(pmtNPERight[noctant]);
-// 	analysis->fRootEvent->Cerenkov.Octant[noctant].PMT.StorePMTTotalNbOfPEs(pmtNPELeft[noctant] + pmtNPERight[noctant]);
-//}
-            analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftNbOfHits(pmtHitsLeft);
-            analysis->fRootEvent->Cerenkov.PMT.StorePMTRightNbOfHits(pmtHitsRight);
-            analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalNbOfHits(pmtHitsLeft + pmtHitsRight);
-            analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftNbOfPEs(pmtNPELeft);
-            analysis->fRootEvent->Cerenkov.PMT.StorePMTRightNbOfPEs(pmtNPERight);
-            analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalNbOfPEs(pmtNPELeft + pmtNPERight);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftNbOfHits(pmtHitsLeft);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTRightNbOfHits(pmtHitsRight);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalNbOfHits(pmtHitsLeft + pmtHitsRight);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftNbOfPEs(pmtNPELeft);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTRightNbOfPEs(pmtNPERight);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalNbOfPEs(pmtNPELeft + pmtNPERight);
 
 
         //==============================================================================
@@ -1176,800 +824,149 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
             // loop over wire plane hits
             for (int i1=0;i1<n_HDChitWirePlane;i1++) {
 
-                int HDC_ChamberFront_Plane1_NbOfHits = 0;
-                int HDC_ChamberFront_Plane2_NbOfHits = 0;
-                int HDC_ChamberFront_Plane3_NbOfHits = 0;
-                int HDC_ChamberFront_Plane4_NbOfHits = 0;
-                int HDC_ChamberFront_Plane5_NbOfHits = 0;
-                int HDC_ChamberFront_Plane6_NbOfHits = 0;
-
-                int HDC_ChamberBack_Plane1_NbOfHits = 0;
-                int HDC_ChamberBack_Plane2_NbOfHits = 0;
-                int HDC_ChamberBack_Plane3_NbOfHits = 0;
-                int HDC_ChamberBack_Plane4_NbOfHits = 0;
-                int HDC_ChamberBack_Plane5_NbOfHits = 0;
-                int HDC_ChamberBack_Plane6_NbOfHits = 0;
+                int HDC_Chamber_Plane_NbOfHits[2][6];
+                for (int chamber = 0; chamber < 2; chamber++)
+                  for (int plane = 0; plane < 6; plane++)
+                    HDC_Chamber_Plane_NbOfHits[chamber][plane] = 0;
 
                 // get hit pointer for each hit
                 QweakSimHDC_WirePlaneHit* aHit = (*HDC_WirePlane_HC)[i1];
 
-                //G4cout << G4endl << "###### Printing HDC hit info within QweakSimEventAction::EndOfEventAction() " << G4endl << G4endl;
-                //aHit->Print();
-
                 // get local position of hit
                 localPosition  = aHit->GetLocalPosition();
-                rLocalPositionX = (Float_t) localPosition.x()/cm;
-                rLocalPositionY = (Float_t) localPosition.y()/cm;
-                rLocalPositionZ = (Float_t) localPosition.z()/cm;
+                rLocalPositionX = (Float_t) localPosition.x() / cm;
+                rLocalPositionY = (Float_t) localPosition.y() / cm;
+                rLocalPositionZ = (Float_t) localPosition.z() / cm;
 
                 // get world position of hit
                 globalPosition  = aHit->GetWorldPosition();
-                rGlobalPositionX = (Float_t) globalPosition.x()/cm;
-                rGlobalPositionY = (Float_t) globalPosition.y()/cm;
-                rGlobalPositionZ = (Float_t) globalPosition.z()/cm;
+                rGlobalPositionX = (Float_t) globalPosition.x() / cm;
+                rGlobalPositionY = (Float_t) globalPosition.y() / cm;
+                rGlobalPositionZ = (Float_t) globalPosition.z() / cm;
 
                 // get local Momentum of hit
                 localMomentum  = aHit->GetLocalMomentum();
-                rLocalMomentumX = (Float_t) localMomentum.x()/MeV;
-                rLocalMomentumY = (Float_t) localMomentum.y()/MeV;
-                rLocalMomentumZ = (Float_t) localMomentum.z()/MeV;
+                rLocalMomentumX = (Float_t) localMomentum.x() / MeV;
+                rLocalMomentumY = (Float_t) localMomentum.y() / MeV;
+                rLocalMomentumZ = (Float_t) localMomentum.z() / MeV;
 
                 // get world Momentum of hit
                 globalMomentum  = aHit->GetWorldMomentum();
-                rGlobalMomentumX = (Float_t) globalMomentum.x()/MeV;
-                rGlobalMomentumY = (Float_t) globalMomentum.y()/MeV;
-                rGlobalMomentumZ = (Float_t) globalMomentum.z()/MeV;
+                rGlobalMomentumX = (Float_t) globalMomentum.x() / MeV;
+                rGlobalMomentumY = (Float_t) globalMomentum.y() / MeV;
+                rGlobalMomentumZ = (Float_t) globalMomentum.z() / MeV;
+                rGlobalThetaAngle = (Float_t) globalMomentum.theta() / degree;
+                rGlobalPhiAngle   = (Float_t) globalMomentum.phi() / degree - 90.0;
 
                 originVertexPosition  = aHit->GetOriginVertexPosition();
-                rOriginVertexPositionX      = (Float_t) originVertexPosition.x()/cm;
-                rOriginVertexPositionY      = (Float_t) originVertexPosition.y()/cm;
-                rOriginVertexPositionZ      = (Float_t) originVertexPosition.z()/cm;
+                rOriginVertexPositionX      = (Float_t) originVertexPosition.x() / cm;
+                rOriginVertexPositionY      = (Float_t) originVertexPosition.y() / cm;
+                rOriginVertexPositionZ      = (Float_t) originVertexPosition.z() / cm;
 
 
                 originVertexMomentumDirection = aHit->GetOriginVertexMomentumDirection();
                 rOriginVertexMomentumDirectionX = (Float_t) originVertexMomentumDirection.x();
                 rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
                 rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
+                rOriginVertexPhiAngle   = (Float_t) originVertexMomentumDirection.phi() / degree;
+                rOriginVertexThetaAngle = (Float_t) originVertexMomentumDirection.theta() / degree;
 
-                OriginVertexPhiAngle = atan2(rOriginVertexMomentumDirectionY, rOriginVertexMomentumDirectionX);
-                rOriginVertexPhiAngle = OriginVertexPhiAngle/degree;
+                rOriginVertexKineticEnergy = (Float_t) aHit->GetOriginVertexKineticEnergy() / MeV;
+                rOriginVertexTotalEnergy   = (Float_t) aHit->GetOriginVertexTotalEnergy() / MeV;
 
-		OriginVertexThetaAngle = atan2(sqrt(rOriginVertexMomentumDirectionY*rOriginVertexMomentumDirectionY
-		                               +rOriginVertexMomentumDirectionX*rOriginVertexMomentumDirectionX), 
-		                                rOriginVertexMomentumDirectionZ);
-                rOriginVertexThetaAngle = OriginVertexThetaAngle/degree;
-
-                originVertexKineticEnergy = aHit->GetOriginVertexKineticEnergy();
-                rOriginVertexKineticEnergy = (Float_t ) originVertexKineticEnergy/MeV;
-                originVertexTotalEnergy = aHit->GetOriginVertexTotalEnergy();
-                rOriginVertexTotalEnergy = (Float_t ) originVertexTotalEnergy/MeV;
-
-// 	   primaryQ2  = aHit->GetPrimaryQ2();
-// 	  rPrimaryQ2  = (Float_t) primaryQ2;
-//
-// 	   crossSection = aHit->GetCrossSection();
-// 	  rCrossSection = (Float_t) crossSection;
-//
-// 	   crossSectionWeight = aHit->GetCrossSectionWeight();
-// 	  rCrossSectionWeight = (Float_t) crossSectionWeight;
-//
-// 	   primaryEventNumber = aHit->GetPrimaryEventNumber();
-// 	  rPrimaryEventNumber = (Int_t) primaryEventNumber;
-
-
-                globalTime = aHit->GetGlobalTime();
-                rGlobalTime = (Float_t) globalTime/ns;
-
-
-                GlobalThetaAngle = globalMomentum.theta();
-                rGlobalThetaAngle = (Float_t) GlobalThetaAngle/degree;
-
-                GlobalPhiAngle   = globalMomentum.phi() -90.0*degree;
-                rGlobalPhiAngle   = (Float_t) GlobalPhiAngle/degree;
+                rGlobalTime = (Float_t) aHit->GetGlobalTime() / ns;
 
                 // get total Energy of hit
-                totalEnergy     = aHit->GetTotalEnergy();
-                rtotalEnergy     = (Float_t) totalEnergy/MeV;
+                rTotalEnergy     = (Float_t) aHit->GetTotalEnergy() / MeV;
 
                 // get kinetic Energy of hit
-                kineticEnergy     = aHit->GetKineticEnergy();
-                rkineticEnergy     = (Float_t) kineticEnergy/MeV;
+                rKineticEnergy     = (Float_t) aHit->GetKineticEnergy() / MeV;
 
                 //-----------------------------------
-
-                if ((aHit->GetHDCID()==0) && (aHit->GetWirePlaneID()==0)) {
-
-                    HDC_ChamberFront_Plane1_NbOfHits++;
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane1.StoreNbOfHits(HDC_ChamberFront_Plane1_NbOfHits);
-
-                    // mark wire plane as been hit
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane1.StorePlaneHasBeenHit(5);
-
-
-                    // store origin vertex info
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane1.StoreOriginVertexPositionX(rOriginVertexPositionX);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane1.StoreOriginVertexPositionY(rOriginVertexPositionY);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane1.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane1.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane1.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane1.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane1.StoreOriginVertexPhiAngle( rOriginVertexPhiAngle );
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane1.StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
-
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane1.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane1.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
-
-// 	      analysis->fRootEvent->Region2.ChamberFront.WirePlane1.StorePrimaryQ2(rPrimaryQ2);
-// 	      analysis->fRootEvent->Region2.ChamberFront.WirePlane1.StoreCrossSection(rCrossSection);
-// 	      analysis->fRootEvent->Region2.ChamberFront.WirePlane1.StoreCrossSectionWeight(rCrossSectionWeight);
-//
-// 	      analysis->fRootEvent->Region2.ChamberFront.WirePlane1.StorePrimaryEventNumber(rPrimaryEventNumber);
-
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane1.StoreGlobalTimeOfHit(rGlobalTime);
-
-
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane1.StorePlaneLocalPositionX(rLocalPositionX);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane1.StorePlaneLocalPositionY(rLocalPositionY);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane1.StorePlaneLocalPositionZ(rLocalPositionZ);
-
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane1.StorePlaneGlobalPositionX(rGlobalPositionX);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane1.StorePlaneGlobalPositionY(rGlobalPositionY);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane1.StorePlaneGlobalPositionZ(rGlobalPositionZ);
-
-                    // store wire plane hit momentum
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane1.StorePlaneLocalMomentumX(rLocalMomentumX);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane1.StorePlaneLocalMomentumY(rLocalMomentumY);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane1.StorePlaneLocalMomentumZ(rLocalMomentumZ);
-
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane1.StorePlaneGlobalMomentumX(rGlobalMomentumX);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane1.StorePlaneGlobalMomentumY(rGlobalMomentumY);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane1.StorePlaneGlobalMomentumZ(rGlobalMomentumZ);
-
-                    // store global track angles Phi and Theta
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane1.StoreGlobalPhiAngle(rGlobalPhiAngle);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane1.StoreGlobalThetaAngle(rGlobalThetaAngle);
-
-                    // store total+kinetic energy of hit
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane1.StoreTotalEnergy(rtotalEnergy);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane1.StoreKineticEnergy(rkineticEnergy);
-
-                } //end of if((aHit->GetHDCID()==0) && (aHit->GetWirePlaneID()==0))
-                //-----------------------------------
-
-                if ((aHit->GetHDCID()==0) && (aHit->GetWirePlaneID()==1)) {
-
-                    HDC_ChamberFront_Plane2_NbOfHits++;
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane2.StoreNbOfHits(HDC_ChamberFront_Plane2_NbOfHits);
-
-                    // mark wire plane as been hit
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane2.StorePlaneHasBeenHit(5);
-
-
-                    // store origin vertex info
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane2.StoreOriginVertexPositionX(rOriginVertexPositionX);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane2.StoreOriginVertexPositionY(rOriginVertexPositionY);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane2.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane2.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane2.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane2.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane2.StoreOriginVertexPhiAngle( rOriginVertexPhiAngle );
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane2.StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane2.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane2.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
-
-
-
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane2.StoreGlobalTimeOfHit(rGlobalTime);
-
-
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane2.StorePlaneLocalPositionX(rLocalPositionX);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane2.StorePlaneLocalPositionY(rLocalPositionY);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane2.StorePlaneLocalPositionZ(rLocalPositionZ);
-
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane2.StorePlaneGlobalPositionX(rGlobalPositionX);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane2.StorePlaneGlobalPositionY(rGlobalPositionY);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane2.StorePlaneGlobalPositionZ(rGlobalPositionZ);
-
-                    // store wire plane hit momentum
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane2.StorePlaneLocalMomentumX(rLocalMomentumX);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane2.StorePlaneLocalMomentumY(rLocalMomentumY);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane2.StorePlaneLocalMomentumZ(rLocalMomentumZ);
-
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane2.StorePlaneGlobalMomentumX(rGlobalMomentumX);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane2.StorePlaneGlobalMomentumY(rGlobalMomentumY);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane2.StorePlaneGlobalMomentumZ(rGlobalMomentumZ);
-
-                    // store global track angles Phi and Theta
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane2.StoreGlobalPhiAngle(rGlobalPhiAngle);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane2.StoreGlobalThetaAngle(rGlobalThetaAngle);
-
-                    // store total+kinetic energy of hit
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane2.StoreTotalEnergy(rtotalEnergy);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane2.StoreKineticEnergy(rkineticEnergy);
-
-                } //end of if((aHit->GetHDCID()==0) && (aHit->GetWirePlaneID()==1))
-                //-----------------------------------
-
-                if ((aHit->GetHDCID()==0) && (aHit->GetWirePlaneID()==2)) {
-
-                    HDC_ChamberFront_Plane3_NbOfHits++;
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane3.StoreNbOfHits(HDC_ChamberFront_Plane3_NbOfHits);
-
-                    // mark wire plane as been hit
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane3.StorePlaneHasBeenHit(5);
-
-
-                    // store origin vertex info
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane3.StoreOriginVertexPositionX(rOriginVertexPositionX);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane3.StoreOriginVertexPositionY(rOriginVertexPositionY);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane3.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane3.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane3.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane3.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane3.StoreOriginVertexPhiAngle( rOriginVertexPhiAngle );
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane3.StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
-
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane3.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane3.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
-
-// 	      analysis->fRootEvent->Region2.ChamberFront.WirePlane3.StorePrimaryQ2(rPrimaryQ2);
-// 	      analysis->fRootEvent->Region2.ChamberFront.WirePlane3.StoreCrossSection(rCrossSection);
-// 	      analysis->fRootEvent->Region2.ChamberFront.WirePlane3.StoreCrossSectionWeight(rCrossSectionWeight);
-// 	      analysis->fRootEvent->Region2.ChamberFront.WirePlane3.StorePrimaryEventNumber(rPrimaryEventNumber);
-
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane3.StoreGlobalTimeOfHit(rGlobalTime);
-
-
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane3.StorePlaneLocalPositionX(rLocalPositionX);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane3.StorePlaneLocalPositionY(rLocalPositionY);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane3.StorePlaneLocalPositionZ(rLocalPositionZ);
-
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane3.StorePlaneGlobalPositionX(rGlobalPositionX);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane3.StorePlaneGlobalPositionY(rGlobalPositionY);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane3.StorePlaneGlobalPositionZ(rGlobalPositionZ);
-
-                    // store wire plane hit momentum
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane3.StorePlaneLocalMomentumX(rLocalMomentumX);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane3.StorePlaneLocalMomentumY(rLocalMomentumY);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane3.StorePlaneLocalMomentumZ(rLocalMomentumZ);
-
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane3.StorePlaneGlobalMomentumX(rGlobalMomentumX);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane3.StorePlaneGlobalMomentumY(rGlobalMomentumY);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane3.StorePlaneGlobalMomentumZ(rGlobalMomentumZ);
-
-                    // store global track angles Phi and Theta
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane3.StoreGlobalPhiAngle(rGlobalPhiAngle);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane3.StoreGlobalThetaAngle(rGlobalThetaAngle);
-
-                    // store total+kinetic energy of hit
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane3.StoreTotalEnergy(rtotalEnergy);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane3.StoreKineticEnergy(rkineticEnergy);
-
-                } //end of if((aHit->GetHDCID()==0) && (aHit->GetWirePlaneID()==2))
-                //-----------------------------------
-
-                if ((aHit->GetHDCID()==0) && (aHit->GetWirePlaneID()==3)) {
-
-                    HDC_ChamberFront_Plane4_NbOfHits++;
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane4.StoreNbOfHits(HDC_ChamberFront_Plane4_NbOfHits);
-
-                    // mark wire plane as been hit
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane4.StorePlaneHasBeenHit(5);
-
-
-                    // store origin vertex info
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane4.StoreOriginVertexPositionX(rOriginVertexPositionX);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane4.StoreOriginVertexPositionY(rOriginVertexPositionY);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane4.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane4.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane4.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane4.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane4.StoreOriginVertexPhiAngle( rOriginVertexPhiAngle );
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane4.StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
-
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane4.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane4.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
-
-// 	      analysis->fRootEvent->Region2.ChamberFront.WirePlane4.StorePrimaryQ2(rPrimaryQ2);
-// 	      analysis->fRootEvent->Region2.ChamberFront.WirePlane4.StoreCrossSection(rCrossSection);
-// 	      analysis->fRootEvent->Region2.ChamberFront.WirePlane4.StoreCrossSectionWeight(rCrossSectionWeight);
-// 	      analysis->fRootEvent->Region2.ChamberFront.WirePlane4.StorePrimaryEventNumber(rPrimaryEventNumber);
-
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane4.StoreGlobalTimeOfHit(rGlobalTime);
-
-
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane4.StorePlaneLocalPositionX(rLocalPositionX);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane4.StorePlaneLocalPositionY(rLocalPositionY);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane4.StorePlaneLocalPositionZ(rLocalPositionZ);
-
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane4.StorePlaneGlobalPositionX(rGlobalPositionX);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane4.StorePlaneGlobalPositionY(rGlobalPositionY);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane4.StorePlaneGlobalPositionZ(rGlobalPositionZ);
-
-                    // store wire plane hit momentum
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane4.StorePlaneLocalMomentumX(rLocalMomentumX);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane4.StorePlaneLocalMomentumY(rLocalMomentumY);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane4.StorePlaneLocalMomentumZ(rLocalMomentumZ);
-
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane4.StorePlaneGlobalMomentumX(rGlobalMomentumX);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane4.StorePlaneGlobalMomentumY(rGlobalMomentumY);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane4.StorePlaneGlobalMomentumZ(rGlobalMomentumZ);
-
-                    // store global track angles Phi and Theta
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane4.StoreGlobalPhiAngle(rGlobalPhiAngle);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane4.StoreGlobalThetaAngle(rGlobalThetaAngle);
-
-                    // store total+kinetic energy of hit
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane4.StoreTotalEnergy(rtotalEnergy);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane4.StoreKineticEnergy(rkineticEnergy);
-
-                } //end of if((aHit->GetHDCID()==0) && (aHit->GetWirePlaneID()==3))
-                //-----------------------------------
-
-                if ((aHit->GetHDCID()==0) && (aHit->GetWirePlaneID()==4)) {
-
-                    HDC_ChamberFront_Plane5_NbOfHits++;
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane5.StoreNbOfHits(HDC_ChamberFront_Plane5_NbOfHits);
-
-                    // mark wire plane as been hit
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane5.StorePlaneHasBeenHit(5);
-
-
-                    // store origin vertex info
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane5.StoreOriginVertexPositionX(rOriginVertexPositionX);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane5.StoreOriginVertexPositionY(rOriginVertexPositionY);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane5.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane5.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane5.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane5.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane5.StoreOriginVertexPhiAngle( rOriginVertexPhiAngle );
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane5.StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
-
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane5.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane5.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
-
-// 	      analysis->fRootEvent->Region2.ChamberFront.WirePlane5.StorePrimaryQ2(rPrimaryQ2);
-// 	      analysis->fRootEvent->Region2.ChamberFront.WirePlane5.StoreCrossSection(rCrossSection);
-// 	      analysis->fRootEvent->Region2.ChamberFront.WirePlane5.StoreCrossSectionWeight(rCrossSectionWeight);
-// 	      analysis->fRootEvent->Region2.ChamberFront.WirePlane5.StorePrimaryEventNumber(rPrimaryEventNumber);
-
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane5.StoreGlobalTimeOfHit(rGlobalTime);
-
-
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane5.StorePlaneLocalPositionX(rLocalPositionX);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane5.StorePlaneLocalPositionY(rLocalPositionY);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane5.StorePlaneLocalPositionZ(rLocalPositionZ);
-
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane5.StorePlaneGlobalPositionX(rGlobalPositionX);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane5.StorePlaneGlobalPositionY(rGlobalPositionY);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane5.StorePlaneGlobalPositionZ(rGlobalPositionZ);
-
-                    // store wire plane hit momentum
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane5.StorePlaneLocalMomentumX(rLocalMomentumX);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane5.StorePlaneLocalMomentumY(rLocalMomentumY);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane5.StorePlaneLocalMomentumZ(rLocalMomentumZ);
-
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane5.StorePlaneGlobalMomentumX(rGlobalMomentumX);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane5.StorePlaneGlobalMomentumY(rGlobalMomentumY);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane5.StorePlaneGlobalMomentumZ(rGlobalMomentumZ);
-
-                    // store global track angles Phi and Theta
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane5.StoreGlobalPhiAngle(rGlobalPhiAngle);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane5.StoreGlobalThetaAngle(rGlobalThetaAngle);
-
-                    // store total+kinetic energy of hit
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane5.StoreTotalEnergy(rtotalEnergy);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane5.StoreKineticEnergy(rkineticEnergy);
-
-                } //end of if((aHit->GetHDCID()==0) && (aHit->GetWirePlaneID()==4))
-                //-----------------------------------
-
-                if ((aHit->GetHDCID()==0) && (aHit->GetWirePlaneID()==5)) {
-
-                    HDC_ChamberFront_Plane6_NbOfHits++;
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane6.StoreNbOfHits(HDC_ChamberFront_Plane6_NbOfHits);
-
-                    // mark wire plane as been hit
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane6.StorePlaneHasBeenHit(5);
-
-
-                    // store origin vertex info
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane6.StoreOriginVertexPositionX(rOriginVertexPositionX);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane6.StoreOriginVertexPositionY(rOriginVertexPositionY);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane6.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane6.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane6.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane6.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane6.StoreOriginVertexPhiAngle( rOriginVertexPhiAngle );
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane6.StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
-
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane6.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane6.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
-
-// 	      analysis->fRootEvent->Region2.ChamberFront.WirePlane6.StorePrimaryQ2(rPrimaryQ2);
-// 	      analysis->fRootEvent->Region2.ChamberFront.WirePlane6.StoreCrossSection(rCrossSection);
-// 	      analysis->fRootEvent->Region2.ChamberFront.WirePlane6.StoreCrossSectionWeight(rCrossSectionWeight);
-// 	      analysis->fRootEvent->Region2.ChamberFront.WirePlane6.StorePrimaryEventNumber(rPrimaryEventNumber);
-
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane6.StoreGlobalTimeOfHit(rGlobalTime);
-
-
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane6.StorePlaneLocalPositionX(rLocalPositionX);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane6.StorePlaneLocalPositionY(rLocalPositionY);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane6.StorePlaneLocalPositionZ(rLocalPositionZ);
-
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane6.StorePlaneGlobalPositionX(rGlobalPositionX);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane6.StorePlaneGlobalPositionY(rGlobalPositionY);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane6.StorePlaneGlobalPositionZ(rGlobalPositionZ);
-
-                    // store wire plane hit momentum
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane6.StorePlaneLocalMomentumX(rLocalMomentumX);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane6.StorePlaneLocalMomentumY(rLocalMomentumY);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane6.StorePlaneLocalMomentumZ(rLocalMomentumZ);
-
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane6.StorePlaneGlobalMomentumX(rGlobalMomentumX);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane6.StorePlaneGlobalMomentumY(rGlobalMomentumY);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane6.StorePlaneGlobalMomentumZ(rGlobalMomentumZ);
-
-                    // store global track angles Phi and Theta
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane6.StoreGlobalPhiAngle(rGlobalPhiAngle);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane6.StoreGlobalThetaAngle(rGlobalThetaAngle);
-
-                    // store total+kinetic energy of hit
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane6.StoreTotalEnergy(rtotalEnergy);
-                    analysis->fRootEvent->Region2.ChamberFront.WirePlane6.StoreKineticEnergy(rkineticEnergy);
-
-                } //end of if((aHit->GetHDCID()==0) && (aHit->GetWirePlaneID()==5))
-                //-----------------------------------
-                if ((aHit->GetHDCID()==1) && (aHit->GetWirePlaneID()==0)) {
-
-                    HDC_ChamberBack_Plane1_NbOfHits++;
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane1.StoreNbOfHits(HDC_ChamberBack_Plane1_NbOfHits);
-
-                    // mark wire plane as been hit
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane1.StorePlaneHasBeenHit(5);
-
-                    // store origin vertex info
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane1.StoreOriginVertexPositionX(rOriginVertexPositionX);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane1.StoreOriginVertexPositionY(rOriginVertexPositionY);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane1.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane1.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane1.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane1.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane1.StoreOriginVertexPhiAngle( rOriginVertexPhiAngle );
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane1.StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
-
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane1.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane1.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
-
-// 	      analysis->fRootEvent->Region2.ChamberBack.WirePlane1.StorePrimaryQ2(rPrimaryQ2);
-// 	      analysis->fRootEvent->Region2.ChamberBack.WirePlane1.StoreCrossSection(rCrossSection);
-// 	      analysis->fRootEvent->Region2.ChamberBack.WirePlane1.StoreCrossSectionWeight(rCrossSectionWeight);
-// 	      analysis->fRootEvent->Region2.ChamberBack.WirePlane1.StorePrimaryEventNumber(rPrimaryEventNumber);
-
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane1.StoreGlobalTimeOfHit(rGlobalTime);
-
-
-
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane1.StorePlaneLocalPositionX(rLocalPositionX);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane1.StorePlaneLocalPositionY(rLocalPositionY);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane1.StorePlaneLocalPositionZ(rLocalPositionZ);
-
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane1.StorePlaneGlobalPositionX(rGlobalPositionX);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane1.StorePlaneGlobalPositionY(rGlobalPositionY);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane1.StorePlaneGlobalPositionZ(rGlobalPositionZ);
-
-                    // store wire plane hit momentum
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane1.StorePlaneLocalMomentumX(rLocalMomentumX);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane1.StorePlaneLocalMomentumY(rLocalMomentumY);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane1.StorePlaneLocalMomentumZ(rLocalMomentumZ);
-
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane1.StorePlaneGlobalMomentumX(rGlobalMomentumX);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane1.StorePlaneGlobalMomentumY(rGlobalMomentumY);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane1.StorePlaneGlobalMomentumZ(rGlobalMomentumZ);
-
-                    // store global track angles Phi and Theta
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane1.StoreGlobalPhiAngle(rGlobalPhiAngle);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane1.StoreGlobalThetaAngle(rGlobalThetaAngle);
-
-                    // store total+kinetic energy of hit
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane1.StoreTotalEnergy(rtotalEnergy);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane1.StoreKineticEnergy(rkineticEnergy);
-
-                } // end of if((aHit->GetHDCID()==1) && (aHit->GetWirePlaneID()==0)) {
+                int iHDCID = aHit->GetHDCID();
+                QweakSimUserHDC_SingleHDCEvent* single_hdc_event = 0;
+                if (iHDCID == 0)
+                  single_hdc_event = &(analysis->fRootEvent->Region2.ChamberFront);
+                if (iHDCID == 1)
+                  single_hdc_event = &(analysis->fRootEvent->Region2.ChamberBack);
 
                 //-----------------------------------
-
-                if ((aHit->GetHDCID()==1) && (aHit->GetWirePlaneID()==1)) {
-
-                    HDC_ChamberBack_Plane2_NbOfHits++;
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane2.StoreNbOfHits(HDC_ChamberBack_Plane2_NbOfHits);
-
-                    // mark wire plane as been hit
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane2.StorePlaneHasBeenHit(5);
-
-                    // store origin vertex info
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane2.StoreOriginVertexPositionX(rOriginVertexPositionX);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane2.StoreOriginVertexPositionY(rOriginVertexPositionY);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane2.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane2.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane2.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane2.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane2.StoreOriginVertexPhiAngle( rOriginVertexPhiAngle );
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane2.StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane2.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane2.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
-
-// 	      analysis->fRootEvent->Region2.ChamberBack.WirePlane2.StorePrimaryQ2(rPrimaryQ2);
-// 	      analysis->fRootEvent->Region2.ChamberBack.WirePlane2.StoreCrossSection(rCrossSection);
-// 	      analysis->fRootEvent->Region2.ChamberBack.WirePlane2.StoreCrossSectionWeight(rCrossSectionWeight);
-// 	      analysis->fRootEvent->Region2.ChamberBack.WirePlane2.StorePrimaryEventNumber(rPrimaryEventNumber);
-
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane2.StoreGlobalTimeOfHit(rGlobalTime);
-
-
-
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane2.StorePlaneLocalPositionX(rLocalPositionX);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane2.StorePlaneLocalPositionY(rLocalPositionY);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane2.StorePlaneLocalPositionZ(rLocalPositionZ);
-
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane2.StorePlaneGlobalPositionX(rGlobalPositionX);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane2.StorePlaneGlobalPositionY(rGlobalPositionY);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane2.StorePlaneGlobalPositionZ(rGlobalPositionZ);
-
-                    // store wire plane hit momentum
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane2.StorePlaneLocalMomentumX(rLocalMomentumX);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane2.StorePlaneLocalMomentumY(rLocalMomentumY);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane2.StorePlaneLocalMomentumZ(rLocalMomentumZ);
-
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane2.StorePlaneGlobalMomentumX(rGlobalMomentumX);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane2.StorePlaneGlobalMomentumY(rGlobalMomentumY);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane2.StorePlaneGlobalMomentumZ(rGlobalMomentumZ);
-
-                    // store global track angles Phi and Theta
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane2.StoreGlobalPhiAngle(rGlobalPhiAngle);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane2.StoreGlobalThetaAngle(rGlobalThetaAngle);
-
-                    // store total+kinetic energy of hit
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane2.StoreTotalEnergy(rtotalEnergy);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane2.StoreKineticEnergy(rkineticEnergy);
-
-                } // end of if((aHit->GetHDCID()==1) && (aHit->GetWirePlaneID()==1)) {
+                if (single_hdc_event == 0) {
+                    G4cerr << "HDC hit with incorrect chamber ID." << G4endl;
+                    break;
+                }
 
                 //-----------------------------------
-                if ((aHit->GetHDCID()==1) && (aHit->GetWirePlaneID()==2)) {
-
-                    HDC_ChamberBack_Plane3_NbOfHits++;
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane3.StoreNbOfHits(HDC_ChamberBack_Plane3_NbOfHits);
-
-                    // mark wire plane as been hit
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane3.StorePlaneHasBeenHit(5);
-
-                    // store origin vertex info
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane3.StoreOriginVertexPositionX(rOriginVertexPositionX);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane3.StoreOriginVertexPositionY(rOriginVertexPositionY);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane3.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane3.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane3.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane3.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane3.StoreOriginVertexPhiAngle( rOriginVertexPhiAngle );
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane3.StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
-
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane3.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane3.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
-
-// 	      analysis->fRootEvent->Region2.ChamberBack.WirePlane3.StorePrimaryQ2(rPrimaryQ2);
-// 	      analysis->fRootEvent->Region2.ChamberBack.WirePlane3.StoreCrossSection(rCrossSection);
-// 	      analysis->fRootEvent->Region2.ChamberBack.WirePlane3.StoreCrossSectionWeight(rCrossSectionWeight);
-// 	      analysis->fRootEvent->Region2.ChamberBack.WirePlane3.StorePrimaryEventNumber(rPrimaryEventNumber);
-
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane3.StoreGlobalTimeOfHit(rGlobalTime);
-
-
-
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane3.StorePlaneLocalPositionX(rLocalPositionX);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane3.StorePlaneLocalPositionY(rLocalPositionY);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane3.StorePlaneLocalPositionZ(rLocalPositionZ);
-
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane3.StorePlaneGlobalPositionX(rGlobalPositionX);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane3.StorePlaneGlobalPositionY(rGlobalPositionY);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane3.StorePlaneGlobalPositionZ(rGlobalPositionZ);
-
-                    // store wire plane hit momentum
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane3.StorePlaneLocalMomentumX(rLocalMomentumX);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane3.StorePlaneLocalMomentumY(rLocalMomentumY);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane3.StorePlaneLocalMomentumZ(rLocalMomentumZ);
-
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane3.StorePlaneGlobalMomentumX(rGlobalMomentumX);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane3.StorePlaneGlobalMomentumY(rGlobalMomentumY);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane3.StorePlaneGlobalMomentumZ(rGlobalMomentumZ);
-
-                    // store global track angles Phi and Theta
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane3.StoreGlobalPhiAngle(rGlobalPhiAngle);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane3.StoreGlobalThetaAngle(rGlobalThetaAngle);
-
-                    // store total+kinetic energy of hit
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane3.StoreTotalEnergy(rtotalEnergy);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane3.StoreKineticEnergy(rkineticEnergy);
-
-                } // end of if((aHit->GetHDCID()==1) && (aHit->GetWirePlaneID()==2)) {
+                int iWirePlaneID = aHit->GetWirePlaneID();
+                QweakSimUserHDC_WirePlaneEvent* wire_plane_event = 0;
+                if (iWirePlaneID == 0)
+                  wire_plane_event = &(single_hdc_event->WirePlane1);
+                if (iWirePlaneID == 1)
+                  wire_plane_event = &(single_hdc_event->WirePlane2);
+                if (iWirePlaneID == 2)
+                  wire_plane_event = &(single_hdc_event->WirePlane3);
+                if (iWirePlaneID == 3)
+                  wire_plane_event = &(single_hdc_event->WirePlane4);
+                if (iWirePlaneID == 4)
+                  wire_plane_event = &(single_hdc_event->WirePlane5);
+                if (iWirePlaneID == 5)
+                  wire_plane_event = &(single_hdc_event->WirePlane6);
 
                 //-----------------------------------
-                if ((aHit->GetHDCID()==1) && (aHit->GetWirePlaneID()==3)) {
-
-                    HDC_ChamberBack_Plane4_NbOfHits++;
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane4.StoreNbOfHits(HDC_ChamberBack_Plane4_NbOfHits);
-
-                    // mark wire plane as been hit
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane4.StorePlaneHasBeenHit(5);
-
-                    // store origin vertex info
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane4.StoreOriginVertexPositionX(rOriginVertexPositionX);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane4.StoreOriginVertexPositionY(rOriginVertexPositionY);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane4.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane4.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane4.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane4.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane4.StoreOriginVertexPhiAngle( rOriginVertexPhiAngle );
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane4.StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
-
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane4.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane4.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
-
-// 	      analysis->fRootEvent->Region2.ChamberBack.WirePlane4.StorePrimaryQ2(rPrimaryQ2);
-// 	      analysis->fRootEvent->Region2.ChamberBack.WirePlane4.StoreCrossSection(rCrossSection);
-// 	      analysis->fRootEvent->Region2.ChamberBack.WirePlane4.StoreCrossSectionWeight(rCrossSectionWeight);
-// 	      analysis->fRootEvent->Region2.ChamberBack.WirePlane4.StorePrimaryEventNumber(rPrimaryEventNumber);
-
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane4.StoreGlobalTimeOfHit(rGlobalTime);
-
-
-
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane4.StorePlaneLocalPositionX(rLocalPositionX);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane4.StorePlaneLocalPositionY(rLocalPositionY);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane4.StorePlaneLocalPositionZ(rLocalPositionZ);
-
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane4.StorePlaneGlobalPositionX(rGlobalPositionX);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane4.StorePlaneGlobalPositionY(rGlobalPositionY);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane4.StorePlaneGlobalPositionZ(rGlobalPositionZ);
-
-                    // store wire plane hit momentum
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane4.StorePlaneLocalMomentumX(rLocalMomentumX);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane4.StorePlaneLocalMomentumY(rLocalMomentumY);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane4.StorePlaneLocalMomentumZ(rLocalMomentumZ);
-
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane4.StorePlaneGlobalMomentumX(rGlobalMomentumX);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane4.StorePlaneGlobalMomentumY(rGlobalMomentumY);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane4.StorePlaneGlobalMomentumZ(rGlobalMomentumZ);
-
-                    // store global track angles Phi and Theta
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane4.StoreGlobalPhiAngle(rGlobalPhiAngle);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane4.StoreGlobalThetaAngle(rGlobalThetaAngle);
-
-                    // store total+kinetic energy of hit
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane4.StoreTotalEnergy(rtotalEnergy);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane4.StoreKineticEnergy(rkineticEnergy);
-
-                } // end of if((aHit->GetHDCID()==1) && (aHit->GetWirePlaneID()==3)) {
+                if (wire_plane_event == 0) {
+                    G4cerr << "HDC hit with incorrect plane ID." << G4endl;
+                    break;
+                }
 
                 //-----------------------------------
-                if ((aHit->GetHDCID()==1) && (aHit->GetWirePlaneID()==4)) {
+                // store number of hits
+                HDC_Chamber_Plane_NbOfHits[iHDCID][iWirePlaneID]++;
+                wire_plane_event->StoreNbOfHits(HDC_Chamber_Plane_NbOfHits[iHDCID][iWirePlaneID]);
 
-                    HDC_ChamberBack_Plane5_NbOfHits++;
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane5.StoreNbOfHits(HDC_ChamberBack_Plane5_NbOfHits);
+                // mark wire plane as been hit
+                wire_plane_event->StorePlaneHasBeenHit(5);
 
-                    // mark wire plane as been hit
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane5.StorePlaneHasBeenHit(5);
+                // store origin vertex info
+                wire_plane_event->StoreOriginVertexPositionX(rOriginVertexPositionX);
+                wire_plane_event->StoreOriginVertexPositionY(rOriginVertexPositionY);
+                wire_plane_event->StoreOriginVertexPositionZ(rOriginVertexPositionZ);
+                wire_plane_event->StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);
+                wire_plane_event->StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);
+                wire_plane_event->StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
+                wire_plane_event->StoreOriginVertexPhiAngle( rOriginVertexPhiAngle );
+                wire_plane_event->StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
 
-                    // store origin vertex info
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane5.StoreOriginVertexPositionX(rOriginVertexPositionX);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane5.StoreOriginVertexPositionY(rOriginVertexPositionY);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane5.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane5.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane5.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane5.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane5.StoreOriginVertexPhiAngle( rOriginVertexPhiAngle );
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane5.StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
+                wire_plane_event->StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
+                wire_plane_event->StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
 
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane5.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane5.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
-
-// 	      analysis->fRootEvent->Region2.ChamberBack.WirePlane5.StorePrimaryQ2(rPrimaryQ2);
-// 	      analysis->fRootEvent->Region2.ChamberBack.WirePlane5.StoreCrossSection(rCrossSection);
-// 	      analysis->fRootEvent->Region2.ChamberBack.WirePlane5.StoreCrossSectionWeight(rCrossSectionWeight);
-// 	      analysis->fRootEvent->Region2.ChamberBack.WirePlane5.StorePrimaryEventNumber(rPrimaryEventNumber);
-
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane5.StoreGlobalTimeOfHit(rGlobalTime);
+                wire_plane_event->StoreGlobalTimeOfHit(rGlobalTime);
 
 
+                wire_plane_event->StorePlaneLocalPositionX(rLocalPositionX);
+                wire_plane_event->StorePlaneLocalPositionY(rLocalPositionY);
+                wire_plane_event->StorePlaneLocalPositionZ(rLocalPositionZ);
 
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane5.StorePlaneLocalPositionX(rLocalPositionX);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane5.StorePlaneLocalPositionY(rLocalPositionY);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane5.StorePlaneLocalPositionZ(rLocalPositionZ);
+                wire_plane_event->StorePlaneGlobalPositionX(rGlobalPositionX);
+                wire_plane_event->StorePlaneGlobalPositionY(rGlobalPositionY);
+                wire_plane_event->StorePlaneGlobalPositionZ(rGlobalPositionZ);
 
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane5.StorePlaneGlobalPositionX(rGlobalPositionX);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane5.StorePlaneGlobalPositionY(rGlobalPositionY);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane5.StorePlaneGlobalPositionZ(rGlobalPositionZ);
+                // store wire plane hit momentum
+                wire_plane_event->StorePlaneLocalMomentumX(rLocalMomentumX);
+                wire_plane_event->StorePlaneLocalMomentumY(rLocalMomentumY);
+                wire_plane_event->StorePlaneLocalMomentumZ(rLocalMomentumZ);
 
-                    // store wire plane hit momentum
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane5.StorePlaneLocalMomentumX(rLocalMomentumX);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane5.StorePlaneLocalMomentumY(rLocalMomentumY);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane5.StorePlaneLocalMomentumZ(rLocalMomentumZ);
+                wire_plane_event->StorePlaneGlobalMomentumX(rGlobalMomentumX);
+                wire_plane_event->StorePlaneGlobalMomentumY(rGlobalMomentumY);
+                wire_plane_event->StorePlaneGlobalMomentumZ(rGlobalMomentumZ);
 
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane5.StorePlaneGlobalMomentumX(rGlobalMomentumX);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane5.StorePlaneGlobalMomentumY(rGlobalMomentumY);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane5.StorePlaneGlobalMomentumZ(rGlobalMomentumZ);
+                // store global track angles Phi and Theta
+                wire_plane_event->StoreGlobalPhiAngle(rGlobalPhiAngle);
+                wire_plane_event->StoreGlobalThetaAngle(rGlobalThetaAngle);
 
-                    // store global track angles Phi and Theta
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane5.StoreGlobalPhiAngle(rGlobalPhiAngle);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane5.StoreGlobalThetaAngle(rGlobalThetaAngle);
+                // store total+kinetic energy of hit
+                wire_plane_event->StoreTotalEnergy(rTotalEnergy);
+                wire_plane_event->StoreKineticEnergy(rKineticEnergy);
 
-                    // store total+kinetic energy of hit
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane5.StoreTotalEnergy(rtotalEnergy);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane5.StoreKineticEnergy(rkineticEnergy);
-
-                } // end of if((aHit->GetHDCID()==1) && (aHit->GetWirePlaneID()==4)) {
-
-                //-----------------------------------
-
-                if ((aHit->GetHDCID()==1) && (aHit->GetWirePlaneID()==5)) {
-
-                    HDC_ChamberBack_Plane6_NbOfHits++;
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane6.StoreNbOfHits(HDC_ChamberBack_Plane6_NbOfHits);
-
-                    // mark wire plane as been hit
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane6.StorePlaneHasBeenHit(5);
-
-                    // store origin vertex info
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane6.StoreOriginVertexPositionX(rOriginVertexPositionX);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane6.StoreOriginVertexPositionY(rOriginVertexPositionY);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane6.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane6.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane6.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane6.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane6.StoreOriginVertexPhiAngle( rOriginVertexPhiAngle );
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane6.StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
-
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane6.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane6.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
-
-// 	      analysis->fRootEvent->Region2.ChamberBack.WirePlane6.StorePrimaryQ2(rPrimaryQ2);
-// 	      analysis->fRootEvent->Region2.ChamberBack.WirePlane6.StoreCrossSection(rCrossSection);
-// 	      analysis->fRootEvent->Region2.ChamberBack.WirePlane6.StoreCrossSectionWeight(rCrossSectionWeight);
-// 	      analysis->fRootEvent->Region2.ChamberBack.WirePlane6.StorePrimaryEventNumber(rPrimaryEventNumber);
-
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane6.StoreGlobalTimeOfHit(rGlobalTime);
-
-
-
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane6.StorePlaneLocalPositionX(rLocalPositionX);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane6.StorePlaneLocalPositionY(rLocalPositionY);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane6.StorePlaneLocalPositionZ(rLocalPositionZ);
-
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane6.StorePlaneGlobalPositionX(rGlobalPositionX);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane6.StorePlaneGlobalPositionY(rGlobalPositionY);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane6.StorePlaneGlobalPositionZ(rGlobalPositionZ);
-
-                    // store wire plane hit momentum
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane6.StorePlaneLocalMomentumX(rLocalMomentumX);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane6.StorePlaneLocalMomentumY(rLocalMomentumY);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane6.StorePlaneLocalMomentumZ(rLocalMomentumZ);
-
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane6.StorePlaneGlobalMomentumX(rGlobalMomentumX);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane6.StorePlaneGlobalMomentumY(rGlobalMomentumY);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane6.StorePlaneGlobalMomentumZ(rGlobalMomentumZ);
-
-                    // store global track angles Phi and Theta
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane6.StoreGlobalPhiAngle(rGlobalPhiAngle);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane6.StoreGlobalThetaAngle(rGlobalThetaAngle);
-
-                    // store total+kinetic energy of hit
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane6.StoreTotalEnergy(rtotalEnergy);
-                    analysis->fRootEvent->Region2.ChamberBack.WirePlane6.StoreKineticEnergy(rkineticEnergy);
-
-                } // end of if((aHit->GetHDCID()==1) && (aHit->GetWirePlaneID()==5)) {
-
-                //-----------------------------------
                 //-----------------------------------
 
             } // end of  for(int i1=0;i1<n_HDChitWirePlane;i1++){
@@ -2001,83 +998,56 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 QweakSimGEM_WirePlaneHit* aHit = (*GEM_WirePlane_HC)[i1];
 
                 // G4cout << G4endl << "###### Printing GEM hit info within QweakSimEventAction::EndOfEventAction() " << G4endl << G4endl;
-                // aHit->Print();
+                if (print_GEM_WirePlaneHit) aHit->Print();
 
                 // get local position of hit
                 localPosition  = aHit->GetLocalPosition();
-                rLocalPositionX = (Float_t) localPosition.x()/cm;
-                rLocalPositionY = (Float_t) localPosition.y()/cm;
-                rLocalPositionZ = (Float_t) localPosition.z()/cm;
+                rLocalPositionX = (Float_t) localPosition.x() / cm;
+                rLocalPositionY = (Float_t) localPosition.y() / cm;
+                rLocalPositionZ = (Float_t) localPosition.z() / cm;
 
                 // get world position of hit
                 globalPosition  = aHit->GetWorldPosition();
-                rGlobalPositionX = (Float_t) globalPosition.x()/cm;
-                rGlobalPositionY = (Float_t) globalPosition.y()/cm;
-                rGlobalPositionZ = (Float_t) globalPosition.z()/cm;
+                rGlobalPositionX = (Float_t) globalPosition.x() / cm;
+                rGlobalPositionY = (Float_t) globalPosition.y() / cm;
+                rGlobalPositionZ = (Float_t) globalPosition.z() / cm;
 
                 // get local Momentum of hit
                 localMomentum  = aHit->GetLocalMomentum();
-                rLocalMomentumX = (Float_t) localMomentum.x()/MeV;
-                rLocalMomentumY = (Float_t) localMomentum.y()/MeV;
-                rLocalMomentumZ = (Float_t) localMomentum.z()/MeV;
+                rLocalMomentumX = (Float_t) localMomentum.x() / MeV;
+                rLocalMomentumY = (Float_t) localMomentum.y() / MeV;
+                rLocalMomentumZ = (Float_t) localMomentum.z() / MeV;
 
                 // get world Momentum of hit
                 globalMomentum  = aHit->GetWorldMomentum();
-                rGlobalMomentumX = (Float_t) globalMomentum.x()/MeV;
-                rGlobalMomentumY = (Float_t) globalMomentum.y()/MeV;
-                rGlobalMomentumZ = (Float_t) globalMomentum.z()/MeV;
+                rGlobalMomentumX = (Float_t) globalMomentum.x() / MeV;
+                rGlobalMomentumY = (Float_t) globalMomentum.y() / MeV;
+                rGlobalMomentumZ = (Float_t) globalMomentum.z() / MeV;
+                rGlobalThetaAngle = globalMomentum.theta() / degree;
+                rGlobalPhiAngle   = globalMomentum.phi() / degree - 90.0;
 
                 originVertexPosition  = aHit->GetOriginVertexPosition();
-                rOriginVertexPositionX      = (Float_t) originVertexPosition.x()/cm;
-                rOriginVertexPositionY      = (Float_t) originVertexPosition.y()/cm;
-                rOriginVertexPositionZ      = (Float_t) originVertexPosition.z()/cm;
-
+                rOriginVertexPositionX      = (Float_t) originVertexPosition.x() / cm;
+                rOriginVertexPositionY      = (Float_t) originVertexPosition.y() / cm;
+                rOriginVertexPositionZ      = (Float_t) originVertexPosition.z() / cm;
 
                 originVertexMomentumDirection = aHit->GetOriginVertexMomentumDirection();
                 rOriginVertexMomentumDirectionX = (Float_t) originVertexMomentumDirection.x();
                 rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
                 rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
+                rOriginVertexPhiAngle   = (Float_t) originVertexMomentumDirection.phi() / degree;
+                rOriginVertexThetaAngle = (Float_t) originVertexMomentumDirection.theta() / degree;
 
-                OriginVertexPhiAngle = atan2(-1.0*rOriginVertexMomentumDirectionY, -1.0*rOriginVertexMomentumDirectionX)+ 90.0*degree;
-                rOriginVertexPhiAngle = OriginVertexPhiAngle/degree;
+                rOriginVertexKineticEnergy = (Float_t) aHit->GetOriginVertexKineticEnergy() / MeV;
+                rOriginVertexTotalEnergy = (Float_t) aHit->GetOriginVertexTotalEnergy() / MeV;
 
-                OriginVertexThetaAngle = atan2( rOriginVertexMomentumDirectionY, rOriginVertexMomentumDirectionZ);
-                rOriginVertexThetaAngle = OriginVertexThetaAngle/degree;
-
-                originVertexKineticEnergy = aHit->GetOriginVertexKineticEnergy();
-                rOriginVertexKineticEnergy = (Float_t ) originVertexKineticEnergy/MeV;
-                originVertexTotalEnergy = aHit->GetOriginVertexTotalEnergy();
-                rOriginVertexTotalEnergy = (Float_t ) originVertexTotalEnergy/MeV;
-
-// 	   primaryQ2  = aHit->GetPrimaryQ2();
-// 	  rPrimaryQ2  = (Float_t) primaryQ2;
-//
-// 	   crossSection = aHit->GetCrossSection();
-// 	  rCrossSection = (Float_t) crossSection;
-//
-// 	   crossSectionWeight = aHit->GetCrossSectionWeight();
-// 	  rCrossSectionWeight = (Float_t) crossSectionWeight;
-//
-// 	   primaryEventNumber = aHit->GetPrimaryEventNumber();
-// 	  rPrimaryEventNumber = (Int_t) primaryEventNumber;
-
-
-                globalTime = aHit->GetGlobalTime();
-                rGlobalTime = (Float_t) globalTime/ns;
-
-                GlobalThetaAngle = globalMomentum.theta();
-                rGlobalThetaAngle = (Float_t) GlobalThetaAngle/degree;
-
-                GlobalPhiAngle   = globalMomentum.phi() -90.0*degree;
-                rGlobalPhiAngle   = (Float_t) GlobalPhiAngle/degree;
+                rGlobalTime = (Float_t) aHit->GetGlobalTime() / ns;
 
                 // get total Energy of hit
-                totalEnergy     = aHit->GetTotalEnergy();
-                rtotalEnergy     = (Float_t) totalEnergy/MeV;
+                rtotalEnergy     = (Float_t) aHit->GetTotalEnergy() / MeV;
 
                 // get kinetic Energy of hit
-                kineticEnergy     = aHit->GetKineticEnergy();
-                rkineticEnergy     = (Float_t) kineticEnergy/MeV;
+                rkineticEnergy     = (Float_t) aHit->GetKineticEnergy() / MeV;
 
                 //-----------------------------------
 
@@ -2101,17 +1071,8 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                     analysis->fRootEvent->Region1.ChamberFront.WirePlane.StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
                     //------------------------------------------------------------------------------------------------------------------------------------------
 
-                    for (int noctant=0;noctant<8;noctant++) {
-
-                    }
-
                     analysis->fRootEvent->Region1.ChamberFront.WirePlane.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
                     analysis->fRootEvent->Region1.ChamberFront.WirePlane.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
-
-// 	      analysis->fRootEvent->Region1.ChamberFront.WirePlane.StorePrimaryQ2(rPrimaryQ2);
-// 	      analysis->fRootEvent->Region1.ChamberFront.WirePlane.StoreCrossSection(rCrossSection);
-// 	      analysis->fRootEvent->Region1.ChamberFront.WirePlane.StoreCrossSectionWeight(rCrossSectionWeight);
-// 	      analysis->fRootEvent->Region1.ChamberFront.WirePlane.StorePrimaryEventNumber(rPrimaryEventNumber);
 
                     analysis->fRootEvent->Region1.ChamberFront.WirePlane.StoreGlobalTimeOfHit(rGlobalTime);
 
@@ -2167,11 +1128,6 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                     analysis->fRootEvent->Region1.ChamberBack.WirePlane.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
                     analysis->fRootEvent->Region1.ChamberBack.WirePlane.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
 
-// 	      analysis->fRootEvent->Region1.ChamberBack.WirePlane.StorePrimaryQ2(rPrimaryQ2);
-// 	      analysis->fRootEvent->Region1.ChamberBack.WirePlane.StoreCrossSection(rCrossSection);
-// 	      analysis->fRootEvent->Region1.ChamberBack.WirePlane.StoreCrossSectionWeight(rCrossSectionWeight);
-// 	      analysis->fRootEvent->Region1.ChamberBack.WirePlane.StorePrimaryEventNumber(rPrimaryEventNumber);
-
                     analysis->fRootEvent->Region1.ChamberBack.WirePlane.StoreGlobalTimeOfHit(rGlobalTime);
 
 
@@ -2226,78 +1182,50 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 
                 QweakSimTriggerScintillator_DetectorHit* aHit = (*TriggerScintillatorDetector_HC)[i1];
 
-                //aHit->Print();
+                if (print_TriggerScintillator_DetectorHit) aHit->Print();
 
                 // get local position of hit
                 localPosition  = aHit->GetLocalPosition();
-                rLocalPositionX = (Float_t) localPosition.x()/cm;
-                rLocalPositionY = (Float_t) localPosition.y()/cm;
-                rLocalPositionZ = (Float_t) localPosition.z()/cm;
+                rLocalPositionX = (Float_t) localPosition.x() / cm;
+                rLocalPositionY = (Float_t) localPosition.y() / cm;
+                rLocalPositionZ = (Float_t) localPosition.z() / cm;
 
                 // get world position of hit
                 globalPosition  = aHit->GetWorldPosition();
-                rGlobalPositionX = (Float_t) globalPosition.x()/cm;
-                rGlobalPositionY = (Float_t) globalPosition.y()/cm;
-                rGlobalPositionZ = (Float_t) globalPosition.z()/cm;
+                rGlobalPositionX = (Float_t) globalPosition.x() / cm;
+                rGlobalPositionY = (Float_t) globalPosition.y() / cm;
+                rGlobalPositionZ = (Float_t) globalPosition.z() / cm;
 
                 // get local Momentum of hit
                 localMomentum  = aHit->GetLocalMomentum();
-                rLocalMomentumX = (Float_t) localMomentum.x()/MeV;
-                rLocalMomentumY = (Float_t) localMomentum.y()/MeV;
-                rLocalMomentumZ = (Float_t) localMomentum.z()/MeV;
+                rLocalMomentumX = (Float_t) localMomentum.x() / MeV;
+                rLocalMomentumY = (Float_t) localMomentum.y() / MeV;
+                rLocalMomentumZ = (Float_t) localMomentum.z() / MeV;
 
                 // get world Momentum of hit
                 globalMomentum  = aHit->GetWorldMomentum();
-                rGlobalMomentumX = (Float_t) globalMomentum.x()/MeV;
-                rGlobalMomentumY = (Float_t) globalMomentum.y()/MeV;
-                rGlobalMomentumZ = (Float_t) globalMomentum.z()/MeV;
-
-
+                rGlobalMomentumX = (Float_t) globalMomentum.x() / MeV;
+                rGlobalMomentumY = (Float_t) globalMomentum.y() / MeV;
+                rGlobalMomentumZ = (Float_t) globalMomentum.z() / MeV;
+                rGlobalThetaAngle = (Float_t) globalMomentum.theta() / degree;
+                rGlobalPhiAngle   = (Float_t) globalMomentum.phi() / degree - 90.0;
 
                 originVertexPosition  = aHit->GetOriginVertexPosition();
-                rOriginVertexPositionX      = (Float_t) originVertexPosition.x()/cm;
-                rOriginVertexPositionY      = (Float_t) originVertexPosition.y()/cm;
-                rOriginVertexPositionZ      = (Float_t) originVertexPosition.z()/cm;
+                rOriginVertexPositionX      = (Float_t) originVertexPosition.x() / cm;
+                rOriginVertexPositionY      = (Float_t) originVertexPosition.y() / cm;
+                rOriginVertexPositionZ      = (Float_t) originVertexPosition.z() / cm;
 
                 originVertexMomentumDirection = aHit->GetOriginVertexMomentumDirection();
                 rOriginVertexMomentumDirectionX = (Float_t) originVertexMomentumDirection.x();
                 rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
                 rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
+                rOriginVertexPhiAngle   = (Float_t) originVertexMomentumDirection.phi() / degree;
+                rOriginVertexThetaAngle = (Float_t) originVertexMomentumDirection.theta() / degree;
 
-                OriginVertexPhiAngle = atan2(rOriginVertexMomentumDirectionY, rOriginVertexMomentumDirectionX);
-                rOriginVertexPhiAngle = OriginVertexPhiAngle/degree;
+                rOriginVertexKineticEnergy =  (Float_t) aHit->GetOriginVertexKineticEnergy() / MeV;
+                rOriginVertexTotalEnergy = (Float_t) aHit->GetOriginVertexTotalEnergy() / MeV;
 
-		OriginVertexThetaAngle = atan2(sqrt(rOriginVertexMomentumDirectionY*rOriginVertexMomentumDirectionY
-		                               +rOriginVertexMomentumDirectionX*rOriginVertexMomentumDirectionX), 
-		                               rOriginVertexMomentumDirectionZ);
-                rOriginVertexThetaAngle = OriginVertexThetaAngle/degree;
-
-                originVertexKineticEnergy =   aHit->GetOriginVertexKineticEnergy();
-                rOriginVertexKineticEnergy = (Float_t ) originVertexKineticEnergy/MeV;
-                originVertexTotalEnergy = aHit->GetOriginVertexTotalEnergy();
-                rOriginVertexTotalEnergy = (Float_t ) originVertexTotalEnergy/MeV;
-
-                originVertexTotalEnergy =   aHit->GetOriginVertexTotalEnergy();
-                rOriginVertexTotalEnergy = (Float_t ) originVertexTotalEnergy/MeV;
-
-// 	   primaryQ2  = aHit->GetPrimaryQ2();
-// 	  rPrimaryQ2  = (Float_t) primaryQ2;
-//
-// 	   crossSection =  aHit->GetCrossSection();
-// 	  rCrossSection = (Float_t) crossSection;
-//
-// 	   crossSectionWeight =  aHit->GetCrossSectionWeight();
-// 	  rCrossSectionWeight = (Float_t) crossSectionWeight;
-
-
-                globalTime = aHit->GetGlobalTime();
-                rGlobalTime = (Float_t) globalTime/ns;
-
-                GlobalThetaAngle = globalMomentum.theta();
-                rGlobalThetaAngle = (Float_t) GlobalThetaAngle/degree;
-
-                GlobalPhiAngle   = globalMomentum.phi() -90.0*degree;
-                rGlobalPhiAngle   = (Float_t) GlobalPhiAngle/degree;
+                rGlobalTime = (Float_t) aHit->GetGlobalTime() / ns;
 
 
                 // 	      edgeEvent = myUserInfo->GetEdgeEventDetected();
@@ -2358,10 +1286,6 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 
                 analysis->fRootEvent->TriggerScintillator.Detector.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
                 analysis->fRootEvent->TriggerScintillator.Detector.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
-
-// 	analysis->fRootEvent->TriggerScintillator.Detector.StorePrimaryQ2(rPrimaryQ2);
-// 	analysis->fRootEvent->TriggerScintillator.Detector.StoreCrossSection(rCrossSection);
-// 	analysis->fRootEvent->TriggerScintillator.Detector.StoreCrossSectionWeight(rCrossSectionWeight);
 
                 analysis->fRootEvent->TriggerScintillator.Detector.StoreDetectorLocalPositionX(rLocalPositionX);
                 analysis->fRootEvent->TriggerScintillator.Detector.StoreDetectorLocalPositionY(rLocalPositionY);
@@ -2450,36 +1374,20 @@ void QweakSimEventAction::Initialize() {
 
     originVertexMomentumDirection = G4ThreeVector(0.,0.,0.);
 
-    originVertexKineticEnergy = 0.;
     rOriginVertexKineticEnergy = 0.;
-
-    originVertexTotalEnergy = 0.;
     rOriginVertexTotalEnergy = 0.;
 
-    GlobalThetaAngle = 0.0;
     rGlobalThetaAngle = 0.0;
-
-    GlobalPhiAngle   = 0.0;
     rGlobalPhiAngle   = 0.0;
 
 
-    primaryQ2 = 0.;
     rPrimaryQ2 = 0.;
-
-    crossSection = 0.0;
     rCrossSection = 0.0;
-
-    crossSectionWeight = 0.0;
     rCrossSectionWeight = 0.0;
-
-    asymmetry = 0.0;
     rAsymmetry = 0.0;
     
-    primaryEventNumber = 0;
     rPrimaryEventNumber = 0;
 
-
-    globalTime = 0.;
     rGlobalTime = 0.;
 
     rDCWidthOnFrame     = 0.;
@@ -2514,14 +1422,10 @@ void QweakSimEventAction::Initialize() {
     //----------------------
 
 
-    particleType = -1;
     rParticleType = -1;
 
-    kineticEnergy  = 0.;
-    rkineticEnergy  = 0.;
-
-    totalEnergy  = 0.;
-    rtotalEnergy  = 0.;
+    rKineticEnergy  = 0.;
+    rTotalEnergy  = 0.;
 
 
     // aHit->GetDetectorID() returnes the Geant4 index of the cerenkov MV copy numbers that needs to
@@ -2550,7 +1454,6 @@ void QweakSimEventAction::Initialize() {
     
     detectorID = 0;
     octantID   = 0;
-    rOctantID   = 0;
 
 }
 

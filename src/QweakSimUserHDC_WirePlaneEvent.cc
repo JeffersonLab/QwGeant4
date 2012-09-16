@@ -81,12 +81,11 @@ void QweakSimUserHDC_WirePlaneEvent::Clear(const Option_t*)
   OriginVertexKineticEnergy.clear();
   OriginVertexTotalEnergy.clear();
 
-//   PrimaryQ2                      = 0.0;
-//   CrossSection                   = 0.0;
-//   CrossSectionWeight             = 0.0;
-
   GlobalPhiAngle.clear();
   GlobalThetaAngle.clear();
+
+  TotalEnergy.clear();
+  KineticEnergy.clear();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....

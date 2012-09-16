@@ -21,9 +21,11 @@
 /**
    \class QweakSimUserVDC_DriftCellEvent
     
-   \brief Stores the data structure related to a VDC DriftCell Hit into the ROOT file for each event
+   \ingroup root
 
-   Placeholder for a long explaination
+   \brief ROOT Subtree structure for VDC DriftCellEvent
+
+   Stores the data structure related to a VDC DriftCell Hit into the ROOT file for each event
     
  */
 //=============================================================================
@@ -58,11 +60,11 @@ class QweakSimUserVDC_DriftCellEvent : public TObject
 
 private:
 
-  Int_t UDriftCellHasBeenHit;
-  Int_t VDriftCellHasBeenHit;
+  Int_t UDriftCellHasBeenHit;   ///< Has a U drift cell been hit? 0 = no, 5 = yes
+  Int_t VDriftCellHasBeenHit;   ///< Has a V drift cell been hit? 0 = no, 5 = yes
 
-  Int_t UDriftCellNbOfHits;
-  Int_t VDriftCellNbOfHits;
+  Int_t UDriftCellNbOfHits;     ///< Number of U drift cell hits in this event
+  Int_t VDriftCellNbOfHits;     ///< Number of V drift cell hits in this event
 
 public:
   

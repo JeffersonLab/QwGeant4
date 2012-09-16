@@ -21,11 +21,13 @@
 /**
    \class QweakSimUserVDC_SingleVDCEvent
     
-   \brief tores the data structure related to a VDC Hit into the ROOT file for each event.
-    A VDC Hit contains the information of a WirePlane Hit and/or a DriftCell Hit
+   \ingroup root
+
+   \brief ROOT Subtree structure for VDC SingleVDCEvent
+
+   Stores the data structure related to a VDC Hit into the ROOT file for each event.
+   A VDC Hit contains the information of a WirePlane Hit and/or a DriftCell Hit
   
-   Placeholder for a long explaination
-
    Region3.ChamberFront.WirePlane
 
    Region3.ChamberFront.DriftCell	
@@ -37,27 +39,6 @@
     
  */
 //=============================================================================
-//=============================================================================
-/**
-   \class QweakSimUserVDC_SingleVDCEvent
-    
-   \brief Stores the data structure related to a VDC Hit into the ROOT file for each event.
-    A VDC Hit contains the information of a WirePlane Hit and/or a DriftCell Hit   
-   
-   Placeholder for a long explaination
-
-   Region3.ChamberFront.WirePlane
-
-   Region3.ChamberFront.DriftCell	
-
-   Region3.ChamberBack.WirePlane
-
-   Region3.ChamberBack.DriftCell	
-    
- */
-//=============================================================================
-// 
-
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 #ifndef QweakSimUserVDC_SingleVDCEvent_h
@@ -84,10 +65,10 @@ private:
 
 public:
 
-  QweakSimUserVDC_WirePlaneEvent  WirePlaneU;
-  QweakSimUserVDC_WirePlaneEvent  WirePlaneV;
+  QweakSimUserVDC_WirePlaneEvent  WirePlaneU;   ///< U wire plane hit information
+  QweakSimUserVDC_WirePlaneEvent  WirePlaneV;   ///< V wire plane hit information
 
-  QweakSimUserVDC_DriftCellEvent  DriftCell;
+  QweakSimUserVDC_DriftCellEvent  DriftCell;    ///< Drift cell hit information
 
 public:
     

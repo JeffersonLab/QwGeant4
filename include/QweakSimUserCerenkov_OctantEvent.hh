@@ -21,9 +21,9 @@
 /**
    \class QweakSimUserCerenkov_OctantEvent
     
-   \brief ROOT Subtree structure for Cerenkov OctantEvent
+   \ingroup root
 
-   Placeholder for a long explaination
+   \brief ROOT Subtree structure for Cerenkov OctantEvent
     
  */
 //=============================================================================
@@ -64,9 +64,8 @@ private:
 
 public:
 
-//jpan@nuclear.uwinnipeg.ca
-  QweakSimUserCerenkov_DetectorEvent  Detector;
-  QweakSimUserCerenkov_PMTEvent       PMT;
+  QweakSimUserCerenkov_DetectorEvent  Detector; ///< Event information for hits in the detector
+  QweakSimUserCerenkov_PMTEvent       PMT;      ///< Event information for hits in the PMT
 
 public:
     
@@ -74,9 +73,6 @@ public:
   QweakSimUserCerenkov_OctantEvent();
   // Destructor 
   virtual ~QweakSimUserCerenkov_OctantEvent();
-  
-
-  //void SetTree(TTree *data){  Detector.SetTree(data); };
   
   // define a new Class known to ROOT
   ClassDef(QweakSimUserCerenkov_OctantEvent,1)

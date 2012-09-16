@@ -96,6 +96,13 @@ private:
   QweakSimAnalysis*             analysis;
   QweakSimUserInformation*      myUserInfo;
 
+  // Print hits for some subsystems during debugging
+  //static const G4bool print_GEM_WirePlaneHit = false;
+  static const G4bool print_VDC_WirePlaneHit = false;
+  static const G4bool print_VDC_DriftCellHit = false;
+  static const G4bool print_TriggerScintillator_DetectorHit = false;
+  static const G4bool print_Cerenkov_DetectorHit = false;
+
   G4int n_GEMhitWirePlane;
   G4int n_HDChitWirePlane;
   G4int n_VDChitWirePlane;
@@ -163,53 +170,32 @@ private:
 
 
   G4ThreeVector originVertexPosition;
-  G4double OriginVertexPositionX;
-  G4double OriginVertexPositionY;
-  G4double OriginVertexPositionZ;
   Float_t rOriginVertexPositionX;
   Float_t rOriginVertexPositionY;
   Float_t rOriginVertexPositionZ;
 
 
   G4ThreeVector originVertexMomentumDirection;
-  G4double OriginVertexMomentumDirectionX;
-  G4double OriginVertexMomentumDirectionY;
-  G4double OriginVertexMomentumDirectionZ;
   Float_t rOriginVertexMomentumDirectionX;
   Float_t rOriginVertexMomentumDirectionY;
   Float_t rOriginVertexMomentumDirectionZ;
 
 
-  G4double  originVertexKineticEnergy;
   Float_t  rOriginVertexKineticEnergy;
-
-  G4double  originVertexTotalEnergy;
   Float_t  rOriginVertexTotalEnergy;
 
   //---------------------------------
-  G4double   GlobalThetaAngle;
   Float_t   rGlobalThetaAngle;
-
-  G4double   GlobalPhiAngle;
   Float_t   rGlobalPhiAngle;
   //---------------------------------
 
-  G4double primaryQ2;
   Float_t rPrimaryQ2;
-
-  G4double  crossSection;
   Float_t  rCrossSection;
-
-  G4double  crossSectionWeight;
   Float_t  rCrossSectionWeight;
-
-  G4double  asymmetry;
   Float_t  rAsymmetry;
   
-  G4int  primaryEventNumber;
   Int_t rPrimaryEventNumber;
 
-  G4double globalTime;
   Float_t rGlobalTime;
 
   G4double rDCWidthOnFrame;
@@ -229,23 +215,16 @@ private:
 
   Int_t edgeEvent;
 
-  G4String   particleName;
   TString   rParticleName;
-
-  G4int      particleType;
   Int_t     rParticleType;
 
-  G4double   totalEnergy;
-  Float_t   rtotalEnergy;
-
-  G4double   kineticEnergy;
-  Float_t   rkineticEnergy;
+  Float_t   rTotalEnergy;
+  Float_t   rKineticEnergy;
 
   Int_t G4IndexToOctantNumber[8];
 
   G4int  detectorID;
-  G4int  octantID;
-  Int_t  rOctantID;
+  Int_t  octantID;
 
 };
 

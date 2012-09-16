@@ -32,8 +32,6 @@
 	  Region3.
 
 	  Cerenkov.
-
-   Placeholder for a long explaination
     
  */
 //=============================================================================
@@ -59,21 +57,62 @@ class QweakSimUserMainEvent : public TObject
 // class QweakSimUserMainEvent 
 {
 
+/** \page global_coordinate_system global coordinate system
+ *
+ *  The global coordinate system of the MC simulation is defined as follows:
+ *  \li X-axis is in the horizontal direction beam-left,
+ *  \li Y-axis is in the vertical direction up,
+ *  \li Z-axis is along the beam line in the downstream direction.
+ */
+
+/** \page local_coordinate_system local coordinate system
+ *
+ *  The local coordinate system of the MC simulation is normally defined as follows:
+ *  \li X-axis is along the longest detector edge in the non-dispersive direction beam-left for octant 3,
+ *  \li Y-axis is along the shortest detector edge in the dispersive direction away from the beam line,
+ *  \li Z-axis is perpendicular to the detector plane in the downstream direction.
+ */
+
+/** \page Lund_type Lund type
+ *
+ *  A complete list of Lund particle type codes is summarized in the PDG: \url http://pdg.lbl.gov/2011/reviews/rpp2011-rev-monte-carlo-numbering.pdf
+ *
+ *  The most important particle codes are:
+ *  \li electron: 11
+ *  \li photon: 22
+ *  \li pion-: -211
+ *  \li kaon-: -321
+ *  \li proton: 2212
+ *  \li neutron: 2112
+ *
+ */
+
+/** \page geant3_type geant3 type
+ *
+ *  The only geant3 particle types that were used in the Qweak Monte Carlo are
+ *  \li electron: 1
+ *  \li positron: 2
+ *  \li gamma: 3
+ */
+
+/** \defgroup root Variables include in the ROOT file
+ *
+ *  This group contains all variables that are included in the ROOT file.
+ */
+
 private:
 
 public:
 
-  // top directoty of Root output tree:
-    
-  QweakSimUserPrimaryEvent                     Primary;              // tree containing primary particle info
+  QweakSimUserPrimaryEvent                     Primary;              ///< object containing primary particle info
 
-  QweakSimUserGEM_MainEvent                    Region1;              // tree containing HDC info
-  QweakSimUserHDC_MainEvent                    Region2;              // tree containing HDC info
-  QweakSimUserVDC_MainEvent                    Region3;              // tree containing VDC info
+  QweakSimUserGEM_MainEvent                    Region1;              ///< object containing HDC info
+  QweakSimUserHDC_MainEvent                    Region2;              ///< object containing HDC info
+  QweakSimUserVDC_MainEvent                    Region3;              ///< object containing VDC info
 
-  QweakSimUserTriggerScintillator_MainEvent    TriggerScintillator;  // tree containing TriggerScintilliator info
+  QweakSimUserTriggerScintillator_MainEvent    TriggerScintillator;  ///< object containing TriggerScintilliator info
 
-  QweakSimUserCerenkov_MainEvent               Cerenkov;             // tree containing Cdetector info
+  QweakSimUserCerenkov_MainEvent               Cerenkov;             ///< object containing Cerenkov detector info
 
 public:
     
@@ -81,9 +120,6 @@ public:
   QweakSimUserMainEvent();
   // Destructor 
   virtual ~QweakSimUserMainEvent();
-  
-  //void SetTree(TTree *data){Cerenkov.SetTree(data);};
-
   
   // define a new Class known to ROOT  
   ClassDef(QweakSimUserMainEvent,1)

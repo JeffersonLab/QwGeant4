@@ -22,9 +22,9 @@
 /**
    \class QweakSimUserCerenkov_PMTEvent
     
-   \brief ROOT Subtree structure for Cerenkov PMTEvent
+   \ingroup root
 
-   Placeholder for a long explaination
+   \brief ROOT Subtree structure for Cerenkov PMTEvent
     
  */
 //=============================================================================
@@ -58,19 +58,18 @@ class QweakSimUserCerenkov_PMTEvent : public TObject
 
 private:
 
-  Int_t   DetectorID;
+  Int_t TrackID;                ///< ID of the track from which this hit was generated
+  Int_t DetectorID;             ///< ID of the detector in which this hit was registered
 
-  Float_t TrackID;
+  Int_t PMTHasBeenHit;          ///< Has this PMT been hit? 0 = no, 5 = yes
 
-  Int_t PMTHasBeenHit;
+  Int_t PMTLeftNbOfHits;        ///< Number of hits in the left PMT
+  Int_t PMTRightNbOfHits;       ///< Number of hits in the right PMT
+  Int_t PMTTotalNbOfHits;       ///< Number of hits in both PMTs
 
-  Int_t PMTLeftNbOfHits;
-  Int_t PMTRightNbOfHits;
-  Int_t PMTTotalNbOfHits;
-
-  Float_t PMTLeftNbOfPEs;
-  Float_t PMTRightNbOfPEs;
-  Float_t PMTTotalNbOfPEs;
+  Float_t PMTLeftNbOfPEs;       ///< Number of photo-electrons in the left PMT
+  Float_t PMTRightNbOfPEs;      ///< Number of photo-electrons in the right PMT
+  Float_t PMTTotalNbOfPEs;      ///< Number of photo-electrons in both PMTs
 
 public:
   
@@ -87,8 +86,8 @@ public:
   //-----------------
   
   //-----------------
-  void     StoreTrackID(Float_t tid)    { TrackID = tid; }
-  Float_t    GetTrackID() const {return TrackID;}
+  void     StoreTrackID(Int_t tid)    { TrackID = tid; }
+  Int_t      GetTrackID() const {return TrackID;}
    //-----------------
   void     StorePMTHasBeenHit(Int_t np)      { PMTHasBeenHit = np; }
   Int_t      GetPMTHasBeenHit() const {return  PMTHasBeenHit;}

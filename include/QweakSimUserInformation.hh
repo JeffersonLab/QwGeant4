@@ -1,11 +1,6 @@
 #ifndef QweakSimUserInformation_h
 #define QweakSimUserInformation_h 
 
-// system includes
-//#include "cpp_include.h"
-//#include "Root_include.h"
-//#include "Geant4_include.hh" 
-
 #include <vector>
 
 //user includes
@@ -59,7 +54,7 @@ private:
   G4double fNormMomentumY;
 
   G4int    PrimaryEventNumber;
-  G4int    PDGcode;              // particle data code/number for the primary particle, e.g. 3=electron
+  G4int    PDGcode;              // particle data code/number for the primary particle, e.g. 11=electron
   G4int    TrackID;
   G4double GlobalTime;
   G4double PrimaryQ2;

@@ -21,11 +21,13 @@
 /**
    \class QweakSimUserVDC_Config
     
-   \brief Stores the geometry information of a VDC DriftCell into the ROOT file for each event.
-          This allows to simulate different DriftCell designs (like different wire spacing, wire stringing angle,
-	  drift cell height, VDC tilting angle) within one ROOT file and distinguish between them.
+   \ingroup root
 
-   Placeholder for a long explaination
+   \brief ROOT Subtree structure for HDC geometry
+
+   Stores the geometry information of a VDC DriftCell into the ROOT file for each event.
+   This allows to simulate different DriftCell designs (like different wire spacing, wire stringing angle,
+   drift cell height, VDC tilting angle) within one ROOT file and distinguish between them.
     
  */
 //=============================================================================
@@ -61,10 +63,10 @@ class QweakSimUserVDC_Config : public TObject
 
 private:
 
-  Float_t CellWidthOnFrame;
-  Float_t CellFullThickness;
-  Float_t CellUPlaneWireAngle;
-  Float_t CellVPlaneWireAngle;
+  Float_t CellWidthOnFrame;     ///< Width of drift cell on frame (mm)
+  Float_t CellFullThickness;    ///< Thickness of drift cell (mm)
+  Float_t CellUPlaneWireAngle;  ///< U plane wire angle (degrees)
+  Float_t CellVPlaneWireAngle;  ///< V plane wire angle (degrees)
 
 public:
   
@@ -86,8 +88,6 @@ public:
 
   void     StoreDCVPlaneWireAngle(Float_t dc_va)  { CellVPlaneWireAngle = dc_va; }
   Float_t    GetDCVPlaneWireAngle() const {return CellVPlaneWireAngle;}
-
-
 
   //-----------------
 

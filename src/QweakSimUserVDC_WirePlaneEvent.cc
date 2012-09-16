@@ -76,15 +76,11 @@ void QweakSimUserVDC_WirePlaneEvent::Clear(const Option_t*)
   OriginVertexKineticEnergy.clear();
   OriginVertexTotalEnergy.clear();
 
-//   PrimaryQ2                      = 0.0;
-//   CrossSection                   = 0.0;
-//   CrossSectionWeight             = 0.0;
-
   GlobalPhiAngle.clear();
   GlobalThetaAngle.clear();
 
   ParticleName.clear();
-  ParticleType.clear();         //   = -1;
+  ParticleType.clear();
   TotalEnergy.clear();
   KineticEnergy.clear();
 }

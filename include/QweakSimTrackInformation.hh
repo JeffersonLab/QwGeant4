@@ -73,12 +73,6 @@ private:
   G4double              primaryKineticEnergy;
   G4double              primaryTime;
 
-  // TrackInfo which can *not* derived from G4Track
-//   G4double              primaryQ2;
-//   G4double		   crossSection;
-//   G4double              crossSectionWeight;
-//   G4int                 primaryEventNumber;
-
   std::vector <QweakSimTrackHistory*> theCerenkovTrackHistory;
 
   std::vector <G4ThreeVector> OriginVertex;

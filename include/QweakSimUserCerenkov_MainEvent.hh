@@ -21,9 +21,9 @@
 /**
    \class QweakSimUserCerenkov_MainEvent
     
-   \brief ROOT Subtree structure for Cerenkov MainEvent
+   \ingroup root
 
-   Placeholder for a long explaination
+   \brief ROOT Subtree structure for Cerenkov MainEvent
     
  */
 //=============================================================================
@@ -64,21 +64,18 @@
 class QweakSimUserCerenkov_MainEvent : public TObject
 {
 
-private:
-
 public:
 
-//jpan@nuclear.uwinnipeg.ca
-//  std::vector <QweakSimUserCerenkov_OctantEvent> Octant;
-  QweakSimUserCerenkov_DetectorEvent  Detector;
-  QweakSimUserCerenkov_PMTEvent       PMT;
+  //std::vector <QweakSimUserCerenkov_OctantEvent> Octant;      ///< Cerenkov detector octant hit information
+  QweakSimUserCerenkov_DetectorEvent  Detector;                 ///< Cerenkov detector hit information
+  QweakSimUserCerenkov_PMTEvent       PMT;                      ///< PMT hit information
 
 public:
     
   // Constructor
   QweakSimUserCerenkov_MainEvent();
   // Destructor 
- virtual ~QweakSimUserCerenkov_MainEvent();
+  virtual ~QweakSimUserCerenkov_MainEvent();
   
   // define a new Class known to ROOT  
   ClassDef(QweakSimUserCerenkov_MainEvent,1)

@@ -79,7 +79,7 @@ private:
   G4int    DetectorID;  // octant number
   G4double time;
 
-  G4double TrackID;
+  G4int TrackID;
 
   G4ThreeVector localPos;
   G4ThreeVector worldPos;
@@ -107,8 +107,8 @@ private:
 
 public:
   
-  inline void   StoreTrackID(G4double tid)    { TrackID = tid; }
-  inline G4double GetTrackID() const { return TrackID; }
+  inline void   StoreTrackID(G4int tid)    { TrackID = tid; }
+  inline G4int GetTrackID() const { return TrackID; }
 
   inline void   StoreGlobalTime(G4double t)    { time = t; }
   inline G4double GetGlobalTime() const { return time; }
