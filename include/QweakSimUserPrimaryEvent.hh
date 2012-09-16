@@ -76,8 +76,8 @@ private:
 
   Int_t   PrimaryEventNumber;   ///< The primary event number (increments by two due to target energy loss simulation)
 
-  Int_t   ReactionType;         ///< \ref The reaction_type used for this event, e.g. elastic ep = 1, e+p -> e'+p+pi = 2
-  Int_t   PDGcode;              ///< \ref The Lund_type of the primary particle, e.g. electron = 11
+  Int_t   ReactionType;         ///< The \ref reaction_type used for this event, e.g. elastic ep = 1, e+p -> e'+p+pi = 2
+  Int_t   PDGcode;              ///< The \ref Lund_type of the primary particle, e.g. electron = 11
 
 public:
   

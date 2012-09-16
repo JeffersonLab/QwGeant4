@@ -75,7 +75,7 @@ class QweakSimUserMainEvent : public TObject
 
 /** \page Lund_type Lund type
  *
- *  A complete list of Lund particle type codes is summarized in the PDG: \url http://pdg.lbl.gov/2011/reviews/rpp2011-rev-monte-carlo-numbering.pdf
+ *  A complete list of Lund particle type codes is summarized in the PDG: http://pdg.lbl.gov/2011/reviews/rpp2011-rev-monte-carlo-numbering.pdf
  *
  *  The most important particle codes are:
  *  \li electron: 11
