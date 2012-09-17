@@ -199,24 +199,24 @@ QweakSimVDC::~QweakSimVDC()
 
 void QweakSimVDC::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 {
-G4cout << G4endl << "###### Calling QweakSimVDC::ConstructComponent() " << G4endl << G4endl;
+  G4cout << G4endl << "###### Calling QweakSimVDC::ConstructComponent() " << G4endl << G4endl;
  
 
-// assign material-
- 
- G4Material* VDC_DriftCell_Material                = pMaterial->GetMaterial("Vacuum"); 
- G4Material* VDC_DriftCellContainer_Material       = pMaterial->GetMaterial("Vacuum"); 
+  // assign material-
 
- G4Material* VDC_MasterContainer_Material          = pMaterial->GetMaterial("Air");   
- G4Material* VDC_SubContainer_Material             = pMaterial->GetMaterial("Ar-C2H6_40-60");   
- G4Material* VDC_G10Frame_Material                 = pMaterial->GetMaterial("NemaG10");  
- G4Material* VDC_AluFrame_Material                 = pMaterial->GetMaterial("Aluminum");  
- 
- G4Material* VDC_WirePlane_Material                = pMaterial->GetMaterial("Vacuum"); 
- G4Material* VDC_AluLayer_Material                 = pMaterial->GetMaterial("Aluminum");  
- G4Material* VDC_MylarFoil_Material                = pMaterial->GetMaterial("Mylar");  
+  G4Material* VDC_DriftCell_Material                = pMaterial->GetMaterial("Vacuum");
+  G4Material* VDC_DriftCellContainer_Material       = pMaterial->GetMaterial("Vacuum");
 
-   //==========================================================================================================
+  G4Material* VDC_MasterContainer_Material          = pMaterial->GetMaterial("Air");
+  G4Material* VDC_SubContainer_Material             = pMaterial->GetMaterial("Ar-C2H6_40-60");
+  G4Material* VDC_G10Frame_Material                 = pMaterial->GetMaterial("NemaG10");
+  G4Material* VDC_AluFrame_Material                 = pMaterial->GetMaterial("Aluminum");
+
+  G4Material* VDC_WirePlane_Material                = pMaterial->GetMaterial("Vacuum");
+  G4Material* VDC_AluLayer_Material                 = pMaterial->GetMaterial("Aluminum");
+  G4Material* VDC_MylarFoil_Material                = pMaterial->GetMaterial("Mylar");
+
+  //==========================================================================================================
 
   //============================
   // new code of the VDC setup
@@ -293,7 +293,7 @@ G4cout << G4endl << "###### Calling QweakSimVDC::ConstructComponent() " << G4end
   // Define Stesalit frame
   //-----------------------
 
- //===============================================================================
+  //===============================================================================
   // Definition of the VDC Stesalit Frame ( symbolizes the stack of real frames )
   //===============================================================================
 
@@ -303,7 +303,7 @@ G4cout << G4endl << "###### Calling QweakSimVDC::ConstructComponent() " << G4end
   G4Box* VDC_G10OuterFrame_Solid    = new G4Box("VDC_G10OuterFrame_Sol",
 						0.5* G10Frame_OuterLength,
 						0.5* G10Frame_OuterWidth,
-						0.5* G10Frame_Thickness*NumberOfG10FramesInsideVDC); 
+						0.5* G10Frame_Thickness*NumberOfG10FramesInsideVDC);
 
   // define inner frame solid
   G4cout << G4endl << "###### QweakSimVDC: Define VDC_G10InnerFrame_Solid" << G4endl << G4endl;
@@ -311,15 +311,15 @@ G4cout << G4endl << "###### Calling QweakSimVDC::ConstructComponent() " << G4end
   G4Box* VDC_G10InnerFrame_Solid    = new G4Box("VDC_G10InnerFrame_Sol",
 						0.5* G10Frame_InnerLength,
 						0.5* G10Frame_InnerWidth,
-						0.5* G10Frame_Thickness*NumberOfG10FramesInsideVDC + 0.1*mm); 
+						0.5* G10Frame_Thickness*NumberOfG10FramesInsideVDC + 0.1*mm);
 
 
  // create frame by subtracting outer framebox from inner framebox
   G4cout << G4endl << "###### QweakSimVDC: Define VDC_G10Frame_Solid" << G4endl << G4endl;
 
   VDC_G10Frame_Solid  =  new G4SubtractionSolid("VDC_G10Frame_Solid",
-						VDC_G10OuterFrame_Solid, 
-						VDC_G10InnerFrame_Solid); 
+						VDC_G10OuterFrame_Solid,
+						VDC_G10InnerFrame_Solid);
 
 
   G4cout << G4endl << "###### QweakSimVDC: Define VDC_G10Frame_Logical" << G4endl << G4endl;
@@ -329,17 +329,17 @@ G4cout << G4endl << "###### Calling QweakSimVDC::ConstructComponent() " << G4end
 					      0,0,0);
 
 
-  // define the position of the Frame within the VDC MasterContainer: put it in the center of MasterContainer 
+  // define the position of the Frame within the VDC MasterContainer: put it in the center of MasterContainer
   G4ThreeVector position_G10Frame = G4ThreeVector(0. , 0. , 0.);
-  
+
   G4cout << G4endl << "###### QweakSimVDC: Define VDC_G10Frame_Physical" << G4endl << G4endl;
-  
-  VDC_G10Frame_Physical =   new G4PVPlacement(0,                          // no rotation matrix needed 
-					      position_G10Frame, 
-					      VDC_G10Frame_Logical, 
+
+  VDC_G10Frame_Physical =   new G4PVPlacement(0,                          // no rotation matrix needed
+					      position_G10Frame,
+					      VDC_G10Frame_Logical,
 					      "VDC_G10Frame_Physical",
-					      VDC_MasterContainer_Logical, 
-					      0, 
+					      VDC_MasterContainer_Logical,
+					      0,
 					      0); //copy number: 0
 
 
@@ -349,7 +349,7 @@ G4cout << G4endl << "###### Calling QweakSimVDC::ConstructComponent() " << G4end
   // Define Aluminum frame
   //-----------------------
 
- //=====================================================================================
+  //=====================================================================================
   // Definition of the VDC Alu Frame ( symbolizes the top and bottom alu support frames)
   //=====================================================================================
 
@@ -359,7 +359,7 @@ G4cout << G4endl << "###### Calling QweakSimVDC::ConstructComponent() " << G4end
   G4Box* VDC_AluOuterFrame_Solid    = new G4Box("VDC_AluOuterFrame_Sol",
 						0.5* AluFrame_OuterLength,
 						0.5* AluFrame_OuterWidth,
-						0.5* AluFrame_Thickness); 
+						0.5* AluFrame_Thickness);
 
   // define inner frame solid
   G4cout << G4endl << "###### QweakSimVDC: Define VDC_AluInnerFrame_Solid" << G4endl << G4endl;
@@ -367,15 +367,15 @@ G4cout << G4endl << "###### Calling QweakSimVDC::ConstructComponent() " << G4end
   G4Box* VDC_AluInnerFrame_Solid    = new G4Box("VDC_AluInnerFrame_Sol",
 						0.5* AluFrame_InnerLength,
 						0.5* AluFrame_InnerWidth,
-						0.5* AluFrame_Thickness + 0.1*mm); 
+						0.5* AluFrame_Thickness + 0.1*mm);
 
 
- // create frame by subtracting outer framebox from inner framebox
+  // create frame by subtracting outer framebox from inner framebox
   G4cout << G4endl << "###### QweakSimVDC: Define VDC_AluFrame_Solid" << G4endl << G4endl;
 
   VDC_AluFrame_Solid  =  new G4SubtractionSolid("VDC_AluFrame_Solid",
-						VDC_AluOuterFrame_Solid, 
-						VDC_AluInnerFrame_Solid); 
+						VDC_AluOuterFrame_Solid,
+						VDC_AluInnerFrame_Solid);
 
 
   G4cout << G4endl << "###### QweakSimVDC: Define VDC_AluFrame_Logical" << G4endl << G4endl;
@@ -386,25 +386,25 @@ G4cout << G4endl << "###### Calling QweakSimVDC::ConstructComponent() " << G4end
 					      0,0,0);
 
 
-  // define the position of the Frame within the VDC MasterContainer: put it in the center of MasterContainer 
+  // define the position of the Frame within the VDC MasterContainer: put it in the center of MasterContainer
   // AluTopFrame     = downstream side, looking to beam dunp
   // AluBottomFrame  = upstream side, looking to target
 
   G4ThreeVector position_AluTopFrame    = G4ThreeVector(0. , 0. ,  0.5*(G10Frame_Thickness*NumberOfG10FramesInsideVDC + AluFrame_Thickness));
   G4ThreeVector position_AluBottomFrame = G4ThreeVector(0. , 0. , -0.5*(G10Frame_Thickness*NumberOfG10FramesInsideVDC + AluFrame_Thickness));
-  
+
   G4cout << G4endl << "###### QweakSimVDC: Define VDC_AluTopFrame_Physical" << G4endl << G4endl;
-  
-  VDC_AluTopFrame_Physical =   new G4PVPlacement(0,                          // no rotation matrix needed 
-						 position_AluTopFrame, 
-						 VDC_AluFrame_Logical, 
+
+  VDC_AluTopFrame_Physical =   new G4PVPlacement(0,                          // no rotation matrix needed
+						 position_AluTopFrame,
+						 VDC_AluFrame_Logical,
 						 "VDC_AluTopFrame_Physical",
-						 VDC_MasterContainer_Logical, 
-						 0, 
+						 VDC_MasterContainer_Logical,
+						 0,
 						 0); //copy number: 0
 
   G4cout << G4endl << "###### QweakSimVDC: Define VDC_AluBottomFrame_Physical" << G4endl << G4endl;
-  
+
   VDC_AluBottomFrame_Physical =   new G4PVPlacement(0,                          // no rotation matrix needed
 						    position_AluBottomFrame,
 						    VDC_AluFrame_Logical,
@@ -434,9 +434,9 @@ G4cout << G4endl << "###### Calling QweakSimVDC::ConstructComponent() " << G4end
 						  VDC_SubContainer_Material,
 						  "VDC_SubContainer_Log",
 						  0,0,0);
-  
 
- // define the position of the SubContainer within the VDC MasterContainer: put it in the center 
+
+  // define the position of the SubContainer within the VDC MasterContainer: put it in the center
   G4ThreeVector position_SubContainer = G4ThreeVector(0. , 0. , 0.);
   
   G4cout << G4endl << "###### QweakSimVDC: Define VDC_SubContainer_Physical" << G4endl << G4endl;
@@ -461,7 +461,7 @@ G4cout << G4endl << "###### Calling QweakSimVDC::ConstructComponent() " << G4end
    G4Box* VDC_WirePlane_Solid    = new G4Box("VDC_WirePlane_Sol",
 					     VDC_SubContainer_Solid->GetXHalfLength() -1.0*micrometer,
 					     VDC_SubContainer_Solid->GetYHalfLength() -1.0*micrometer,
-					     0.5* 10.0*micrometer); 
+					     0.5* 10.0*micrometer);
 
    // define wire plane logical
    G4cout << G4endl << "###### QweakSimVDC: Define VDC_WirePlane_Logical" << G4endl << G4endl;
@@ -483,21 +483,21 @@ G4cout << G4endl << "###### Calling QweakSimVDC::ConstructComponent() " << G4end
 
   G4ThreeVector position_Uplane    = G4ThreeVector( 0.0*cm, 0.0*cm, -1.0 * G10Frame_Thickness);
   G4ThreeVector position_Vplane    = G4ThreeVector( 0.0*cm, 0.0*cm,        G10Frame_Thickness);
-  
-  VDC_UPlane_Physical = new G4PVPlacement(0, 
-					  position_Uplane, 
-					  VDC_WirePlane_Logical, 
+
+  VDC_UPlane_Physical = new G4PVPlacement(0,
+					  position_Uplane,
+					  VDC_WirePlane_Logical,
 					  "VDC_UPlane_Physical",
-					  VDC_SubContainer_Logical, 
-					  0, 
+					  VDC_SubContainer_Logical,
+					  0,
 					  0); //copy number: 0
-  
-  VDC_VPlane_Physical = new G4PVPlacement(0, 
-					  position_Vplane, 
-					  VDC_WirePlane_Logical, 
+
+  VDC_VPlane_Physical = new G4PVPlacement(0,
+					  position_Vplane,
+					  VDC_WirePlane_Logical,
 					  "VDC_VPlane_Physical",
-					  VDC_SubContainer_Logical, 
-					  0, 
+					  VDC_SubContainer_Logical,
+					  0,
 					  1); //copy number: 1
   
 
@@ -505,21 +505,21 @@ G4cout << G4endl << "###### Calling QweakSimVDC::ConstructComponent() " << G4end
   //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   //====================================================================
-  //             Definition of the VDC Foils 
+  //             Definition of the VDC Foils
   //====================================================================
 
   //============================================
-  // Define a 6.25 micrometer thick Mylar foil 
+  // Define a 6.25 micrometer thick Mylar foil
   //============================================
-  
+
   G4Box* VDC_MylarFoil_Solid    = new G4Box("VDC_MylarFoil_Sol",
 					    VDC_SubContainer_Solid->GetXHalfLength() -20.0*micrometer ,
 					    VDC_SubContainer_Solid->GetYHalfLength() -20.0*micrometer,
-					    0.5* VDC_MylarFoil_Thickness); 
-  
+					    0.5* VDC_MylarFoil_Thickness);
+
   // define foil logical
   G4cout << G4endl << "###### QweakSimVDC: Define VDC_MylarFoil_Logical" << G4endl << G4endl;
-   
+
   VDC_MylarFoil_Logical  = new G4LogicalVolume(VDC_MylarFoil_Solid,
 					       VDC_MylarFoil_Material,
 					       "VDC_MylarFoil_Log",
@@ -529,18 +529,18 @@ G4cout << G4endl << "###### Calling QweakSimVDC::ConstructComponent() " << G4end
   //=========================================================
   // Define a 1000 Angstrom (= 0.1 micrometer) thick Alu layer
   //=========================================================
-   
+
   // define solid
   G4cout << G4endl << "###### QweakSimVDC: Define VDC_AluLayer_Solid" << G4endl << G4endl;
-  
+
   G4Box* VDC_AluLayer_Solid    =  new G4Box("VDC_AluLayer_Sol",
 					    VDC_SubContainer_Solid->GetXHalfLength() -20.0*micrometer,
 					    VDC_SubContainer_Solid->GetYHalfLength() -20.0*micrometer,
-					    0.5* VDC_AluLayer_Thickness); 
+					    0.5* VDC_AluLayer_Thickness);
 
   // define logical
   G4cout << G4endl << "###### QweakSimVDC: Define VDC_AluFoil_Logical" << G4endl << G4endl;
-  
+
   VDC_AluLayer_Logical  = new G4LogicalVolume(VDC_AluLayer_Solid,
 					      VDC_AluLayer_Material,
 					      "VDC_AluLayer_Log",
@@ -555,92 +555,92 @@ G4cout << G4endl << "###### Calling QweakSimVDC::ConstructComponent() " << G4end
 
 
   G4cout << G4endl << "###### QweakSimVDC: Define VDC_AMA_FoilContainer_Solid" << G4endl << G4endl;
-  
+
   G4Box* VDC_AMA_FoilContainer_Solid    = new G4Box("VDC_AMA_FoilContainer_Sol",
 						      VDC_SubContainer_Solid->GetXHalfLength() -10.0*micrometer,
 						      VDC_SubContainer_Solid->GetYHalfLength() -10.0*micrometer,
-						      0.5* (VDC_MylarFoil_Thickness + 2*VDC_AluLayer_Thickness) + 10.0*micrometer ); 
+						      0.5* (VDC_MylarFoil_Thickness + 2*VDC_AluLayer_Thickness) + 10.0*micrometer );
 
   // define foil logical
   G4cout << G4endl << "###### QweakSimVDC: Define VDC_AMA_FoilContainer_Logical" << G4endl << G4endl;
-  
+
   VDC_AMA_FoilContainer_Logical  = new G4LogicalVolume(VDC_AMA_FoilContainer_Solid,
 						       VDC_SubContainer_Material,
 						       "VDC_AMA_FoilContainer_Log",
 						       0,0,0);
 
 
-   //========================================================================
-   // Place the 6.25 micrometer thick Mylar foil inside VDC_AMA_FoilContainer
-   //========================================================================
-   
+  //========================================================================
+  // Place the 6.25 micrometer thick Mylar foil inside VDC_AMA_FoilContainer
+  //========================================================================
+
 
   // place 6.25um thick Mylar foil into VDC_DoubleSidedFoilContainer: center
-  new G4PVPlacement(0, 
-		    G4ThreeVector(0. , 0. , 0. ), 
-		    VDC_MylarFoil_Logical, 
-		    "VDC_MylarFoil_Physical",
-		    VDC_AMA_FoilContainer_Logical, 
-		    0, 
-		    0); //copy number 0 
-   
+  new G4PVPlacement(0,
+      G4ThreeVector(0. , 0. , 0. ),
+      VDC_MylarFoil_Logical,
+      "VDC_MylarFoil_Physical",
+		    VDC_AMA_FoilContainer_Logical,
+		    0,
+		    0); //copy number 0
 
-   //=========================================================================================
-   // Place the  1000 Angstrom (= 0.1 micrometer) thick Alu layers inside VDC_AMA_FoilContainer
-   //=========================================================================================
-  
+
+  //=========================================================================================
+  // Place the  1000 Angstrom (= 0.1 micrometer) thick Alu layers inside VDC_AMA_FoilContainer
+  //=========================================================================================
+
   // define physical
   G4cout << G4endl << "###### QweakSimVDC: Define VDC_AluLayer_Physical" << G4endl << G4endl;
-  
+
   // Z Location of the AluLayer within VDC_AMA_FoilContainer:
   // (first go to border of box and go half the alu layer thickness back)
 
   G4double _LocalPostionInZ_TopAluLayer =
-      +  0.5*(VDC_MylarFoil_Thickness + 2*VDC_AluLayer_Thickness) - 0.5*  VDC_AluLayer_Thickness; 
+      +  0.5*(VDC_MylarFoil_Thickness + 2*VDC_AluLayer_Thickness) - 0.5*  VDC_AluLayer_Thickness;
 
   G4double _LocalPostionInZ_BottomAluLayer =
-      -  0.5*(VDC_MylarFoil_Thickness + 2*VDC_AluLayer_Thickness) + 0.5*  VDC_AluLayer_Thickness; 
+      -  0.5*(VDC_MylarFoil_Thickness + 2*VDC_AluLayer_Thickness) + 0.5*  VDC_AluLayer_Thickness;
 
 
   G4cout << G4endl << "###### QweakSimVDC: Place Top AluLayer inside VDC_AMA_FoilContainer_Logical" << G4endl << G4endl;
   // place alu top layer
-  new G4PVPlacement(0, 
-		    G4ThreeVector(0. , 0. , _LocalPostionInZ_TopAluLayer ), 
-		    VDC_AluLayer_Logical, 
+  new G4PVPlacement(0,
+		    G4ThreeVector(0. , 0. , _LocalPostionInZ_TopAluLayer ),
+		    VDC_AluLayer_Logical,
 		    "VDC_TopAluLayer_Physical",
-		    VDC_AMA_FoilContainer_Logical, 
-		    0, 
+		    VDC_AMA_FoilContainer_Logical,
+		    0,
 		    0); //copy number for top layer
 
   G4cout << G4endl << "###### QweakSimVDC: Place Bottom AluLayer inside VDC_AMA_FoilContainer_Logical" << G4endl << G4endl;
- // place alu bottom layer
-  new G4PVPlacement(0, 
-		    G4ThreeVector(0. , 0. , _LocalPostionInZ_BottomAluLayer ), 
-		    VDC_AluLayer_Logical, 
+  // place alu bottom layer
+  new G4PVPlacement(0,
+		    G4ThreeVector(0. , 0. , _LocalPostionInZ_BottomAluLayer ),
+		    VDC_AluLayer_Logical,
 		    "VDC_BottomAluLayer_Physical",
-		    VDC_AMA_FoilContainer_Logical, 
-		    0, 
+		    VDC_AMA_FoilContainer_Logical,
+		    0,
 		    1); //copy number for bottom layer
 
 
 
- //====================================================================================================
- //                      create the "AM" sided foil container: Alu-Mylar (alias "AM") 
- //
- // (define a container holding a 6.25um thick Mylar foil coated with 0.1um Aluminum on top side.
- //====================================================================================================
+  //====================================================================================================
+  //                      create the "AM" sided foil container: Alu-Mylar (alias "AM")
+  //
+  // (define a container holding a 6.25um thick Mylar foil coated with 0.1um Aluminum on top side.
+  //====================================================================================================
 
 
   G4cout << G4endl << "###### QweakSimVDC: Define VDC_AM_FoilContainer_Solid" << G4endl << G4endl;
-  
+
   G4Box* VDC_AM_FoilContainer_Solid    = new G4Box("VDC_AM_FoilContainer_Sol",
 						   VDC_SubContainer_Solid->GetXHalfLength() -10.0*micrometer,
 						   VDC_SubContainer_Solid->GetYHalfLength() -10.0*micrometer,
-						   0.5* (VDC_MylarFoil_Thickness + VDC_AluLayer_Thickness) ); 
+						   0.5* (VDC_MylarFoil_Thickness + VDC_AluLayer_Thickness) );
 
   // define foil logical
   G4cout << G4endl << "###### QweakSimVDC: Define VDC_AM_FoilContainer_Logical" << G4endl << G4endl;
-  
+
   VDC_AM_FoilContainer_Logical  = new G4LogicalVolume(VDC_AM_FoilContainer_Solid,
 						      VDC_SubContainer_Material,
 						      "VDC_AM_FoilContainer_Log",
@@ -655,14 +655,14 @@ G4cout << G4endl << "###### Calling QweakSimVDC::ConstructComponent() " << G4end
 
   G4cout << G4endl << "###### QweakSimVDC: Place Mylar inside VDC_AM_FoilContainer_Logical" << G4endl << G4endl;
 
-  new G4PVPlacement(0, 
-		    G4ThreeVector(0. , 0. , position_MylarFoilInsideAMContainer_Z ), 
-		    VDC_MylarFoil_Logical, 
+  new G4PVPlacement(0,
+		    G4ThreeVector(0. , 0. , position_MylarFoilInsideAMContainer_Z ),
+		    VDC_MylarFoil_Logical,
 		    "VDC_MylarFoil_Physical",
-		    VDC_AM_FoilContainer_Logical, 
-		    0, 
+		    VDC_AM_FoilContainer_Logical,
+		    0,
 		    0); //copy number
-  
+
 
   //=======================================================================================
   // Place the 1000 Angstrom (= 0.1 micrometer) thick Alu layer inside VDC_AM_FoilContainer
@@ -672,32 +672,32 @@ G4cout << G4endl << "###### Calling QweakSimVDC::ConstructComponent() " << G4end
 
   G4cout << G4endl << "###### QweakSimVDC: Place AluLayer inside VDC_AM_FoilContainer_Logical" << G4endl << G4endl;
 
-  new G4PVPlacement(0, 
-		    G4ThreeVector(0. , 0. , position_AluLayerInsideAMContainer_Z), 
-		    VDC_AluLayer_Logical, 
+  new G4PVPlacement(0,
+		    G4ThreeVector(0. , 0. , position_AluLayerInsideAMContainer_Z),
+		    VDC_AluLayer_Logical,
 		    "VDC_TopAluLayer_Physical",
-		    VDC_AM_FoilContainer_Logical, 
-		    0, 
+		    VDC_AM_FoilContainer_Logical,
+		    0,
 		    0); //copy number
 
 
- //====================================================================================================
- //                      create the "MA" sided foil container: Mylar-Alu (alias "MA") 
- //
- // (define a container holding a 6.25um thick Mylar foil coated with 0.1um Aluminum on bottom side.
- //====================================================================================================
+  //====================================================================================================
+  //                      create the "MA" sided foil container: Mylar-Alu (alias "MA")
+  //
+  // (define a container holding a 6.25um thick Mylar foil coated with 0.1um Aluminum on bottom side.
+  //====================================================================================================
 
 
   G4cout << G4endl << "###### QweakSimVDC: Define VDC_MA_FoilContainer_Solid" << G4endl << G4endl;
-  
+
   G4Box* VDC_MA_FoilContainer_Solid    = new G4Box("VDC_MA_FoilContainer_Sol",
 						   VDC_SubContainer_Solid->GetXHalfLength() -10.0*micrometer,
 						   VDC_SubContainer_Solid->GetYHalfLength() -10.0*micrometer,
-						   0.5* (VDC_MylarFoil_Thickness + VDC_AluLayer_Thickness) ); 
-  
+						   0.5* (VDC_MylarFoil_Thickness + VDC_AluLayer_Thickness) );
+
   // define foil logical
   G4cout << G4endl << "###### QweakSimVDC: Define VDC_MA_FoilContainer_Logical" << G4endl << G4endl;
-  
+
   VDC_MA_FoilContainer_Logical  = new G4LogicalVolume(VDC_MA_FoilContainer_Solid,
 						      VDC_SubContainer_Material,
 						      "VDC_MA_FoilContainer_Log",
@@ -712,14 +712,14 @@ G4cout << G4endl << "###### Calling QweakSimVDC::ConstructComponent() " << G4end
 
   G4cout << G4endl << "###### QweakSimVDC: Place Mylar inside VDC_MA_FoilContainer_Logical" << G4endl << G4endl;
 
-  new G4PVPlacement(0, 
-		    G4ThreeVector(0. , 0. , position_MylarFoilInsideMAContainer_Z ), 
-		    VDC_MylarFoil_Logical, 
+  new G4PVPlacement(0,
+		    G4ThreeVector(0. , 0. , position_MylarFoilInsideMAContainer_Z ),
+		    VDC_MylarFoil_Logical,
 		    "VDC_MylarFoil_Physical",
-		    VDC_MA_FoilContainer_Logical, 
-		    0, 
+		    VDC_MA_FoilContainer_Logical,
+		    0,
 		    0); //copy number
-  
+
 
   //=======================================================================================
   // Place the 1000 Angstrom (= 0.1 micrometer) thick Alu layer inside VDC_MA_FoilContainer
@@ -728,91 +728,91 @@ G4cout << G4endl << "###### Calling QweakSimVDC::ConstructComponent() " << G4end
   G4double position_AluLayerInsideMAContainer_Z = -1*VDC_MA_FoilContainer_Solid->GetZHalfLength() + VDC_AluLayer_Solid->GetZHalfLength();
 
   G4cout << G4endl << "###### QweakSimVDC: Place AluLayer inside VDC_MA_FoilContainer_Logical" << G4endl << G4endl;
-    
-  new G4PVPlacement(0, 
-		    G4ThreeVector(0. , 0. , position_AluLayerInsideMAContainer_Z), 
-		    VDC_AluLayer_Logical, 
+
+  new G4PVPlacement(0,
+		    G4ThreeVector(0. , 0. , position_AluLayerInsideMAContainer_Z),
+		    VDC_AluLayer_Logical,
 		    "VDC_TopAluLayer_Physical",
-		    VDC_MA_FoilContainer_Logical, 
-		    0, 
+		    VDC_MA_FoilContainer_Logical,
+		    0,
 		    0); //copy number
 
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-     //----------------------------------------------------------------------------
-     //
-     //  Final assembly of AM, MA, and AMA FoilContainers within VDC_SubContainer
-     //
-     //----------------------------------------------------------------------------
-     //
-     // Foil Stack orientation (AM=Alu-Mylar, MA=Mylar-Alu, AMA=Alu-Mylar-Alu)
-     // 
-     // Single sided gas foil  : AM   , zpos= 4*G10Frame_Thickness
-     // Single sided HV  foil  : MA   , zpos= 2*G10Frame_Thickness
-     // (U-Plane)
-     // Double sided HV  foil  : AMA  , zpos= 0*G10Frame_Thickness
-     // (V-Plane)
-     // Single sided HV  foil  : AM   , zpos= -2*G10Frame_Thickness
-     // Single sided gas foil  : MA   , zpos= -4*G10Frame_Thickness
-     //
-     //---------------------------------------------------------------------------
+  //----------------------------------------------------------------------------
+  //
+  //  Final assembly of AM, MA, and AMA FoilContainers within VDC_SubContainer
+  //
+  //----------------------------------------------------------------------------
+  //
+  // Foil Stack orientation (AM=Alu-Mylar, MA=Mylar-Alu, AMA=Alu-Mylar-Alu)
+  //
+  // Single sided gas foil  : AM   , zpos= 4*G10Frame_Thickness
+  // Single sided HV  foil  : MA   , zpos= 2*G10Frame_Thickness
+  // (U-Plane)
+  // Double sided HV  foil  : AMA  , zpos= 0*G10Frame_Thickness
+  // (V-Plane)
+  // Single sided HV  foil  : AM   , zpos= -2*G10Frame_Thickness
+  // Single sided gas foil  : MA   , zpos= -4*G10Frame_Thickness
+  //
+  //---------------------------------------------------------------------------
 
   G4cout << G4endl << "###### QweakSimVDC: Place VDC_TopGasFoilContainer_Physical inside VDC_SubContainer_Physical" << G4endl << G4endl;
   //
-  VDC_TopGasFoilContainer_Physical  = 
-      new G4PVPlacement(0, 
-			G4ThreeVector(0. , 0. , 4*G10Frame_Thickness ), 
-			"VDC_TopGasFoilContainer_Physical", 
-			VDC_AM_FoilContainer_Logical,
-			VDC_SubContainer_Physical,   
-			false, 
-			0); 
+  VDC_TopGasFoilContainer_Physical  =
+      new G4PVPlacement(0,
+          G4ThreeVector(0. , 0. , 4*G10Frame_Thickness ),
+          "VDC_TopGasFoilContainer_Physical",
+          VDC_AM_FoilContainer_Logical,
+			VDC_SubContainer_Physical,
+			false,
+			0);
 
   G4cout << G4endl << "###### QweakSimVDC: Place VDC_TopHVFoilContainer_Physical inside VDC_SubContainer_Physical" << G4endl << G4endl;
   //
-  VDC_TopHVFoilContainer_Physical  = 
-      new G4PVPlacement(0, 
-			G4ThreeVector(0. , 0. , 2*G10Frame_Thickness ), 
-			"VDC_TopHVFoilContainer_Physical", 
+  VDC_TopHVFoilContainer_Physical  =
+      new G4PVPlacement(0,
+			G4ThreeVector(0. , 0. , 2*G10Frame_Thickness ),
+			"VDC_TopHVFoilContainer_Physical",
 			VDC_MA_FoilContainer_Logical,
-			VDC_SubContainer_Physical,   
-			false, 
-			0); 
-  
+			VDC_SubContainer_Physical,
+			false,
+			0);
+
 
   G4cout << G4endl << "###### QweakSimVDC: Place VDC_CenterHVFoilContainer_Physical inside VDC_SubContainer_Physical" << G4endl << G4endl;
   //
-  VDC_CenterHVFoilContainer_Physical  = 
-      new G4PVPlacement(0, 
+  VDC_CenterHVFoilContainer_Physical  =
+      new G4PVPlacement(0,
 			G4ThreeVector(0. , 0. , 0. ),
-			"VDC_CenterHVFoilContainer_Physical", 
+			"VDC_CenterHVFoilContainer_Physical",
 			VDC_AMA_FoilContainer_Logical,
-			VDC_SubContainer_Physical,   
-			false, 
-			0); 
+			VDC_SubContainer_Physical,
+			false,
+			0);
 
   G4cout << G4endl << "###### QweakSimVDC: PlaceVDC_BottomHVFoilContainer_Physical inside VDC_SubContainer_Physical" << G4endl << G4endl;
   //
-  VDC_BottomHVFoilContainer_Physical  = 
-      new G4PVPlacement(0, 
-			G4ThreeVector(0. , 0. , -2*G10Frame_Thickness ), 
-			"VDC_TopHVFoilContainer_Physical", 
+  VDC_BottomHVFoilContainer_Physical  =
+      new G4PVPlacement(0,
+			G4ThreeVector(0. , 0. , -2*G10Frame_Thickness ),
+			"VDC_TopHVFoilContainer_Physical",
 			VDC_AM_FoilContainer_Logical,
-			VDC_SubContainer_Physical,   
-			false, 
-			1); // copy number 1 (second VDC_AM_FoilContainer_Logical placement inside SubContainer) 
+			VDC_SubContainer_Physical,
+			false,
+			1); // copy number 1 (second VDC_AM_FoilContainer_Logical placement inside SubContainer)
 
   G4cout << G4endl << "###### QweakSimVDC: Place VDC_BottomGasFoilContainer_Physical inside VDC_SubContainer_Physical" << G4endl << G4endl;
   //
-  VDC_BottomGasFoilContainer_Physical  = 
-      new G4PVPlacement(0, 
-			G4ThreeVector(0. , 0. , -4*G10Frame_Thickness ), 
-			"VDC_TopHVFoilContainer_Physical", 
+  VDC_BottomGasFoilContainer_Physical  =
+      new G4PVPlacement(0,
+			G4ThreeVector(0. , 0. , -4*G10Frame_Thickness ),
+			"VDC_TopHVFoilContainer_Physical",
 			VDC_MA_FoilContainer_Logical,
-			VDC_SubContainer_Physical,   
-			false, 
-			1); // copy number 1 (second  VDC_MA_FoilContainer_Logical placement inside SubContainer) 
-  
+			VDC_SubContainer_Physical,
+			false,
+			1); // copy number 1 (second  VDC_MA_FoilContainer_Logical placement inside SubContainer)
+
   //==========================================================================================================
 
 
@@ -968,7 +968,7 @@ G4cout << G4endl << "###### Calling QweakSimVDC::ConstructComponent() " << G4end
 
 
 
- // define  solid volume of the drift chamber container
+  // define  solid volume of the drift chamber container
   G4cout << G4endl << "###### QweakSimVDC: Define VDC_DriftCellBackContainer_Solid" << G4endl << G4endl;
 
   G4Box* VDC_DriftCellBackContainer_Solid    = new G4Box("VDC_DriftCellBackContainer_Solid",
@@ -984,7 +984,7 @@ G4cout << G4endl << "###### Calling QweakSimVDC::ConstructComponent() " << G4end
 							    "VDC_DriftCellbackContainer_Log",
 							    0,0,0);
   
- // define VDC Drift Cell Back Container position in MotherVolume
+  // define VDC Drift Cell Back Container position in MotherVolume
   G4ThreeVector position_DriftCellBackContainer = G4ThreeVector(0,
 								0,
 								0.25* DriftCell_MasterContainer_FullThickness);
@@ -1037,7 +1037,7 @@ G4cout << G4endl << "###### Calling QweakSimVDC::ConstructComponent() " << G4end
   //dummy value : kXAxis -- modified by parameterised volume
  
   VDC_DriftCellFront_Physical  = 
-    new G4PVParameterised("VDC_DriftCellFront_Physical",       // their name
+    new G4PVParameterised("VDC_DriftCellFront_Physical",         // their name
 			    VDC_DriftCellFront_Logical,          // their logical volume
 			    VDC_DriftCellFrontContainer_Logical, // Mother logical volume
 			    kXAxis,                              // Are placed along this axis
@@ -1046,7 +1046,7 @@ G4cout << G4endl << "###### Calling QweakSimVDC::ConstructComponent() " << G4end
 
 
   VDC_DriftCellBack_Physical  = 
-    new G4PVParameterised("VDC_DriftCellBack_Physical",       // their name
+    new G4PVParameterised("VDC_DriftCellBack_Physical",          // their name
 			    VDC_DriftCellBack_Logical,           // their logical volume
 			    VDC_DriftCellBackContainer_Logical,  // Mother logical volume
 			    kXAxis,                              // Are placed along this axis 
@@ -1064,87 +1064,89 @@ G4cout << G4endl << "###### Calling QweakSimVDC::ConstructComponent() " << G4end
   // handling a precise energy loss of relativistic charged
   // particles crossing the drift chamber gas.
   // ------------------------------------------------------
-  
 
-  if( fRegGasDet != 0 )  // remove obsolete root logical volume
-  {
+  if (fEnablePAI) {
+
+    if( fRegGasDet != 0 )  // remove obsolete root logical volume
+    {
       fRegGasDet->RemoveRootLogicalVolume(VDC_DriftCellFront_Logical);
       fRegGasDet->RemoveRootLogicalVolume(VDC_DriftCellBack_Logical);
-  }
+    }
 
-  G4ProductionCuts* cuts = 0;
-  
-  if( fRegGasDet == 0 ) // First time - instantiate a region and a cut objects
-  {    
+    G4ProductionCuts* cuts = 0;
+
+    if( fRegGasDet == 0 ) // First time - instantiate a region and a cut objects
+    {
       fRegGasDet = new G4Region("DriftCellRegion_VDC");
       cuts = new G4ProductionCuts();
       fRegGasDet->SetProductionCuts(cuts);
-   }
-  else  // Second time - get a cut object from region
-  {   
+    }
+    else  // Second time - get a cut object from region
+    {
       cuts = fRegGasDet->GetProductionCuts();
+    }
+
+    VDC_DriftCellFront_Logical->SetRegion(fRegGasDet);
+    VDC_DriftCellBack_Logical->SetRegion(fRegGasDet);
+
+    fRegGasDet->AddRootLogicalVolume(VDC_DriftCellFront_Logical);
+    fRegGasDet->AddRootLogicalVolume(VDC_DriftCellBack_Logical);
+
+    cuts->SetProductionCut(fGammaCut,"gamma");
+    cuts->SetProductionCut(fElectronCut,"e-");
+    cuts->SetProductionCut(fPositronCut,"e+");
+
   }
 
-  VDC_DriftCellFront_Logical->SetRegion(fRegGasDet);
-  VDC_DriftCellBack_Logical->SetRegion(fRegGasDet);
-
-  fRegGasDet->AddRootLogicalVolume(VDC_DriftCellFront_Logical);                               
-  fRegGasDet->AddRootLogicalVolume(VDC_DriftCellBack_Logical);                               
- 
-  cuts->SetProductionCut(fGammaCut,"gamma");
-  cuts->SetProductionCut(fElectronCut,"e-");
-  cuts->SetProductionCut(fPositronCut,"e+");
-  
-
-//==========================================================================================
+  //==========================================================================================
 
 
 
-G4cout << G4endl << "###### QweakSimVDC: Setting Sensitive Detectors " << G4endl << G4endl;
+  G4cout << G4endl << "###### QweakSimVDC: Setting Sensitive Detectors " << G4endl << G4endl;
 
   // Sensitive detectors
   //------------------------------------------------ 
   // All managed (deleted) by SDManager
 
-   G4SDManager* SDman = G4SDManager::GetSDMpointer();
+  G4SDManager* SDman = G4SDManager::GetSDMpointer();
 
 
-   //#######################################################
-   // define drift chamber elements as sensitiv detectors
-   // "sensitivity" will be handled by class QweakSimVDCSD
-   //#######################################################
+  //#######################################################
+  // define drift chamber elements as sensitiv detectors
+  // "sensitivity" will be handled by class QweakSimVDCSD
+  //#######################################################
 
 
-   //***********************************************************
-   driftChamberSD = new QweakSimVDC_WirePlaneSD("VDCWirePlaneSD");
-   SDman->AddNewDetector(driftChamberSD);
-   
-   // add wire plane as a sensitive element
-   VDC_WirePlane_Logical->SetSensitiveDetector(driftChamberSD);
-   //***********************************************************
+  //***********************************************************
+  driftChamberSD = new QweakSimVDC_WirePlaneSD("VDCWirePlaneSD");
+  SDman->AddNewDetector(driftChamberSD);
+
+  // add wire plane as a sensitive element
+  VDC_WirePlane_Logical->SetSensitiveDetector(driftChamberSD);
+  //***********************************************************
 
 
-   //***********************************************************
-   driftCellFrontSD = new QweakSimVDC_DriftCellFrontSD("VDCDriftCellFrontSD");
-   SDman->AddNewDetector(driftCellFrontSD);
+  //***********************************************************
+  driftCellFrontSD = new QweakSimVDC_DriftCellFrontSD("VDCDriftCellFrontSD");
+  SDman->AddNewDetector(driftCellFrontSD);
 
-   // add Front Drift Cell as a sensitive element
-   VDC_DriftCellFront_Logical->SetSensitiveDetector(driftCellFrontSD);
-   //***********************************************************
-
-
-   //***********************************************************
-   driftCellBackSD = new QweakSimVDC_DriftCellBackSD("VDCDriftCellBackSD");
-   SDman->AddNewDetector(driftCellBackSD);
-
-   // add Back Drift Cell as a sensitive element
-   VDC_DriftCellBack_Logical->SetSensitiveDetector(driftCellBackSD);
-   //***********************************************************
+  // add Front Drift Cell as a sensitive element
+  VDC_DriftCellFront_Logical->SetSensitiveDetector(driftCellFrontSD);
+  //***********************************************************
 
 
+  //***********************************************************
+  driftCellBackSD = new QweakSimVDC_DriftCellBackSD("VDCDriftCellBackSD");
+  SDman->AddNewDetector(driftCellBackSD);
+
+  // add Back Drift Cell as a sensitive element
+  VDC_DriftCellBack_Logical->SetSensitiveDetector(driftCellBackSD);
+  //***********************************************************
 
 
-G4cout << G4endl << "###### QweakSimVDC: Setting Attributes " << G4endl << G4endl;
+
+
+  G4cout << G4endl << "###### QweakSimVDC: Setting Attributes " << G4endl << G4endl;
 
   G4Colour  orange       (241/255.,224/255.,0/255.);
   G4Colour  gray         (210/255.,213/255.,210/255.);
@@ -1194,27 +1196,27 @@ G4cout << G4endl << "###### QweakSimVDC: Setting Attributes " << G4endl << G4end
   VDC_G10Frame_VisAtt  = new G4VisAttributes(green);
   VDC_G10Frame_VisAtt  -> SetVisibility(true);
   //VDC_G10Frame_VisAtt  -> SetForceWireframe(true);
-  VDC_G10Frame_Logical -> SetVisAttributes(VDC_G10Frame_VisAtt); 
+  VDC_G10Frame_Logical -> SetVisAttributes(VDC_G10Frame_VisAtt);
 
   VDC_AluFrame_VisAtt  = new G4VisAttributes(gray);
   VDC_AluFrame_VisAtt  -> SetVisibility(true);
   //VDC_AluFrame_VisAtt  -> SetForceWireframe(true);
-  VDC_AluFrame_Logical -> SetVisAttributes(VDC_AluFrame_VisAtt); 
+  VDC_AluFrame_Logical -> SetVisAttributes(VDC_AluFrame_VisAtt);
 
   VDC_AluLayer_VisAtt  = new G4VisAttributes(gray);
   VDC_AluLayer_VisAtt  -> SetVisibility(true);
   //VDC_AluLayer_VisAtt  -> SetForceWireframe(true);
-  VDC_AluLayer_Logical -> SetVisAttributes(VDC_AluLayer_VisAtt); 
+  VDC_AluLayer_Logical -> SetVisAttributes(VDC_AluLayer_VisAtt);
 
   VDC_MylarFoil_VisAtt  = new G4VisAttributes(red);
   VDC_MylarFoil_VisAtt  -> SetVisibility(true);
   //VDC_MylarFoil_VisAtt  -> SetForceWireframe(true);
-  VDC_MylarFoil_Logical -> SetVisAttributes(VDC_MylarFoil_VisAtt); 
+  VDC_MylarFoil_Logical -> SetVisAttributes(VDC_MylarFoil_VisAtt);
 
   VDC_AMA_FoilContainer_VisAtt  = new G4VisAttributes(gray);
   VDC_AMA_FoilContainer_VisAtt  -> SetVisibility(false);
   VDC_AMA_FoilContainer_VisAtt  -> SetForceWireframe(true);
-  VDC_AMA_FoilContainer_Logical -> SetVisAttributes(VDC_AMA_FoilContainer_VisAtt); 
+  VDC_AMA_FoilContainer_Logical -> SetVisAttributes(VDC_AMA_FoilContainer_VisAtt);
 
   VDC_AM_FoilContainer_VisAtt  = new G4VisAttributes(gray);
   VDC_AM_FoilContainer_VisAtt  -> SetVisibility(false);
@@ -1229,10 +1231,10 @@ G4cout << G4endl << "###### QweakSimVDC: Setting Attributes " << G4endl << G4end
   VDC_WirePlane_VisAtt = new G4VisAttributes(green_yellow);
   VDC_WirePlane_VisAtt -> SetVisibility(true);
   //VDC_MyWirePlane_VisAtt -> SetForceWireframe(true);
-  VDC_WirePlane_Logical -> SetVisAttributes(VDC_WirePlane_VisAtt); 
+  VDC_WirePlane_Logical -> SetVisAttributes(VDC_WirePlane_VisAtt);
 
 
-G4cout << G4endl << "###### Leaving QweakSimVDC::ConstructComponent() " << G4endl << G4endl;
+  G4cout << G4endl << "###### Leaving QweakSimVDC::ConstructComponent() " << G4endl << G4endl;
 
 } // end of  QweakSimVDC::ConstructComponent()
 

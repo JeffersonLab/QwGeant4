@@ -279,6 +279,7 @@ private:
 
 
   // cuts for G4Region and PAIModel
+  static const G4bool fEnablePAI = false;
   G4double    fGammaCut; 
   G4double    fElectronCut; 
   G4double    fPositronCut; 
