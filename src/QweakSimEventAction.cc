@@ -223,42 +223,56 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 
         // get  GEM_WirePlane Hit Collector pointer
         //GEM_WirePlane_HC       = (QweakSimGEM_WirePlane_HitsCollection*)(HCE->GetHC(GEM_WirePlane_CollID));
+        //n_GEMhitWirePlane      = GEM_WirePlane_HC -> entries();
 
         // get  HDC_WirePlane Hit Collector pointer
-        HDC_WirePlane_HC       = (QweakSimHDC_WirePlane_HitsCollection*)(HCE->GetHC(HDC_WirePlane_CollID));
+        if (HDC_WirePlane_CollID > -1) {
+            HDC_WirePlane_HC       = (QweakSimHDC_WirePlane_HitsCollection*)(HCE->GetHC(HDC_WirePlane_CollID));
+            n_HDChitWirePlane      = HDC_WirePlane_HC  -> entries();
+        }
 
         // get  VDC_WirePlane Hit Collector pointer
-        VDC_WirePlane_HC       = (QweakSimVDC_WirePlane_HitsCollection*)(HCE->GetHC(VDC_WirePlane_CollID));
+        if (VDC_WirePlane_CollID > -1) {
+            VDC_WirePlane_HC       = (QweakSimVDC_WirePlane_HitsCollection*)(HCE->GetHC(VDC_WirePlane_CollID));
+            n_VDChitWirePlane      = VDC_WirePlane_HC -> entries();
+        }
 
         // get  VDC_DriftCellFront Hit Collector pointer
-        VDC_DriftCellFront_HC  = (QweakSimVDC_DriftCellHitsCollection*)(HCE->GetHC(VDC_DriftCellFront_CollID));
+        if (VDC_DriftCellFront_CollID > -1) {
+            VDC_DriftCellFront_HC  = (QweakSimVDC_DriftCellHitsCollection*)(HCE->GetHC(VDC_DriftCellFront_CollID));
+            n_VDChitDCFront        = VDC_DriftCellFront_HC -> entries();
+        }
 
         // get  VDC_DriftCellFront Hit Collector pointer
-        VDC_DriftCellBack_HC   = (QweakSimVDC_DriftCellHitsCollection*)(HCE->GetHC(VDC_DriftCellBack_CollID));
+        if (VDC_DriftCellBack_CollID > -1) {
+            VDC_DriftCellBack_HC   = (QweakSimVDC_DriftCellHitsCollection*)(HCE->GetHC(VDC_DriftCellBack_CollID));
+            n_VDChitDCBack         = VDC_DriftCellBack_HC -> entries();
+        }
 
         // get  TriggerScintillator Hit Collector pointer
-        TriggerScintillatorDetector_HC  = (QweakSimTriggerScintillator_DetectorHitsCollection*)(HCE->GetHC(TriggerScintillatorDetector_CollID));
+        if (TriggerScintillatorDetector_CollID > -1) {
+            TriggerScintillatorDetector_HC = (QweakSimTriggerScintillator_DetectorHitsCollection*)(HCE->GetHC(TriggerScintillatorDetector_CollID));
+            n_hitTriggerScintillator       = TriggerScintillatorDetector_HC -> entries();
+        }
 
         // get  TriggerScintillatorPMT Hit Collector pointer
-        //TriggerScintillatorPMT_HC = (QweakSimTriggerScintillator_PMTHitsCollection*)(HCE->GetHC(TriggerScintillatorPMT_CollID));
+        //if (TriggerScintillatorPMT_CollID > -1) {
+        //    TriggerScintillatorPMT_HC   = (QweakSimTriggerScintillator_PMTHitsCollection*)(HCE->GetHC(TriggerScintillatorPMT_CollID));
+        //    n_hitTriggerScintillatorPMT = TriggerScintillatorPMT_HC -> entries();
+        //}
 
         // get  CerenkovDetector Hit Collector pointer
-        CerenkovDetector_HC    = (QweakSimCerenkovDetectorHitsCollection*)(HCE->GetHC(CerenkovDetector_CollID));
+        if (CerenkovDetector_CollID > -1) {
+            CerenkovDetector_HC    = (QweakSimCerenkovDetectorHitsCollection*)(HCE->GetHC(CerenkovDetector_CollID));
+            n_hitCerenkov          = CerenkovDetector_HC -> entries();
+        }
 
         // get  CerenkovDetectorPMT Hit Collector pointer
-        CerenkovDetectorPMT_HC = (QweakSimCerenkovDetector_PMTHitsCollection*)(HCE->GetHC(CerenkovDetectorPMT_CollID));
+        if (CerenkovDetectorPMT_CollID > -1) {
+            CerenkovDetectorPMT_HC = (QweakSimCerenkovDetector_PMTHitsCollection*)(HCE->GetHC(CerenkovDetectorPMT_CollID));
+            n_hitCerenkovPMT       = CerenkovDetectorPMT_HC -> entries();
+        }
     }
-
-    // Get number of entries for this event
-    // n_GEMhitWirePlane              = GEM_WirePlane_HC               -> entries();
-    n_HDChitWirePlane              = HDC_WirePlane_HC               -> entries();
-    n_VDChitWirePlane              = VDC_WirePlane_HC               -> entries();
-    n_VDChitDCFront                = VDC_DriftCellFront_HC          -> entries();
-    n_VDChitDCBack                 = VDC_DriftCellBack_HC           -> entries();
-    n_hitTriggerScintillator       = TriggerScintillatorDetector_HC -> entries();
-    //n_hitTriggerScintillatorPMT    = TriggerScintillatorPMT_HC      -> entries();
-    n_hitCerenkov                  = CerenkovDetector_HC            -> entries();
-    n_hitCerenkovPMT               = CerenkovDetectorPMT_HC         -> entries();
 
     G4cout <<",\tVDC_Front "<<n_VDChitDCFront<<",\tVDC_Back "<<n_VDChitDCBack<<",\tTS "<<n_hitTriggerScintillator;
     G4cout <<",\tCerenkov "<<n_hitCerenkov<<"\tCerenkovPMT "<<n_hitCerenkovPMT<<G4endl;
@@ -1346,10 +1360,13 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void QweakSimEventAction::Initialize() {
 
+    n_GEMhitWirePlane   = 0;
     n_HDChitWirePlane   = 0;
     n_VDChitWirePlane   = 0;
     n_VDChitDCFront     = 0;
     n_VDChitDCBack      = 0;
+    n_hitTriggerScintillator = 0;
+    n_hitTriggerScintillatorPMT = 0;
     n_hitCerenkov       = 0;
     n_hitCerenkovPMT    = 0;
 
