@@ -22,6 +22,10 @@
 #include "G4UIterminal.hh"
 #include "G4UItcsh.hh"
 
+
+#include "G4PhysListFactory.hh"
+#include "G4VModularPhysicsList.hh"
+
 // user includes
 #include "QweakSimUserInformation.hh"
 #include "QweakSimDetectorConstruction.hh"
@@ -68,7 +72,15 @@ int main(int argc,char** argv) {
   QweakSimEPEvent*               myEPEvent                  = new QweakSimEPEvent(myQweakSimUserInformation);
 
   runManager->SetUserInitialization(myQweakSimExperiment);
-  runManager->SetUserInitialization(new QweakSimPhysicsList() );
+
+
+  // Calls a reference physics list for the simulation
+  G4PhysListFactory factory;
+  G4VModularPhysicsList* physlist = factory.GetReferencePhysList("QGSP_BERT_LIV");
+  runManager->SetUserInitialization(physlist);
+
+  // Original Qweak Physics List, uncomment to use, comment out block above
+  //runManager->SetUserInitialization(new QweakSimPhysicsList() );
 
   // UserAction classes
   runManager->SetUserAction( new QweakSimPrimaryGeneratorAction(myQweakSimUserInformation, myEPEvent) );
