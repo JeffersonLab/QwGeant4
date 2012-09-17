@@ -1444,13 +1444,13 @@ void QweakSimEventAction::Initialize() {
     //                     8 - 1
     
     G4IndexToOctantNumber[0] = 1;
-    G4IndexToOctantNumber[1] = 8;
-    G4IndexToOctantNumber[2] = 7;
-    G4IndexToOctantNumber[3] = 6;
+    G4IndexToOctantNumber[1] = 2;
+    G4IndexToOctantNumber[2] = 3;
+    G4IndexToOctantNumber[3] = 4;
     G4IndexToOctantNumber[4] = 5;
-    G4IndexToOctantNumber[5] = 4;
-    G4IndexToOctantNumber[6] = 3;
-    G4IndexToOctantNumber[7] = 2;
+    G4IndexToOctantNumber[5] = 6;
+    G4IndexToOctantNumber[6] = 7;
+    G4IndexToOctantNumber[7] = 8;
     
     detectorID = 0;
     octantID   = 0;
