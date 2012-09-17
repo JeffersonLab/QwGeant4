@@ -23,6 +23,7 @@
 #include "G4UItcsh.hh"
 
 
+#include "G4OpticalPhysics.hh"
 #include "G4PhysListFactory.hh"
 #include "G4VModularPhysicsList.hh"
 
@@ -57,8 +58,8 @@
 
 int main(int argc,char** argv) {
 
-  //my Verbose output class
-  G4VSteppingVerbose::SetInstance( new QweakSimSteppingVerbose() ); 
+  // Verbose output class
+  //G4VSteppingVerbose::SetInstance( new QweakSimSteppingVerbose() ); 
 
   // Run manager
   G4RunManager * runManager = new G4RunManager();
@@ -77,6 +78,7 @@ int main(int argc,char** argv) {
   // Calls a reference physics list for the simulation
   G4PhysListFactory factory;
   G4VModularPhysicsList* physlist = factory.GetReferencePhysList("QGSP_BERT_LIV");
+  physlist->RegisterPhysics(new G4OpticalPhysics());
   runManager->SetUserInitialization(physlist);
 
   // Original Qweak Physics List, uncomment to use, comment out block above
