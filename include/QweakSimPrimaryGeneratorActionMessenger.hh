@@ -57,7 +57,6 @@ private:
   G4UIcmdWithAnInteger*    verboseCmd;
   G4UIcmdWithoutParameter* resetCmd;
   G4UIcmdWithAnInteger*    InitEventCounterCmd;
-  G4UIcmdWithAnInteger*    SelectOctant_Cmd;
   G4UIcmdWithAString*      SetParticleType_Cmd;
 
   G4UIcmdWithADoubleAndUnit*    SetPositionX_Cmd;

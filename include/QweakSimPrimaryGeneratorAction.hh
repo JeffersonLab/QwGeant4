@@ -83,11 +83,7 @@ public:
   void GeneratePrimaries(G4Event* anEvent);
   void ResetNtupleEventCounter() {myEventCounter = 0;}
   void SetNtupleEventCounter(G4int cnt) {myEventCounter = cnt;}
-  void SetActiveOctant(G4int noct) {
-    G4cout << "%%==> Changing Active Octant to: " << noct << G4endl;
-    kActiveOctantNumber = noct;
-  }
-  
+
   void SetParticleType(G4String type = "e-") {
     G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
     G4ParticleDefinition* particle = particleTable->FindParticle(type);
@@ -115,8 +111,6 @@ private:
   G4double fPositionX_max;
   G4double fPositionY_min;
   G4double fPositionY_max;
-
-  G4int kActiveOctantNumber;
 
 };
 

@@ -121,13 +121,6 @@ QweakSimPrimaryGeneratorActionMessenger::QweakSimPrimaryGeneratorActionMessenger
   SetRasterYmax_Cmd->SetDefaultValue(2.0*mm);
   //SetRasterYmax_Cmd->SetRange("Ymax<10");
   SetRasterYmax_Cmd->AvailableForStates(G4State_PreInit,G4State_Idle);
-  
-  SelectOctant_Cmd = new G4UIcmdWithAnInteger("/PrimaryEvent/SelectOctant",this);
-  SelectOctant_Cmd->SetGuidance("Select octant for primaries");
-  SelectOctant_Cmd->SetParameterName("SelectOctant",true);
-  SelectOctant_Cmd->SetDefaultValue(1);
-  SelectOctant_Cmd->SetRange("SelectOctant>=0");
-  SelectOctant_Cmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -138,7 +131,6 @@ QweakSimPrimaryGeneratorActionMessenger::~QweakSimPrimaryGeneratorActionMessenge
   delete SetRasterXmax_Cmd;
   delete SetRasterYmin_Cmd;
   delete SetRasterYmax_Cmd;
-  delete SelectOctant_Cmd;
   delete InitEventCounterCmd;
   delete verboseCmd;
   delete resetCmd;
@@ -210,13 +202,6 @@ void QweakSimPrimaryGeneratorActionMessenger::SetNewValue(G4UIcommand* command, 
       G4cout << "#### Messenger: Setting Raster max. Y to " << newValue << G4endl;
       Ymax = SetRasterYmax_Cmd->GetNewDoubleValue(newValue);
       pPrimaryGeneratorAction->SetBeamRasteringRegion(Xmin, Xmax, Ymin, Ymax); 
-    }
-
-
-  if( command == SelectOctant_Cmd )
-    { 
-      pPrimaryGeneratorAction->SetActiveOctant(SelectOctant_Cmd->GetNewIntValue(newValue)); 
-      //QweakSimPrimaryGeneratorAction::SetActiveOctant(SelectOctant_Cmd->GetNewIntValue(newValue)); 
     }
 
 }
