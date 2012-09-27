@@ -37,12 +37,12 @@ QweakSimUserCerenkov_DetectorEvent::~QweakSimUserCerenkov_DetectorEvent()
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 void QweakSimUserCerenkov_DetectorEvent::Initialize()
 {
-    DetectorID                     = 0;
+    DetectorID.clear();
     TrackID                        = 0;
     HasBeenHit                     = 0;
     NbOfHits                       = 0;
-    GlobalTimeOfHit                = 0.0;
-    EdgeEventFlag                  = 0;
+    GlobalTimeOfHit.clear();
+    EdgeEventFlag.clear();
 
     SecPartLocalOriginX.clear();
     SecPartLocalOriginY.clear();
@@ -56,7 +56,7 @@ void QweakSimUserCerenkov_DetectorEvent::Initialize()
     SecPartLocalType.clear();
 
 
-    OpticalPhotonCount = 0;
+    OpticalPhotonCount             = 0;
     CerenkovPhotonEnergy.clear();
 
     SecondaryParticleCount = 0;
@@ -68,29 +68,37 @@ void QweakSimUserCerenkov_DetectorEvent::Initialize()
     HitLocalPositionY.clear();
     HitLocalPositionZ.clear();
 
-    HitGlobalPositionX             = 0.0;
-    HitGlobalPositionY             = 0.0;
-    HitGlobalPositionZ             = 0.0;
+    HitLocalExitPositionX.clear();
+    HitLocalExitPositionY.clear();
+    HitLocalExitPositionZ.clear();
+
+    HitGlobalPositionX.clear();
+    HitGlobalPositionY.clear();
+    HitGlobalPositionZ.clear();
     
-    OriginVertexPositionX          = 0.0;
-    OriginVertexPositionY          = 0.0;
-    OriginVertexPositionZ          = 0.0;
+    OriginVertexPositionX.clear();
+    OriginVertexPositionY.clear();
+    OriginVertexPositionZ.clear();
 
-    OriginVertexMomentumDirectionX = 0.0;
-    OriginVertexMomentumDirectionY = 0.0;
-    OriginVertexMomentumDirectionZ = 0.0;
+    OriginVertexMomentumDirectionX.clear();
+    OriginVertexMomentumDirectionY.clear();
+    OriginVertexMomentumDirectionZ.clear();
     
-    OriginVertexThetaAngle         = 0.0;
-    OriginVertexPhiAngle           = 0.0;
-    OriginVertexKineticEnergy      = 0.0;
-    OriginVertexTotalEnergy        = 0.0; 
+    OriginVertexThetaAngle.clear();
+    OriginVertexPhiAngle.clear();
+    OriginVertexKineticEnergy.clear();
+    OriginVertexTotalEnergy.clear(); 
+    
+    GlobalThetaAngle.clear();
+    GlobalPhiAngle.clear();
+    
+    EdgeEventFlag.clear();
 
-    EdgeEventFlag                  = 0;
-
-    ParticleName                   = "None";
-    ParticleType                   = -1;
-    TotalEnergy                    = 0.;
-    KineticEnergy                  = 0.;
+    ParticleName.clear();
+    ParticleType.clear();
+    
+    TotalEnergy.clear();
+    KineticEnergy.clear();
 
 }	
 

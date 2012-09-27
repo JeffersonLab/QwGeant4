@@ -63,13 +63,13 @@ class QweakSimUserCerenkov_DetectorEvent : public TObject
 
 private:
 
-  Int_t   DetectorID; ///< ID of the detector in which this hit was registered
+  std::vector<Int_t>   DetectorID; ///< ID of the detector in which this hit was registered
   Int_t   TrackID;    ///< ID of the track from which this hit was generated
 
-  Float_t GlobalTimeOfHit;      ///< Global time when this hit was generated (ns)
+  std::vector<Float_t> GlobalTimeOfHit;      ///< Global time when this hit was generated (ns)
 
   Int_t HasBeenHit;             ///< Has this detector been hit? 0 = no, 5 = yes
-  Int_t EdgeEventFlag;          ///< Was the distance between hit and exit position below 1.5 cm? 0 = no, 1 = yes
+  std::vector<Int_t> EdgeEventFlag;          ///< Was the distance between hit and exit position below 1.5 cm? 0 = no, 1 = yes
   Int_t NbOfHits;               ///< Number of hits in this detector
 
   Int_t SecondaryParticleCount; ///< Number of secondary particles
@@ -111,57 +111,57 @@ private:
   /// \name Position where the track exits the volume in local coordinates (cm)
   /// The local coordinates are defined in the \ref local_coordinate_system.
   //@{
-  Float_t HitLocalExitPositionX; ///< (cm)
-  Float_t HitLocalExitPositionY; ///< (cm)
-  Float_t HitLocalExitPositionZ; ///< (cm)
+  std::vector<Float_t> HitLocalExitPositionX; ///< (cm)
+  std::vector<Float_t> HitLocalExitPositionY; ///< (cm)
+  std::vector<Float_t> HitLocalExitPositionZ; ///< (cm)
   //@}
 
   /// \name Position of the hit in global coordinates
   /// The global coordinates are defined in the \ref global_coordinate_system.
   //@{
-  Float_t HitGlobalPositionX;    ///< (cm)
-  Float_t HitGlobalPositionY;    ///< (cm)
-  Float_t HitGlobalPositionZ;    ///< (cm)
+  std::vector<Float_t> HitGlobalPositionX;    ///< (cm)
+  std::vector<Float_t> HitGlobalPositionY;    ///< (cm)
+  std::vector<Float_t> HitGlobalPositionZ;    ///< (cm)
   //@}
 
   /// \name Position in global coordinates of original vertex of the track from which this hit was generated
   /// The global coordinates are defined in the \ref global_coordinate_system.
   //@{
-  Float_t OriginVertexPositionX; ///< (cm)
-  Float_t OriginVertexPositionY; ///< (cm)
-  Float_t OriginVertexPositionZ; ///< (cm)
+  std::vector<Float_t> OriginVertexPositionX; ///< (cm)
+  std::vector<Float_t> OriginVertexPositionY; ///< (cm)
+  std::vector<Float_t> OriginVertexPositionZ; ///< (cm)
   //@}
 
   /// \name Direction in global coordinates of original vertex of the track from which this hit was generated
   /// The global coordinates are defined in the \ref global_coordinate_system.
   //@{
-  Float_t OriginVertexMomentumDirectionX;
-  Float_t OriginVertexMomentumDirectionY;
-  Float_t OriginVertexMomentumDirectionZ;
-  Float_t OriginVertexThetaAngle;       ///< (degrees)
-  Float_t OriginVertexPhiAngle;         ///< (degrees)
+  std::vector<Float_t> OriginVertexMomentumDirectionX;
+  std::vector<Float_t> OriginVertexMomentumDirectionY;
+  std::vector<Float_t> OriginVertexMomentumDirectionZ;
+  std::vector<Float_t> OriginVertexThetaAngle;       ///< (degrees)
+  std::vector<Float_t> OriginVertexPhiAngle;         ///< (degrees)
   //@}
 
-  Float_t OriginVertexKineticEnergy;
-  Float_t OriginVertexTotalEnergy;
+  std::vector<Float_t> OriginVertexKineticEnergy;
+  std::vector<Float_t> OriginVertexTotalEnergy;
 
   /// \name Direction of the hit in global coordinates
   /// The global coordinates are defined in the \ref global_coordinate_system.
   //@{
-  Float_t GlobalThetaAngle;     ///< (degrees)
-  Float_t GlobalPhiAngle;       ///< (degrees, but 90 degrees rotated to keep things interesting)
+  std::vector<Float_t> GlobalThetaAngle;     ///< (degrees)
+  std::vector<Float_t> GlobalPhiAngle;       ///< (degrees, but 90 degrees rotated to keep things interesting)
   //@}
 
   /// \name Particle name and type at the hit
   //@{
-  TString ParticleName;         ///< Name of the particle type of this hit
-  Int_t   ParticleType;         ///< \ref Lund_type of the particle type of this hit
+  std::vector<TString> ParticleName;         ///< Name of the particle type of this hit
+  std::vector<Int_t>   ParticleType;         ///< \ref Lund_type of the particle type of this hit
   //@}
 
   /// \name Total and kinetic energy of the track at the hit
   //@{
-  Float_t TotalEnergy;          ///< (MeV)
-  Float_t KineticEnergy;        ///< (MeV)
+  std::vector<Float_t> TotalEnergy;          ///< (MeV)
+  std::vector<Float_t> KineticEnergy;        ///< (MeV)
   //@}
 
 public:
@@ -174,28 +174,28 @@ public:
   void Initialize();
 
   //-----------------
-  void     StoreDetectorID(Int_t did)  { DetectorID = did; }
-  Int_t      GetDetectorID() const {return DetectorID;}
+  void     StoreDetectorID(Int_t did)  { DetectorID.push_back(did); }
+  std::vector<Int_t>      GetDetectorID() const {return DetectorID;}
   //-----------------
 
   void     StoreTrackID(Int_t tid)  { TrackID = tid; }
   Int_t      GetTrackID() const {return TrackID;}
 
-  void     StoreParticleName(TString pn)    { ParticleName = pn; }
-  TString    GetParticleName() const {return  ParticleName;}
+  void     StoreParticleName(TString pn)    { ParticleName.push_back(pn); }
+  std::vector<TString>    GetParticleName() const {return  ParticleName;}
 
-  void     StoreParticleType(Int_t pt)      { ParticleType = pt; }
-  Int_t      GetParticleType() const {return  ParticleType;}
+  void     StoreParticleType(Int_t pt)      { ParticleType.push_back(pt); }
+  std::vector<Int_t>      GetParticleType() const {return  ParticleType;}
 
 
-  void     StoreGlobalTimeOfHit(Float_t gtime) { GlobalTimeOfHit = gtime; }
-  Float_t    GetGloablTimeOfHit()  const {return GlobalTimeOfHit;}
+  void     StoreGlobalTimeOfHit(Float_t gtime) { GlobalTimeOfHit.push_back(gtime); }
+  std::vector<Float_t>    GetGloablTimeOfHit()  const {return GlobalTimeOfHit;}
 
-  void     StoreTotalEnergy(Float_t te)   { TotalEnergy = te; }
-  Float_t    GetTotalEnergy() const {return TotalEnergy;}
+  void     StoreTotalEnergy(Float_t te)   { TotalEnergy.push_back(te); }
+  std::vector<Float_t>    GetTotalEnergy() const {return TotalEnergy;}
 
-  void     StoreKineticEnergy(Float_t ke)   { KineticEnergy = ke; }
-  Float_t    GetKineticEnergy() const {return KineticEnergy;}
+  void     StoreKineticEnergy(Float_t ke)   { KineticEnergy.push_back(ke); }
+  std::vector<Float_t>    GetKineticEnergy() const {return KineticEnergy;}
 
 
   //-----------------
@@ -214,67 +214,67 @@ public:
   void     StoreDetectorLocalPositionZ(Float_t lz)   { HitLocalPositionZ.push_back(lz); }
   std::vector<Float_t>    GetDetectorLocalPositionZ() const {return HitLocalPositionZ;}
   //-----------------
-  void     StoreDetectorLocalExitPositionX(Float_t lx)   { HitLocalExitPositionX = lx; }
-  Float_t    GetDetectorLocalExitPositionX() const {return HitLocalExitPositionX;}
+  void     StoreDetectorLocalExitPositionX(Float_t lx)   { HitLocalExitPositionX.push_back(lx); }
+  std::vector<Float_t>    GetDetectorLocalExitPositionX() const {return HitLocalExitPositionX;}
 
-  void     StoreDetectorLocalExitPositionY(Float_t ly)   { HitLocalExitPositionY = ly; }
-  Float_t    GetDetectorLocalExitPositionY() const {return HitLocalExitPositionY;}
+  void     StoreDetectorLocalExitPositionY(Float_t ly)   { HitLocalExitPositionY.push_back(ly); }
+  std::vector<Float_t>    GetDetectorLocalExitPositionY() const {return HitLocalExitPositionY;}
 
-  void     StoreDetectorLocalExitPositionZ(Float_t lz)   { HitLocalExitPositionZ = lz; }
-  Float_t    GetDetectorLocalExitPositionZ() const {return HitLocalExitPositionZ;}
+  void     StoreDetectorLocalExitPositionZ(Float_t lz)   { HitLocalExitPositionZ.push_back(lz); }
+  std::vector<Float_t>    GetDetectorLocalExitPositionZ() const {return HitLocalExitPositionZ;}
   //---
-  void     StoreDetectorGlobalPositionX(Float_t lx)   { HitGlobalPositionX = lx; }
-  Float_t    GetDetectorGlobalPositionX() const {return HitGlobalPositionX;}
+  void     StoreDetectorGlobalPositionX(Float_t lx)   { HitGlobalPositionX.push_back(lx); }
+  std::vector<Float_t>    GetDetectorGlobalPositionX() const {return HitGlobalPositionX;}
 
-  void     StoreDetectorGlobalPositionY(Float_t ly)   { HitGlobalPositionY = ly; }
-  Float_t    GetDetectorGlobalPositionY() const {return HitGlobalPositionY;}
+  void     StoreDetectorGlobalPositionY(Float_t ly)   { HitGlobalPositionY.push_back(ly); }
+  std::vector<Float_t>    GetDetectorGlobalPositionY() const {return HitGlobalPositionY;}
 
-  void     StoreDetectorGlobalPositionZ(Float_t lz)   { HitGlobalPositionZ = lz; }
-  Float_t    GetDetectorGlobalPositionZ() const {return HitGlobalPositionZ;}
+  void     StoreDetectorGlobalPositionZ(Float_t lz)   { HitGlobalPositionZ.push_back(lz); }
+  std::vector<Float_t>    GetDetectorGlobalPositionZ() const {return HitGlobalPositionZ;}
   //-----------------
-  void     StoreOriginVertexPositionX(Float_t vx)   { OriginVertexPositionX = vx; }
-  Float_t    GetOriginVertexPositionX() const {return OriginVertexPositionX;}
+  void     StoreOriginVertexPositionX(Float_t vx)   { OriginVertexPositionX.push_back(vx); }
+  std::vector<Float_t>    GetOriginVertexPositionX() const {return OriginVertexPositionX;}
 
-  void     StoreOriginVertexPositionY(Float_t vy)   { OriginVertexPositionY = vy; }
-  Float_t    GetOriginVertexPositionY() const {return OriginVertexPositionY;}
+  void     StoreOriginVertexPositionY(Float_t vy)   { OriginVertexPositionY.push_back(vy); }
+  std::vector<Float_t>    GetOriginVertexPositionY() const {return OriginVertexPositionY;}
 
-  void     StoreOriginVertexPositionZ(Float_t vz)   { OriginVertexPositionZ = vz; }
-  Float_t    GetOriginVertexPositionZ() const {return OriginVertexPositionZ;}
+  void     StoreOriginVertexPositionZ(Float_t vz)   { OriginVertexPositionZ.push_back(vz); }
+  std::vector<Float_t>    GetOriginVertexPositionZ() const {return OriginVertexPositionZ;}
   //-----------------
-  void     StoreOriginVertexMomentumDirectionX(Float_t vx)   { OriginVertexMomentumDirectionX = vx; }
-  Float_t    GetOriginVertexMomentumDirectionX() const {return OriginVertexMomentumDirectionX;}
+  void     StoreOriginVertexMomentumDirectionX(Float_t vx)   { OriginVertexMomentumDirectionX.push_back(vx); }
+  std::vector<Float_t>    GetOriginVertexMomentumDirectionX() const {return OriginVertexMomentumDirectionX;}
 
-  void     StoreOriginVertexMomentumDirectionY(Float_t vy)   { OriginVertexMomentumDirectionY = vy; }
-  Float_t    GetOriginVertexMomentumDirectionY() const {return OriginVertexMomentumDirectionY;}
+  void     StoreOriginVertexMomentumDirectionY(Float_t vy)   { OriginVertexMomentumDirectionY.push_back(vy); }
+  std::vector<Float_t>    GetOriginVertexMomentumDirectionY() const {return OriginVertexMomentumDirectionY;}
 
-  void     StoreOriginVertexMomentumDirectionZ(Float_t vz)   { OriginVertexMomentumDirectionZ = vz; }
-  Float_t    GetOriginVertexMomentumDirectionZ() const {return OriginVertexMomentumDirectionZ;}
+  void     StoreOriginVertexMomentumDirectionZ(Float_t vz)   { OriginVertexMomentumDirectionZ.push_back(vz); }
+  std::vector<Float_t>    GetOriginVertexMomentumDirectionZ() const {return OriginVertexMomentumDirectionZ;}
   //-----------------
-  void     StoreOriginVertexThetaAngle(Float_t theta) { OriginVertexThetaAngle = theta; }
-  Float_t    GetOriginVertexThetaAngle() const  {return OriginVertexThetaAngle;}
+  void     StoreOriginVertexThetaAngle(Float_t theta) { OriginVertexThetaAngle.push_back(theta); }
+  std::vector<Float_t>    GetOriginVertexThetaAngle() const  {return OriginVertexThetaAngle;}
 
-  void     StoreOriginVertexPhiAngle(Float_t phi)  { OriginVertexPhiAngle = phi; }
-  Float_t    GetOriginVertexPhiAngle() const {return OriginVertexPhiAngle;}
+  void     StoreOriginVertexPhiAngle(Float_t phi)  { OriginVertexPhiAngle.push_back(phi); }
+  std::vector<Float_t>    GetOriginVertexPhiAngle() const {return OriginVertexPhiAngle;}
   //-----------------
-  void     StoreOriginVertexKineticEnergy(Float_t ekin) { OriginVertexKineticEnergy = ekin; }
-  Float_t    GetOriginVertexKineticEnergy() const {return OriginVertexKineticEnergy;}
+  void     StoreOriginVertexKineticEnergy(Float_t ekin) { OriginVertexKineticEnergy.push_back(ekin); }
+  std::vector<Float_t>    GetOriginVertexKineticEnergy() const {return OriginVertexKineticEnergy;}
 
-  void     StoreOriginVertexTotalEnergy(Float_t etot) { OriginVertexTotalEnergy = etot; }
-  Float_t    GetOriginVertexTotalEnergy() const {return OriginVertexTotalEnergy;}
+  void     StoreOriginVertexTotalEnergy(Float_t etot) { OriginVertexTotalEnergy.push_back(etot); }
+  std::vector<Float_t>    GetOriginVertexTotalEnergy() const {return OriginVertexTotalEnergy;}
   //----------------
-  void     StoreGlobalThetaAngle(Float_t theta) { GlobalThetaAngle = theta; }
-  Float_t    GetGlobalThetaAngle() const  {return GlobalThetaAngle;}
+  void     StoreGlobalThetaAngle(Float_t theta) { GlobalThetaAngle.push_back(theta); }
+  std::vector<Float_t>    GetGlobalThetaAngle() const  {return GlobalThetaAngle;}
 
-  void     StoreGlobalPhiAngle(Float_t phi)  { GlobalPhiAngle = phi; }
-  Float_t    GetGlobalPhiAngle() const {return GlobalPhiAngle;}
+  void     StoreGlobalPhiAngle(Float_t phi)  { GlobalPhiAngle.push_back(phi); }
+  std::vector<Float_t>    GetGlobalPhiAngle() const {return GlobalPhiAngle;}
 
 
   void AddSecondaryParticleEvent(Float_t XO, Float_t YO, Float_t ZO,
 				 Float_t XM, Float_t YM, Float_t ZM,
 				 Float_t energy, Int_t type);
 
-  void     StoreEdgeEventFlag(Int_t flag) {EdgeEventFlag = flag;};
-  Int_t    GetEdgeEventFlag() {return EdgeEventFlag;};
+  void     StoreEdgeEventFlag(Int_t flag) {EdgeEventFlag.push_back(flag);};
+  std::vector<Int_t>    GetEdgeEventFlag() {return EdgeEventFlag;};
 
   void     StoreOpticalPhotonCount(Int_t cnt){OpticalPhotonCount = cnt;};
 
