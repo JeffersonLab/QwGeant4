@@ -47,7 +47,7 @@ class QweakSimEventActionMessenger;
 
 enum EQweakSimTriggerMode
   { kTriggerAll, kTrigger4Fold, kTrigger3Fold,
-    kTriggerScint, kTriggerCer,
+    kTriggerScint, kTriggerLeadGlass, kTriggerCer,
     kNumTriggers };
 
 class QweakSimEventAction : public G4UserEventAction
@@ -90,6 +90,8 @@ private:
   G4int VDC_DriftCellBack_CollID;
   G4int TriggerScintillatorDetector_CollID;
   G4int TriggerScintillatorPMT_CollID;
+  G4int LeadGlassDetector_CollID;
+  G4int LeadGlassPMT_CollID;
   G4int CerenkovDetector_CollID;
   G4int CerenkovDetectorPMT_CollID;
 
@@ -110,6 +112,8 @@ private:
   G4int n_VDChitDCBack;
   G4int n_hitTriggerScintillator;
   G4int n_hitTriggerScintillatorPMT;
+  G4int n_hitLeadGlass;
+  G4int n_hitLeadGlassPMT;
   G4int n_hitCerenkov;
   G4int n_hitCerenkovPMT;
 
@@ -197,6 +201,18 @@ private:
   Int_t rPrimaryEventNumber;
 
   Float_t rGlobalTime;
+	
+  //--- LeadGlass deposited energy
+  Float_t  rTrackID;	
+	
+  G4ThreeVector localVertexMomentumDirection;
+  Float_t      rLocalVertexMomentumDirectionX;
+  Float_t      rLocalVertexMomentumDirectionY;
+  Float_t      rLocalVertexMomentumDirectionZ;
+	
+  Float_t rDepositedEnergy;
+	
+  //-----------------------------------------
 
   G4double rDCWidthOnFrame;
   G4double rDCFullThickness;

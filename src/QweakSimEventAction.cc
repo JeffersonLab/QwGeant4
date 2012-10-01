@@ -35,6 +35,8 @@
 #include "QweakSimVDC_DriftCellHit.hh"
 #include "QweakSimTriggerScintillator_DetectorHit.hh"
 #include "QweakSimTriggerScintillator_PMTHit.hh"
+#include "QweakSimLeadGlass_DetectorHit.hh"
+#include "QweakSimLeadGlass_PMTHit.hh"
 #include "QweakSimCerenkov_DetectorHit.hh"
 #include "QweakSimCerenkovDetector_PMTHit.hh"
 #include "QweakSimTrajectory.hh"
@@ -64,6 +66,8 @@ QweakSimEventAction::QweakSimEventAction(QweakSimAnalysis* AN, QweakSimUserInfor
     VDC_DriftCellBack_CollID              = -1;
     TriggerScintillatorDetector_CollID    = -1;
     //TriggerScintillatorPMT_CollID         = -1;
+    LeadGlassDetector_CollID              = -1;
+    //LeadGlassPMT_CollID                   = -1;
     CerenkovDetector_CollID               = -1;
     CerenkovDetectorPMT_CollID            = -1;
 
@@ -85,6 +89,8 @@ QweakSimEventAction::QweakSimEventAction(QweakSimAnalysis* AN, QweakSimUserInfor
         fTriggerName[kTrigger3Fold] = "3fold";
         kMapTriggerMode["scint"] = kTriggerScint;
         fTriggerName[kTriggerScint] = "scint";
+        kMapTriggerMode["leadglass"] = kTriggerLeadGlass;  // trigger for the lead glass
+        fTriggerName[kTriggerLeadGlass] = "leadglass";
         // kMapTriggerMode["gem"]   = kTriggerGEM;
         // fTriggerName[kTriggerGEM] = "gem";
         kMapTriggerMode["cer"]   = kTriggerCer;
@@ -161,6 +167,11 @@ void QweakSimEventAction::BeginOfEventAction(const G4Event* /*evt*/)
         TriggerScintillatorDetector_CollID = SDman->GetCollectionID("TriggerScintillatorSD/TriggerScintillatorCollection");
     }
 
+	// check for existing LeadGlass Collection ID (if it's -1 it will be assigned)
+    if (LeadGlassDetector_CollID==-1) {
+        LeadGlassDetector_CollID = SDman->GetCollectionID("LeadGlassSD/LeadGlassCollection");
+    }
+	
     // check for existing CerenkovDetector Collection ID (if it's -1 it will be assigned)
     if (CerenkovDetector_CollID==-1) {
         CerenkovDetector_CollID = SDman->GetCollectionID("CerenkovDetectorSD/CerenkovDetectorCollection");
@@ -216,6 +227,8 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     QweakSimVDC_DriftCellHitsCollection*                     VDC_DriftCellBack_HC               = 0;
     QweakSimTriggerScintillator_DetectorHitsCollection*      TriggerScintillatorDetector_HC     = 0;
     //QweakSimTriggerScintillator_PMTHitsCollection*           TriggerScintillatorPMT_HC          = 0;
+    QweakSimLeadGlass_DetectorHitsCollection*                LeadGlassDetector_HC               = 0;
+    //QweakSimLeadGlass_PMTHitsCollection*                   LeadGlassPMT_HC                    = 0;
     QweakSimCerenkovDetectorHitsCollection*                  CerenkovDetector_HC                = 0;
     QweakSimCerenkovDetector_PMTHitsCollection*              CerenkovDetectorPMT_HC             = 0;
 
@@ -260,6 +273,18 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         //    TriggerScintillatorPMT_HC   = (QweakSimTriggerScintillator_PMTHitsCollection*)(HCE->GetHC(TriggerScintillatorPMT_CollID));
         //    n_hitTriggerScintillatorPMT = TriggerScintillatorPMT_HC -> entries();
         //}
+		
+		// get  LeadGlass Hit Collector pointer
+        if (LeadGlassDetector_CollID > -1) {
+            LeadGlassDetector_HC  = (QweakSimLeadGlass_DetectorHitsCollection*)(HCE->GetHC(LeadGlassDetector_CollID));
+            n_hitLeadGlass        = LeadGlassDetector_HC -> entries();
+		}
+		
+        // get  LeadGlassPMT Hit Collector pointer
+        //if (LeadGlassPMT_CollID > -1) {
+        //    LeadGlassPMT_HC    = (QweakSimLeadGlass_PMTHitsCollection*)(HCE->GetHC(LeadGlassPMT_CollID));
+        //    n_hitLeadGlassPMT  = LeadGlassPMT_HC -> entries();
+        //}
 
         // get  CerenkovDetector Hit Collector pointer
         if (CerenkovDetector_CollID > -1) {
@@ -275,6 +300,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     }
 
     G4cout <<",\tVDC_Front "<<n_VDChitDCFront<<",\tVDC_Back "<<n_VDChitDCBack<<",\tTS "<<n_hitTriggerScintillator;
+    G4cout <<",\tLeadGlass"<<n_hitLeadGlass;
     G4cout <<",\tCerenkov "<<n_hitCerenkov<<"\tCerenkovPMT "<<n_hitCerenkovPMT<<G4endl;
 
     // Initialize/Clear Event variables, initialize Cerenkov Detector with NoHit Flag
@@ -329,6 +355,10 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 //	analysis->fRootEvent->TriggerScintillator.Detector[ndet].Initialize();
 //    }
     analysis->fRootEvent->TriggerScintillator.Detector.Initialize();
+	
+    // Initialize LeadGlass //--- with NoHit Flag
+    analysis->fRootEvent->LeadGlass.Detector.Initialize();
+    //analysis->fRootEvent->LeadGlass.Detector.StoreDetectorHasBeenHit(0);
     //-------------------------------------------------------------------------------------------------
 
     //#########################################################################################################################
@@ -347,6 +377,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
             || (fTrigger[kTrigger4Fold] && (n_VDChitWirePlane == 4) && (n_VDChitDCFront > 0) && (n_VDChitDCBack > 0) && (n_hitCerenkov > 0) ) /* 4-fold coincidence */
             || (fTrigger[kTrigger3Fold] && (n_VDChitWirePlane >= 2) && (n_VDChitDCFront > 0) && (n_VDChitDCBack > 0) ) /* 3-fold coincidence */
             || (fTrigger[kTriggerScint] && (n_hitTriggerScintillator > 0) ) /* Qweak trigger on a hit in the trigger scintillator */
+            || (fTrigger[kTriggerLeadGlass] && (n_hitLeadGlass >0))         /* a hit in the LeadGlass */
             || (fTrigger[kTriggerCer]   && (n_hitCerenkov > 0) )            /* Triggering on Main Detector */
        ) {
 
@@ -412,6 +443,9 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 
         // Store Number of Hits for: Cerenkov Detector
         analysis->fRootEvent->Cerenkov.Detector.StoreDetectorNbOfHits(n_hitCerenkov);
+		
+        // Store Number of Hits for: LeadGlass Detector
+        analysis->fRootEvent->LeadGlass.Detector.StoreDetectorNbOfHits(n_hitLeadGlass);
 
         //==========================================================================================================
 
@@ -1324,6 +1358,191 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         } // end    if (n_hitTriggerScintillator >0)
 
 
+		
+		
+        //===========================================================
+		
+        //===========================================================
+        // Store LeadGlass hits into /LeadGlass
+        //===========================================================
+		
+        if (n_hitLeadGlass >0) {
+			
+            //--- loop over hits
+            for (int i1=0;i1<n_hitLeadGlass;i1++) {
+				
+                QweakSimLeadGlass_DetectorHit* aHit = (*LeadGlassDetector_HC)[i1];
+				
+                //aHit->Print();
+				
+                //--- primary event number --- Done in previous code
+                //G4int PrimaryEventNumber = myUserInfo->GetPrimaryEventNumber();
+				
+                //--- track ID
+                rTrackID = (Float_t) aHit->GetTrackID();
+				
+                //--- particle name & type
+                rParticleName = TString(aHit->GetParticleName());
+                rParticleType = (Int_t) aHit->GetParticleType();
+				
+                //--- get global time of hit
+                rGlobalTime = (Float_t) aHit->GetGlobalTime() / ns;
+				
+                //--- GetHasBeenHit();
+                //GetEdgeEventFlag();
+                //n_hitLeadGlass <---> GetNbOfHits();
+				
+                //--- get world position of hit
+                globalPosition  = aHit->GetWorldPosition();
+                rGlobalPositionX = (Float_t) globalPosition.x() / cm;
+                rGlobalPositionY = (Float_t) globalPosition.y() / cm;
+                rGlobalPositionZ = (Float_t) globalPosition.z() / cm;
+				
+                //--- get local position of hit
+                localPosition  = aHit->GetLocalPosition();
+                rLocalPositionX = (Float_t) localPosition.x() / cm;
+                rLocalPositionY = (Float_t) localPosition.y() / cm;
+                rLocalPositionZ = (Float_t) localPosition.z() / cm;
+				
+                //--- get local exit position of hit
+                //localExitPosition = aHit->GetLocalExitPosition();
+                //rLocalExitPositionX = (Float_t) localExitPosition.x() / cm;
+                //rLocalExitPositionY = (Float_t) localExitPosition.y() / cm;
+                //rLocalExitPositionZ = (Float_t) localExitPosition.z() / cm;
+				
+                //--- get origin vertex position
+                originVertexPosition  = aHit->GetOriginVertexPosition(); 
+                rOriginVertexPositionX = (Float_t) originVertexPosition.x() / cm;
+                rOriginVertexPositionY = (Float_t) originVertexPosition.y() / cm;
+                rOriginVertexPositionZ = (Float_t) originVertexPosition.z() / cm;
+				
+                //--- get world momentum of hit
+                globalMomentum  = aHit->GetWorldMomentum();
+                rGlobalMomentumX = (Float_t) globalMomentum.x() / MeV;
+                rGlobalMomentumY = (Float_t) globalMomentum.y() / MeV;
+                rGlobalMomentumZ = (Float_t) globalMomentum.z() / MeV;
+				
+                //--- get local momentum of hit  
+                localMomentum  = aHit->GetLocalMomentum();
+                rLocalMomentumX = (Float_t) localMomentum.x() / MeV;
+                rLocalMomentumY = (Float_t) localMomentum.y() / MeV;
+                rLocalMomentumZ = (Float_t) localMomentum.z() / MeV;
+				
+                //--- get local vertex momentum direction of hit
+                localVertexMomentumDirection = aHit->GetMomentumDirection();
+                rLocalVertexMomentumDirectionX = (Float_t) localVertexMomentumDirection.x();
+                rLocalVertexMomentumDirectionY = (Float_t) localVertexMomentumDirection.y();
+                rLocalVertexMomentumDirectionZ = (Float_t) localVertexMomentumDirection.z();
+				
+                //--- get origin vertex momentum direction of hit
+                originVertexMomentumDirection = aHit->GetOriginVertexMomentumDirection();
+                rOriginVertexMomentumDirectionX = (Float_t) originVertexMomentumDirection.x();
+                rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
+                rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
+				
+                //--- get origin vertex theta & phi angle
+                rOriginVertexThetaAngle = (Float_t) originVertexMomentumDirection.theta() / degree;
+                rOriginVertexPhiAngle   = (Float_t) originVertexMomentumDirection.phi() / degree;
+				
+                //--- get origin vertex kinetic energy & total energy
+                rOriginVertexKineticEnergy = (Float_t ) aHit->GetOriginVertexKineticEnergy() / MeV;
+                rOriginVertexTotalEnergy   = (Float_t ) aHit->GetOriginVertexTotalEnergy() / MeV;
+				
+                //--- get total energy & total energy of hit
+                rKineticEnergy = (Float_t) aHit->GetKineticEnergy() / MeV;
+                rTotalEnergy = (Float_t) aHit->GetTotalEnergy() / MeV;
+				
+                //rPrimaryQ2 = (Float_t) aHit->GetPrimaryQ2();
+                //rCrossSection = (Float_t) aHit->GetCrossSection();
+                //rCrossSectionWeight = (Float_t) aHit->GetCrossSectionWeight();
+				
+                //--- get global theta & phi angle
+                rGlobalThetaAngle = (Float_t) globalMomentum.theta() / degree;
+                rGlobalPhiAngle   = (Float_t) globalMomentum.phi() / degree - 90.0;
+				
+                //--- get LeadGlass deposited energy
+                rDepositedEnergy = (Float_t) aHit->GetDepositedEnergy() / MeV;
+				
+                //--------------------------------------------------------------------------------------------
+				
+                //--- store Primary Event Number
+                analysis->fRootEvent->LeadGlass.Detector.StorePrimaryEventNumber((Int_t) PrimaryEventNumber);
+				
+                //--- store track ID
+                analysis->fRootEvent->LeadGlass.Detector.StoreTrackID(rTrackID);
+				
+                //--- store particle name & type
+                analysis->fRootEvent->LeadGlass.Detector.StoreParticleName(rParticleName);
+                analysis->fRootEvent->LeadGlass.Detector.StoreParticleType(rParticleType);
+				
+                //--- store global time of hit
+                analysis->fRootEvent->LeadGlass.Detector.StoreGlobalTimeOfHit(rGlobalTime);
+				
+                //--- mark LeadGlass detector as been hit
+                analysis->fRootEvent->LeadGlass.Detector.StoreDetectorHasBeenHit(5);
+                //--- edge event flag
+                //--- Store Nb of hits  --- Done in previous code
+                //analysis->fRootEvent->LeadGlass.Detector.StoreDetectorNbOfHits(n_hitLeadGlass);
+				
+                //--- store global position
+                analysis->fRootEvent->LeadGlass.Detector.StoreDetectorGlobalPositionX(rGlobalPositionX);
+                analysis->fRootEvent->LeadGlass.Detector.StoreDetectorGlobalPositionY(rGlobalPositionY);
+                analysis->fRootEvent->LeadGlass.Detector.StoreDetectorGlobalPositionZ(rGlobalPositionZ);
+				
+                //--- store local position
+                analysis->fRootEvent->LeadGlass.Detector.StoreDetectorLocalPositionX(rLocalPositionX);
+                analysis->fRootEvent->LeadGlass.Detector.StoreDetectorLocalPositionY(rLocalPositionY);
+                analysis->fRootEvent->LeadGlass.Detector.StoreDetectorLocalPositionZ(rLocalPositionZ);
+				
+                //analysis->fRootEvent->LeadGlass.Detector.StoreDetectorLocalExitPositionX(rLocalExitPositionX);
+                //analysis->fRootEvent->LeadGlass.Detector.StoreDetectorLocalExitPositionY(rLocalExitPositionY);
+                //analysis->fRootEvent->LeadGlass.Detector.StoreDetectorLocalExitPositionZ(rLocalExitPositionZ);
+				
+                //--- store origin vertex position
+                analysis->fRootEvent->LeadGlass.Detector.StoreOriginVertexPositionX(rOriginVertexPositionX);
+                analysis->fRootEvent->LeadGlass.Detector.StoreOriginVertexPositionY(rOriginVertexPositionY);
+                analysis->fRootEvent->LeadGlass.Detector.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
+				
+                //--- store local vertex momentum direction
+                analysis->fRootEvent->LeadGlass.Detector.StoreLocalVertexMomentumDirectionX(rLocalVertexMomentumDirectionX);
+                analysis->fRootEvent->LeadGlass.Detector.StoreLocalVertexMomentumDirectionY(rLocalVertexMomentumDirectionY);
+                analysis->fRootEvent->LeadGlass.Detector.StoreLocalVertexMomentumDirectionZ(rLocalVertexMomentumDirectionZ);
+				
+                //--- store origin vertex momentum direction
+                analysis->fRootEvent->LeadGlass.Detector.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);
+                analysis->fRootEvent->LeadGlass.Detector.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);
+                analysis->fRootEvent->LeadGlass.Detector.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
+				
+                //--- store origin theta & phi angle
+                analysis->fRootEvent->LeadGlass.Detector.StoreOriginVertexThetaAngle(rOriginVertexThetaAngle);
+                analysis->fRootEvent->LeadGlass.Detector.StoreOriginVertexPhiAngle(rOriginVertexPhiAngle);
+				
+                //--- store origin kinetic energy & total energy
+                analysis->fRootEvent->LeadGlass.Detector.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
+                analysis->fRootEvent->LeadGlass.Detector.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
+				
+                //--- store local vertex kinetic & total energy
+                analysis->fRootEvent->LeadGlass.Detector.StoreDetectorLocalVertexKineticEnergy(rKineticEnergy);
+                analysis->fRootEvent->LeadGlass.Detector.StoreDetectorLocalVertexTotalEnergy(rTotalEnergy);
+				
+                //analysis->fRootEvent->LeadGlass.Detector.StorePrimaryQ2(rPrimaryQ2);
+                //analysis->fRootEvent->LeadGlass.Detector.StoreCrossSection(rCrossSection);
+                //analysis->fRootEvent->LeadGlass.Detector.StoreCrossSectionWeight(rCrossSectionWeight);		
+				
+                //--- store global track theta & phi angle
+                analysis->fRootEvent->LeadGlass.Detector.StoreGlobalThetaAngle(rGlobalThetaAngle);
+                analysis->fRootEvent->LeadGlass.Detector.StoreGlobalPhiAngle(rGlobalPhiAngle);
+				
+                //--- sotre LeadGlass deposited energy
+                analysis->fRootEvent->LeadGlass.Detector.StoreDepositedEnergy(rDepositedEnergy);
+
+		//--------------------------------------------------------------------------------------------
+				
+            } // end  for(int i1=0;i1<n_hitLeadGlass;i1++)
+        } // end    if (n_hitLeadGlass >0)
+		
+		
+		
 
 //  G4cout << "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" << G4endl;
 
@@ -1369,6 +1588,8 @@ void QweakSimEventAction::Initialize() {
     n_hitTriggerScintillatorPMT = 0;
     n_hitCerenkov       = 0;
     n_hitCerenkovPMT    = 0;
+    n_hitLeadGlass      = 0;
+    n_hitLeadGlassPMT   = 0;
 
     // get local position of hit
     localPosition   = G4ThreeVector(0.,0.,0.);
@@ -1406,6 +1627,16 @@ void QweakSimEventAction::Initialize() {
     rPrimaryEventNumber = 0;
 
     rGlobalTime = 0.;
+	
+    //--- LeadGlass
+    rTrackID = 0.;
+	
+    localVertexMomentumDirection = G4ThreeVector(0.0,0.0,0.0);
+    rLocalVertexMomentumDirectionX = 0.0;
+    rLocalVertexMomentumDirectionY = 0.0;
+    rLocalVertexMomentumDirectionZ = 0.0;
+	
+    rDepositedEnergy = 0.0;
 
     rDCWidthOnFrame     = 0.;
     rDCFullThickness    = 0.;

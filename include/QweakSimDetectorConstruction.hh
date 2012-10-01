@@ -58,6 +58,7 @@ class QweakSimCollimator;
 class QweakSimCollimatorSupport;
 class QweakSimShieldingWall;
 class QweakSimPionWall;
+class QweakSimLeadGlass;
 class QweakSimMainMagnet;
 class QweakSimVDC;
 class QweakSimVDCRotator;
@@ -114,6 +115,8 @@ private:
   QweakSimShieldingWall*     pShieldingWall;
  
   QweakSimPionWall*          pPionWall;
+	
+  QweakSimLeadGlass*         pLeadGlass;
 
   QweakSimMainMagnet*        pMainMagnet;
 

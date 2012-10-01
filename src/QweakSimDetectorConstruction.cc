@@ -55,6 +55,7 @@
 #include "QweakSimCollimatorSupport.hh"
 #include "QweakSimShieldingWall.hh"
 #include "QweakSimPionWall.hh"
+#include "QweakSimLeadGlass.hh"
 #include "QweakSimMainMagnet.hh"
 #include "QweakSimVDC.hh"
 #include "QweakSimVDCRotator.hh"
@@ -108,6 +109,8 @@ QweakSimDetectorConstruction::QweakSimDetectorConstruction(QweakSimUserInformati
   pShieldingWall     = NULL;
   
   pPionWall          = NULL;
+	
+  pLeadGlass         = NULL;
 
   // pGEM               = NULL;
   pHDC               = NULL;
@@ -167,6 +170,8 @@ QweakSimDetectorConstruction::~QweakSimDetectorConstruction()
   if (pShieldingWall)       delete pShieldingWall;
   
   if (pPionWall)            delete pPionWall;
+	
+  if (pLeadGlass)            delete pLeadGlass;
 
   if (pTarget)              delete pTarget;
   if (pBeamLine)            delete pBeamLine;
@@ -197,6 +202,8 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   pShieldingWall       = new QweakSimShieldingWall();
   
   pPionWall            = new QweakSimPionWall();
+	
+  pLeadGlass           = new QweakSimLeadGlass();
 
   pMainMagnet          = new QweakSimMainMagnet(); // QTOR Geometry (decoupled from field)
 
@@ -500,6 +507,15 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
     pPionWall->ConstructPionWall(experimentalHall_Physical);
   }
 
+  //===================================================
+  // create/place LeadGlass into MotherVolume
+  //===================================================
+  //
+  if (pLeadGlass){
+    pLeadGlass->ConstructComponent(experimentalHall_Physical);
+    pGeometry->AddModule(pLeadGlass->GetLeadGlass_PhysicalVolume());
+  }
+	
   //===============================================
   // create/place Drift Chambers into MotherVolume
   //===============================================

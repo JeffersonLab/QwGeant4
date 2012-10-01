@@ -62,6 +62,10 @@
 #pragma link C++ class QweakSimUserTriggerScintillator_DetectorEvent+;
 #pragma link C++ class QweakSimUserTriggerScintillator_PMTEvent+;
 
+#pragma link C++ class QweakSimUserLeadGlass_MainEvent+;
+#pragma link C++ class QweakSimUserLeadGlass_DetectorEvent+;
+#pragma link C++ class QweakSimUserLeadGlass_PMTEvent+;
+
 #pragma link C++ class QweakSimUserCerenkov_MainEvent+;
 #pragma link C++ class QweakSimUserCerenkov_OctantEvent+;
 #pragma link C++ class QweakSimUserCerenkov_DetectorEvent+;

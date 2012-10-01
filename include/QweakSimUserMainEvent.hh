@@ -50,6 +50,7 @@
 #include "QweakSimUserHDC_MainEvent.hh"
 #include "QweakSimUserVDC_MainEvent.hh"
 #include "QweakSimUserTriggerScintillator_MainEvent.hh"
+#include "QweakSimUserLeadGlass_MainEvent.hh"
 #include "QweakSimUserCerenkov_MainEvent.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
@@ -111,7 +112,9 @@ public:
   QweakSimUserVDC_MainEvent                    Region3;              ///< object containing VDC info
 
   QweakSimUserTriggerScintillator_MainEvent    TriggerScintillator;  ///< object containing TriggerScintilliator info
-
+	
+  QweakSimUserLeadGlass_MainEvent              LeadGlass;            // tree containing LeadGlass info
+	
   QweakSimUserCerenkov_MainEvent               Cerenkov;             ///< object containing Cerenkov detector info
 
 public:

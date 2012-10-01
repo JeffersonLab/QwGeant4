@@ -51,6 +51,13 @@ void QweakSimMaterial::DefineMaterials()
   G4Element* elXe = fNistManager->FindOrBuildElement("Xe");
   //G4Element* elSb = fNistManager->FindOrBuildElement("Sb");
   //G4Element* elPb = fNistManager->FindOrBuildElement("Pb");
+	
+  // elements for the LeadGlass
+  G4Element* elPb = fNistManager->FindOrBuildElement("Pb");
+  G4Element* elTi = fNistManager->FindOrBuildElement("Ti");
+  G4Element* elAs = fNistManager->FindOrBuildElement("As");
+	
+	
 
   // Let's get Tungsten.  This is not the alooy to be used
   // but it is fine for a test.
@@ -447,6 +454,20 @@ void QweakSimMaterial::DefineMaterials()
   temperature = 2.73*kelvin;
   G4Material* __attribute__ ((unused))
   matVacuum = new G4Material("Vacuum", Z, A, density,kStateGas,temperature,pressure);
+	
+  // LeadGlass  
+  // --- Added 2012/09/07 by Fang Guo
+  name         = "LeadGlass";
+  density      = 6.220 * g/cm3;
+  ncomponents  = 5;
+  G4Material* __attribute__ ((unused))
+  matLeadGlass = new G4Material(name, density, ncomponents);
+  matLeadGlass -> AddElement(elPb, fractionmass = 0.751938);
+  matLeadGlass -> AddElement(elO , fractionmass = 0.156453);
+  matLeadGlass -> AddElement(elSi, fractionmass = 0.080866);
+  matLeadGlass -> AddElement(elTi, fractionmass = 0.008092);
+  matLeadGlass -> AddElement(elAs, fractionmass = 0.002651);
+	
 
 
   //========================================

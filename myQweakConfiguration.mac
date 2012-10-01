@@ -257,3 +257,10 @@
 
 # Uncomment the following line to change the Pion Wall thickness to 2"
 #/PionWall/SetThicknessInZ 5.08 cm
+
+#=====================================
+# LeadGlass related
+#=====================================
+
+# Comment out the line below to leave the LeadGlass in
+/LeadGlass/Disable

@@ -97,11 +97,13 @@
 /gui/addButton trigger "Enable on 4 VDC planes and CER" "/Trigger/Enable 4fold"
 /gui/addButton trigger "Enable on 3 VDC planes" "/Trigger/Enable 3fold"
 /gui/addButton trigger "Enable on TS" "/Trigger/Enable scint"
+/gui/addButton trigger "Enable on LeadGlass" "Trigger/Enable leadglass"  #Enable Trigger for the LeadGlass
 /gui/addButton trigger "Enable on CER" "/Trigger/Enable cer"
 /gui/addButton trigger "Disable on all events" "/Trigger/Disable all"
 /gui/addButton trigger "Disable on 4 VDC planes and CER" "/Trigger/Disable 4fold"
 /gui/addButton trigger "Disable on 3 VDC planes" "/Trigger/Disable 3fold"
 /gui/addButton trigger "Disable on TS" "/Trigger/Disable scint"
+/gui/addButton trigger "Disable on LeadGlass" "/Trigger/Disable leadglass"   #Disable Trigger for the LeadGlass
 /gui/addButton trigger "Disable on CER" "/Trigger/Disable cer"
 
 
