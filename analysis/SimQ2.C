@@ -45,13 +45,13 @@ void SimQ2 (double posx, double posy, int anglex, int angley)
 
   //draw the q2 graph for all octants
   c1->cd(9);
-  QweakSimG4_Tree->Draw("Primary.PrimaryQ2>>q2[0]","Primary.CrossSection");
+  QweakSimG4_Tree->Draw("Primary.PrimaryQ2>>q2[0]","Primary.CrossSection * Cerenkov.PMT.PMTTotalNbOfPEs");
 
   //draw the q2 graph for each octants
   for (size_t oct = 1; oct < q2.size(); oct ++)
   {
     c1->cd(oct);
-    QweakSimG4_Tree->Draw(Form("Primary.PrimaryQ2>>q2[%d]",oct),Form("Primary.CrossSection*(Cerenkov.Detector.DetectorID==%d)",oct));
+    QweakSimG4_Tree->Draw(Form("Primary.PrimaryQ2>>q2[%d]",oct),Form("Primary.CrossSection* Cerenkov.PMT.PMTTotalNbOfPEs* (Cerenkov.Detector.DetectorID==%d)/Cerenkov.Detector.NbOfHits",oct));
   }
 
   //output the values for q2 for all octants together and indidually
