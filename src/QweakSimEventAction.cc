@@ -300,7 +300,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     }
 
     G4cout <<",\tVDC_Front "<<n_VDChitDCFront<<",\tVDC_Back "<<n_VDChitDCBack<<",\tTS "<<n_hitTriggerScintillator;
-    G4cout <<",\tLeadGlass"<<n_hitLeadGlass;
+    G4cout <<",\tLeadGlass "<<n_hitLeadGlass;
     G4cout <<",\tCerenkov "<<n_hitCerenkov<<"\tCerenkovPMT "<<n_hitCerenkovPMT<<G4endl;
 
     // Initialize/Clear Event variables, initialize Cerenkov Detector with NoHit Flag
@@ -667,7 +667,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 
                 QweakSimCerenkov_DetectorHit* aHit = (*CerenkovDetector_HC)[i1];
 
-                octantID = G4IndexToOctantNumber[ (Int_t) aHit->GetDetectorID()];
+                octantID = (Int_t) aHit->GetDetectorID() + 1;
 
                 if (print_Cerenkov_DetectorHit) aHit->Print();
 
@@ -824,7 +824,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
             for (int i1=0;i1<n_hitCerenkovPMT;i1++) {
 
                 QweakSimCerenkovDetector_PMTHit* aHit = (*CerenkovDetectorPMT_HC)[i1];
-                octantID = G4IndexToOctantNumber[(Int_t) aHit->GetDetectorID()];
+                octantID = (Int_t) aHit->GetDetectorID() + 1;
 
                 //------------------------------------------------------------------------
                 if ( (aHit->GetPMTID() == 0) ) { // left PMT
@@ -1675,31 +1675,6 @@ void QweakSimEventAction::Initialize() {
     rKineticEnergy  = 0.;
     rTotalEnergy  = 0.;
 
-
-    // aHit->GetDetectorID() returnes the Geant4 index of the cerenkov MV copy numbers that needs to
-    // be converted in intuitive octant numbers. Octant #1 is at 12o'clock
-    // So here I define some sort of lookup table:
-
-    // Peiqing, Dec. 20, 2011, 
-    // Qweak global octant # - detector copy #
-    //                     1 - 0
-    //                     2 - 7
-    //                     3 - 6
-    //                     4 - 5
-    //                     5 - 4
-    //                     6 - 3
-    //                     7 - 2
-    //                     8 - 1
-    
-    G4IndexToOctantNumber[0] = 1;
-    G4IndexToOctantNumber[1] = 2;
-    G4IndexToOctantNumber[2] = 3;
-    G4IndexToOctantNumber[3] = 4;
-    G4IndexToOctantNumber[4] = 5;
-    G4IndexToOctantNumber[5] = 6;
-    G4IndexToOctantNumber[6] = 7;
-    G4IndexToOctantNumber[7] = 8;
-    
     detectorID = 0;
     octantID   = 0;
 

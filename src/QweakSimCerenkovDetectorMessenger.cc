@@ -39,8 +39,13 @@ QweakSimCerenkovDetectorMessenger::QweakSimCerenkovDetectorMessenger(QweakSimCer
   Dir = new  G4UIdirectory(G4String("/Cerenkov" + cerenkov + "/"));
   Dir -> SetGuidance("Cerenkov Detector control.");
 
+  NumberOfDetectorsCmd = new G4UIcmdWithAnInteger(G4String("/Cerenkov/SetNumberOfDetectors"),this);
+  NumberOfDetectorsCmd->SetGuidance("Set the number of detectors");
+  NumberOfDetectorsCmd->SetParameterName("n",false);
+  NumberOfDetectorsCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+
   //ContainerThicknessCmd =  new G4UIcmdWithADoubleAndUnit("/Cerenkov/SetThickness",this);
-  ContainerThicknessCmd =  new G4UIcmdWithADoubleAndUnit(G4String("/Cerenkov" + cerenkov + "/SetThickness"),this);
+  ContainerThicknessCmd =  new G4UIcmdWithADoubleAndUnit(G4String("/Cerenkov/SetThickness"),this);
   ContainerThicknessCmd->SetGuidance("Set the thickness (length in Z) of the Cherenkov container"); 
   ContainerThicknessCmd->SetParameterName("Size",true);
   ContainerThicknessCmd->SetUnitCategory("Length");
@@ -68,33 +73,33 @@ QweakSimCerenkovDetectorMessenger::QweakSimCerenkovDetectorMessenger(QweakSimCer
   ContainerXPositionCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
   //TiltingAngleCmd =  new G4UIcmdWithADoubleAndUnit("/Cerenkov/SetTiltingAngle",this);
-  TiltingAngleCmd =  new G4UIcmdWithADoubleAndUnit(G4String("/Cerenkov" + cerenkov + "/SetTiltingAngle"),this);
+  TiltingAngleCmd =  new G4UIcmdWithADoubleAndUnit(G4String("/Cerenkov/SetTiltingAngle"),this);
   TiltingAngleCmd->SetGuidance("Set the tilting angle of the Cerenkov Detector"); 
   TiltingAngleCmd->SetParameterName("Angle",true);
   TiltingAngleCmd->SetDefaultUnit("degree");
   TiltingAngleCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
   //KinkAngleCmd =  new G4UIcmdWithADoubleAndUnit("/Cerenkov/SetKinkAngle",this);
-  KinkAngleCmd =  new G4UIcmdWithADoubleAndUnit(G4String("/Cerenkov" + cerenkov + "/SetKinkAngle"),this);
+  KinkAngleCmd =  new G4UIcmdWithADoubleAndUnit(G4String("/Cerenkov/SetKinkAngle"),this);
   KinkAngleCmd->SetGuidance("Set the kink angle for the V-shape "); 
   KinkAngleCmd->SetParameterName("Angle",true);
   KinkAngleCmd->SetDefaultUnit("degree");
   KinkAngleCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
   //ContainerMatCmd = new G4UIcmdWithAString("/Cerenkov/SetContainerMaterial",this);
-  ContainerMatCmd = new G4UIcmdWithAString(G4String("/Cerenkov" + cerenkov + "/SetContainerMaterial"),this);
+  ContainerMatCmd = new G4UIcmdWithAString(G4String("/Cerenkov/SetContainerMaterial"),this);
   ContainerMatCmd->SetGuidance("Select Material of the Cerenkov Container.");
   ContainerMatCmd->SetParameterName("choice",false);
   ContainerMatCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
   //DetectorMatCmd = new G4UIcmdWithAString("/Cerenkov/SetCerenkovMaterial",this);
-  DetectorMatCmd = new G4UIcmdWithAString(G4String("/Cerenkov" + cerenkov + "/SetCerenkovMaterial"),this);
+  DetectorMatCmd = new G4UIcmdWithAString(G4String("/Cerenkov/SetCerenkovMaterial"),this);
   DetectorMatCmd->SetGuidance("Select Material of the Cerenkov Detector.");
   DetectorMatCmd->SetParameterName("choice",false);
   DetectorMatCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
   //PreRadiatorMatCmd = new G4UIcmdWithAString("/Cerenkov/SetPreradiatorMaterial",this);
-  PreRadiatorMatCmd = new G4UIcmdWithAString(G4String("/Cerenkov" + cerenkov + "/SetPreradiatorMaterial"),this);
+  PreRadiatorMatCmd = new G4UIcmdWithAString(G4String("/Cerenkov/SetPreradiatorMaterial"),this);
   PreRadiatorMatCmd->SetGuidance("Select Material of the Pre-radiator.");
   PreRadiatorMatCmd->SetParameterName("choice",false);
   PreRadiatorMatCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
@@ -108,6 +113,7 @@ QweakSimCerenkovDetectorMessenger::~QweakSimCerenkovDetectorMessenger()
   if (ContainerYPositionCmd)      delete ContainerYPositionCmd;
   if (ContainerZPositionCmd)      delete ContainerZPositionCmd;
 
+  if (NumberOfDetectorsCmd)       delete NumberOfDetectorsCmd;
   if (ContainerThicknessCmd)      delete ContainerThicknessCmd;
   if (DetectorMatCmd)             delete DetectorMatCmd;  
   if (PreRadiatorMatCmd)          delete PreRadiatorMatCmd;  
@@ -123,6 +129,13 @@ void QweakSimCerenkovDetectorMessenger::SetNewValue(G4UIcommand* command,G4Strin
 { 
   G4cout << "#### Calling QweakSimCerenkovDetectorMessenger::SetNewValue() " << newValue << G4endl;
    
+  if( command == NumberOfDetectorsCmd )
+   {
+     G4cout << "#### Messenger: Setting Number of Detectors to " << newValue << G4endl;
+
+     myCerenkovDetector->SetNumberOfDetectors(NumberOfDetectorsCmd->GetNewIntValue(newValue));
+   }
+
   if( command == ContainerThicknessCmd )
    {
      G4cout << "#### Messenger: Setting CerenkovDetector Container Thickness to " << newValue << G4endl;

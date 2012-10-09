@@ -237,8 +237,6 @@ private:
   Float_t   rTotalEnergy;
   Float_t   rKineticEnergy;
 
-  Int_t G4IndexToOctantNumber[8];
-
   G4int  detectorID;
   Int_t  octantID;
 

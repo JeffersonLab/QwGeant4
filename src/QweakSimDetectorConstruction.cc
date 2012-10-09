@@ -580,9 +580,11 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
 
   //--------- Dump geometry/materials  -------------------------------
 
-  G4cout << G4endl << "The geometrical tree defined are : " << G4endl << G4endl;
-  DumpGeometricalTree(experimentalHall_Physical);
+  //G4cout << G4endl << "The geometrical tree defined are : " << G4endl << G4endl;
+  //DumpGeometricalTree(experimentalHall_Physical);
 
+
+  //--------- Load magnetic field  -------------------------------
 
   SetGlobalMagneticField();
 

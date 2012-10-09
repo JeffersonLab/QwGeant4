@@ -46,7 +46,8 @@
 #/Analysis/RootFileName QweakSimNew.root
 #/Analysis/RootFileStem QwSim
 
+/EventGen/SelectOctant 1
+
 #/run/verbose 2
 #/tracking/verbose 2
-/run/beamOn 60000
-
+/run/beamOn 10000

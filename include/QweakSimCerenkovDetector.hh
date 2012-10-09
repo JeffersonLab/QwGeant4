@@ -46,6 +46,9 @@ public:
   void ConstructComponent(G4VPhysicalVolume* MotherVolume);
   void DefineCerenkovGeometry();
   void DestroyComponent();
+
+  void SetNumberOfDetectors(G4int number);
+
   void SetCerenkovDetectorMaterial(G4String materialName);
   void SetPreradiatorMaterial(G4String materialName);
 
@@ -73,11 +76,13 @@ private:
 
   G4VPhysicalVolume* theMotherPV;
 
- // needed for manual coil placement
-   std::vector< G4VPhysicalVolume* > CerenkovMasterContainer_Physical;
-   std::vector< G4double >           AnglePhi_CerenkovMasterContainer;
-   std::vector< G4ThreeVector >      Translation_CerenkovMasterContainer;
-   std::vector< G4RotationMatrix* >  Rotation_CerenkovMasterContainer;
+  // Number of Cerenkov detectors
+  G4int NumberOfCerenkovDetectors;
+
+  // Needed for manual coil placement
+  std::vector< G4VPhysicalVolume* > CerenkovMasterContainer_Physical;
+  std::vector< G4ThreeVector >      Translation_CerenkovMasterContainer;
+  std::vector< G4RotationMatrix* >  Rotation_CerenkovMasterContainer;
 
   std::vector< G4RotationMatrix* > Rotation_SideBracket;
   std::vector< G4ThreeVector > Position_SideBracket;
@@ -384,11 +389,16 @@ private:
  // pointer to the sensitive detector
   G4VSensitiveDetector* CerenkovDetectorSD;
   G4VSensitiveDetector* CerenkovDetector_PMTSD;
-  //Cerenkov Position variable now a vector for eight positions
+
+  // Cerenkov Position variable now a vector for eight positions
   std::vector< G4double > Position_CerenkovContainer_X;
   std::vector< G4double > Position_CerenkovContainer_Y;
   std::vector< G4double > Position_CerenkovContainer_Z;
 
+  // Default values for position
+  G4double Default_Position_CerenkovContainer_X;
+  G4double Default_Position_CerenkovContainer_Y;
+  G4double Default_Position_CerenkovContainer_Z;
 };
 #endif
 

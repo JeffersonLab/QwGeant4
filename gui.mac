@@ -75,7 +75,7 @@
 /gui/addButton detectorhut "ShowTopWall" "/DetectorHut/Visibility/ShowTopWall"
 /gui/addButton detectorhut "HideTopWall" "/DetectorHut/Visibility/HideTopWall"
 
-# TrackingAction menue
+# TrackingAction menu
 /gui/addMenu   trackingAction TrackingAction 
 /gui/addButton trackingAction "Track primary electrons only" "/TrackingAction/TrackingFlag 0"
 /gui/addButton trackingAction "Track primary electrons and optical photons only" "/TrackingAction/TrackingFlag 1"
@@ -107,7 +107,7 @@
 /gui/addButton trigger "Disable on CER" "/Trigger/Disable cer"
 
 
-# Reaction type menue
+# Reaction type menu
 /gui/addMenu reactionType Reaction
 /gui/addButton reactionType "0 - Combination of all reactions" "/EventGen/SelectReactionType 0"
 /gui/addButton reactionType "1 - Elastic LH2" "/EventGen/SelectReactionType 1"
@@ -117,7 +117,7 @@
 /gui/addButton reactionType "5 - Inelastic LH2" "/EventGen/SelectReactionType 5"
 /gui/addButton reactionType "6 - Moller scattering" "/EventGen/SelectReactionType 6"
 
-# Reaction region menue
+# Reaction region menu
 /gui/addMenu reactionRegion ReactionRegion
 /gui/addButton reactionRegion "1 - Target" "/EventGen/SelectReactionRegion 1"
 /gui/addButton reactionRegion "2 - Entrance target window" "/EventGen/SelectReactionRegion 2"

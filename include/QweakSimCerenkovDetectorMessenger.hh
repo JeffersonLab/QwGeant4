@@ -69,6 +69,9 @@ private:
   G4UIcmdWithADoubleAndUnit* TiltingAngleCmd;
   G4UIcmdWithADoubleAndUnit* KinkAngleCmd;
 
+  G4UIcmdWithAnInteger*      NumberOfDetectorsCmd;
+
+
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

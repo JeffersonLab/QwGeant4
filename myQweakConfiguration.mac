@@ -46,7 +46,7 @@
 #
 #/Cerenkov/SetCerenkovMaterial HeGas
 #/Cerenkov/SetCerenkovMaterial SiO2
-/Cerenkov/Cerenkov1/SetCerenkovMaterial Quartz
+/Cerenkov/SetCerenkovMaterial Quartz
 #/Cerenkov/SetCerenkovMaterial Vacuum
 
 # positions to be extracted from SolidWorks
@@ -55,11 +55,13 @@
 #/Cerenkov/SetCenterPositionInX      0.0 cm
 #/Cerenkov/SetCenterPositionInY   335.17 cm
 #/Cerenkov/SetCenterPositionInZ   577.88 cm
-/Cerenkov/Cerenkov1/SetTiltingAngle           0.0 degree
+/Cerenkov/SetTiltingAngle           0.0 degree
 
-/Cerenkov/Cerenkov1/SetPreradiatorMaterial PBA
+/Cerenkov/SetPreradiatorMaterial PBA
 
-#Move Cerenkov Detectors to actual position 
+# Move Cerenkov Detectors to actual position 
+/Cerenkov/SetNumberOfDetectors 9
+
 /Cerenkov/Cerenkov1/SetCenterPositionInY  334.724 cm
 /Cerenkov/Cerenkov1/SetCenterPositionInZ  576.665 cm
 
@@ -83,6 +85,9 @@
 
 /Cerenkov/Cerenkov8/SetCenterPositionInY  334.888 cm
 /Cerenkov/Cerenkov8/SetCenterPositionInZ  577.060 cm
+
+/Cerenkov/Cerenkov9/SetCenterPositionInY  364.888 cm
+/Cerenkov/Cerenkov9/SetCenterPositionInZ  677.060 cm
 
 #==================================
 #  Trigger Scintillator related

@@ -12,9 +12,6 @@ QweakSimCerenkovDetector::QweakSimCerenkovDetector(QweakSimUserInformation *user
     // initialize some pointers
     myUserInfo = userInfo;
 
-    //CerenkovDetectorMessenger = NULL;
-    CerenkovDetectorMessenger.clear();
-    CerenkovDetectorMessenger.resize(8,NULL);
     pMaterial                 = NULL;
 
     theMotherPV               = NULL;
@@ -99,22 +96,6 @@ QweakSimCerenkovDetector::QweakSimCerenkovDetector(QweakSimUserInformation *user
     Rotation_SideBracketPad.clear();
     Position_SideBracketPad.clear();
 
-    CerenkovMasterContainer_Physical.clear();
-    CerenkovMasterContainer_Physical.resize(8);
-
-    AnglePhi_CerenkovMasterContainer.clear();
-    AnglePhi_CerenkovMasterContainer.resize(8);
-
-    Translation_CerenkovMasterContainer.clear();
-    Translation_CerenkovMasterContainer.resize(8);
-
-    Rotation_CerenkovMasterContainer.clear();
-    Rotation_CerenkovMasterContainer.resize(8);
-
-    //Creates a messenger for each of the eight Cerenkov detectors
-    for(size_t k=0; k<CerenkovDetectorMessenger.size(); k++){
-      CerenkovDetectorMessenger[k] = new QweakSimCerenkovDetectorMessenger(this, k);
-    }
     pMaterial = new QweakSimMaterial();
     pMaterial->DefineMaterials();
 
@@ -135,13 +116,12 @@ QweakSimCerenkovDetector::QweakSimCerenkovDetector(QweakSimUserInformation *user
     Window_Material            = pMaterial->GetMaterial("Tyvek");
     BracketPad_Material        = pMaterial->GetMaterial("Tyvek");
 
-    Position_CerenkovContainer_X.clear();
-    Position_CerenkovContainer_X.resize(8, 0*cm);
-    Position_CerenkovContainer_Y.clear();
-    Position_CerenkovContainer_Y.resize(8, 335.17*cm);
-    Position_CerenkovContainer_Z.clear();
-    Position_CerenkovContainer_Z.resize(8, 577.88*cm);
+    Default_Position_CerenkovContainer_X =      0*cm;
+    Default_Position_CerenkovContainer_Y = 335.17*cm;
+    Default_Position_CerenkovContainer_Z = 577.88*cm;
     
+    SetNumberOfDetectors(8);
+
     LightGuide_FullLength      =   18.00*cm;
     LightGuide_FullWidth1      =   18.00*cm;
     LightGuide_FullWidth2      =   18.00*cm;
@@ -2293,6 +2273,43 @@ void QweakSimCerenkovDetector::SetCerenkovDetectorMaterial(G4String materialName
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+void QweakSimCerenkovDetector::SetNumberOfDetectors(G4int number)
+{
+  // Delete pointers if resizing to something smaller
+  if (number < NumberOfCerenkovDetectors) {
+    for (size_t k = number; k < CerenkovDetectorMessenger.size(); k++) {
+      delete CerenkovDetectorMessenger[k];
+      delete CerenkovMasterContainer_Physical[k];
+      delete Rotation_CerenkovMasterContainer[k];
+    }
+  }
+
+  // Set number of detectors
+  NumberOfCerenkovDetectors = number;
+
+  // Resize objects and fill with zeros
+  CerenkovDetectorMessenger.resize(NumberOfCerenkovDetectors,0);
+  CerenkovMasterContainer_Physical.resize(NumberOfCerenkovDetectors,0);
+  Rotation_CerenkovMasterContainer.resize(NumberOfCerenkovDetectors,0);
+  Translation_CerenkovMasterContainer.resize(NumberOfCerenkovDetectors);
+
+  // Resize positions and set to default values
+  Position_CerenkovContainer_X.resize(NumberOfCerenkovDetectors,Default_Position_CerenkovContainer_X);
+  Position_CerenkovContainer_Y.resize(NumberOfCerenkovDetectors,Default_Position_CerenkovContainer_Y);
+  Position_CerenkovContainer_Z.resize(NumberOfCerenkovDetectors,Default_Position_CerenkovContainer_Z);
+
+  // Creates a messenger for each of the new Cerenkov detectors
+  for(size_t k = 0; k < CerenkovDetectorMessenger.size(); k++) {
+    if (CerenkovDetectorMessenger[k] == 0) {
+      CerenkovDetectorMessenger[k] = new QweakSimCerenkovDetectorMessenger(this, k);
+    }
+  }
+
+  // Update geometry
+  CerenkovGeometryPVUpdate();
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void QweakSimCerenkovDetector::SetPreradiatorMaterial(G4String materialName) {
 
@@ -2393,18 +2410,15 @@ void QweakSimCerenkovDetector::CerenkovGeometryPVUpdate() {
     G4cout << G4endl << "###### Calling QweakSimCerenkovDetector::CerenkovGeometryPVUpdate()" << G4endl << G4endl;
 
     for (size_t i=0; i< CerenkovMasterContainer_Physical.size();i++) {
-        CerenkovContainer_Logical->RemoveDaughter(CerenkovMasterContainer_Physical[i]);
+        if (CerenkovContainer_Logical)
+          CerenkovContainer_Logical->RemoveDaughter(CerenkovMasterContainer_Physical[i]);
+
         delete CerenkovMasterContainer_Physical[i];
+        CerenkovMasterContainer_Physical[i] = 0;
 
         delete Rotation_CerenkovMasterContainer[i];
-
+        Rotation_CerenkovMasterContainer[i] = 0;
     }
-    CerenkovMasterContainer_Physical.clear();
-    CerenkovMasterContainer_Physical.resize(8);
-
-    Rotation_CerenkovMasterContainer.clear();
-    Rotation_CerenkovMasterContainer.resize(8);
-
 
     // Place the physical volume of the rods with the new phi angle
     PlacePVCerenkovMasterContainer();
@@ -2414,20 +2428,17 @@ void QweakSimCerenkovDetector::CerenkovGeometryPVUpdate() {
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void QweakSimCerenkovDetector::PlacePVCerenkovMasterContainer() {
-    G4ThreeVector* centerVector  = new G4ThreeVector();
-
     // place 8  CerenkovContainer_Logical plates into the MotherVolume (around the global Z axis)
-    for (G4int n=0; n<8; n++) {
-
+    for (size_t i = 0; i < Rotation_CerenkovMasterContainer.size(); i++) {
 
         // Phi angles of the 8 cerenkovs
-        AnglePhi_CerenkovMasterContainer[n] = n*45.0*degree;
+        G4double AnglePhi_CerenkovMasterContainer = i * 45.0*degree;
 
         // since the CerenkovMasterContainer_Logical is defined for a vertical orientation
         // but the translation assumes a horizontal orientation, we have to subtract 90*deg
-        Rotation_CerenkovMasterContainer[n] = new G4RotationMatrix();
-        Rotation_CerenkovMasterContainer[n]->rotateZ(-AnglePhi_CerenkovMasterContainer[n]+90*degree);
-        Rotation_CerenkovMasterContainer[n]->rotateX(Tilting_Angle);
+        Rotation_CerenkovMasterContainer[i] = new G4RotationMatrix();
+        Rotation_CerenkovMasterContainer[i]->rotateZ(-AnglePhi_CerenkovMasterContainer + 90*degree);
+        Rotation_CerenkovMasterContainer[i]->rotateX(Tilting_Angle);
 
         // set the vectors to the center of the CerenkovContainer
         // located at 12 o'clock. Then rotate the centerVector to the 8
@@ -2435,29 +2446,28 @@ void QweakSimCerenkovDetector::PlacePVCerenkovMasterContainer() {
         // This procedure is easier than the calculation by hand for individual positions/orientations
 
         // define 12' o'clock start location
-        centerVector->setX(Position_CerenkovContainer_X[n]);
-        centerVector->setY(Position_CerenkovContainer_Y[n]);
-        centerVector->setZ(Position_CerenkovContainer_Z[n]);
+        G4ThreeVector centerVector;
+        centerVector.setX(Position_CerenkovContainer_X[i]);
+        centerVector.setY(Position_CerenkovContainer_Y[i]);
+        centerVector.setZ(Position_CerenkovContainer_Z[i]);
 
         // rotate centerVector to the 8 positions
-        centerVector->rotateZ(-AnglePhi_CerenkovMasterContainer[n]);
+        centerVector.rotateZ(-AnglePhi_CerenkovMasterContainer);
 
-        Translation_CerenkovMasterContainer[n].setX( centerVector->y() );
-        Translation_CerenkovMasterContainer[n].setY( centerVector->x() );
-        Translation_CerenkovMasterContainer[n].setZ( centerVector->z() );
+        Translation_CerenkovMasterContainer[i].setX(centerVector.y());
+        Translation_CerenkovMasterContainer[i].setY(centerVector.x());
+        Translation_CerenkovMasterContainer[i].setZ(centerVector.z());
 
-
-
-
-        CerenkovMasterContainer_Physical[n]   = new G4PVPlacement(Rotation_CerenkovMasterContainer[n],
-                Translation_CerenkovMasterContainer[n],
+        CerenkovMasterContainer_Physical[i]   = new G4PVPlacement(
+                Rotation_CerenkovMasterContainer[i],
+                Translation_CerenkovMasterContainer[i],
                 "CerenkovMasterContainer_Physical",
                 CerenkovContainer_Logical,
                 theMotherPV,
                 false,
-                n);
+                i);
 
-    } // end of  for (G4int n=0; n<8; n++)
+    } // end of  for (size_t i=0; i < n; i++)
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
