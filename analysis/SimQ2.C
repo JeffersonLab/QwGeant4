@@ -24,44 +24,97 @@ void SimQ2 (double posx, double posy, int anglex, int angley)
   TChain* QweakSimG4_Tree = new TChain ("QweakSimG4_Tree");
 
   //add the root files to the chain the event_tree branches
-  QweakSimG4_Tree->Add(Form("~/QWGEANT4/rootfiles/PositionX_%gmm_PositionY_%gmm_DirectionX_%durad_DirectionY_%durad_1.root",posx,posy, anglex, angley));
+  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeightScan/myLightWeightScan_*.root");
 
   //define vector of histograms
-  std::vector<TH1D*> q2;
-  q2.resize(9);
-
+  std::vector < vector<TH1D*> >  q2;
+  q2.resize(11);
+  
+  std::vector<TH1D*> q2_tot;
+  q2_tot.resize(9);
+  
   for (size_t i = 0; i<q2.size();i++)
   {
-     //set the histogram for the q2 
-     q2[i]= new TH1D (Form("q2[%d]",i),Form("Sim Q2 for Octant number %d",i),100,0.0,0.12);
-  }
+     q2[i].resize(9);
+     for (size_t j = 0; j<q2[i].size();j++)
+     {
+       //set the histogram for the q2 
+       q2[i][j]= new TH1D (Form("q2[%d][%d]",i,j),Form("Sim Q2 for Octant number %d, set %d",i,j),100,0.0,0.12);
+     }
+	}
+  for (size_t j = 0; j<q2_tot.size();j++)
+  {
+     q2_tot[j] = new TH1D (Form("q2_tot[%d]",j),Form("Sim Q2 for Octant number %d",j),100,0.0,0.12);
+ 	}
+
+  // define a vector for the mean and sigma of all the histograms
+  //this will allow to get the proper mean - initalze all values to zero.
+  //std::vector <Double_t> mean_q2(9, 0.0);
+  //std::vector <Double_t> sigma_q2(9, 0.0);
+
+  Double_t mean_q2[9] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+  Double_t sigma_q2[9] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 
 //set the histogram for the q2
 //q2 = new TH1D ("q2","Q2 value",100,0.0,0.12);
 
+  //draw the q2 graph for all octants
+  // c1->cd(9);
+
+  Int_t n = 10;
+  Int_t nentries = QweakSimG4_Tree->GetEntries();
+  
+  for (Int_t i = 0; i < n; i++) 
+  {
+    Int_t n1 = nentries / n * i;
+    Int_t n2 = nentries / n * (i+1);
+  
+    QweakSimG4_Tree->Draw(Form("Primary.PrimaryQ2>>q2[%d][0]",i) ,Form("Primary.CrossSection * Cerenkov.PMT.PMTTotalNbOfPEs *(%d < Entry$) * (Entry$ < %d)",n1,n2));
+    mean_q2[0] += q2[i][0]->GetMean();
+    sigma_q2[0] += q2[i][0]->GetMean() * q2[i][0]->GetMean();
+    q2_tot[0]->Add(q2[i][0]);
+    
+    //draw the q2 graph for each octants
+    for (size_t oct = 1; oct < q2[i].size(); oct ++)
+    {
+      QweakSimG4_Tree->Draw(Form("Primary.PrimaryQ2>>q2[%d][%d]",i,oct),
+        Form("Primary.CrossSection*(%d < Entry$)*(Entry$ < %d)*Cerenkov.PMT.PMTTotalNbOfPEs* (Cerenkov.Detector.DetectorID==%d)/Cerenkov.Detector.NbOfHits",n1,n2,oct));
+      mean_q2[oct] += q2[i][oct]->GetMean();
+      sigma_q2[oct] += q2[i][oct]->GetMean() * q2[i][oct]->GetMean();
+      q2_tot[oct]->Add(q2[i][oct]);
+    }
+
+  }
+
   //define canvas
   TCanvas* c1 = new TCanvas ("c1","Sim Q2");
   c1->Divide(3,3);
-
-  //draw the q2 graph for all octants
   c1->cd(9);
-  QweakSimG4_Tree->Draw("Primary.PrimaryQ2>>q2[0]","Primary.CrossSection * Cerenkov.PMT.PMTTotalNbOfPEs");
+  q2_tot[0]->Draw();
 
-  //draw the q2 graph for each octants
-  for (size_t oct = 1; oct < q2.size(); oct ++)
+  for (size_t oct = 1; oct < q2_tot.size(); oct ++)
+    {
+      c1->cd(oct);
+      q2_tot[oct]->Draw();
+    }
+	
+
+  //calaulate out the right error and mean
+  for (size_t oct = 0; oct < q2_tot.size(); oct++)
   {
-    c1->cd(oct);
-    QweakSimG4_Tree->Draw(Form("Primary.PrimaryQ2>>q2[%d]",oct),Form("Primary.CrossSection* Cerenkov.PMT.PMTTotalNbOfPEs* (Cerenkov.Detector.DetectorID==%d)/Cerenkov.Detector.NbOfHits",oct));
+    mean_q2[oct] /= n;
+    sigma_q2[oct] = sqrt(sigma_q2[oct] / n - mean_q2[oct] * mean_q2[oct]);
   }
+
 
   //output the values for q2 for all octants together and indidually
   cout << "All Octants" <<endl;
-  cout << "q2: " <<  setprecision(5) << 1000*q2[0]->GetMean() << " error RMS/sqrt(N): " <<  setprecision(4) << 1000*q2[0]->GetRMS()/sqrt(q2[0]->GetEntries()) << endl;
+  cout << "q2: " <<  setprecision(5) << 1000*mean_q2[0] << " error RMS/sqrt(N): " <<  setprecision(4) << 1000*sigma_q2[0] << " m(GeV)^2 " << endl;
 
   for (int oct = 1; oct < 9; oct ++)
   {
     cout << "Octant number " << oct <<endl;
-    cout << "q2: " <<  std::setprecision(5) << 1000*q2[oct]->GetMean() << " error RMS/sqrt(N): " <<  std::setprecision(4) << 1000*q2[oct]->GetRMS()/sqrt(q2[oct]->GetEntries()) << endl;
+    cout << "q2: " <<  std::setprecision(5) << 1000*mean_q2[oct] << " error RMS/sqrt(N): " <<  std::setprecision(4) << 1000*sigma_q2[oct]<< " m(GeV)^2 " << endl;
   }
 
   return;
