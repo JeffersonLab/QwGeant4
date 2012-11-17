@@ -51,9 +51,9 @@ void QweakSimLeadGlass_DetectorSD::Initialize(G4HCofThisEvent* HCE)
 G4bool QweakSimLeadGlass_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistory* )
 {	
     //--- Dismiss Photons
-    G4Track *track = aStep->GetTrack();    
-    if (fabs(track->GetDefinition()->GetPDGCharge())<0.1)
-        return false;
+    //G4Track *track = aStep->GetTrack();    
+    //if (fabs(track->GetDefinition()->GetPDGCharge())<0.1)
+        //return false;
 	
     if (aStep->GetPreStepPoint()->GetStepStatus() != fGeomBoundary )
     {
@@ -64,6 +64,7 @@ G4bool QweakSimLeadGlass_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHisto
     G4TouchableHandle theTouchable = aStep->GetPreStepPoint()->GetTouchableHandle();
 	
     G4int         motherCopyNo = theTouchable->GetVolume(1)->GetCopyNo();   // one Mother Volume
+    //G4int         CopyNo = theTouchable->GetVolume()->GetCopyNo();   // one Volume
 	
     //primaryEventNumber
 	
@@ -116,7 +117,7 @@ G4bool QweakSimLeadGlass_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHisto
 	
     //--- LeadGlass deposited energy
     G4double      depositedEnergy      = aStep->GetTotalEnergyDeposit();
-
+	
 	
     //----------------- Store Hit information
 	
@@ -160,8 +161,8 @@ G4bool QweakSimLeadGlass_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHisto
     //aHit -> StoreGlobalPhiAngle;
 	
     //--- LeadGlass deposited energy
-    aHit -> AddDepositedEnergy(depositedEnergy);
-    //aHit -> StoreDepositedEnergy(depositedEnergy);
+    //aHit -> AddDepositedEnergy(depositedEnergy);
+    aHit -> StoreDepositedEnergy(depositedEnergy);
 	
 	
     //----------------- check if it is first touch

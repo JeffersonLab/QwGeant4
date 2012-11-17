@@ -407,6 +407,8 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 	G4double PreScatteringKineticEnergy = myUserInfo->GetPreScatteringKineticEnergy();
         G4double OriginVertexKineticEnergy = myUserInfo->GetOriginVertexKineticEnergy();
         G4double OriginVertexTotalEnergy = myUserInfo->GetOriginVertexTotalEnergy();
+        //--- Get total deposited energy in the LeadGlass from myUserInfo
+        G4double LeadGlassEngDep = myUserInfo->GetLeadGlassEnergyDeposit();
 
         analysis->fRootEvent->Primary.StoreTrackID((Int_t) TrackID);
         analysis->fRootEvent->Primary.StoreGlobalTime((Float_t) GlobalTime);
@@ -428,6 +430,10 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         analysis->fRootEvent->Primary.StorePrimaryEventNumber((Int_t) PrimaryEventNumber);
         analysis->fRootEvent->Primary.StoreReactionType((Int_t) ReactionType);
         analysis->fRootEvent->Primary.StorePDGcode((Int_t) PDGcode);
+        //--- Write total deposited energy in the LeadGlass to the rootfile
+        analysis->fRootEvent->LeadGlass.Detector.StoreTotalEnergyDeposit((Float_t) LeadGlassEngDep);
+        //--- force a reset to LeadGlassEngDep=0.0 to get ready for the next event
+        myUserInfo->ResetLeadGlassEnergyDeposit();
 
         //==========================================================================================
 
@@ -1462,6 +1468,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 				
                 //--- get LeadGlass deposited energy
                 rDepositedEnergy = (Float_t) aHit->GetDepositedEnergy() / MeV;
+                //--- TotalDepositedEnergy --- Done in previous code
 				
                 //--------------------------------------------------------------------------------------------
 				
@@ -1535,6 +1542,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 				
                 //--- sotre LeadGlass deposited energy
                 analysis->fRootEvent->LeadGlass.Detector.StoreDepositedEnergy(rDepositedEnergy);
+                //--- TotalDepositedEnergy --- Done in previous code
 
 		//--------------------------------------------------------------------------------------------
 				

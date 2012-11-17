@@ -36,7 +36,7 @@ void QweakSimUserLeadGlass_DetectorEvent::Initialize()
 	
     PrimaryEventNumber             = 0;
 	
-    TrackID                        = 0.0;
+    TrackID.clear();
 	
     ParticleName.clear();
     ParticleType.clear();
@@ -117,8 +117,10 @@ void QweakSimUserLeadGlass_DetectorEvent::Initialize()
     GlobalPhiAngle.clear(); 
     GlobalThetaAngle.clear();
 	
-    //--- LeadGlass deposited energy
+    //--- deposited energy in the LeadGlass in one step
     DepositedEnergy.clear(); 
+    //--- total deposited energy in the LeadGlass in one event
+    TotalDepositedEnergy             = 0.0;
 }
 
 

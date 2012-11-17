@@ -88,6 +88,11 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep)
   //RandomPositionZ = myEvent->GetVertexZ();
   RandomPositionZ = myUserInfo->GetOriginVertexPositionZ();
 
+    if((thePrePV->GetName()).contains("LeadGlass"))
+    {
+        G4double engDep = theStep->GetTotalEnergyDeposit();
+        myUserInfo->AddLeadGlassEnergyDeposit(engDep);
+    }
 
 //jpan@nuclear.uwinnipeg.ca Thu Apr 16 01:33:14 CDT 2009
 // check if it is primary

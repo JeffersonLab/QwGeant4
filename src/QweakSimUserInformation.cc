@@ -46,6 +46,8 @@ void QweakSimUserInformation::Initialize()
   OriginVertexTotalEnergy = 0.0;
 
   CerEngDep                      = 0.0;
+  //--- initial the variable that holds total energy deposited in the LeadGlass
+  LeadGlassEngDep                = 0.0;
   
   leftPMTHitValid                = 0;
   rightPMTHitValid               = 0;

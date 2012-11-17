@@ -32,7 +32,7 @@ private:
 	
     Int_t                PrimaryEventNumber;
 	
-    Float_t              TrackID;
+    std::vector<Float_t> TrackID;
 	
     std::vector<TString> ParticleName;
     std::vector<Int_t>   ParticleType;
@@ -107,8 +107,10 @@ private:
     std::vector<Float_t> GlobalPhiAngle;
     std::vector<Float_t> GlobalThetaAngle;
 	
-    //--- LeadGlass deposited energy
+    //--- deposited energy in the LeadGlass in one step
     std::vector<Float_t> DepositedEnergy;
+    //--- total deposited energy in the LeadGlass in one event
+    Float_t TotalDepositedEnergy;
 	
 public:
 	
@@ -128,8 +130,8 @@ public:
 	
     //----------------- TrackID
 	
-    void   StoreTrackID(Float_t tid)    { TrackID = tid; }
-    Float_t  GetTrackID() const      {return TrackID;}
+    void   StoreTrackID(Float_t tid)        { TrackID.push_back(tid); }
+    std::vector<Float_t>  GetTrackID() const      {return TrackID;}
 	
     //----------------- ParticleName & ParticleType
 	
@@ -268,8 +270,13 @@ public:
 	
     //----------------- LeadGlass deposited energy
 	
+    //--- deposited energy in the leadGlass in one step
     void   StoreDepositedEnergy(Float_t dpeg)    { DepositedEnergy.push_back(dpeg); }
     std::vector<Float_t>  GetDepositedEnergy() const      {return DepositedEnergy;}
+	
+    //--- total deposited energy in the LeadGlass in one event
+    void     StoreTotalEnergyDeposit(Float_t eng)   { TotalDepositedEnergy = eng; }
+    Float_t    GetTotalEnergyDeposit()   const {return TotalDepositedEnergy;}
 	
     //void AddSecondaryElectronEvent(Float_t XO, Float_t YO, Float_t ZO,
     //                                  Float_t XM, Float_t YM, Float_t ZM,
