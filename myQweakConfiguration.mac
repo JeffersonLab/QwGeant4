@@ -86,8 +86,25 @@
 /Cerenkov/Cerenkov8/SetCenterPositionInY  334.888 cm
 /Cerenkov/Cerenkov8/SetCenterPositionInZ  577.060 cm
 
-/Cerenkov/Cerenkov9/SetCenterPositionInY  364.888 cm
-/Cerenkov/Cerenkov9/SetCenterPositionInZ  677.060 cm
+# ELOG Detector/74: Positions of background detectors
+#
+# For practical reasons (MD9 is in the same octant as MD1) the background
+# detector is here in the opposite octant than it actually was in (behind MD5).
+#
+# PRELIMINARY: More accurate numbers will require both the final survey
+# and the local survey of the monument with respect to the detector itself.
+#
+# "Det. Origin" is (assumed to be) the center of the back of the bar, outer edge.
+#
+# Z position of Det. Origin = 737.86 cm
+#   - 1 cm (half thickness) = 736.86 cm (Z in MC)
+# X position of Det. Origin = 377.84 cm
+#   - 9 cm (half width bar) = 368.84 cm (Y in MC)
+# Y position of Det. Origin =  72.86 cm (X in MC)
+# 
+/Cerenkov/Cerenkov9/SetCenterPositionInX  -72.86 cm
+/Cerenkov/Cerenkov9/SetCenterPositionInY  368.84 cm
+/Cerenkov/Cerenkov9/SetCenterPositionInZ  736.86 cm
 
 #==================================
 #  Trigger Scintillator related
