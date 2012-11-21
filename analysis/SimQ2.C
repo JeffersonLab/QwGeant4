@@ -5,7 +5,7 @@ and each octant individually
 
 Entry Conditions: x and y position , x and y angle direction
 Date: 04-11-2012
-Modified:08-23-2012
+Modified:11-21-2012
 Assisted By: Wouter Deconinck
 *********************************************************/
 
@@ -18,21 +18,24 @@ Assisted By: Wouter Deconinck
 #include <iostream>
 #include <iomanip>
 
-void SimQ2 (double posx, double posy, int anglex, int angley)
+void SimQ2 (int posx, double posy, int anglex, int angley)
 {
   // groups root files for a run together
   TChain* QweakSimG4_Tree = new TChain ("QweakSimG4_Tree");
 
   //add the root files to the chain the event_tree branches
-  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeightScan/myLightWeightScan_*.root");
+  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeightScan_Al_DS/*.root");
+
+  //number of chunks
+  Int_t n = 1000;
 
   //define vector of histograms
   std::vector < vector<TH1D*> >  q2;
-  q2.resize(11);
-  
+  q2.resize(n+1);
+
   std::vector<TH1D*> q2_tot;
   q2_tot.resize(9);
-  
+
   for (size_t i = 0; i<q2.size();i++)
   {
      q2[i].resize(9);
@@ -61,24 +64,25 @@ void SimQ2 (double posx, double posy, int anglex, int angley)
   //draw the q2 graph for all octants
   // c1->cd(9);
 
-  Int_t n = 10;
   Int_t nentries = QweakSimG4_Tree->GetEntries();
-  
-  for (Int_t i = 0; i < n; i++) 
+  Int_t step = nentries / n;
+
+
+  for (Int_t i = 0; i < n; i++)
   {
     Int_t n1 = nentries / n * i;
     Int_t n2 = nentries / n * (i+1);
-  
-    QweakSimG4_Tree->Draw(Form("Primary.PrimaryQ2>>q2[%d][0]",i) ,Form("Primary.CrossSection * Cerenkov.PMT.PMTTotalNbOfPEs *(%d < Entry$) * (Entry$ < %d)",n1,n2));
+
+    QweakSimG4_Tree->Draw(Form("Primary.PrimaryQ2>>q2[%d][0]",i) ,"Primary.CrossSection * Cerenkov.PMT.PMTTotalNbOfPEs"," ", step ,n1 );
     mean_q2[0] += q2[i][0]->GetMean();
     sigma_q2[0] += q2[i][0]->GetMean() * q2[i][0]->GetMean();
     q2_tot[0]->Add(q2[i][0]);
-    
+
     //draw the q2 graph for each octants
     for (size_t oct = 1; oct < q2[i].size(); oct ++)
     {
       QweakSimG4_Tree->Draw(Form("Primary.PrimaryQ2>>q2[%d][%d]",i,oct),
-        Form("Primary.CrossSection*(%d < Entry$)*(Entry$ < %d)*Cerenkov.PMT.PMTTotalNbOfPEs* (Cerenkov.Detector.DetectorID==%d)/Cerenkov.Detector.NbOfHits",n1,n2,oct));
+        Form("Primary.CrossSection*Cerenkov.PMT.PMTTotalNbOfPEs* (Cerenkov.Detector.DetectorID==%d)/Cerenkov.Detector.NbOfHits",oct), " ", step, n1 );
       mean_q2[oct] += q2[i][oct]->GetMean();
       sigma_q2[oct] += q2[i][oct]->GetMean() * q2[i][oct]->GetMean();
       q2_tot[oct]->Add(q2[i][oct]);
@@ -97,13 +101,14 @@ void SimQ2 (double posx, double posy, int anglex, int angley)
       c1->cd(oct);
       q2_tot[oct]->Draw();
     }
-	
 
   //calaulate out the right error and mean
   for (size_t oct = 0; oct < q2_tot.size(); oct++)
   {
+    cout << mean_q2[oct] << " " << sigma_q2[oct] << endl;
     mean_q2[oct] /= n;
-    sigma_q2[oct] = sqrt(sigma_q2[oct] / n - mean_q2[oct] * mean_q2[oct]);
+    //the extra  factor of sqrt(n) is to get the error on the mean not just the error of the distibution
+    sigma_q2[oct] = sqrt(sigma_q2[oct] / n - mean_q2[oct] * mean_q2[oct]) / sqrt(n);
   }
 
 
