@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #Programmer: Valerie Gray
 #Purpose: This script creates that xml and macro files
 #for the Light weighting study in Geant4 on LH2 with a 90
@@ -7,7 +9,6 @@
 #Modified:
 #Assisted By: Wouter Deconinck
 #
-#!/bin/bash
 
 name=myLightWeightScan_MagRot90deg
 
@@ -15,7 +16,7 @@ name=myLightWeightScan_MagRot90deg
 #on to the get more simultaions)
 firstjob=1
 #total number of jobs one would like done
-njobs=300
+njobs=301
 #number of events simulated in each Geant4 file
 nevents=500000
 

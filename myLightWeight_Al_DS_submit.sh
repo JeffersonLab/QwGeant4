@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #Programmer: Valerie Gray
 #Purpose: This script creates that xml and macro files
 #for the Light weighting study in Geant4 on Al DS
@@ -6,7 +8,6 @@
 #Modified:
 #Assisted By: Wouter Deconinck
 #
-#!/bin/bash
 
 name=myLightWeightScan_Al_DS
 

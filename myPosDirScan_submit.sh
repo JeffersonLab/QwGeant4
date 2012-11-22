@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #Programmer: Valerie Gray
 #Purpose: This script creates that xml and macro files
 #for the MD9 bar study in Geant4
@@ -10,8 +12,6 @@
 #Modified:
 #Assisted By: Wouter Deconinck
 #
-
-#!/bin/bash
 
 # comment
 
