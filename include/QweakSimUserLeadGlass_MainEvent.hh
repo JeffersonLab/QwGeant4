@@ -30,7 +30,7 @@ public:
     QweakSimUserLeadGlass_MainEvent();
     virtual ~QweakSimUserLeadGlass_MainEvent();
 	
-    ClassDef(QweakSimUserLeadGlass_MainEvent,1)
+    ClassDef(QweakSimUserLeadGlass_MainEvent,1);
 	
 public:
 	
