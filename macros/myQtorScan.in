@@ -7,6 +7,7 @@
 #
 /control/execute myQweakConfiguration.mac
 /control/execute macros/peiqing_2011.mac
+/control/execute macros/noTracking.mac
 
 /random/setSavingFlag 1
 /random/setDirectoryName random/%name%_%jobid%
