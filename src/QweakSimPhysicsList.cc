@@ -450,9 +450,6 @@ void QweakSimPhysicsList::ConstructOpticalPhotonProcess()
   //theScintillationProcess->SetScintillationYieldFactor(1.);
   //theScintillationProcess->SetTrackSecondariesFirst(true);
 
-  G4OpticalSurfaceModel themodel = unified;
-  theBoundaryProcess->SetModel(themodel);
-
   theParticleIterator->reset();
 
   while( (*theParticleIterator)() )
