@@ -2,7 +2,7 @@
 #Purpose: The macro file for the LightWeight study on LH2 
 #
 #Date: 11-22-2012
-#Modified:
+#Modified:1-25-2013
 #Assisted By:
 #
 
@@ -15,7 +15,7 @@
 /random/setDirectoryName random/%name%_%jobid%
 /random/setSeeds %seedA% %seedB%
 
-/TrackingAction/TrackingFlag 1
+/TrackingAction/TrackingFlag 3
 
 #set reaction region and type
 /EventGen/SelectReactionRegion 1

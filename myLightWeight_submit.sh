@@ -5,7 +5,7 @@
 #for the Light weighting study in Geant4 on LH2
 #
 #Date: 11-22-2012
-#Modified:
+#Modified: 1-25-2013
 #Assisted By: Wouter Deconinck
 #
 
@@ -13,11 +13,11 @@ name=myLightWeightScan
 
 #first job number (can change if just want to add
 #on to the get more simultaions)
-firstjob=12
+firstjob=1
 #total number of jobs one would like done
-njobs=300
+njobs=1200
 #number of events simulated in each Geant4 file
-nevents=500000
+nevents=125000
 
 let jobid=${firstjob}
  while [[ ${jobid} -le ${njobs} ]] ; do
