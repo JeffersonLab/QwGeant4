@@ -39,7 +39,7 @@ QweakSimPrimaryGeneratorAction::QweakSimPrimaryGeneratorAction( QweakSimUserInfo
 {
   G4cout << "###### Calling QweakSimPrimaryGeneratorAction::QweakSimPrimaryGeneratorAction " << G4endl;
   
-
+  SetBeamEnergy();
 
   fPositionX_min = -2.0*mm;
   fPositionX_max =  2.0*mm;
@@ -85,7 +85,6 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
    * \todo need to double-check that position and momentum are properly transferred to second primary
    */
   
-  G4double E_beam;
   G4int myEventCounter = myUserInfo->GetPrimaryEventNumber();
   G4double myPositionX, myPositionY, myPositionZ;
   G4double myNormMomentumX, myNormMomentumY, myNormMomentumZ;
@@ -98,8 +97,6 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     myNormMomentumY  = tan(myUserInfo->GetNormMomentumY());
     myNormMomentumZ  = sqrt(1.0 - myNormMomentumX * myNormMomentumX - myNormMomentumY * myNormMomentumY);
     
-    E_beam = 1.160*GeV;
-
     myUserInfo->StoreOriginVertexPositionZ(myEvent->GetVertexZ());
     myUserInfo->EvtGenStatus = 0;
   }
@@ -113,7 +110,7 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     myNormMomentumY  = myUserInfo->GetOriginVertexMomentumDirectionY();
     myNormMomentumZ  = myUserInfo->GetOriginVertexMomentumDirectionZ();
     
-    E_beam = myUserInfo->GetOriginVertexKineticEnergy();
+    fBeamEnergy = myUserInfo->GetOriginVertexKineticEnergy();
   }
 
 
@@ -141,7 +138,7 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
                                                           myNormMomentumY,
                                                           myNormMomentumZ));
 
-  particleGun->SetParticleEnergy(E_beam);
+  particleGun->SetParticleEnergy(fBeamEnergy);
 
   // finally : fire !!!
   particleGun->GeneratePrimaryVertex(anEvent);

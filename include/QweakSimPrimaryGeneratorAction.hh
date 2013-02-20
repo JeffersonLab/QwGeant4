@@ -80,6 +80,11 @@ public:
     fPositionY_max = Y_max;
   }
 
+  void SetBeamEnergy(G4double energy = 1.160*GeV) {
+    if (energy>0) fBeamEnergy = energy;
+    else G4cout << G4endl << "##### Beam Energy must be greater than zero" << G4endl << G4endl;
+  }
+
   void GeneratePrimaries(G4Event* anEvent);
   void ResetNtupleEventCounter() {myEventCounter = 0;}
   void SetNtupleEventCounter(G4int cnt) {myEventCounter = cnt;}
@@ -111,6 +116,8 @@ private:
   G4double fPositionX_max;
   G4double fPositionY_min;
   G4double fPositionY_max;
+
+  G4double fBeamEnergy;
 
 };
 

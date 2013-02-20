@@ -121,6 +121,14 @@ QweakSimPrimaryGeneratorActionMessenger::QweakSimPrimaryGeneratorActionMessenger
   SetRasterYmax_Cmd->SetDefaultValue(2.0*mm);
   //SetRasterYmax_Cmd->SetRange("Ymax<10");
   SetRasterYmax_Cmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+
+  SetBeamEnergy_Cmd = new G4UIcmdWithADoubleAndUnit("/PrimaryEvent/SetBeamEnergy",this);
+  SetBeamEnergy_Cmd->SetGuidance("Set beam energy.");
+  SetBeamEnergy_Cmd->SetParameterName("BeamEnergy",true);
+  SetBeamEnergy_Cmd->SetUnitCategory("Energy");
+  SetBeamEnergy_Cmd->SetDefaultValue(1.160*GeV);
+  //SetBeamEnergy_Cmd->SetRange("BeamEnergy>0");
+  SetBeamEnergy_Cmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -131,6 +139,7 @@ QweakSimPrimaryGeneratorActionMessenger::~QweakSimPrimaryGeneratorActionMessenge
   delete SetRasterXmax_Cmd;
   delete SetRasterYmin_Cmd;
   delete SetRasterYmax_Cmd;
+  delete SetBeamEnergy_Cmd;
   delete InitEventCounterCmd;
   delete verboseCmd;
   delete resetCmd;
@@ -202,6 +211,13 @@ void QweakSimPrimaryGeneratorActionMessenger::SetNewValue(G4UIcommand* command, 
       G4cout << "#### Messenger: Setting Raster max. Y to " << newValue << G4endl;
       Ymax = SetRasterYmax_Cmd->GetNewDoubleValue(newValue);
       pPrimaryGeneratorAction->SetBeamRasteringRegion(Xmin, Xmax, Ymin, Ymax); 
+    }
+
+  if( command == SetBeamEnergy_Cmd )
+    { 
+      G4cout << "#### Messenger: Setting Beam Energy to " << newValue << G4endl;
+      G4double BeamEnergy = SetPositionX_Cmd->GetNewDoubleValue(newValue);
+      pPrimaryGeneratorAction->SetBeamEnergy(BeamEnergy); 
     }
 
 }
