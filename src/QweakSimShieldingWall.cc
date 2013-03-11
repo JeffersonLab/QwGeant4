@@ -53,7 +53,7 @@ static const G4double inch = 2.54*cm;
     pMaterial->DefineMaterials();
 
 //--------------------
-// Collimator Wall related
+// Front Shielding Wall related
 //--------------------
 // 
 // initialize pointers
@@ -86,21 +86,21 @@ ShieldingWallHousing_Material = NULL;
  //---------------------------
  // Conical cutouts are not used anymore for the Shielding Wall
  // However I will leave the code here
- //
+ /*
  OctantCutOut_Cone_FrontInnerDiameter = 153.0*mm;
  OctantCutOut_Cone_FrontOuterDiameter = 500.0*mm;
  OctantCutOut_Cone_BackInnerDiameter  = 193.0*mm;
  OctantCutOut_Cone_BackOuterDiameter  = 600.0*mm;
  OctantCutOut_Cone_StartingPhiAngle   = -12.0*degree;
  OctantCutOut_Cone_DeltaPhiAngle      =  24.0*degree;
+ */
   
  // define wall geometry values
- ShieldingWallHousing_FullLength_X = 264*inch;    // Full X length (264")
- ShieldingWallHousing_FullLength_Y = 264*inch;    // Full Y length 
- ShieldingWallHousing_FullLength_Z =  40.0*cm;    // Full Z length 
- 
+ ShieldingWallHousing_FullLength_X = 670.56*cm;    // Full X length (264")
+ ShieldingWallHousing_FullLength_Y = 670.56*cm;    // Full Y length 
+ ShieldingWallHousing_FullLength_Z =  80.0*cm;    // Full Z length 
 
- ShieldingWallHousing_UpStreamWall_ZPosition = 340.0*cm;// 330.0*cm;  
+ ShieldingWallHousing_UpStreamWall_ZPosition = 340.0*cm;
  ShieldingWallHousing_CenterZPosition        = ShieldingWallHousing_UpStreamWall_ZPosition + 0.5*ShieldingWallHousing_FullLength_Z; 
 
  // get shielding wall material
@@ -258,28 +258,28 @@ G4cout << G4endl << "###### Calling QweakSimShieldingWall::DefineOctantCutOut() 
 
   // definition of octant cut out
    OctantCutOut_Trap_Solid = new G4Trap("Octant_cut",
-				    0.5 * ShieldingWallHousing_FullLength_Z +0.1*mm,    // Half-length along the z-axis
-				    OctantCutOut_Trap_PolarAngle,                        // Polar angle of the line joining the centres of the 
-					                                // faces at -/+pDz
-				    OctantCutOut_Trap_AzimuthalAngle,       // Azimuthal angle of the line joining the centre  of the 
-					                                // face at -pDz to the centre of the face at +pDz
-				    0.5*OctantCutOut_Trap_FullHeightFront, // Half-length along y of the face at -pDz  
-				    0.5*OctantCutOut_Trap_FullLengthFront_Outer, // Half-length along x of the side at y=-pDy1 of the face 
-					                                // at -pDz
-				    0.5*OctantCutOut_Trap_FullLengthFront_Inner, // Half-length along x of the side at y=+pDy1 of the face 
-					                                // at -pDz
-				    0.0*degree,                        // Angle with respect to the y axis from the centre of the  
-					                                // side at y=-pDy1 to the centre at y=+pDy1 of the face 
-					                                // at -pDz
-				    0.5*OctantCutOut_Trap_FullHeightBack,  // Half-length along y of the face at +pDz
-				    0.5*OctantCutOut_Trap_FullLengthBack_Outer,   // Half-length along x of the side at y=-pDy2 of the face 
-					                                // at +pDz
-				    0.5*OctantCutOut_Trap_FullLengthBack_Inner,   // Half-length along x of the side at y=+pDy2 of the face 
-					                                // at +pDz             
-				    0.0*degree                         // Angle with respect to the y axis from the centre of the 
-					                                // side at y=-pDy2 to the centre at y=+pDy2 of the face 
-					                                // at +pDz
-  				    );
+		    0.5 * ShieldingWallHousing_FullLength_Z +0.1*mm,     // Half-length along the z-axis
+		    OctantCutOut_Trap_PolarAngle,                        // Polar angle of the line joining the centres of the 
+					                                 // faces at -/+pDz
+		    OctantCutOut_Trap_AzimuthalAngle,                    // Azimuthal angle of the line joining the centre  of the 
+					                                 // face at -pDz to the centre of the face at +pDz
+		    0.5*OctantCutOut_Trap_FullHeightFront,               // Half-length along y of the face at -pDz  
+		    0.5*OctantCutOut_Trap_FullLengthFront_Outer,         // Half-length along x of the side at y=-pDy1 of the face 
+					                                 // at -pDz
+		    0.5*OctantCutOut_Trap_FullLengthFront_Inner,         // Half-length along x of the side at y=+pDy1 of the face 
+					                                 // at -pDz
+		    0.0*degree,                                          // Angle with respect to the y axis from the centre of the  
+					                                 // side at y=-pDy1 to the centre at y=+pDy1 of the face 
+					                                 // at -pDz
+		    0.5*OctantCutOut_Trap_FullHeightBack,                // Half-length along y of the face at +pDz
+		    0.5*OctantCutOut_Trap_FullLengthBack_Outer,          // Half-length along x of the side at y=-pDy2 of the face 
+				                                         // at +pDz
+		    0.5*OctantCutOut_Trap_FullLengthBack_Inner,          // Half-length along x of the side at y=+pDy2 of the face 
+					                                 // at +pDz             
+		    0.0*degree                                           // Angle with respect to the y axis from the centre of the 
+					                                 // side at y=-pDy2 to the centre at y=+pDy2 of the face 
+					                                 // at +pDz
+ 		    );
    
 G4cout << G4endl << "###### Leaving QweakSimShieldingWall::DefineOctantCutOut() " << G4endl << G4endl;
 }
