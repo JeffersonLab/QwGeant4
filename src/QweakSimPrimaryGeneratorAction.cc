@@ -38,9 +38,8 @@
 QweakSimPrimaryGeneratorAction::QweakSimPrimaryGeneratorAction( QweakSimUserInformation* myUI, QweakSimEPEvent* myEPEvent)
 {
   G4cout << "###### Calling QweakSimPrimaryGeneratorAction::QweakSimPrimaryGeneratorAction " << G4endl;
-  
-  SetBeamEnergy();
 
+  E_beam = 1.160*GeV;
   fPositionX_min = -2.0*mm;
   fPositionX_max =  2.0*mm;
   fPositionY_min = -2.0*mm;
@@ -86,8 +85,12 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
    */
   
   G4int myEventCounter = myUserInfo->GetPrimaryEventNumber();
+
+  if (myEventCounter%1000==0) G4cout << "*=== Event number = " << myEventCounter << " ===*" << G4endl;
+
   G4double myPositionX, myPositionY, myPositionZ;
   G4double myNormMomentumX, myNormMomentumY, myNormMomentumZ;
+
   if (myEventCounter%2 == 0) {
     myPositionX =  myUserInfo->GetBeamPositionX() + (G4UniformRand()-0.5)*(fPositionX_max-fPositionX_min)+(fPositionX_max+fPositionX_min)/2.0;
     myPositionY =  myUserInfo->GetBeamPositionY() + (G4UniformRand()-0.5)*(fPositionY_max-fPositionY_min)+(fPositionY_max+fPositionY_min)/2.0;
@@ -95,8 +98,11 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 
     myNormMomentumX  = tan(myUserInfo->GetNormMomentumX());
     myNormMomentumY  = tan(myUserInfo->GetNormMomentumY());
-    myNormMomentumZ  = sqrt(1.0 - myNormMomentumX * myNormMomentumX - myNormMomentumY * myNormMomentumY);
-    
+    myNormMomentumZ  = sqrt(1.0 - myNormMomentumX * myNormMomentumX - myNormMomentumY * myNormMomentumY);  
+
+    fBeamEnergy = E_beam;
+    //G4cout << "Pretrack energy, momentum: " << fBeamEnergy << ", " << myNormMomentumZ << G4endl;
+
     myUserInfo->StoreOriginVertexPositionZ(myEvent->GetVertexZ());
     myUserInfo->EvtGenStatus = 0;
   }
@@ -105,12 +111,13 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     myPositionX = myUserInfo->GetOriginVertexPositionX();
     myPositionY = myUserInfo->GetOriginVertexPositionY();
     myPositionZ = myUserInfo->GetOriginVertexPositionZ();
-    	
+
     myNormMomentumX  = myUserInfo->GetOriginVertexMomentumDirectionX();
     myNormMomentumY  = myUserInfo->GetOriginVertexMomentumDirectionY();
     myNormMomentumZ  = myUserInfo->GetOriginVertexMomentumDirectionZ();
-    
+
     fBeamEnergy = myUserInfo->GetOriginVertexKineticEnergy();
+    //G4cout << "Postrack energy, momentum: " << fBeamEnergy << ", " << myNormMomentumZ << G4endl;
   }
 
 

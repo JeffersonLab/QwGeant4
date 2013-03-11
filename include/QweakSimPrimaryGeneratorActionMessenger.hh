@@ -75,6 +75,7 @@ private:
   G4double Xmax;
   G4double Ymin;
   G4double Ymax;
+  G4double E_beam;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

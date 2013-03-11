@@ -33,6 +33,7 @@ QweakSimPrimaryGeneratorActionMessenger::QweakSimPrimaryGeneratorActionMessenger
   Xmax = 0.0;
   Ymin = 0.0;
   Ymax = 0.0;
+  E_beam = 0.0;
 
   Dir = new G4UIdirectory("/PrimaryEvent/");
   Dir->SetGuidance("Primary event control");
@@ -124,7 +125,7 @@ QweakSimPrimaryGeneratorActionMessenger::QweakSimPrimaryGeneratorActionMessenger
 
   SetBeamEnergy_Cmd = new G4UIcmdWithADoubleAndUnit("/PrimaryEvent/SetBeamEnergy",this);
   SetBeamEnergy_Cmd->SetGuidance("Set beam energy.");
-  SetBeamEnergy_Cmd->SetParameterName("BeamEnergy",true);
+  SetBeamEnergy_Cmd->SetParameterName("E_beam",true);
   SetBeamEnergy_Cmd->SetUnitCategory("Energy");
   SetBeamEnergy_Cmd->SetDefaultValue(1.160*GeV);
   //SetBeamEnergy_Cmd->SetRange("BeamEnergy>0");
@@ -216,8 +217,8 @@ void QweakSimPrimaryGeneratorActionMessenger::SetNewValue(G4UIcommand* command, 
   if( command == SetBeamEnergy_Cmd )
     { 
       G4cout << "#### Messenger: Setting Beam Energy to " << newValue << G4endl;
-      G4double BeamEnergy = SetPositionX_Cmd->GetNewDoubleValue(newValue);
-      pPrimaryGeneratorAction->SetBeamEnergy(BeamEnergy); 
+      E_beam = SetBeamEnergy_Cmd->GetNewDoubleValue(newValue);
+      pPrimaryGeneratorAction->SetBeamEnergy(E_beam); 
     }
 
 }
