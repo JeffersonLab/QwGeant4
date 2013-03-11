@@ -30,10 +30,14 @@ set(Geant4_DIR $ENV{G4INSTALL}/build)
 find_package(Geant4 REQUIRED COMPONENTS gdml qt ui_all vis_all)
 include(${Geant4_USE_FILE})
 
-# Add the target executables
-add_executable(QweakSimG4   QweakSimG4.cc   ${my_project_sources})
-add_executable(QweakSimRoot QweakSimRoot.cc ${my_project_sources})
-
 # Link the ROOT and Geant4 libraries
-target_link_libraries(QweakSimG4   ${Geant4_LIBRARIES} ${ROOT_LIBRARIES})
-target_link_libraries(QweakSimRoot ${Geant4_LIBRARIES} ${ROOT_LIBRARIES})
+add_library(QweakSim SHARED ${my_project_sources})
+target_link_libraries(QweakSim ${Geant4_LIBRARIES} ${ROOT_LIBRARIES})
+
+# Add the target executables:
+# - QweakSimG4
+add_executable(QweakSimG4 QweakSimG4.cc)
+target_link_libraries(QweakSimG4 ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} QweakSim)
+# - QweakSimRoot
+add_executable(QweakSimRoot QweakSimRoot.cc)
+target_link_libraries(QweakSimRoot ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} QweakSim)
