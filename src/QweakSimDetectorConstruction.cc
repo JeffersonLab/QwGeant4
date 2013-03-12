@@ -469,7 +469,7 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   if (pShieldingWall) {
     pShieldingWall->SetCollimatorWall_FullLengthInX(670.56*cm);
     pShieldingWall->SetCollimatorWall_FullLengthInY(670.56*cm);
-    pShieldingWall->SetCollimatorWall_FullLengthInZ( 40.0*cm);
+    pShieldingWall->SetCollimatorWall_FullLengthInZ( 80.0*cm);
 
     // Peiqing: updated it according to as-designed geometry. 2011 Nov 12
     pShieldingWall->SetOctantCutOut_Trap_RadialDistance  (246.425*cm);
