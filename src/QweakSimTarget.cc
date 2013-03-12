@@ -116,8 +116,8 @@ QweakSimTarget::QweakSimTarget(QweakSimUserInformation *myUI)
     myUserInfo->TargetLength = targetCellInnerLength;
     myUserInfo->TargetEntranceWindowThickness = targetCellEntranceWindowThickness;
     myUserInfo->TargetExitWindowThickness = targetCellExitWindowThickness;
+    myUserInfo->TargetExitWindowNippleThickness = targetCellExitWindowNippleThickness;
     targetMessenger = new QweakSimTargetMessenger(this);
-
 
 }
 
@@ -133,7 +133,6 @@ QweakSimTarget::~QweakSimTarget()
 void QweakSimTarget::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 {
     G4cout << G4endl << "###### Calling QweakSimTarget::ConstructComponent() " << G4endl << G4endl;
-
 
     // define Target position
 
@@ -515,4 +514,3 @@ G4double QweakSimTarget::GetTargetCenterPositionInZ()
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-

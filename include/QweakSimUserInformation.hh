@@ -23,6 +23,7 @@ public:
   G4double TargetLength;
   G4double TargetEntranceWindowThickness;
   G4double TargetExitWindowThickness;
+  G4double TargetExitWindowNippleThickness;
 
   G4int    ReactionType;         // assign a number to which kind of reaction,e.g. 1 = elastic ep,
   G4int    ReactionRegion;

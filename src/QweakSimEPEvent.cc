@@ -24,12 +24,6 @@
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-   const G4double QweakSimEPEvent::TargetLength = 34.346*cm;
-
-   // definition of a mil = inch/1000
-   const G4double QweakSimEPEvent::mil = 0.001*2.54*cm;
-   const G4double QweakSimEPEvent::TargetWindowThickness = 5.0*mil;
-
    const G4double QweakSimEPEvent::M_n = 939.5656*MeV; //neutron mass in MeV/c^2
    const G4double QweakSimEPEvent::M_p = 938.2796*MeV;  // proton mass in MeV/c^2
 
@@ -87,16 +81,18 @@ G4double QweakSimEPEvent::GetVertexZ()
    */
 
   if (ReactionRegion == 1) // target
-    myPositionZ =  myUserInfo->TargetCenterPositionZ + (G4UniformRand()-0.5)*TargetLength;
+    myPositionZ =  myUserInfo->TargetCenterPositionZ + (G4UniformRand()-0.5)*(myUserInfo->TargetLength);
 
   else if (ReactionRegion == 2) // front entrance window
-    myPositionZ =  myUserInfo->TargetCenterPositionZ - 0.5*TargetLength - TargetWindowThickness*G4UniformRand();
+    myPositionZ =  myUserInfo->TargetCenterPositionZ - 0.5*(myUserInfo->TargetLength)
+                   - (myUserInfo->TargetEntranceWindowThickness)*G4UniformRand();
 
   else if(ReactionRegion == 3) // back exit window
-    myPositionZ =  myUserInfo->TargetCenterPositionZ + 0.5*TargetLength + TargetWindowThickness*G4UniformRand();
+    myPositionZ =  myUserInfo->TargetCenterPositionZ + 0.5*(myUserInfo->TargetLength)
+                   + (myUserInfo->TargetExitWindowNippleThickness)*G4UniformRand();
 
   else
-    myPositionZ =  myUserInfo->TargetCenterPositionZ + (G4UniformRand()-0.5)*TargetLength; //default region
+    myPositionZ =  myUserInfo->TargetCenterPositionZ + (G4UniformRand()-0.5)*(myUserInfo->TargetLength); //default region
 
   return myPositionZ;
 }
