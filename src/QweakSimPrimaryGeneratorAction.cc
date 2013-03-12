@@ -39,7 +39,7 @@ QweakSimPrimaryGeneratorAction::QweakSimPrimaryGeneratorAction( QweakSimUserInfo
 {
   G4cout << "###### Calling QweakSimPrimaryGeneratorAction::QweakSimPrimaryGeneratorAction " << G4endl;
 
-  E_beam = 1.160*GeV;
+  SetBeamEnergy();
   fPositionX_min = -2.0*mm;
   fPositionX_max =  2.0*mm;
   fPositionY_min = -2.0*mm;
@@ -88,8 +88,9 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 
   if (myEventCounter%1000==0) G4cout << "*=== Event number = " << myEventCounter << " ===*" << G4endl;
 
-  G4double myPositionX, myPositionY, myPositionZ;
+  G4double myPositionX, myPositionY, myPositionZ, myVertexZ;
   G4double myNormMomentumX, myNormMomentumY, myNormMomentumZ;
+  G4double E_beam;
 
   if (myEventCounter%2 == 0) {
     myPositionX =  myUserInfo->GetBeamPositionX() + (G4UniformRand()-0.5)*(fPositionX_max-fPositionX_min)+(fPositionX_max+fPositionX_min)/2.0;
@@ -100,8 +101,7 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     myNormMomentumY  = tan(myUserInfo->GetNormMomentumY());
     myNormMomentumZ  = sqrt(1.0 - myNormMomentumX * myNormMomentumX - myNormMomentumY * myNormMomentumY);  
 
-    fBeamEnergy = E_beam;
-    //G4cout << "Pretrack energy, momentum: " << fBeamEnergy << ", " << myNormMomentumZ << G4endl;
+    E_beam = fBeamEnergy;
 
     myUserInfo->StoreOriginVertexPositionZ(myEvent->GetVertexZ());
     myUserInfo->EvtGenStatus = 0;
@@ -116,8 +116,17 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     myNormMomentumY  = myUserInfo->GetOriginVertexMomentumDirectionY();
     myNormMomentumZ  = myUserInfo->GetOriginVertexMomentumDirectionZ();
 
-    fBeamEnergy = myUserInfo->GetOriginVertexKineticEnergy();
-    //G4cout << "Postrack energy, momentum: " << fBeamEnergy << ", " << myNormMomentumZ << G4endl;
+    E_beam = myUserInfo->GetOriginVertexKineticEnergy();
+
+    if (myEvent->GetReactionType() == 7) {
+      myVertexZ = myPositionZ;
+      myPositionZ = myUserInfo->TargetCenterPositionZ + 0.5*myUserInfo->TargetLength 
+                       + myUserInfo->TargetExitWindowThickness;
+      
+      // Project x & y positions from vertex to downstream of the target exit window
+      myPositionX += (myPositionZ-myVertexZ)*myNormMomentumX/myNormMomentumZ;
+      myPositionY += (myPositionZ-myVertexZ)*myNormMomentumY/myNormMomentumZ;   
+    }
   }
 
 
@@ -145,7 +154,7 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
                                                           myNormMomentumY,
                                                           myNormMomentumZ));
 
-  particleGun->SetParticleEnergy(fBeamEnergy);
+  particleGun->SetParticleEnergy(E_beam);
 
   // finally : fire !!!
   particleGun->GeneratePrimaryVertex(anEvent);
