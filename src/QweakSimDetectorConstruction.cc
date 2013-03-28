@@ -363,7 +363,7 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
     pCollimator1->SetOctantCutOutFrontInnerDiameter(2.0*5.21*cm);
     pCollimator1->SetOctantCutOutFrontOuterDiameter(2.0*10.69*cm);
     pCollimator1->SetOctantCutOutBackInnerDiameter(2.0*7.03*cm);
-    pCollimator1->SetOctantCutOutBackOuterDiameter(2.0*12.63*mm);
+    pCollimator1->SetOctantCutOutBackOuterDiameter(2.0*12.63*cm);
     pCollimator1->SetOctantCutOutStartingPhiAngle((-16.61+90.0)*degree);
     pCollimator1->SetOctantCutOutDeltaPhiAngle(2.0*16.61*degree);
     pCollimator1->SetOctantCutOutRadialOffset(0.0*cm);
@@ -379,7 +379,7 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   // Collimator 2 configuration
   if (pCollimator2) {
     pCollimator2->SetCollimatorNumber(2);
-    pCollimator2->SetCollimatorHousing_FullLengthInX(142.2*cm);//should be updated to 142.2*cm
+    pCollimator2->SetCollimatorHousing_FullLengthInX(142.2*cm);
     pCollimator2->SetCollimatorHousing_FullLengthInY(142.2*cm);
     pCollimator2->SetCollimatorHousing_FullLengthInZ(15.00*cm);
 
@@ -401,7 +401,7 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
     //   pCollimator2->SetOctantCutOutRadialOffset(0.0*cm);
 
     // redefine it here. -Peiqing, 2011 Nov 11
-    pCollimator2->SetOctantCutOutFrontInnerDiameter(14.935*2.0*cm);
+    pCollimator2->SetOctantCutOutFrontInnerDiameter(2.0*14.935*cm);
     pCollimator2->SetOctantCutOutFrontOuterDiameter(2.0*(14.935+7.25)*cm);
     pCollimator2->SetOctantCutOutBackInnerDiameter(33.89*cm);
     pCollimator2->SetOctantCutOutBackOuterDiameter(46.89*cm);
