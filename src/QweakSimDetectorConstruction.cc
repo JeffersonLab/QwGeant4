@@ -210,6 +210,7 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   //pGEM                 = new QweakSimGEM();
   pHDC                 = new QweakSimHDC();
   pVDC                 = new QweakSimVDC();
+  pVDCRotator 		   = new QweakSimVDCRotator(pVDC);
 
   pCerenkovDetector    = new QweakSimCerenkovDetector(myUserInfo);
 
@@ -342,24 +343,27 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
 
   // Collimator 1 configuration
   if (pCollimator1) {
+
+    // TODO: the little high-theta corners of collimator 1 are not implemented
+    // TODO: the slanted region of collimator 1 is implemented with a single slope, not a double slope (see drawings)
     pCollimator1->SetCollimatorNumber(1);
-    pCollimator1->SetCollimatorHousing_FullLengthInX(240.0*cm);//should be updated to 86.36*cm
-    pCollimator1->SetCollimatorHousing_FullLengthInY(240.0*cm);
+    pCollimator1->SetCollimatorHousing_FullLengthInX(86.36*cm);
+    pCollimator1->SetCollimatorHousing_FullLengthInY(86.36*cm);
     pCollimator1->SetCollimatorHousing_FullLengthInZ(15.24*cm);
 
     pCollimator1->SetOctantCutOutFrontFullLength_Y(5.04*cm);
-    pCollimator1->SetOctantCutOutFrontFullLength_X1(6.38*cm);
-    pCollimator1->SetOctantCutOutFrontFullLength_X2(6.38*cm);
+    pCollimator1->SetOctantCutOutFrontFullLength_X1(2.0*3.19*cm);
+    pCollimator1->SetOctantCutOutFrontFullLength_X2(2.0*3.19*cm);
     pCollimator1->SetOctantCutOutBackFullLength_Y(5.83*cm);
-    pCollimator1->SetOctantCutOutBackFullLength_X1(7.30*cm);
-    pCollimator1->SetOctantCutOutBackFullLength_X2(7.30*cm);
+    pCollimator1->SetOctantCutOutBackFullLength_X1(2.0*3.65*cm);
+    pCollimator1->SetOctantCutOutBackFullLength_X2(2.0*3.65*cm);
 
     pCollimator1->SetBeamlineCutoutDiameter(8.3*cm);
 
-    pCollimator1->SetOctantCutOutFrontInnerDiameter(104.2*mm);
-    pCollimator1->SetOctantCutOutFrontOuterDiameter(213.8*mm);
-    pCollimator1->SetOctantCutOutBackInnerDiameter(140.6*mm);
-    pCollimator1->SetOctantCutOutBackOuterDiameter(252.6*mm);
+    pCollimator1->SetOctantCutOutFrontInnerDiameter(2.0*5.21*cm);
+    pCollimator1->SetOctantCutOutFrontOuterDiameter(2.0*10.69*cm);
+    pCollimator1->SetOctantCutOutBackInnerDiameter(2.0*7.03*cm);
+    pCollimator1->SetOctantCutOutBackOuterDiameter(2.0*12.63*mm);
     pCollimator1->SetOctantCutOutStartingPhiAngle((-16.61+90.0)*degree);
     pCollimator1->SetOctantCutOutDeltaPhiAngle(2.0*16.61*degree);
     pCollimator1->SetOctantCutOutRadialOffset(0.0*cm);
@@ -375,8 +379,8 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   // Collimator 2 configuration
   if (pCollimator2) {
     pCollimator2->SetCollimatorNumber(2);
-    pCollimator2->SetCollimatorHousing_FullLengthInX(240.0*cm);//should be updated to 142.2*cm
-    pCollimator2->SetCollimatorHousing_FullLengthInY(240.0*cm);
+    pCollimator2->SetCollimatorHousing_FullLengthInX(142.2*cm);//should be updated to 142.2*cm
+    pCollimator2->SetCollimatorHousing_FullLengthInY(142.2*cm);
     pCollimator2->SetCollimatorHousing_FullLengthInZ(15.00*cm);
 
     pCollimator2->SetOctantCutOutFrontFullLength_Y(15.40*cm);
@@ -543,7 +547,6 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   //===============================================
   //
   if (pVDCRotator) {
-    pVDCRotator  = new QweakSimVDCRotator(pVDC);
     pVDCRotator->SetMotherVolume(experimentalHall_Physical);
     pVDCRotator->ConstructRings();
     pVDCRotator->ConstructRails();
