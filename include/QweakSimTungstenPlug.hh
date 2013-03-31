@@ -32,6 +32,7 @@ private:
   QweakSimMaterial* pMaterial;
   
   // W-Plug
+
   G4LogicalVolume*   WPlug_US_Logical;
   G4VPhysicalVolume* WPlug_US_Physical;
   G4LogicalVolume*   WPlug_DS_Logical;
@@ -49,8 +50,8 @@ public:
 
   void ConstructTungstenPlug(G4VPhysicalVolume*);
 
-  void DestroyComponent();
-
+  G4VPhysicalVolume* getTungstenPlugUSPhysicalVolume()   {return WPlug_US_Physical;}
+  G4VPhysicalVolume* getTungstenPlugDSPhysicalVolume()   {return WPlug_DS_Physical;}
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....

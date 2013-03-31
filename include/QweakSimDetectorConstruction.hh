@@ -54,6 +54,7 @@ class QweakSimTarget;
 class QweakSimTargetMessenger;
 class QweakSimBeamLine;
 class QweakSimBeamLineMessenger;
+class QweakSimTungstenPlug;
 class QweakSimCollimator;
 class QweakSimCollimatorSupport;
 class QweakSimShieldingWall;
@@ -106,6 +107,7 @@ private:
   QweakSimTarget*            pTarget;
   QweakSimBeamLine*          pBeamLine;
 
+  QweakSimTungstenPlug*      pTungstenPlug;
   QweakSimCollimator*        pCollimator1;
   QweakSimCollimator*        pCollimator2;
   QweakSimCollimator*        pCollimator3;

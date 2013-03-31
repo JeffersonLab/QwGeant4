@@ -51,6 +51,7 @@
 #include "QweakSimTargetMessenger.hh"
 #include "QweakSimBeamLine.hh"
 #include "QweakSimBeamLineMessenger.hh"
+#include "QweakSimTungstenPlug.hh"
 #include "QweakSimCollimator.hh"
 #include "QweakSimCollimatorSupport.hh"
 #include "QweakSimShieldingWall.hh"
@@ -100,6 +101,7 @@ QweakSimDetectorConstruction::QweakSimDetectorConstruction(QweakSimUserInformati
   pTriggerScintillator  = NULL;
   pCerenkovDetector     = NULL;
 
+  pTungstenPlug      = NULL;
   pCollimator1       = NULL;
   pCollimator2       = NULL;
   pCollimator3       = NULL;
@@ -160,7 +162,7 @@ QweakSimDetectorConstruction::~QweakSimDetectorConstruction()
   if (pCerenkovDetector)    delete pCerenkovDetector;
   if (pTriggerScintillator) delete pTriggerScintillator;
 
-
+  if (pTungstenPlug)        delete pTungstenPlug;
   if (pCollimator1)         delete pCollimator1;
   if (pCollimator2)         delete pCollimator2;
   if (pCollimator3)         delete pCollimator3;
@@ -194,6 +196,7 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   pTarget              = new QweakSimTarget(myUserInfo);
   pBeamLine            = new QweakSimBeamLine(myUserInfo);
   
+  pTungstenPlug        = new QweakSimTungstenPlug();
   pCollimator1         = new QweakSimCollimator();
   pCollimator2         = new QweakSimCollimator();
   pCollimator3         = new QweakSimCollimator();
@@ -336,6 +339,17 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
     pMainMagnet -> Construct_DownstreamSpider(experimentalHall_Physical);
     //
     pGeometry->AddModule(pMainMagnet->getMainMagnetPhysicalVolume());
+  }
+
+   //================================================
+   // create/place Tungsten plug body into MotherVolume
+   //================================================
+   //
+  if (pTungstenPlug) {
+    pTungstenPlug->ConstructTungstenPlug(experimentalHall_Physical);
+    //
+    pGeometry->AddModule(pTungstenPlug->getTungstenPlugUSPhysicalVolume());
+    pGeometry->AddModule(pTungstenPlug->getTungstenPlugDSPhysicalVolume());
   }
 
   //jpan@nuclear.uwinnipeg.ca: Fri Jun  5 12:24:18 CDT 2009
