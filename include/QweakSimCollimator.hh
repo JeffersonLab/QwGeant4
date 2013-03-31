@@ -82,15 +82,6 @@ private:
   G4double OctantCutOutRadialOffset;
   G4double BeamlineCutoutDiameter;
 
-  // W-Plug
-
-  G4LogicalVolume*   WPlug_US_Logical;
-  G4VPhysicalVolume* WPlug_US_Physical;
-  G4LogicalVolume*   WPlug_DS_Logical;
-  G4VPhysicalVolume* WPlug_DS_Physical;
-
-  G4Material*        WPlug_Material;  
-  G4Material*        WPlug_Material_Vac;  
 
 public:
     //!Constructor
