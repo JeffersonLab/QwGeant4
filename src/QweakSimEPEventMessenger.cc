@@ -70,6 +70,7 @@ QweakSimEPEventMessenger::QweakSimEPEventMessenger(QweakSimEPEvent* pEPEvent)
   SelectReactionType_Cmd->SetGuidance("4 - Al quasi-elastic (neutron)");
   SelectReactionType_Cmd->SetGuidance("5 - LH2 inelastic (delta resonance)");
   SelectReactionType_Cmd->SetGuidance("6 - Moller scattering");
+  SelectReactionType_Cmd->SetGuidance("7 - LH2 radiative lookup table (3.35 GeV)");
   SelectReactionType_Cmd->SetParameterName("SelectReactionType",true);
   SelectReactionType_Cmd->SetDefaultValue(1);
   SelectReactionType_Cmd->SetRange("SelectReactionType>=0");
@@ -113,6 +114,20 @@ QweakSimEPEventMessenger::QweakSimEPEventMessenger(QweakSimEPEvent* pEPEvent)
   PhiMaxLimitCmd->SetDefaultUnit("degree");
   PhiMaxLimitCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
+  EPrimeMinLimitCmd =  new G4UIcmdWithADoubleAndUnit("/EventGen/SetEPrimeMin",this);
+  EPrimeMinLimitCmd->SetGuidance("Set the minimum E\' of event generator"); 
+  EPrimeMinLimitCmd->SetParameterName("EPrimeMin",true);
+  EPrimeMinLimitCmd->SetUnitCategory("Energy");
+  EPrimeMinLimitCmd->SetDefaultUnit("GeV");
+  EPrimeMinLimitCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+
+  EPrimeMaxLimitCmd =  new G4UIcmdWithADoubleAndUnit("/EventGen/SetEPrimeMax",this);
+  EPrimeMaxLimitCmd->SetGuidance("Set the maximum E\' of event generator"); 
+  EPrimeMaxLimitCmd->SetParameterName("EPrimeMax",true);
+  EPrimeMaxLimitCmd->SetUnitCategory("Energy");
+  EPrimeMaxLimitCmd->SetDefaultUnit("GeV");
+  EPrimeMaxLimitCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+
   G4cout << "###### Leaving QweakSimEPEventMessenger::QweakSimEPEventMessenger() " << G4endl;
 }
 
@@ -131,6 +146,8 @@ QweakSimEPEventMessenger::~QweakSimEPEventMessenger()
   delete ThetaMaxLimitCmd;
   delete PhiMinLimitCmd;
   delete PhiMaxLimitCmd;
+  delete EPrimeMinLimitCmd;
+  delete EPrimeMaxLimitCmd;
   delete EventGenDir;
 
   G4cout << "###### Leaving QweakSimEPEventMessenger::~QweakSimEPEventMessenger() " << G4endl;
@@ -155,7 +172,9 @@ void QweakSimEPEventMessenger::SetNewValue(G4UIcommand* command, G4String newVal
   if( command == SelectReactionType_Cmd )
     { 
       G4cout << "% % ===> Changing reaction type to: "<<newValue<< G4endl;
-      pQweakSimEPEvent->SetReactionType(SelectReactionType_Cmd->GetNewIntValue(newValue)); 
+      G4int type = SelectReactionType_Cmd->GetNewIntValue(newValue); 
+      pQweakSimEPEvent->SetReactionType(type);
+      if (type == 7) pQweakSimEPEvent->CreateLookupTable(); 
     }
 
   if( command == SelectReactionRegion_Cmd )
@@ -186,6 +205,18 @@ void QweakSimEPEventMessenger::SetNewValue(G4UIcommand* command, G4String newVal
     { 
       G4cout << "% % ===> Changing phi maximum to: "<<newValue<< G4endl;
       pQweakSimEPEvent->SetPhiAngle_Max(PhiMaxLimitCmd->GetNewDoubleValue(newValue)); 
+    }
+
+  if( command == EPrimeMinLimitCmd )
+    { 
+      G4cout << "% % ===> Changing E\' minimum to: "<<newValue<< G4endl;
+      pQweakSimEPEvent->SetEPrime_Min(EPrimeMinLimitCmd->GetNewDoubleValue(newValue)); 
+    }
+
+  if( command == EPrimeMaxLimitCmd )
+    { 
+      G4cout << "% % ===> Changing E\' maximum to: "<<newValue<< G4endl;
+      pQweakSimEPEvent->SetEPrime_Max(EPrimeMaxLimitCmd->GetNewDoubleValue(newValue)); 
     }
 
 }

@@ -43,6 +43,9 @@ QweakSimEPEvent::QweakSimEPEvent( QweakSimUserInformation* myUI)
   ThetaAngle_Min =  4.0*degree;
   ThetaAngle_Max = 13.5*degree;
 
+  EPrime_Min = 0.4*GeV;
+  EPrime_Max = 0.4*GeV;
+
   TypeSetting = 1;
   ReactionType = 1;
   ReactionRegion = 1;
@@ -206,6 +209,7 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
     * \li 4: quasi-elastic scattering from neutron in aluminum (see QweakSimEPEvent::Quasi_Elastic_Neutron)
     * \li 5: Delta resonance (see QweakSimEPEvent::Delta_Resonance)
     * \li 6: Moller scattering (see QweakSimEPEvent::Moller_Scattering)
+    * \li 7: radiative scattering from hydrogen (3.35 GeV) (see QweakSimEPEvent::Radiative_Cross_Section_Proton)
     */
 
    if(ReactionType==1) //LH2 target
@@ -260,6 +264,12 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
 					 E_recoil, ThetaRecoil, 
                                          Q2, fWeightN, Asymmetry);
       }      
+   else if(ReactionType==7) //LH2 target, radiative cross section 3.35 GeV
+      {
+       fCrossSection = Radiative_Cross_Section_Proton(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
+       Asymmetry = GetAsymmetry_EP(RelativeThetaAngle, E_in);
+      }
+
 }
 
 
@@ -863,6 +873,125 @@ G4double QweakSimEPEvent::Moller_Scattering(G4double E_in, G4double theta1,
       //         <<theta2*180/3.14<<"  "<<Xsect<<"  "<<fWeightN<<"  "<<q2*1e-6<<"  "<<asymmetry<<std::endl;
       
       return Xsect;
+}
+
+////....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+//  Jim Dowd
+// ---------------------------------------------------------
+//      Calculates the Cross Section weighting factor for 
+//      radiated scattering from the proton. 
+// ---------------------------------------------------------
+//
+//  Beam Energy must be 3.35 GeV
+
+G4double QweakSimEPEvent::Radiative_Cross_Section_Proton(G4double E_in,
+                                                         G4double Theta,
+                                                         G4double &fWeightN,
+                                                         G4double &Q2,
+                                                         G4double &E_out)
+{
+    if (Theta<Theta_Min)
+       Theta = Theta_Min;
+
+    E_out = (G4UniformRand()*(EPrime_Max-EPrime_Min) + EPrime_Min);
+
+    const Double_t pos[value_d]   = {myUserInfo->GetOriginVertexPositionZ(),3.35*GeV,E_out,Theta};
+    Double_t       value[value_n] = {0.0};
+
+    fLookupTable->GetValue(pos,value);
+    Q2       = value[1];
+    fWeightN = value[6]*sin(Theta);
+    //fWeightN = value[6];
+
+    return fWeightN;
+
+}
+
+////....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+//  Jim Dowd
+// ---------------------------------------------------------
+//      Creates lookup table for calculating elastic radiative 
+//      cross sections on hydrogen. 
+// ---------------------------------------------------------
+
+void QweakSimEPEvent::CreateLookupTable()
+{
+    G4int entries = 1;
+
+    coord_t coord[value_d] = {0.0};
+    value_t field[value_n] = {0.0};
+ 
+    //  Set min, max, and step size for each coordinate in the lookup table.
+    //  Z position in radiation lengths
+    fMin.push_back(myUserInfo->TargetCenterPositionZ - 0.5*myUserInfo->TargetLength);
+    fMax.push_back(myUserInfo->TargetCenterPositionZ + 0.5*myUserInfo->TargetLength);
+    fStep.push_back(myUserInfo->TargetLength/10.0);
+
+    //  Beam Energy in GeV
+    fMin.push_back(3.35*GeV);
+    fMax.push_back(3.35*GeV);
+    fStep.push_back(0.05*GeV);
+
+    //  E prime in GeV
+    fMin.push_back(0.15*GeV);
+    fMax.push_back(1.55*GeV);
+    fStep.push_back(0.05*GeV);
+
+    //  Theta angle
+    fMin.push_back(2.00*degree);
+    fMax.push_back(20.0*degree);
+    fStep.push_back(0.5*degree);
+
+    for (Int_t n = 0; n < (Int_t)fStep.size(); n++) {
+      entries *= (G4int)( (fMax[n]-fMin[n])/fStep[n] + 1.5 );
+    }
+    std::ifstream in;
+    in.open("./radiative_lookup.dat");
+    if (!in.is_open())  
+        G4cout << "#### Failed to open data file for lookup table" << G4endl;
+    else
+    {
+      G4cout << "#### Found lookup table data file"  << G4endl;
+      if (fLookupTable != 0) delete fLookupTable;
+      fLookupTable = new QweakSimFieldMap<value_t,value_n>(value_d);
+      fLookupTable->SetMinimumMaximumStep(fMin,fMax,fStep);
+
+      //  Filling Lookup Table
+      for (Int_t line = 0; line <  entries; line++) {
+        if (in.peek() == EOF) {
+          G4cout << "#### Error reading \'elastic_lookup.dat\':  File contains only "
+                 << line << " of " << entries << " expected lines. ####" << G4endl;
+          break;
+        }
+
+        for (G4int i = 0; i < value_d; i++)  in >> coord[i];
+        for (G4int j = 0; j < value_n; j++)  in >> field[j];
+   
+        //  Add units
+                             // Z position converted from rad lengths to GEANT coords
+        coord[0] = myUserInfo->TargetCenterPositionZ - 0.5*myUserInfo->TargetLength
+                   + coord[0]*myUserInfo->TargetLength/0.0396;        
+        coord[1] *= GeV;     // Beam Energy
+        coord[2] *= GeV;     // E prime
+        coord[3] *= degree;  // Theta
+
+        //field[0]           // Bjorken x (unitless) // This value has too few sig figs
+	field[1] *= GeV*GeV; // Q2                   // This value has too few sig figs
+	//field[2]           // total born cross section (ub/Sr)
+	//field[3]           // inelastic born cross section(ub/Sr)
+	//field[4]           // quasi-elastic born cross section (ub/Sr)
+	//field[5]           // quasi-elastic factor
+	//field[6]           // total radiated cross section (ub/Sr)
+	//field[7]           // elastic radiated cross section (ub/Sr)
+	//field[8]           // quasi-elastic radiated cross section (ub/Sr)
+	//field[9]           // deep-inelastic radiated cross section (ub/Sr)
+	//field[10]          // charge correction
+
+        fLookupTable->Set(coord,field);
+      }
+      G4cout << "===== Filling of Lookup Table complete! =====" << G4endl;
+    }
+    in.close();
 }
 
 ////....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

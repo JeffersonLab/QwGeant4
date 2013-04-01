@@ -90,7 +90,7 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 
   G4double myPositionX, myPositionY, myPositionZ, myVertexZ;
   G4double myNormMomentumX, myNormMomentumY, myNormMomentumZ;
-  G4double E_beam;
+  G4double E_beam;  // Energy of the incoming and outgoing particle
 
   if (myEventCounter%2 == 0) {
     myPositionX =  myUserInfo->GetBeamPositionX() + (G4UniformRand()-0.5)*(fPositionX_max-fPositionX_min)+(fPositionX_max+fPositionX_min)/2.0;
@@ -121,11 +121,12 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     if (myEvent->GetReactionType() == 7) {
       myVertexZ = myPositionZ;
       myPositionZ = myUserInfo->TargetCenterPositionZ + 0.5*myUserInfo->TargetLength 
-                       + myUserInfo->TargetExitWindowThickness;
+	+ myUserInfo->TargetExitWindowThickness + 1.0*cm;
       
-      // Project x & y positions from vertex to downstream of the target exit window
+      // Project x & y positions from vertex to 1 cm downstream of the target exit window
       myPositionX += (myPositionZ-myVertexZ)*myNormMomentumX/myNormMomentumZ;
-      myPositionY += (myPositionZ-myVertexZ)*myNormMomentumY/myNormMomentumZ;   
+      myPositionY += (myPositionZ-myVertexZ)*myNormMomentumY/myNormMomentumZ;
+
     }
   }
 

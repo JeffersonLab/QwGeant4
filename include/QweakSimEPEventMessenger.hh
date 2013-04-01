@@ -60,6 +60,8 @@ private:
   G4UIcmdWithADoubleAndUnit* ThetaMaxLimitCmd;
   G4UIcmdWithADoubleAndUnit* PhiMinLimitCmd;
   G4UIcmdWithADoubleAndUnit* PhiMaxLimitCmd;
+  G4UIcmdWithADoubleAndUnit* EPrimeMinLimitCmd;
+  G4UIcmdWithADoubleAndUnit* EPrimeMaxLimitCmd;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

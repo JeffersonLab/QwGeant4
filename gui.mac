@@ -116,6 +116,7 @@
 /gui/addButton reactionType "4 - Quasi-elastic Al (neutron)" "/EventGen/SelectReactionType 4"
 /gui/addButton reactionType "5 - Inelastic LH2" "/EventGen/SelectReactionType 5"
 /gui/addButton reactionType "6 - Moller scattering" "/EventGen/SelectReactionType 6"
+/gui/addButton reactionType "7 - LH2 radiative lookup table (3.35 GeV)" "/EventGen/SelectReactionType 7"
 
 # Reaction region menu
 /gui/addMenu reactionRegion ReactionRegion

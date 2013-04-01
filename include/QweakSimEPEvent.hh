@@ -20,9 +20,16 @@
 #include "G4Types.hh"
 #include "G4ThreeVector.hh"
 
+//  user includes
+#include <QweakSimFieldMap.hh>
+#include "Randomize.hh"
+
 // user classes
 class QweakSimEPEventMessenger;
 class QweakSimUserInformation;
+
+//template <class value_t, unsigned int value_n>
+//class QweakSimFieldMap<value_t,value_n>;
 
 class QweakSimEPEvent {
 
@@ -56,8 +63,22 @@ class QweakSimEPEvent {
    G4double PhiAngle_Max;
    G4double ThetaAngle_Min;
    G4double ThetaAngle_Max;
+   G4double EPrime_Min;
+   G4double EPrime_Max;
 
    G4double myPositionZ;
+
+  //  Lookup Table storage type
+   typedef float value_t;      // type of all values stored  in the field
+
+  //  Lookup Table field values
+   static const G4int value_n = 11; // number of values at each point in the field
+   static const G4int value_d = 4;  // number of dimensions of the coordinates
+   std::vector< G4double > fMin;
+   std::vector< G4double > fMax;
+   std::vector< G4double > fStep;
+
+   QweakSimFieldMap<value_t,value_n> *fLookupTable;
 
    G4ThreeVector GetMomentumDirection();
    G4double ResMod507(G4int sf,G4double w2,G4double q2,G4double *xval);
@@ -78,6 +99,12 @@ class QweakSimEPEvent {
   void SetIsotropy(G4int isot) { Isotropy = isot; };
   G4int GetIsotropy( ) {return Isotropy;};
   
+  void SetEPrime_Min(G4double energy) {EPrime_Min = energy;};
+  G4double GetEPrime_Min() {return EPrime_Min;};
+
+  void SetEPrime_Max(G4double energy) {EPrime_Max = energy;};
+  G4double GetEPrime_Max() {return EPrime_Max;};
+
   void SetThetaAngle_Min(G4double ang) {ThetaAngle_Min = ang;};
   G4double GetThetaAngle_Min() {return ThetaAngle_Min;};
 
@@ -135,6 +162,14 @@ class QweakSimEPEvent {
                              G4double &E_out1, G4double &E_out2, G4double &theta2, 
                              G4double &q2, G4double &fWeightN, G4double &asymmetry);
   
+  G4double Radiative_Cross_Section_Proton( G4double E_in,
+                                           G4double Theta,
+                                           G4double &fWeightN,
+                                           G4double &Q2,
+                                           G4double &E_out);
+
+  void CreateLookupTable();
+
   G4double GetAsymmetry_EP(G4double theta, G4double energy);
   G4double GetAsymmetry_EN(G4double theta, G4double energy);
   G4double GetAsymmetry_AL(G4double theta, G4double energy);
