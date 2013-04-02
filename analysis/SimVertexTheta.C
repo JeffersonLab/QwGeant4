@@ -1,16 +1,10 @@
-/***********************************************************
+/*********************************************************** 
 Programmer: Valerie Gray
-Purpose: To Output the Q2 values for simulated data for all the octants
+Purpose: To Output the Theta vertex values for simulated data for all the octants
 and each octant individually
 
 This code shows two differnt ways to calaulate the error on the mean
 of a wieghted histogram
-
-Also this output the number of entries in the histogram so that the
-relative weights can be caluculated.  Please note that the number of entries
-in a weighted histogram is not the correct number of entries, however
-it works just fine for weighted histograms, since the relaitive rates is
-what they are used for.
 
 Entry Conditions: x and y position , x and y angle direction
 Date: 04-11-2012
@@ -28,7 +22,7 @@ Assisted By: Wouter Deconinck
 #include <iomanip>
 #include <string>
 
-void SimQ2 (string posx, int posy, int anglex, int angley)
+void SimVertexTheta (string posx, int posy, int anglex, int angley)
 {
   // groups root files for a run together
   TChain* QweakSimG4_Tree = new TChain ("QweakSimG4_Tree");
@@ -53,7 +47,6 @@ void SimQ2 (string posx, int posy, int anglex, int angley)
 //  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeightScan_MagRot90deg/*.root");
 //  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeightScan_MagRot90deg_noDC/*.root");
 
-
   //Qtor Scans
 //  QweakSimG4_Tree->Add(Form("/cache/mss/home/vmgray/rootfiles/myQtorScan/myQtorScan_%d_*.root", posy));
 
@@ -69,39 +62,39 @@ void SimQ2 (string posx, int posy, int anglex, int angley)
   Int_t n = 1000;
 
   //define vector of histograms
-  std::vector < vector<TH1D*> >  q2; //[chunk #][octant]
-  q2.resize(n+1);
+  std::vector < vector<TH1D*> >  Theta; //[chunk #][octant]
+  Theta.resize(n+1);
 
-  std::vector<TH1D*> q2_tot;//[oct]
-  q2_tot.resize(9);
+  std::vector<TH1D*> Theta_tot;//[oct]
+  Theta_tot.resize(9);
 
-  for (size_t i = 0; i<q2.size();i++)
+  for (size_t i = 0; i<Theta.size();i++)
   {
-     q2[i].resize(9);
-     for (size_t j = 0; j<q2[i].size();j++)
+     Theta[i].resize(9);
+     for (size_t j = 0; j<Theta[i].size();j++)
      {
-       //set the histogram for the q2 
-       q2[i][j]= new TH1D (Form("q2[%d][%d]",i,j),Form("Sim Q2 for Octant number %d, set %d",i,j),100,0.0,0.12);
-       q2[i][j]->GetXaxis()->SetTitle("Q2 value m(GeV)^2");
-       q2[i][j]->GetYaxis()->SetTitle("Frequency");
+       //set the histogram for the Theta 
+       Theta[i][j]= new TH1D (Form("Theta[%d][%d]",i,j),Form("Sim Theta vertex for Octant number %d, set %d",i,j),100,0.0,18.0);
+       Theta[i][j]->GetXaxis()->SetTitle("Theta value (degree)");
+       Theta[i][j]->GetYaxis()->SetTitle("Frequency");
      }
 	}
-  for (size_t j = 0; j<q2_tot.size();j++)
+  for (size_t j = 0; j<Theta_tot.size();j++)
   {
-     q2_tot[j] = new TH1D (Form("q2_tot[%d]",j),Form("Sim Q2 for Octant number %d",j),100,0.0,0.12);
-     q2_tot[j]->GetXaxis()->SetTitle("Q2 value m(GeV)^2");
-     q2_tot[j]->GetYaxis()->SetTitle("Frequency");
+     Theta_tot[j] = new TH1D (Form("Theta_tot[%d]",j),Form("Sim Theta vertex for Octant number %d",j),100,0.0,18.0);
+     Theta_tot[j]->GetXaxis()->SetTitle("Theta value (degree)");
+     Theta_tot[j]->GetYaxis()->SetTitle("Frequency");
  	}
 
  //define a histogram to store all the means of the n histogram chunk 
-  std::vector<TH1D*> h_q2_mean;//[oct]
-  h_q2_mean.resize(9);
+  std::vector<TH1D*> h_Theta_mean;//[oct]
+  h_Theta_mean.resize(9);
 
-  for (size_t j = 0; j<h_q2_mean.size();j++)
+  for (size_t j = 0; j<h_Theta_mean.size();j++)
   {
-     h_q2_mean[j] = new TH1D (Form("h_q2_mean[%d]",j),Form("Mean Sim Q2 distribution from the %d chunks for Octant number %d", n,j),300,10.0,40.0);
-     h_q2_mean[j]->GetXaxis()->SetTitle("Mean Q2 value m(GeV)^2");
-     h_q2_mean[j]->GetYaxis()->SetTitle("Frequency");
+     h_Theta_mean[j] = new TH1D (Form("h_Theta_mean[%d]",j),Form("Mean Sim Theta value distribution from the %d chunks for Octant number %d", n,j),300,0.0,18.0);
+     h_Theta_mean[j]->GetXaxis()->SetTitle("Mean Theta value (degree)");
+     h_Theta_mean[j]->GetYaxis()->SetTitle("Frequency");
  	}
 
   //define an array  for the mean and sigma of all the histograms
@@ -109,9 +102,8 @@ void SimQ2 (string posx, int posy, int anglex, int angley)
   //mean it the mean
   //sigma is the mean squared at this point (sorry for the bad naming)
 
-  Double_t mean_q2[9] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
-  Double_t sigma_q2[9] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
-  int Entries[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+  Double_t mean_Theta[9] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+  Double_t sigma_Theta[9] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 
   //divide the number of entries up
   Int_t nentries = QweakSimG4_Tree->GetEntries();
@@ -121,67 +113,65 @@ void SimQ2 (string posx, int posy, int anglex, int angley)
   {
     Int_t n1 = nentries / n * i;
 
-    QweakSimG4_Tree->Draw(Form("Primary.PrimaryQ2>>q2[%d][0]",i) ,"Primary.CrossSection * Cerenkov.PMT.PMTTotalNbOfPEs"," ", step ,n1 );
-    mean_q2[0] += q2[i][0]->GetMean();
-    sigma_q2[0] += q2[i][0]->GetMean() * q2[i][0]->GetMean();
-    q2_tot[0]->Add(q2[i][0]);
-    h_q2_mean[0]->Fill( 1000*q2[i][0]->GetMean() );
-    Entries[0] += q2[i][0]->GetEntries();
+    QweakSimG4_Tree->Draw(Form("Primary.OriginVertexThetaAngle>>Theta[%d][0]",i) ,"Primary.CrossSection * Cerenkov.PMT.PMTTotalNbOfPEs"," ", step ,n1 );
+    mean_Theta[0] += Theta[i][0]->GetMean();
+    sigma_Theta[0] += Theta[i][0]->GetMean() * Theta[i][0]->GetMean();
+    Theta_tot[0]->Add(Theta[i][0]);
+    h_Theta_mean[0]->Fill( Theta[i][0]->GetMean() );
 
-    //draw the q2 graph for each octants
-    for (size_t oct = 1; oct < q2[i].size(); oct ++)
+    //draw the Theta graph for each octants
+    for (size_t oct = 1; oct < Theta[i].size(); oct ++)
     {
-      QweakSimG4_Tree->Draw(Form("Primary.PrimaryQ2>>q2[%d][%d]",i,oct),
+      QweakSimG4_Tree->Draw(Form("Primary.OriginVertexThetaAngle>>Theta[%d][%d]",i,oct),
         Form("Primary.CrossSection*Cerenkov.PMT.PMTTotalNbOfPEs* (Cerenkov.Detector.DetectorID==%d)/Cerenkov.Detector.NbOfHits",oct), " ", step, n1 );
-      mean_q2[oct] += q2[i][oct]->GetMean();
-      sigma_q2[oct] += q2[i][oct]->GetMean() * q2[i][oct]->GetMean();
-      q2_tot[oct]->Add(q2[i][oct]);
-      h_q2_mean[oct]->Fill( 1000*q2[i][oct]->GetMean() );
-      Entries[oct] += q2[i][oct]->GetEntries();
+      mean_Theta[oct] += Theta[i][oct]->GetMean();
+      sigma_Theta[oct] += Theta[i][oct]->GetMean() * Theta[i][oct]->GetMean();
+      Theta_tot[oct]->Add(Theta[i][oct]);
+      h_Theta_mean[oct]->Fill( Theta[i][oct]->GetMean() );
     }
 
   }
 
   //define canvas
-  TCanvas* c1 = new TCanvas ("c1","Sim Q2");
+  TCanvas* c1 = new TCanvas ("c1","Sim Theta Vetex");
   c1->Divide(3,3);
   c1->cd(9);
-  q2_tot[0]->Draw();
+  Theta_tot[0]->Draw();
 
-  for (size_t oct = 1; oct < q2_tot.size(); oct ++)
+  for (size_t oct = 1; oct < Theta_tot.size(); oct ++)
     {
       c1->cd(oct);
-      q2_tot[oct]->Draw();
+      Theta_tot[oct]->Draw();
     }
 
-  TCanvas* c2 = new TCanvas ("c2","Mean Sim Q2");
+  TCanvas* c2 = new TCanvas ("c2","Mean Sim Theta Vertex");
   c2->Divide(3,3);
   c2->cd(9);
-  h_q2_mean[0]->Draw();
+  h_Theta_mean[0]->Draw();
 
-  for (size_t oct = 1; oct < h_q2_mean.size(); oct ++)
+  for (size_t oct = 1; oct < h_Theta_mean.size(); oct ++)
     {
       c2->cd(oct);
-      h_q2_mean[oct]->Draw();
+      h_Theta_mean[oct]->Draw();
     }
 
 
   //calaulate out the right error and mean
-  for (size_t oct = 0; oct < q2_tot.size(); oct++)
+  for (size_t oct = 0; oct < Theta_tot.size(); oct++)
   {
-    mean_q2[oct] /= n;
+    mean_Theta[oct] /= n;
     //the extra  factor of sqrt(n) is to get the error on the mean not just the error of the distibution
-    sigma_q2[oct] = sqrt(sigma_q2[oct] / n - mean_q2[oct] * mean_q2[oct]) / sqrt(n);
+    sigma_Theta[oct] = sqrt(sigma_Theta[oct] / n - mean_Theta[oct] * mean_Theta[oct]) / sqrt(n);
   }
 
-  cout << "Oct \t " << "Q2(calc) \t " << "error (calc) \t " <<  "Q2 (hist) \t " << "error (hist) \t # Entries \t all in m(Gev)^2 " << endl;
-  cout << "All \t " << setprecision(5) << 1000*mean_q2[0] << " \t " <<  setprecision(4) << 1000*sigma_q2[0] << " \t "
-     << setprecision(5) << h_q2_mean[0]->GetMean() << " \t " <<  setprecision(4) << h_q2_mean[0]->GetRMS()/sqrt(h_q2_mean[0]->GetEntries()) << " \t " << Entries[0] <<  endl;
+  cout << "Oct \t " << "Theta(calc) \t " << "error (calc) \t " <<  "Theta (hist) \t " << "error (hist) \t all in degrees " << endl;
+  cout << "All \t " << setprecision(5) << mean_Theta[0] << " \t " <<  setprecision(4) << sigma_Theta[0] << " \t "
+     << setprecision(5) << h_Theta_mean[0]->GetMean() << " \t " <<  setprecision(4) << h_Theta_mean[0]->GetRMS()/sqrt(h_Theta_mean[0]->GetEntries()) << endl;
 
   for (int oct = 1; oct < 9; oct ++)
   {
-  cout << oct << " \t " << setprecision(5) << 1000*mean_q2[oct] << " \t " <<  setprecision(4) << 1000*sigma_q2[oct] << " \t "
-     << setprecision(5) << h_q2_mean[oct]->GetMean() << " \t " <<  setprecision(4) << h_q2_mean[oct]->GetRMS()/sqrt(h_q2_mean[oct]->GetEntries()) << " \t " << Entries[oct] << endl;
+  cout << oct << " \t " << setprecision(5) << mean_Theta[oct] << " \t " <<  setprecision(4) << sigma_Theta[oct] << " \t "
+     << setprecision(5) << h_Theta_mean[oct]->GetMean() << " \t " <<  setprecision(4) << h_Theta_mean[oct]->GetRMS()/sqrt(h_Theta_mean[oct]->GetEntries()) << endl;
   }
   return;
 
