@@ -186,6 +186,6 @@ void QweakSimWShutters::SetDisabled()
   SetWShutters_Material("Air");
   WShutters_Physical->SetTranslation(G4ThreeVector(WShutters_CenterXPosition,
 		  	  	  	  	  	  	  	  	  	  	   WShutters_CenterYPosition + 200*cm,
-		  	  	  	  	  	  	  	  	  	  	   WShutters_CenterZPosition + 1600*cm));
+		  	  	  	  	  	  	  	  	  	  	   WShutters_CenterZPosition));
 
 }
