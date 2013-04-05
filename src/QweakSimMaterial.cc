@@ -57,7 +57,9 @@ void QweakSimMaterial::DefineMaterials()
   G4Element* elTi = fNistManager->FindOrBuildElement("Ti");
   G4Element* elAs = fNistManager->FindOrBuildElement("As");
 	
-	
+  //elements for the TungstenAlloy
+  G4Element* elW = fNistManager->FindOrBuildElement("W");
+  G4Element* elCu = fNistManager->FindOrBuildElement("Cu");
 
   // Let's get Tungsten.  This is not the alooy to be used
   // but it is fine for a test.
@@ -468,7 +470,16 @@ void QweakSimMaterial::DefineMaterials()
   matLeadGlass -> AddElement(elTi, fractionmass = 0.008092);
   matLeadGlass -> AddElement(elAs, fractionmass = 0.002651);
 	
-
+  //Tungsten Alloy for WShutters
+  //Added Kurtis Bartlett 02/06/2012
+  //Mitech CW 68 Tungsten Alloy
+  name 			= "TungstenAlloy";
+  density		= 13.93 *g/cm3;
+  ncomponents 	= 2;
+  G4Material* __attribute__ ((unused))
+  matTungstenAlloy = new G4Material(name, density, ncomponents);
+  matTungstenAlloy -> AddElement(elW, fractionmass = 0.68);
+  matTungstenAlloy -> AddElement(elCu , fractionmass = 0.32);
 
   //========================================
   // Hydrocarbones, metane and others
@@ -511,7 +522,7 @@ void QweakSimMaterial::DefineMaterials()
   matEthane -> AddElement(elH, natoms= 6) ;
   matEthane -> GetIonisation() -> SetMeanExcitationEnergy(45.4*eV);
 
-  // Argon-Ethane 40-60 by mass, STP
+  // Argon-Ethane40-60 by mass, STP
   name        = "Ar-C2H6_40-60";
   density     = 1.46920*mg/cm3 ;
   ncomponents = 2;

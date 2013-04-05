@@ -56,6 +56,7 @@
 #include "QweakSimCollimatorSupport.hh"
 #include "QweakSimShieldingWall.hh"
 #include "QweakSimPionWall.hh"
+#include "QweakSimWShutters.hh"
 #include "QweakSimLeadGlass.hh"
 #include "QweakSimMainMagnet.hh"
 #include "QweakSimVDC.hh"
@@ -67,6 +68,7 @@
 #include "QweakSimMagneticField.hh"
 #include "QweakSimUserInformation.hh"
 
+static const G4double inch = 2.54*cm;
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 //===================================================================
@@ -111,6 +113,9 @@ QweakSimDetectorConstruction::QweakSimDetectorConstruction(QweakSimUserInformati
   pShieldingWall     = NULL;
   
   pPionWall          = NULL;
+
+  pWShutters1		 = NULL;
+  pWShutters2		 = NULL;
 	
   pLeadGlass         = NULL;
 
@@ -172,7 +177,10 @@ QweakSimDetectorConstruction::~QweakSimDetectorConstruction()
   if (pShieldingWall)       delete pShieldingWall;
   
   if (pPionWall)            delete pPionWall;
-	
+
+  if (pWShutters1)            delete pWShutters1;
+  if (pWShutters2)            delete pWShutters2;
+
   if (pLeadGlass)            delete pLeadGlass;
 
   if (pTarget)              delete pTarget;
@@ -205,6 +213,9 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   pShieldingWall       = new QweakSimShieldingWall();
   
   pPionWall            = new QweakSimPionWall();
+
+  pWShutters1		   = new QweakSimWShutters(1);
+  pWShutters2		   = new QweakSimWShutters(2);
 	
   pLeadGlass           = new QweakSimLeadGlass();
 
@@ -525,6 +536,29 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
     pPionWall->ConstructPionWall(experimentalHall_Physical);
   }
 
+  //===================================================
+  // create/place WShutters body into MotherVolume
+  //===================================================
+  //
+    if (pWShutters1) {
+    	pWShutters1->SetWShuttersNumber(1);
+    	pWShutters1->ConstructWShutters(experimentalHall_Physical);
+    	//pWShutters1->SetWShuttersNumber(1);
+    	pWShutters1->SetWShutters_CenterPositionInX ((6.657*inch));
+    	pWShutters1->SetWShutters_CenterPositionInY (0.0*inch);
+    	pWShutters1->SetWShutters_CenterPositionInZ (-221.939*inch);
+    	pWShutters1->SetWShutters_Material ("TungstenAlloy");
+
+    }
+    if (pWShutters2) {
+    	pWShutters2->SetWShuttersNumber(2);
+    	pWShutters2->ConstructWShutters(experimentalHall_Physical);
+    	//pWShutters2->SetWShuttersNumber(2);
+    	pWShutters2->SetWShutters_CenterPositionInX (-6.657*inch);
+     	pWShutters2->SetWShutters_CenterPositionInY (0.0*inch);
+     	pWShutters2->SetWShutters_CenterPositionInZ (-221.939*inch);
+       	pWShutters2->SetWShutters_Material ("TungstenAlloy");
+    	}
   //===================================================
   // create/place LeadGlass into MotherVolume
   //===================================================

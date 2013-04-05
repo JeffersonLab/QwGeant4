@@ -250,6 +250,7 @@
 
 # This is only valid for peiqing_2007.dat
 #/MagneticField/SetRotation -67.5 degree
+#/MagneticField/SetRotation 45.0 degree
 #/MagneticField/SetActualCurrent 8921.0
 #/MagneticField/SetReferenceCurrent 8615.0
 #/MagneticField/ReadFieldMap peiqing_2007.dat 
@@ -279,6 +280,15 @@
 
 # Uncomment the following line to change the Pion Wall thickness to 2"
 #/PionWall/SetThicknessInZ 5.08 cm
+
+#=====================================
+# Tungsten Shutters related
+#=====================================
+
+# Comment out the following two lines to leave the Tungsten Shutters in.
+/WShutters/WShutters1/Disable
+/WShutters/WShutters2/Disable
+
 
 #=====================================
 # LeadGlass related
