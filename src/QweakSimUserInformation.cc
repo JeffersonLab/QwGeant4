@@ -14,6 +14,31 @@ QweakSimUserInformation::~QweakSimUserInformation()
 
 void QweakSimUserInformation::Print() const
 {
+  G4cout << G4endl;
+  G4cout << "**** Calling QweakSimUserInformation::Print() ****" << G4endl;
+  G4cout << "Primary Event #:: " << PrimaryEventNumber << G4endl;
+  G4cout << "Reaction type:: " << ReactionType << G4endl;
+  G4cout << "Beam pos:: " << fPositionX << "\t" << fPositionY << G4endl;
+  G4cout << "Tgt center z:: " << TargetCenterPositionZ << G4endl;
+  G4cout << "Beam mom:: " << fNormMomentumX << "\t" << fNormMomentumY << G4endl;
+  G4cout << "Org ver pos:: " << OriginVertexPositionX <<"\t" << OriginVertexPositionY << "\t" << OriginVertexPositionZ << G4endl;
+  G4cout << "Org ver ang:: "<< OriginVertexThetaAngle <<"\t"<< OriginVertexPhiAngle << G4endl;
+  G4cout << "Org ver mom dir:: " << OriginVertexMomentumDirectionX <<"\t" << OriginVertexMomentumDirectionY << "\t" << OriginVertexMomentumDirectionZ << G4endl;
+  G4cout << "Org ver KE:: " << OriginVertexKineticEnergy << G4endl;
+  G4cout << "Org ver TE:: " << OriginVertexTotalEnergy << G4endl;
+  G4cout << "**** Exiting QweakSimUserInformation::Print() ****" << G4endl;
+}
+
+
+void QweakSimUserInformation::PrintELoss()
+{  // various energy losses at the target
+  G4cout << G4endl;
+  G4cout << "**** Calling QweakSimUserInformation::PrintEloss() ****" << G4endl;
+  G4cout << "Ion Eloss (In,Out,Tot):: "<< dEIonIn <<"\t" << dEIonOut <<"\t" << GetdEIonTot() << G4endl;
+  G4cout << "Brem Eloss (In,Out,Tot):: "<< dEBremIn <<"\t" << dEBremOut <<"\t" << GetdEBremTot() << G4endl;
+  G4cout << "Msc Eloss (In,Out,Tot):: "<< dEMscIn <<"\t" << dEMscOut <<"\t" << GetdEMscTot() << G4endl;
+  G4cout << "Net Eloss (In,Out,Tot):: "<< GetdETotIn() <<"\t" << GetdETotOut() <<"\t" << GetdETot() << G4endl;
+  G4cout << "**** Leaving QweakSimUserInformation::PrintEloss() ****" << G4endl;
 }
 
 void QweakSimUserInformation::Initialize()
@@ -44,6 +69,9 @@ void QweakSimUserInformation::Initialize()
   OriginVertexMomentumDirectionZ = 0.0;
   OriginVertexKineticEnergy = 0.0;
   OriginVertexTotalEnergy = 0.0;
+
+  // various energy losses at the target
+  ClearELoss(); 
 
   CerEngDep                      = 0.0;
   //--- initial the variable that holds total energy deposited in the LeadGlass

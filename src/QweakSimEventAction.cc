@@ -386,7 +386,6 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         //========================================
 
         //-------------------------------------------------------------------------------------------
-
         G4int    PrimaryEventNumber = myUserInfo->GetPrimaryEventNumber();
         G4int    ReactionType = myUserInfo->GetReactionType();
         G4int    PDGcode = myUserInfo->GetPDGcode();
@@ -430,6 +429,24 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         analysis->fRootEvent->Primary.StorePrimaryEventNumber((Int_t) PrimaryEventNumber);
         analysis->fRootEvent->Primary.StoreReactionType((Int_t) ReactionType);
         analysis->fRootEvent->Primary.StorePDGcode((Int_t) PDGcode);
+
+	////////
+	// store energy loss variables into rootfile
+	//  all Elosses are in MeV (see QweakSimSteppingAction.cc)
+	analysis->fRootEvent->Primary.StoredEIonIn((Float_t) myUserInfo->GetdEIonIn());
+	analysis->fRootEvent->Primary.StoredEIonOut((Float_t) myUserInfo->GetdEIonOut());
+	analysis->fRootEvent->Primary.StoredEIonTot((Float_t) myUserInfo->GetdEIonTot());
+	analysis->fRootEvent->Primary.StoredEBremIn((Float_t) myUserInfo->GetdEBremIn());
+	analysis->fRootEvent->Primary.StoredEBremOut((Float_t) myUserInfo->GetdEBremOut());
+	analysis->fRootEvent->Primary.StoredEBremTot((Float_t) myUserInfo->GetdEBremTot());
+	analysis->fRootEvent->Primary.StoredEMscIn((Float_t) myUserInfo->GetdEMscIn());
+	analysis->fRootEvent->Primary.StoredEMscOut((Float_t) myUserInfo->GetdEMscOut());
+	analysis->fRootEvent->Primary.StoredEMscTot((Float_t) myUserInfo->GetdEMscTot());
+	analysis->fRootEvent->Primary.StoredETotIn((Float_t) myUserInfo->GetdETotIn());
+	analysis->fRootEvent->Primary.StoredETotOut((Float_t) myUserInfo->GetdETotOut());
+	analysis->fRootEvent->Primary.StoredETot((Float_t) myUserInfo->GetdETot());
+	///////
+
         //--- Write total deposited energy in the LeadGlass to the rootfile
         analysis->fRootEvent->LeadGlass.Detector.StoreTotalEnergyDeposit((Float_t) LeadGlassEngDep);
         //--- force a reset to LeadGlassEngDep=0.0 to get ready for the next event
@@ -1562,12 +1579,27 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         analysis->fRootEvent->Region3.Clear();
         analysis->fRootEvent->Region2.Clear();
         analysis->fRootEvent->Region1.Clear();
-
-
+	
     } //end of if( (n_hitWirePlane == 2)&&(n_hitFront >0)&&(n_hitBack >0)&&(n_hitCerenkov >0) )
 
     myUserInfo->ResetCerenkovSecondaryParticleInfo();
 
+    // print the Eloss for diagnostics
+    if(ELOSS_DEBUG)    myUserInfo->PrintELoss();
+    // clear the Eloss variables for even PrimaryEventNumber events only, 
+    // after they have been stored in the rootfile
+    //
+    // odd PrimaryEventNumber events are used to generate physics 
+    // up to the scattering vertex Z
+    //
+    // NOTE:: in QweakSimPrimaryGenerator.cc, the PrimaryEventNumber is increased 
+    //   at the end of GeneratePrimaries. GeneratePrimaries is called before EnfOfEventAction.
+    //   Therefore, even though, even events are used to generate physics events up to the 
+    //   scattering vertex Z in GeneratePrimaries, the permuation is flipped inside this
+    //   routine.
+    if(myUserInfo->GetPrimaryEventNumber()%2==0){ 
+      myUserInfo->ClearELoss();
+    }
 
 //=======================================================================
 // Save the Ntuple periodically so we have some data in case of a crash
@@ -1579,6 +1611,8 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 
     if (eventNumber%1000 == 1)
         analysis->AutoSaveRootNtuple();
+
+    if(ELOSS_DEBUG)    G4cout << "***** End of analysis for PrimaryEventNumber " << myUserInfo->GetPrimaryEventNumber() << " *****"<<G4endl;
 
 //=======================================================================
 

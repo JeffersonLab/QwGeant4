@@ -66,6 +66,11 @@ void QweakSimUserPrimaryEvent::Initialize()
 
   ReactionType                   = 1;   // assume elastic as default
 
+  // clear Eloss variables
+  dEIonIn= dEIonOut=dEIonTot=0;
+  dEBremIn= dEBremOut= dEBremTot=0;
+  dEMscIn= dEMscOut= dEMscTot=0;
+  dETotIn= dETotOut= dETot=0;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
