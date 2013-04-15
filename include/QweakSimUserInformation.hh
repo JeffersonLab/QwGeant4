@@ -11,6 +11,7 @@
 
 #include "QweakSimPrimaryGeneratorAction.hh"
 
+#define ELOSS_DEBUG 0
 
 class QweakSimUserInformation 
 {
@@ -28,6 +29,13 @@ public:
   G4int    ReactionType;         // assign a number to which kind of reaction,e.g. 1 = elastic ep,
   G4int    ReactionRegion;
   G4int    EvtGenStatus;
+
+  // clear the energy loss variables
+  void ClearELoss(){
+    dEIonIn= dEIonOut=0;
+    dEBremIn= dEBremOut=0;
+    dEMscIn= dEMscOut=0;
+  }
   
   //setter functions
   void SetBeamPositionX(G4double x) { fPositionX = x; };
@@ -73,11 +81,15 @@ private:
   G4double PreScatteringKineticEnergy;
   G4double OriginVertexKineticEnergy;
   G4double OriginVertexTotalEnergy;
-
   
   G4double CerEngDep;
   //--- a variable to hold total energy deposited in the LeadGlass
   G4double LeadGlassEngDep;
+
+  // various energy losses at the target
+  G4double dEIonIn, dEIonOut;
+  G4double dEBremIn, dEBremOut;
+  G4double dEMscIn, dEMscOut;
 
   G4int    edgeEventDetected;
   G4int    leftPMTHitValid;
@@ -107,6 +119,7 @@ private:
  public:
 
   void Print() const;
+  void PrintELoss();
   void Initialize();
 
   void     StoreTrackID(G4int tid)    { TrackID = tid; }
@@ -219,6 +232,35 @@ private:
 	
   void StoreCerenkovPhotonEnergy(G4double eng) {CerenkovPhotonEnergy.push_back(eng);};
   G4double GetCerenkovPhotonEnergyAtIndex(G4int ind) {return CerenkovPhotonEnergy[ind];};
+
+  //   // store various Elosses at the target
+  void StoredEIonIn(G4double dE){dEIonIn=dE;}
+  void StoredEIonOut(G4double dE){dEIonOut=dE;}
+  void StoredEBremIn(G4double dE){dEBremIn=dE;}
+  void StoredEBremOut(G4double dE){dEBremOut=dE;}
+  void StoredEMscIn(G4double dE){dEMscIn=dE;}
+  void StoredEMscOut(G4double dE){dEMscOut=dE;}
+  ///
+  void AddTodEIonIn(G4double dE){dEIonIn+=dE;}
+  void AddTodEIonOut(G4double dE){dEIonOut+=dE;}
+  void AddTodEBremIn(G4double dE){dEBremIn+=dE;}
+  void AddTodEBremOut(G4double dE){dEBremOut+=dE;}
+  void AddTodEMscIn(G4double dE){dEMscIn+=dE;}
+  void AddTodEMscOut(G4double dE){dEMscOut+=dE;}
+  ////////
+  G4double GetdEIonIn(){return dEIonIn;}
+  G4double GetdEIonOut(){return dEIonOut;}
+  G4double GetdEIonTot(){return dEIonIn + dEIonOut;}
+  G4double GetdEBremIn(){return dEBremIn;}
+  G4double GetdEBremOut(){return dEBremOut;}
+  G4double GetdEBremTot(){return dEBremIn + dEBremOut;}
+  G4double GetdEMscIn(){return dEMscIn;}
+  G4double GetdEMscOut(){return dEMscOut;}
+  G4double GetdEMscTot(){return dEMscIn + dEMscOut;}
+  G4double GetdETotIn(){return dEIonIn + dEBremIn + dEMscIn;}
+  G4double GetdETotOut(){return dEIonOut + dEBremOut + dEMscOut;}
+  G4double GetdETot(){return dEIonIn + dEBremIn + dEMscIn + dEIonOut + dEBremOut + dEMscOut;}
+  ///////
 
 };
 
