@@ -79,6 +79,12 @@ private:
   Int_t   ReactionType;         ///< The \ref reaction_type used for this event, e.g. elastic ep = 1, e+p -> e'+p+pi = 2
   Int_t   PDGcode;              ///< The \ref Lund_type of the primary particle, e.g. electron = 11
 
+  // various energy losses at the target
+  Float_t dEIonIn, dEIonOut, dEIonTot;
+  Float_t dEBremIn, dEBremOut, dEBremTot;
+  Float_t dEMscIn, dEMscOut, dEMscTot;
+  Float_t dETotIn, dETotOut, dETot;
+
 public:
   
   // Constructor
@@ -149,6 +155,20 @@ public:
   void     StorePDGcode(Int_t code)  { PDGcode = code; }
   Int_t      GetPDGcode() const {return PDGcode; }
 
+  // store various Elosses at the target
+  void StoredEIonIn(Float_t dE){dEIonIn=dE;}
+  void StoredEIonOut(Float_t dE){dEIonOut=dE;}
+  void StoredEIonTot(Float_t dE){dEIonTot=dE;}
+  void StoredEBremIn(Float_t dE){dEBremIn=dE;}
+  void StoredEBremOut(Float_t dE){dEBremOut=dE;}
+  void StoredEBremTot(Float_t dE){dEBremTot=dE;}
+  void StoredEMscIn(Float_t dE){dEMscIn=dE;}
+  void StoredEMscOut(Float_t dE){dEMscOut=dE;}
+  void StoredEMscTot(Float_t dE){dEMscTot=dE;}
+  void StoredETotIn(Float_t dE){dETotIn=dE;}
+  void StoredETotOut(Float_t dE){dETotOut=dE;}
+  void StoredETot(Float_t dE){dETot=dE;}
+  ///
 
   // define a new Class known to ROOT  
   ClassDef(QweakSimUserPrimaryEvent,1)
