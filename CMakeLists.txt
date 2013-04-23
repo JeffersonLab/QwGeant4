@@ -12,11 +12,10 @@ file(GLOB my_project_sources ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc)
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
 # Custom target that is always built
-add_custom_target(QweakSimVersion ALL
-	DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/QweakSimVersion.hh)
+add_custom_target(QweakSimVersion ALL)
 
 # Creates QweakSimVersion.hh using cmake script
-add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/QweakSimVersion.hh
+add_custom_command(TARGET QweakSimVersion
 	COMMAND ${CMAKE_COMMAND} -DSOURCE_DIR=${CMAKE_CURRENT_SOURCE_DIR}
 	-P ${CMAKE_CURRENT_SOURCE_DIR}/GetQweakSimVersion.cmake)
 
