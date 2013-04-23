@@ -40,6 +40,8 @@
 #pragma link off all classes;
 #pragma link off all functions;
 
+#pragma link C++ class QweakSimUserRunInformation+;
+
 #pragma link C++ class QweakSimUserMainEvent+;
 
 #pragma link C++ class QweakSimUserPrimaryEvent+;

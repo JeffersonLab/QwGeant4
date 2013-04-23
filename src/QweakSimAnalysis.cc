@@ -26,6 +26,7 @@
 
 // user includes
 #include "QweakSimAnalysis.hh"
+#include "QweakSimUserRunInformation.hh"
 #include "QweakSimUserMainEvent.hh"
 #include "QweakSimAnalysisMessenger.hh"
 
@@ -43,6 +44,9 @@ QweakSimAnalysis::QweakSimAnalysis()
 
   // Create messenger
   pAnalysisMessenger = new QweakSimAnalysisMessenger(this);
+
+  // Create user run data
+  pUserRunInformation = new QweakSimUserRunInformation();
 
   G4cout << "###### Leaving QweakSimAnalysis::QweakSimAnalysis()" << G4endl;
 }
@@ -113,6 +117,9 @@ void QweakSimAnalysis::ConstructRootNtuple()
   int bufsize = 64000;
   int split   = 99;
   fRootBranch = fRootNtuple->Branch("QweakSimUserMainEvent", "QweakSimUserMainEvent", &fRootEvent, bufsize, split);
+
+  // Write run data
+  pUserRunInformation->Write();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....

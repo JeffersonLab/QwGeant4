@@ -47,6 +47,7 @@
 class G4Run;
 
 // user classes
+class QweakSimUserRunInformation;
 class QweakSimUserMainEvent;
 class QweakSimAnalysisMessenger;
 
@@ -75,6 +76,8 @@ public:
 private:
 
   QweakSimAnalysisMessenger* pAnalysisMessenger;
+
+  QweakSimUserRunInformation* pUserRunInformation;
 
   G4String fRootFileStem;
   G4String fRootFileName;

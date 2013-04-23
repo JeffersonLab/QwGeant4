@@ -11,18 +11,34 @@ file(GLOB my_project_sources ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc)
 # Local path for cmake modules, before ${CMAKE_ROOT}/Modules/ is checked
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
+# Custom target that is always built
+add_custom_target(QweakSimVersion ALL
+	DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/QweakSimVersion.hh)
+
+# Creates QweakSimVersion.hh using cmake script
+add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/QweakSimVersion.hh
+	COMMAND ${CMAKE_COMMAND} -DSOURCE_DIR=${CMAKE_CURRENT_SOURCE_DIR}
+	-P ${CMAKE_CURRENT_SOURCE_DIR}/GetQweakSimVersion.cmake)
+
+# QweakSimVersion.hh is a generated file
+set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/QweakSimVersion.h
+	PROPERTIES GENERATED TRUE
+	HEADER_FILE_ONLY TRUE)
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
+
 # Load ROOT and setup include directory
 find_package(ROOT REQUIRED)
 include_directories(${ROOT_INCLUDE_DIR})
 
 # Create ROOT dictionary before messing up include dirs with Geant4 stuff
 # (-p option to "use of the compiler's preprocessor instead of CINT's preprocessor.")
-ROOT_GENERATE_DICTIONARY(${CMAKE_CURRENT_BINARY_DIR}/QweakSimUserMainEvent_Dict
+ROOT_GENERATE_DICTIONARY(${CMAKE_CURRENT_BINARY_DIR}/QweakSimDict
 	${CMAKE_CURRENT_SOURCE_DIR}/include/QweakSimUser*Event.hh
 	${CMAKE_CURRENT_SOURCE_DIR}/include/QweakSimUser*Config.hh
-	LINKDEF ${CMAKE_CURRENT_SOURCE_DIR}/include/QweakSimUserMainEvent_LinkDef.hh
+	${CMAKE_CURRENT_SOURCE_DIR}/include/QweakSimUserRunInformation.hh
+	LINKDEF ${CMAKE_CURRENT_SOURCE_DIR}/include/QweakSimLinkDef.hh
 	OPTIONS -p)
-set(my_project_sources ${my_project_sources} ${CMAKE_CURRENT_BINARY_DIR}/QweakSimUserMainEvent_Dict.cxx)
+set(my_project_sources ${my_project_sources} ${CMAKE_CURRENT_BINARY_DIR}/QweakSimDict.cxx)
 
 # Load Geant4 through Find and Use files (the Geant4_DIR directory is where
 # the Geant4 cmake Find and Use files can be found)
@@ -32,6 +48,7 @@ include(${Geant4_USE_FILE})
 
 # Link the ROOT and Geant4 libraries
 add_library(QweakSim SHARED ${my_project_sources})
+add_dependencies(QweakSim QweakSimVersion)
 target_link_libraries(QweakSim ${Geant4_LIBRARIES} ${ROOT_LIBRARIES})
 
 # Add the target executables:
