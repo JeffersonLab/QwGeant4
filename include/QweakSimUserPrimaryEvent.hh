@@ -69,6 +69,18 @@ private:
   Float_t OriginVertexKineticEnergy;    ///< Kinetic energy right after the primary vertex
   Float_t OriginVertexTotalEnergy;      ///< Total energy right after the primary vertex
 
+  Float_t OriginVertexKinematicNu;
+  Float_t OriginVertexKinematicQ2;
+  Float_t OriginVertexKinematicX;
+  Float_t OriginVertexKinematicW;
+
+  Float_t BeamEnergy;
+
+  Float_t EffectiveKinematicNu;
+  Float_t EffectiveKinematicQ2;
+  Float_t EffectiveKinematicX;
+  Float_t EffectiveKinematicW;
+
   Float_t PrimaryQ2;            ///< Momentum transfer Q^2 for this event (GeV<sup>2</sup>)
   Float_t CrossSection;         ///< Cross section weight for events with these kinematics, assuming isotropic spherical picking (isotropy = 1, see \ref isotropy)
   Float_t CrossSectionWeight;   ///< Modified cross section weight for events with these kimematics, assuming flat-theta picking (isotropy = 0, see \ref isotropy)
@@ -133,6 +145,36 @@ public:
 
   void     StoreOriginVertexTotalEnergy(Float_t etot) { OriginVertexTotalEnergy = etot; }
   Float_t    GetOriginVertexTotalEnergy() const {return OriginVertexTotalEnergy;}
+  //-----------------
+  void     StoreOriginVertexKinematicNu(Float_t nu) { OriginVertexKinematicNu = nu; }
+  Float_t    GetOriginVertexKinematicNu() const {return OriginVertexKinematicNu;}
+  
+  void     StoreOriginVertexKinematicQ2(Float_t q2) { OriginVertexKinematicQ2 = q2; }
+  Float_t    GetOriginVertexKinematicQ2() const {return OriginVertexKinematicQ2;}
+  
+  void     StoreOriginVertexKinematicX(Float_t x) { OriginVertexKinematicX = x; }
+  Float_t    GetOriginVertexKinematicX() const {return OriginVertexKinematicX;}
+  
+  void     StoreOriginVertexKinematicW(Float_t w) { OriginVertexKinematicW = w; }
+  Float_t    GetOriginVertexKinematicW() const {return OriginVertexKinematicW;}
+  
+  //-----------------
+  void     StoreBeamEnergy(Float_t energy) { BeamEnergy = energy; }
+  Float_t    GetBeamEnergy() const {return BeamEnergy;}
+  
+  //-----------------
+  void     StoreEffectiveKinematicNu(Float_t nu) { EffectiveKinematicNu = nu; }
+  Float_t    GetEffectiveKinematicNu() const {return EffectiveKinematicNu;}
+  
+  void     StoreEffectiveKinematicQ2(Float_t q2) { EffectiveKinematicQ2 = q2; }
+  Float_t    GetEffectiveKinematicQ2() const {return EffectiveKinematicQ2;}
+  
+  void     StoreEffectiveKinematicX(Float_t x) { EffectiveKinematicX = x; }
+  Float_t    GetEffectiveKinematicX() const {return EffectiveKinematicX;}
+  
+  void     StoreEffectiveKinematicW(Float_t w) { EffectiveKinematicW = w; }
+  Float_t    GetEffectiveKinematicW() const {return EffectiveKinematicW;}
+  
   //-----------------
   void     StorePrimaryQ2(Float_t pq2)  { PrimaryQ2 = pq2; }
   Float_t    GetPrimaryQ2() const {return PrimaryQ2; }

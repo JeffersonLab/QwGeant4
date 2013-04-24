@@ -266,10 +266,9 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
       }      
    else if(ReactionType==7) //LH2 target, radiative cross section 3.35 GeV
       {
-       fCrossSection = Radiative_Cross_Section_Proton(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
+       fCrossSection = Radiative_Cross_Section_Proton(myUserInfo->GetBeamEnergy(), RelativeThetaAngle, fWeightN, Q2, E_out);
        Asymmetry = GetAsymmetry_EP(RelativeThetaAngle, E_in);
       }
-
 }
 
 
@@ -895,16 +894,21 @@ G4double QweakSimEPEvent::Radiative_Cross_Section_Proton(G4double E_in,
 
     E_out = (G4UniformRand()*(EPrime_Max-EPrime_Min) + EPrime_Min);
 
-    const Double_t pos[value_d]   = {myUserInfo->GetOriginVertexPositionZ(),3.35*GeV,E_out,Theta};
+    const Double_t pos[value_d]   = {myUserInfo->GetOriginVertexPositionZ(),E_in,E_out,Theta};
     Double_t       value[value_n] = {0.0};
 
     fLookupTable->GetValue(pos,value);
     Q2       = value[1];
-    fWeightN = value[6]*sin(Theta);
+    fWeightN = value[6]*sin(Theta*degree);
     //fWeightN = value[6];
 
-    return fWeightN;
+    //G4cout << "===== Lookup Table =====" << G4endl;
+    //G4cout << "Beam Energy:  " << E_in << G4endl;
+    //G4cout << "Theta:        " << Theta << G4endl;
+    //G4cout << "Theta*degree: " << Theta*degree << G4endl;
+    //G4cout << "Q2:           " << Q2 << G4endl;
 
+    return value[6];
 }
 
 ////....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -993,6 +997,8 @@ void QweakSimEPEvent::CreateLookupTable()
     }
     in.close();
 }
+
+
 
 ////....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 //

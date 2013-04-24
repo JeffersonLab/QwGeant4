@@ -57,6 +57,18 @@ void QweakSimUserPrimaryEvent::Initialize()
   OriginVertexKineticEnergy      = 0.0;
   OriginVertexTotalEnergy        = 0.0;
 
+  OriginVertexKinematicNu        = 0.0;
+  OriginVertexKinematicQ2        = 0.0;
+  OriginVertexKinematicX         = 0.0;
+  OriginVertexKinematicW         = 0.0;
+
+  BeamEnergy                     = 0.0;
+
+  EffectiveKinematicNu           = 0.0;
+  EffectiveKinematicQ2           = 0.0;
+  EffectiveKinematicX            = 0.0;
+  EffectiveKinematicW            = 0.0;
+
   PrimaryQ2                      = 0.0;
   CrossSection                   = 0.0;
   CrossSectionWeight             = 0.0;

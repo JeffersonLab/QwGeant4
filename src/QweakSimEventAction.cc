@@ -406,6 +406,17 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 	G4double PreScatteringKineticEnergy = myUserInfo->GetPreScatteringKineticEnergy();
         G4double OriginVertexKineticEnergy = myUserInfo->GetOriginVertexKineticEnergy();
         G4double OriginVertexTotalEnergy = myUserInfo->GetOriginVertexTotalEnergy();
+
+        G4double BeamEnergy              = myUserInfo->GetBeamEnergy();
+        CalculateKinematicVariables();
+        G4double OriginVertexKinematicNu = myUserInfo->GetOriginVertexKinematicNu();
+        G4double OriginVertexKinematicQ2 = myUserInfo->GetOriginVertexKinematicQ2();
+        G4double OriginVertexKinematicX  = myUserInfo->GetOriginVertexKinematicX();
+        G4double OriginVertexKinematicW  = myUserInfo->GetOriginVertexKinematicW();
+        G4double EffectiveKinematicNu    = myUserInfo->GetEffectiveKinematicNu();
+        G4double EffectiveKinematicQ2    = myUserInfo->GetEffectiveKinematicQ2();
+        G4double EffectiveKinematicX     = myUserInfo->GetEffectiveKinematicX();
+        G4double EffectiveKinematicW     = myUserInfo->GetEffectiveKinematicW();
         //--- Get total deposited energy in the LeadGlass from myUserInfo
         G4double LeadGlassEngDep = myUserInfo->GetLeadGlassEnergyDeposit();
 
@@ -429,6 +440,15 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         analysis->fRootEvent->Primary.StorePrimaryEventNumber((Int_t) PrimaryEventNumber);
         analysis->fRootEvent->Primary.StoreReactionType((Int_t) ReactionType);
         analysis->fRootEvent->Primary.StorePDGcode((Int_t) PDGcode);
+        analysis->fRootEvent->Primary.StoreBeamEnergy((Float_t) BeamEnergy);
+        analysis->fRootEvent->Primary.StoreOriginVertexKinematicNu((Float_t) OriginVertexKinematicNu);
+        analysis->fRootEvent->Primary.StoreOriginVertexKinematicQ2((Float_t) OriginVertexKinematicQ2);
+        analysis->fRootEvent->Primary.StoreOriginVertexKinematicX((Float_t) OriginVertexKinematicX);
+        analysis->fRootEvent->Primary.StoreOriginVertexKinematicW((Float_t) OriginVertexKinematicW);
+        analysis->fRootEvent->Primary.StoreEffectiveKinematicNu((Float_t) EffectiveKinematicNu);
+        analysis->fRootEvent->Primary.StoreEffectiveKinematicQ2((Float_t) EffectiveKinematicQ2);
+        analysis->fRootEvent->Primary.StoreEffectiveKinematicX((Float_t) EffectiveKinematicX);
+        analysis->fRootEvent->Primary.StoreEffectiveKinematicW((Float_t) EffectiveKinematicW);
 
 	////////
 	// store energy loss variables into rootfile
@@ -1729,6 +1749,72 @@ G4double QweakSimEventAction::GetDistance(G4ThreeVector p1,G4ThreeVector p2) {
                 (p1.z()-p2.z())*(p1.z()-p2.z()));
 }
 
+
+////....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+//  Jim Dowd
+// ---------------------------------------------------------
+//      Calculates and stores the kinematic variables Nu, Q2,
+//      x, and W.
+// ---------------------------------------------------------
+void QweakSimEventAction::CalculateKinematicVariables() 
+{
+  // Vertex Kinematic variables
+  // These variables are only valid for events generated with the standard
+  // generator (not the lookup table).
+  G4double mp    = 938.2796*MeV;
+  G4double E_in  = myUserInfo->GetPreScatteringKineticEnergy();
+  G4double E_out = myUserInfo->GetOriginVertexTotalEnergy();
+  G4double theta = myUserInfo->GetOriginVertexThetaAngle();
+
+  G4double nu    = E_in - E_out;
+  G4double q2    = 4.0*E_in*E_out*sin(theta*degree/2.0)*sin(theta*degree/2.0);
+  G4double x     = q2/(2.0*mp*nu);
+  G4double w     = sqrt(mp*mp+2.0*mp*nu-q2);
+
+  myUserInfo->StoreOriginVertexKinematicNu(nu);
+  myUserInfo->StoreOriginVertexKinematicQ2(q2*0.000001);
+  myUserInfo->StoreOriginVertexKinematicX(x);
+  myUserInfo->StoreOriginVertexKinematicW(w);
+
+  //G4cout << "==== Vertex Kinematics ====" << G4endl;
+  //G4cout << "E_in:         " << E_in  << G4endl;
+  //G4cout << "E_out:        " << E_out << G4endl;
+  //G4cout << "Theta:        " << theta << G4endl;
+  //G4cout << "Nu:           " << nu << G4endl;
+  //G4cout << "Q2:           " << q2 << G4endl;
+  //G4cout << "X:            " << x << G4endl;
+  //G4cout << "W:            " << w << G4endl;
+
+  
+  // "Effective" kinematic variables
+  //  These kinematic variables are not calculated correctly yet.
+  //  Need values for E_out and theta grabbed from just downstream 
+  //  of the target, instead of the vertex quantities used below.
+  //  They are still valid for any events generated using the 
+  //  lookup table.
+  E_in  = myUserInfo->GetBeamEnergy();
+  E_out = myUserInfo->GetOriginVertexTotalEnergy(); 
+  theta = myUserInfo->GetOriginVertexThetaAngle(); 
+
+  nu    = E_in - E_out;
+  q2    = 4.0*E_in*E_out*sin(theta*degree/2.0)*sin(theta*degree/2.0);
+  x     = q2/(2.0*mp*nu);
+  w     = sqrt(mp*mp+2.0*mp*nu-q2);
+
+  myUserInfo->StoreEffectiveKinematicNu(nu);
+  myUserInfo->StoreEffectiveKinematicQ2(q2*0.000001);
+  myUserInfo->StoreEffectiveKinematicX(x);
+  myUserInfo->StoreEffectiveKinematicW(w);
+
+  //G4cout << "==== Effective Kinematics ====" << G4endl;
+  //G4cout << "E_in:         " << E_in  << G4endl;
+  //G4cout << "E_out:        " << E_out << G4endl;
+  //G4cout << "Theta:        " << theta << G4endl;
+  //G4cout << "Nu:           " << nu << G4endl;
+  //G4cout << "Q2:           " << q2 << G4endl;
+  //G4cout << "X:            " << x << G4endl;
+  //G4cout << "W:            " << w << G4endl;
+  //G4cout << "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" << G4endl;
+}
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-

@@ -81,6 +81,17 @@ private:
   G4double PreScatteringKineticEnergy;
   G4double OriginVertexKineticEnergy;
   G4double OriginVertexTotalEnergy;
+  G4double OriginVertexKinematicQ2;
+  G4double OriginVertexKinematicNu;
+  G4double OriginVertexKinematicX;
+  G4double OriginVertexKinematicW;
+  
+  G4double BeamEnergy;
+
+  G4double EffectiveKinematicQ2;
+  G4double EffectiveKinematicNu;
+  G4double EffectiveKinematicX;
+  G4double EffectiveKinematicW;
   
   G4double CerEngDep;
   //--- a variable to hold total energy deposited in the LeadGlass
@@ -163,6 +174,37 @@ private:
   void     StoreOriginVertexTotalEnergy(G4double etot) { OriginVertexTotalEnergy = etot; }
   G4double    GetOriginVertexTotalEnergy() const {return OriginVertexTotalEnergy;}
   //-----------------
+
+  void     StoreOriginVertexKinematicQ2(G4double Q2) { OriginVertexKinematicQ2 = Q2; }
+  G4double    GetOriginVertexKinematicQ2() const {return OriginVertexKinematicQ2;}
+
+  void     StoreOriginVertexKinematicNu(G4double Nu) { OriginVertexKinematicNu = Nu; }
+  G4double    GetOriginVertexKinematicNu() const {return OriginVertexKinematicNu;}
+
+  void     StoreOriginVertexKinematicX(G4double X) { OriginVertexKinematicX = X; }
+  G4double    GetOriginVertexKinematicX() const {return OriginVertexKinematicX;}
+
+  void     StoreOriginVertexKinematicW(G4double W) { OriginVertexKinematicW = W; }
+  G4double    GetOriginVertexKinematicW() const {return OriginVertexKinematicW;}
+  //-----------------
+
+  void     StoreBeamEnergy(G4double energy) { BeamEnergy = energy; }
+  G4double    GetBeamEnergy() const {return BeamEnergy;}
+  //-----------------
+
+  void     StoreEffectiveKinematicQ2(G4double Q2) { EffectiveKinematicQ2 = Q2; }
+  G4double    GetEffectiveKinematicQ2() const {return EffectiveKinematicQ2;}
+
+  void     StoreEffectiveKinematicNu(G4double Nu) { EffectiveKinematicNu = Nu; }
+  G4double    GetEffectiveKinematicNu() const {return EffectiveKinematicNu;}
+
+  void     StoreEffectiveKinematicX(G4double X) { EffectiveKinematicX = X; }
+  G4double    GetEffectiveKinematicX() const {return EffectiveKinematicX;}
+
+  void     StoreEffectiveKinematicW(G4double W) { EffectiveKinematicW = W; }
+  G4double    GetEffectiveKinematicW() const {return EffectiveKinematicW;}
+  //-----------------
+
   void     StorePrimaryQ2(G4double pq2)  { PrimaryQ2 = pq2; }
   G4double    GetPrimaryQ2() const {return PrimaryQ2; }
 

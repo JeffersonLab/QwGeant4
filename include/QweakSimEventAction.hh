@@ -73,6 +73,7 @@ private:
 
   void Initialize();
   G4double GetDistance(G4ThreeVector,G4ThreeVector);
+  void CalculateKinematicVariables();
 
   // Event action messenger
   QweakSimEventActionMessenger* fEventActionMessenger;

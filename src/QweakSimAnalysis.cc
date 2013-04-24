@@ -87,6 +87,9 @@ void QweakSimAnalysis::BeginOfRun(const G4Run* aRun)
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 void QweakSimAnalysis::EndOfRun(const G4Run* /*aRun*/)
 {
+  // Autosave one last time
+  AutoSaveRootNtuple();
+
   // Write the data to the ROOT file
   G4cout << "###### Analysis: closing ROOT file " << fRootFileName << G4endl;
   fRootFile->Write();
