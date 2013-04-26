@@ -84,6 +84,13 @@ private:
   Float_t PrimaryQ2;            ///< Momentum transfer Q^2 for this event (GeV<sup>2</sup>)
   Float_t CrossSection;         ///< Cross section weight for events with these kinematics, assuming isotropic spherical picking (isotropy = 1, see \ref isotropy)
   Float_t CrossSectionWeight;   ///< Modified cross section weight for events with these kimematics, assuming flat-theta picking (isotropy = 0, see \ref isotropy)
+  Float_t CrossSectionBornTotal;
+  Float_t CrossSectionBornInelastic;
+  Float_t CrossSectionBornQE;
+  Float_t CrossSectionRadTotal;
+  Float_t CrossSectionRadElastic;
+  Float_t CrossSectionRadQE;
+  Float_t CrossSectionRadDIS;
   Float_t Asymmetry;            ///< Asymmetry for events with these kinematics
 
   Int_t   PrimaryEventNumber;   ///< The primary event number (increments by two due to target energy loss simulation)
@@ -184,7 +191,30 @@ public:
 
   void     StoreCrossSectionWeight(Float_t csw)  {CrossSectionWeight = csw;}
   Float_t    GetCrossSectionWeight() const {return CrossSectionWeight; }
+  
+  //-----------------
+  void     StoreCrossSectionBornTotal(Float_t cs)  {CrossSectionBornTotal = cs;}
+  Float_t    GetCrossSectionBornTotal() const {return CrossSectionBornTotal; }
 
+  void     StoreCrossSectionBornInelastic(Float_t cs)  {CrossSectionBornInelastic = cs;}
+  Float_t    GetCrossSectionBornInelastic() const {return CrossSectionBornInelastic; }
+
+  void     StoreCrossSectionBornQE(Float_t cs)  {CrossSectionBornQE = cs;}
+  Float_t    GetCrossSectionBornQE() const {return CrossSectionBornQE; }
+
+  void     StoreCrossSectionRadTotal(Float_t cs)  {CrossSectionRadTotal = cs;}
+  Float_t    GetCrossSectionRadTotal() const {return CrossSectionRadTotal; }
+
+  void     StoreCrossSectionRadElastic(Float_t cs)  {CrossSectionRadElastic = cs;}
+  Float_t    GetCrossSectionRadElastic() const {return CrossSectionRadElastic; }
+
+  void     StoreCrossSectionRadQE(Float_t cs)  {CrossSectionRadQE = cs;}
+  Float_t    GetCrossSectionRadQE() const {return CrossSectionRadQE; }
+
+  void     StoreCrossSectionRadDIS(Float_t cs)  {CrossSectionRadDIS = cs;}
+  Float_t    GetCrossSectionRadDIS() const {return CrossSectionRadDIS; }
+
+  //-----------------
   void     StoreAsymmetry(Float_t asym)  {Asymmetry = asym;}
   Float_t    GetAsymmetry() const {return Asymmetry; }
 

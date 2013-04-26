@@ -69,6 +69,13 @@ private:
   G4double PrimaryQ2;
   G4double CrossSection;
   G4double CrossSectionWeight;
+  G4double CrossSectionBornTotal;
+  G4double CrossSectionBornInelastic;
+  G4double CrossSectionBornQE;
+  G4double CrossSectionRadTotal;
+  G4double CrossSectionRadElastic;
+  G4double CrossSectionRadQE;
+  G4double CrossSectionRadDIS;
   G4double Asymmetry;
   G4double OriginVertexPositionX;
   G4double OriginVertexPositionY;
@@ -219,6 +226,28 @@ private:
 
   void     StorePrimaryEventNumber(G4int pen)    { PrimaryEventNumber = pen; }
   G4int      GetPrimaryEventNumber() const {return PrimaryEventNumber; }
+  //-----------------
+
+  void     StoreCrossSectionBornTotal(G4double cs)  {CrossSectionBornTotal = cs;}
+  G4double    GetCrossSectionBornTotal() const {return CrossSectionBornTotal; }
+
+  void     StoreCrossSectionBornInelastic(G4double cs)  {CrossSectionBornInelastic = cs;}
+  G4double    GetCrossSectionBornInelastic() const {return CrossSectionBornInelastic; }
+
+  void     StoreCrossSectionBornQE(G4double cs)  {CrossSectionBornQE = cs;}
+  G4double    GetCrossSectionBornQE() const {return CrossSectionBornQE; }
+
+  void     StoreCrossSectionRadTotal(G4double cs)  {CrossSectionRadTotal = cs;}
+  G4double    GetCrossSectionRadTotal() const {return CrossSectionRadTotal; }
+
+  void     StoreCrossSectionRadElastic(G4double cs)  {CrossSectionRadElastic = cs;}
+  G4double    GetCrossSectionRadElastic() const {return CrossSectionRadElastic; }
+
+  void     StoreCrossSectionRadQE(G4double cs)  {CrossSectionRadQE = cs;}
+  G4double    GetCrossSectionRadQE() const {return CrossSectionRadQE; }
+
+  void     StoreCrossSectionRadDIS(G4double cs)  {CrossSectionRadDIS = cs;}
+  G4double    GetCrossSectionRadDIS() const {return CrossSectionRadDIS; }
   //-----------------
 
   void     StoreReactionType(G4int rt)  { ReactionType = rt; }

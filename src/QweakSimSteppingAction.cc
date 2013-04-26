@@ -186,7 +186,9 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep){
 	// the stepLength of RandomPositionZ,
 	// then kill the particle, and reset the origin vertex Z as theZ
         if( fabs(theZ - RandomPositionZ)<=theStepLength && sqrt(theX*theX+theY*theY)<2.54*cm){
-	  G4double CrossSection, WeightN, Q2, E_out, theta, phi;
+      std::vector< G4double > CrossSection;
+      for (Int_t i = 0; i<8; i++) { CrossSection.push_back(0.0); }
+	  G4double WeightN, Q2, E_out, theta, phi;
 	  G4double Asymmetry;
 	  G4ThreeVector MomentumDirection = theTrack->GetMomentumDirection();
 	  G4double E_in = theTrack->GetKineticEnergy()/MeV;  //Event generator needs units of MeV
@@ -225,8 +227,15 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep){
 	  myUserInfo->StoreOriginVertexTotalEnergy(E_out);
 
 	  myUserInfo->StorePrimaryQ2(Q2*0.000001); //in units of GeV^2
-	  myUserInfo->StoreCrossSection(CrossSection);
+	  myUserInfo->StoreCrossSection(CrossSection[0]);
 	  myUserInfo->StoreCrossSectionWeight(WeightN);
+	  myUserInfo->StoreCrossSectionBornTotal    (CrossSection[1]);
+	  myUserInfo->StoreCrossSectionBornInelastic(CrossSection[2]);
+	  myUserInfo->StoreCrossSectionBornQE       (CrossSection[3]);
+	  myUserInfo->StoreCrossSectionRadTotal     (CrossSection[4]);
+	  myUserInfo->StoreCrossSectionRadElastic   (CrossSection[5]);
+	  myUserInfo->StoreCrossSectionRadQE        (CrossSection[6]);
+	  myUserInfo->StoreCrossSectionRadDIS       (CrossSection[7]);
 	  myUserInfo->StoreAsymmetry ( Asymmetry );
 	  //myUserInfo->StorePrimaryEventNumber(myEventCounter);
 	  myUserInfo->StoreReactionType(myEvent->GetReactionType());

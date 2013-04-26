@@ -160,7 +160,7 @@ G4ThreeVector QweakSimEPEvent::GetMomentumDirection()
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void QweakSimEPEvent::GetanEvent(G4double E_in, 
-                                 G4double &fCrossSection, 
+                                 std::vector< G4double > &fCrossSection, 
                                  G4double &fWeightN,
                                  G4double &Q2,
                                  G4double &E_out,
@@ -217,7 +217,7 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
        A = 1.0;
        Z = 1.0;
        Mass = Z*M_p+(A-Z)*M_n;
-       fCrossSection = Elastic_Cross_Section_Proton(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
+       fCrossSection[0] = Elastic_Cross_Section_Proton(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
        Asymmetry = GetAsymmetry_EP(RelativeThetaAngle, E_in);
       }
       
@@ -226,7 +226,7 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
        A = 27.0;
        Z = 13.0;
        Mass = Z*M_p+(A-Z)*M_n;
-       fCrossSection = Elastic_Cross_Section_Aluminum(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
+       fCrossSection[0] = Elastic_Cross_Section_Aluminum(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
        Asymmetry = GetAsymmetry_AL(RelativeThetaAngle, E_in);
       }
 
@@ -235,7 +235,7 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
        A = 1.0;
        Z = 1.0;   
        Mass = M_p;    
-       fCrossSection = Elastic_Cross_Section_Proton(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
+       fCrossSection[0] = Elastic_Cross_Section_Proton(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
        Asymmetry = GetAsymmetry_EP(RelativeThetaAngle, E_in);
       }
 
@@ -244,13 +244,13 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
        A = 1.0;
        Z = 1.0;   // Z needs to be set to 1 for neutron quasi elastic scattering
        Mass = M_n;    
-       fCrossSection = Quasi_Elastic_Neutron(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
+       fCrossSection[0] = Quasi_Elastic_Neutron(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
        Asymmetry = GetAsymmetry_EN(RelativeThetaAngle, E_in);
       }
 
    else if(ReactionType==5) // Delta resonances
       {
-       fCrossSection = Delta_Resonance(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
+       fCrossSection[0] = Delta_Resonance(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
        //std::cout<<E_in<<" "<<ThetaAngle/degree<<" "<<fWeightN<<" "<<Q2<<" "<<E_out<<std::endl;
        Asymmetry = GetAsymmetry_Pi(Q2);
       }
@@ -260,7 +260,7 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
 	//  Small angle recoil electrons are directly dumped for now.
        G4double E_recoil;
        G4double ThetaRecoil;
-       fCrossSection = Moller_Scattering(E_in, RelativeThetaAngle, E_out, 
+       fCrossSection[0] = Moller_Scattering(E_in, RelativeThetaAngle, E_out, 
 					 E_recoil, ThetaRecoil, 
                                          Q2, fWeightN, Asymmetry);
       }      
@@ -883,7 +883,7 @@ G4double QweakSimEPEvent::Moller_Scattering(G4double E_in, G4double theta1,
 //
 //  Beam Energy must be 3.35 GeV
 
-G4double QweakSimEPEvent::Radiative_Cross_Section_Proton(G4double E_in,
+const std::vector< G4double > QweakSimEPEvent::Radiative_Cross_Section_Proton(G4double E_in,
                                                          G4double Theta,
                                                          G4double &fWeightN,
                                                          G4double &Q2,
@@ -896,19 +896,23 @@ G4double QweakSimEPEvent::Radiative_Cross_Section_Proton(G4double E_in,
 
     const Double_t pos[value_d]   = {myUserInfo->GetOriginVertexPositionZ(),E_in,E_out,Theta};
     Double_t       value[value_n] = {0.0};
-
+    std::vector< G4double > CrossSection;
+    
     fLookupTable->GetValue(pos,value);
     Q2       = value[1];
     fWeightN = value[6]*sin(Theta*degree);
     //fWeightN = value[6];
 
-    //G4cout << "===== Lookup Table =====" << G4endl;
-    //G4cout << "Beam Energy:  " << E_in << G4endl;
-    //G4cout << "Theta:        " << Theta << G4endl;
-    //G4cout << "Theta*degree: " << Theta*degree << G4endl;
-    //G4cout << "Q2:           " << Q2 << G4endl;
+    CrossSection.push_back(value[6]);
+    CrossSection.push_back(value[2]);
+    CrossSection.push_back(value[3]);
+    CrossSection.push_back(value[4]);
+    CrossSection.push_back(value[6]);
+    CrossSection.push_back(value[7]);
+    CrossSection.push_back(value[8]);
+    CrossSection.push_back(value[9]);
 
-    return value[6];
+     return CrossSection;
 }
 
 ////....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

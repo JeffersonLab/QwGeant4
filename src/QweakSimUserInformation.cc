@@ -58,6 +58,13 @@ void QweakSimUserInformation::Initialize()
   PrimaryQ2 = 0.0;
   CrossSection = 0.0;
   CrossSectionWeight = 0.0;
+  CrossSectionBornTotal          = 0.0;
+  CrossSectionBornInelastic      = 0.0;
+  CrossSectionBornQE             = 0.0;
+  CrossSectionRadTotal           = 0.0;
+  CrossSectionRadElastic         = 0.0;
+  CrossSectionRadQE              = 0.0;
+  CrossSectionRadDIS             = 0.0;
   Asymmetry = 0.0;
   OriginVertexPositionX = 0.0;
   OriginVertexPositionY = 0.0;

@@ -394,6 +394,13 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         G4double PrimaryQ2 = myUserInfo->GetPrimaryQ2();
         G4double CrossSection = myUserInfo->GetCrossSection();
         G4double CrossSectionWeight = myUserInfo->GetCrossSectionWeight();
+        G4double CrossSectionBornTotal     = myUserInfo->GetCrossSectionBornTotal();
+        G4double CrossSectionBornInelastic = myUserInfo->GetCrossSectionBornInelastic();
+        G4double CrossSectionBornQE        = myUserInfo->GetCrossSectionBornQE();
+        G4double CrossSectionRadTotal      = myUserInfo->GetCrossSectionRadTotal();
+        G4double CrossSectionRadElastic    = myUserInfo->GetCrossSectionRadElastic();
+        G4double CrossSectionRadQE         = myUserInfo->GetCrossSectionRadQE();
+        G4double CrossSectionRadDIS        = myUserInfo->GetCrossSectionRadDIS();
 	G4double Asymmetry = myUserInfo->GetAsymmetry();
         G4double OriginVertexPositionX = myUserInfo->GetOriginVertexPositionX();
         G4double OriginVertexPositionY = myUserInfo->GetOriginVertexPositionY();
@@ -436,6 +443,13 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         analysis->fRootEvent->Primary.StorePrimaryQ2((Float_t) PrimaryQ2);
         analysis->fRootEvent->Primary.StoreCrossSection((Float_t) CrossSection);
         analysis->fRootEvent->Primary.StoreCrossSectionWeight((Float_t) CrossSectionWeight);
+        analysis->fRootEvent->Primary.StoreCrossSectionBornTotal    ((Float_t) CrossSectionBornTotal);
+        analysis->fRootEvent->Primary.StoreCrossSectionBornInelastic((Float_t) CrossSectionBornInelastic);
+        analysis->fRootEvent->Primary.StoreCrossSectionBornQE       ((Float_t) CrossSectionBornQE);
+        analysis->fRootEvent->Primary.StoreCrossSectionRadTotal     ((Float_t) CrossSectionRadTotal);
+        analysis->fRootEvent->Primary.StoreCrossSectionRadElastic   ((Float_t) CrossSectionRadElastic);
+        analysis->fRootEvent->Primary.StoreCrossSectionRadQE        ((Float_t) CrossSectionRadQE);
+        analysis->fRootEvent->Primary.StoreCrossSectionRadDIS       ((Float_t) CrossSectionRadDIS);
 	analysis->fRootEvent->Primary.StoreAsymmetry((Float_t) Asymmetry);
         analysis->fRootEvent->Primary.StorePrimaryEventNumber((Int_t) PrimaryEventNumber);
         analysis->fRootEvent->Primary.StoreReactionType((Int_t) ReactionType);

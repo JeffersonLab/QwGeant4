@@ -125,7 +125,7 @@ class QweakSimEPEvent {
 
   G4double GetVertexZ();
   void GetanEvent(G4double E_in, 
-                  G4double &CrossSection, 
+                  std::vector< G4double > &CrossSection, 
                   G4double &weight_n,
                   G4double &Q2,
                   G4double &E_out,
@@ -162,7 +162,7 @@ class QweakSimEPEvent {
                              G4double &E_out1, G4double &E_out2, G4double &theta2, 
                              G4double &q2, G4double &fWeightN, G4double &asymmetry);
   
-  G4double Radiative_Cross_Section_Proton( G4double E_in,
+  const std::vector< G4double > Radiative_Cross_Section_Proton( G4double E_in,
                                            G4double Theta,
                                            G4double &fWeightN,
                                            G4double &Q2,
