@@ -92,7 +92,7 @@ void QweakSimAnalysis::EndOfRun(const G4Run* /*aRun*/)
 
   // Write the data to the ROOT file
   G4cout << "###### Analysis: closing ROOT file " << fRootFileName << G4endl;
-  fRootFile->Write();
+  fRootFile->Write(0,TObject::kOverwrite);
   fRootFile->Close();
   fRootFileName = "";
 }
