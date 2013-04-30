@@ -48,6 +48,11 @@ QweakSimEventActionMessenger::QweakSimEventActionMessenger(QweakSimEventAction* 
   theTriggerDisableCommand->SetGuidance("Disable trigger condition.");
   theTriggerDisableCommand->AvailableForStates(G4State_Idle);
 
+  thePrintHitsCommand = new G4UIcmdWithABool("/Trigger/PrintHits", this);
+  thePrintHitsCommand->SetParameterName("printhits",true);
+  thePrintHitsCommand->SetDefaultValue("true");
+  thePrintHitsCommand->AvailableForStates(G4State_Init,G4State_Idle);
+
   G4cout << G4endl << "###### Leaving QweakSimEventActionMessenger::QweakSimEventActionMessenger() " << G4endl << G4endl;
 }
 
@@ -60,6 +65,7 @@ QweakSimEventActionMessenger::~QweakSimEventActionMessenger()
   if (theTriggerShowCommand)    delete theTriggerShowCommand;
   if (theTriggerEnableCommand)  delete theTriggerEnableCommand;
   if (theTriggerDisableCommand) delete theTriggerDisableCommand;
+  if (thePrintHitsCommand)      delete thePrintHitsCommand;
   if (theTriggerDir)            delete theTriggerDir;
 
   G4cout << G4endl << "###### Leaving QweakSimEventActionMessenger::~QweakSimEventActionMessenger() " << G4endl << G4endl;
@@ -80,5 +86,9 @@ void QweakSimEventActionMessenger::SetNewValue(G4UIcommand* command, G4String ne
   if ( command == theTriggerDisableCommand )
   {
     theEventAction->DisableTrigger(newValue);
+  }
+  if ( command == thePrintHitsCommand )
+  {
+    theEventAction->SetPrintHits(thePrintHitsCommand->GetNewBoolValue(newValue));
   }
 }

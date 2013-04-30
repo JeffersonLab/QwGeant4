@@ -68,12 +68,15 @@ public:
   void SetTrigger(const G4String value, const G4bool status);
   void EnableTrigger(const G4String value) { SetTrigger(value, true); };
   void DisableTrigger(const G4String value) { SetTrigger(value, false); };
+  void SetPrintHits(bool value) {printhits = value;};
 
 private:
 
   void Initialize();
   G4double GetDistance(G4ThreeVector,G4ThreeVector);
   void CalculateKinematicVariables();
+
+  bool printhits;
 
   // Event action messenger
   QweakSimEventActionMessenger* fEventActionMessenger;

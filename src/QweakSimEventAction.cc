@@ -105,6 +105,9 @@ QweakSimEventAction::QweakSimEventAction(QweakSimAnalysis* AN, QweakSimUserInfor
 
     // By default enable only cerenkov trigger
     fTrigger[kTriggerCer] = true;
+
+    // By default, enable print out of hit information
+    printhits = true;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -299,9 +302,11 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         }
     }
 
-    G4cout <<",\tVDC_Front "<<n_VDChitDCFront<<",\tVDC_Back "<<n_VDChitDCBack<<",\tTS "<<n_hitTriggerScintillator;
-    G4cout <<",\tLeadGlass "<<n_hitLeadGlass;
-    G4cout <<",\tCerenkov "<<n_hitCerenkov<<"\tCerenkovPMT "<<n_hitCerenkovPMT<<G4endl;
+    if (printhits) {
+      G4cout <<",\tVDC_Front "<<n_VDChitDCFront<<",\tVDC_Back "<<n_VDChitDCBack<<",\tTS "<<n_hitTriggerScintillator;
+      G4cout <<",\tLeadGlass "<<n_hitLeadGlass;
+      G4cout <<",\tCerenkov "<<n_hitCerenkov<<"\tCerenkovPMT "<<n_hitCerenkovPMT<<G4endl;
+    }
 
     // Initialize/Clear Event variables, initialize Cerenkov Detector with NoHit Flag
     analysis->fRootEvent->Cerenkov.Detector.Initialize();
