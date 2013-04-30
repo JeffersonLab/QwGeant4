@@ -170,6 +170,11 @@ class QweakSimEPEvent {
 
   void CreateLookupTable();
 
+  G4double Quasi_Elastic_Bosted(G4double E_in, G4double Theta, G4int Zin, G4int Ain,
+                                G4double &fWeightN, G4double &Q2, G4double &E_out);
+  void F1F2QE09(G4int &Z, G4int &A, G4double &QSQ,
+                G4double &wsq, G4double &F1, G4double &F2);
+
   G4double GetAsymmetry_EP(G4double theta, G4double energy);
   G4double GetAsymmetry_EN(G4double theta, G4double energy);
   G4double GetAsymmetry_AL(G4double theta, G4double energy);
