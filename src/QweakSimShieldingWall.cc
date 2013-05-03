@@ -114,8 +114,12 @@ ShieldingWallHousing_Material = NULL;
  // Hut area related
  //--------------------
  //
- InnerHut_FullLength_X = 312.50*inch; // horizontally, Paulo design 
- InnerHut_FullLength_Z = 148.35*inch; // along beam  , Paulo design
+// InnerHut_FullLength_X = 312.50*inch; // horizontally, Paulo design 
+// InnerHut_FullLength_Z = 148.35*inch; // along beam  , Paulo design
+
+// Val's changes from Paulos design 2013-04-16
+ InnerHut_FullLength_X = 446.0*inch; // horizontally, Paulo design 
+ InnerHut_FullLength_Z = 233.26*inch; // along beam  , Paulo design
 
 
  //--------------------
@@ -126,7 +130,8 @@ ShieldingWallHousing_Material = NULL;
  FrontWall_Physical = NULL;
  FrontWall_Material = NULL;
  //
- FrontWall_FullLength_X = ShieldingWallHousing_FullLength_X + 2*60.0*inch; // adding left/right block x-dim
+// FrontWall_FullLength_X = ShieldingWallHousing_FullLength_X + 2*60.0*inch; // adding left/right block x-dim
+ FrontWall_FullLength_X = ShieldingWallHousing_FullLength_X + 2*140.0*inch; // Val's change based on Paulo design 2013-05-03
  FrontWall_FullLength_Y = ShieldingWallHousing_FullLength_X + 2*24.0*inch; 
  FrontWall_FullLength_Z = 36.0*inch;
  //
@@ -154,9 +159,11 @@ ShieldingWallHousing_Material = NULL;
  BackWall_Physical = NULL;
  BackWall_Material = NULL;
  //
- BackWall_FullLength_X = 312.0*inch;  // Paulo IDEAS
+// BackWall_FullLength_X = 312.0*inch;  // Paulo IDEAS
+ BackWall_FullLength_X = 546.0*inch;  // Paulo's drawings!  Updated by Val 2013-05-03
  BackWall_FullLength_Y = 312.0*inch;  // Paulo IDEAS
- BackWall_FullLength_Z =  48.0*inch;  // Paulo IDEAS
+ //BackWall_FullLength_Z =  48.0*inch;  // Paulo IDEAS
+ BackWall_FullLength_Z =  52.0*inch;  // Paulo's drawings!  Updated by Val 2013-04-16
  //
  BackWallBeamCutout_FullLength_X = 29.0*inch +0.01*cm;
  BackWallBeamCutout_FullLength_Y = BackWallBeamCutout_FullLength_X;
@@ -182,8 +189,10 @@ ShieldingWallHousing_Material = NULL;
  //
  BeamLeftSideWall_FullLength_X =  48.0*inch;  // Paulo IDEAS
  BeamLeftSideWall_FullLength_Y = BackWall_FullLength_Y;  // Paulo IDEAS
- BeamLeftSideWall_FullLength_Z = InnerHut_FullLength_Z + 48.0*inch + 15*inch;  // Paulo IDEAS
- //
+// BeamLeftSideWall_FullLength_Z = InnerHut_FullLength_Z + 48.0*inch + 15*inch;  // Paulo IDEAS
+ BeamLeftSideWall_FullLength_Z = InnerHut_FullLength_Z;// Paulo Drawing - Val change 2013-05-03
+
+//
  BeamLeftSideWall_CenterXPosition = -1.0*(0.5*InnerHut_FullLength_X + 0.5*BeamLeftSideWall_FullLength_X); 
  BeamLeftSideWall_CenterZPosition = FrontWall_CenterZPosition + 0.5*FrontWall_FullLength_Z + 0.5*BeamLeftSideWall_FullLength_Z; 
  //
@@ -223,10 +232,12 @@ ShieldingWallHousing_Material = NULL;
  //
  TopWall_FullLength_X = InnerHut_FullLength_X + BeamLeftSideWall_FullLength_X;
  TopWall_FullLength_Y =  20.0*inch;
- TopWall_FullLength_Z = BackWall_CenterZPosition - FrontWall_CenterZPosition;
+// TopWall_FullLength_Z = BackWall_CenterZPosition - FrontWall_CenterZPosition;
+ TopWall_FullLength_Z = BackWall_CenterZPosition - FrontWall_CenterZPosition + 4.0*inch; //Val's change to fit new Hut size 2013/05-03
  //
  TopWall_CenterYPosition = 0.5*BeamLeftSideWall_FullLength_Y + 0.5*TopWall_FullLength_Y; 
- TopWall_CenterZPosition = 0.5*(FrontWall_CenterZPosition + BackWall_CenterZPosition) - 18.0*inch;
+// TopWall_CenterZPosition = 0.5*(FrontWall_CenterZPosition + BackWall_CenterZPosition) - 18.0*inch;
+ TopWall_CenterZPosition = 0.5*(FrontWall_CenterZPosition + BackWall_CenterZPosition) - 8.0*inch; //Val's change to fit new Hut size 2013/05-03
  //
  TopWall_Material = pMaterial->GetMaterial("ShieldingConcrete");  
  //

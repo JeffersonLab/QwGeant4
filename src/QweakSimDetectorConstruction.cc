@@ -233,9 +233,14 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
 
   //--------- Definitions of Solids, Logical Volumes, Physical Volumes ---------
 
-  fWorldLengthInX =  10.0*m;
-  fWorldLengthInY =  10.0*m;
-  fWorldLengthInZ =  20.0*m;
+//  fWorldLengthInX =  10.0*m;
+//  fWorldLengthInY =  10.0*m;
+//  fWorldLengthInZ =  20.0*m;
+
+//Val's Changes so correct shielding hut lengths fit in the world 2013-05-03
+  fWorldLengthInX =  20.0*m; //Val's Changes so correct shielding hut lengths fit in the world
+  fWorldLengthInY =  20.0*m; //Val's Changes so correct shielding hut lengths fit in the world
+  fWorldLengthInZ =  40.0*m; //Val's Changes so correct shielding hut lengths fit in the world
 
 
   // experimentalHall_Material   = pMaterial->GetMaterial("HeGas");
@@ -272,9 +277,14 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   // Defining the Hall Floor
   //==========================
 
-  fFloorLengthInX =  12.0*m;
+//  fFloorLengthInX =  12.0*m;
+//  fFloorLengthInY =   1.0*m;
+//  fFloorLengthInZ =  28.0*m;
+
+//Val's Changes so correct shielding hut lengths will be on the floor 2013-05-03
+  fFloorLengthInX =  16.0*m;
   fFloorLengthInY =   1.0*m;
-  fFloorLengthInZ =  28.0*m;
+  fFloorLengthInZ =  32.0*m;
 
   fFloorPositionInY =  -396.25*cm; // Top positon, not the center pos
 
