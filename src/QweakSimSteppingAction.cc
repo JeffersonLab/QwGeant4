@@ -67,17 +67,6 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep){
 
   // ** all the track info is postStep **
   G4Track*              theTrack     = theStep->GetTrack();
-
-  // return if the track is dead
-  // NOTE:: UserSteppingAction is called for all primary & secondaries created.
-  //        Therefore, this msg might appear once for every secondary!!
-  if(theStep->GetTrack()->GetTrackStatus()!=fAlive){
-    // -- fix me :: need to tie this printout to G4 verbose condition --
-    //    if(verboseLevel>=1)  G4cout << "** The track is dead. Terminating QweakSimSteppingAction::UserSteppingAction(..) **" << G4endl;
-    return;
-  };
-
-  //
   G4StepPoint*          thePrePoint  = theStep->GetPreStepPoint();
   G4VPhysicalVolume*    thePrePV     = thePrePoint->GetPhysicalVolume();
   G4StepPoint*          thePostPoint = theStep->GetPostStepPoint();
