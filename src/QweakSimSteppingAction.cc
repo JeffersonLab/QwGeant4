@@ -67,13 +67,27 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep){
 
   // ** all the track info is postStep **
   G4Track*              theTrack     = theStep->GetTrack();
+  G4ParticleDefinition* particleType = theTrack->GetDefinition();
+
+  ////////// -- //////////// --  ////////// -- //////////// --
+  //
+  // kludge to return if the track is dead
+  //
+  // NOTE:: without the OpticalPhoton condition, this caused the 
+  //        photoelectron counts (CerenkovPMT) to be 0
+  //  -- should not have to include OpticalPhoton condition below...
+  // **  Needs to be look at **       
+  if(theStep->GetTrack()->GetTrackStatus()!=fAlive && particleType!=G4OpticalPhoton::OpticalPhotonDefinition()){
+    return;
+  };
+  ////////// -- //////////// --   ////////// -- //////////// --
+
   G4StepPoint*          thePrePoint  = theStep->GetPreStepPoint();
   G4VPhysicalVolume*    thePrePV     = thePrePoint->GetPhysicalVolume();
   G4StepPoint*          thePostPoint = theStep->GetPostStepPoint();
   G4VPhysicalVolume*    thePostPV    = thePostPoint->GetPhysicalVolume(); 
   G4TouchableHistory*   theTouchable = (G4TouchableHistory*)(thePrePoint->GetTouchable());
   //   G4int                 ReplicaNo    = 0;
-  G4ParticleDefinition* particleType = theTrack->GetDefinition();
   G4String              particleName = theTrack->GetDefinition()->GetParticleName();
   G4ProcessManager*     pm           = particleType->GetProcessManager();
   //   G4int                 nprocesses   = pm->GetProcessListLength();
