@@ -6,7 +6,7 @@
 #Assisted By:
 #
 
-/control/execute myQweakConfiguration.mac
+/control/execute myQweakConfiguration_Mag45.mac
 /control/execute macros/peiqing_2011.mac
 /control/execute macros/noTracking.mac
 
