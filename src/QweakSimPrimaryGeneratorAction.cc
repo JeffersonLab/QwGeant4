@@ -97,7 +97,7 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     myPositionX =  myUserInfo->GetBeamPositionX() + (G4UniformRand()-0.5)*(fPositionX_max-fPositionX_min)+(fPositionX_max+fPositionX_min)/2.0;
     myPositionY =  myUserInfo->GetBeamPositionY() + (G4UniformRand()-0.5)*(fPositionY_max-fPositionY_min)+(fPositionY_max+fPositionY_min)/2.0;
     // select the z position 30 cm upstream of the target center (this is basically a constant)
-    myPositionZ = myUserInfo->TargetCenterPositionZ -30.0*cm;
+    myPositionZ = myUserInfo->TargetCenterPositionZ - 30.0*cm;
 
     myNormMomentumX  = tan(myUserInfo->GetNormMomentumX()); // = 0
     myNormMomentumY  = tan(myUserInfo->GetNormMomentumY()); // = 0
@@ -108,14 +108,6 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     myUserInfo->StoreOriginVertexPositionZ(myEvent->GetVertexZ());
     myUserInfo->EvtGenStatus = 0; // checked in QweakSimSteppingAction.cc
 
-    if(ELOSS_DEBUG){
-      G4cout << "*=== Actual Event number (myEventCounter) = " << myEventCounter << " ===*" << G4endl;
-      G4cout << "*=== Nominal Event number (PrimaryEventNumber)= " << myEventCounter+1 << " ===*" << G4endl;
-      G4cout << "Position:: " << myPositionX <<"\t" << myPositionY <<"\t" << myPositionZ  << G4endl;
-      G4cout << "Momentum:: " << myNormMomentumX <<"\t" << myNormMomentumY <<"\t" << myNormMomentumZ  << G4endl;
-      G4cout << "Beam energy:: " << E_beam/GeV << G4endl;
-      G4cout << "OriginVerPosZ:: " << myEvent->GetVertexZ() << G4endl;
-    }
   }
   else{ // for odd myEventCounter
 
@@ -128,15 +120,6 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     myNormMomentumZ  = myUserInfo->GetOriginVertexMomentumDirectionZ();
 
     E_beam = myUserInfo->GetOriginVertexKineticEnergy();
-
-    if(ELOSS_DEBUG){
-      G4cout << "*=== Actual Event number (myEventCounter) = " << myEventCounter << " ===*" << G4endl;
-      G4cout << "*=== Nominal Event number (PrimaryEventNumber)= " << myEventCounter+1 << " ===*" << G4endl;
-      G4cout << "Position:: " << myPositionX <<"\t" << myPositionY <<"\t" << myPositionZ  << G4endl;
-      G4cout << "Momentum:: " << myNormMomentumX <<"\t" << myNormMomentumY <<"\t" << myNormMomentumZ  << G4endl;
-      G4cout << "Beam energy:: " << E_beam/GeV << G4endl;
-      G4cout << "OriginVerPosZ:: " << myEvent->GetVertexZ() << G4endl;
-    }
 
     if (myEvent->GetReactionType() == 7) {
       myVertexZ = myPositionZ;
@@ -179,8 +162,7 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   particleGun->GeneratePrimaryVertex(anEvent);  // takes an event, generates primary vertex, and associates primary particles with the vertex
   myUserInfo->StorePrimaryEventNumber(myEventCounter+1);
   myUserInfo->StoreBeamEnergy(fBeamEnergy); 
-
-  // rest of userInfo filled in QweakSimSteppingAction.cc
+    // rest of userInfo filled in QweakSimSteppingAction.cc
 
 //  G4cout << "###### Leaving QweakSimPrimaryGeneratorAction::GeneratePrimaries" << G4endl;
 

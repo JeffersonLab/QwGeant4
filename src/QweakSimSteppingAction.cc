@@ -68,20 +68,6 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep){
   // ** all the track info is postStep **
   G4Track*              theTrack     = theStep->GetTrack();
   G4ParticleDefinition* particleType = theTrack->GetDefinition();
-
-  ////////// -- //////////// --  ////////// -- //////////// --
-  //
-  // kludge to return if the track is dead
-  //
-  // NOTE:: without the OpticalPhoton condition, this caused the 
-  //        photoelectron counts (CerenkovPMT) to be 0
-  //  -- should not have to include OpticalPhoton condition below...
-  // **  Needs to be look at **       
-  if(theStep->GetTrack()->GetTrackStatus()!=fAlive && particleType!=G4OpticalPhoton::OpticalPhotonDefinition()){
-    return;
-  };
-  ////////// -- //////////// --   ////////// -- //////////// --
-
   G4StepPoint*          thePrePoint  = theStep->GetPreStepPoint();
   G4VPhysicalVolume*    thePrePV     = thePrePoint->GetPhysicalVolume();
   G4StepPoint*          thePostPoint = theStep->GetPostStepPoint();
@@ -117,31 +103,14 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep){
     //jpan: to account for the energy loss before the event generation,
     //      force to change primary momentum direction here
 
-    // G4double engDepTot = theStep->GetTotalEnergyDeposit();
-    // G4double engDepNonIon = theStep->GetNonIonizingEnergyDeposit();
-    // G4cout << "*** Tot eng dep:: " << engDepTot << G4endl;
-    // G4cout << "*** Non Ion eng dep:: " << engDepNonIon << G4endl;
-    
-    G4String procName = thePostPoint->GetProcessDefinedStep()->GetProcessName();
-
-    if(ELOSS_DEBUG){
-    //    G4cout<< "*** Process name:: " << procName << G4endl;
-      G4cout<< "*** Pre PV name:: " << thePrePV->GetName() << G4endl;
-      G4cout<< "*** Post PV name:: " << thePostPV->GetName() << G4endl;
-    
-    //  G4cout<< "*** KE:: " << theTrack->GetKineticEnergy() << G4endl;
-    //    G4cout<< "*** KE (track - preStep):: " << theTrack->GetKineticEnergy()-thePrePoint->GetKineticEnergy() << G4endl;
-    //    G4cout<< "*** KE (track - postStep):: " << theTrack->GetKineticEnergy()-thePostPoint->GetKineticEnergy() << G4endl;
-    }
-    
-    //    myUserInfo->Print();
     //scattering only occur inside reaction region of the target, only occur once
     G4ThreeVector thePosition = theTrack->GetPosition();
     G4double theX = thePosition.getX();
     G4double theY = thePosition.getY();
     G4double theZ = thePosition.getZ();
     //      G4cout << "Track pos:: " << theX << "\t" << theY << "\t" << theZ << G4endl;
-    
+ 
+    G4String procName = thePostPoint->GetProcessDefinedStep()->GetProcessName();   
     // dEE in MeV -> all Elosses are in MeV
     G4double dEE = thePrePoint->GetKineticEnergy()/MeV-thePostPoint->GetKineticEnergy()/MeV;
 
@@ -154,33 +123,17 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep){
 
       if( myUserInfo->EvtGenStatus == 0){  // true for primary event # = 0,2,4,...
 	// see QweakSimPrimaryGeneratorAction.cc
-
-	// various energy losses at the target
-	// IMP:: all the Elosses upto the vertex, theZ, is stored here
-	if(thePrePV->GetName().contains("QweakTarget") || 
-	   thePostPV->GetName().contains("QweakTarget")){
-	  if (procName.compare("msc")==0){ 
+	
+	// // various energy losses at the target
+	// // IMP:: all the Elosses upto the vertex, theZ, is stored here
+	if((thePrePV->GetName()).contains("QweakTarget") || 
+	   (thePostPV->GetName()).contains("QweakTarget")){
+	  if (procName.compare("msc")==0)
 	    myUserInfo->AddTodEMscIn(dEE);
-	    if(ELOSS_DEBUG){
-	      G4cout<< "*** Process name is msc ***" << G4endl;
-	      G4cout<< "*** dE:: " << dEE << "\tdETot:: " << myUserInfo->GetdEMscIn()<< G4endl;
-	    }
-	  }
-	  else if(procName.compare("eIoni")==0){
+	  else if(procName.compare("eIoni")==0)
 	    myUserInfo->AddTodEIonIn(dEE);
-	    if(ELOSS_DEBUG){
-	      G4cout<< "*** Process name is eIoni ***" << G4endl;
-	      G4cout<< "*** dE:: " << dEE << "\tdETot:: " << myUserInfo->GetdEIonIn()<< G4endl;
-	    }
-	  }
-	  else if(procName.compare("eBrem")==0){
+	  else if(procName.compare("eBrem")==0)
 	    myUserInfo->AddTodEBremIn(dEE);
-	    if(ELOSS_DEBUG){
-	      G4cout<< "*** Process name is eBrem ***" << G4endl;
-	      G4cout<< "*** dE:: " << dEE << "\tdETot:: " << myUserInfo->GetdEBremIn()<< G4endl;
-	    }
-	  }
-	  if(ELOSS_DEBUG)  G4cout<< "*** dETotIn:: " << myUserInfo->GetdETotIn()<< G4endl;
 	}
 	
 	G4double theStepLength = theStep->GetStepLength();
@@ -189,13 +142,13 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep){
 	// the stepLength of RandomPositionZ,
 	// then kill the particle, and reset the origin vertex Z as theZ
         if( fabs(theZ - RandomPositionZ)<=theStepLength && sqrt(theX*theX+theY*theY)<2.54*cm){
-      std::vector< G4double > CrossSection;
-      for (Int_t i = 0; i<8; i++) { CrossSection.push_back(0.0); }
+	  std::vector< G4double > CrossSection;
+	  for (Int_t i = 0; i<8; i++) { CrossSection.push_back(0.0); }
 	  G4double WeightN, Q2, E_out, theta, phi;
 	  G4double Asymmetry;
 	  G4ThreeVector MomentumDirection = theTrack->GetMomentumDirection();
 	  G4double E_in = theTrack->GetKineticEnergy()/MeV;  //Event generator needs units of MeV
-
+	  
 	  // evaluate the MomentumDirection, E_out ..
 	  myEvent->GetanEvent(E_in, CrossSection, WeightN, Q2, E_out, MomentumDirection, theta, phi, Asymmetry);
 
@@ -250,40 +203,27 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep){
 	  // G4cout << "Org ver scat KE:: "<<E_out<< G4endl;
 	   
 	  //             myUserInfo->Print();
-	  theTrack->SetTrackStatus(fStopAndKill);     
-	  if(ELOSS_DEBUG)
-	    G4cout << G4endl << "** ** ** Track killed ** ** ** " << G4endl << G4endl;
+	  theTrack->SetTrackStatus(fStopAndKill);
 	} // end of if( fabs(theZ - RandomPositionZ)<=theStepLength && sqrt(theX*theX+theY*theY)<2.54*cm)
       } // end of  if( myUserInfo->EvtGenStatus == 0){  // true for primary event # = 0,2,4,...
     } // end of    if(myUserInfo->GetPrimaryEventNumber() %2!=0)
-    else {
+    else{
+      
+      // need this here, else the track might get out of physical volume,
+      //  and crash the program
+      if(!thePostPV)	return;
+      
       // various energy losses at the target
-      if(thePrePV->GetName().contains("QweakTarget") || 
-	 thePostPV->GetName().contains("QweakTarget")){
-	if (procName.compare("msc")==0){ 
+      if((thePrePV->GetName()).contains("QweakTarget") || 
+	 (thePostPV->GetName()).contains("QweakTarget")){
+	if (procName.compare("msc")==0)
 	  myUserInfo->AddTodEMscOut(dEE);
-	  if(ELOSS_DEBUG){
-	    G4cout<< "*** Process name is msc ***" << G4endl;
-	    G4cout<< "*** dE:: " << dEE << "\tdETot:: " << myUserInfo->GetdEMscOut()<< G4endl;
-	  }
-	}
-	else if(procName.compare("eIoni")==0){
+	else if(procName.compare("eIoni")==0)
 	  myUserInfo->AddTodEIonOut(dEE);
-	  if(ELOSS_DEBUG){
-	    G4cout<< "*** Process name is eIoni ***" << G4endl;
-	    G4cout<< "*** dE:: " << dEE << "\tdETot:: " << myUserInfo->GetdEIonOut()<< G4endl;
-	  }
-	}
-	else if(procName.compare("eBrem")==0){
-	  myUserInfo->AddTodEBremOut(dEE);
-	  if(ELOSS_DEBUG){
-	    G4cout<< "*** Process name is eBrem ***" << G4endl;
-	    G4cout<< "*** dE:: " << dEE << "\tdETot:: " << myUserInfo->GetdEBremOut()<< G4endl;
-	  }
-	}
-	if(ELOSS_DEBUG) G4cout<< "*** dETotOut:: " << myUserInfo->GetdETotOut()<< G4endl;
+	else if(procName.compare("eBrem")==0)
+	  myUserInfo->AddTodEBremOut(dEE);	
       }
-    } //
+    }
   }
   
 //now this is handled in the TrackingAction with the control of the tracking flag
@@ -403,54 +343,9 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep){
     }
   }
 
-  ///////////////
-  // not sure this condition is useful, because this engine crashes 
-  // a couple of lines into the UserSteppingAction. 
-  // trackStatus != fAlive is a better alternative, as is implemented above. -- rupesh
   if(!thePostPV){
     return;
   }
-
-  // if (!theStep->GetTrack()->GetNextVolume()){
-  //   G4cout << "**-- The track is out of the defined physical bounds--** " << G4endl;   
-  //   theStep->GetTrack()->SetTrackStatus(fStopAndKill);
-  // }
-
-  // "OutOfWorld" is not a volume, but a print out statement,
-  //  printed by SteppingVerbose to indicate that the track has
-  //  reached the world volume boundary
-
-  // printout statement of SteppingVerbose
-  //
-  // G4cout << std::setw( 5) << theTrack->GetCurrentStepNumber() << " "                 
-  // 	 << std::setw( 8) << G4BestUnit(theTrack->GetPosition().x() , "Length") << " "
-  // 	 << std::setw( 8) << G4BestUnit(theTrack->GetPosition().y() , "Length") << " "
-  // 	 << std::setw( 8) << G4BestUnit(theTrack->GetPosition().z() , "Length") << " "
-  // 	 << std::setw( 9) << G4BestUnit(theTrack->GetKineticEnergy() , "Energy") << " "
-  // 	 << std::setw( 8) << G4BestUnit(theStep->GetTotalEnergyDeposit(), "Energy") << " "
-  // 	 << std::setw( 8) << G4BestUnit(theStep->GetStepLength() , "Length") << " "
-  // 	 << std::setw( 9) << G4BestUnit(theTrack->GetTrackLength() , "Length") << " ";
-
-  // G4cout << std::setw( 5) << theTrack->GetCurrentStepNumber() << " "                 
-  // 	 << std::setw( 8) << theTrack->GetPosition().x()/mm << " "
-  // 	 << std::setw( 8) << theTrack->GetPosition().y()/mm << " "
-  // 	 << std::setw( 8) << theTrack->GetPosition().z()/mm << " "
-  // 	 << std::setw( 9) << theTrack->GetKineticEnergy()/MeV << " "
-  // 	 << std::setw( 8) << theStep->GetTotalEnergyDeposit()/MeV << " "
-  // 	 << std::setw( 8) << theStep->GetStepLength() << " "
-  // 	 << std::setw( 9) << theTrack->GetTrackLength() << " " ;
-  //
-  // if(theTrack->GetNextVolume()){
-  //   G4cout << std::setw(11) << theTrack->GetNextVolume()->GetName() << " " << G4endl;
-  // } else {
-  //   G4cout << std::setw(11) << "OutOfWorld" << " " << G4endl;     }
-  
-  // G4cout << thePrePV->GetName() << G4endl;
-  // G4cout << thePostPV->GetName() << G4endl;
-  // G4cout << theStep->GetTrack()->GetNextVolume()->GetName() << G4endl;
-  // G4cout << theStep->GetTrack()->GetNextVolume() << G4endl;
-
-  ////////////////
 
   if(particleType==G4OpticalPhoton::OpticalPhotonDefinition()){
     boundaryStatus=boundary->GetStatus();
