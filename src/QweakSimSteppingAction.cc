@@ -26,6 +26,7 @@
 #include "G4Electron.hh"
 #include "G4Positron.hh"
 #include "G4OpticalPhoton.hh"
+#include "G4PionMinus.hh"
 #include "G4OpBoundaryProcess.hh"
 #include "G4SDManager.hh"
 #include "G4UnitsTable.hh"
@@ -89,7 +90,8 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep){
   //RandomPositionZ = myEvent->GetVertexZ();
   RandomPositionZ = myUserInfo->GetOriginVertexPositionZ();
 
-  if((thePrePV->GetName()).contains("LeadGlass")){
+  if((thePrePV->GetName()).contains("LeadGlass"))
+  {
     G4double engDep = theStep->GetTotalEnergyDeposit();
     myUserInfo->AddLeadGlassEnergyDeposit(engDep);
   }
@@ -98,7 +100,7 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep){
   // check if it is primary
 
   G4int parentID = theTrack->GetParentID();
-  if( particleType==G4Electron::ElectronDefinition() && parentID==0 ){
+  if( (particleType==G4Electron::ElectronDefinition()||particleType==G4PionMinus::PionMinusDefinition()) && parentID==0 ){
 
     //jpan: to account for the energy loss before the event generation,
     //      force to change primary momentum direction here
@@ -179,7 +181,12 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep){
 	  //myUserInfo->StoreOriginVertexTotalEnergy(theTrack->GetTotalEnergy());     
 
 	  myUserInfo->StorePreScatteringKineticEnergy(E_in);
-	  myUserInfo->StoreOriginVertexKineticEnergy(E_out - 0.511*MeV);
+	  if(particleType==G4Electron::ElectronDefinition())
+	      myUserInfo->StoreOriginVertexKineticEnergy(E_out - 0.511*MeV);
+          if(particleType==G4PionMinus::PionMinusDefinition())
+          {
+              myUserInfo->StoreOriginVertexKineticEnergy(E_out - 139.57*MeV);
+          }
 	  myUserInfo->StoreOriginVertexTotalEnergy(E_out);
 
 	  myUserInfo->StorePrimaryQ2(Q2*0.000001); //in units of GeV^2
