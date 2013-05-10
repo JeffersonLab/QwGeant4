@@ -26,7 +26,8 @@
 /Trigger/Show
 
 #set an alias for the octant that will be active in the simultaion
-/control/alias oct %octant%
+#hehe - don't use
+#/control/alias oct %octant%
 
 #set the standard positions on MD9
 /Cerenkov/Cerenkov9/SetCenterPositionInX  -72.86 cm
