@@ -72,6 +72,9 @@ QweakSimEPEventMessenger::QweakSimEPEventMessenger(QweakSimEPEvent* pEPEvent)
   SelectReactionType_Cmd->SetGuidance("6 - Moller scattering");
   SelectReactionType_Cmd->SetGuidance("7 - LH2 radiative lookup table (3.35 GeV)");
   SelectReactionType_Cmd->SetGuidance("8 - Al quasi-elastic (Bosted)");
+	
+  SelectReactionType_Cmd->SetGuidance("88 - LH2 pion photo-production (3.35 GeV)");
+
   SelectReactionType_Cmd->SetParameterName("SelectReactionType",true);
   SelectReactionType_Cmd->SetDefaultValue(1);
   SelectReactionType_Cmd->SetRange("SelectReactionType>=0");

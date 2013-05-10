@@ -22,6 +22,8 @@
 #include "QweakSimEPEventMessenger.hh"
 #include "QweakSimUserInformation.hh"
 
+#include "wiser_pion.h"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
    const G4double QweakSimEPEvent::M_n = 939.5656*MeV; //neutron mass in MeV/c^2
@@ -277,6 +279,12 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
          fCrossSection[0] = Quasi_Elastic_Bosted(E_in, RelativeThetaAngle, Z, A, fWeightN, Q2,
                                               E_out);
       }
+	
+   else if(ReactionType==88) //--- LH2 target, pion photo-production cross section 3.35 GeV
+   {
+       fCrossSection[0] = Pion_PhotoProduction(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
+       Asymmetry = GetAsymmetry_EP(RelativeThetaAngle, E_in); //--- use the elastic asymmetry for now
+   }
 }
 
 
@@ -1010,6 +1018,53 @@ void QweakSimEPEvent::CreateLookupTable()
     in.close();
 }
 
+
+/////// --------------------------------------------------------------------
+//
+//--- Fang Guo
+//
+//---   Calculates the Cross Section weighting factor for 
+//---   pion photo-production with the wiser code. 
+//
+//--- Beam Energy must be 3.35 GeV
+
+G4double QweakSimEPEvent::Pion_PhotoProduction(G4double E_in,
+                                               G4double Theta,
+                                               G4double &fWeightN,
+                                               G4double &Q2,
+                                               G4double &E_out)
+{
+    const G4double Mpi=139.57;   ///--- MeV
+	
+    if (Theta<Theta_Min)
+        Theta = Theta_Min;
+	
+    Q2 = 0.026;	
+	
+    double Ebeam = 3.35*GeV;   //--- beam energy in GeV
+	
+    E_out = (G4UniformRand()*(1500-1000) + 1000);   //--- final total energy in MeV
+    G4double pf = (sqrt(E_out * E_out - Mpi * Mpi))/1000.0;   //--- final momentum in GeV
+    G4double thf = Theta*(3.1415626/180.0);  //--- change angle from degrees to radians
+    G4double rad_len = 0.05;   //--- radiation length
+    G4int type = 1; //--- pi-
+	
+    G4double xsect = 1000.00 * wiser_sigma(Ebeam, pf, thf, rad_len, type); //--- ub/sr
+	
+	fWeightN = xsect*sin(Theta);
+	
+	if(xsect == 0)  // if E > E_max, reject the event
+	{
+		E_out = 0.0;
+		Q2 = 0.0;
+	}
+	
+	return xsect;
+	
+}
+
+
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 // Quasielastic fit from Bosted et al
@@ -1388,6 +1443,7 @@ void QweakSimEPEvent::F1F2QE09(G4int &Z, G4int &IA, G4double &QSQ,
 
   return;
 }
+
 
 ////....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 //
