@@ -940,6 +940,34 @@ const std::vector< G4double > QweakSimEPEvent::Radiative_Cross_Section_Proton(G4
 
 void QweakSimEPEvent::CreateLookupTable()
 {
+    //Int_t BeamEnergy = (Int_t)myUserInfo->GetBeamEnergy();
+    //if (BeamEnergy != 3350*MeV && BeamEnergy != 1160*MeV && BeamEnergy != 877*MeV) {
+      //G4cout << "#### Current beam energy is not a valid choice for lookup table"  << G4endl;
+      //G4cout << "#### Setting beam energy to default value for lookup table" << G4endl;
+      //BeamEnergy = 3350*MeV;
+      
+    //}
+
+    std::ifstream in;
+    TString filename = "radiative_lookup_lh2_3350MeV.dat";
+    TString filepath = "./";
+    in.open(filepath + filename);
+    if (!in.is_open())  
+      G4cout << "#### Failed to open lookup table data file \"" << filepath << filename << "\"" << G4endl;
+    else
+    {
+      in.close();
+      G4cout << "#### Found lookup table data file \"" << filepath << filename << "\"" << G4endl;
+      if (fLookupTable != 0) delete fLookupTable;
+      fLookupTable = new QweakSimFieldMap<value_t,value_n>(value_d);
+      //fLookupTable = new QweakSimFieldMap<value_t,value_n>((filepath + filename).Data());
+      fLookupTable->ReadTextFile((filepath +filename).Data());
+      
+    }
+    
+    //********************************************************************
+    
+/*
     G4int entries = 1;
 
     coord_t coord[value_d] = {0.0};
@@ -966,6 +994,10 @@ void QweakSimEPEvent::CreateLookupTable()
     fMax.push_back(20.0*degree);
     fStep.push_back(0.5*degree);
 
+    G4cout << "Target Min:      " << fMin[0] << G4endl;
+    G4cout << "Target Max:      " << fMax[0] << G4endl;
+    
+    
     for (Int_t n = 0; n < (Int_t)fStep.size(); n++) {
       entries *= (G4int)( (fMax[n]-fMin[n])/fStep[n] + 1.5 );
     }
@@ -1016,6 +1048,8 @@ void QweakSimEPEvent::CreateLookupTable()
       G4cout << "===== Filling of Lookup Table complete! =====" << G4endl;
     }
     in.close();
+    fLookupTable->WriteTextFile("./radiative_lookup.out");
+    */
 }
 
 
