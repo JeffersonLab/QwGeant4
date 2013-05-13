@@ -285,9 +285,11 @@
 # Tungsten Shutters related
 #=====================================
 
-# Comment out the following two lines to leave the Tungsten Shutters in.
-/WShutters/WShutters1/Disable
-/WShutters/WShutters2/Disable
+# Comment out the following two lines to enable the Tungsten Shutters.
+# By default they are disabled.
+
+#/WShutters/WShutters1/Enable
+#/WShutters/WShutters2/Enable
 
 
 #=====================================

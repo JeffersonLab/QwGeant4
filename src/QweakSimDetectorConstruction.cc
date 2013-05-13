@@ -558,7 +558,7 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
     	pWShutters1->SetWShutters_CenterPositionInY (0.0*inch);
     	pWShutters1->SetWShutters_CenterPositionInZ (-221.939*inch);
     	pWShutters1->SetWShutters_Material ("TungstenAlloy");
-
+	pWShutters1->SetDisabled();
     }
     if (pWShutters2) {
     	pWShutters2->SetWShuttersNumber(2);
@@ -568,6 +568,7 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
      	pWShutters2->SetWShutters_CenterPositionInY (0.0*inch);
      	pWShutters2->SetWShutters_CenterPositionInZ (-221.939*inch);
        	pWShutters2->SetWShutters_Material ("TungstenAlloy");
+	pWShutters2->SetDisabled();
     	}
   //===================================================
   // create/place LeadGlass into MotherVolume
