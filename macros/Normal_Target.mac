@@ -9,5 +9,5 @@
 /Target/SetTargetCellMaterial Aluminum
 /Target/SetTargetEntranceWindowMaterial Aluminum
 /Target/SetTargetExitWindowMaterial Aluminum
-
+/Target/SetTargetExitWindowNippleMaterial Aluminum
 

@@ -8,3 +8,4 @@
 /Target/SetTargetMaterial Air
 /Target/SetTargetCellMaterial Air
 /Target/SetTargetExitWindowMaterial Air
+/Target/SetTargetExitWindowNippleMaterial Air

@@ -60,6 +60,13 @@ QweakSimTargetMessenger::QweakSimTargetMessenger(QweakSimTarget* myTar)
   TargExtWinMatCmd->SetGuidance("Select Material of the Target Exit Window.");
   TargExtWinMatCmd->SetParameterName("choice",false);
   TargExtWinMatCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+
+  TargExtWinNipMatCmd = new G4UIcmdWithAString("/Target/SetTargetExitWindowNippleMaterial",this);
+  TargExtWinNipMatCmd->SetGuidance("Select Material of the Target Exit Window.");
+  TargExtWinNipMatCmd->SetParameterName("choice",false);
+  TargExtWinNipMatCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+
+
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -71,6 +78,7 @@ QweakSimTargetMessenger::~QweakSimTargetMessenger()
   delete TargCellMatCmd;
   delete TargEntWinMatCmd;
   delete TargExtWinMatCmd;
+  delete TargExtWinNipMatCmd;
   delete TargetDir;
 }
 
@@ -114,6 +122,13 @@ void QweakSimTargetMessenger::SetNewValue(G4UIcommand* command,G4String newValue
      G4cout << "#### Messenger: Setting Target Exit Window Material to " << newValue << G4endl;
 
      myTarget->SetTargetExitWindowMaterial(newValue);
+  }
+
+  if( command == TargExtWinNipMatCmd )
+  {
+     G4cout << "#### Messenger: Setting Target Exit Window Material to " << newValue << G4endl;
+
+     myTarget->SetTargetExitWindowNippleMaterial(newValue);
   }
 
   G4cout << "#### Leaving QweakSimTargetMessenger::SetNewValue() " << newValue << G4endl;
