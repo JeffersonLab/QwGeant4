@@ -65,6 +65,7 @@ class QweakSimEPEvent {
    G4double ThetaAngle_Max;
    G4double EPrime_Min;
    G4double EPrime_Max;
+   G4double BeamEnergy;
 
    G4double myPositionZ;
 
@@ -117,6 +118,9 @@ class QweakSimEPEvent {
   void SetPhiAngle_Max(G4double ang) {PhiAngle_Max = ang;};
   G4double GetPhiAngle_Max() {return PhiAngle_Max;};
   
+  G4double GetBeamEnergy() {return BeamEnergy;}
+  void SetBeamEnergy(G4double energy = 1.160*GeV); 
+
   void  SetReactionType(G4int rt) { ReactionType = rt; TypeSetting = rt;};
   G4int GetReactionType() {return ReactionType; };
 

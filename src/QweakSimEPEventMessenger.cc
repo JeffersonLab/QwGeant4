@@ -132,6 +132,14 @@ QweakSimEPEventMessenger::QweakSimEPEventMessenger(QweakSimEPEvent* pEPEvent)
   EPrimeMaxLimitCmd->SetDefaultUnit("GeV");
   EPrimeMaxLimitCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
+  SetBeamEnergyCmd = new G4UIcmdWithADoubleAndUnit("/EventGen/SetBeamEnergy",this);
+  SetBeamEnergyCmd->SetGuidance("Set beam energy.");
+  SetBeamEnergyCmd->SetParameterName("E_beam",true);
+  SetBeamEnergyCmd->SetUnitCategory("Energy");
+  SetBeamEnergyCmd->SetDefaultValue(1.160*GeV);
+  //SetBeamEnergyCmd->SetRange("BeamEnergy>0");
+  SetBeamEnergyCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+
   G4cout << "###### Leaving QweakSimEPEventMessenger::QweakSimEPEventMessenger() " << G4endl;
 }
 
@@ -152,6 +160,7 @@ QweakSimEPEventMessenger::~QweakSimEPEventMessenger()
   delete PhiMaxLimitCmd;
   delete EPrimeMinLimitCmd;
   delete EPrimeMaxLimitCmd;
+  delete SetBeamEnergyCmd;
   delete EventGenDir;
 
   G4cout << "###### Leaving QweakSimEPEventMessenger::~QweakSimEPEventMessenger() " << G4endl;
@@ -221,6 +230,12 @@ void QweakSimEPEventMessenger::SetNewValue(G4UIcommand* command, G4String newVal
     { 
       G4cout << "% % ===> Changing E\' maximum to: "<<newValue<< G4endl;
       pQweakSimEPEvent->SetEPrime_Max(EPrimeMaxLimitCmd->GetNewDoubleValue(newValue)); 
+    }
+
+  if( command == SetBeamEnergyCmd )
+    { 
+      G4cout << "% % ===> Changing Beam Energy to: "<<newValue<< G4endl;
+      pQweakSimEPEvent->SetBeamEnergy(SetBeamEnergyCmd->GetNewDoubleValue(newValue)); 
     }
 
 }

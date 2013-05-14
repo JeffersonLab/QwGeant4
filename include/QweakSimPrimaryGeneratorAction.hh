@@ -112,12 +112,6 @@ private:
   G4double fPositionX_max;
   G4double fPositionY_min;
   G4double fPositionY_max;
-  G4double fBeamEnergy;
-  //G4double E_beam;
-
-public:
-  G4double GetBeamEnergy() {return fBeamEnergy;}
-  void SetBeamEnergy(G4double energy = 1.160*GeV); 
   
 };
 

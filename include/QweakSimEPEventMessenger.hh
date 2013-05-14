@@ -62,6 +62,7 @@ private:
   G4UIcmdWithADoubleAndUnit* PhiMaxLimitCmd;
   G4UIcmdWithADoubleAndUnit* EPrimeMinLimitCmd;
   G4UIcmdWithADoubleAndUnit* EPrimeMaxLimitCmd;
+  G4UIcmdWithADoubleAndUnit* SetBeamEnergyCmd;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

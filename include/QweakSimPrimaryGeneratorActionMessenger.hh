@@ -59,8 +59,6 @@ private:
   G4UIcmdWithAnInteger*    InitEventCounterCmd;
   G4UIcmdWithAString*      SetParticleType_Cmd;
 
-  G4UIcmdWithADoubleAndUnit*    SetBeamEnergy_Cmd;
-
   G4UIcmdWithADoubleAndUnit*    SetPositionX_Cmd;
   G4UIcmdWithADoubleAndUnit*    SetPositionY_Cmd;
   G4UIcmdWithADoubleAndUnit*    SetDirectionX_Cmd;
@@ -75,7 +73,6 @@ private:
   G4double Xmax;
   G4double Ymin;
   G4double Ymax;
-  G4double E_beam;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

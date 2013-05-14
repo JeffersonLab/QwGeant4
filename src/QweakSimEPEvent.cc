@@ -47,6 +47,8 @@ QweakSimEPEvent::QweakSimEPEvent( QweakSimUserInformation* myUI)
 
   EPrime_Min = 0.4*GeV;
   EPrime_Max = 0.4*GeV;
+  
+  BeamEnergy = 1.16*GeV;
 
   TypeSetting = 1;
   ReactionType = 1;
@@ -1745,6 +1747,16 @@ G4double QweakSimEPEvent::GetAsymmetry_Pi(G4double Q2_pi)
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+void QweakSimEPEvent::SetBeamEnergy(G4double energy) {
+    if (energy>0) { 
+      BeamEnergy = energy; 
+      myUserInfo->StoreBeamEnergy(energy); 
+    }
+    else {
+      G4cout << G4endl << "##### Beam Energy must be greater than zero" << G4endl << G4endl;
+    }
+}
 
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
