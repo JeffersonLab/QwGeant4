@@ -126,4 +126,5 @@
 /gui/addButton reactionRegion "1 - Target" "/EventGen/SelectReactionRegion 1"
 /gui/addButton reactionRegion "2 - Entrance target window" "/EventGen/SelectReactionRegion 2"
 /gui/addButton reactionRegion "3 - Exit target window" "/EventGen/SelectReactionRegion 3"
-
+/gui/addButton reactionRegion "Upstream Al Target Window" "/control/execute macros/Al_TargetWindow_Dummy_Upstream.mac"
+/gui/addButton reactionRegion "Downstream Al Target Window" "/control/execute macros/Al_TargetWindow_Dummy_Downstream.mac"

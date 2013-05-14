@@ -51,6 +51,15 @@ QweakSimTargetMessenger::QweakSimTargetMessenger(QweakSimTarget* myTar)
   TargCellMatCmd->SetParameterName("choice",false);
   TargCellMatCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
+  TargEntWinMatCmd = new G4UIcmdWithAString("/Target/SetTargetEntranceWindowMaterial",this);
+  TargEntWinMatCmd->SetGuidance("Select Material of the Target Entrance Window.");
+  TargEntWinMatCmd->SetParameterName("choice",false);
+  TargEntWinMatCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+  
+  TargExtWinMatCmd = new G4UIcmdWithAString("/Target/SetTargetExitWindowMaterial",this);
+  TargExtWinMatCmd->SetGuidance("Select Material of the Target Exit Window.");
+  TargExtWinMatCmd->SetParameterName("choice",false);
+  TargExtWinMatCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -60,6 +69,8 @@ QweakSimTargetMessenger::~QweakSimTargetMessenger()
   delete TargZPosCmd;
   delete TargMatCmd;
   delete TargCellMatCmd;
+  delete TargEntWinMatCmd;
+  delete TargExtWinMatCmd;
   delete TargetDir;
 }
 
@@ -91,7 +102,19 @@ void QweakSimTargetMessenger::SetNewValue(G4UIcommand* command,G4String newValue
      myTarget->SetTargetCellMaterial(newValue);
   }
 
+  if( command == TargEntWinMatCmd )
+  {
+     G4cout << "#### Messenger: Setting Target Entrance Window Material to " << newValue << G4endl;
+    
+     myTarget->SetTargetEntranceWindowMaterial(newValue);
+  }
 
+  if( command == TargExtWinMatCmd )
+  {
+     G4cout << "#### Messenger: Setting Target Exit Window Material to " << newValue << G4endl;
+
+     myTarget->SetTargetExitWindowMaterial(newValue);
+  }
 
   G4cout << "#### Leaving QweakSimTargetMessenger::SetNewValue() " << newValue << G4endl;
 }

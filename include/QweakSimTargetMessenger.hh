@@ -72,6 +72,8 @@ class QweakSimTargetMessenger: public G4UImessenger
 
     G4UIcmdWithAString*        TargMatCmd;
     G4UIcmdWithAString*        TargCellMatCmd;
+    G4UIcmdWithAString*	       TargEntWinMatCmd;
+    G4UIcmdWithAString*        TargExtWinMatCmd;
     G4UIcmdWithADoubleAndUnit* TargZPosCmd;
 };
 
