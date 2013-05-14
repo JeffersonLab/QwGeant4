@@ -128,3 +128,4 @@
 /gui/addButton reactionRegion "3 - Exit target window" "/EventGen/SelectReactionRegion 3"
 /gui/addButton reactionRegion "Upstream Al Target Window" "/control/execute macros/Al_TargetWindow_Dummy_Upstream.mac"
 /gui/addButton reactionRegion "Downstream Al Target Window" "/control/execute macros/Al_TargetWindow_Dummy_Downstream.mac"
+/gui/addButton reactionRegion "Normal LH2 Target" "/control/execute macros/Normal_Target.mac"
