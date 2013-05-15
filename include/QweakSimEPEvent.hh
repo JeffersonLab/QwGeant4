@@ -100,16 +100,16 @@ class QweakSimEPEvent {
   void SetIsotropy(G4int isot) { Isotropy = isot; };
   G4int GetIsotropy( ) {return Isotropy;};
   
-  void SetEPrime_Min(G4double energy) {EPrime_Min = energy;};
+  void SetEPrime_Min(G4double energy) {EPrime_Min = energy; CheckLookupTableBounds();};
   G4double GetEPrime_Min() {return EPrime_Min;};
 
-  void SetEPrime_Max(G4double energy) {EPrime_Max = energy;};
+  void SetEPrime_Max(G4double energy) {EPrime_Max = energy; CheckLookupTableBounds();};
   G4double GetEPrime_Max() {return EPrime_Max;};
 
-  void SetThetaAngle_Min(G4double ang) {ThetaAngle_Min = ang;};
+  void SetThetaAngle_Min(G4double ang) {ThetaAngle_Min = ang; CheckLookupTableBounds();};
   G4double GetThetaAngle_Min() {return ThetaAngle_Min;};
 
-  void SetThetaAngle_Max(G4double ang) {ThetaAngle_Max = ang;};
+  void SetThetaAngle_Max(G4double ang) {ThetaAngle_Max = ang; CheckLookupTableBounds();};
   G4double GetThetaAngle_Max() {return ThetaAngle_Max;};
 
   void SetPhiAngle_Min(G4double ang) {PhiAngle_Min = ang;};
@@ -173,7 +173,9 @@ class QweakSimEPEvent {
                                            G4double &E_out);
 
   void CreateLookupTable();
-	
+
+  void CheckLookupTableBounds();
+  
   G4double Pion_PhotoProduction(G4double E_in,
                                 G4double Theta,
                                 G4double &fWeightN,

@@ -942,17 +942,24 @@ const std::vector< G4double > QweakSimEPEvent::Radiative_Cross_Section_Proton(G4
 
 void QweakSimEPEvent::CreateLookupTable()
 {
-    //Int_t BeamEnergy = (Int_t)myUserInfo->GetBeamEnergy();
-    //if (BeamEnergy != 3350*MeV && BeamEnergy != 1160*MeV && BeamEnergy != 877*MeV) {
-      //G4cout << "#### Current beam energy is not a valid choice for lookup table"  << G4endl;
-      //G4cout << "#### Setting beam energy to default value for lookup table" << G4endl;
-      //BeamEnergy = 3350*MeV;
-      
-    //}
+    G4double energy = BeamEnergy;
+    if (energy != 3350*MeV /*&& energy != 1160*MeV && energy != 877*MeV*/) {
+      G4cout << "#### Current beam energy is not a valid choice for lookup table"  << G4endl;
+      G4cout << "#### Setting beam energy to default value for lookup table (3.35 GeV)" << G4endl;
+      energy = 3350*MeV;
+    }
+
+    TString target = "lh2";
+    
+    TString filename =  "radiative_lookup_";
+    filename += target;
+    filename += "_";
+    filename += (Int_t)energy;
+    filename += "MeV.dat";
+
+    TString filepath = "./";
 
     std::ifstream in;
-    TString filename = "radiative_lookup_lh2_3350MeV.dat";
-    TString filepath = "./";
     in.open(filepath + filename);
     if (!in.is_open())  
       G4cout << "#### Failed to open lookup table data file \"" << filepath << filename << "\"" << G4endl;
@@ -962,10 +969,21 @@ void QweakSimEPEvent::CreateLookupTable()
       G4cout << "#### Found lookup table data file \"" << filepath << filename << "\"" << G4endl;
       if (fLookupTable != 0) delete fLookupTable;
       fLookupTable = new QweakSimFieldMap<value_t,value_n>(value_d);
-      //fLookupTable = new QweakSimFieldMap<value_t,value_n>((filepath + filename).Data());
       fLookupTable->ReadTextFile((filepath +filename).Data());
-      
     }
+    G4cout << "+++++++++++++++++++++++++++++" << G4endl;
+    G4cout << "++ Lookup Table Parameters ++" << G4endl;
+    G4cout << "+++++++++++++++++++++++++++++" << G4endl;
+    G4cout << "Beam Energy:       " << fLookupTable->GetMinimum(1)/1000 << " GeV" << G4endl;
+    G4cout << "Target:            " << target << G4endl;
+    G4cout << "E\' Lower Bound:    " << fLookupTable->GetMinimum(2)/1000 << " GeV" << G4endl;
+    G4cout << "E\' Upper Bound:    " << fLookupTable->GetMaximum(2)/1000 << " GeV" << G4endl;
+    G4cout << "Theta Lower Bound: " << fLookupTable->GetMinimum(3)/degree << " degrees" << G4endl;
+    G4cout << "Theta Upper Bound: " << fLookupTable->GetMaximum(3)/degree << " degrees" << G4endl;
+    G4cout << "+++++++++++++++++++++++++++++" << G4endl;
+
+    if (energy != GetBeamEnergy()) SetBeamEnergy(energy);
+    else CheckLookupTableBounds();
     
     //********************************************************************
     
@@ -1053,6 +1071,61 @@ void QweakSimEPEvent::CreateLookupTable()
     fLookupTable->WriteTextFile("./radiative_lookup.out");
     */
 }
+
+
+////....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+//  Jim Dowd
+// ---------------------------------------------------------
+//      Checks the ranges of input parameters (E, E', and theta)
+//      and insures they are within the lookup table bounds.  
+// ---------------------------------------------------------
+
+void QweakSimEPEvent::CheckLookupTableBounds()
+{
+  if (fLookupTable == 0) return;
+  if (BeamEnergy != (G4double)fLookupTable->GetMinimum(1) ) {
+    G4cout << "!!!! Beam Energy is out of bounds" << G4endl;
+    G4cout << "---> Changing Beam Energy to default value (" << fLookupTable->GetMinimum(1)/1000 << " GeV)" << G4endl;
+    SetBeamEnergy(  (G4double)fLookupTable->GetMinimum(1) );
+    CreateLookupTable();
+    return;
+  }
+  
+  if (EPrime_Min < fLookupTable->GetMinimum(2) || EPrime_Min > fLookupTable->GetMaximum(2)) {
+    EPrime_Min = fLookupTable->GetMinimum(2);
+    G4cout << "!!!! Minimum E\' is out of bounds" << G4endl;
+    G4cout << "---> Changing Minimum E\' to lower bound (" << fLookupTable->GetMinimum(2)/1000 << " GeV)" << G4endl;      
+  }
+  if (EPrime_Max > fLookupTable->GetMaximum(2) || EPrime_Max < fLookupTable->GetMinimum(2)) {
+    EPrime_Max = fLookupTable->GetMaximum(2);
+    G4cout << "!!!! Maximum E\' is out of bounds" << G4endl;
+    G4cout << "---> Changing Maximum E\' to upper bound (" << fLookupTable->GetMaximum(2)/1000 << " GeV)" << G4endl;      
+  }
+  if (EPrime_Min > EPrime_Max) {
+    EPrime_Min = EPrime_Max;
+    G4cout << "!!!! Minimum E\' greater than maximum E\'" << G4endl;
+    G4cout << "---> Changing Minimum E\' to " << EPrime_Max/1000 << " GeV" << G4endl;
+  }
+  
+  if (ThetaAngle_Min < fLookupTable->GetMinimum(3) || ThetaAngle_Min > fLookupTable->GetMaximum(3)) {
+    ThetaAngle_Min = fLookupTable->GetMinimum(3);
+    G4cout << "!!!! Minimum Theta is out of bounds" << G4endl;
+    G4cout << "---> Changing Minimum Theta to lower bound (" << fLookupTable->GetMinimum(3)/degree << " degrees)" << G4endl;      
+  }
+  if (ThetaAngle_Max > fLookupTable->GetMaximum(3) || ThetaAngle_Max < fLookupTable->GetMinimum(3)) {
+    ThetaAngle_Max = fLookupTable->GetMaximum(3);
+    G4cout << "!!!! Maximum Theta is out of bounds" << G4endl;
+    G4cout << "---> Changing Maximum Theta to upper bound (" << fLookupTable->GetMaximum(3)/degree << " degrees)" << G4endl;      
+  }
+  if (ThetaAngle_Min > ThetaAngle_Max) {
+    ThetaAngle_Min = ThetaAngle_Max;
+    G4cout << "!!!! Minimum Theta greater than maximum Theta" << G4endl;
+    G4cout << "---> Changing Minimum Theta to " << ThetaAngle_Max << " degrees" << G4endl;
+  }
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 
 
 /////// --------------------------------------------------------------------
@@ -1751,7 +1824,9 @@ G4double QweakSimEPEvent::GetAsymmetry_Pi(G4double Q2_pi)
 void QweakSimEPEvent::SetBeamEnergy(G4double energy) {
     if (energy>0) { 
       BeamEnergy = energy; 
+      CheckLookupTableBounds();
       myUserInfo->StoreBeamEnergy(energy); 
+      //G4cout << "#### Changing Beam Energy to " << energy/1000 << " GeV" << G4endl;
     }
     else {
       G4cout << G4endl << "##### Beam Energy must be greater than zero" << G4endl << G4endl;
