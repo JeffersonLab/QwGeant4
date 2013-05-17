@@ -28,7 +28,7 @@ Assisted By: Wouter Deconinck
 #include <iomanip>
 #include <string>
 
-void SimQ2 (string posx, int posy, int anglex, int angley)
+void SimQ2 (string posx, int posy, double anglex, int angley)
 {
   // groups root files for a run together
   TChain* QweakSimG4_Tree = new TChain ("QweakSimG4_Tree");
@@ -40,19 +40,28 @@ void SimQ2 (string posx, int posy, int anglex, int angley)
 //  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeightScan_Al_US/*.root");
 //  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeightScan_Al_DS/*.root");
 
+//  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeight_Al_US_Run1/*.root");
+//  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeight_Al_DS_Run1/*.root");
+
+//  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeight_Al_US_Run2/*.root");
+//  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeight_Al_DS_Run2/*.root");
+
+
+//Run 1 & 2
+//  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeight_Run1_noDC/*.root");
+  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeight_Run2_noDC/*.root");
 
 //  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeightScan/*.root");
 //  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeightScan_IdealPos/*.root");
-  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeightScan_noDC/*.root");
+//  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeightScan_noDC/*.root");
 //  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeightScan_noHDC/*.root");
 //  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeightScan_noVDC/*.root");
 
 //Magnetic Field Rotations
 //  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeightScan_MagRot45deg/*.root");
-//  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeightScan_MagRot45deg_noDC/*.root");
+//  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeightScan_MagRot45deg_noDC/myLightWeightScan_MagRot45deg_noDC_*.root");
 //  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeightScan_MagRot90deg/*.root");
-//  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeightScan_MagRot90deg_noDC/*.root");
-
+//  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeightScan_MagRot90deg_noDC/myLightWeightScan_MagRot90deg_noDC_*.root");
 
   //Qtor Scans
 //  QweakSimG4_Tree->Add(Form("/cache/mss/home/vmgray/rootfiles/myQtorScan/myQtorScan_%d_*.root", posy));
@@ -65,6 +74,9 @@ void SimQ2 (string posx, int posy, int anglex, int angley)
 //  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myPosDirScan/myPosDirScan_PosX_0um_DirX_0urad_*.root");
 //  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myPosDirScan/myPosDirScan_PosY_0um_DirY_0urad_*.root");
 
+  //MD9
+//  QweakSimG4_Tree->Add(Form("/cache/mss/home/vmgray/rootfiles/MD9_Oct1_%s_%.2Fcm/*.root", posx.c_str(), anglex));
+
   //number of chunks
   Int_t n = 1000;
 
@@ -73,11 +85,11 @@ void SimQ2 (string posx, int posy, int anglex, int angley)
   q2.resize(n+1);
 
   std::vector<TH1D*> q2_tot;//[oct]
-  q2_tot.resize(9);
+  q2_tot.resize(10);
 
   for (size_t i = 0; i<q2.size();i++)
   {
-     q2[i].resize(9);
+     q2[i].resize(10);
      for (size_t j = 0; j<q2[i].size();j++)
      {
        //set the histogram for the q2 
@@ -95,7 +107,7 @@ void SimQ2 (string posx, int posy, int anglex, int angley)
 
  //define a histogram to store all the means of the n histogram chunk 
   std::vector<TH1D*> h_q2_mean;//[oct]
-  h_q2_mean.resize(9);
+  h_q2_mean.resize(10);
 
   for (size_t j = 0; j<h_q2_mean.size();j++)
   {
@@ -109,9 +121,9 @@ void SimQ2 (string posx, int posy, int anglex, int angley)
   //mean it the mean
   //sigma is the mean squared at this point (sorry for the bad naming)
 
-  Double_t mean_q2[9] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
-  Double_t sigma_q2[9] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
-  int Entries[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+  Double_t mean_q2[10] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+  Double_t sigma_q2[10] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+  int Entries[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
   //divide the number of entries up
   Int_t nentries = QweakSimG4_Tree->GetEntries();
@@ -121,7 +133,7 @@ void SimQ2 (string posx, int posy, int anglex, int angley)
   {
     Int_t n1 = nentries / n * i;
 
-    QweakSimG4_Tree->Draw(Form("Primary.PrimaryQ2>>q2[%d][0]",i) ,"Primary.CrossSection * Cerenkov.PMT.PMTTotalNbOfPEs"," ", step ,n1 );
+    QweakSimG4_Tree->Draw(Form("Primary.PrimaryQ2>>q2[%d][0]",i) ,"(Primary.CrossSection) * (Cerenkov.PMT.PMTTotalNbOfPEs)"," ", step ,n1 );
     mean_q2[0] += q2[i][0]->GetMean();
     sigma_q2[0] += q2[i][0]->GetMean() * q2[i][0]->GetMean();
     q2_tot[0]->Add(q2[i][0]);
@@ -138,8 +150,7 @@ void SimQ2 (string posx, int posy, int anglex, int angley)
       q2_tot[oct]->Add(q2[i][oct]);
       h_q2_mean[oct]->Fill( 1000*q2[i][oct]->GetMean() );
       Entries[oct] += q2[i][oct]->GetEntries();
-    }
-
+   }
   }
 
   //define canvas
@@ -178,7 +189,7 @@ void SimQ2 (string posx, int posy, int anglex, int angley)
   cout << "All \t " << setprecision(5) << 1000*mean_q2[0] << " \t " <<  setprecision(4) << 1000*sigma_q2[0] << " \t "
      << setprecision(5) << h_q2_mean[0]->GetMean() << " \t " <<  setprecision(4) << h_q2_mean[0]->GetRMS()/sqrt(h_q2_mean[0]->GetEntries()) << " \t " << Entries[0] <<  endl;
 
-  for (int oct = 1; oct < 9; oct ++)
+  for (int oct = 1; oct < 10; oct ++)
   {
   cout << oct << " \t " << setprecision(5) << 1000*mean_q2[oct] << " \t " <<  setprecision(4) << 1000*sigma_q2[oct] << " \t "
      << setprecision(5) << h_q2_mean[oct]->GetMean() << " \t " <<  setprecision(4) << h_q2_mean[oct]->GetRMS()/sqrt(h_q2_mean[oct]->GetEntries()) << " \t " << Entries[oct] << endl;

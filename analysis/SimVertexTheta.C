@@ -1,4 +1,4 @@
-/*********************************************************** 
+/***********************************************************
 Programmer: Valerie Gray
 Purpose: To Output the Theta vertex values for simulated data for all the octants
 and each octant individually
@@ -22,7 +22,7 @@ Assisted By: Wouter Deconinck
 #include <iomanip>
 #include <string>
 
-void SimVertexTheta (string posx, int posy, int anglex, int angley)
+void SimVertexTheta (string posx, int posy, double anglex, int angley)
 {
   // groups root files for a run together
   TChain* QweakSimG4_Tree = new TChain ("QweakSimG4_Tree");
@@ -34,18 +34,28 @@ void SimVertexTheta (string posx, int posy, int anglex, int angley)
 //  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeightScan_Al_US/*.root");
 //  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeightScan_Al_DS/*.root");
 
+//  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeight_Al_US_Run1/*.root");
+//  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeight_Al_DS_Run1/*.root");
+
+//  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeight_Al_US_Run2/*.root");
+//  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeight_Al_DS_Run2/*.root");
+
+
+//Run 1 & 2
+//  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeight_Run1_noDC/*.root");
+  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeight_Run2_noDC/*.root");
 
 //  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeightScan/*.root");
 //  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeightScan_IdealPos/*.root");
-  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeightScan_noDC/*.root");
+//  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeightScan_noDC/*.root");
 //  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeightScan_noHDC/*.root");
 //  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeightScan_noVDC/*.root");
 
 //Magnetic Field Rotations
 //  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeightScan_MagRot45deg/*.root");
-//  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeightScan_MagRot45deg_noDC/*.root");
+//  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeightScan_MagRot45deg_noDC/myLightWeightScan_MagRot45deg_noDC_*.root");
 //  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeightScan_MagRot90deg/*.root");
-//  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeightScan_MagRot90deg_noDC/*.root");
+//  QweakSimG4_Tree->Add(Form("/cache/mss/home/vmgray/rootfiles/myLightWeightScan_MagRot90deg_noDC/myLightWeightScan_MagRot90deg_noDC_%d.root",i));
 
   //Qtor Scans
 //  QweakSimG4_Tree->Add(Form("/cache/mss/home/vmgray/rootfiles/myQtorScan/myQtorScan_%d_*.root", posy));
@@ -58,6 +68,9 @@ void SimVertexTheta (string posx, int posy, int anglex, int angley)
 //  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myPosDirScan/myPosDirScan_PosX_0um_DirX_0urad_*.root");
 //  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myPosDirScan/myPosDirScan_PosY_0um_DirY_0urad_*.root");
 
+  //MD9
+//  QweakSimG4_Tree->Add(Form("/cache/mss/home/vmgray/rootfiles/MD9_Oct1_%s_%.2Fcm/*.root", posx.c_str(), anglex));
+
   //number of chunks
   Int_t n = 1000;
 
@@ -66,11 +79,11 @@ void SimVertexTheta (string posx, int posy, int anglex, int angley)
   Theta.resize(n+1);
 
   std::vector<TH1D*> Theta_tot;//[oct]
-  Theta_tot.resize(9);
+  Theta_tot.resize(10);
 
   for (size_t i = 0; i<Theta.size();i++)
   {
-     Theta[i].resize(9);
+     Theta[i].resize(10);
      for (size_t j = 0; j<Theta[i].size();j++)
      {
        //set the histogram for the Theta 
@@ -88,7 +101,7 @@ void SimVertexTheta (string posx, int posy, int anglex, int angley)
 
  //define a histogram to store all the means of the n histogram chunk 
   std::vector<TH1D*> h_Theta_mean;//[oct]
-  h_Theta_mean.resize(9);
+  h_Theta_mean.resize(10);
 
   for (size_t j = 0; j<h_Theta_mean.size();j++)
   {
@@ -102,8 +115,8 @@ void SimVertexTheta (string posx, int posy, int anglex, int angley)
   //mean it the mean
   //sigma is the mean squared at this point (sorry for the bad naming)
 
-  Double_t mean_Theta[9] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
-  Double_t sigma_Theta[9] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+  Double_t mean_Theta[10] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+  Double_t sigma_Theta[10] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 
   //divide the number of entries up
   Int_t nentries = QweakSimG4_Tree->GetEntries();
@@ -168,7 +181,7 @@ void SimVertexTheta (string posx, int posy, int anglex, int angley)
   cout << "All \t " << setprecision(5) << mean_Theta[0] << " \t " <<  setprecision(4) << sigma_Theta[0] << " \t "
      << setprecision(5) << h_Theta_mean[0]->GetMean() << " \t " <<  setprecision(4) << h_Theta_mean[0]->GetRMS()/sqrt(h_Theta_mean[0]->GetEntries()) << endl;
 
-  for (int oct = 1; oct < 9; oct ++)
+  for (int oct = 1; oct < 10; oct ++)
   {
   cout << oct << " \t " << setprecision(5) << mean_Theta[oct] << " \t " <<  setprecision(4) << sigma_Theta[oct] << " \t "
      << setprecision(5) << h_Theta_mean[oct]->GetMean() << " \t " <<  setprecision(4) << h_Theta_mean[oct]->GetRMS()/sqrt(h_Theta_mean[oct]->GetEntries()) << endl;
