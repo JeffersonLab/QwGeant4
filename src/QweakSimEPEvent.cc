@@ -1143,7 +1143,7 @@ G4double QweakSimEPEvent::Pion_PhotoProduction(G4double E_in,
                                                G4double &Q2,
                                                G4double &E_out)
 {
-    const G4double Mpi=139.57;   ///--- MeV
+    const G4double Mpi = 0.13957*GeV;   ///--- GeV
 	
     if (Theta<Theta_Min)
         Theta = Theta_Min;
@@ -1152,23 +1152,32 @@ G4double QweakSimEPEvent::Pion_PhotoProduction(G4double E_in,
 	
     double Ebeam = 3.35*GeV;   //--- beam energy in GeV
 	
-    E_out = (G4UniformRand()*(1500-1000) + 1000);   //--- final total energy in MeV
-    G4double pf = (sqrt(E_out * E_out - Mpi * Mpi))/1000.0;   //--- final momentum in GeV
-    G4double thf = Theta*(3.1415626/180.0);  //--- change angle from degrees to radians
-    G4double rad_len = 0.05;   //--- radiation length
+    E_out = (G4UniformRand()*(EPrime_Max - EPrime_Min) + EPrime_Min);   //--- final total energy in GeV
+    G4double pf = (sqrt(E_out * E_out - Mpi * Mpi));   //--- final momentum in GeV
+
+    G4double thf = Theta*(3.1415926/180.0);  //--- degrees --> radians
+
+    //---
+    //--- radiation length from page 12 of "The Qweak target design and safety document"
+    //--- http://qweak.jlab.org/DocDB/0010/001041/002/Qweak%20Target%20PDR.pdf
+    //---
+    G4double lh2_length = myPositionZ - (myUserInfo->TargetCenterPositionZ) + 0.5*(myUserInfo->TargetLength);
+    G4double rad_len = myUserInfo->TargetEntranceWindowThickness/(8.896*cm) + lh2_length/(871.9*cm) + 0.0204;   //--- radiation length
+    //G4cout << "radiation length: " << rad_len << G4endl;
+
     G4int type = 1; //--- pi-
 	
-    G4double xsect = 1000.00 * wiser_sigma(Ebeam, pf, thf, rad_len, type); //--- ub/sr
+    G4double xsect = (1.0/1000.00) * wiser_sigma(Ebeam, pf, thf, rad_len, type); //--- nanobarns/GeV/str --> ub/sr
 	
-	fWeightN = xsect*sin(Theta);
+    fWeightN = xsect*sin(Theta);
 	
-	if(xsect == 0)  // if E > E_max, reject the event
-	{
-		E_out = 0.0;
-		Q2 = 0.0;
-	}
+    if(xsect == 0)
+    {
+        E_out = 0.0;
+        Q2 = 0.0;
+    }
 	
-	return xsect;
+    return xsect;
 	
 }
 
