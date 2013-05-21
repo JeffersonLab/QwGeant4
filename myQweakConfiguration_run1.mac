@@ -4,4 +4,4 @@
 
 /MagneticField/SetActualCurrent 8920.10 A
 
-/PrimaryEvent/SetBeamEnergy 1159.65 MeV
+/EventGen/SetBeamEnergy 1159.65 MeV
