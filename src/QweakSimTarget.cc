@@ -83,7 +83,8 @@ QweakSimTarget::QweakSimTarget(QweakSimUserInformation *myUI)
 
     // define target geometry values
 
-    targetCellEntranceWindowThickness =  5*mil;
+    targetCellEntranceWindowThickness =  3.8*mil; // from Katherine's A&S ELOG 893
+    //    targetCellEntranceWindowThickness =  5*mil;
     //targetCellEntranceWindowThickness =  0.89*mm;
     targetCellExitWindowThickness =  20*mil;
     targetCellExitWindowNippleThickness =  5*mil;
