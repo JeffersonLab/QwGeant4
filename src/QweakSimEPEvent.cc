@@ -163,7 +163,7 @@ G4ThreeVector QweakSimEPEvent::GetMomentumDirection()
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void QweakSimEPEvent::GetanEvent(G4double E_in, 
+void QweakSimEPEvent::GetanEvent(G4double E_in,
                                  std::vector< G4double > &fCrossSection, 
                                  G4double &fWeightN,
                                  G4double &Q2,
@@ -278,8 +278,7 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
       {
          Z = 13;
          A = 27;
-         fCrossSection[0] = Quasi_Elastic_Bosted(E_in, RelativeThetaAngle, Z, A, fWeightN, Q2,
-                                              E_out);
+         fCrossSection[0] = Quasi_Elastic_Bosted(E_in, RelativeThetaAngle, Z, A, fWeightN, Q2, E_out);
       }
 	
    else if(ReactionType==88) //--- LH2 target, pion photo-production cross section 3.35 GeV
@@ -1146,8 +1145,11 @@ void QweakSimEPEvent::CheckLookupTableBounds()
 //---   Calculates the Cross Section weighting factor for 
 //---   pion photo-production with the wiser code. 
 //
-//--- Beam Energy must be 3.35 GeV
-
+// EPrime_Max, EPrime_Min in GeV
+// E_in is in MeV, 
+//   but need not worry as g4 is smart enough 
+//   to do any calculation involving E_in in correct units
+//
 G4double QweakSimEPEvent::Pion_PhotoProduction(G4double E_in,
                                                G4double Theta,
                                                G4double &fWeightN,
@@ -1155,41 +1157,42 @@ G4double QweakSimEPEvent::Pion_PhotoProduction(G4double E_in,
                                                G4double &E_out)
 {
     const G4double Mpi = 0.13957*GeV;   ///--- GeV
-	
+
     if (Theta<Theta_Min)
         Theta = Theta_Min;
 	
-    Q2 = 0.026;	
-	
-    double Ebeam = 3.35*GeV;   //--- beam energy in GeV
-	
-    E_out = (G4UniformRand()*(EPrime_Max - EPrime_Min) + EPrime_Min);   //--- final total energy in GeV
-    G4double pf = (sqrt(E_out * E_out - Mpi * Mpi));   //--- final momentum in GeV
+    // need to evaluate Q2 properply, in order to evaluate 
+    // the internal radiation length more accurately below
+    Q2 = 0.026; 
 
-    G4double thf = Theta*(3.1415926/180.0);  //--- degrees --> radians
+    G4double tmp_EpMax = EPrime_Max;
+    if(EPrime_Max > E_in) tmp_EpMax = E_in;
+	
+    E_out = (G4UniformRand()*(tmp_EpMax - EPrime_Min) + EPrime_Min);   //--- final total energy in GeV
+    G4double pf = sqrt(pow(E_out,2) - pow(Mpi,2)); //--- final momentum in GeV
 
     //---
     //--- radiation length from page 12 of "The Qweak target design and safety document"
     //--- http://qweak.jlab.org/DocDB/0010/001041/002/Qweak%20Target%20PDR.pdf
     //---
     G4double lh2_length = myPositionZ - (myUserInfo->TargetCenterPositionZ) + 0.5*(myUserInfo->TargetLength);
-    G4double rad_len = myUserInfo->TargetEntranceWindowThickness/(8.896*cm) + lh2_length/(871.9*cm) + 0.0204;   //--- radiation length
+    G4double intern_rad_len = 0.0204; // internal radiator from Mo/Tsai
+    G4double rad_len = myUserInfo->TargetEntranceWindowThickness/(8.896*cm) + lh2_length/(871.9*cm) + intern_rad_len;   //--- radiation length
     //G4cout << "radiation length: " << rad_len << G4endl;
 
     G4int type = 1; //--- pi-
 	
-    G4double xsect = (1.0/1000.00) * wiser_sigma(Ebeam, pf, thf, rad_len, type); //--- nanobarns/GeV/str --> ub/sr
+    // wiser_sigma() needs E_in & pf in GeV, Theta in radians,
+    //  rad_len in fraction (not %)
+    //  wiser_sigma returns crsec in nb/GeV/sr 
+    G4double xsect = (1.0/1000.00) * wiser_sigma(E_in/GeV, pf/GeV, Theta, rad_len, type); //--- nanobarns/GeV/str --> ub/sr
 	
     fWeightN = xsect*sin(Theta);
-	
-    if(xsect == 0)
-    {
-        E_out = 0.0;
-        Q2 = 0.0;
-    }
-	
+
+    //    G4cout << E_in/GeV <<"\t" << pf/GeV << "\t" << Theta <<"\t" << rad_len <<"\t" << type << G4endl;
+    //    G4cout << "-- ** Pion crsec :: " << xsect << " ** --" << G4endl;
+
     return xsect;
-	
 }
 
 

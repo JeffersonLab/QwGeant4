@@ -5,7 +5,7 @@
 #define pi_w 3.14159
 #define me_w 0.511E-3 //electron restmass (GeV)
 #define alpha_w 0.007299
-
+#define WISER_VERBOSE 0
 
 G4double wiser_all_fit(G4double *x, G4double *par);
 
@@ -44,7 +44,7 @@ G4double wiser_sigma(G4double Ebeam, G4double pf, G4double thf, G4double rad_len
 
     const G4double mass_p  = 0.9383;
     const G4double mass_p2 = mass_p*mass_p;
-    const G4double mass_pi = 0.1396;
+    const G4double mass_pi = 0.13957;
     const G4double mass_K  = 0.4973;
     const G4double mass_Lambda  = 1.116;
 
@@ -107,6 +107,13 @@ G4double wiser_sigma(G4double Ebeam, G4double pf, G4double thf, G4double rad_len
     double sigma, sig_e;
     double fitres;
 
+    if(WISER_VERBOSE)   
+      G4cout <<"In wiser_pion.h: \n"<< Ebeam <<"\t" << pf << "\t" << thf <<"\t" << rad_len <<"\t" << type << G4endl;
+
+    if(WISER_VERBOSE){   
+      G4cout << "E_gamma_min:: " << E_gamma_min << G4endl; 
+      G4cout << "Ebeam:: " << Ebeam << G4endl;
+    }
 
     if( E_gamma_min > 0.0 && E_gamma_min < Ebeam ){
 
@@ -130,13 +137,21 @@ G4double wiser_sigma(G4double Ebeam, G4double pf, G4double thf, G4double rad_len
 	// Factor of 1000 is required for units
 	sigma = pf*pf*sig_e*rad_len*1000.0/Ef;
 
+	if(WISER_VERBOSE)	
+	  G4cout << "Pion crsec :: " << sigma << G4endl;
+
 	delete mass2;
 	return sigma;
     } else {
 	// Kinematically forbidden
-	delete mass2;
-	return 0.0;
+      if(WISER_VERBOSE)
+	G4cout << "--** Creation of Pions kinematically Forbidden **--" << G4endl;
+      delete mass2;
+      return 0.0;
     }
+
+    if(WISER_VERBOSE)
+      G4cout << "--** No pions. E_gamma is outside the valid range **--" << G4endl;
 
     delete mass2;
     return 0.0;
@@ -161,7 +176,7 @@ G4double wiser_all_fit(G4double *x, G4double *par){
 
     const G4double mass_p  = 0.9383;
     const G4double mass_p2 = mass_p*mass_p;
-    const G4double mass_pi = 0.1396;
+    const G4double mass_pi = 0.13957;
     const G4double mass_K  = 0.4973;
 
     G4double mass[] = {mass_pi, mass_pi, mass_K, mass_K, mass_p, mass_p};
