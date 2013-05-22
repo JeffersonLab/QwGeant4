@@ -91,6 +91,10 @@ private:
   Float_t CrossSectionRadElastic;
   Float_t CrossSectionRadQE;
   Float_t CrossSectionRadDIS;
+  Float_t CrossSectionRadTotalIntOnly;
+  Float_t CrossSectionRadElasticIntOnly;
+  Float_t CrossSectionRadQEIntOnly;
+  Float_t CrossSectionRadDISIntOnly;
   Float_t Asymmetry;            ///< Asymmetry for events with these kinematics
 
   Int_t   PrimaryEventNumber;   ///< The primary event number (increments by two due to target energy loss simulation)
@@ -213,6 +217,19 @@ public:
 
   void     StoreCrossSectionRadDIS(Float_t cs)  {CrossSectionRadDIS = cs;}
   Float_t    GetCrossSectionRadDIS() const {return CrossSectionRadDIS; }
+
+  //-----------------
+  void     StoreCrossSectionRadTotalIntOnly(Float_t cs)  {CrossSectionRadTotalIntOnly = cs;}
+  Float_t    GetCrossSectionRadTotalIntOnly() const {return CrossSectionRadTotalIntOnly; }
+
+  void     StoreCrossSectionRadElasticIntOnly(Float_t cs)  {CrossSectionRadElasticIntOnly = cs;}
+  Float_t    GetCrossSectionRadElasticIntOnly() const {return CrossSectionRadElasticIntOnly; }
+
+  void     StoreCrossSectionRadQEIntOnly(Float_t cs)  {CrossSectionRadQEIntOnly = cs;}
+  Float_t    GetCrossSectionRadQEIntOnly() const {return CrossSectionRadQEIntOnly; }
+
+  void     StoreCrossSectionRadDISIntOnly(Float_t cs)  {CrossSectionRadDISIntOnly = cs;}
+  Float_t    GetCrossSectionRadDISIntOnly() const {return CrossSectionRadDISIntOnly; }
 
   //-----------------
   void     StoreAsymmetry(Float_t asym)  {Asymmetry = asym;}

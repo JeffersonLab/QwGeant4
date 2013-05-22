@@ -73,7 +73,7 @@ class QweakSimEPEvent {
    typedef float value_t;      // type of all values stored  in the field
 
   //  Lookup Table field values
-   static const G4int value_n = 11; // number of values at each point in the field
+   static const G4int value_n = 15; // number of values at each point in the field
    static const G4int value_d = 4;  // number of dimensions of the coordinates
    std::vector< G4double > fMin;
    std::vector< G4double > fMax;

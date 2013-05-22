@@ -921,14 +921,19 @@ const std::vector< G4double > QweakSimEPEvent::Radiative_Cross_Section_Proton(G4
     fWeightN = value[6]*sin(Theta*degree);
     //fWeightN = value[6];
 
-    CrossSection.push_back(value[6]);
-    CrossSection.push_back(value[2]);
-    CrossSection.push_back(value[3]);
-    CrossSection.push_back(value[4]);
-    CrossSection.push_back(value[6]);
-    CrossSection.push_back(value[7]);
-    CrossSection.push_back(value[8]);
-    CrossSection.push_back(value[9]);
+    CrossSection.push_back(value[6]);     // 0  total radiated cross section (ub/Sr)
+    CrossSection.push_back(value[2]);     // 1  total born cross section (ub/Sr)
+    CrossSection.push_back(value[3]);     // 2  inelastic born cross section(ub/Sr)
+    CrossSection.push_back(value[4]);     // 3  quasi-elastic born cross section (ub/Sr)
+    CrossSection.push_back(value[6]);     // 4  total radiated cross section (ub/Sr)
+    CrossSection.push_back(value[7]);     // 5  elastic radiated cross section (ub/Sr)
+    CrossSection.push_back(value[8]);     // 6  quasi-elastic radiated cross section (ub/Sr)
+    CrossSection.push_back(value[9]);     // 7  deep-inelastic radiated cross section (ub/Sr)
+    CrossSection.push_back(value[11]);    // 8  total radiated cross section internal only (ub/Sr)
+    CrossSection.push_back(value[12]);    // 9  elastic radiated cross section internal only (ub/Sr)
+    CrossSection.push_back(value[14]);    // 10 quasi-elastic radiated cross section internal only (ub/Sr)
+    CrossSection.push_back(value[13]);    // 11 deep-inelastic radiated cross section internal only (ub/Sr)
+
 
      return CrossSection;
 }
@@ -943,7 +948,7 @@ const std::vector< G4double > QweakSimEPEvent::Radiative_Cross_Section_Proton(G4
 void QweakSimEPEvent::CreateLookupTable()
 {
     G4double energy = BeamEnergy;
-    if (energy != 3350*MeV /*&& energy != 1160*MeV && energy != 877*MeV*/) {
+    if (energy != 3350*MeV && energy != 1160*MeV && energy != 877*MeV) {
       G4cout << "#### Current beam energy is not a valid choice for lookup table"  << G4endl;
       G4cout << "#### Setting beam energy to default value for lookup table (3.35 GeV)" << G4endl;
       energy = 3350*MeV;
@@ -958,7 +963,7 @@ void QweakSimEPEvent::CreateLookupTable()
     filename += "MeV.dat";
 
     TString filepath = "./";
-
+    
     std::ifstream in;
     in.open(filepath + filename);
     if (!in.is_open())  
@@ -986,8 +991,8 @@ void QweakSimEPEvent::CreateLookupTable()
     else CheckLookupTableBounds();
     
     //********************************************************************
-    
-/*
+/*    
+
     G4int entries = 1;
 
     coord_t coord[value_d] = {0.0};
@@ -1022,7 +1027,8 @@ void QweakSimEPEvent::CreateLookupTable()
       entries *= (G4int)( (fMax[n]-fMin[n])/fStep[n] + 1.5 );
     }
     std::ifstream in;
-    in.open("./radiative_lookup.dat");
+    //in.open("./radiative_lookup.dat");
+    in.open("./test.out");
     if (!in.is_open())  
         G4cout << "#### Failed to open data file for lookup table" << G4endl;
     else
@@ -1062,14 +1068,19 @@ void QweakSimEPEvent::CreateLookupTable()
 	//field[8]           // quasi-elastic radiated cross section (ub/Sr)
 	//field[9]           // deep-inelastic radiated cross section (ub/Sr)
 	//field[10]          // charge correction
+    //field[11]          // total radiated cross section internal only (ub/Sr)
+	//field[12]          // elastic radiated cross section internal only (ub/Sr)
+	//field[13]          // deep-inelastic radiated cross section internal only (ub/Sr)
+	//field[14]          // quasi-elastic radiated cross section internal only (ub/Sr)
 
         fLookupTable->Set(coord,field);
       }
       G4cout << "===== Filling of Lookup Table complete! =====" << G4endl;
     }
     in.close();
-    fLookupTable->WriteTextFile("./radiative_lookup.out");
-    */
+    //fLookupTable->WriteTextFile("./radiative_lookup.out");
+    fLookupTable->WriteTextFile("./radiative_lookup_test.out");
+*/    
 }
 
 
