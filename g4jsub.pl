@@ -14,7 +14,7 @@ use Data::Dumper;
 ###############################################################################
 
 #declaration of global variables, arrays, and hashes
-my $user = "NOTmagee";
+my $user = "magee";
 my $original_mac;
 my $jobname;
 my $mac_content;
@@ -58,11 +58,11 @@ close ORIG;
 foreach my $number (1..$Njobs) {
   my $basename = "$jobname\_$number";
   my $output = "macros\/$basename\.mac";
-  my $xmlout = "xml\/$basename\_$number.xml";
+  my $xmlout = "xml\/$basename.xml";
 
   #create individual mapfile
   open my $fh, ">", $output or die "can't open/create $output: $!\n";
-  print_header($fh,$output,$Nevents);
+  print_header($fh,$basename,$Nevents);
   print $fh $mac_content;
   close $fh;
 
@@ -109,7 +109,7 @@ die $helpstring if $help;
 }
 
 sub print_header {
-  my ($fh,$output,$Nevents) = @_;
+  my ($fh,$basename,$Nevents) = @_;
 
   my $seed1 = int ( rand(1e10) );
   my $seed2 = int ( rand(1e9 ) );
@@ -117,12 +117,12 @@ sub print_header {
   my $header =
   "
 #======================#
-# Macro file $output   #
+# Macro file $basename #
 #======================#
 
 # load/execute this macro
 /random/setSeeds $seed1 $seed2
-/Analysis/RootFileName $output.root
+/Analysis/RootFileName $basename.root
 /run/beamOn $Nevents
 ";
 
