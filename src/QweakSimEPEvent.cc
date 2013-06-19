@@ -388,7 +388,11 @@ G4double QweakSimEPEvent::Elastic_Cross_Section_Aluminum(G4double E_in,
 //    Electric form factor (data fit)
       G4double F0 = (1.0/Z)*( Z-4.0/3.0*(Z-5.0)*x+4.0/15.0*(Z-8.0)*x*x)*exp(-x);
       G4double F2 = (1.0-2.0/7.0*x)*exp(-x);
-      G4double Fe_2 = F0*F0+(7.0/450.0)*q2*q2*(Q*Q/Z/Z)*F2*F2;
+      G4double Fe = sqrt( F0*F0+(7.0/450.0)*q2*q2*(Q*Q/Z/Z)*F2*F2 );
+      Fe=Fe*exp(-0.25*q2*ap*ap); //correction for finite proton size
+      Fe=Fe*exp(x/A); //correction for center-of-well motion
+      G4double Fe_2 = pow(Fe,2);
+
 
 //  EventDataFile<<"F0="<<F0<<"  "<<"F2="<<F2<<"  "<<"Fe_2="<<Fe_2<<G4endl;
 
@@ -1688,7 +1692,7 @@ G4double QweakSimEPEvent::GetAsymmetry_AL (G4double theta, G4double energy)
     G4double Q2=4*energy*energy*sin(theta/2.)*sin(theta/2.);
 
 //     Correction for Coulomb distortion for Al
-    Q2=Q2*(1.+(3.*ZT*0.197/137./(2.*energy*2.98)))*(1.+(3.*ZT*0.197/137./(2.*energy*2.98)));
+//    Q2=Q2*(1.+(3.*ZT*0.197/137./(2.*energy*2.98)))*(1.+(3.*ZT*0.197/137./(2.*energy*2.98)));
 
 //     Aluminum Asymmetry
     G4double asym=-gf/(4.*pi*alpha*sqrt(2.))*1e6*Q2*(qwp+qwn*NT/ZT);
