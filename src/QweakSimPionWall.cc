@@ -31,6 +31,10 @@ QweakSimPionWall::QweakSimPionWall()
 
   MD7_CenterYPosition = -335.17*cm;
   MD7_CenterZPosition = 577.88*cm;
+
+  Offset_X = 0.0*cm;
+  Offset_Y = 0.0*cm;
+  Offset_Z = 0.0*cm;
   
   PionWall_CenterXPosition = 0*cm;
   PionWall_CenterYPosition = MD7_CenterYPosition + 1*inch;  //  MD7 center Y position + 1"
@@ -82,9 +86,9 @@ void QweakSimPionWall::ConstructPionWall(G4VPhysicalVolume* MotherVolume)
                                          "PionWall_Log",
                                          0,0,0);
   
-  positionPionWall = G4ThreeVector(PionWall_CenterXPosition,
-                                   PionWall_CenterYPosition,
-                                   PionWall_CenterZPosition);
+  positionPionWall = G4ThreeVector(PionWall_CenterXPosition + Offset_X,
+                                   PionWall_CenterYPosition + Offset_Y,
+                                   PionWall_CenterZPosition + Offset_Z);
   
   PionWall_Physical = new G4PVPlacement(0,
                                         positionPionWall,
@@ -118,9 +122,9 @@ void QweakSimPionWall::SetPionWall_CenterPositionInX(G4double xPos)
 {
   //  Sets X position of the pion wall
   PionWall_CenterXPosition = xPos;
-  PionWall_Physical->SetTranslation(G4ThreeVector(PionWall_CenterXPosition,
-                                                  PionWall_CenterYPosition,
-                                                  PionWall_CenterZPosition));
+  PionWall_Physical->SetTranslation(G4ThreeVector(PionWall_CenterXPosition + Offset_X,
+                                                  PionWall_CenterYPosition + Offset_Y,
+                                                  PionWall_CenterZPosition + Offset_Z));
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -128,9 +132,9 @@ void QweakSimPionWall::SetPionWall_CenterPositionInY(G4double yPos)
 {
   //  Sets Y position of the pion wall
   PionWall_CenterYPosition = yPos;
-  PionWall_Physical->SetTranslation(G4ThreeVector(PionWall_CenterXPosition,
-                                                  PionWall_CenterYPosition,
-                                                  PionWall_CenterZPosition));
+  PionWall_Physical->SetTranslation(G4ThreeVector(PionWall_CenterXPosition + Offset_X,
+                                                  PionWall_CenterYPosition + Offset_Y,
+                                                  PionWall_CenterZPosition + Offset_Z));
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -138,16 +142,74 @@ void QweakSimPionWall::SetPionWall_CenterPositionInZ(G4double zPos)
 {
   //  Sets Z position of the pion wall
   PionWall_CenterZPosition = zPos;
-  PionWall_Physical->SetTranslation(G4ThreeVector(PionWall_CenterXPosition,
-                                                  PionWall_CenterYPosition,
-                                                  PionWall_CenterZPosition));
+  PionWall_Physical->SetTranslation(G4ThreeVector(PionWall_CenterXPosition + Offset_X,
+                                                  PionWall_CenterYPosition + Offset_Y,
+                                                  PionWall_CenterZPosition + Offset_Z));
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+void QweakSimPionWall::SetPionWall_Position_Offset_X(G4double xOff)
+{
+  //  Sets X position offset of the pion wall
+  Offset_X = xOff;
+  PionWall_Physical->SetTranslation(G4ThreeVector(PionWall_CenterXPosition + Offset_X,
+                                                  PionWall_CenterYPosition + Offset_Y,
+                                                  PionWall_CenterZPosition + Offset_Z));
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+void QweakSimPionWall::SetPionWall_Position_Offset_Y(G4double yOff)
+{
+  //  Sets Y position offset of the pion wall
+  Offset_Y = yOff;
+  PionWall_Physical->SetTranslation(G4ThreeVector(PionWall_CenterXPosition + Offset_X,
+                                                  PionWall_CenterYPosition + Offset_Y,
+                                                  PionWall_CenterZPosition + Offset_Z));
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+void QweakSimPionWall::SetPionWall_Position_Offset_Z(G4double zOff)
+{
+  //  Sets Z position offset of the pion wall
+  Offset_Z = zOff;
+  PionWall_Physical->SetTranslation(G4ThreeVector(PionWall_CenterXPosition + Offset_X,
+                                                  PionWall_CenterYPosition + Offset_Y,
+                                                  PionWall_CenterZPosition + Offset_Z));
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+void QweakSimPionWall::SetPionWall_LengthInX(G4double dim)
+{
+  // Sets thickness in X of the Pion Wall 
+  if (dim > 0.0){
+    //G4double oldDim = PionWall_Length_X;
+    PionWall_Length_X = dim;
+    PionWall_Solid->SetXHalfLength(0.5*PionWall_Length_X);
+    //SetPionWall_CenterPositionInZ(PionWall_CenterZPosition + 0.5*oldDim - 0.5*dim);
+  } 
+  else 
+    G4cout << "Pion Wall:  Invalid thickness value" << G4endl;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+void QweakSimPionWall::SetPionWall_LengthInY(G4double dim)
+{
+  // Sets thickness in Y of the Pion Wall
+  if (dim > 0.0){
+    G4double oldDim = PionWall_Length_Y;
+    PionWall_Length_Y = dim;
+    PionWall_Solid->SetYHalfLength(0.5*PionWall_Length_Y);
+    SetPionWall_CenterPositionInY(PionWall_CenterYPosition - 0.5*oldDim + 0.5*dim);
+  } 
+  else 
+    G4cout << "Pion Wall:  Invalid thickness value" << G4endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void QweakSimPionWall::SetPionWall_LengthInZ(G4double dim)
 {
   // Sets thickness in Z of the Pion Wall and moves the Pion Wall to be flush with Pb MD7 PMT shielding blocks
-  if (dim >0.){
+  if (dim > 0.0){
     G4double oldDim = PionWall_Length_Z;
     PionWall_Length_Z = dim;
     PionWall_Solid->SetZHalfLength(0.5*PionWall_Length_Z);
@@ -172,9 +234,9 @@ void QweakSimPionWall::SetEnabled()
   //  Enables the Pion Wall
   PionWall_VisAtt->SetVisibility(true);
   SetPionWall_Material(PionWall_Material->GetName());
-  PionWall_Physical->SetTranslation(G4ThreeVector(PionWall_CenterXPosition,
-                                                  PionWall_CenterYPosition,
-                                                  PionWall_CenterZPosition));
+  PionWall_Physical->SetTranslation(G4ThreeVector(PionWall_CenterXPosition + Offset_X,
+                                                  PionWall_CenterYPosition + Offset_Y,
+                                                  PionWall_CenterZPosition + Offset_Z));
 
   
 }

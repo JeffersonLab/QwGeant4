@@ -33,7 +33,12 @@ class QweakSimPionWallMessenger: public G4UImessenger
     
     G4UIdirectory*  PionWallDir;
     
+    G4UIcmdWithADoubleAndUnit* PionWall_SetThicknessInX_Cmd;
+    G4UIcmdWithADoubleAndUnit* PionWall_SetThicknessInY_Cmd;
     G4UIcmdWithADoubleAndUnit* PionWall_SetThicknessInZ_Cmd;
+    G4UIcmdWithADoubleAndUnit* PionWall_SetOffsetX_Cmd;
+    G4UIcmdWithADoubleAndUnit* PionWall_SetOffsetY_Cmd;
+    G4UIcmdWithADoubleAndUnit* PionWall_SetOffsetZ_Cmd;
     G4UIcmdWithoutParameter*   PionWall_SetEnabled_Cmd;
     G4UIcmdWithoutParameter*   PionWall_SetDisabled_Cmd;
 };
