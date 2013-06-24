@@ -5,3 +5,8 @@
 /MagneticField/SetActualCurrent 8920.10 A
 
 /EventGen/SetBeamEnergy 1159.65 MeV
+
+#set the beam angle (direction)
+/PrimaryEvent/SetBeamDirectionX -0.3 mrad
+/PrimaryEvent/SetBeamDirectionY -0.41 mrad
+
