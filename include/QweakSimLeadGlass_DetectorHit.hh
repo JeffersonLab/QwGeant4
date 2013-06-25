@@ -93,7 +93,7 @@ private:
     //G4double      globalPhiAngle;
 	
     //--- LeadGlass deposited energy
-    G4double      depositedEnergy;
+    G4double      depositedEnergyHit;
 
 	
     G4ThreeVector          cellPos;
@@ -218,9 +218,8 @@ public:
 	
     //--------------- LeadGlass deposited energy
 	
-    inline void   StoreDepositedEnergy(G4double dpeg)    {depositedEnergy = dpeg;}
-    inline void     AddDepositedEnergy(G4double dpeg)    {depositedEnergy += dpeg;}
-    inline G4double GetDepositedEnergy() const       {return depositedEnergy;}
+  inline void   StoreHitDepositedEnergy(G4double dpeg) { depositedEnergyHit = dpeg; }
+    inline G4double GetHitDepositedEnergy() const {return depositedEnergyHit;}
 	
 	
     //---

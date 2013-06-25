@@ -281,7 +281,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         if (LeadGlassDetector_CollID > -1) {
             LeadGlassDetector_HC  = (QweakSimLeadGlass_DetectorHitsCollection*)(HCE->GetHC(LeadGlassDetector_CollID));
             n_hitLeadGlass        = LeadGlassDetector_HC -> entries();
-		}
+	}
 		
         // get  LeadGlassPMT Hit Collector pointer
         //if (LeadGlassPMT_CollID > -1) {
@@ -433,8 +433,6 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         G4double EffectiveKinematicQ2    = myUserInfo->GetEffectiveKinematicQ2();
         G4double EffectiveKinematicX     = myUserInfo->GetEffectiveKinematicX();
         G4double EffectiveKinematicW     = myUserInfo->GetEffectiveKinematicW();
-        //--- Get total deposited energy in the LeadGlass from myUserInfo
-        G4double LeadGlassEngDep = myUserInfo->GetLeadGlassEnergyDeposit();
 
         analysis->fRootEvent->Primary.StoreTrackID((Int_t) TrackID);
         analysis->fRootEvent->Primary.StoreGlobalTime((Float_t) GlobalTime);
@@ -493,11 +491,6 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 	analysis->fRootEvent->Primary.StoredETotOut((Float_t) myUserInfo->GetdETotOut());
 	analysis->fRootEvent->Primary.StoredETot((Float_t) myUserInfo->GetdETot());
 	///////
-
-        //--- Write total deposited energy in the LeadGlass to the rootfile
-        analysis->fRootEvent->LeadGlass.Detector.StoreTotalEnergyDeposit((Float_t) LeadGlassEngDep);
-        //--- force a reset to LeadGlassEngDep=0.0 to get ready for the next event
-        myUserInfo->ResetLeadGlassEnergyDeposit();
 
         //==========================================================================================
 
@@ -1531,9 +1524,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 rGlobalPhiAngle   = (Float_t) globalMomentum.phi() / degree - 90.0;
 				
                 //--- get LeadGlass deposited energy
-                rDepositedEnergy = (Float_t) aHit->GetDepositedEnergy() / MeV;
-                //--- TotalDepositedEnergy --- Done in previous code
-				
+                rDepositedEnergy = (Float_t) aHit->GetHitDepositedEnergy() / MeV;				
                 //--------------------------------------------------------------------------------------------
 				
                 //--- store Primary Event Number
@@ -1606,14 +1597,12 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 				
                 //--- sotre LeadGlass deposited energy
                 analysis->fRootEvent->LeadGlass.Detector.StoreDepositedEnergy(rDepositedEnergy);
-                //--- TotalDepositedEnergy --- Done in previous code
+		// -- TotalDepositedEnergy is evaluated in UserLeadGlass class
 
 		//--------------------------------------------------------------------------------------------
 				
-            } // end  for(int i1=0;i1<n_hitLeadGlass;i1++)
+            } // end  for(int i1=0;i1<n_hitLeadGlass;i1++)	   
         } // end    if (n_hitLeadGlass >0)
-		
-		
 		
 
 //  G4cout << "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" << G4endl;

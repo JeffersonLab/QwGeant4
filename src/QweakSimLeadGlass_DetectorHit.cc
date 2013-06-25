@@ -64,7 +64,7 @@ QweakSimLeadGlass_DetectorHit::QweakSimLeadGlass_DetectorHit()
     //globalPhiAngle              = 0.;
 	
     //--- LeadGlass deposited energy
-    depositedEnergy               = 0.;
+    depositedEnergyHit               = 0.;
 	
     pLogV                         = 0;
 }
@@ -137,7 +137,7 @@ QweakSimLeadGlass_DetectorHit::QweakSimLeadGlass_DetectorHit(const QweakSimLeadG
     //globalPhiAngle              = right.globalPhiAngle;
 	
     //--- LeadGlass deposited energy
-    depositedEnergy               = right.depositedEnergy;
+    depositedEnergyHit               = right.depositedEnergyHit;
 	
     cellPos        = right.cellPos;
     cellRot        = right.cellRot;
@@ -193,7 +193,7 @@ const QweakSimLeadGlass_DetectorHit& QweakSimLeadGlass_DetectorHit::operator=(co
     //globalPhiAngle              = right.globalPhiAngle;
 	
     //--- LeadGlass deposited energy
-    depositedEnergy               = right.depositedEnergy;
+    depositedEnergyHit               = right.depositedEnergyHit;
 	
     cellPos        = right.cellPos;
     cellRot        = right.cellRot;
@@ -257,12 +257,12 @@ void QweakSimLeadGlass_DetectorHit::Draw()
 
 void QweakSimLeadGlass_DetectorHit::Print()
 {
-    // G4cout << " LeadGlass[" << DetectorID << "] : time " << time/ns
-	//    << " (nsec) --- local (x,y,z) [cm] " 
-	//    << localPos.x()/cm << ", " 
-	//    << localPos.y()/cm << ", " 
-	//    << localPos.z()/cm << ", " 
-	//    << G4endl;
+  G4cout << " LeadGlass[" << detectorID << "] : time " << time/ns
+	 << " (nsec) --- local (x,y,z) [cm] " 
+	 << worldPos.x()/cm << ", " 
+	 << worldPos.y()/cm << ", " 
+	 << worldPos.z()/cm
+	 << G4endl << G4endl;
 }
 
 

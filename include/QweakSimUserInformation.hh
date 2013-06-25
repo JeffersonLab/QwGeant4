@@ -105,8 +105,6 @@ private:
   G4double EffectiveKinematicW;
   
   G4double CerEngDep;
-  //--- a variable to hold total energy deposited in the LeadGlass
-  G4double LeadGlassEngDep;
 
   // various energy losses at the target
   G4double dEIonIn, dEIonOut;
@@ -313,11 +311,6 @@ private:
   void     AddCerenkovEnergyDeposit(G4double eng){CerEngDep += eng;};
   G4double GetCerenkovEnergyDeposit(G4bool zero = true){G4double tmp = CerEngDep; if(zero) CerEngDep = 0.0; return tmp;};
 
-  //--- methods for total energy deposited in the LeadGlass
-  void     AddLeadGlassEnergyDeposit(G4double eng)   {LeadGlassEngDep += eng;}
-  G4double GetLeadGlassEnergyDeposit()   {return LeadGlassEngDep;}
-  void   ResetLeadGlassEnergyDeposit()   {LeadGlassEngDep = 0.0;}
-	
   void StoreCerenkovPhotonEnergy(G4double eng) {CerenkovPhotonEnergy.push_back(eng);};
   G4double GetCerenkovPhotonEnergyAtIndex(G4int ind) {return CerenkovPhotonEnergy[ind];};
 

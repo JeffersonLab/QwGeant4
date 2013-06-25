@@ -119,7 +119,6 @@ void QweakSimUserLeadGlass_DetectorEvent::Initialize()
 	
     //--- deposited energy in the LeadGlass in one step
     DepositedEnergy.clear(); 
-    //--- total deposited energy in the LeadGlass in one event
     TotalDepositedEnergy             = 0.0;
 }
 

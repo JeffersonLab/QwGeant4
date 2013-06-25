@@ -57,7 +57,7 @@ QweakSimSteppingAction::QweakSimSteppingAction(QweakSimUserInformation* myUInfo,
   
   //std::ofstream EventDataFile("Event.dat", std::ios::out);
 
-G4cout << "###### Leaving QweakSimSteppingAction::QweakSimSteppingAction() " << G4endl;
+  G4cout << "###### Leaving QweakSimSteppingAction::QweakSimSteppingAction() " << G4endl;
 
 }
 
@@ -89,12 +89,6 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep){
 
   //RandomPositionZ = myEvent->GetVertexZ();
   RandomPositionZ = myUserInfo->GetOriginVertexPositionZ();
-
-  if((thePrePV->GetName()).contains("LeadGlass"))
-  {
-    G4double engDep = theStep->GetTotalEnergyDeposit();
-    myUserInfo->AddLeadGlassEnergyDeposit(engDep);
-  }
   
   //jpan@nuclear.uwinnipeg.ca Thu Apr 16 01:33:14 CDT 2009
   // check if it is primary
@@ -111,7 +105,7 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep){
     G4double theY = thePosition.getY();
     G4double theZ = thePosition.getZ();
     //      G4cout << "Track pos:: " << theX << "\t" << theY << "\t" << theZ << G4endl;
- 
+
     G4String procName = thePostPoint->GetProcessDefinedStep()->GetProcessName();   
     // dEE in MeV -> all Elosses are in MeV
     G4double dEE = thePrePoint->GetKineticEnergy()/MeV-thePostPoint->GetKineticEnergy()/MeV;
@@ -144,8 +138,10 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep){
 	// the stepLength of RandomPositionZ,
 	// then kill the particle, and reset the origin vertex Z as theZ
         if( fabs(theZ - RandomPositionZ)<=theStepLength && sqrt(theX*theX+theY*theY)<2.54*cm){
+
 	  std::vector< G4double > CrossSection;
 	  for (Int_t i = 0; i<8; i++) { CrossSection.push_back(0.0); }
+	  
 	  G4double WeightN, Q2, E_out, theta, phi;
 	  G4double Asymmetry;
 	  G4ThreeVector MomentumDirection = theTrack->GetMomentumDirection();
@@ -181,11 +177,13 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep){
 	  //myUserInfo->StoreOriginVertexTotalEnergy(theTrack->GetTotalEnergy());     
 
 	  myUserInfo->StorePreScatteringKineticEnergy(E_in);
-	  if(particleType==G4Electron::ElectronDefinition())
-	      myUserInfo->StoreOriginVertexKineticEnergy(E_out - 0.511*MeV);
+	  if(particleType==G4Electron::ElectronDefinition()){
+	    myUserInfo->StoreOriginVertexKineticEnergy(E_out - 0.511*MeV);
+	    //	    G4cout << "Stepping Action E_out:: " << (E_out - 0.511*MeV)/MeV << G4endl;
+	  }
           if(particleType==G4PionMinus::PionMinusDefinition())
           {
-              myUserInfo->StoreOriginVertexKineticEnergy(E_out - 139.57*MeV);
+	    myUserInfo->StoreOriginVertexKineticEnergy(E_out - 139.57*MeV);
           }
 	  myUserInfo->StoreOriginVertexTotalEnergy(E_out);
 

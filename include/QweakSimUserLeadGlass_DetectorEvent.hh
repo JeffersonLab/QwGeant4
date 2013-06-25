@@ -109,8 +109,8 @@ private:
 	
     //--- deposited energy in the LeadGlass in one step
     std::vector<Float_t> DepositedEnergy;
-    //--- total deposited energy in the LeadGlass in one event
     Float_t TotalDepositedEnergy;
+
 	
 public:
 	
@@ -271,11 +271,11 @@ public:
     //----------------- LeadGlass deposited energy
 	
     //--- deposited energy in the leadGlass in one step
-    void   StoreDepositedEnergy(Float_t dpeg)    { DepositedEnergy.push_back(dpeg); }
-    std::vector<Float_t>  GetDepositedEnergy() const      {return DepositedEnergy;}
-	
-    //--- total deposited energy in the LeadGlass in one event
-    void     StoreTotalEnergyDeposit(Float_t eng)   { TotalDepositedEnergy = eng; }
+    void   StoreDepositedEnergy(Float_t dpeg)    { 
+      DepositedEnergy.push_back(dpeg); 
+      TotalDepositedEnergy += dpeg;
+    }
+    std::vector<Float_t>  GetDepositedEnergy() const      {return DepositedEnergy;}	
     Float_t    GetTotalEnergyDeposit()   const {return TotalDepositedEnergy;}
 	
     //void AddSecondaryElectronEvent(Float_t XO, Float_t YO, Float_t ZO,
