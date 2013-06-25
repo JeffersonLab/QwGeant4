@@ -68,6 +68,7 @@ class QweakSimHDC;
 // class QweakSimGEM;
 class QweakSimTriggerScintillator;
 class QweakSimCerenkovDetector;
+class QweakSimLumiDetector;
 class QweakSimMagneticField;
 class QweakSimUserInformation;
 
@@ -135,6 +136,7 @@ private:
 
   QweakSimTriggerScintillator*  pTriggerScintillator;
   QweakSimCerenkovDetector*     pCerenkovDetector;
+  QweakSimLumiDetector*     pLumiDetector;
   //G4VReadOutGeometry*        pROHitPlane;
 
   QweakSimDetectorMessenger*      detectorMessenger;  // pointer to the Messenger
