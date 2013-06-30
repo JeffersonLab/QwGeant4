@@ -223,15 +223,14 @@ private:
   G4double rDCUPlaneWireAngle;
   G4double rDCVPlaneWireAngle;
 
-//   vector <G4int>    pmtHitsLeft;
-//   vector <G4int>    pmtHitsRight;
-//   vector <G4double> pmtNPELeft;
-//   vector <G4double> pmtNPERight;
-  G4int    pmtHitsLeft;
-  G4int    pmtHitsRight;
-  G4double pmtNPELeft;
-  G4double pmtNPERight;
-
+  static const int PmtMaxSize = 18;
+  std::vector<G4int>   PmtHasBeenHit;
+  std::vector<G4int>   PmtHitsLeft;
+  std::vector<G4int>   PmtHitsRight;
+  std::vector<G4int>   PmtHitsTotal;
+  std::vector<G4float> PmtNPELeft;
+  std::vector<G4float> PmtNPERight;
+  std::vector<G4float> PmtNPETotal;
 
   Int_t edgeEvent;
 
@@ -242,7 +241,7 @@ private:
   Float_t   rKineticEnergy;
 
   G4int  detectorID;
-  Int_t  octantID;
+  G4int  octantID;
 
 };
 

@@ -507,6 +507,9 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         // Store Number of Hits for: Cerenkov Detector
         analysis->fRootEvent->Cerenkov.Detector.StoreDetectorNbOfHits(n_hitCerenkov);
 		
+        // Store Number of Hits for: Cerenkov PMT Detector
+        analysis->fRootEvent->Cerenkov.PMT.StoreDetectorNbOfHits(n_hitCerenkovPMT);
+
         // Store Number of Hits for: LeadGlass Detector
         analysis->fRootEvent->LeadGlass.Detector.StoreDetectorNbOfHits(n_hitLeadGlass);
 
@@ -882,47 +885,59 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         // Store Number of Photoelectrons of Cerenkov Detector hits
         //=========================================================
 
-        if (n_hitCerenkovPMT >0) {
-            // loop over hits
-            for (int i1=0;i1<n_hitCerenkovPMT;i1++) {
+        if (n_hitCerenkovPMT > 0) {
+
+        	// loop over hits
+            for (int i1 = 0; i1 < n_hitCerenkovPMT; i1++) {
 
                 QweakSimCerenkovDetector_PMTHit* aHit = (*CerenkovDetectorPMT_HC)[i1];
                 octantID = (Int_t) aHit->GetDetectorID() + 1;
 
+                if (octantID > (Int_t) PmtHitsLeft.size()) {
+                  G4cerr << "octantID is larger than size of vectorPmtHitsLeft in QweakSimEventAction!" << G4endl;
+                  break;
+                }
+
                 //------------------------------------------------------------------------
-                if ( (aHit->GetPMTID() == 0) ) { // left PMT
+                if (aHit->GetPMTID() == 0) { // left PMT
                     //if(aHit->IsHitValid())
                     {
-                        pmtHitsLeft =  pmtHitsLeft +1;
-                        pmtNPELeft += myUserInfo->GetNumberOfPhotoelectronsS20(aHit->GetPhotonEnergy()*1.0e6);
-                        // G4cout<<"pmtNPELeft: "<<pmtNPELeft<<G4endl;
+                        PmtHitsLeft[octantID]++;
+                        PmtNPELeft[octantID] += myUserInfo->GetNumberOfPhotoelectronsS20(aHit->GetPhotonEnergy()*1.0e6);
+                        // G4cout<<"pmtNPELeft: "<<pmtNPELeft[octantID]<<G4endl;
                     }
                 }
 
-                if (  (aHit->GetPMTID() == 1)  ) { // right PMT
+                if (aHit->GetPMTID() == 1) { // right PMT
                     //if(aHit->IsHitValid())
                     {
-                        pmtHitsRight =  pmtHitsRight +1;
-                        pmtNPERight += myUserInfo->GetNumberOfPhotoelectronsS20(aHit->GetPhotonEnergy()*1.0e6);
-                        // G4cout<<"pmtNPERight: "<<pmtNPERight<<G4endl;
+                        PmtHitsRight[octantID]++;
+                        PmtNPERight[octantID] += myUserInfo->GetNumberOfPhotoelectronsS20(aHit->GetPhotonEnergy()*1.0e6);
+                        // G4cout<<"pmtNPERight: "<<pmtNPERight[octantID]<<G4endl;
                     }
                 }
+
+                PmtHasBeenHit[octantID] = 5;
+                PmtHitsTotal[octantID]++;
+                PmtNPETotal[octantID] += myUserInfo->GetNumberOfPhotoelectronsS20(aHit->GetPhotonEnergy()*1.0e6);
+                // G4cout<<"pmtNPETTotal: "<<pmtNPETotal[octantID]<<G4endl;
+
                 //------------------------------------------------------------------------
 
-            } // end for(int i1=0;i1<n_hitCerenkovPMT;i1++)
-        } //end if (n_hitCerenkovPMT >0)
+            } // end for (int i1 = 0; i1 < n_hitCerenkovPMT; i1++)
+        } // end if (n_hitCerenkovPMT > 0)
 
 
         //---------------------------------------------
         // store number of hits for left and right PMT
         //---------------------------------------------
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftNbOfHits(pmtHitsLeft);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTRightNbOfHits(pmtHitsRight);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalNbOfHits(pmtHitsLeft + pmtHitsRight);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftNbOfPEs(pmtNPELeft);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTRightNbOfPEs(pmtNPERight);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalNbOfPEs(pmtNPELeft + pmtNPERight);
-
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTHasBeenHit(PmtHasBeenHit);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftNbOfHits(PmtHitsLeft);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTRightNbOfHits(PmtHitsRight);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalNbOfHits(PmtHitsTotal);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftNbOfPEs(PmtNPELeft);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTRightNbOfPEs(PmtNPERight);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalNbOfPEs(PmtNPETotal);
 
         //==============================================================================
 
@@ -1722,29 +1737,15 @@ void QweakSimEventAction::Initialize() {
     rDCVPlaneWireAngle  = 0.;
 
     //----------------------
-    /*  pmtHitsLeft.clear();
-      pmtHitsLeft.resize(8);
+    PmtHasBeenHit.clear();  PmtHasBeenHit.resize(PmtMaxSize);
 
-      pmtHitsRight.clear();
-      pmtHitsRight.resize(8);
+    PmtHitsLeft.clear();  PmtHitsLeft.resize(PmtMaxSize);
+    PmtHitsRight.clear(); PmtHitsRight.resize(PmtMaxSize);
+    PmtHitsTotal.clear(); PmtHitsTotal.resize(PmtMaxSize);
 
-      pmtNPELeft.clear();
-      pmtNPELeft.resize(8);
-
-      pmtNPERight.clear();
-      pmtNPERight.resize(8);
-
-      for (int n=0;n<8;n++) {
-          pmtHitsLeft[n]  = 0;
-          pmtHitsRight[n] = 0;
-          pmtNPELeft[n]   = 0.0;
-          pmtNPERight[n]  = 0.0; }*/
-
-    pmtHitsLeft=0;
-    pmtHitsRight=0;
-    pmtNPELeft=0;
-    pmtNPERight=0;
-
+    PmtNPELeft.clear();   PmtNPELeft.resize(PmtMaxSize);
+    PmtNPERight.clear();  PmtNPERight.resize(PmtMaxSize);
+    PmtNPETotal.clear();  PmtNPETotal.resize(PmtMaxSize);
     //----------------------
 
 
