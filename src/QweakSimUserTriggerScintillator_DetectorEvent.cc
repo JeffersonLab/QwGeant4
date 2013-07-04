@@ -101,6 +101,9 @@ void QweakSimUserTriggerScintillator_DetectorEvent::Initialize()
 
     GlobalPhiAngle                 = 0.;
     GlobalThetaAngle               = 0.;
+    
+    ParticleName.clear();
+    ParticleType.clear();
 }	
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....

@@ -86,6 +86,9 @@ void QweakSimUserHDC_WirePlaneEvent::Clear(const Option_t*)
 
   TotalEnergy.clear();
   KineticEnergy.clear();
+  
+  ParticleName.clear();
+  ParticleType.clear();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
