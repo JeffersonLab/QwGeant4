@@ -91,6 +91,8 @@ QweakSimTriggerScintillator_DetectorHit::QweakSimTriggerScintillator_DetectorHit
   worldMomentum  = right.worldMomentum;
   localMomentum  = right.localMomentum;
   time           = right.time;
+  particleName   = right.particleName;
+  particleType   = right.particleType;
 
   originVertexPosition          = right.originVertexPosition;
   originVertexMomentumDirection = right.originVertexMomentumDirection;
@@ -116,7 +118,9 @@ const QweakSimTriggerScintillator_DetectorHit& QweakSimTriggerScintillator_Detec
   worldMomentum  = right.worldMomentum;
   localMomentum  = right.localMomentum;
   time           = right.time;
-
+  particleName = right.particleName;
+  particleType = right.particleType;
+  
   originVertexPosition          = right.originVertexPosition;
   originVertexMomentumDirection = right.originVertexMomentumDirection;
   originVertexKineticEnergy     = right.originVertexKineticEnergy;

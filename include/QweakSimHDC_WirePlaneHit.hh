@@ -83,6 +83,9 @@ private:
   G4double      crossSectionWeight;
 
   G4int         primaryEventNumber;
+  
+  G4String      particleName;
+  G4int         particleType;
 
 public:
 
@@ -131,6 +134,12 @@ public:
   inline void     StoreCrossSectionWeight(G4double csw)  {crossSectionWeight = csw;}
   inline G4double   GetCrossSectionWeight() const {return crossSectionWeight;}
 
+  inline void     StoreParticleName(G4String pn)   {particleName = pn;}
+  inline G4String   GetParticleName() const {return particleName;}
+
+  void     StoreParticleType(G4int pt)   {particleType = pt;}
+  G4int   GetParticleType() const {return particleType;}
+  
   inline void     StoreKineticEnergy(G4double ekin) { currentKineticEnergy  = ekin; }
   inline G4double   GetKineticEnergy() const { return currentKineticEnergy; }
 

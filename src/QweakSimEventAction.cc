@@ -1001,6 +1001,8 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 rOriginVertexTotalEnergy   = (Float_t) aHit->GetOriginVertexTotalEnergy() / MeV;
 
                 rGlobalTime = (Float_t) aHit->GetGlobalTime() / ns;
+                rParticleName = TString(aHit->GetParticleName());
+                rParticleType = (Int_t) aHit->GetParticleType();
 
                 // get total Energy of hit
                 rTotalEnergy     = (Float_t) aHit->GetTotalEnergy() / MeV;
@@ -1066,7 +1068,8 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 wire_plane_event->StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
 
                 wire_plane_event->StoreGlobalTimeOfHit(rGlobalTime);
-
+                wire_plane_event->StoreParticleName(rParticleName);
+                wire_plane_event->StoreParticleType(rParticleType);
 
                 wire_plane_event->StorePlaneLocalPositionX(rLocalPositionX);
                 wire_plane_event->StorePlaneLocalPositionY(rLocalPositionY);
@@ -1352,7 +1355,8 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 rOriginVertexTotalEnergy = (Float_t) aHit->GetOriginVertexTotalEnergy() / MeV;
 
                 rGlobalTime = (Float_t) aHit->GetGlobalTime() / ns;
-
+                rParticleName = TString(aHit->GetParticleName());
+                rParticleType = (Int_t) aHit->GetParticleType();
 
                 // 	      edgeEvent = myUserInfo->GetEdgeEventDetected();
 
@@ -1399,6 +1403,10 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 
                 // store global time of hit
                 analysis->fRootEvent->TriggerScintillator.Detector.StoreGlobalTimeOfHit(rGlobalTime);
+
+                //--- store particle name & type
+                analysis->fRootEvent->TriggerScintillator.Detector.StoreParticleName(rParticleName);
+                analysis->fRootEvent->TriggerScintillator.Detector.StoreParticleType(rParticleType);
 
                 // store origin vertex info
                 analysis->fRootEvent->TriggerScintillator.Detector.StoreOriginVertexPositionX(rOriginVertexPositionX);
@@ -1504,7 +1512,9 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 localMomentum  = aHit->GetLocalMomentum();
                 rLocalMomentumX = (Float_t) localMomentum.x() / MeV;
                 rLocalMomentumY = (Float_t) localMomentum.y() / MeV;
-                rLocalMomentumZ = (Float_t) localMomentum.z() / MeV;
+                rLocalMomentumZ = (Float_t) localMomentum.z() / MeV;                //--- store particle name & type
+                analysis->fRootEvent->LeadGlass.Detector.StoreParticleName(rParticleName);
+                analysis->fRootEvent->LeadGlass.Detector.StoreParticleType(rParticleType);
 				
                 //--- get local vertex momentum direction of hit
                 localVertexMomentumDirection = aHit->GetMomentumDirection();

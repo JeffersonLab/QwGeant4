@@ -107,7 +107,9 @@ QweakSimHDC_WirePlaneHit::QweakSimHDC_WirePlaneHit(const QweakSimHDC_WirePlaneHi
   currentTotalEnergy   = right.currentTotalEnergy;
 
   time        = right.time;
-
+  particleName = right.particleName;
+  particleType = right.particleType;
+  
   originVertexPosition           = right.originVertexPosition;
   originVertexMomentumDirection  = right.originVertexMomentumDirection;
   originVertexKineticEnergy      = right.originVertexKineticEnergy;

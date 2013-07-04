@@ -84,8 +84,10 @@ G4bool QweakSimHDC_WirePlaneSD::ProcessHits(G4Step* aStep,G4TouchableHistory* /*
   //G4cout << G4endl << "###### Calling QweakSimHDC_WirePlaneSD::ProcessHits() " << G4endl << G4endl; 
 
 
-  G4double charge = aStep->GetTrack()->GetDefinition()->GetPDGCharge();
-
+  G4double  charge = aStep->GetTrack()->GetDefinition()->GetPDGCharge();
+  G4String  particlename = aStep->GetTrack()->GetDefinition()->GetParticleName();
+  G4int     particletype = aStep->GetTrack()->GetDefinition()->GetPDGEncoding();
+  
 //   G4cout << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Charge =" << charge << G4endl;
 
   // dismiss photons
@@ -219,6 +221,9 @@ G4bool QweakSimHDC_WirePlaneSD::ProcessHits(G4Step* aStep,G4TouchableHistory* /*
     aHit->StoreWorldMomentum(worldMomentum);
     aHit->StoreLocalMomentum(localMomentum);
 
+    aHit->StoreParticleName(particlename);
+    aHit->StoreParticleType(particletype);
+    
     aHit->StoreKineticEnergy(currentKineticEnergy);
     aHit->StoreTotalEnergy(currentTotalEnergy);
 

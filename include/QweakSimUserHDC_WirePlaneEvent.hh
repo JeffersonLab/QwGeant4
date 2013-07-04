@@ -40,6 +40,7 @@
 
 // root includes
 #include "TObject.h"
+#include "TString.h"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 class QweakSimUserHDC_WirePlaneEvent : public TObject
@@ -105,6 +106,12 @@ private:
   std::vector <Float_t> OriginVertexPhiAngle;   ///< (degrees)
   //@}
 
+  /// \name Particle name and type at the hit
+  //@{
+  std::vector <TString> ParticleName; ///< Name of the particle that caused this hit
+  std::vector <Int_t>   ParticleType; ///< \ref Lund_type of the particle that caused this hit (until r4757 this used the \ref geant3_type of the particle)
+  //@}
+  
   /// \name Total and kinetic energy at the original vertex of the track from which this hit was generated
   //@{
   std::vector <Float_t> OriginVertexTotalEnergy;        ///< (MeV)
@@ -220,7 +227,13 @@ public:
   
   void     StoreKineticEnergy(Float_t ke)   { KineticEnergy.push_back(ke); }
   std::vector <Float_t>    GetKineticEnergy() const {return KineticEnergy;}
-    
+
+  void     StoreParticleName(TString pn)    { ParticleName.push_back(pn); }
+  std::vector <TString>    GetParticleName() const {return  ParticleName;}
+
+  void     StoreParticleType(Int_t pt)      { ParticleType.push_back(pt); }
+  std::vector <Int_t>      GetParticleType() const {return  ParticleType;}
+  
 
   // define a new Class known to ROOT  
   ClassDef(QweakSimUserHDC_WirePlaneEvent,1)

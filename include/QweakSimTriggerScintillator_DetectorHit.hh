@@ -87,6 +87,9 @@ private:
   G4ThreeVector localMomentum;
   G4ThreeVector worldMomentum;
 
+  G4String      particleName;
+  G4int         particleType;
+  
   G4ThreeVector    cellPos;
   G4RotationMatrix cellRot;
   const G4LogicalVolume* pLogV;
@@ -112,6 +115,13 @@ public:
 
   inline void   StoreGlobalTime(G4double t)    { time = t; }
   inline G4double GetGlobalTime() const { return time; }
+  
+  inline void     StoreParticleName(G4String pn)   {particleName = pn;}
+  inline G4String   GetParticleName() const {return particleName;}
+
+  void     StoreParticleType(G4int pt)   {particleType = pt;}
+  G4int   GetParticleType() const {return particleType;}
+  
   //------
   inline void        StoreLocalPosition(G4ThreeVector xyz) { localPos = xyz; }
   inline G4ThreeVector GetLocalPosition()     const { return localPos; }

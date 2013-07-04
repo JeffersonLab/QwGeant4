@@ -39,6 +39,7 @@
 
 // root includes
 #include "TObject.h"
+#include "TString.h"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 class QweakSimUserTriggerScintillator_DetectorEvent : public TObject
@@ -123,7 +124,12 @@ private:
   Float_t GlobalPhiAngle;       ///< (degrees, but 90 degrees rotated to keep things interesting)
   //@}
 
-
+  /// \name Particle name and type at the hit
+  //@{
+  std::vector <TString> ParticleName; ///< Name of the particle that caused this hit
+  std::vector <Int_t>   ParticleType; ///< \ref Lund_type of the particle that caused this hit (until r4757 this used the \ref geant3_type of the particle)
+  //@}
+  
 public:
   
   // Constructor
@@ -139,6 +145,13 @@ public:
 
   void     StoreGlobalTimeOfHit(Float_t gtime) { GlobalTimeOfHit = gtime; }
   Float_t    GetGloablTimeOfHit()  const {return GlobalTimeOfHit;}
+  
+  void     StoreParticleName(TString pn)    { ParticleName.push_back(pn); }
+  std::vector <TString>    GetParticleName() const {return  ParticleName;}
+
+  void     StoreParticleType(Int_t pt)      { ParticleType.push_back(pt); }
+  std::vector <Int_t>      GetParticleType() const {return  ParticleType;}
+  
   //-----------------
   void     StoreDetectorHasBeenHit(Int_t n)      { HasBeenHit = n; }
   Int_t      GetDetectorHasBeenHit() const {return HasBeenHit;}

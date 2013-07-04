@@ -87,8 +87,12 @@ G4bool QweakSimTriggerScintillator_DetectorSD::ProcessHits(G4Step* aStep, G4Touc
 
     // Dismiss Photons
     G4Track *track = aStep->GetTrack();    
-    if (fabs(track->GetDefinition()->GetPDGCharge())<0.1) return false;
-
+    G4double  charge = track->GetDefinition()->GetPDGCharge();
+    if (fabs(charge)<0.1) 
+      return false;
+    G4String  particlename = track->GetDefinition()->GetParticleName();
+    G4int     particletype = track->GetDefinition()->GetPDGEncoding();
+  
     G4ThreeVector worldPos;
     G4ThreeVector localPos;
     G4ThreeVector worldMomentum;
@@ -227,6 +231,9 @@ else { return false;}
 
   aHit->StoreGlobalTime(aStep->GetPreStepPoint()->GetGlobalTime());
 
+  aHit->StoreParticleName(particlename);
+  aHit->StoreParticleType(particletype);
+    
   aHit->StoreWorldPosition(worldPos);
   aHit->StoreLocalPosition(localPos);
 
