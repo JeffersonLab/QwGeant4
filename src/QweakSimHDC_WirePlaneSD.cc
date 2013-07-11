@@ -90,9 +90,9 @@ G4bool QweakSimHDC_WirePlaneSD::ProcessHits(G4Step* aStep,G4TouchableHistory* /*
   
 //   G4cout << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Charge =" << charge << G4endl;
 
-  // dismiss photons
-  if(charge==0.) return false;
-
+  // reject non-charged particle hits
+  if (fabs(charge)<0.1) 
+      return false;
 
   G4StepPoint*        preStepPoint  = aStep->GetPreStepPoint();
   G4StepPoint*        postStepPoint = aStep->GetPreStepPoint();

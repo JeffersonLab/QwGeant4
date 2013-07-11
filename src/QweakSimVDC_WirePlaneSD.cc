@@ -84,7 +84,11 @@ G4bool QweakSimVDC_WirePlaneSD::ProcessHits(G4Step* aStep,G4TouchableHistory* /*
   //G4cout << G4endl << "###### Calling QweakSimVDC_WirePlaneSD::ProcessHits() " << G4endl << G4endl; 
 
 
-  //G4double  charge       = aStep->GetTrack()->GetDefinition()->GetPDGCharge();
+  G4double  charge = aStep->GetTrack()->GetDefinition()->GetPDGCharge();
+  // reject non-charged particle hits
+  if (fabs(charge)<0.1) 
+      return false;
+  
   G4String  particlename = aStep->GetTrack()->GetDefinition()->GetParticleName();
   G4int     particletype = aStep->GetTrack()->GetDefinition()->GetPDGEncoding();
 
