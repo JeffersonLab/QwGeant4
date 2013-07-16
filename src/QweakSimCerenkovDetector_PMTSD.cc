@@ -62,7 +62,7 @@ G4bool QweakSimCerenkovDetector_PMTSD::ProcessHits_constStep(const G4Step* aStep
   G4double currentPhotonEnergy = aStep->GetTrack()->GetTotalEnergy();
   G4int MotherCopyNo      = theTouchable->GetVolume(1)->GetCopyNo();
   QweakSimCerenkovDetector_PMTHit* aHit = new QweakSimCerenkovDetector_PMTHit();
-  G4int MotherReplicaNo2  = theTouchable->GetReplicaNumber(2);        // Several MotherVolumes
+  G4int MotherReplicaNo2  = theTouchable->GetReplicaNumber(3);        // Several MotherVolumes
 
 //  std::cout<<"store hit info: detector "<<MotherReplicaNo2<<"  PMTID "<<MotherCopyNo<<std::endl;
   aHit->StoreDetectorID(MotherReplicaNo2); // which octant (number to be converted) 
