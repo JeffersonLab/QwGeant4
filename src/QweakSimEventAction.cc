@@ -95,6 +95,8 @@ QweakSimEventAction::QweakSimEventAction(QweakSimAnalysis* AN, QweakSimUserInfor
         // fTriggerName[kTriggerGEM] = "gem";
         kMapTriggerMode["cer"]   = kTriggerCer;
         fTriggerName[kTriggerCer] = "cer";
+	kMapTriggerMode["hdc"] = kTriggerHDC;
+	fTriggerName[kTriggerHDC] = "hdc";
     }
     if (kMapTriggerMode.size() != kNumTriggers)
         G4cout << "Number of software triggers is not defined correctly!" << G4endl;
@@ -305,6 +307,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     if (printhits) {
       G4cout <<",\tVDC_Front "<<n_VDChitDCFront<<",\tVDC_Back "<<n_VDChitDCBack<<",\tTS "<<n_hitTriggerScintillator;
       G4cout <<",\tLeadGlass "<<n_hitLeadGlass;
+      G4cout <<",\tHDC "<<n_HDChitWirePlane; 
       G4cout <<",\tCerenkov "<<n_hitCerenkov<<"\tCerenkovPMT "<<n_hitCerenkovPMT<<G4endl;
     }
 
@@ -382,6 +385,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
             || (fTrigger[kTrigger4Fold] && (n_VDChitWirePlane == 4) && (n_VDChitDCFront > 0) && (n_VDChitDCBack > 0) && (n_hitCerenkov > 0) ) /* 4-fold coincidence */
             || (fTrigger[kTrigger3Fold] && (n_VDChitWirePlane >= 2) && (n_VDChitDCFront > 0) && (n_VDChitDCBack > 0) ) /* 3-fold coincidence */
             || (fTrigger[kTriggerScint] && (n_hitTriggerScintillator > 0) ) /* Qweak trigger on a hit in the trigger scintillator */
+	    || (fTrigger[kTriggerHDC]   && (n_HDChitWirePlane >= 6))         /* HDC Trigger */
             || (fTrigger[kTriggerLeadGlass] && (n_hitLeadGlass >0))         /* a hit in the LeadGlass */
             || (fTrigger[kTriggerCer]   && (n_hitCerenkov > 0) )            /* Triggering on Main Detector */
        ) {
