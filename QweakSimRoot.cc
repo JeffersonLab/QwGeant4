@@ -18,6 +18,7 @@ int main(int argc, char** argv)
 {
   // Start QweakSim-Root command prompt
   QweakSimRint* qweaksimrint = new QweakSimRint("QweakSim ROOT Analyzer", &argc, argv);
+  gROOT->ProcessLine(".include include");
   qweaksimrint->Run();
   delete qweaksimrint;
 }
