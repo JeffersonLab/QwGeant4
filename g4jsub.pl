@@ -144,12 +144,15 @@ my $xmlfile =
   <Command><![CDATA[
 source /home/$user/.login
 cd /u/home/$user/QwGeant4/
-build/QweakSimG4 jsub/macros/$basename\.mac
+build/QweakSimG4 macros/$basename\.mac
   ]]></Command>
 
   <Memory space=\"1200\" unit=\"MB\"/>
+  <TimeLimit unit=\"minutes\" time=\"4320\"/>
+
 
   <Job>
+    <Output src=\"$basename.root\" dest=\"/volatile/hallc/qweak/$user/$basename.root\"/>
     <Stdout dest=\"/u/home/$user/QwGeant4/jsub/output/$basename\.out\"/>
     <Stderr dest=\"/u/home/$user/QwGeant4/jsub/output/$basename\.err\"/>
   </Job>
