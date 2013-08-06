@@ -23,7 +23,7 @@ my $Njobs;
 
 #declaration of subroutines
 sub helpscreen;
-sub print_header;   #prints macfile header
+sub print_footer;   #prints macfile header
 sub print_xml;      #prints xml file
 
 my ($help);
@@ -62,8 +62,8 @@ foreach my $number (1..$Njobs) {
 
   #create individual mapfile
   open my $fh, ">", $output or die "can't open/create $output: $!\n";
-  print_header($fh,$basename,$Nevents);
   print $fh $mac_content;
+  print_footer($fh,$basename,$Nevents);
   close $fh;
 
   #deal with xml file
@@ -108,7 +108,7 @@ EOF
 die $helpstring if $help;
 }
 
-sub print_header {
+sub print_footer {
   my ($fh,$basename,$Nevents) = @_;
 
   my $seed1 = int ( rand(1e10) );
@@ -152,9 +152,8 @@ build/QweakSimG4 macros/$basename\.mac
 
 
   <Job>
-    <Output src=\"$basename.root\" dest=\"/volatile/hallc/qweak/$user/$basename.root\"/>
-    <Stdout dest=\"/u/home/$user/QwGeant4/jsub/output/$basename\.out\"/>
-    <Stderr dest=\"/u/home/$user/QwGeant4/jsub/output/$basename\.err\"/>
+    <Stdout dest=\"/u/home/$user/QwGeant4/output/$basename\.out\"/>
+    <Stderr dest=\"/u/home/$user/QwGeant4/output/$basename\.err\"/>
   </Job>
 
 </Request>
