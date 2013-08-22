@@ -1,6 +1,7 @@
 # Find Subversion 
 find_package(Subversion REQUIRED)
-Subversion_WC_INFO(${SOURCE_DIR} QWGEANT4)
+get_filename_component(REAL_SOURCE_DIR "${SOURCE_DIR}" REALPATH)
+Subversion_WC_INFO(${REAL_SOURCE_DIR} QWGEANT4)
 # Write version info to local text file
 file(WRITE QweakSimVersion.txt "// This file is generated automatically.  All changes will be lost.\n")
 file(APPEND QweakSimVersion.txt "#define QWEAKSIM_URL		\"${QWGEANT4_WC_URL}\"\n")
