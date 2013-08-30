@@ -30,8 +30,8 @@ direction_step=300
 #first job number (can change if just want to add
 #on to the get more simultaions)
 firstjob=1
-#total number of jobs one would like done
-njobs=50
+#last number of jobs one would like done
+lastjob=50
 #number of events simulated in each Geant4 file
 nevents=125000
 
@@ -50,7 +50,7 @@ for axis in X Y ; do
 		name=${basename}_Pos${axis}_${position}um_Dir${axis}_${direction}urad
 
 		let jobid=${firstjob}
-  	while [[ ${jobid} -le ${njobs} ]] ; do
+  	while [[ ${jobid} -le ${lastjob} ]] ; do
 			echo "Job ${jobid}"
 
       #create a randome seed so that the simultaions are not all the same
@@ -119,7 +119,7 @@ for axis in X Y ; do
 		name=${basename}_Position${axis}_${position}um_Direction${axis}_${direction}urad
 
 		let jobid=${firstjob}
-  	while [[ ${jobid} -le ${njobs} ]] ; do
+  	while [[ ${jobid} -le ${lastjob} ]] ; do
 			echo "Job ${jobid}"
 
       #create a randome seed so that the simultaions are not all the same

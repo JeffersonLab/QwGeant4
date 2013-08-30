@@ -1,5 +1,5 @@
 #!/bin/bash
-# Original Programmer: Val 
+# Original Programmer: Val Gray
 #Programmer: Kurtis Bartlett
 #Purpose: This script creates that xml and macro files for the isolated target
 # windows simulations
@@ -14,13 +14,13 @@ name=myDownstream_TargetWindow_Run1
 #first job number (can change if just want to add
 #on to the get more simultaions)
 firstjob=1
-#total number of jobs one would like done
-njobs=50
+#last number of jobs one would like done
+lastjob=50
 #number of events simulated in each Geant4 file
 nevents=125000
 
 let jobid=${firstjob}
- while [[ ${jobid} -le ${njobs} ]] ; do
+ while [[ ${jobid} -le ${lastjob} ]] ; do
 	echo "Job ${jobid}"
 
   #create a randome seed so that the simultaions are not all the same

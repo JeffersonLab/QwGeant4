@@ -21,8 +21,8 @@ current_step=20
 #first job number (can change if just want to add
 #on to the get more simultaions)
 firstjob=1
-#number of jobs
-njobs=50
+#last job number
+lastjob=50
 #number of events per job
 nevents=125000
 
@@ -34,7 +34,7 @@ while [[ ${current} -le ${current_max} ]] ; do
 	name=${basename}_${current}
 
 	let jobid=${firstjob}
- 	while [[ ${jobid} -le ${njobs} ]] ; do
+ 	while [[ ${jobid} -le ${lastjob} ]] ; do
 		echo "Job ${jobid}"
 
     #create a randome seed so that the simultaions are not all the same
