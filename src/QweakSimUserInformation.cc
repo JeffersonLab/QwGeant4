@@ -44,12 +44,27 @@ void QweakSimUserInformation::PrintELoss()
 void QweakSimUserInformation::Initialize()
 {
 
+
   fPositionX = 0.0*mm;
   fPositionY = 0.0*mm;
   fNormMomentumX = 0.0*mrad;
   fNormMomentumY = 0.0*mrad;
   
   TargetCenterPositionZ = -650*cm;
+  TargetUSDummyPositionOffsetZ = -178.956*cm;  // Offset from LH2 center
+  TargetDSDummyPositionOffsetZ = 168.68*cm;    // Offset from LH2 center
+  // Dummy target Z positions are taken from the June 21, 2012 target survey
+  // The average US and average DS positions are used.  
+
+
+  //TargetUSALDummy1Thickness    = 0.0*cm;
+  //TargetUSALDummy2Thickness    = 0.0*cm;
+  //TargetUSALDummy4Thickness    = 0.0*cm;
+  //TargetDSALDummy2Thickness    = 0.0*cm;
+  //TargetDSALDummy4Thickness    = 0.0*cm;
+  //TargetDSALDummy8Thickness    = 0.0*cm;
+  //TargetUSCDummyThickness      = 0.0*cm;
+  //TargetDSCDummyThickness      = 0.0*cm;
   PrimaryEventNumber = 0;
   ReactionType = 0;         // assign a number to which kind of reaction,e.g. 1 = elastic ep,
   PDGcode = 0;              // particle data code/number for the primary particle, e.g. 3=electron

@@ -45,8 +45,8 @@ QweakSimEPEvent::QweakSimEPEvent( QweakSimUserInformation* myUI)
   ThetaAngle_Min =  4.0*degree;
   ThetaAngle_Max = 13.5*degree;
 
-  EPrime_Min = 0.4*GeV;
-  EPrime_Max = 0.4*GeV;
+  EPrime_Max = 1.159*GeV;
+  EPrime_Min = 0.059*GeV;
   
   BeamEnergy = 1.16*GeV;
 
@@ -81,9 +81,17 @@ G4double QweakSimEPEvent::GetVertexZ()
    * There are a number of pre-set reaction regions.  These do not automatically set the
    * reaction type, so don't expect aluminum exit window simulations by setting reaction
    * region to 3...
-   * \li 1: target
+   * \li 1: LH2 Target
    * \li 2: front entrance window
    * \li 3: back exit window
+   * \li 4: Dummy Target (1% US Al)
+   * \li 5: Dummy Target (2% US Al)
+   * \li 6: Dummy Target (4% US Al)
+   * \li 7: Dummy Target (2% DS Al)
+   * \li 8: Dummy Target (4% DS Al)
+   * \li 9: Dummy Target (8% DS Al)
+   * \li 10: Dummy Target (US Carbon)
+   * \li 11: Dummy Target (DS Carbon)
    * \li else: target
    */
 
@@ -97,6 +105,12 @@ G4double QweakSimEPEvent::GetVertexZ()
   else if(ReactionRegion == 3) // back exit window
     myPositionZ =  myUserInfo->TargetCenterPositionZ + 0.5*(myUserInfo->TargetLength)
                    + (myUserInfo->TargetExitWindowNippleThickness)*G4UniformRand();
+
+  else if(ReactionRegion == 4 || ReactionRegion == 5 || ReactionRegion == 6 || ReactionRegion == 10) // US Dummy Targets
+    myPositionZ =  myUserInfo->TargetCenterPositionZ + myUserInfo->TargetUSDummyPositionOffsetZ;
+
+  else if(ReactionRegion == 7 || ReactionRegion == 8 || ReactionRegion == 9 || ReactionRegion == 11) // DS Dummy Targets
+    myPositionZ =  myUserInfo->TargetCenterPositionZ + myUserInfo->TargetDSDummyPositionOffsetZ;
 
   else
     myPositionZ =  myUserInfo->TargetCenterPositionZ + (G4UniformRand()-0.5)*(myUserInfo->TargetLength); //default region
@@ -173,7 +187,6 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
                                  G4double &phi,
 				 G4double &Asymmetry)
 {
-
     // incoming momentum
     G4ThreeVector IncomingMomentumDirection = myUserInfo->GetNormMomentum();
     
@@ -213,7 +226,7 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
     * \li 4: quasi-elastic scattering from neutron in aluminum (see QweakSimEPEvent::Quasi_Elastic_Neutron)
     * \li 5: Delta resonance (see QweakSimEPEvent::Delta_Resonance)
     * \li 6: Moller scattering (see QweakSimEPEvent::Moller_Scattering)
-    * \li 7: radiative scattering from hydrogen (3.35 GeV) (see QweakSimEPEvent::Radiative_Cross_Section_Proton)
+    * \li 7: Radiative Scattering (see QweakSimEPEvent::Radiative_Cross_Section_Proton)
     * \li 8: Quasielastic scattering from aluminum using the Bosted fit
     */
 
@@ -269,9 +282,9 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
 					 E_recoil, ThetaRecoil, 
                                          Q2, fWeightN, Asymmetry);
       }      
-   else if(ReactionType==7) //LH2 target, radiative cross section 3.35 GeV
+   else if(ReactionType==7) // Radiative Cross Section Lookup Table
       {
-       fCrossSection = Radiative_Cross_Section_Proton(myUserInfo->GetBeamEnergy(), RelativeThetaAngle, fWeightN, Q2, E_out);
+       fCrossSection = Radiative_Cross_Section_Lookup(myUserInfo->GetBeamEnergy(), RelativeThetaAngle, fWeightN, Q2, E_out);
        Asymmetry = GetAsymmetry_EP(RelativeThetaAngle, E_in);
       }
    else if(ReactionType==8) // Quasielastic Bosted - Aluminum
@@ -899,12 +912,12 @@ G4double QweakSimEPEvent::Moller_Scattering(G4double E_in, G4double theta1,
 //  Jim Dowd
 // ---------------------------------------------------------
 //      Calculates the Cross Section weighting factor for 
-//      radiated scattering from the proton. 
+//      radiated scattering from a lookup table. 
 // ---------------------------------------------------------
 //
-//  Beam Energy must be 3.35 GeV
+//  Beam Energy must be 3.35 GeV, 1.16 GeV, or 877 MeV
 
-const std::vector< G4double > QweakSimEPEvent::Radiative_Cross_Section_Proton(G4double E_in,
+const std::vector< G4double > QweakSimEPEvent::Radiative_Cross_Section_Lookup(G4double E_in,
                                                          G4double Theta,
                                                          G4double &fWeightN,
                                                          G4double &Q2,
@@ -914,31 +927,37 @@ const std::vector< G4double > QweakSimEPEvent::Radiative_Cross_Section_Proton(G4
        Theta = Theta_Min;
 
     E_out = (G4UniformRand()*(EPrime_Max-EPrime_Min) + EPrime_Min);
-
-    const Double_t pos[value_d]   = {myUserInfo->GetOriginVertexPositionZ(),E_in,E_out,Theta};
+    Double_t Zpos;
+  
+    if ( ReactionRegion == 1 ) {
+      Zpos = myUserInfo->GetOriginVertexPositionZ();
+    } 
+    else {
+      Zpos = 0.0;
+    }
+    const Double_t pos[value_d]   = {Zpos,E_in,E_out,Theta};
     Double_t       value[value_n] = {0.0};
     std::vector< G4double > CrossSection;
-    
+   
     fLookupTable->GetValue(pos,value);
     Q2       = value[1];
     fWeightN = value[6]*sin(Theta*degree);
     //fWeightN = value[6];
 
-    CrossSection.push_back(value[6]);     // 0  total radiated cross section (ub/Sr)
-    CrossSection.push_back(value[2]);     // 1  total born cross section (ub/Sr)
-    CrossSection.push_back(value[3]);     // 2  inelastic born cross section(ub/Sr)
-    CrossSection.push_back(value[4]);     // 3  quasi-elastic born cross section (ub/Sr)
-    CrossSection.push_back(value[6]);     // 4  total radiated cross section (ub/Sr)
-    CrossSection.push_back(value[7]);     // 5  elastic radiated cross section (ub/Sr)
-    CrossSection.push_back(value[8]);     // 6  quasi-elastic radiated cross section (ub/Sr)
-    CrossSection.push_back(value[9]);     // 7  deep-inelastic radiated cross section (ub/Sr)
-    CrossSection.push_back(value[11]);    // 8  total radiated cross section internal only (ub/Sr)
-    CrossSection.push_back(value[12]);    // 9  elastic radiated cross section internal only (ub/Sr)
-    CrossSection.push_back(value[14]);    // 10 quasi-elastic radiated cross section internal only (ub/Sr)
-    CrossSection.push_back(value[13]);    // 11 deep-inelastic radiated cross section internal only (ub/Sr)
+    CrossSection.push_back(value[6]);     // 0  total radiated cross section (nb/Sr/GeV)
+    CrossSection.push_back(value[2]);     // 1  total born cross section (nb/Sr/GeV)
+    CrossSection.push_back(value[3]);     // 2  inelastic born cross section(nb/Sr/GeV)
+    CrossSection.push_back(value[4]);     // 3  quasi-elastic born cross section (nb/Sr/GeV)
+    CrossSection.push_back(value[6]);     // 4  total radiated cross section (nb/Sr/GeV)
+    CrossSection.push_back(value[7]);     // 5  elastic radiated cross section (nb/Sr/GeV)
+    CrossSection.push_back(value[8]);     // 6  quasi-elastic radiated cross section (nb/Sr/GeV)
+    CrossSection.push_back(value[9]);     // 7  deep-inelastic radiated cross section (nb/Sr/GeV)
+    CrossSection.push_back(value[11]);    // 8  total radiated cross section internal only (nb/Sr/GeV)
+    CrossSection.push_back(value[12]);    // 9  elastic radiated cross section internal only (nb/Sr/GeV)
+    CrossSection.push_back(value[14]);    // 10 quasi-elastic radiated cross section internal only (nb/Sr/GeV)
+    CrossSection.push_back(value[13]);    // 11 deep-inelastic radiated cross section internal only (nb/Sr/GeV)
 
-
-     return CrossSection;
+    return CrossSection;
 }
 
 ////....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -950,6 +969,8 @@ const std::vector< G4double > QweakSimEPEvent::Radiative_Cross_Section_Proton(G4
 
 void QweakSimEPEvent::CreateLookupTable()
 {
+    G4cout << "---> Calling CreateLookupTable() <---" << G4endl;
+  
     G4double energy = BeamEnergy;
     if (energy != 3350*MeV && energy != 1160*MeV && energy != 877*MeV) {
       G4cout << "#### Current beam energy is not a valid choice for lookup table"  << G4endl;
@@ -957,20 +978,33 @@ void QweakSimEPEvent::CreateLookupTable()
       energy = 3350*MeV;
     }
 
-    TString target = "lh2";
+    TString target;
+    if (ReactionRegion == 1) target = "lh2";
+    else if (ReactionRegion == 2) target = "USALWindow";
+    else if (ReactionRegion == 3) target = "DSALWindow";
+    else if (ReactionRegion == 4) target = "USALDummy1";
+    else if (ReactionRegion == 5) target = "USALDummy2";
+    else if (ReactionRegion == 6) target = "USALDummy4";
+    else if (ReactionRegion == 7) target = "DSALDummy2";
+    else if (ReactionRegion == 8) target = "DSALDummy4";
+    else if (ReactionRegion == 9) target = "DSALDummy8";
+    else if (ReactionRegion == 10) target = "USCDummy";
+    else if (ReactionRegion == 11) target = "DSCDummy";
     
-    TString filename =  "radiative_lookup_";
+    TString filename =  "radiative_cross_section_";
     filename += target;
     filename += "_";
     filename += (Int_t)energy;
     filename += "MeV.dat";
 
-    TString filepath = "./";
+    TString filepath = "./radiative_lookup_tables/";
     
     std::ifstream in;
     in.open(filepath + filename);
-    if (!in.is_open())  
+    if (!in.is_open()) { 
       G4cout << "#### Failed to open lookup table data file \"" << filepath << filename << "\"" << G4endl;
+      return;
+    }
     else
     {
       in.close();
@@ -992,98 +1026,225 @@ void QweakSimEPEvent::CreateLookupTable()
 
     if (energy != GetBeamEnergy()) SetBeamEnergy(energy);
     else CheckLookupTableBounds();
+
+
+    G4cout << "---> Leaving CreateLookupTable() <---" << G4endl;
     
     //********************************************************************
-/*    
 
-    G4int entries = 1;
+
+/*
+  // **********************************************************************
+  // **********************************************************************
+  // The code below is used to convert the raw output of the Bosted code
+  // into a format the GEANT4 can read.  
+  // **********************************************************************
+
+
+  //G4int entries = 1;
+  G4int entries[3] = { 1295, 1665, 1073};
 
     coord_t coord[value_d] = {0.0};
     value_t field[value_n] = {0.0};
  
+    //std::vector< G4double > fMin;
+    //std::vector< G4double > fMax;
+    //std::vector< G4double > fStep;
+
+    std::vector< G4double > fMin[3];
+    std::vector< G4double > fMax[3];
+    std::vector< G4double > fStep[3];
+
+    std::string target[10] = { "DSALDummy2",
+                             "DSALDummy4",
+                             "DSALDummy8",
+                             "USALDummy1",
+                             "USALDummy2",
+                             "USALDummy4",
+                             "DSALWindow",
+                             "USALWindow",
+                             "DSCDummy",
+                             "USCDummy" };
+
+    std::string energy_in[3] = { "877mev",
+                               "1gev",
+                               "3gev" };
+
+    std::string energy_out[3] = { "877MeV",
+                                "1160MeV",
+                                "3350MeV" };
+
+    std::string filepath = "/group/qweak/jdowd/externals_qweak/OUT/";
+    std::string name, name1, name2, name3;
+
     //  Set min, max, and step size for each coordinate in the lookup table.
     //  Z position in radiation lengths
-    fMin.push_back(myUserInfo->TargetCenterPositionZ - 0.5*myUserInfo->TargetLength);
-    fMax.push_back(myUserInfo->TargetCenterPositionZ + 0.5*myUserInfo->TargetLength);
-    fStep.push_back(myUserInfo->TargetLength/10.0);
+    //fMin.push_back(myUserInfo->TargetCenterPositionZ - 0.5*myUserInfo->TargetLength);
+    //fMax.push_back(myUserInfo->TargetCenterPositionZ + 0.5*myUserInfo->TargetLength);
+    //fStep.push_back(myUserInfo->TargetLength/10.0);
+    //fMin.push_back(0.0);
+    //fMax.push_back(0.0);
+    //fStep.push_back(1.0);
+    
+    fMin[0].push_back(0.0);
+    fMax[0].push_back(0.0);
+    fStep[0].push_back(1.0);
+
+    fMin[1].push_back(0.0);
+    fMax[1].push_back(0.0);
+    fStep[1].push_back(1.0);
+
+    fMin[2].push_back(0.0);
+    fMax[2].push_back(0.0);
+    fStep[2].push_back(1.0);
+    
 
     //  Beam Energy in GeV
-    fMin.push_back(3.35*GeV);
-    fMax.push_back(3.35*GeV);
-    fStep.push_back(0.05*GeV);
+    //fMin.push_back(0.877*GeV);
+    //fMax.push_back(0.877*GeV);
+    //fStep.push_back(0.05*GeV);
+    
+    fMin[0].push_back(0.877*GeV);
+    fMax[0].push_back(0.877*GeV);
+    fStep[0].push_back(0.05*GeV);
 
+    fMin[1].push_back(1.16*GeV);
+    fMax[1].push_back(1.16*GeV);
+    fStep[1].push_back(0.05*GeV);
+
+    fMin[2].push_back(3.35*GeV);
+    fMax[2].push_back(3.35*GeV);
+    fStep[2].push_back(0.05*GeV);
+    
     //  E prime in GeV
-    fMin.push_back(0.15*GeV);
-    fMax.push_back(1.55*GeV);
-    fStep.push_back(0.05*GeV);
+    //fMin.push_back(0.026*GeV);
+    //fMax.push_back(0.876*GeV);
+    //fStep.push_back(0.025*GeV);
+    
+    fMin[0].push_back(0.026*GeV);
+    fMax[0].push_back(0.876*GeV);
+    fStep[0].push_back(0.025*GeV);
 
+    fMin[1].push_back(0.059*GeV);
+    fMax[1].push_back(1.159*GeV);
+    fStep[1].push_back(0.025*GeV);
+
+    fMin[2].push_back(0.150*GeV);
+    fMax[2].push_back(1.550*GeV);
+    fStep[2].push_back(0.050*GeV);
+    
     //  Theta angle
-    fMin.push_back(2.00*degree);
-    fMax.push_back(20.0*degree);
-    fStep.push_back(0.5*degree);
+    //fMin.push_back(2.00*degree);
+    //fMax.push_back(20.0*degree);
+    //fStep.push_back(0.5*degree);
+    
+    fMin[0].push_back(2.00*degree);
+    fMax[0].push_back(20.0*degree);
+    fStep[0].push_back(0.5*degree);
 
-    G4cout << "Target Min:      " << fMin[0] << G4endl;
-    G4cout << "Target Max:      " << fMax[0] << G4endl;
+    fMin[1].push_back(2.00*degree);
+    fMax[1].push_back(20.0*degree);
+    fStep[1].push_back(0.5*degree);
+
+    fMin[2].push_back(2.00*degree);
+    fMax[2].push_back(20.0*degree);
+    fStep[2].push_back(0.5*degree);
+    
+    //G4cout << "Target Min:      " << fMin[0] << G4endl;
+    //G4cout << "Target Max:      " << fMax[0] << G4endl;
     
     
-    for (Int_t n = 0; n < (Int_t)fStep.size(); n++) {
-      entries *= (G4int)( (fMax[n]-fMin[n])/fStep[n] + 1.5 );
-    }
+    //for (Int_t n = 0; n < (Int_t)fStep.size(); n++) {
+    //  entries *= (G4int)( (fMax[n]-fMin[n])/fStep[n] + 1.5 );
+    //}
     std::ifstream in;
-    //in.open("./radiative_lookup.dat");
-    in.open("./test.out");
-    if (!in.is_open())  
-        G4cout << "#### Failed to open data file for lookup table" << G4endl;
-    else
-    {
-      G4cout << "#### Found lookup table data file"  << G4endl;
-      if (fLookupTable != 0) delete fLookupTable;
-      fLookupTable = new QweakSimFieldMap<value_t,value_n>(value_d);
-      fLookupTable->SetMinimumMaximumStep(fMin,fMax,fStep);
+    
+    //G4cout << "!!!!!!!!!!!!!!!!!!!!!!  Debug !!!!!!!!!!!!!!!!!!!!!!" << G4endl;
+    //G4cout << " fMin:   " << fMin[0] << "    " << fMin[1] << "    " << fMin[2] << "    " << fMin[3] << G4endl;
+    //G4cout << " fMax:   " << fMax[0] << "    " << fMax[1] << "    " << fMax[2] << "    " << fMax[3] << G4endl;
+    //G4cout << " fStep:  " << fStep[0]<< "    " << fStep[1]<< "    " << fStep[2]<< "    " << fStep[3]<< G4endl;
+    //G4cout << "===================================================================" << G4endl;
 
-      //  Filling Lookup Table
-      for (Int_t line = 0; line <  entries; line++) {
-        if (in.peek() == EOF) {
-          G4cout << "#### Error reading \'elastic_lookup.dat\':  File contains only "
-                 << line << " of " << entries << " expected lines. ####" << G4endl;
-          break;
-        }
+    for (Int_t target_num = 0; target_num < 10; target_num++) {
+      for (Int_t energy_num = 0; energy_num < 3; energy_num++) {
+        //in.open("./radiative_lookup.dat");
 
-        for (G4int i = 0; i < value_d; i++)  in >> coord[i];
-        for (G4int j = 0; j < value_n; j++)  in >> field[j];
+        name = filepath + "lookup_" + target[target_num] + "_" + energy_out[energy_num] + ".out";
+
+        //in.open("./test.out");
+        in.open(name.c_str());
+        if (!in.is_open())  
+            G4cout << "#### Failed to open data file for lookup table" << G4endl;
+        else
+        {
+          G4cout << "#### Found lookup table data file"  << G4endl;
+          if (fLookupTable != 0) delete fLookupTable;
+          fLookupTable = new QweakSimFieldMap<value_t,value_n>(value_d);
+          fLookupTable->SetMinimumMaximumStep(fMin[energy_num],fMax[energy_num],fStep[energy_num]);
+          //fLookupTable->SetMinimumMaximumStep(fMin,fMax,fStep);
+
+
+          //for (Int_t n = 0; n < (Int_t)fStep[energy_num].size(); n++) {
+          //  entries *= (G4int)( (fMax[energy_num][n]-fMin[energy_num][n])/fStep[energy_num][n] + 1.5 );
+          //}
+
+          //  Filling Lookup Table
+          for (Int_t line = 0; line <  entries[energy_num]; line++) {
+            if (in.peek() == EOF) {
+              G4cout << "#### Error reading \'elastic_lookup.dat\':  File contains only "
+                     << line << " of " << entries << " expected lines. ####" << G4endl;
+              break;
+            }
+
+            for (G4int i = 0; i < value_d; i++)  in >> coord[i];
+            for (G4int j = 0; j < value_n; j++)  in >> field[j];
+
+            //G4cout << "Initial:  " << coord[0] << "    " << coord[1] << "    " << coord[2] << "    " << coord[3] << G4endl;
    
-        //  Add units
-                             // Z position converted from rad lengths to GEANT coords
-        coord[0] = myUserInfo->TargetCenterPositionZ - 0.5*myUserInfo->TargetLength
-                   + coord[0]*myUserInfo->TargetLength/0.0396;        
-        coord[1] *= GeV;     // Beam Energy
-        coord[2] *= GeV;     // E prime
-        coord[3] *= degree;  // Theta
+            //  Add units
+                                 // Z position converted from rad lengths to GEANT coords
+            //coord[0] = myUserInfo->TargetCenterPositionZ - 0.5*myUserInfo->TargetLength
+            //           + coord[0]*myUserInfo->TargetLength/0.0396;        
+            coord[1] *= GeV;     // Beam Energy
+            coord[2] *= GeV;     // E prime
+            coord[3] *= degree;  // Theta
 
-        //field[0]           // Bjorken x (unitless) // This value has too few sig figs
-	field[1] *= GeV*GeV; // Q2                   // This value has too few sig figs
-	//field[2]           // total born cross section (ub/Sr)
-	//field[3]           // inelastic born cross section(ub/Sr)
-	//field[4]           // quasi-elastic born cross section (ub/Sr)
-	//field[5]           // quasi-elastic factor
-	//field[6]           // total radiated cross section (ub/Sr)
-	//field[7]           // elastic radiated cross section (ub/Sr)
-	//field[8]           // quasi-elastic radiated cross section (ub/Sr)
-	//field[9]           // deep-inelastic radiated cross section (ub/Sr)
-	//field[10]          // charge correction
-    //field[11]          // total radiated cross section internal only (ub/Sr)
-	//field[12]          // elastic radiated cross section internal only (ub/Sr)
-	//field[13]          // deep-inelastic radiated cross section internal only (ub/Sr)
-	//field[14]          // quasi-elastic radiated cross section internal only (ub/Sr)
+            //G4cout << "Final:    " << coord[0] << "    " << coord[1] << "    " << coord[2] << "    " << coord[3] << G4endl;
+            //G4cout << "-----------------------------------------------------------------" << G4endl;
 
-        fLookupTable->Set(coord,field);
+            //field[0]           // Bjorken x (unitless) // This value has too few sig figs
+	    field[1] *= GeV*GeV; // Q2                   // This value has too few sig figs
+	    //field[2]           // total born cross section (ub/Sr)
+	    //field[3]           // inelastic born cross section(ub/Sr)
+	    //field[4]           // quasi-elastic born cross section (ub/Sr)
+	    //field[5]           // quasi-elastic factor
+	    //field[6]           // total radiated cross section (ub/Sr)
+	    //field[7]           // elastic radiated cross section (ub/Sr)
+	    //field[8]           // quasi-elastic radiated cross section (ub/Sr)
+	    //field[9]           // deep-inelastic radiated cross section (ub/Sr)
+	    //field[10]          // charge correction
+            //field[11]          // total radiated cross section internal only (ub/Sr)
+	    //field[12]          // elastic radiated cross section internal only (ub/Sr)
+	    //field[13]          // deep-inelastic radiated cross section internal only (ub/Sr)
+	    //field[14]          // quasi-elastic radiated cross section internal only (ub/Sr)
+
+            fLookupTable->Set(coord,field);
+          }
+          G4cout << "===== Filling of Lookup Table complete! =====" << G4endl;
+        }
+        in.close();
+        //fLookupTable->WriteTextFile("./radiative_lookup.out");
+
+        name = filepath + "final/radiative_lookup_" + target[target_num] + "_" + energy_out[energy_num] + ".dat";
+        
+        //fLookupTable->WriteTextFile("./radiative_lookup_test.out");
+        fLookupTable->WriteTextFile(name.c_str());
+
+        G4cout << "Wrote:  " << name << G4endl;
+
       }
-      G4cout << "===== Filling of Lookup Table complete! =====" << G4endl;
-    }
-    in.close();
-    //fLookupTable->WriteTextFile("./radiative_lookup.out");
-    fLookupTable->WriteTextFile("./radiative_lookup_test.out");
-*/    
+   }
+*/ 
 }
 
 
@@ -1096,6 +1257,7 @@ void QweakSimEPEvent::CreateLookupTable()
 
 void QweakSimEPEvent::CheckLookupTableBounds()
 {
+  G4cout << "---> Calling CheckLookupTableBounds() <---" << G4endl;
   if (fLookupTable == 0) return;
   if (BeamEnergy != (G4double)fLookupTable->GetMinimum(1) ) {
     G4cout << "!!!! Beam Energy is out of bounds" << G4endl;
@@ -1136,6 +1298,7 @@ void QweakSimEPEvent::CheckLookupTableBounds()
     G4cout << "!!!! Minimum Theta greater than maximum Theta" << G4endl;
     G4cout << "---> Changing Minimum Theta to " << ThetaAngle_Max << " degrees" << G4endl;
   }
+  G4cout << "---> Leaving CheckLookupTableBounds() <---" << G4endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

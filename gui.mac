@@ -119,13 +119,22 @@
 /gui/addButton reactionType "4 - Quasi-elastic Al (neutron)" "/EventGen/SelectReactionType 4"
 /gui/addButton reactionType "5 - Inelastic LH2" "/EventGen/SelectReactionType 5"
 /gui/addButton reactionType "6 - Moller scattering" "/EventGen/SelectReactionType 6"
-/gui/addButton reactionType "7 - LH2 radiative lookup table (3.35 GeV)" "/EventGen/SelectReactionType 7"
+/gui/addButton reactionType "7 - Radiative Scattering Lookup Table" "/EventGen/SelectReactionType 7"
+/gui/addButton reactionType "8 - Quasielastic Scattering from Al using Bosted fit" "/EventGen/SelectReactionType 8"
 
 # Reaction region menu
 /gui/addMenu reactionRegion ReactionRegion
-/gui/addButton reactionRegion "1 - Target" "/EventGen/SelectReactionRegion 1"
+/gui/addButton reactionRegion "1 - LH2 Target" "/EventGen/SelectReactionRegion 1"
 /gui/addButton reactionRegion "2 - Entrance target window" "/EventGen/SelectReactionRegion 2"
 /gui/addButton reactionRegion "3 - Exit target window" "/EventGen/SelectReactionRegion 3"
+/gui/addButton reactionRegion "4 - Dummy Target (1% US AL)" "/EventGen/SelectReactionRegion 4"
+/gui/addButton reactionRegion "5 - Dummy Target (2% US AL)" "/EventGen/SelectReactionRegion 5"
+/gui/addButton reactionRegion "6 - Dummy Target (4% US AL)" "/EventGen/SelectReactionRegion 6"
+/gui/addButton reactionRegion "7 - Dummy Target (2% DS AL)" "/EventGen/SelectReactionRegion 7"
+/gui/addButton reactionRegion "8 - Dummy Target (4% DS AL)" "/EventGen/SelectReactionRegion 8"
+/gui/addButton reactionRegion "9 - Dummy Target (8% DS AL)" "/EventGen/SelectReactionRegion 9"
+/gui/addButton reactionRegion "10 - Dummy Target (US Carbon)" "/EventGen/SelectReactionRegion 10"
+/gui/addButton reactionRegion "11 - Dummy Target (US Carbon)" "/EventGen/SelectReactionRegion 11"
 
 # Target Options menu
 /gui/addMenu target Target

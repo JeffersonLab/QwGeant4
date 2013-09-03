@@ -25,6 +25,18 @@ public:
   G4double TargetEntranceWindowThickness;
   G4double TargetExitWindowThickness;
   G4double TargetExitWindowNippleThickness;
+  G4double TargetUSDummyPositionOffsetZ;  // Offset from LH2 center
+  G4double TargetDSDummyPositionOffsetZ;  // Offset from LH2 center
+  // Dummy target Z positions are taken from the June 21, 2012 target survey
+
+  //G4double TargetUSALDummy1Thickness;
+  //G4double TargetUSALDummy2Thickness;
+  //G4double TargetUSALDummy4Thickness;
+  //G4double TargetDSALDummy2Thickness;
+  //G4double TargetDSALDummy4Thickness;
+  //G4double TargetDSALDummy8Thickness;
+  //G4double TargetUSCDummyThickness;
+  //G4double TargetDSCDummyThickness;
 
   G4int    ReactionType;         // assign a number to which kind of reaction,e.g. 1 = elastic ep,
   G4int    ReactionRegion;

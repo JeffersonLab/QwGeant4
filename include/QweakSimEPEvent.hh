@@ -75,9 +75,9 @@ class QweakSimEPEvent {
   //  Lookup Table field values
    static const G4int value_n = 15; // number of values at each point in the field
    static const G4int value_d = 4;  // number of dimensions of the coordinates
-   std::vector< G4double > fMin;
-   std::vector< G4double > fMax;
-   std::vector< G4double > fStep;
+  //std::vector< G4double > fMin;
+  //std::vector< G4double > fMax;
+  //std::vector< G4double > fStep;
 
    QweakSimFieldMap<value_t,value_n> *fLookupTable;
 
@@ -124,7 +124,7 @@ class QweakSimEPEvent {
   void  SetReactionType(G4int rt) { ReactionType = rt; TypeSetting = rt;};
   G4int GetReactionType() {return ReactionType; };
 
-  void  SetReactionRegion(G4int rr) { ReactionRegion = rr; };
+  void  SetReactionRegion(G4int rr) { ReactionRegion = rr; if(ReactionType==7) CreateLookupTable();};
   G4int GetReactionRegion() {return ReactionRegion; };
 
   G4double GetVertexZ();
@@ -166,7 +166,7 @@ class QweakSimEPEvent {
                              G4double &E_out1, G4double &E_out2, G4double &theta2, 
                              G4double &q2, G4double &fWeightN, G4double &asymmetry);
   
-  const std::vector< G4double > Radiative_Cross_Section_Proton( G4double E_in,
+  const std::vector< G4double > Radiative_Cross_Section_Lookup( G4double E_in,
                                            G4double Theta,
                                            G4double &fWeightN,
                                            G4double &Q2,
