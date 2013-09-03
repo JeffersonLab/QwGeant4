@@ -122,15 +122,17 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep){
 	
 	// // various energy losses at the target
 	// // IMP:: all the Elosses upto the vertex, theZ, is stored here
-	if((thePrePV->GetName()).contains("QweakTarget") || 
-	   (thePostPV->GetName()).contains("QweakTarget")){
-	  if (procName.compare("msc")==0)
-	    myUserInfo->AddTodEMscIn(dEE);
-	  else if(procName.compare("eIoni")==0)
-	    myUserInfo->AddTodEIonIn(dEE);
-	  else if(procName.compare("eBrem")==0)
-	    myUserInfo->AddTodEBremIn(dEE);
-	}
+        if ( thePrePV && thePostPV) {  // Added check to prevent a seg fault
+	  if(((thePrePV->GetName()).contains("QweakTarget") || 
+	      (thePostPV->GetName()).contains("QweakTarget"))) {
+	    if (procName.compare("msc")==0)
+	      myUserInfo->AddTodEMscIn(dEE);
+	    else if(procName.compare("eIoni")==0)
+	      myUserInfo->AddTodEIonIn(dEE);
+            else if(procName.compare("eBrem")==0)
+	      myUserInfo->AddTodEBremIn(dEE);
+	  }
+        }
 	
 	G4double theStepLength = theStep->GetStepLength();
 
@@ -220,17 +222,18 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep){
       
       // need this here, else the track might get out of physical volume,
       //  and crash the program
-      if(!thePostPV)	return;
+      if(!thePostPV || !thePrePV)	return;
       
       // various energy losses at the target
-      if((thePrePV->GetName()).contains("QweakTarget") || 
-	 (thePostPV->GetName()).contains("QweakTarget")){
-	if (procName.compare("msc")==0)
-	  myUserInfo->AddTodEMscOut(dEE);
-	else if(procName.compare("eIoni")==0)
-	  myUserInfo->AddTodEIonOut(dEE);
-	else if(procName.compare("eBrem")==0)
-	  myUserInfo->AddTodEBremOut(dEE);	
+      if(((thePrePV->GetName()).contains("QweakTarget") || 
+        (thePostPV->GetName()).contains("QweakTarget"))) {
+        if (procName.compare("msc")==0)
+          myUserInfo->AddTodEMscOut(dEE);
+        else if(procName.compare("eIoni")==0)
+          myUserInfo->AddTodEIonOut(dEE);
+        else if(procName.compare("eBrem")==0)
+          myUserInfo->AddTodEBremOut(dEE);	
+        
       }
     }
   }
