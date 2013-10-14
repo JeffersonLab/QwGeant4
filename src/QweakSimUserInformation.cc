@@ -113,6 +113,9 @@ void QweakSimUserInformation::Initialize()
 
   CerEngDep                      = 0.0;
   
+  //--- initial the variable that holds total energy deposited in the PMTOnly
+  PMTOnlyEngDep                = 0.0;
+  
   leftPMTHitValid                = 0;
   rightPMTHitValid               = 0;
   StoreStepVolumeName("none");

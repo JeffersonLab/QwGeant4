@@ -305,13 +305,13 @@ private:
   G4double LGAngCutZDim;
 
 
- // needed for boolean union
+  // needed for boolean union
   std::vector< G4SubtractionSolid* >  RightQuartz_Solid;
   std::vector< G4SubtractionSolid* >  LeftQuartz_Solid;
   std::vector< G4SubtractionSolid* >  LeftGuide_Solid;
   std::vector< G4SubtractionSolid* >  RightGuide_Solid;
 
-//   std::vector< G4Box* >  mirror_solid;
+  // std::vector< G4Box* >  mirror_solid;
   G4Material* mirror_material;
   std::vector< G4LogicalVolume* > mirror_logical;
   std::vector< G4VPhysicalVolume* > mirror_physical;
@@ -319,7 +319,6 @@ private:
   G4double Tilting_Angle;      // total tilting angle towards mean track
   G4double Kink_Angle;         // Vshape angle
   G4double Thickness; 
-
 
   // placing the container
   G4ThreeVector    Position_CerenkovContainer;
@@ -385,8 +384,7 @@ private:
   G4ThreeVector    Translation_PMTEntranceWindow;
   G4RotationMatrix Rotation_PMTEntranceWindow;
  
-
- // pointer to the sensitive detector
+  // pointer to the sensitive detector
   G4VSensitiveDetector* CerenkovDetectorSD;
   G4VSensitiveDetector* CerenkovDetector_PMTSD;
 

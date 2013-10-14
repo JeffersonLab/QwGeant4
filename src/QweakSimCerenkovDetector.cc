@@ -1752,7 +1752,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
         // lamda = h*c/E
 
         mylambda = (h_Planck*c_light/PhotonEnergy[kk])/nanometer;
-        Reflectivity[kk] =  1.0 -0.027*exp(-0.004608*mylambda);
+        Reflectivity[kk] =  1.0 - 0.027*exp(-0.004608*mylambda);
         //Reflectivity[kk] =  1.0;
     };
 
@@ -2186,7 +2186,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
     G4VisAttributes* SideBracketPadVisAtt = new G4VisAttributes(brown);
     SideBracketPadVisAtt->SetVisibility(true);
 //SideBracketPadVisAtt->SetForceWireframe(true);
-SideBracketPadVisAtt->SetForceSolid(true);
+    SideBracketPadVisAtt->SetForceSolid(true);
     SideBracketPad_Logical->SetVisAttributes(SideBracketPadVisAtt);
 
 //------------------------------------------

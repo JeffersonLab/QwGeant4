@@ -49,7 +49,6 @@ QweakSimTrackingAction::~QweakSimTrackingAction()
 
   delete pTrackingActionMessenger;
 
-
   G4cout << G4endl << "###### Leaving QweakSimTrackingAction::~QweakSimTrackingAction() " << G4endl << G4endl;
 }
 

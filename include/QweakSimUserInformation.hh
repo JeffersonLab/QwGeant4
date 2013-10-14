@@ -117,6 +117,9 @@ private:
   G4double EffectiveKinematicW;
   
   G4double CerEngDep;
+  
+  //--- a variable to hold total energy deposited in the PMTOnly
+  G4double PMTOnlyEngDep;
 
   // various energy losses at the target
   G4double dEIonIn, dEIonOut;

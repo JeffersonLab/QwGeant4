@@ -1,39 +1,37 @@
 
-// QweakSimLeadGlass_DetectorHit.hh
-// Fang Guo
-// 2012/07/31
+// QweakSimPMTOnly_DetectorHit.hh
+// Martin McHugh
+// 2013-07-20
 
 /////// --------------------------------------------------------------------
 
-#ifndef QweakSimLeadGlass_DetectorHit_h
-#define QweakSimLeadGlass_DetectorHit_h 1
+#ifndef QweakSimPMTOnly_DetectorHit_h
+#define QweakSimPMTOnly_DetectorHit_h 1
 
 //--- user includes
 #include "QweakSimHit.hh"
 
-
-
 /////// --------------------------------------------------------------------
 
-class QweakSimLeadGlass_DetectorHit : public G4VHit
+class QweakSimPMTOnly_DetectorHit : public G4VHit
 {
 	
 public:
 	
     //--- Constructor
-    QweakSimLeadGlass_DetectorHit();
-    QweakSimLeadGlass_DetectorHit(G4int detector_id);
+    QweakSimPMTOnly_DetectorHit();
+    QweakSimPMTOnly_DetectorHit(G4int detector_id);
 	
     //--- Destructor
-    virtual ~QweakSimLeadGlass_DetectorHit();
+    virtual ~QweakSimPMTOnly_DetectorHit();
 	
     //--- Copy Constructor
-    QweakSimLeadGlass_DetectorHit(const QweakSimLeadGlass_DetectorHit &right);
+    QweakSimPMTOnly_DetectorHit(const QweakSimPMTOnly_DetectorHit &right);
 	
     //--- Assignment Operator
-    const QweakSimLeadGlass_DetectorHit& operator=(const QweakSimLeadGlass_DetectorHit &right);
+    const QweakSimPMTOnly_DetectorHit& operator=(const QweakSimPMTOnly_DetectorHit &right);
 	
-    int operator==(const QweakSimLeadGlass_DetectorHit &right) const;
+    int operator==(const QweakSimPMTOnly_DetectorHit &right) const;
 	
     inline void *operator new(size_t);
     inline void operator delete(void *aHit);
@@ -62,8 +60,6 @@ private:
     G4int         edgeEventFlag;
     G4int         nbOfHits;
 	
-    //G4int       secondaryElectronCount;
-	
     G4ThreeVector worldPos;
     G4ThreeVector localPos;
     G4ThreeVector localExitPos;
@@ -74,28 +70,15 @@ private:
     G4ThreeVector currentMomentumDirection;
     G4ThreeVector originVertexMomentumDirection;
 	
-    //--- calculated in Event Action
-    //G4double      originVertexThetaAngle;
-    //G4double      originVertexPhiAngle;
-	
     G4double      originVertexKineticEnergy;
     G4double      originVertexTotalEnergy;
 	
     G4double      currentKineticEnergy;
     G4double      currentTotalEnergy;
 	
-    //G4double      primaryQ2;
-    //G4double      crossSection;
-    //G4double      crossSectionWeight;
-	
-    //--- calculated in Event Action
-    //G4double      globalThetaAngle;
-    //G4double      globalPhiAngle;
-	
-    //--- LeadGlass deposited energy
-    G4double      depositedEnergyHit;
+    //--- PMTOnly deposited energy
+    G4double      depositedEnergy;
 
-	
     G4ThreeVector          cellPos;
     G4RotationMatrix       cellRot;
     const G4LogicalVolume* pLogV;
@@ -173,14 +156,6 @@ public:
     inline void  StoreOriginVertexMomentumDirection(G4ThreeVector opxyz)  { originVertexMomentumDirection = opxyz; }
     inline G4ThreeVector GetOriginVertexMomentumDirection() const   {return originVertexMomentumDirection;}
 	
-    //---------------- OriginVertexThetaAngle & PhiAngle
-	
-    //inline void   StoreOriginVertexThetaAngle(G4double thetag)   { originVertexThetaAngle = thetag; }
-    //inline G4double GetOriginVertexThetaAngle() const      {return originVertexThetaAngle;}
-	
-    //inline void   StoreOriginVertexPhiAngle(G4double phiag)      { originVertexPhiAngle = phiag; }
-    //inline G4double GetOriginVertexPhiAngle() const        {return originVertexPhiAngle;}
-	
     //---------------- OriginVertexKineticEnergy & TotalEnergy
 	
     inline void   StoreOriginVertexKineticEnergy(G4double oekin)   { originVertexKineticEnergy = oekin; }
@@ -197,29 +172,11 @@ public:
     inline void   StoreTotalEnergy(G4double etot)     { currentTotalEnergy = etot; }
     inline G4double GetTotalEnergy() const         {return currentTotalEnergy;}
 	
-    //---------------- 
+    //--------------- PMTOnly deposited energy
 	
-    //inline void   StorePrimaryQ2(G4double q2)              { primaryQ2 = q2; }
-    //inline G4double GetPrimaryQ2() const               {return primaryQ2;}
-	
-    //inline void   StoreCrossSection(G4double cs)           { crossSection = cs; }
-    //inline G4double GetCrossSection() const            {return crossSection;}
-	
-    //inline void   StoreCrossSectionWeight(G4double csw)    { crossSectionWeight = csw; }
-    //inline G4double GetCrossSectionWeight() const      {return crossSectionWeight;}
-	
-    //---------------- LocalThetaAngle & PhiAngle
-	
-    //inline void   StoreGlobalThetaAngle(G4double gthetag)   { globalThetaAngle = gthetag; }
-    //inline G4double GetGlobalThetaAngle() const       {return globalThetaAngle;}
-	
-    //inline void   StoreGlobalPhiAngle(G4double gphiag)      { globalPhiAngle = gphiag; }
-    //inline G4double GetGlobalPhiAngle() const         {return globalPhiAngle;}
-	
-    //--------------- LeadGlass deposited energy
-	
-    inline void   StoreHitDepositedEnergy(G4double dpeg) { depositedEnergyHit = dpeg; }
-    inline G4double GetHitDepositedEnergy() const {return depositedEnergyHit;}
+    inline void   StoreDepositedEnergy(G4double dpeg)    {depositedEnergy = dpeg;}
+    inline void     AddDepositedEnergy(G4double dpeg)    {depositedEnergy += dpeg;}
+    inline G4double GetHitDepositedEnergy() const       {return depositedEnergy;}
 	
 	
     //---
@@ -232,25 +189,24 @@ public:
     inline void   StoreLogVolume(G4LogicalVolume* val)      { pLogV = val; }
     inline const G4LogicalVolume* GetLogVolume() const   {return pLogV;}
 	
-	
 };
 
 
 
 /////// --------------------------------------------------------------------
 
-typedef G4THitsCollection<QweakSimLeadGlass_DetectorHit> QweakSimLeadGlass_DetectorHitsCollection;
+typedef G4THitsCollection<QweakSimPMTOnly_DetectorHit> QweakSimPMTOnly_DetectorHitsCollection;
 
-extern G4Allocator<QweakSimLeadGlass_DetectorHit>  QweakSimLeadGlass_DetectorHitAllocator;
+extern G4Allocator<QweakSimPMTOnly_DetectorHit>  QweakSimPMTOnly_DetectorHitAllocator;
 
 
 
 /////// --------------------------------------------------------------------
 
-inline void* QweakSimLeadGlass_DetectorHit::operator new(size_t)
+inline void* QweakSimPMTOnly_DetectorHit::operator new(size_t)
 {
     void* aHit;
-    aHit = (void*) QweakSimLeadGlass_DetectorHitAllocator.MallocSingle();
+    aHit = (void*) QweakSimPMTOnly_DetectorHitAllocator.MallocSingle();
     return aHit;
 }
 
@@ -258,9 +214,9 @@ inline void* QweakSimLeadGlass_DetectorHit::operator new(size_t)
 
 /////// --------------------------------------------------------------------
 
-inline void QweakSimLeadGlass_DetectorHit::operator delete(void* aHit)
+inline void QweakSimPMTOnly_DetectorHit::operator delete(void* aHit)
 {
-    QweakSimLeadGlass_DetectorHitAllocator.FreeSingle((QweakSimLeadGlass_DetectorHit*) aHit);
+    QweakSimPMTOnly_DetectorHitAllocator.FreeSingle((QweakSimPMTOnly_DetectorHit*) aHit);
 }
 
 

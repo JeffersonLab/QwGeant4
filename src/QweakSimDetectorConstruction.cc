@@ -58,6 +58,7 @@
 #include "QweakSimPionWall.hh"
 #include "QweakSimWShutters.hh"
 #include "QweakSimLeadGlass.hh"
+#include "QweakSimPMTOnly.hh"
 #include "QweakSimMainMagnet.hh"
 #include "QweakSimVDC.hh"
 #include "QweakSimVDCRotator.hh"
@@ -120,6 +121,8 @@ QweakSimDetectorConstruction::QweakSimDetectorConstruction(QweakSimUserInformati
   pWShutters2		 = NULL;
 	
   pLeadGlass         = NULL;
+  
+  pPMTOnly		 = NULL;
 
   // pGEM               = NULL;
   pHDC               = NULL;
@@ -184,6 +187,8 @@ QweakSimDetectorConstruction::~QweakSimDetectorConstruction()
   if (pWShutters2)            delete pWShutters2;
 
   if (pLeadGlass)            delete pLeadGlass;
+  
+  if (pPMTOnly)		    delete pPMTOnly;
 
   if (pTarget)              delete pTarget;
   if (pBeamLine)            delete pBeamLine;
@@ -220,6 +225,8 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   pWShutters2		   = new QweakSimWShutters(2);
 	
   pLeadGlass           = new QweakSimLeadGlass();
+  
+  pPMTOnly 	       = new QweakSimPMTOnly(myUserInfo);
 
   pMainMagnet          = new QweakSimMainMagnet(); // QTOR Geometry (decoupled from field)
 
@@ -580,6 +587,15 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   if (pLeadGlass){
     pLeadGlass->ConstructComponent(experimentalHall_Physical);
     pGeometry->AddModule(pLeadGlass->GetLeadGlass_PhysicalVolume());
+  }
+  
+  //===================================================
+  // create/place PMTOnly into MotherVolume
+  //===================================================
+  //
+  if (pPMTOnly){
+    pPMTOnly->ConstructComponent(experimentalHall_Physical);
+    pGeometry->AddModule(pPMTOnly->GetPMTOnly_PhysicalVolume());
   }
 	
   //===============================================

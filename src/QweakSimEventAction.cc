@@ -37,6 +37,8 @@
 #include "QweakSimTriggerScintillator_PMTHit.hh"
 #include "QweakSimLeadGlass_DetectorHit.hh"
 #include "QweakSimLeadGlass_PMTHit.hh"
+#include "QweakSimPMTOnly_DetectorHit.hh"
+#include "QweakSimPMTOnly_PMTHit.hh"
 #include "QweakSimCerenkov_DetectorHit.hh"
 #include "QweakSimCerenkovDetector_PMTHit.hh"
 #include "QweakSimTrajectory.hh"
@@ -45,7 +47,6 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 QweakSimEventAction::QweakSimEventAction(QweakSimAnalysis* AN, QweakSimUserInformation* myUI)
 {
-
 //---------------------------------------------------------------------------------------------
 //! Constructor of QweakSimEventAction
     /*!
@@ -68,6 +69,8 @@ QweakSimEventAction::QweakSimEventAction(QweakSimAnalysis* AN, QweakSimUserInfor
     //TriggerScintillatorPMT_CollID         = -1;
     LeadGlassDetector_CollID              = -1;
     //LeadGlassPMT_CollID                   = -1;
+    PMTOnlyDetector_CollID		  = -1;
+    PMTOnlyDetectorPMT_CollID		  = -1;
     CerenkovDetector_CollID               = -1;
     CerenkovDetectorPMT_CollID            = -1;
 
@@ -97,6 +100,8 @@ QweakSimEventAction::QweakSimEventAction(QweakSimAnalysis* AN, QweakSimUserInfor
         fTriggerName[kTriggerCer] = "cer";
 	kMapTriggerMode["hdc"] = kTriggerHDC;
 	fTriggerName[kTriggerHDC] = "hdc";
+	kMapTriggerMode["pmtonly"] = kTriggerPMTOnly;
+	fTriggerName[kTriggerHDC] = "pmtonly";
     }
     if (kMapTriggerMode.size() != kNumTriggers)
         G4cout << "Number of software triggers is not defined correctly!" << G4endl;
@@ -172,9 +177,19 @@ void QweakSimEventAction::BeginOfEventAction(const G4Event* /*evt*/)
         TriggerScintillatorDetector_CollID = SDman->GetCollectionID("TriggerScintillatorSD/TriggerScintillatorCollection");
     }
 
-	// check for existing LeadGlass Collection ID (if it's -1 it will be assigned)
+    // check for existing LeadGlass Collection ID (if it's -1 it will be assigned)
     if (LeadGlassDetector_CollID==-1) {
         LeadGlassDetector_CollID = SDman->GetCollectionID("LeadGlassSD/LeadGlassCollection");
+    }
+    
+    // check for existing PMTOnly Collection ID (if it's -1 it will be assigned)
+    if (PMTOnlyDetector_CollID==-1) {
+        PMTOnlyDetector_CollID = SDman->GetCollectionID("PMTOnlySD/PMTOnlyCollection");
+    }
+    
+        // check for existing PMTOnly Collection ID (if it's -1 it will be assigned)
+    if (PMTOnlyDetectorPMT_CollID==-1) {
+        PMTOnlyDetectorPMT_CollID = SDman->GetCollectionID("PMTOnly_PMTSD/PMTHitCollection");
     }
 	
     // check for existing CerenkovDetector Collection ID (if it's -1 it will be assigned)
@@ -234,6 +249,8 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     //QweakSimTriggerScintillator_PMTHitsCollection*           TriggerScintillatorPMT_HC          = 0;
     QweakSimLeadGlass_DetectorHitsCollection*                LeadGlassDetector_HC               = 0;
     //QweakSimLeadGlass_PMTHitsCollection*                   LeadGlassPMT_HC                    = 0;
+    QweakSimPMTOnly_DetectorHitsCollection*                  PMTOnlyDetector_HC                 = 0;
+    QweakSimPMTOnly_PMTHitsCollection*                       PMTOnlyPMT_HC			= 0;
     QweakSimCerenkovDetectorHitsCollection*                  CerenkovDetector_HC                = 0;
     QweakSimCerenkovDetector_PMTHitsCollection*              CerenkovDetectorPMT_HC             = 0;
 
@@ -279,7 +296,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         //    n_hitTriggerScintillatorPMT = TriggerScintillatorPMT_HC -> entries();
         //}
 		
-		// get  LeadGlass Hit Collector pointer
+	// get  LeadGlass Hit Collector pointer
         if (LeadGlassDetector_CollID > -1) {
             LeadGlassDetector_HC  = (QweakSimLeadGlass_DetectorHitsCollection*)(HCE->GetHC(LeadGlassDetector_CollID));
             n_hitLeadGlass        = LeadGlassDetector_HC -> entries();
@@ -290,6 +307,18 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         //    LeadGlassPMT_HC    = (QweakSimLeadGlass_PMTHitsCollection*)(HCE->GetHC(LeadGlassPMT_CollID));
         //    n_hitLeadGlassPMT  = LeadGlassPMT_HC -> entries();
         //}
+
+        // get  PMTOnly Hit Collector pointer
+        if (PMTOnlyDetector_CollID > -1) {
+            PMTOnlyDetector_HC  = (QweakSimPMTOnly_DetectorHitsCollection*)(HCE->GetHC(PMTOnlyDetector_CollID));
+            n_hitPMTOnly        = PMTOnlyDetector_HC -> entries();
+	}
+	
+	// get PMTOnly_PMT Hitt Collection
+	if (PMTOnlyDetectorPMT_CollID > -1) {
+            PMTOnlyPMT_HC  = (QweakSimPMTOnly_PMTHitsCollection*)(HCE->GetHC(PMTOnlyDetectorPMT_CollID));
+            n_hitPMTOnlyPMT        = PMTOnlyPMT_HC -> entries();
+	}
 
         // get  CerenkovDetector Hit Collector pointer
         if (CerenkovDetector_CollID > -1) {
@@ -307,6 +336,8 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     if (printhits) {
       G4cout <<",\tVDC_Front "<<n_VDChitDCFront<<",\tVDC_Back "<<n_VDChitDCBack<<",\tTS "<<n_hitTriggerScintillator;
       G4cout <<",\tLeadGlass "<<n_hitLeadGlass;
+      G4cout <<",\tPMTOnly "<<n_hitPMTOnly;
+      G4cout <<",\tPMTOnlyPMT "<<n_hitPMTOnlyPMT;
       G4cout <<",\tHDC "<<n_HDChitWirePlane; 
       G4cout <<",\tCerenkov "<<n_hitCerenkov<<"\tCerenkovPMT "<<n_hitCerenkovPMT<<G4endl;
     }
@@ -364,8 +395,9 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 //    }
     analysis->fRootEvent->TriggerScintillator.Detector.Initialize();
 	
-    // Initialize LeadGlass //--- with NoHit Flag
+    // Initialize LeadGlass and PMTOnly //--- with NoHit Flag
     analysis->fRootEvent->LeadGlass.Detector.Initialize();
+    analysis->fRootEvent->PMTOnly.Detector.Initialize();
     //analysis->fRootEvent->LeadGlass.Detector.StoreDetectorHasBeenHit(0);
     //-------------------------------------------------------------------------------------------------
 
@@ -387,6 +419,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
             || (fTrigger[kTriggerScint] && (n_hitTriggerScintillator > 0) ) /* Qweak trigger on a hit in the trigger scintillator */
 	    || (fTrigger[kTriggerHDC]   && (n_HDChitWirePlane >= 6))         /* HDC Trigger */
             || (fTrigger[kTriggerLeadGlass] && (n_hitLeadGlass >0))         /* a hit in the LeadGlass */
+            || (fTrigger[kTriggerPMTOnly] && (n_hitPMTOnly >0))         /* a hit in the PMTOnly */
             || (fTrigger[kTriggerCer]   && (n_hitCerenkov > 0) )            /* Triggering on Main Detector */
        ) {
 
@@ -516,6 +549,9 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 
         // Store Number of Hits for: LeadGlass Detector
         analysis->fRootEvent->LeadGlass.Detector.StoreDetectorNbOfHits(n_hitLeadGlass);
+        
+        // Store Number of Hits for: PMTOnly Detector
+        analysis->fRootEvent->PMTOnly.Detector.StoreDetectorNbOfHits(n_hitPMTOnly);
 
         //==========================================================================================================
 
@@ -1632,7 +1668,159 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 				
             } // end  for(int i1=0;i1<n_hitLeadGlass;i1++)	   
         } // end    if (n_hitLeadGlass >0)
+	
+	
+	//===========================================================
+        // Store PMTOnly hits into /PMTOnly
+        //===========================================================
 		
+        if (n_hitPMTOnly >0) {
+            //--- loop over hits
+            for (int i1=0;i1<n_hitPMTOnly;i1++) {
+				
+                QweakSimPMTOnly_DetectorHit* aHit = (*PMTOnlyDetector_HC)[i1];
+				
+                //--- track ID
+                rTrackID = (Float_t) aHit->GetTrackID();
+				
+                //--- particle name & type
+                rParticleName = TString(aHit->GetParticleName());
+                rParticleType = (Int_t) aHit->GetParticleType();
+				
+                //--- get global time of hit
+                rGlobalTime = (Float_t) aHit->GetGlobalTime() / ns;
+				
+                //--- get world position of hit
+                globalPosition  = aHit->GetWorldPosition();
+                rGlobalPositionX = (Float_t) globalPosition.x() / cm;
+                rGlobalPositionY = (Float_t) globalPosition.y() / cm;
+                rGlobalPositionZ = (Float_t) globalPosition.z() / cm;
+				
+                //--- get local position of hit
+                localPosition  = aHit->GetLocalPosition();
+                rLocalPositionX = (Float_t) localPosition.x() / cm;
+                rLocalPositionY = (Float_t) localPosition.y() / cm;
+                rLocalPositionZ = (Float_t) localPosition.z() / cm;
+				
+                //--- get origin vertex position
+                originVertexPosition  = aHit->GetOriginVertexPosition(); 
+                rOriginVertexPositionX = (Float_t) originVertexPosition.x() / cm;
+                rOriginVertexPositionY = (Float_t) originVertexPosition.y() / cm;
+                rOriginVertexPositionZ = (Float_t) originVertexPosition.z() / cm;
+				
+                //--- get world momentum of hit
+                globalMomentum  = aHit->GetWorldMomentum();
+                rGlobalMomentumX = (Float_t) globalMomentum.x() / MeV;
+                rGlobalMomentumY = (Float_t) globalMomentum.y() / MeV;
+                rGlobalMomentumZ = (Float_t) globalMomentum.z() / MeV;
+				
+                //--- get local momentum of hit  
+                localMomentum  = aHit->GetLocalMomentum();
+                rLocalMomentumX = (Float_t) localMomentum.x() / MeV;
+                rLocalMomentumY = (Float_t) localMomentum.y() / MeV;
+                rLocalMomentumZ = (Float_t) localMomentum.z() / MeV;                //--- store particle name & type
+                analysis->fRootEvent->PMTOnly.Detector.StoreParticleName(rParticleName);
+                analysis->fRootEvent->PMTOnly.Detector.StoreParticleType(rParticleType);
+				
+                //--- get local vertex momentum direction of hit
+                localVertexMomentumDirection = aHit->GetMomentumDirection();
+                rLocalVertexMomentumDirectionX = (Float_t) localVertexMomentumDirection.x();
+                rLocalVertexMomentumDirectionY = (Float_t) localVertexMomentumDirection.y();
+                rLocalVertexMomentumDirectionZ = (Float_t) localVertexMomentumDirection.z();
+				
+                //--- get origin vertex momentum direction of hit
+                originVertexMomentumDirection = aHit->GetOriginVertexMomentumDirection();
+                rOriginVertexMomentumDirectionX = (Float_t) originVertexMomentumDirection.x();
+                rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
+                rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
+				
+                //--- get origin vertex theta & phi angle
+                rOriginVertexThetaAngle = (Float_t) originVertexMomentumDirection.theta() / degree;
+                rOriginVertexPhiAngle   = (Float_t) originVertexMomentumDirection.phi() / degree;
+				
+                //--- get origin vertex kinetic energy & total energy
+                rOriginVertexKineticEnergy = (Float_t ) aHit->GetOriginVertexKineticEnergy() / MeV;
+                rOriginVertexTotalEnergy   = (Float_t ) aHit->GetOriginVertexTotalEnergy() / MeV;
+				
+                //--- get total energy & total energy of hit
+                rKineticEnergy = (Float_t) aHit->GetKineticEnergy() / MeV;
+                rTotalEnergy = (Float_t) aHit->GetTotalEnergy() / MeV;
+				
+                //--- get global theta & phi angle
+                rGlobalThetaAngle = (Float_t) globalMomentum.theta() / degree;
+                rGlobalPhiAngle   = (Float_t) globalMomentum.phi() / degree - 90.0;
+				
+                //--- get PMTOnly deposited energy
+                rDepositedEnergy = (Float_t) aHit->GetHitDepositedEnergy() / MeV;				
+                rTotalDepositedEnergy += rDepositedEnergy;
+                		
+                //--- store Primary Event Number
+                analysis->fRootEvent->PMTOnly.Detector.StorePrimaryEventNumber((Int_t) PrimaryEventNumber);
+				
+                //--- store track ID
+                analysis->fRootEvent->PMTOnly.Detector.StoreTrackID(rTrackID);
+				
+                //--- store particle name & type
+                analysis->fRootEvent->PMTOnly.Detector.StoreParticleName(rParticleName);
+                analysis->fRootEvent->PMTOnly.Detector.StoreParticleType(rParticleType);
+				
+                //--- store global time of hit
+                analysis->fRootEvent->PMTOnly.Detector.StoreGlobalTimeOfHit(rGlobalTime);
+				
+                //--- mark PMTOnly detector as been hit
+                analysis->fRootEvent->PMTOnly.Detector.StoreDetectorHasBeenHit(5);
+				
+                //--- store global position
+                analysis->fRootEvent->PMTOnly.Detector.StoreDetectorGlobalPositionX(rGlobalPositionX);
+                analysis->fRootEvent->PMTOnly.Detector.StoreDetectorGlobalPositionY(rGlobalPositionY);
+                analysis->fRootEvent->PMTOnly.Detector.StoreDetectorGlobalPositionZ(rGlobalPositionZ);
+				
+                //--- store local position
+                analysis->fRootEvent->PMTOnly.Detector.StoreDetectorLocalPositionX(rLocalPositionX);
+                analysis->fRootEvent->PMTOnly.Detector.StoreDetectorLocalPositionY(rLocalPositionY);
+                analysis->fRootEvent->PMTOnly.Detector.StoreDetectorLocalPositionZ(rLocalPositionZ);
+				
+                //--- store origin vertex position
+                analysis->fRootEvent->PMTOnly.Detector.StoreOriginVertexPositionX(rOriginVertexPositionX);
+                analysis->fRootEvent->PMTOnly.Detector.StoreOriginVertexPositionY(rOriginVertexPositionY);
+                analysis->fRootEvent->PMTOnly.Detector.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
+				
+                //--- store local vertex momentum direction
+                analysis->fRootEvent->PMTOnly.Detector.StoreLocalVertexMomentumDirectionX(rLocalVertexMomentumDirectionX);
+                analysis->fRootEvent->PMTOnly.Detector.StoreLocalVertexMomentumDirectionY(rLocalVertexMomentumDirectionY);
+                analysis->fRootEvent->PMTOnly.Detector.StoreLocalVertexMomentumDirectionZ(rLocalVertexMomentumDirectionZ);
+				
+                //--- store origin vertex momentum direction
+                analysis->fRootEvent->PMTOnly.Detector.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);
+                analysis->fRootEvent->PMTOnly.Detector.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);
+                analysis->fRootEvent->PMTOnly.Detector.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
+				
+                //--- store origin theta & phi angle
+                analysis->fRootEvent->PMTOnly.Detector.StoreOriginVertexThetaAngle(rOriginVertexThetaAngle);
+                analysis->fRootEvent->PMTOnly.Detector.StoreOriginVertexPhiAngle(rOriginVertexPhiAngle);
+				
+                //--- store origin kinetic energy & total energy
+                analysis->fRootEvent->PMTOnly.Detector.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
+                analysis->fRootEvent->PMTOnly.Detector.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
+				
+                //--- store local vertex kinetic & total energy
+                analysis->fRootEvent->PMTOnly.Detector.StoreDetectorLocalVertexKineticEnergy(rKineticEnergy);
+                analysis->fRootEvent->PMTOnly.Detector.StoreDetectorLocalVertexTotalEnergy(rTotalEnergy);
+				
+                //--- store global track theta & phi angle
+                analysis->fRootEvent->PMTOnly.Detector.StoreGlobalThetaAngle(rGlobalThetaAngle);
+                analysis->fRootEvent->PMTOnly.Detector.StoreGlobalPhiAngle(rGlobalPhiAngle);
+				
+                //--- store PMTOnly deposited energy
+                analysis->fRootEvent->PMTOnly.Detector.StoreDepositedEnergy(rDepositedEnergy);
+				
+            } // end  for(int i1=0;i1<n_hitPMTOnly;i1++)	   
+            
+            // Put the total energy into the thing. 
+            analysis->fRootEvent->PMTOnly.Detector.StoreTotalEnergyDeposit(rTotalDepositedEnergy);
+            rTotalDepositedEnergy = 0.0;
+            
+        } // end    if (n_hitPMTOnly >0)	
 
 //  G4cout << "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" << G4endl;
 
@@ -1697,6 +1885,7 @@ void QweakSimEventAction::Initialize() {
     n_hitCerenkovPMT    = 0;
     n_hitLeadGlass      = 0;
     n_hitLeadGlassPMT   = 0;
+    n_hitPMTOnly        = 0;
 
     // get local position of hit
     localPosition   = G4ThreeVector(0.,0.,0.);
@@ -1744,6 +1933,7 @@ void QweakSimEventAction::Initialize() {
     rLocalVertexMomentumDirectionZ = 0.0;
 	
     rDepositedEnergy = 0.0;
+    rTotalDepositedEnergy = 0.0;
 
     rDCWidthOnFrame     = 0.;
     rDCFullThickness    = 0.;
