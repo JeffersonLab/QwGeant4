@@ -239,9 +239,9 @@
 # Event generator related
 #====================================
 
-/EventGen/SelectOctant         5
-/EventGen/SelectReactionType   1
-/EventGen/SelectReactionRegion 1
+#/EventGen/SelectOctant         3
+#/EventGen/SelectReactionType   1
+#/EventGen/SelectReactionRegion 1
 
 
 #====================================
@@ -267,7 +267,7 @@
 /random/setSavingFlag 1
 # Copy the following command line to your user macro and uncomment it 
 # to use the seeds of the last event in last run
-/random/resetEngineFrom currentEvent.rndm
+#/random/resetEngineFrom currentEvent.rndm
 # Or use specific seeds from file 'myseed.rndm', for example 
 #/random/resetEngineFrom myseed.rndm
 
