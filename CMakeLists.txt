@@ -41,7 +41,9 @@ set(my_project_sources ${my_project_sources} ${CMAKE_CURRENT_BINARY_DIR}/QweakSi
 
 # Load Geant4 through Find and Use files (the Geant4_DIR directory is where
 # the Geant4 cmake Find and Use files can be found)
-set(Geant4_DIR $ENV{G4INSTALL}/build)
+if(NOT DEFINED Geant4_DIR)
+	set(Geant4_DIR $ENV{G4INSTALL}/build)
+endif(NOT DEFINED Geant4_DIR)
 find_package(Geant4 REQUIRED COMPONENTS gdml qt ui_all vis_all)
 include(${Geant4_USE_FILE})
 
