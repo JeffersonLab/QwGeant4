@@ -5,8 +5,8 @@
   <Name name="%name%_%jobid%"/>
   <OS name="centos62"/>
   <Command><![CDATA[
-cd ~/QwGeant4
-mkdir rootfiles
+cd %qwgeant4%
+mkdir -p rootfiles
 ln -sf $WORKDIR rootfiles/%name%_%jobid%_workdir
 build/QweakSimG4 macros/jobs/%name%_%jobid%.mac
 rm -f rootfiles/%name%_%jobid%_workdir
@@ -16,7 +16,7 @@ rm -f rootfiles/%name%_%jobid%_workdir
   <TimeLimit unit="minutes" time="4320"/>
 
   <Job>
-    <Output src="%name%_%jobid%.root" dest="mss:/mss/home/vmgray/rootfiles/%basename%/%name%_%jobid%.root"/>
+    <Output src="%name%_%jobid%.root" dest="mss:/mss/home/vmgray/rootfiles/%name%/%name%_%jobid%.root"/>
     <Stdout dest="/home/vmgray/scratch/job/%name%_%jobid%.out"/>
     <Stderr dest="/home/vmgray/scratch/job/%name%_%jobid%.err"/>
   </Job>

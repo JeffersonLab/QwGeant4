@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #Programmer: Valerie Gray
-#Purpose: This script creates that xml and macro files
+#Purpose: This script creates the job and macro files
 #for the Qtor scan study in Geant4
 #
 #Date: 11-22-2012
@@ -14,17 +14,20 @@
 basename=myQtorScan
 
 #min and max current values
-current_min=8000
-current_max=9000
-current_step=20
+current_min=10000
+current_max=10000
+current_step=10000
 
 #first job number (can change if just want to add
 #on to the get more simultaions)
-firstjob=1
+firstjob=0
 #last job number
-lastjob=50
+lastjob=0
 #number of events per job
-nevents=125000
+nevents=5000
+#batch system
+batch=sh
+qwgeant4=~/QwGeant4
 
 let current=${current_min}
 while [[ ${current} -le ${current_max} ]] ; do
@@ -44,43 +47,51 @@ while [[ ${current} -le ${current_max} ]] ; do
 		let seedB=10#${nanosecond}+${position}+${jobid}
 
 		mkdir -p random/${name}_${jobid}
-		mkdir -p jobs/xml
+		mkdir -p jobs/${batch}
 		mkdir -p macros/jobs
 
     #replace the variables in the file macros/${basename}.in
     #which creates the mac file that Geant4 uses
-		sed -e "s/%current%/${current}/g" \
-				-e "s/%nevents%/${nevents}/g" \
-				-e "s/%seedA%/${seedA}/g" \
-				-e "s/%seedB%/${seedB}/g" \
-				-e "s/%jobid%/${jobid}/g" \
-				-e "s/%basename%/${basename}/g" \
-				-e "s/%name%/${name}/g" \
+		sed -e "s|%current%|${current}|g" \
+				-e "s|%nevents%|${nevents}|g" \
+ 		    -e "s|%qwgeant4%|${qwgeant4}|g" \
+				-e "s|%seedA%|${seedA}|g" \
+				-e "s|%seedB%|${seedB}|g" \
+				-e "s|%jobid%|${jobid}|g" \
+				-e "s|%basename%|${basename}|g" \
+				-e "s|%name%|${name}|g" \
 			macros/${basename}.in \
 		> macros/jobs/${name}_${jobid}.mac
 
     #replace the variables in the file ${basename}.in
-    #which creates the xml file that is submitted to the farm
-		sed -e "s/%current%/${current}/g" \
-				-e "s/%nevents%/${nevents}/g" \
-				-e "s/%seedA%/${seedA}/g" \
-				-e "s/%seedB%/${seedB}/g" \
-				-e "s/%jobid%/${jobid}/g" \
-				-e "s/%basename%/${basename}/g" \
-				-e "s/%name%/${name}/g" \
-			jobs/${basename}.in \
-		> jobs/xml/${name}_${jobid}.xml
+    #which creates the job file that is submitted to the farm
+		sed -e "s|%current%|${current}|g" \
+				-e "s|%nevents%|${nevents}|g" \
+ 		    -e "s|%qwgeant4%|${qwgeant4}|g" \
+				-e "s|%seedA%|${seedA}|g" \
+				-e "s|%seedB%|${seedB}|g" \
+				-e "s|%jobid%|${jobid}|g" \
+				-e "s|%basename%|${basename}|g" \
+				-e "s|%name%|${name}|g" \
+			jobs/job.${batch}.in \
+		> jobs/${batch}/${name}_${jobid}.${batch}
 
     #define where the rootfile will be stored, check to see if a rootfile  
     #exists, if not then submit the job if it is there do not submit it 
     #if so then move to the next job
-		rootfile=/mss/home/vmgray/rootfiles/${basename}/${name}_${jobid}.root
-		if [ ! -e ${rootfile} ] ; then
-			echo "File ${rootfile} doesn't exist. Will submit job."
-			jsub -xml jobs/xml/${name}_${jobid}.xml
-		else
-			echo "File ${rootfile} already exists."
-		fi
+		rootfile=/mss/home/${USER}/rootfiles/${basename}/${name}_${jobid}.root
+    if [ -e ${rootfile} ] ; then
+      echo "File ${rootfile} already exists on mss."
+    else
+      echo "File ${rootfile} doesn't exist. Will submit job."
+      if [ "${batch}" == "xml" ] ; then
+        jsub -xml jobs/${batch}/${name}_${jobid}.${batch}
+      fi
+      if [ "${batch}" == "sh" ] ; then
+        echo "Submitting job jobs/${batch}/${name}_${jobid}.${batch}..."
+        qsub jobs/${batch}/${name}_${jobid}.${batch}
+      fi
+    fi
 
 		let jobid=${jobid}+1
 	done
