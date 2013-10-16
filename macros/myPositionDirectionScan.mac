@@ -1,7 +1,8 @@
 /control/execute myQweakConfiguration.mac
 /control/execute macros/peiqing_2011.mac
 
-/random/setSavingFlag 1
+/random/setSavingFlag 0
+/random/setDirectoryName random/myPositionScan
 /random/resetEngineFrom currentEvent.rndm
 
 /TrackingAction/TrackingFlag 0
@@ -13,13 +14,11 @@
 /Trigger/Enable cer
 /Trigger/Show
 
-/control/alias oct 7
+#/control/alias oct 7
 /control/alias posx 0
 /control/alias posy 0
 /control/alias anglex 0
 /control/alias angley 0
-
-/random/setDirectoryName currentEvent_{oct}
 
 /control/loop macros/myPositionDirectionScan.loop angley -0.6 0.6 0.3
 /control/alias angley 0

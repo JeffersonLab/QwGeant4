@@ -15,7 +15,7 @@
 /HDC/SetFrontCenterPositionInY      151.104  cm
 /HDC/SetBackCenterPositionInY       154.872  cm
 
-/random/setSavingFlag 1
+/random/setSavingFlag 0
 /random/setDirectoryName random/%name%_%jobid%
 /random/setSeeds %seedA% %seedB%
 

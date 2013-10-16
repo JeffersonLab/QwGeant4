@@ -7,17 +7,17 @@
 #
 
 /control/execute myQweakConfiguration_Mag45.mac
-/control/execute macros/peiqing_2011.mac
+#/control/execute macros/peiqing_2011.mac
 /control/execute macros/noTracking.mac
 
-/random/setSavingFlag 1
+/random/setSavingFlag 0
 /random/setDirectoryName random/%name%_%jobid%
 /random/setSeeds %seedA% %seedB%
 
 /TrackingAction/TrackingFlag 3
 
 #rotate a magnetic field
-/MagneticField/SetRotation 45.0 degree
+#/MagneticField/SetRotation 45.0 degree
 
 #select the reaction type and region
 /EventGen/SelectReactionRegion 1

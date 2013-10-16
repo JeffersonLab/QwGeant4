@@ -5,11 +5,11 @@
 #Modified:
 #Assisted By:
 #
-/control/execute myQweakConfiguration.mac
+/control/execute myQweakConfiguration_run2.mac
 /control/execute macros/peiqing_2011.mac
 /control/execute macros/noTracking.mac
 
-/random/setSavingFlag 1
+/random/setSavingFlag 0
 /random/setDirectoryName random/%name%_%jobid%
 /random/setSeeds %seedA% %seedB%
 
