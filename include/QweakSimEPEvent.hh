@@ -176,6 +176,18 @@ class QweakSimEPEvent {
 
   void CheckLookupTableBounds();
   
+  G4double AlNuclInel(G4double E_in,
+		      G4double Theta,
+		      G4double &fWeightN,
+		      G4double &Q2,
+		      G4double &E_out);
+
+  G4double AlGDR(G4double E_in,
+		      G4double Theta,
+		      G4double &fWeightN,
+		      G4double &Q2,
+		      G4double &E_out);
+  
   G4double Pion_PhotoProduction(G4double E_in,
                                 G4double Theta,
                                 G4double &fWeightN,

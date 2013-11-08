@@ -92,7 +92,8 @@ QweakSimTarget::QweakSimTarget(QweakSimUserInformation *myUI)
 
     targetCellExitWindowNippleRadius = 0.5*0.622*inch;
 
-    targetCellInnerLength     = 34.346*cm;
+    //    targetCellInnerLength     = 34.346*cm;
+    targetCellInnerLength     = myUserInfo->TargetLength;
     targetCellOuterLength     = targetCellInnerLength
                                 + targetCellEntranceWindowThickness
                                 + targetCellExitWindowThickness;  // Full length of Target
@@ -512,6 +513,21 @@ G4double QweakSimTarget::GetTargetCenterPositionInZ()
 {
     G4cout << G4endl << "###### Calling QweakSimTarget::GetTargetCenterPositionInZ() " << G4endl << G4endl;
     return targetZPos;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+void QweakSimTarget::SetTargetLength(G4double len)
+{
+    G4cout << G4endl << "###### Calling QweakSimTarget::SetTargetLength() " << G4endl << G4endl;
+
+    targetLen = len;
+    myUserInfo->TargetLength = len;
+}
+
+G4double QweakSimTarget::GetTargetLength()
+{
+    G4cout << G4endl << "###### Calling QweakSimTarget::GetTargetLength() " << G4endl << G4endl;
+    return targetLen;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

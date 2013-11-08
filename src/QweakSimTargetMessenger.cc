@@ -66,6 +66,11 @@ QweakSimTargetMessenger::QweakSimTargetMessenger(QweakSimTarget* myTar)
   TargExtWinNipMatCmd->SetParameterName("choice",false);
   TargExtWinNipMatCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
+  TargLenCmd =  new G4UIcmdWithADoubleAndUnit("/Target/SetTargetLength",this);
+  TargLenCmd->SetGuidance("Set the length of the target center"); 
+  TargLenCmd->SetParameterName("Size",true);
+  TargLenCmd->SetUnitCategory("Length");
+  TargLenCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
 }
 
@@ -80,6 +85,7 @@ QweakSimTargetMessenger::~QweakSimTargetMessenger()
   delete TargExtWinMatCmd;
   delete TargExtWinNipMatCmd;
   delete TargetDir;
+  delete TargLenCmd;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -130,6 +136,14 @@ void QweakSimTargetMessenger::SetNewValue(G4UIcommand* command,G4String newValue
 
      myTarget->SetTargetExitWindowNippleMaterial(newValue);
   }
+
+  if( command == TargLenCmd )
+   {
+     G4cout << "#### Messenger: Setting Target length to " << newValue << G4endl;
+
+     myTarget->SetTargetLength(TargLenCmd->GetNewDoubleValue(newValue));
+   }
+
 
   G4cout << "#### Leaving QweakSimTargetMessenger::SetNewValue() " << newValue << G4endl;
 }

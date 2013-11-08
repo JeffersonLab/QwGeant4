@@ -23,6 +23,7 @@
 #include "QweakSimUserInformation.hh"
 
 #include "wiser_pion.h"
+#include "Alinel_crsec_gen.h"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -292,13 +293,22 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
          Z = 13;
          A = 27;
          fCrossSection[0] = Quasi_Elastic_Bosted(E_in, RelativeThetaAngle, Z, A, fWeightN, Q2, E_out);
-      }
-	
+      }	
    else if(ReactionType==88) //--- LH2 target, pion photo-production cross section 3.35 GeV
-   {
+     {
        fCrossSection[0] = Pion_PhotoProduction(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
        Asymmetry = GetAsymmetry_EP(RelativeThetaAngle, E_in); //--- use the elastic asymmetry for now
-   }
+     }
+   else if(ReactionType==9) // Nuclear Inelastics Single Particle States - Aluminum
+     {
+       fCrossSection[0] = AlNuclInel(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
+     }
+   else if(ReactionType==10) // GDR - Aluminum
+     {
+       fCrossSection[0] = AlGDR(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
+     }
+
+
 }
 
 
@@ -418,17 +428,22 @@ G4double QweakSimEPEvent::Elastic_Cross_Section_Aluminum(G4double E_in,
 //  EventDataFile<<"Fm1="<<Fm1<<"  "<<"Fm3="<<Fm3<<"  "<<"Fm5="<<Fm5<<"  "<<"Fm_2="<<Fm_2<<G4endl;
 
 //    form factor square
-      G4double F_2 = Z*Z*Fe_2+(1.0+2.0*T2THE)*mu*mu/3.0*(J+1.0)/J*q2/4.0/pow((M_p/0.197),2)*Fm_2;
+//      G4double F_2 = Z*Z*Fe_2+(1.0+2.0*T2THE)*mu*mu/3.0*(J+1.0)/J*q2/4.0/pow((M_p/0.197),2)*Fm_2;
+      G4double F_2 = Fe_2;//+(1.0+2.0*T2THE)*mu*mu/3.0*(J+1.0)/J*q2/4.0/pow((M_p/0.197),2)*Fm_2;
 
 //  EventDataFile<<"F_2="<<F_2<<"  "<<G4endl;
 
 //    cross section units: ub/sr
 //    G4double SigmaMott = ((0.72/E_in)*cos(Theta/2)/(sin(Theta/2)^2))^2 /( 1+2*E_in/M*(sin(Theta/2)^2))*10000 ;
       G4double SigmaMott = pow(((0.72/E_in)*CTH/(STH*STH)),2)/(1+2*E_in/M*STH*STH)*10000 ;
+      SigmaMott *= (Z*Z);
 
 //  EventDataFile<<"SigmaMott="<<SigmaMott<<"  "<<"SigmaMott*F_2="<<SigmaMott*F_2<<"  "<<"weight_n="<<SigmaMott*F_2*sin(Theta)<<G4endl;
+
       G4double Xsect = SigmaMott*F_2;
       fWeightN = Xsect*sin(Theta);
+
+      //      G4cout<< "q(1/fm)"<<sqrt(q2) <<"  SigmaMott="<<SigmaMott<<"  F_2="<<F_2<<"  SigmaMott*F_2="<<Xsect<<G4endl;
       return Xsect;
 }
 
@@ -1032,7 +1047,6 @@ void QweakSimEPEvent::CreateLookupTable()
     
     //********************************************************************
 
-
 /*
   // **********************************************************************
   // **********************************************************************
@@ -1152,7 +1166,6 @@ void QweakSimEPEvent::CreateLookupTable()
     
     //G4cout << "Target Min:      " << fMin[0] << G4endl;
     //G4cout << "Target Max:      " << fMax[0] << G4endl;
-    
     
     //for (Int_t n = 0; n < (Int_t)fStep.size(); n++) {
     //  entries *= (G4int)( (fMax[n]-fMin[n])/fStep[n] + 1.5 );
@@ -1303,6 +1316,86 @@ void QweakSimEPEvent::CheckLookupTableBounds()
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
+G4double QweakSimEPEvent::AlNuclInel(G4double E_in, // MeV
+				     G4double Theta,  //radians
+				     G4double &fWeightN,
+				     G4double &Q2,
+				     G4double &E_out)
+{
+  ///
+  G4double M_p = 938.2796;  // proton mass in MeV
+  G4double Z_Al = 13.0;
+  G4double A_Al = 27.0;
+  G4double M_Al = M_p*A_Al;
+
+  G4double CTH = cos(Theta/2.0);
+  G4double STH = sin(Theta/2.0);
+
+  // now get qsq
+  G4double ETA = 1.0+2.0*E_in*STH*STH/M_Al;
+  E_out = E_in/ETA;
+  
+  Q2 = 4*E_in*E_out*STH*STH;     //unit: MeV^2
+
+  Theta *= 180/3.14159;  //deg
+  // in ub/sr
+  G4double xsect = Alinel_crsec_gen(E_in,Theta);
+  
+  Theta *= 3.14159/180; // bk to radians
+
+  fWeightN = xsect*sin(Theta);
+
+  return xsect;
+}
+
+//////////////////////////
+// GDR crsec
+G4double QweakSimEPEvent::AlGDR(G4double E_in, //MeV
+				G4double Theta,  // radians
+				G4double &fWeightN,
+				G4double &Q2,
+				G4double &E_out){
+  ///
+  double M_p = 938.2796;  // proton mass in MeV
+  double Z_Al = 13.0;
+  double A_Al = 27.0;
+  double M_Al = M_p*A_Al;
+
+  //  double th = Theta*3.14159/180.;  // convert to radians
+  double CTH = cos(Theta/2.0);
+  double STH = sin(Theta/2.0);
+
+  // now get qsq
+  double ETA = 1.0+2.0*E_in*STH*STH/M_Al;
+  E_out = E_in/ETA;
+  
+  Q2 = 4*E_in*E_out*STH*STH;     //unit: MeV^2
+  // double hbarc = 197.3269631; // MeV fm
+  // double q2 = Q2/(hbarc*hbarc);  //convert MeV^2 into fm^(-2)
+  // double qq = sqrt(q2);
+
+  // GDR peak energy
+  Double_t E_peak = 20.8;  // MeV 
+
+  double N_Al = 14;
+  double mu = N_Al*Z_Al/A_Al*M_Al;
+  double sig_GDR_el_Ratio = pow(N_Al/A_Al,2)/(2*mu)*Q2/E_peak; // dimensionless
+
+  //  cout << "q(1/fm):: " << qq << endl;
+
+  double fac = 6.5; // scale crsec to reflect integration in energy of the GDR peak
+
+  double elasticAl = Elastic_Cross_Section_Aluminum(E_in,Theta,fWeightN,Q2,E_out);
+
+  E_out = E_in/ETA;  
+  Q2 = 4*E_in*E_out*STH*STH;     //unit: MeV^2
+
+  double xsect = sig_GDR_el_Ratio*elasticAl*fac; //ub/sr
+
+  fWeightN = xsect*sin(Theta);
+
+  return xsect;
+}
 
 
 /////// --------------------------------------------------------------------
@@ -1314,11 +1407,9 @@ void QweakSimEPEvent::CheckLookupTableBounds()
 //
 // EPrime_Max, EPrime_Min in GeV
 // E_in is in MeV, 
-//   but need not worry as g4 is smart enough 
-//   to do any calculation involving E_in in correct units
 //
-G4double QweakSimEPEvent::Pion_PhotoProduction(G4double E_in,
-                                               G4double Theta,
+G4double QweakSimEPEvent::Pion_PhotoProduction(G4double E_in, //MeV
+                                               G4double Theta, //radians
                                                G4double &fWeightN,
                                                G4double &Q2,
                                                G4double &E_out)
@@ -1369,9 +1460,9 @@ G4double QweakSimEPEvent::Pion_PhotoProduction(G4double E_in,
 // Quasielastic fit from Bosted et al
 // Added 19/March kamyers@jlab.org
 
-G4double QweakSimEPEvent::Quasi_Elastic_Bosted(G4double E_in,
-                                               G4double Theta,
-                                               G4int Zin,
+G4double QweakSimEPEvent::Quasi_Elastic_Bosted(G4double E_in, //MeV
+                                               G4double Theta, //radians
+                                               G4int Zin, 
                                                G4int Ain,
                                                G4double &fWeightN,
                                                G4double &Q2,
@@ -1396,7 +1487,7 @@ G4double QweakSimEPEvent::Quasi_Elastic_Bosted(G4double E_in,
   if (Theta<Theta_Min)
       Theta = Theta_Min;
 
-  // Generate flat energy distribution of outgoing electron      
+  // Generate flat energy distribution of outgoing electron
   Eout =  M_electron + G4UniformRand()*(Ein - M_electron);
 
   G4double CTH = cos(Theta/2.0);
@@ -1410,18 +1501,20 @@ G4double QweakSimEPEvent::Quasi_Elastic_Bosted(G4double E_in,
   G4double MOTT = pow((0.00072/Ein*CTH/STH/STH),2);
   MOTT = MOTT*1.0E4; // Units: ub/sr/GeV
 
-  //G4cout << "Ein, Eout, Nu, Theta: " << Ein << ", " << Eout << ", " << Nu << ", " << Theta/degree << G4endl;
-  //G4cout << "Q2, W2, Mott: " << Q2 << ", " << W2 << ", " << MOTT << G4endl;
+  // G4cout << "Ein, Eout, Nu, Theta: " << Ein << ", " << Eout << ", " << Nu << ", " << Theta/degree << G4endl;
+  // G4cout << "Q2, W2, Mott: " << Q2 << ", " << W2 << ", " << MOTT << G4endl;
 
   F1F2QE09(Zin, Ain, Q2, W2, F1qe, F2qe);
   W1qe = F1qe/Mp;
   W2qe = F2qe/Nu;
 
   xsect = MOTT*(W2qe + 2.0*T2THE*W1qe);
-  //G4cout << "F1, F2, W1, W1: " << F1qe << ", " << F2qe << ", " << W1qe << ", " << W2qe << G4endl;
+  //  G4cout << "F1, F2, W1, W2: " << F1qe << ", " << F2qe << ", " << W1qe << ", " << W2qe << G4endl;
 
   // In some cases a negative F2 is returned giving a negative cross section
   if (xsect <= 0) xsect = 0.0;
+
+  //  G4cout << "xsect: " << xsect << G4endl;
 
   fWeightN = xsect*sin(Theta)*(Ein - M_electron);
 
@@ -1456,6 +1549,8 @@ void QweakSimEPEvent::F1F2QE09(G4int &Z, G4int &IA, G4double &QSQ,
 // b) Q2>1 gev**2 on wings of q.e. peak. But, this model is up
 //    to 50% too big at top of q.e. peak. BUT, F2 DOES agree very
 //    nicely with Osipenko et al data from CLAS, up to 5 GeV**2
+  
+//  G4cout << "Z, A, Q2, W2: " << Z << ", " << IA << ", " << QSQ << ", " << wsq << G4endl;
 
   G4double avgN, Pauli_sup1, Pauli_sup2, GEP, GEN, GMP, GMN, Q, Q3, Q4;
   G4double amp = 0.93828;

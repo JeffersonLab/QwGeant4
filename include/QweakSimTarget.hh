@@ -92,6 +92,9 @@ public:
   G4LogicalVolume*   getTargetLogicalVolume()    {return TargetMaterial_Logical;} 
   G4VPhysicalVolume* getTargetPhysicalVolume()   {return TargetMaterial_Physical;} 
 
+  void SetTargetLength(G4double);
+  G4double GetTargetLength();
+
 private:
 
   QweakSimMaterial* pMaterial;
@@ -150,6 +153,8 @@ private:
 
   QweakSimTargetMessenger* targetMessenger;  // pointer to the Messenger
   QweakSimUserInformation *myUserInfo;
+
+  G4double targetLen;
 
 };
 

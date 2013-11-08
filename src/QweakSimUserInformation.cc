@@ -20,6 +20,7 @@ void QweakSimUserInformation::Print() const
   G4cout << "Reaction type:: " << ReactionType << G4endl;
   G4cout << "Beam pos:: " << fPositionX << "\t" << fPositionY << G4endl;
   G4cout << "Tgt center z:: " << TargetCenterPositionZ << G4endl;
+  G4cout << "Tgt length:: " << TargetLength << G4endl;
   G4cout << "Beam mom:: " << fNormMomentumX << "\t" << fNormMomentumY << G4endl;
   G4cout << "Org ver pos:: " << OriginVertexPositionX <<"\t" << OriginVertexPositionY << "\t" << OriginVertexPositionZ << G4endl;
   G4cout << "Org ver ang:: "<< OriginVertexThetaAngle <<"\t"<< OriginVertexPhiAngle << G4endl;
@@ -44,18 +45,19 @@ void QweakSimUserInformation::PrintELoss()
 void QweakSimUserInformation::Initialize()
 {
 
-
   fPositionX = 0.0*mm;
   fPositionY = 0.0*mm;
   fNormMomentumX = 0.0*mrad;
   fNormMomentumY = 0.0*mrad;
   
   TargetCenterPositionZ = -650*cm;
-  TargetUSDummyPositionOffsetZ = -178.956*cm;  // Offset from LH2 center
-  TargetDSDummyPositionOffsetZ = 168.68*cm;    // Offset from LH2 center
+
+  TargetLength = 34.346*cm;
+
+  TargetUSDummyPositionOffsetZ = -178.956*mm;  // Offset from LH2 center
+  TargetDSDummyPositionOffsetZ = 168.68*mm;    // Offset from LH2 center
   // Dummy target Z positions are taken from the June 21, 2012 target survey
   // The average US and average DS positions are used.  
-
 
   //TargetUSALDummy1Thickness    = 0.0*cm;
   //TargetUSALDummy2Thickness    = 0.0*cm;
@@ -65,6 +67,7 @@ void QweakSimUserInformation::Initialize()
   //TargetDSALDummy8Thickness    = 0.0*cm;
   //TargetUSCDummyThickness      = 0.0*cm;
   //TargetDSCDummyThickness      = 0.0*cm;
+
   PrimaryEventNumber = 0;
   ReactionType = 0;         // assign a number to which kind of reaction,e.g. 1 = elastic ep,
   PDGcode = 0;              // particle data code/number for the primary particle, e.g. 3=electron
