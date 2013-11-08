@@ -30,7 +30,7 @@
 #/particle/process/inactivate 3
 
 # load/execute this macro:
-/control/execute myQweakConfiguration.mac
+/control/execute myQweakConfiguration_Al.mac
 
 # Select the tracking flag
 #  0: Allow primaries only (default)
