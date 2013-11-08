@@ -264,7 +264,7 @@
 #====================================
 
 # Inform the RunManager to systematically save the seed
-/random/setSavingFlag 1
+/random/setSavingFlag 0
 # Copy the following command line to your user macro and uncomment it 
 # to use the seeds of the last event in last run
 #/random/resetEngineFrom currentEvent.rndm
