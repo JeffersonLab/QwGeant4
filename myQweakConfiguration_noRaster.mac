@@ -1,4 +1,4 @@
-/control myQweakConfiguration.mac
+/control/execute myQweakConfiguration.mac
 
 #==========================
 # Set beam rastering region
