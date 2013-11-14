@@ -1,3 +1,5 @@
+/control/execute myQweakConfiguration.mac
+
 #====================================
 # Magnetic field related
 #====================================
