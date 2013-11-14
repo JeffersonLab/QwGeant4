@@ -6,8 +6,8 @@
 #Assisted By:
 #
 
-/control/execute myQweakConfiguration.mac
-/control/execute macros/peiqing_2011.mac
+/control/execute myQweakConfiguration_Mag90.mac
+#/control/execute macros/peiqing_2011.mac
 
 /random/setSavingFlag 0
 /random/setDirectoryName random/%name%_%jobid%
@@ -16,7 +16,7 @@
 /TrackingAction/TrackingFlag 3
 
 #rotate a magnetic field
-/MagneticField/SetRotation 90.0 degree
+#/MagneticField/SetRotation 90.0 degree
 
 /EventGen/SelectReactionRegion 1
 /EventGen/SelectReactionType 1
