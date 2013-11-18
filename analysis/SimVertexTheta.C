@@ -15,12 +15,13 @@ Assisted By: Wouter Deconinck
 #include "TSystem.h"
 #include "TChain.h"
 #include "TCanvas.h"
-
 #include "TH1D.h"
+
 #include <fstream>
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include <vector> 
 
 void SimVertexTheta (string posx, int posy, double anglex, int angley)
 {
@@ -40,10 +41,9 @@ void SimVertexTheta (string posx, int posy, double anglex, int angley)
 //  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeight_Al_US_Run2/*.root");
 //  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeight_Al_DS_Run2/*.root");
 
-
 //Run 1 & 2
 //  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeight_Run1_noDC/*.root");
-  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeight_Run2_noDC/*.root");
+//  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeight_Run2_noDC/*.root");
 
 //  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeightScan/*.root");
 //  QweakSimG4_Tree->Add("/cache/mss/home/vmgray/rootfiles/myLightWeightScan_IdealPos/*.root");
@@ -58,7 +58,7 @@ void SimVertexTheta (string posx, int posy, double anglex, int angley)
 //  QweakSimG4_Tree->Add(Form("/cache/mss/home/vmgray/rootfiles/myLightWeightScan_MagRot90deg_noDC/myLightWeightScan_MagRot90deg_noDC_%d.root",i));
 
   //Qtor Scans
-//  QweakSimG4_Tree->Add(Form("/cache/mss/home/vmgray/rootfiles/myQtorScan/myQtorScan_%d_*.root", posy));
+  QweakSimG4_Tree->Add(Form("/cache/mss/home/vmgray/rootfiles/myQtorScan/myQtorScan_%d_*.root", posy));
 
   //Position scan files
 //  QweakSimG4_Tree->Add(Form("/cache/mss/home/vmgray/rootfiles/myPosDirScan/myPosDirScan_Position%s_%dum_Direction%s_%durad_*.root",posx.c_str(), posy, posx.c_str(), anglex));
@@ -126,7 +126,12 @@ void SimVertexTheta (string posx, int posy, double anglex, int angley)
   {
     Int_t n1 = nentries / n * i;
 
-    QweakSimG4_Tree->Draw(Form("Primary.OriginVertexThetaAngle>>Theta[%d][0]",i) ,"Primary.CrossSection * Cerenkov.PMT.PMTTotalNbOfPEs"," ", step ,n1 );
+    QweakSimG4_Tree->Draw(Form("Primary.OriginVertexThetaAngle>>Theta[%d][0]",i) ,"Primary.CrossSection \\
+      * (Cerenkov.PMT.PMTTotalNbOfPEs[1] + Cerenkov.PMT.PMTTotalNbOfPEs[2] \\
+      + Cerenkov.PMT.PMTTotalNbOfPEs[3] + Cerenkov.PMT.PMTTotalNbOfPEs[4] \\
+      + Cerenkov.PMT.PMTTotalNbOfPEs[5] + Cerenkov.PMT.PMTTotalNbOfPEs[6] \\
+      + Cerenkov.PMT.PMTTotalNbOfPEs[7] + Cerenkov.PMT.PMTTotalNbOfPEs[8] \\
+      + Cerenkov.PMT.PMTTotalNbOfPEs[9])","",step,n1);
     mean_Theta[0] += Theta[i][0]->GetMean();
     sigma_Theta[0] += Theta[i][0]->GetMean() * Theta[i][0]->GetMean();
     Theta_tot[0]->Add(Theta[i][0]);
@@ -136,7 +141,7 @@ void SimVertexTheta (string posx, int posy, double anglex, int angley)
     for (size_t oct = 1; oct < Theta[i].size(); oct ++)
     {
       QweakSimG4_Tree->Draw(Form("Primary.OriginVertexThetaAngle>>Theta[%d][%d]",i,oct),
-        Form("Primary.CrossSection*Cerenkov.PMT.PMTTotalNbOfPEs* (Cerenkov.Detector.DetectorID==%d)/Cerenkov.Detector.NbOfHits",oct), " ", step, n1 );
+        Form("Primary.CrossSection*Cerenkov.PMT.PMTTotalNbOfPEs[%d] * (Cerenkov.Detector.DetectorID==%d)/Cerenkov.Detector.NbOfHits",oct, oct), " ", step, n1 );
       mean_Theta[oct] += Theta[i][oct]->GetMean();
       sigma_Theta[oct] += Theta[i][oct]->GetMean() * Theta[i][oct]->GetMean();
       Theta_tot[oct]->Add(Theta[i][oct]);
