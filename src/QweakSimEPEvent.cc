@@ -142,8 +142,8 @@ G4ThreeVector QweakSimEPEvent::GetMomentumDirection()
      * \li else: not defined
      */
 
-    G4double cosTheta;
-    G4double sinTheta;
+    G4double cosTheta = 1.0;
+    G4double sinTheta = 0.0;
 
     if (Isotropy == 0) {
       // Generate flat theta distribution
@@ -384,14 +384,14 @@ G4double QweakSimEPEvent::Elastic_Cross_Section_Aluminum(G4double E_in,
       G4double a0 = sqrt((a*a-1.5*ap*ap)/(3.5-10/Z-1.5/A)); 
 
       G4double Q = 14.6;  //unit fm^(-2)
-      G4double J = 5.0/2.0; 
+//    G4double J = 5.0/2.0;
 
-      G4double gamma = 2.792847351; //This is the magnetic moment
+//    G4double gamma = 2.792847351; //This is the magnetic moment
 //    G4double Omega = -3/2*(1+2*gamma)*a0*a0; 
 //    G4double Gamma = 15/4*gamma*pow(a0,4);
-      G4double mu = 3.69;  // This is NOT the magnetic moment
-      G4double Omega_mu = -6.36; // Omega/mu 
-      G4double Gamma_mu = 20.7;  // Gamma/mu
+//    G4double mu = 3.69;  // This is NOT the magnetic moment
+//    G4double Omega_mu = -6.36; // Omega/mu 
+//    G4double Gamma_mu = 20.7;  // Gamma/mu
 
       if (Theta<Theta_Min)
            Theta = Theta_Min;
@@ -399,7 +399,7 @@ G4double QweakSimEPEvent::Elastic_Cross_Section_Aluminum(G4double E_in,
 //    E_in unit is MeV, q2 unit is fm^(-2)   
       G4double CTH = cos(Theta/2.0);
       G4double STH = sin(Theta/2.0);
-      G4double T2THE = STH*STH/CTH/CTH;
+//    G4double T2THE = STH*STH/CTH/CTH;
       G4double ETA = 1.0+2.0*E_in*STH*STH/M;
       E_out = E_in/ETA;
    
@@ -422,10 +422,10 @@ G4double QweakSimEPEvent::Elastic_Cross_Section_Aluminum(G4double E_in,
 //  EventDataFile<<"F0="<<F0<<"  "<<"F2="<<F2<<"  "<<"Fe_2="<<Fe_2<<G4endl;
 
 //    Magnetic form factor (theoretical)
-      G4double Fm1 = (1.0-2.0/5.0*(1.0+2.0*gamma)/(1.0+gamma/2.0)*x+6.0/35.0*gamma*x*x/(1.0+gamma/2.0))*exp(-x);
-      G4double Fm3 = (1.0-2.0/3.0*gamma*x/(1.0+2.0*gamma))*exp(-x);
-      G4double Fm5 = exp(-x);
-      G4double Fm_2 = Fm1*Fm1+(4.0/525.0)*pow(q2*Omega_mu*Fm3,2)+(2.0/33075.0)*pow(q2,4)*pow(Gamma_mu*Fm5,2);
+//    G4double Fm1 = (1.0-2.0/5.0*(1.0+2.0*gamma)/(1.0+gamma/2.0)*x+6.0/35.0*gamma*x*x/(1.0+gamma/2.0))*exp(-x);
+//    G4double Fm3 = (1.0-2.0/3.0*gamma*x/(1.0+2.0*gamma))*exp(-x);
+//    G4double Fm5 = exp(-x);
+//    G4double Fm_2 = Fm1*Fm1+(4.0/525.0)*pow(q2*Omega_mu*Fm3,2)+(2.0/33075.0)*pow(q2,4)*pow(Gamma_mu*Fm5,2);
 
 //  EventDataFile<<"Fm1="<<Fm1<<"  "<<"Fm3="<<Fm3<<"  "<<"Fm5="<<Fm5<<"  "<<"Fm_2="<<Fm_2<<G4endl;
 
@@ -1326,11 +1326,11 @@ G4double QweakSimEPEvent::AlNuclInel(G4double E_in, // MeV
 {
   ///
   G4double M_p = 938.2796;  // proton mass in MeV
-  G4double Z_Al = 13.0;
+//G4double Z_Al = 13.0;
   G4double A_Al = 27.0;
   G4double M_Al = M_p*A_Al;
 
-  G4double CTH = cos(Theta/2.0);
+//G4double CTH = cos(Theta/2.0);
   G4double STH = sin(Theta/2.0);
 
   // now get qsq
@@ -1364,7 +1364,7 @@ G4double QweakSimEPEvent::AlGDR(G4double E_in, //MeV
   double M_Al = M_p*A_Al;
 
   //  double th = Theta*3.14159/180.;  // convert to radians
-  double CTH = cos(Theta/2.0);
+//double CTH = cos(Theta/2.0);
   double STH = sin(Theta/2.0);
 
   // now get qsq
@@ -1562,7 +1562,7 @@ void QweakSimEPEvent::F1F2QE09(G4int &Z, G4int &IA, G4double &QSQ,
   G4double pz, Nu, dpz, pznom, pzmin;
   G4double QV, TAU, FY, dwmin, w2p;
   G4double kappa, lam, lamp, taup, squigglef, psi, psip, nuL, nuT;
-  G4double kf, Es, GM2bar, GE2bar, W1bar, W2bar, Delta, GL, GT;
+  G4double kf, Es, GM2bar, GE2bar, W2bar, Delta, GL, GT;
   G4int izz, izzmin, izp, izznom, izdif;
 
   // Look up tables for deuteron case
@@ -1621,12 +1621,14 @@ void QweakSimEPEvent::F1F2QE09(G4int &Z, G4int &IA, G4double &QSQ,
     0.92047,0.92494,0.94450,0.94782,0.96768,0.96975,0.98974,1.0};
 
   // Peter Bosted's correction params
+  /*
   G4double pb[20] = {
     0.1023E+02, 0.1052E+01, 0.2485E-01, 0.1455E+01,
     0.5650E+01,-0.2889E+00, 0.4943E-01,-0.8183E-01,
     -0.7495E+00, 0.8426E+00,-0.2829E+01, 0.1607E+01,
     0.1733E+00, 0.0000E+00, 0.0000E+00, 0.0000E+00,
     0.0000E+00, 0.0000E+00, 0.0000E+00, 0.0000E+00};
+  */
   G4double y,R;
 
   G4double P[24] = {
@@ -1722,7 +1724,7 @@ void QweakSimEPEvent::F1F2QE09(G4int &Z, G4int &IA, G4double &QSQ,
 
   GM2bar = Pauli_sup1 * (Z * GMP*GMP + avgN * GMN*GMN);
   GE2bar = Pauli_sup2 * (Z * GEP*GEP + avgN * GEN*GEN);
-  W1bar = TAU * GM2bar;
+  //G4double W1bar = TAU * GM2bar;
   W2bar = (GE2bar + TAU * GM2bar) / (1. + TAU);
 
   Delta = squigglef * (1. - psi*psi) * (sqrt(TAU * (1.+TAU)) / kappa + squigglef/3. *
