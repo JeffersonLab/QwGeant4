@@ -68,7 +68,7 @@ int main(int argc,char** argv) {
   // UserInitialization classes (mandatory)
   QweakSimUserInformation*       myQweakSimUserInformation  = new QweakSimUserInformation();
   QweakSimDetectorConstruction*  myQweakSimExperiment       = new QweakSimDetectorConstruction(myQweakSimUserInformation);
-  QweakSimAnalysis*              myQweakSimAnalysis         = new QweakSimAnalysis();
+  QweakSimAnalysis*              myQweakSimAnalysis         = new QweakSimAnalysis(myQweakSimUserInformation);
 
 //jpan@nuclear.uwinnipeg.ca
   QweakSimEPEvent*               myEPEvent                  = new QweakSimEPEvent(myQweakSimUserInformation);
@@ -168,6 +168,7 @@ int main(int argc,char** argv) {
 #endif
 
   delete runManager;
+  delete myEPEvent;
 
   return 0;
 }

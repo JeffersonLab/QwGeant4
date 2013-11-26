@@ -65,10 +65,17 @@ public:
     return G4ThreeVector(fNormMomentumX,fNormMomentumY,sqrt(1-fNormMomentumX*fNormMomentumX-fNormMomentumY*fNormMomentumY));
   }
 
-  
-    
+  void SetNumberOfEventToBeProcessed(G4int n) {
+    fNumberOfEventToBeProcessed = n;
+  }
+  G4int GetNumberOfEventToBeProcessed() const {
+    return fNumberOfEventToBeProcessed;
+  }
+
 private:
-  
+
+  G4int fNumberOfEventToBeProcessed;
+
   G4double fPositionX;
   G4double fPositionY;
   G4double fNormMomentumX;

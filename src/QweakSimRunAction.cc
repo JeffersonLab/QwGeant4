@@ -55,6 +55,7 @@ void QweakSimRunAction::BeginOfRunAction(const G4Run* aRun)
 
   // Start analysis at begin of run
   analysis->BeginOfRun(aRun);
+  analysis->SetNumberOfEventToBeProcessed(aRun->GetNumberOfEventToBeProcessed());
 
   // Visualization
   if (G4VVisManager::GetConcreteInstance())

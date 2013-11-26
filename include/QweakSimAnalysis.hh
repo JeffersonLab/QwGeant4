@@ -47,6 +47,7 @@
 class G4Run;
 
 // user classes
+class QweakSimUserInformation;
 class QweakSimUserRunInformation;
 class QweakSimUserMainEvent;
 class QweakSimAnalysisMessenger;
@@ -55,7 +56,7 @@ class QweakSimAnalysisMessenger;
 class QweakSimAnalysis {
 public:
 
-  QweakSimAnalysis();
+  QweakSimAnalysis(QweakSimUserInformation*);
   virtual ~QweakSimAnalysis();
 
 public:
@@ -63,6 +64,10 @@ public:
   void BeginOfRun(const G4Run* aRun);
   void EndOfRun(const G4Run* aRun);
   void EndOfEvent(G4int flag);
+
+  // Get and set number of events in this run
+  void SetNumberOfEventToBeProcessed(G4int n);
+  G4int GetNumberOfEventToBeProcessed() const;
 
   // Set ROOT file stem or name
   void SetRootFileStem(const G4String& stem) { fRootFileStem = stem; }
@@ -76,6 +81,8 @@ public:
 private:
 
   QweakSimAnalysisMessenger* pAnalysisMessenger;
+
+  QweakSimUserInformation* myUserInfo;
 
   QweakSimUserRunInformation* pUserRunInformation;
 

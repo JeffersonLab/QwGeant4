@@ -26,15 +26,18 @@
 
 // user includes
 #include "QweakSimAnalysis.hh"
+#include "QweakSimUserInformation.hh"
 #include "QweakSimUserRunInformation.hh"
 #include "QweakSimUserMainEvent.hh"
 #include "QweakSimAnalysisMessenger.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-QweakSimAnalysis::QweakSimAnalysis()
+QweakSimAnalysis::QweakSimAnalysis(QweakSimUserInformation *userInfo)
 : fRootFileStem("QwSim"),fRootFileName("")
 {
   G4cout << "###### Calling QweakSimAnalysis::QweakSimAnalysis()" << G4endl;
+
+  myUserInfo = userInfo;
 
   // Initialize
   fRootEvent    = NULL;
@@ -66,6 +69,16 @@ QweakSimAnalysis::~QweakSimAnalysis()
   if (pAnalysisMessenger) delete pAnalysisMessenger;
 
   G4cout << "###### Leaving QweakSimAnalysis::QweakSimAnalysis()" << G4endl;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
+
+// Get and set number of events in this run
+void QweakSimAnalysis::SetNumberOfEventToBeProcessed(G4int n) {
+  myUserInfo->SetNumberOfEventToBeProcessed(n);
+}
+G4int QweakSimAnalysis::GetNumberOfEventToBeProcessed() const {
+  return myUserInfo->GetNumberOfEventToBeProcessed();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....

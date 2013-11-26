@@ -69,7 +69,9 @@ QweakSimEPEvent::~QweakSimEPEvent()
 
   G4cout << "###### Calling QweakSimEPEvent::~QweakSimEPEvent () " << G4endl;
 
- if( EventGen_Messenger) delete EventGen_Messenger;
+  if( EventGen_Messenger) delete EventGen_Messenger;
+
+  G4cout << "Created a great many events: " << myUserInfo->GetNumberOfEventToBeProcessed() << G4endl;
 
   G4cout << "###### Leaving QweakSimEPEvent::~QweakSimEPEvent () " << G4endl;
 }
