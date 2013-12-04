@@ -23,14 +23,17 @@ my $Njobs;
 
 #declaration of subroutines
 sub helpscreen;
-sub print_footer;   #prints macfile header
+sub print_header;   #prints macfile header
+sub print_footer;   #prints macfile footer
 sub print_xml;      #prints xml file
 
-my ($help);
+my ($help,$dryrun,$outfile);
 GetOptions(
  "help|h|?"           =>  \$help,
  "Nevents|events=i"   =>  \$Nevents,
  "Njobs|jobs=i"       =>  \$Njobs,
+ "dry-run|dry|test"   =>  \$dryrun,
+ "outfile|out|o=s"    =>  \$outfile,
 );
 
 #die helpscreen unless $#ARGV!=0;
@@ -41,6 +44,8 @@ $Nevents=10000 unless $Nevents;
 $original_mac = pop @ARGV;
 
 #construct basename
+#basename is the name of the original macfile given
+#with a number appended, 1<n<Njobs
 if ($original_mac =~ m/(.*)\.mac/) {
     $jobname = $1;
 } else {
@@ -48,6 +53,7 @@ if ($original_mac =~ m/(.*)\.mac/) {
     $original_mac = $original_mac . "\.mac";
 }
 
+#open and read-in provided mac file
 open ORIG, "<", $original_mac or die "cant open your .mac file: $!\n";
 {
   local $/;               #restrict slurp to local block
@@ -60,19 +66,24 @@ foreach my $number (1..$Njobs) {
   my $output = "macros\/$basename\.mac";
   my $xmlout = "xml\/$basename.xml";
 
-  #create individual mapfile
+  #create individual macfile
   open my $fh, ">", $output or die "can't open/create $output: $!\n";
+  print_header($fh,$basename);  #print new title
   print $fh $mac_content;
-  print_footer($fh,$basename,$Nevents);
+  print_footer($fh,$basename,$Nevents); #print random seed information, output
   close $fh;
 
-  #deal with xml file
+  #create xml file
   open my $xml, ">", $xmlout or die "can't open/create $xmlout: $!\n";
   print_xml($xml,$basename);
   close $xml;
 
-  my $callAuger = "jsub -xml $xmlout";
-  system $callAuger;
+  if ($dryrun) {
+    print "This is just a test: jsub -xml $xmlout\n";
+  } else {
+    my $callAuger = "jsub -xml $xmlout";  #this is command to run jobs
+    system $callAuger;
+  }
 } #end foreach over files
 
 print "End of job submissions.\n";
@@ -95,17 +106,35 @@ the rest.
 Calling syntax:
   g4jsub.pl [options]
 Example:
-  g4sub.pl sample.mac --events 20000 --jobs 5
+  g4sub.pl sample.mac --events 20000 --jobs 5 -o "/work/username/directory"
 
 Options include:
   --help       displays this helpful message
   --events     set number of events in each job
-              default is 10k
+                default is 10k
   --jobs       number of jobs to submit
-              default is 10
+                default is 10
+  --outfile    provide an output file location
+                default is /volatile/hallc/qweak/USERNAME
+  --dry-run    do a dry run: create all the files
+                but don't submit any.
+                Useful for testing.
 NOTE: you MUST make an xml/ and macros/ folder before using.
 EOF
 die $helpstring if $help;
+}
+
+sub print_header {
+  my ($fh,$basename) = @_;
+
+  my $header =
+"
+#==============================#
+# Macro file $basename         #
+# generated from g4jsub script #
+#==============================#
+";
+print $fh "$header\n";
 }
 
 sub print_footer {
@@ -114,19 +143,23 @@ sub print_footer {
   my $seed1 = int ( rand(1e10) );
   my $seed2 = int ( rand(1e9 ) );
 
-  my $header =
-  "
-#======================#
-# Macro file $basename #
-#======================#
+  if ( $outfile ) {
+    #if the given outfile destination ends with a "/", chop it. I'll add it back in.
+    chop $outfile if $outfile =~ m/\/$/;
+    $outfile = "$outfile/$basename.root";
+  } else {
+    $outfile = "/volatile/hallc/qweak/$user/$basename.root";
+  }
 
+  my $footer =
+  "
 # load/execute this macro
 /random/setSeeds $seed1 $seed2
-/Analysis/RootFileName $basename.root
+/Analysis/RootFileName $outfile
 /run/beamOn $Nevents
 ";
 
-print $fh "$header\n";
+print $fh "$footer\n";
 return;
 }
 
@@ -148,12 +181,10 @@ build/QweakSimG4 macros/$basename\.mac
   ]]></Command>
 
   <Memory space=\"1200\" unit=\"MB\"/>
-  <TimeLimit unit=\"minutes\" time=\"4320\"/>
-
 
   <Job>
-    <Stdout dest=\"/u/home/$user/QwGeant4/output/$basename\.out\"/>
-    <Stderr dest=\"/u/home/$user/QwGeant4/output/$basename\.err\"/>
+    <Stdout dest=\"/u/home/$user/QwGeant4/jsub/output/$basename\.out\"/>
+    <Stderr dest=\"/u/home/$user/QwGeant4/jsub/output/$basename\.err\"/>
   </Job>
 
 </Request>
