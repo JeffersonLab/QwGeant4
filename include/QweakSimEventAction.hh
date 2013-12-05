@@ -75,6 +75,7 @@ private:
   void Initialize();
   G4double GetDistance(G4ThreeVector,G4ThreeVector);
   void CalculateKinematicVariables();
+  G4double CalculateRate(G4double xsec, G4int PEs);
 
   bool printhits;
 
@@ -236,6 +237,32 @@ private:
   std::vector<G4float> PmtNPELeft;
   std::vector<G4float> PmtNPERight;
   std::vector<G4float> PmtNPETotal;
+
+  std::vector<G4float> PmtRateLeft;
+  std::vector<G4float> PmtRateRight;
+  std::vector<G4float> PmtRateTotal;
+  std::vector<G4float> PmtRateLeftEL;
+  std::vector<G4float> PmtRateRightEL;
+  std::vector<G4float> PmtRateTotalEL;
+  std::vector<G4float> PmtRateLeftDIS;
+  std::vector<G4float> PmtRateRightDIS;
+  std::vector<G4float> PmtRateTotalDIS;
+  std::vector<G4float> PmtRateLeftQE;
+  std::vector<G4float> PmtRateRightQE;
+  std::vector<G4float> PmtRateTotalQE;
+
+  std::vector<G4float> PmtYieldLeft;
+  std::vector<G4float> PmtYieldRight;
+  std::vector<G4float> PmtYieldTotal;
+  std::vector<G4float> PmtYieldLeftEL;
+  std::vector<G4float> PmtYieldRightEL;
+  std::vector<G4float> PmtYieldTotalEL;
+  std::vector<G4float> PmtYieldLeftDIS;
+  std::vector<G4float> PmtYieldRightDIS;
+  std::vector<G4float> PmtYieldTotalDIS;
+  std::vector<G4float> PmtYieldLeftQE;
+  std::vector<G4float> PmtYieldRightQE;
+  std::vector<G4float> PmtYieldTotalQE;
 
   Int_t edgeEvent;
 

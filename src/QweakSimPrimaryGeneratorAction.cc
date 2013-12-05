@@ -103,7 +103,7 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     myNormMomentumY  = tan(myUserInfo->GetNormMomentumY()); // = 0
     myNormMomentumZ  = sqrt(1.0 - myNormMomentumX * myNormMomentumX - myNormMomentumY * myNormMomentumY);  // = 1
 
-    E_beam = myEvent->GetBeamEnergy();
+    E_beam = myUserInfo->GetBeamEnergy();
 
     myUserInfo->StoreOriginVertexPositionZ(myEvent->GetVertexZ());
     myUserInfo->EvtGenStatus = 0; // checked in QweakSimSteppingAction.cc
@@ -161,7 +161,7 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   // finally : fire !!!
   particleGun->GeneratePrimaryVertex(anEvent);  // takes an event, generates primary vertex, and associates primary particles with the vertex
   myUserInfo->StorePrimaryEventNumber(myEventCounter+1);
-  myUserInfo->StoreBeamEnergy(myEvent->GetBeamEnergy()); 
+  //myUserInfo->SetBeamEnergy(myEvent->GetBeamEnergy());
     // rest of userInfo filled in QweakSimSteppingAction.cc
 
 //  G4cout << "###### Leaving QweakSimPrimaryGeneratorAction::GeneratePrimaries" << G4endl;

@@ -119,6 +119,40 @@ QweakSimTarget::QweakSimTarget(QweakSimUserInformation *myUI)
     myUserInfo->TargetEntranceWindowThickness = targetCellEntranceWindowThickness;
     myUserInfo->TargetExitWindowThickness = targetCellExitWindowThickness;
     myUserInfo->TargetExitWindowNippleThickness = targetCellExitWindowNippleThickness;
+
+    // Thicknesses taken from 2012 target survey (https://qweak.jlab.org/elog/Target/21)
+    myUserInfo->TargetThicknessUSALDummy1    = 0.8812*mm;
+    myUserInfo->TargetThicknessUSALDummy2    = 1.7987*mm;
+    myUserInfo->TargetThicknessUSALDummy4    = 3.6030*mm;
+    myUserInfo->TargetThicknessDSALDummy2    = 1.8637*mm;
+    myUserInfo->TargetThicknessDSALDummy4    = 3.6828*mm;
+    myUserInfo->TargetThicknessDSALDummy8    = 7.1980*mm;
+    myUserInfo->TargetThicknessUSCDummy      = 0.9973*mm;
+    myUserInfo->TargetThicknessDSCDummy      = 3.1876*mm;
+
+    G4double densityLH2 = 0.0713 /(cm*cm*cm);  // [g/cm^3] 
+    G4double densityAL  = 2.80   /(cm*cm*cm);  // From 2012 target survey
+    G4double densityUSC = 1.70   /(cm*cm*cm);  //
+    G4double densityDSC = 2.205  /(cm*cm*cm); //
+
+    // Molar masses taken from PDG:  
+    // J. Beringer et al. (Particle Data Group), Phys. Rev. D86, 010001 (2012).
+    G4double massLH2 = 1.00794;    // [g/mol]
+    G4double massAL  = 26.9815386; // [g/mol]
+    G4double massC   = 12.0107;    // [g/mol]
+
+    myUserInfo->TargetLuminosityLH2 = CalculateLuminosity(massLH2, densityLH2, myUserInfo->TargetLength);
+    myUserInfo->TargetLuminosityUSALWindow = CalculateLuminosity(massAL, densityAL, myUserInfo->TargetEntranceWindowThickness);
+    myUserInfo->TargetLuminosityDSALWindow = CalculateLuminosity(massAL, densityAL, myUserInfo->TargetExitWindowNippleThickness);
+    myUserInfo->TargetLuminosityUSALDummy1 = CalculateLuminosity(massAL, densityAL, myUserInfo->TargetThicknessUSALDummy1);
+    myUserInfo->TargetLuminosityUSALDummy2 = CalculateLuminosity(massAL, densityAL, myUserInfo->TargetThicknessUSALDummy2);
+    myUserInfo->TargetLuminosityUSALDummy4 = CalculateLuminosity(massAL, densityAL, myUserInfo->TargetThicknessUSALDummy4);
+    myUserInfo->TargetLuminosityDSALDummy2 = CalculateLuminosity(massAL, densityAL, myUserInfo->TargetThicknessDSALDummy2);
+    myUserInfo->TargetLuminosityDSALDummy4 = CalculateLuminosity(massAL, densityAL, myUserInfo->TargetThicknessDSALDummy4);
+    myUserInfo->TargetLuminosityDSALDummy8 = CalculateLuminosity(massAL, densityAL, myUserInfo->TargetThicknessDSALDummy8);
+    myUserInfo->TargetLuminosityUSCDummy = CalculateLuminosity(massC, densityUSC, myUserInfo->TargetThicknessUSCDummy);
+    myUserInfo->TargetLuminosityDSCDummy = CalculateLuminosity(massC, densityDSC, myUserInfo->TargetThicknessDSCDummy);
+
     targetMessenger = new QweakSimTargetMessenger(this);
 
 }
@@ -528,6 +562,21 @@ G4double QweakSimTarget::GetTargetLength()
 {
     G4cout << G4endl << "###### Calling QweakSimTarget::GetTargetLength() " << G4endl << G4endl;
     return targetLen;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
+
+G4double QweakSimTarget::CalculateLuminosity(G4double mass, G4double density, G4double length)
+{
+  G4double Lum = 0.0;            // Luminosity
+  G4double N_b = 6.241e12;       // [Hz/uA] # of particles in the beam (from definition of ampere)
+  G4double N_A = 6.02214129e23;  // Avagadro's number
+
+  Lum = N_b*length*density*N_A/mass;  //  units [Hz/(uA*mm^2)]
+
+  Lum *= 1e-31;  //  Conversion from [Hz/(uA*mm^2)] -> [kHz/(uA*ub)]
+
+  return Lum;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

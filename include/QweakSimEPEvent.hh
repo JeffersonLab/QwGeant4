@@ -59,12 +59,12 @@ class QweakSimEPEvent {
    G4int kActiveOctantNumber;   ///< Active octant number in the simulation, 0 will enable all octants
 
    G4int Isotropy;              ///< \ref isotropy used for event generation
-   G4double PhiAngle_Min;
-   G4double PhiAngle_Max;
-   G4double ThetaAngle_Min;
-   G4double ThetaAngle_Max;
-   G4double EPrime_Min;
-   G4double EPrime_Max;
+  //G4double PhiAngle_Min;
+  //G4double PhiAngle_Max;
+  //G4double ThetaAngle_Min;
+  //G4double ThetaAngle_Max;
+  //G4double EPrime_Min;
+  //G4double EPrime_Max;
    G4double BeamEnergy;
 
    G4double myPositionZ;
@@ -99,28 +99,63 @@ class QweakSimEPEvent {
 
   void SetIsotropy(G4int isot) { Isotropy = isot; };
   G4int GetIsotropy( ) {return Isotropy;};
+  //------------------------------------------------------------------------  
+  /*
+  void SetEPrime_Min(G4double energy)  {myUserInfo->SetEPrime_Min(energy); CheckLookupTableBounds();};
+  G4double GetEPrime_Min() {return myUserInfo->GetEPrime_Min();};
+
+  void SetEPrime_Max(G4double energy) {myUserInfo->SetEPrime_Max(energy); CheckLookupTableBounds();};
+  G4double GetEPrime_Max() {return myUserInfo->GetEPrime_Max();};
+
+  void SetThetaAngle_Min(G4double ang) {myUserInfo->SetThetaAngle_Min(ang); CheckLookupTableBounds();};
+  G4double GetThetaAngle_Min() {return myUserInfo->GetThetaAngle_Min();};
+
+  void SetThetaAngle_Max(G4double ang) {myUserInfo->SetThetaAngle_Max(ang); CheckLookupTableBounds();};
+  G4double GetThetaAngle_Max() {return myUserInfo->GetThetaAngle_Max();};
+
+  void SetPhiAngle_Min(G4double ang) {myUserInfo->SetPhiAngle_Min(ang);};
+  G4double GetPhiAngle_Min() {return myUserInfo->GetPhiAngle_Min();};
+
+  void SetPhiAngle_Max(G4double ang) {myUserInfo->SetPhiAngle_Max(ang);};
+  G4double GetPhiAngle_Max() {return myUserInfo->GetPhiAngle_Max();};
+
+  void SetLuminosity(G4double lum) {myUserInfo->SetLuminosity(lum);};
+  G4double GetLuminosity()  {return myUserInfo->GetLuminosity();};
   
-  void SetEPrime_Min(G4double energy) {EPrime_Min = energy; CheckLookupTableBounds();};
-  G4double GetEPrime_Min() {return EPrime_Min;};
+  void SetPhaseSpace(G4double ps) {myUserInfo->SetPhaseSpace(ps);}
+  G4double GetPhaseSpace()  {return myUserInfo->GetPhaseSpace();};
 
-  void SetEPrime_Max(G4double energy) {EPrime_Max = energy; CheckLookupTableBounds();};
-  G4double GetEPrime_Max() {return EPrime_Max;};
-
-  void SetThetaAngle_Min(G4double ang) {ThetaAngle_Min = ang; CheckLookupTableBounds();};
-  G4double GetThetaAngle_Min() {return ThetaAngle_Min;};
-
-  void SetThetaAngle_Max(G4double ang) {ThetaAngle_Max = ang; CheckLookupTableBounds();};
-  G4double GetThetaAngle_Max() {return ThetaAngle_Max;};
-
-  void SetPhiAngle_Min(G4double ang) {PhiAngle_Min = ang;};
-  G4double GetPhiAngle_Min() {return PhiAngle_Min;};
-
-  void SetPhiAngle_Max(G4double ang) {PhiAngle_Max = ang;};
-  G4double GetPhiAngle_Max() {return PhiAngle_Max;};
-  
-  G4double GetBeamEnergy() {return BeamEnergy;}
   void SetBeamEnergy(G4double energy = 1.160*GeV); 
+  G4double GetBeamEnergy() {return myUserInfo->GetBeamEnergy();}
+  */
+  //----------------------------------------------------------------------
+  void SetEPrime_Min(G4double energy);
+  G4double GetEPrime_Min();
 
+  void SetEPrime_Max(G4double energy);
+  G4double GetEPrime_Max();
+
+  void SetThetaAngle_Min(G4double ang);
+  G4double GetThetaAngle_Min();
+
+  void SetThetaAngle_Max(G4double ang);
+  G4double GetThetaAngle_Max();
+
+  void SetPhiAngle_Min(G4double ang);
+  G4double GetPhiAngle_Min();
+
+  void SetPhiAngle_Max(G4double ang);
+  G4double GetPhiAngle_Max();
+
+  void SetLuminosity(G4double lum);
+  G4double GetLuminosity();
+  
+  void SetPhaseSpace(G4double ps);
+  G4double GetPhaseSpace();
+
+  void SetBeamEnergy(G4double energy = 1.160*GeV); 
+  G4double GetBeamEnergy();
+  //-----------------------------------------------------------------
   void  SetReactionType(G4int rt) { ReactionType = rt; TypeSetting = rt;};
   G4int GetReactionType() {return ReactionType; };
 

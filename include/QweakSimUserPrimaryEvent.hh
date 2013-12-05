@@ -69,12 +69,21 @@ private:
   Float_t OriginVertexKineticEnergy;    ///< Kinetic energy right after the primary vertex
   Float_t OriginVertexTotalEnergy;      ///< Total energy right after the primary vertex
 
+  Int_t   NumberOfEventToBeProcessed;
+  Float_t PhiAngle_Min;
+  Float_t PhiAngle_Max;
+  Float_t ThetaAngle_Min;
+  Float_t ThetaAngle_Max;
+  Float_t EPrime_Min;
+  Float_t EPrime_Max;
+  Float_t BeamEnergy;
+  Float_t Luminosity;
+  Float_t PhaseSpace;
+
   Float_t OriginVertexKinematicNu;
   Float_t OriginVertexKinematicQ2;
   Float_t OriginVertexKinematicX;
   Float_t OriginVertexKinematicW;
-
-  Float_t BeamEnergy;
 
   Float_t EffectiveKinematicNu;
   Float_t EffectiveKinematicQ2;
@@ -170,8 +179,35 @@ public:
   Float_t    GetOriginVertexKinematicW() const {return OriginVertexKinematicW;}
   
   //-----------------
+  void     StoreNumberOfEventToBeProcessed(Int_t events) { NumberOfEventToBeProcessed = events;}
+  Int_t      GetNumberOfEventToBeProcessed() const {return NumberOfEventToBeProcessed;}
+
+  void     StorePhiAngle_Min(Float_t ang) { PhiAngle_Min = ang; }
+  Float_t    GetPhiAngle_Min() const {return PhiAngle_Min;}
+
+  void     StorePhiAngle_Max(Float_t ang) { PhiAngle_Max = ang; }
+  Float_t    GetPhiAngle_Max() const {return PhiAngle_Max;}
+
+  void     StoreThetaAngle_Min(Float_t ang) { ThetaAngle_Min = ang; }
+  Float_t    GetThetaAngle_Min() const {return ThetaAngle_Min;}
+
+  void     StoreThetaAngle_Max(Float_t ang) { ThetaAngle_Max = ang; }
+  Float_t    GetThetaAngle_Max() const {return ThetaAngle_Max;}
+
+  void     StoreEPrime_Min(Float_t energy) { EPrime_Min = energy; }
+  Float_t    GetEPrime_Min() const {return EPrime_Min;}
+
+  void     StoreEPrime_Max(Float_t energy) { EPrime_Max = energy; }
+  Float_t    GetEPrime_Max() const {return EPrime_Max;}
+
   void     StoreBeamEnergy(Float_t energy) { BeamEnergy = energy; }
   Float_t    GetBeamEnergy() const {return BeamEnergy;}
+
+  void     StoreLuminosity(Float_t lum) { Luminosity = lum; }
+  Float_t    GetLuminosity() const {return Luminosity;}
+
+  void     StorePhaseSpace(Float_t ps) { PhaseSpace = ps; }
+  Float_t    GetPhaseSpace() const {return PhaseSpace;}
   
   //-----------------
   void     StoreEffectiveKinematicNu(Float_t nu) { EffectiveKinematicNu = nu; }

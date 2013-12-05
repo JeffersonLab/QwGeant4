@@ -95,6 +95,8 @@ public:
   void SetTargetLength(G4double);
   G4double GetTargetLength();
 
+  G4double CalculateLuminosity(G4double mass, G4double density, G4double length);
+
 private:
 
   QweakSimMaterial* pMaterial;

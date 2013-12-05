@@ -59,14 +59,38 @@ void QweakSimUserInformation::Initialize()
   // Dummy target Z positions are taken from the June 21, 2012 target survey
   // The average US and average DS positions are used.  
 
-  //TargetUSALDummy1Thickness    = 0.0*cm;
-  //TargetUSALDummy2Thickness    = 0.0*cm;
-  //TargetUSALDummy4Thickness    = 0.0*cm;
-  //TargetDSALDummy2Thickness    = 0.0*cm;
-  //TargetDSALDummy4Thickness    = 0.0*cm;
-  //TargetDSALDummy8Thickness    = 0.0*cm;
-  //TargetUSCDummyThickness      = 0.0*cm;
-  //TargetDSCDummyThickness      = 0.0*cm;
+  // Thicknesses taken from 2012 target survey (https://qweak.jlab.org/elog/Target/21)
+  //TargetThicknessUSALDummy1    = 0.8812*mm;
+  //TargetThicknessUSALDummy2    = 1.7987*mm;
+  //TargetThicknessUSALDummy4    = 3.6030*mm;
+  //TargetThicknessDSALDummy2    = 1.8637*mm;
+  //TargetThicknessDSALDummy4    = 3.6828*mm;
+  //TargetThicknessDSALDummy8    = 7.1980*mm;
+  //TargetThicknessUSCDummy      = 0.9973*mm;
+  //TargetThicknessDSCDummy      = 3.1876*mm;
+
+  //G4double densityLH2 = 0.0708 g*cm^-3;
+  //G4double densityAL  = 2.80   g*cm^-3;  // From 2012 target survey
+  //G4double densityUSC = 1.70   g*cm^-3;  //
+  //G4double densityDSC = 2.205   g*cm^-3; //
+
+  // Molar masses taken from PDG:  
+  // J. Beringer et al. (Particle Data Group), Phys. Rev. D86, 010001 (2012).
+  //G4double massLH2 = 1.00794    g*mol^-1;
+  //G4double massAL  = 26.9815386 g*mol^-1;
+  //G4double massC   = 12.0107    g*mol^-1;
+
+  //TargetLuminosityLH2 = CalculateLuminosity(massLH2, densityLH2, TargetLength);
+  //TargetLuminosityUSALWindow = CalculateLuminosity(massAL, densityAL, TargetThicknessUSALWindow);
+  //TargetLuminosityDSALWindow;
+  //TargetLuminosityUSALDummy1;
+  //TargetLuminosityUSALDummy2;
+  //TargetLuminosityUSALDummy4;
+  //TargetLuminosityDSALDummy2;
+  //TargetLuminosityDSALDummy4;
+  //TargetLuminosityDSALDummy8;
+  //TargetLuminosityUSCDummy;
+  //TargetLuminosityDSCDummy;
 
   PrimaryEventNumber = 0;
   ReactionType = 0;         // assign a number to which kind of reaction,e.g. 1 = elastic ep,
@@ -99,12 +123,20 @@ void QweakSimUserInformation::Initialize()
   OriginVertexKineticEnergy = 0.0;
   OriginVertexTotalEnergy = 0.0;
 
+  fEPrime_Min                    = 0.059*GeV;
+  fEPrime_Max                    = 1.159*GeV;
+  fThetaAngle_Min                = 4.0*degree;
+  fThetaAngle_Max                = 13.5*degree;
+  fPhiAngle_Min                  = -16.0*degree;
+  fPhiAngle_Max                  = 16.0*degree;
+  fBeamEnergy                    = 1.16*GeV;
+  fLuminosity                    = 0.0;
+  fPhaseSpace                    = 0.0;
+
   OriginVertexKinematicQ2        = 0.0;
   OriginVertexKinematicNu        = 0.0;
   OriginVertexKinematicX         = 0.0;
   OriginVertexKinematicW         = 0.0;
-
-  BeamEnergy                     = 0.0;
 
   EffectiveKinematicQ2           = 0.0;
   EffectiveKinematicNu           = 0.0;
@@ -320,6 +352,20 @@ void QweakSimUserInformation::Initialize()
       PMTQED753WKBS20->InsertValues(E_value, D753WKBS20_QE[kk][1]/100.);
     }
 }
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
+//G4double QweakSimUserInformation::CalculateLuminosity(G4double mass, G4double density, G4double length)
+//{
+//G4double L = 0.0;                        // Luminosity
+//G4double N_b = 6.241*10^12 Hz*microamp;  // # of particles in the beam (from definition of ampere)
+//G4double N_A = 6.02214129*10^23 * mol^-1;// Avagadro's number
+
+//L = N_b*length*density*N_A/mass;
+
+//return L;
+//}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
 G4double QweakSimUserInformation::GetNumberOfPhotoelectrons(G4double eng)
 {

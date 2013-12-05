@@ -55,6 +55,32 @@ class QweakSimUserCerenkov_PMTEvent : public TObject
     std::vector<Float_t> PMTRightNbOfPEs;      ///< Number of photo-electrons in right PMTs
     std::vector<Float_t> PMTTotalNbOfPEs;      ///< Number of photo-electrons in both PMTs
 
+    std::vector<Float_t> PMTLeftRate;      ///< Total event rate in left PMTs
+    std::vector<Float_t> PMTRightRate;     ///< Total event rate in right PMTs
+    std::vector<Float_t> PMTTotalRate;     ///< Total event rate in both PMTs
+    std::vector<Float_t> PMTLeftRateEL;    ///< Elastic event rate in left PMTs
+    std::vector<Float_t> PMTRightRateEL;   ///< Elastic event rate in right PMTs
+    std::vector<Float_t> PMTTotalRateEL;   ///< Elastic event rate in both PMTs
+    std::vector<Float_t> PMTLeftRateDIS;   ///< DIS event rate in left PMTs
+    std::vector<Float_t> PMTRightRateDIS;  ///< DIS event rate in right PMTs
+    std::vector<Float_t> PMTTotalRateDIS;  ///< DIS event rate in both PMTs
+    std::vector<Float_t> PMTLeftRateQE;    ///< Quasi-elastic event rate in left PMTs
+    std::vector<Float_t> PMTRightRateQE;   ///< Quasi-elastic event rate in right PMTs
+    std::vector<Float_t> PMTTotalRateQE;   ///< Quasi-elastic event rate in both PMTs
+
+    std::vector<Float_t> PMTLeftYield;     ///< Total PE yield in left PMTs
+    std::vector<Float_t> PMTRightYield;    ///< Total PE yield in right PMTs
+    std::vector<Float_t> PMTTotalYield;    ///< Total PE yield in both PMTs
+    std::vector<Float_t> PMTLeftYieldEL;   ///< Elastic PE yield in left PMTs
+    std::vector<Float_t> PMTRightYieldEL;  ///< Elastic PE yield in right PMTs
+    std::vector<Float_t> PMTTotalYieldEL;  ///< Elastic PE yield in both PMTs
+    std::vector<Float_t> PMTLeftYieldDIS;  ///< Inelastic PE yield in left PMTs
+    std::vector<Float_t> PMTRightYieldDIS; ///< Inelastic PE yield in right PMTs
+    std::vector<Float_t> PMTTotalYieldDIS; ///< Inelastic PE yield in both PMTs
+    std::vector<Float_t> PMTLeftYieldQE;   ///< Quasi-elastic PE yield in left PMTs
+    std::vector<Float_t> PMTRightYieldQE;  ///< Quasi-elastic PE yield in right PMTs
+    std::vector<Float_t> PMTTotalYieldQE;  ///< Quasi-elastic PE yield in both PMTs
+
   public:
 
     // Constructor
@@ -93,6 +119,87 @@ class QweakSimUserCerenkov_PMTEvent : public TObject
 
     void StorePMTTotalNbOfPEs(std::vector<Float_t> npt)   { PMTTotalNbOfPEs = npt; }
     std::vector<Float_t> GetPMTTotalNbOfPEs() const {return PMTTotalNbOfPEs;}
+
+    //-----------------
+    void StorePMTLeftRate(std::vector<Float_t> rl)    { PMTLeftRate = rl; }
+    std::vector<Float_t> GetPMTLeftRate() const  {return PMTLeftRate;}
+
+    void StorePMTRightRate(std::vector<Float_t> rr)   { PMTRightRate = rr; }
+    std::vector<Float_t> GetPMTRightRate() const {return PMTRightRate;}
+
+    void StorePMTTotalRate(std::vector<Float_t> rt)   { PMTTotalRate = rt; }
+    std::vector<Float_t> GetPMTTotalRate() const {return PMTTotalRate;}
+
+
+    void StorePMTLeftRateEL(std::vector<Float_t> rl)    { PMTLeftRateEL = rl; }
+    std::vector<Float_t> GetPMTLeftRateEL() const  {return PMTLeftRateEL;}
+
+    void StorePMTRightRateEL(std::vector<Float_t> rr)   { PMTRightRateEL = rr; }
+    std::vector<Float_t> GetPMTRightRateEL() const {return PMTRightRateEL;}
+
+    void StorePMTTotalRateEL(std::vector<Float_t> rt)   { PMTTotalRateEL = rt; }
+    std::vector<Float_t> GetPMTTotalRateEL() const {return PMTTotalRateEL;}
+
+
+    void StorePMTLeftRateDIS(std::vector<Float_t> rl)    { PMTLeftRateDIS = rl; }
+    std::vector<Float_t> GetPMTLeftRateDIS() const  {return PMTLeftRateDIS;}
+
+    void StorePMTRightRateDIS(std::vector<Float_t> rr)   { PMTRightRateDIS = rr; }
+    std::vector<Float_t> GetPMTRightRateDIS() const {return PMTRightRateDIS;}
+
+    void StorePMTTotalRateDIS(std::vector<Float_t> rt)   { PMTTotalRateDIS = rt; }
+    std::vector<Float_t> GetPMTTotalRateDIS() const {return PMTTotalRateDIS;}
+
+
+    void StorePMTLeftRateQE(std::vector<Float_t> rl)    { PMTLeftRateQE = rl; }
+    std::vector<Float_t> GetPMTLeftRateQE() const  {return PMTLeftRateQE;}
+
+    void StorePMTRightRateQE(std::vector<Float_t> rr)   { PMTRightRateQE = rr; }
+    std::vector<Float_t> GetPMTRightRateQE() const {return PMTRightRateQE;}
+
+    void StorePMTTotalRateQE(std::vector<Float_t> rt)   { PMTTotalRateQE = rt; }
+    std::vector<Float_t> GetPMTTotalRateQE() const {return PMTTotalRateQE;}
+
+
+    //-----------------
+    void StorePMTLeftYield(std::vector<Float_t> yl)    { PMTLeftYield = yl; }
+    std::vector<Float_t> GetPMTLeftYield() const  {return PMTLeftYield;}
+
+    void StorePMTRightYield(std::vector<Float_t> yr)   { PMTRightYield = yr; }
+    std::vector<Float_t> GetPMTRightYield() const {return PMTRightYield;}
+
+    void StorePMTTotalYield(std::vector<Float_t> yt)   { PMTTotalYield = yt; }
+    std::vector<Float_t> GetPMTTotalYield() const {return PMTTotalYield;}
+
+
+    void StorePMTLeftYieldEL(std::vector<Float_t> yl)    { PMTLeftYieldEL = yl; }
+    std::vector<Float_t> GetPMTLeftYieldEL() const  {return PMTLeftYieldEL;}
+
+    void StorePMTRightYieldEL(std::vector<Float_t> yr)   { PMTRightYieldEL = yr; }
+    std::vector<Float_t> GetPMTRightYieldEL() const {return PMTRightYieldEL;}
+
+    void StorePMTTotalYieldEL(std::vector<Float_t> yt)   { PMTTotalYieldEL = yt; }
+    std::vector<Float_t> GetPMTTotalYieldEL() const {return PMTTotalYieldEL;}
+
+
+    void StorePMTLeftYieldDIS(std::vector<Float_t> yl)    { PMTLeftYieldDIS = yl; }
+    std::vector<Float_t> GetPMTLeftYieldDIS() const  {return PMTLeftYieldDIS;}
+
+    void StorePMTRightYieldDIS(std::vector<Float_t> yr)   { PMTRightYieldDIS = yr; }
+    std::vector<Float_t> GetPMTRightYieldDIS() const {return PMTRightYieldDIS;}
+
+    void StorePMTTotalYieldDIS(std::vector<Float_t> yt)   { PMTTotalYieldDIS = yt; }
+    std::vector<Float_t> GetPMTTotalYieldDIS() const {return PMTTotalYieldDIS;}
+
+
+    void StorePMTLeftYieldQE(std::vector<Float_t> yl)    { PMTLeftYieldQE = yl; }
+    std::vector<Float_t> GetPMTLeftYieldQE() const  {return PMTLeftYieldQE;}
+
+    void StorePMTRightYieldQE(std::vector<Float_t> yr)   { PMTRightYieldQE = yr; }
+    std::vector<Float_t> GetPMTRightYieldQE() const {return PMTRightYieldQE;}
+
+    void StorePMTTotalYieldQE(std::vector<Float_t> yt)   { PMTTotalYieldQE = yt; }
+    std::vector<Float_t> GetPMTTotalYieldQE() const {return PMTTotalYieldQE;}
 
 
     // define a new Class known to ROOT

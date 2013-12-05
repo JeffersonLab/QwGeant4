@@ -40,16 +40,16 @@ QweakSimEPEvent::QweakSimEPEvent( QweakSimUserInformation* myUI)
 
   Isotropy = 1;
   
-  PhiAngle_Min = -16.0*degree;
-  PhiAngle_Max =  16.0*degree;
+  //SetPhiAngle_Min(-16.0*degree);
+  //SetPhiAngle_Max(16.0*degree);
 
-  ThetaAngle_Min =  4.0*degree;
-  ThetaAngle_Max = 13.5*degree;
+  //SetThetaAngle_Min(4.0*degree);
+  //SetThetaAngle_Max(13.5*degree);
 
-  EPrime_Max = 1.159*GeV;
-  EPrime_Min = 0.059*GeV;
+  //SetEPrime_Max(1.159*GeV);
+  //SetEPrime_Min(0.059*GeV);
   
-  BeamEnergy = 1.16*GeV;
+  //SetBeamEnergy(1.16*GeV);
 
   TypeSetting = 1;
   ReactionType = 1;
@@ -127,7 +127,7 @@ G4ThreeVector QweakSimEPEvent::GetMomentumDirection()
 {
 
     // Generate flat phi distribution
-    G4double PhiAngle =  PhiAngle_Min + G4UniformRand()*(PhiAngle_Max - PhiAngle_Min);
+  G4double PhiAngle =  GetPhiAngle_Min() + G4UniformRand()*(GetPhiAngle_Max() - GetPhiAngle_Min());
     // If active octant = 0, all octants are used
     if (kActiveOctantNumber == 0) PhiAngle += (G4RandFlat::shootInt(8) * 45.0 * degree);
     G4double cosPhi = cos(PhiAngle);
@@ -147,7 +147,7 @@ G4ThreeVector QweakSimEPEvent::GetMomentumDirection()
 
     if (Isotropy == 0) {
       // Generate flat theta distribution
-      G4double ThetaAngle = ThetaAngle_Min + G4UniformRand()*(ThetaAngle_Max - ThetaAngle_Min);
+      G4double ThetaAngle = GetThetaAngle_Min() + G4UniformRand()*(GetThetaAngle_Max() - GetThetaAngle_Min());
       cosTheta = cos(ThetaAngle);
       sinTheta = sin(ThetaAngle);
 
@@ -155,8 +155,8 @@ G4ThreeVector QweakSimEPEvent::GetMomentumDirection()
       // Generate uniform distribution on spherical surface. See for example
       // http://hypernews.slac.stanford.edu/HyperNews/geant4/get/particles/31/2.html
       // or more generally http://mathworld.wolfram.com/SpherePointPicking.html
-      G4double cosThetaMax = cos(ThetaAngle_Max);
-      G4double cosThetaMin = cos(ThetaAngle_Min);
+      G4double cosThetaMax = cos(GetThetaAngle_Max());
+      G4double cosThetaMin = cos(GetThetaAngle_Min());
       cosTheta = cosThetaMin + G4UniformRand()*(cosThetaMax - cosThetaMin);
       sinTheta = sqrt(1. - cosTheta * cosTheta);
 
@@ -240,6 +240,7 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
        Mass = Z*M_p+(A-Z)*M_n;
        fCrossSection[0] = Elastic_Cross_Section_Proton(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
        Asymmetry = GetAsymmetry_EP(RelativeThetaAngle, E_in);
+       SetLuminosity(myUserInfo->TargetLuminosityLH2);
       }
       
    else if(ReactionType==2) // Aluminum window
@@ -249,6 +250,8 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
        Mass = Z*M_p+(A-Z)*M_n;
        fCrossSection[0] = Elastic_Cross_Section_Aluminum(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
        Asymmetry = GetAsymmetry_AL(RelativeThetaAngle, E_in);
+       if (ReactionRegion == 2)      SetLuminosity(myUserInfo->TargetLuminosityUSALWindow);
+       else if (ReactionRegion == 3) SetLuminosity(myUserInfo->TargetLuminosityDSALWindow);
       }
 
    else if(ReactionType==3) // Aluminum window quasi-elastic proton (assume free proton)
@@ -258,6 +261,8 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
        Mass = M_p;    
        fCrossSection[0] = Elastic_Cross_Section_Proton(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
        Asymmetry = GetAsymmetry_EP(RelativeThetaAngle, E_in);
+       if (ReactionRegion == 2)      SetLuminosity(myUserInfo->TargetLuminosityUSALWindow);
+       else if (ReactionRegion == 3) SetLuminosity(myUserInfo->TargetLuminosityDSALWindow);
       }
 
    else if(ReactionType==4) // Aluminum window quasi-elastic neutron (assume free neutron)
@@ -267,6 +272,8 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
        Mass = M_n;    
        fCrossSection[0] = Quasi_Elastic_Neutron(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
        Asymmetry = GetAsymmetry_EN(RelativeThetaAngle, E_in);
+       if (ReactionRegion == 2)      SetLuminosity(myUserInfo->TargetLuminosityUSALWindow);
+       else if (ReactionRegion == 3) SetLuminosity(myUserInfo->TargetLuminosityDSALWindow);
       }
 
    else if(ReactionType==5) // Delta resonances
@@ -274,6 +281,7 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
        fCrossSection[0] = Delta_Resonance(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
        //std::cout<<E_in<<" "<<ThetaAngle/degree<<" "<<fWeightN<<" "<<Q2<<" "<<E_out<<std::endl;
        Asymmetry = GetAsymmetry_Pi(Q2);
+       SetLuminosity(myUserInfo->TargetLuminosityLH2);
       }
    else if(ReactionType==6) // Moller scattering
       {
@@ -284,32 +292,55 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
        fCrossSection[0] = Moller_Scattering(E_in, RelativeThetaAngle, E_out, 
 					 E_recoil, ThetaRecoil, 
                                          Q2, fWeightN, Asymmetry);
+       SetLuminosity(myUserInfo->TargetLuminosityLH2);
       }      
    else if(ReactionType==7) // Radiative Cross Section Lookup Table
       {
        fCrossSection = Radiative_Cross_Section_Lookup(myUserInfo->GetBeamEnergy(), RelativeThetaAngle, fWeightN, Q2, E_out);
        Asymmetry = GetAsymmetry_EP(RelativeThetaAngle, E_in);
+       if (ReactionRegion == 1)      SetLuminosity(myUserInfo->TargetLuminosityLH2);
+       else if (ReactionRegion == 2) SetLuminosity(myUserInfo->TargetLuminosityUSALWindow);
+       else if (ReactionRegion == 3) SetLuminosity(myUserInfo->TargetLuminosityDSALWindow);
+       else if (ReactionRegion == 4) SetLuminosity(myUserInfo->TargetLuminosityUSALDummy1);
+       else if (ReactionRegion == 5) SetLuminosity(myUserInfo->TargetLuminosityUSALDummy2);
+       else if (ReactionRegion == 6) SetLuminosity(myUserInfo->TargetLuminosityUSALDummy4);
+       else if (ReactionRegion == 7) SetLuminosity(myUserInfo->TargetLuminosityDSALDummy2);
+       else if (ReactionRegion == 8) SetLuminosity(myUserInfo->TargetLuminosityDSALDummy4);
+       else if (ReactionRegion == 9) SetLuminosity(myUserInfo->TargetLuminosityDSALDummy8);
+       else if (ReactionRegion == 10) SetLuminosity(myUserInfo->TargetLuminosityUSCDummy);
+       else if (ReactionRegion == 11) SetLuminosity(myUserInfo->TargetLuminosityDSCDummy);
       }
    else if(ReactionType==8) // Quasielastic Bosted - Aluminum
       {
          Z = 13;
          A = 27;
          fCrossSection[0] = Quasi_Elastic_Bosted(E_in, RelativeThetaAngle, Z, A, fWeightN, Q2, E_out);
+	 if (ReactionRegion == 2)      SetLuminosity(myUserInfo->TargetLuminosityUSALWindow);
+	 else if (ReactionRegion == 3) SetLuminosity(myUserInfo->TargetLuminosityDSALWindow);
       }	
    else if(ReactionType==88) //--- LH2 target, pion photo-production cross section 3.35 GeV
      {
        fCrossSection[0] = Pion_PhotoProduction(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
        Asymmetry = GetAsymmetry_EP(RelativeThetaAngle, E_in); //--- use the elastic asymmetry for now
+       SetLuminosity(myUserInfo->TargetLuminosityLH2);
      }
    else if(ReactionType==9) // Nuclear Inelastics Single Particle States - Aluminum
      {
        fCrossSection[0] = AlNuclInel(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
+       if (ReactionRegion == 2)      SetLuminosity(myUserInfo->TargetLuminosityUSALWindow);
+       else if (ReactionRegion == 3) SetLuminosity(myUserInfo->TargetLuminosityDSALWindow);
      }
    else if(ReactionType==10) // GDR - Aluminum
      {
        fCrossSection[0] = AlGDR(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
+       if (ReactionRegion == 2)      SetLuminosity(myUserInfo->TargetLuminosityUSALWindow);
+       else if (ReactionRegion == 3) SetLuminosity(myUserInfo->TargetLuminosityDSALWindow);
      }
+   G4double phase_space = (GetPhiAngle_Max()-GetPhiAngle_Min())*(cos(GetThetaAngle_Min())-cos(GetThetaAngle_Max()));  // units [Sr]
 
+   // For ReactionTypes that are differential in E'
+   if (ReactionType == 7 || ReactionType == 88) phase_space *= (GetEPrime_Max()-GetEPrime_Min())/1000.0;  // units [Sr*GeV]
+   SetPhaseSpace(phase_space);
 
 }
 
@@ -338,8 +369,8 @@ G4double QweakSimEPEvent::Elastic_Cross_Section_Proton(G4double E_in,
 
 //    E_in units is MeV
 
-      if (Theta<Theta_Min)
-         Theta = Theta_Min;
+      if (Theta<GetThetaAngle_Min())
+	Theta = GetThetaAngle_Min();
 
       G4double CTH = cos(Theta/2.);
       G4double STH = sin(Theta/2.);
@@ -940,10 +971,10 @@ const std::vector< G4double > QweakSimEPEvent::Radiative_Cross_Section_Lookup(G4
                                                          G4double &Q2,
                                                          G4double &E_out)
 {
-    if (Theta<Theta_Min)
-       Theta = Theta_Min;
+    if (Theta<GetThetaAngle_Min())
+      Theta = GetThetaAngle_Min();
 
-    E_out = (G4UniformRand()*(EPrime_Max-EPrime_Min) + EPrime_Min);
+    E_out = (G4UniformRand()*(GetEPrime_Max()-GetEPrime_Min()) + GetEPrime_Min());
     Double_t Zpos;
   
     if ( ReactionRegion == 1 ) {
@@ -961,20 +992,20 @@ const std::vector< G4double > QweakSimEPEvent::Radiative_Cross_Section_Lookup(G4
     fWeightN = value[6]*sin(Theta*degree);
     //fWeightN = value[6];
 
-    CrossSection.push_back(value[6]);     // 0  total radiated cross section (nb/Sr/GeV)
-    CrossSection.push_back(value[2]);     // 1  total born cross section (nb/Sr/GeV)
-    CrossSection.push_back(value[3]);     // 2  inelastic born cross section(nb/Sr/GeV)
-    CrossSection.push_back(value[4]);     // 3  quasi-elastic born cross section (nb/Sr/GeV)
-    CrossSection.push_back(value[6]);     // 4  total radiated cross section (nb/Sr/GeV)
-    CrossSection.push_back(value[7]);     // 5  elastic radiated cross section (nb/Sr/GeV)
-    CrossSection.push_back(value[8]);     // 6  quasi-elastic radiated cross section (nb/Sr/GeV)
-    CrossSection.push_back(value[9]);     // 7  deep-inelastic radiated cross section (nb/Sr/GeV)
-    CrossSection.push_back(value[11]);    // 8  total radiated cross section internal only (nb/Sr/GeV)
-    CrossSection.push_back(value[12]);    // 9  elastic radiated cross section internal only (nb/Sr/GeV)
-    CrossSection.push_back(value[14]);    // 10 quasi-elastic radiated cross section internal only (nb/Sr/GeV)
-    CrossSection.push_back(value[13]);    // 11 deep-inelastic radiated cross section internal only (nb/Sr/GeV)
+    CrossSection.push_back(value[6]*0.001);  // 0  total radiated cross section
+    CrossSection.push_back(value[2]*0.001);  // 1  total born cross section
+    CrossSection.push_back(value[3]*0.001);  // 2  inelastic born cross section
+    CrossSection.push_back(value[4]*0.001);  // 3  quasi-elastic born cross section
+    CrossSection.push_back(value[6]*0.001);  // 4  total radiated cross section
+    CrossSection.push_back(value[7]*0.001);  // 5  elastic radiated cross section
+    CrossSection.push_back(value[8]*0.001);  // 6  quasi-elastic radiated cross section
+    CrossSection.push_back(value[9]*0.001);  // 7  deep-inelastic radiated cross section
+    CrossSection.push_back(value[11]*0.001); // 8  total radiated cross section internal only
+    CrossSection.push_back(value[12]*0.001); // 9  elastic radiated cross section internal only
+    CrossSection.push_back(value[14]*0.001); // 10 quasi-elastic radiated cross section internal only
+    CrossSection.push_back(value[13]*0.001); // 11 deep-inelastic radiated cross section internal only
 
-    return CrossSection;
+    return CrossSection;  //  units   [ub/sr/GeV]
 }
 
 ////....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -988,11 +1019,12 @@ void QweakSimEPEvent::CreateLookupTable()
 {
     G4cout << "---> Calling CreateLookupTable() <---" << G4endl;
   
-    G4double energy = BeamEnergy;
+    G4double energy = GetBeamEnergy();
     if (energy != 3350*MeV && energy != 1160*MeV && energy != 877*MeV) {
       G4cout << "#### Current beam energy is not a valid choice for lookup table"  << G4endl;
       G4cout << "#### Setting beam energy to default value for lookup table (3.35 GeV)" << G4endl;
       energy = 3350*MeV;
+      SetBeamEnergy(energy);
     }
 
     TString target;
@@ -1274,7 +1306,7 @@ void QweakSimEPEvent::CheckLookupTableBounds()
 {
   G4cout << "---> Calling CheckLookupTableBounds() <---" << G4endl;
   if (fLookupTable == 0) return;
-  if (BeamEnergy != (G4double)fLookupTable->GetMinimum(1) ) {
+  if (GetBeamEnergy() != (G4double)fLookupTable->GetMinimum(1) ) {
     G4cout << "!!!! Beam Energy is out of bounds" << G4endl;
     G4cout << "---> Changing Beam Energy to default value (" << fLookupTable->GetMinimum(1)/1000 << " GeV)" << G4endl;
     SetBeamEnergy(  (G4double)fLookupTable->GetMinimum(1) );
@@ -1282,39 +1314,40 @@ void QweakSimEPEvent::CheckLookupTableBounds()
     return;
   }
   
-  if (EPrime_Min < fLookupTable->GetMinimum(2) || EPrime_Min > fLookupTable->GetMaximum(2)) {
-    EPrime_Min = fLookupTable->GetMinimum(2);
+  if (GetEPrime_Min() < fLookupTable->GetMinimum(2) || GetEPrime_Min() > fLookupTable->GetMaximum(2)) {
+    SetEPrime_Min(fLookupTable->GetMinimum(2));
     G4cout << "!!!! Minimum E\' is out of bounds" << G4endl;
     G4cout << "---> Changing Minimum E\' to lower bound (" << fLookupTable->GetMinimum(2)/1000 << " GeV)" << G4endl;      
   }
-  if (EPrime_Max > fLookupTable->GetMaximum(2) || EPrime_Max < fLookupTable->GetMinimum(2)) {
-    EPrime_Max = fLookupTable->GetMaximum(2);
+  if (GetEPrime_Max() > fLookupTable->GetMaximum(2) || GetEPrime_Max() < fLookupTable->GetMinimum(2)) {
+    SetEPrime_Max(fLookupTable->GetMaximum(2));
     G4cout << "!!!! Maximum E\' is out of bounds" << G4endl;
     G4cout << "---> Changing Maximum E\' to upper bound (" << fLookupTable->GetMaximum(2)/1000 << " GeV)" << G4endl;      
   }
-  if (EPrime_Min > EPrime_Max) {
-    EPrime_Min = EPrime_Max;
+  if (GetEPrime_Min() > GetEPrime_Max()) {
+    SetEPrime_Min(GetEPrime_Max());
     G4cout << "!!!! Minimum E\' greater than maximum E\'" << G4endl;
-    G4cout << "---> Changing Minimum E\' to " << EPrime_Max/1000 << " GeV" << G4endl;
+    G4cout << "---> Changing Minimum E\' to " << GetEPrime_Max()/1000 << " GeV" << G4endl;
   }
   
-  if (ThetaAngle_Min < fLookupTable->GetMinimum(3) || ThetaAngle_Min > fLookupTable->GetMaximum(3)) {
-    ThetaAngle_Min = fLookupTable->GetMinimum(3);
+  if (GetThetaAngle_Min() < fLookupTable->GetMinimum(3) || GetThetaAngle_Min() > fLookupTable->GetMaximum(3)) {
+    SetThetaAngle_Min(fLookupTable->GetMinimum(3));
     G4cout << "!!!! Minimum Theta is out of bounds" << G4endl;
     G4cout << "---> Changing Minimum Theta to lower bound (" << fLookupTable->GetMinimum(3)/degree << " degrees)" << G4endl;      
   }
-  if (ThetaAngle_Max > fLookupTable->GetMaximum(3) || ThetaAngle_Max < fLookupTable->GetMinimum(3)) {
-    ThetaAngle_Max = fLookupTable->GetMaximum(3);
+  if (GetThetaAngle_Max() > fLookupTable->GetMaximum(3) || GetThetaAngle_Max() < fLookupTable->GetMinimum(3)) {
+    SetThetaAngle_Max(fLookupTable->GetMaximum(3));
     G4cout << "!!!! Maximum Theta is out of bounds" << G4endl;
     G4cout << "---> Changing Maximum Theta to upper bound (" << fLookupTable->GetMaximum(3)/degree << " degrees)" << G4endl;      
   }
-  if (ThetaAngle_Min > ThetaAngle_Max) {
-    ThetaAngle_Min = ThetaAngle_Max;
+  if (GetThetaAngle_Min() > GetThetaAngle_Max()) {
+    SetThetaAngle_Min(GetThetaAngle_Max());
     G4cout << "!!!! Minimum Theta greater than maximum Theta" << G4endl;
-    G4cout << "---> Changing Minimum Theta to " << ThetaAngle_Max << " degrees" << G4endl;
+    G4cout << "---> Changing Minimum Theta to " << GetThetaAngle_Max() << " degrees" << G4endl;
   }
   G4cout << "---> Leaving CheckLookupTableBounds() <---" << G4endl;
 }
+
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -1418,17 +1451,17 @@ G4double QweakSimEPEvent::Pion_PhotoProduction(G4double E_in, //MeV
 {
     const G4double Mpi = 0.13957*GeV;   ///--- GeV
 
-    if (Theta<Theta_Min)
-        Theta = Theta_Min;
+    if (Theta<GetThetaAngle_Min())
+      Theta = GetThetaAngle_Min();
 	
     // need to evaluate Q2 properply, in order to evaluate 
     // the internal radiation length more accurately below
     Q2 = 0.026; 
 
-    G4double tmp_EpMax = EPrime_Max;
-    if(EPrime_Max > E_in) tmp_EpMax = E_in;
+    G4double tmp_EpMax = GetEPrime_Max();
+    if(GetEPrime_Max() > E_in) tmp_EpMax = E_in;
 	
-    E_out = (G4UniformRand()*(tmp_EpMax - EPrime_Min) + EPrime_Min);   //--- final total energy in GeV
+    E_out = (G4UniformRand()*(tmp_EpMax - GetEPrime_Min()) + GetEPrime_Min());   //--- final total energy in GeV
     G4double pf = sqrt(pow(E_out,2) - pow(Mpi,2)); //--- final momentum in GeV
 
     //---
@@ -1486,8 +1519,8 @@ G4double QweakSimEPEvent::Quasi_Elastic_Bosted(G4double E_in, //MeV
   G4double Mp = 0.93828;
 
   // G4double Theta_Min = 1.745329E-4;
-  if (Theta<Theta_Min)
-      Theta = Theta_Min;
+  if (Theta<GetThetaAngle_Min())
+    Theta = GetThetaAngle_Min();
 
   // Generate flat energy distribution of outgoing electron
   Eout =  M_electron + G4UniformRand()*(Ein - M_electron);
@@ -2110,17 +2143,50 @@ G4double QweakSimEPEvent::GetAsymmetry_Pi(G4double Q2_pi)
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
+
+////....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+//  Jim Dowd
+// ---------------------------------------------------------
+//      Setters and getters need to be defined here because
+//      they call myUserInfo methods  
+// ---------------------------------------------------------
+
+void  QweakSimEPEvent::SetEPrime_Min(G4double energy)  {myUserInfo->SetEPrime_Min(energy); CheckLookupTableBounds();}
+G4double  QweakSimEPEvent::GetEPrime_Min() {return myUserInfo->GetEPrime_Min();}
+
+void  QweakSimEPEvent::SetEPrime_Max(G4double energy) {myUserInfo->SetEPrime_Max(energy); CheckLookupTableBounds();}
+G4double  QweakSimEPEvent::GetEPrime_Max() {return myUserInfo->GetEPrime_Max();}
+
+void  QweakSimEPEvent::SetThetaAngle_Min(G4double ang) {myUserInfo->SetThetaAngle_Min(ang); CheckLookupTableBounds();}
+G4double  QweakSimEPEvent::GetThetaAngle_Min() {return myUserInfo->GetThetaAngle_Min();}
+
+void  QweakSimEPEvent::SetThetaAngle_Max(G4double ang) {myUserInfo->SetThetaAngle_Max(ang); CheckLookupTableBounds();}
+G4double  QweakSimEPEvent::GetThetaAngle_Max() {return myUserInfo->GetThetaAngle_Max();}
+
+void  QweakSimEPEvent::SetPhiAngle_Min(G4double ang) {myUserInfo->SetPhiAngle_Min(ang);}
+G4double  QweakSimEPEvent::GetPhiAngle_Min() {return myUserInfo->GetPhiAngle_Min();}
+
+void  QweakSimEPEvent::SetPhiAngle_Max(G4double ang) {myUserInfo->SetPhiAngle_Max(ang);}
+G4double  QweakSimEPEvent::GetPhiAngle_Max() {return myUserInfo->GetPhiAngle_Max();}
+
+void  QweakSimEPEvent::SetLuminosity(G4double lum) {myUserInfo->SetLuminosity(lum);}
+G4double  QweakSimEPEvent::GetLuminosity()  {return myUserInfo->GetLuminosity();}
+  
+void  QweakSimEPEvent::SetPhaseSpace(G4double ps) {myUserInfo->SetPhaseSpace(ps);}
+G4double  QweakSimEPEvent::GetPhaseSpace()  {return myUserInfo->GetPhaseSpace();}
+
 void QweakSimEPEvent::SetBeamEnergy(G4double energy) {
     if (energy>0) { 
-      BeamEnergy = energy; 
+      //BeamEnergy = energy; 
       CheckLookupTableBounds();
-      myUserInfo->StoreBeamEnergy(energy); 
+      myUserInfo->SetBeamEnergy(energy); 
       //G4cout << "#### Changing Beam Energy to " << energy/1000 << " GeV" << G4endl;
     }
     else {
       G4cout << G4endl << "##### Beam Energy must be greater than zero" << G4endl << G4endl;
     }
 }
+G4double  QweakSimEPEvent::GetBeamEnergy() {return myUserInfo->GetBeamEnergy();}
 
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

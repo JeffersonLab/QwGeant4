@@ -29,14 +29,26 @@ public:
   G4double TargetDSDummyPositionOffsetZ;  // Offset from LH2 center
   // Dummy target Z positions are taken from the June 21, 2012 target survey
 
-  //G4double TargetUSALDummy1Thickness;
-  //G4double TargetUSALDummy2Thickness;
-  //G4double TargetUSALDummy4Thickness;
-  //G4double TargetDSALDummy2Thickness;
-  //G4double TargetDSALDummy4Thickness;
-  //G4double TargetDSALDummy8Thickness;
-  //G4double TargetUSCDummyThickness;
-  //G4double TargetDSCDummyThickness;
+  G4double TargetThicknessUSALDummy1;
+  G4double TargetThicknessUSALDummy2;
+  G4double TargetThicknessUSALDummy4;
+  G4double TargetThicknessDSALDummy2;
+  G4double TargetThicknessDSALDummy4;
+  G4double TargetThicknessDSALDummy8;
+  G4double TargetThicknessUSCDummy;
+  G4double TargetThicknessDSCDummy;
+
+  G4double TargetLuminosityLH2;
+  G4double TargetLuminosityUSALWindow;
+  G4double TargetLuminosityDSALWindow;
+  G4double TargetLuminosityUSALDummy1;
+  G4double TargetLuminosityUSALDummy2;
+  G4double TargetLuminosityUSALDummy4;
+  G4double TargetLuminosityDSALDummy2;
+  G4double TargetLuminosityDSALDummy4;
+  G4double TargetLuminosityDSALDummy8;
+  G4double TargetLuminosityUSCDummy;
+  G4double TargetLuminosityDSCDummy;
 
   G4int    ReactionType;         // assign a number to which kind of reaction,e.g. 1 = elastic ep,
   G4int    ReactionRegion;
@@ -116,13 +128,22 @@ private:
   G4double OriginVertexKinematicX;
   G4double OriginVertexKinematicW;
   
-  G4double BeamEnergy;
+  G4double fPhiAngle_Min;
+  G4double fPhiAngle_Max;
+  G4double fThetaAngle_Min;
+  G4double fThetaAngle_Max;
+  G4double fEPrime_Min;
+  G4double fEPrime_Max;
 
+  G4double fBeamEnergy;
+  G4double fLuminosity;
+  G4double fPhaseSpace;
+  
   G4double EffectiveKinematicQ2;
   G4double EffectiveKinematicNu;
   G4double EffectiveKinematicX;
   G4double EffectiveKinematicW;
-  
+
   G4double CerEngDep;
   
   //--- a variable to hold total energy deposited in the PMTOnly
@@ -169,6 +190,8 @@ private:
 
   void     StoreGlobalTime(G4double gtime) { GlobalTime = gtime; }
   G4double    GetGlobalTime()  const {return GlobalTime;}
+
+  //G4double CalculateLuminosity(G4double mass, G4double density, G4double length);
 
   //-----------------
   void     StoreOriginVertexPositionX(G4double vx)   { OriginVertexPositionX = vx; }
@@ -219,8 +242,35 @@ private:
   G4double    GetOriginVertexKinematicW() const {return OriginVertexKinematicW;}
   //-----------------
 
-  void     StoreBeamEnergy(G4double energy) { BeamEnergy = energy; }
-  G4double    GetBeamEnergy() const {return BeamEnergy;}
+  void SetEPrime_Min(G4double energy) {fEPrime_Min = energy;}
+  G4double GetEPrime_Min() {return fEPrime_Min;}
+
+  void SetEPrime_Max(G4double energy) {fEPrime_Max = energy;}
+  G4double GetEPrime_Max() {return fEPrime_Max;}
+
+  void SetThetaAngle_Min(G4double ang) {fThetaAngle_Min = ang;}
+  G4double GetThetaAngle_Min() {return fThetaAngle_Min;}
+
+  void SetThetaAngle_Max(G4double ang) {fThetaAngle_Max = ang;}
+  G4double GetThetaAngle_Max() {return fThetaAngle_Max;}
+
+  void SetPhiAngle_Min(G4double ang) {fPhiAngle_Min = ang;}
+  G4double GetPhiAngle_Min() {return fPhiAngle_Min;}
+
+  void SetPhiAngle_Max(G4double ang) {fPhiAngle_Max = ang;}
+  G4double GetPhiAngle_Max() {return fPhiAngle_Max;}
+
+  //-----------------
+
+  void     SetBeamEnergy(G4double energy) { fBeamEnergy = energy; }
+  G4double    GetBeamEnergy() const {return fBeamEnergy;}
+
+  void     SetLuminosity(G4double lum) { fLuminosity = lum; }
+  G4double    GetLuminosity() {return fLuminosity;}
+
+  void     SetPhaseSpace(G4double ps) { fPhaseSpace = ps; }
+  G4double    GetPhaseSpace() {return fPhaseSpace;}
+
   //-----------------
 
   void     StoreEffectiveKinematicQ2(G4double Q2) { EffectiveKinematicQ2 = Q2; }

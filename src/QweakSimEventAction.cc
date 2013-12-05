@@ -460,7 +460,16 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         G4double OriginVertexKineticEnergy = myUserInfo->GetOriginVertexKineticEnergy();
         G4double OriginVertexTotalEnergy = myUserInfo->GetOriginVertexTotalEnergy();
 
+        G4int NumberOfEventToBeProcessed = myUserInfo->GetNumberOfEventToBeProcessed();
+        G4double PhiAngle_Min            = myUserInfo->GetPhiAngle_Min();
+        G4double PhiAngle_Max            = myUserInfo->GetPhiAngle_Max();
+        G4double ThetaAngle_Min          = myUserInfo->GetThetaAngle_Min();
+        G4double ThetaAngle_Max          = myUserInfo->GetThetaAngle_Max();
+        G4double EPrime_Min              = myUserInfo->GetEPrime_Min();
+        G4double EPrime_Max              = myUserInfo->GetEPrime_Max();
         G4double BeamEnergy              = myUserInfo->GetBeamEnergy();
+        G4double Luminosity              = myUserInfo->GetLuminosity();
+        G4double PhaseSpace              = myUserInfo->GetPhaseSpace();
         CalculateKinematicVariables();
         G4double OriginVertexKinematicNu = myUserInfo->GetOriginVertexKinematicNu();
         G4double OriginVertexKinematicQ2 = myUserInfo->GetOriginVertexKinematicQ2();
@@ -502,7 +511,16 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         analysis->fRootEvent->Primary.StorePrimaryEventNumber((Int_t) PrimaryEventNumber);
         analysis->fRootEvent->Primary.StoreReactionType((Int_t) ReactionType);
         analysis->fRootEvent->Primary.StorePDGcode((Int_t) PDGcode);
+        analysis->fRootEvent->Primary.StoreNumberOfEventToBeProcessed((Int_t) NumberOfEventToBeProcessed);
+        analysis->fRootEvent->Primary.StorePhiAngle_Min((Float_t) PhiAngle_Min/degree);
+        analysis->fRootEvent->Primary.StorePhiAngle_Max((Float_t) PhiAngle_Max/degree);
+        analysis->fRootEvent->Primary.StoreThetaAngle_Min((Float_t) ThetaAngle_Min/degree);
+        analysis->fRootEvent->Primary.StoreThetaAngle_Max((Float_t) ThetaAngle_Max/degree);
+        analysis->fRootEvent->Primary.StoreEPrime_Min((Float_t) EPrime_Min);
+        analysis->fRootEvent->Primary.StoreEPrime_Max((Float_t) EPrime_Max);
         analysis->fRootEvent->Primary.StoreBeamEnergy((Float_t) BeamEnergy);
+        analysis->fRootEvent->Primary.StoreLuminosity((Float_t) Luminosity);
+        analysis->fRootEvent->Primary.StorePhaseSpace((Float_t) PhaseSpace);
         analysis->fRootEvent->Primary.StoreOriginVertexKinematicNu((Float_t) OriginVertexKinematicNu);
         analysis->fRootEvent->Primary.StoreOriginVertexKinematicQ2((Float_t) OriginVertexKinematicQ2);
         analysis->fRootEvent->Primary.StoreOriginVertexKinematicX((Float_t) OriginVertexKinematicX);
@@ -965,6 +983,40 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 //------------------------------------------------------------------------
 
             } // end for (int i1 = 0; i1 < n_hitCerenkovPMT; i1++)
+            PmtRateTotal[octantID] = CalculateRate( myUserInfo->GetCrossSection(), (Bool_t)PmtNPETotal[octantID] );
+            PmtRateLeft[octantID] = CalculateRate( myUserInfo->GetCrossSection(), (Bool_t)PmtNPELeft[octantID] );
+            PmtRateRight[octantID] = CalculateRate( myUserInfo->GetCrossSection(), (Bool_t)PmtNPERight[octantID] );
+
+            PmtRateTotalEL[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElastic(), (Bool_t)PmtNPETotal[octantID] );
+            PmtRateLeftEL[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElastic(), (Bool_t)PmtNPELeft[octantID] );
+            PmtRateRightEL[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElastic(), (Bool_t)PmtNPERight[octantID] );
+
+            PmtRateTotalDIS[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadDIS(), (Bool_t)PmtNPETotal[octantID] );
+            PmtRateLeftDIS[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadDIS(), (Bool_t)PmtNPELeft[octantID] );
+            PmtRateRightDIS[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadDIS(), (Bool_t)PmtNPERight[octantID] );
+
+            PmtRateTotalQE[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadQE(), (Bool_t)PmtNPETotal[octantID] );
+            PmtRateLeftQE[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadQE(), (Bool_t)PmtNPELeft[octantID] );
+            PmtRateRightQE[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadQE(), (Bool_t)PmtNPERight[octantID] );
+
+
+
+            PmtYieldTotal[octantID] = CalculateRate( myUserInfo->GetCrossSection(), PmtNPETotal[octantID] );
+            PmtYieldLeft[octantID] = CalculateRate( myUserInfo->GetCrossSection(), PmtNPELeft[octantID] );
+            PmtYieldRight[octantID] = CalculateRate( myUserInfo->GetCrossSection(), PmtNPERight[octantID] );
+
+            PmtYieldTotalEL[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElastic(), PmtNPETotal[octantID] );
+            PmtYieldLeftEL[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElastic(), PmtNPELeft[octantID] );
+            PmtYieldRightEL[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElastic(), PmtNPERight[octantID] );
+
+            PmtYieldTotalDIS[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadDIS(), PmtNPETotal[octantID] );
+            PmtYieldLeftDIS[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadDIS(), PmtNPELeft[octantID] );
+            PmtYieldRightDIS[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadDIS(), PmtNPERight[octantID] );
+
+            PmtYieldTotalQE[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadQE(), PmtNPETotal[octantID] );
+            PmtYieldLeftQE[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadQE(), PmtNPELeft[octantID] );
+            PmtYieldRightQE[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadQE(), PmtNPERight[octantID] );
+
         } // end if (n_hitCerenkovPMT > 0)
 
 
@@ -978,6 +1030,38 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftNbOfPEs(PmtNPELeft);
         analysis->fRootEvent->Cerenkov.PMT.StorePMTRightNbOfPEs(PmtNPERight);
         analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalNbOfPEs(PmtNPETotal);
+
+        //---------------------------------------------
+        // store rates for left and right PMT
+        //---------------------------------------------
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftRate(PmtRateLeft);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTRightRate(PmtRateRight);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalRate(PmtRateTotal);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftRateEL(PmtRateLeftEL);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTRightRateEL(PmtRateRightEL);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalRateEL(PmtRateTotalEL);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftRateDIS(PmtRateLeftDIS);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTRightRateDIS(PmtRateRightDIS);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalRateDIS(PmtRateTotalDIS);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftRateQE(PmtRateLeftQE);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTRightRateQE(PmtRateRightQE);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalRateQE(PmtRateTotalQE);
+
+        //---------------------------------------------
+        // store yields for left and right PMT
+        //---------------------------------------------
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftYield(PmtYieldLeft);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTRightYield(PmtYieldRight);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalYield(PmtYieldTotal);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftYieldEL(PmtYieldLeftEL);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTRightYieldEL(PmtYieldRightEL);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalYieldEL(PmtYieldTotalEL);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftYieldDIS(PmtYieldLeftDIS);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTRightYieldDIS(PmtYieldRightDIS);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalYieldDIS(PmtYieldTotalDIS);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftYieldQE(PmtYieldLeftQE);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTRightYieldQE(PmtYieldRightQE);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalYieldQE(PmtYieldTotalQE);
 
         //==============================================================================
 
@@ -1947,10 +2031,37 @@ void QweakSimEventAction::Initialize() {
     PmtHitsRight.clear(); PmtHitsRight.resize(PmtMaxSize);
     PmtHitsTotal.clear(); PmtHitsTotal.resize(PmtMaxSize);
 
-    PmtNPELeft.clear();   PmtNPELeft.resize(PmtMaxSize);
-    PmtNPERight.clear();  PmtNPERight.resize(PmtMaxSize);
-    PmtNPETotal.clear();  PmtNPETotal.resize(PmtMaxSize);
-    //----------------------
+    PmtNPELeft.clear();     PmtNPELeft.resize(PmtMaxSize);
+    PmtNPERight.clear();    PmtNPERight.resize(PmtMaxSize);
+    PmtNPETotal.clear();    PmtNPETotal.resize(PmtMaxSize);
+
+    PmtRateLeft.clear();     PmtRateLeft.resize(PmtMaxSize);
+    PmtRateRight.clear();    PmtRateRight.resize(PmtMaxSize);
+    PmtRateTotal.clear();    PmtRateTotal.resize(PmtMaxSize);
+    PmtRateLeftEL.clear();   PmtRateLeftEL.resize(PmtMaxSize);
+    PmtRateRightEL.clear();  PmtRateRightEL.resize(PmtMaxSize);
+    PmtRateTotalEL.clear();  PmtRateTotalEL.resize(PmtMaxSize);
+    PmtRateLeftDIS.clear();  PmtRateLeftDIS.resize(PmtMaxSize);
+    PmtRateRightDIS.clear(); PmtRateRightDIS.resize(PmtMaxSize);
+    PmtRateTotalDIS.clear(); PmtRateTotalDIS.resize(PmtMaxSize);
+    PmtRateLeftQE.clear();   PmtRateLeftQE.resize(PmtMaxSize);
+    PmtRateRightQE.clear();  PmtRateRightQE.resize(PmtMaxSize);
+    PmtRateTotalQE.clear();  PmtRateTotalQE.resize(PmtMaxSize);
+
+    PmtYieldLeft.clear();     PmtYieldLeft.resize(PmtMaxSize);
+    PmtYieldRight.clear();    PmtYieldRight.resize(PmtMaxSize);
+    PmtYieldTotal.clear();    PmtYieldTotal.resize(PmtMaxSize);
+    PmtYieldLeftEL.clear();   PmtYieldLeftEL.resize(PmtMaxSize);
+    PmtYieldRightEL.clear();  PmtYieldRightEL.resize(PmtMaxSize);
+    PmtYieldTotalEL.clear();  PmtYieldTotalEL.resize(PmtMaxSize);
+    PmtYieldLeftDIS.clear();  PmtYieldLeftDIS.resize(PmtMaxSize);
+    PmtYieldRightDIS.clear(); PmtYieldRightDIS.resize(PmtMaxSize);
+    PmtYieldTotalDIS.clear(); PmtYieldTotalDIS.resize(PmtMaxSize);
+    PmtYieldLeftQE.clear();   PmtYieldLeftQE.resize(PmtMaxSize);
+    PmtYieldRightQE.clear();  PmtYieldRightQE.resize(PmtMaxSize);
+    PmtYieldTotalQE.clear();  PmtYieldTotalQE.resize(PmtMaxSize);
+
+   //----------------------
 
 
     rParticleType = -1;
@@ -2039,3 +2150,18 @@ void QweakSimEventAction::CalculateKinematicVariables()
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+////....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+//  Jim Dowd
+// ---------------------------------------------------------
+//      Calculates a rate based on the generation limits and
+//      target type.  
+// ---------------------------------------------------------
+G4double QweakSimEventAction::CalculateRate(G4double xsec, G4int PEs) 
+{
+  G4double rate = myUserInfo->GetPhaseSpace()*myUserInfo->GetLuminosity()*xsec*PEs/myUserInfo->GetNumberOfEventToBeProcessed();
+  return rate;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
