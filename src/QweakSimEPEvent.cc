@@ -340,6 +340,12 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
 
    // For ReactionTypes that are differential in E'
    if (ReactionType == 7 || ReactionType == 88) phase_space *= (GetEPrime_Max()-GetEPrime_Min())/1000.0;  // units [Sr*GeV]
+
+
+   //  If events are being thrown in all octants, this increases the phase space accordingly
+   if (!GetActiveOctantNumber()) phase_space *= 8.0; 
+
+
    SetPhaseSpace(phase_space);
 
 }
