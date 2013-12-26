@@ -211,8 +211,13 @@ private:
 
   Float_t rGlobalTime;
 	
-  //--- LeadGlass & PMTOnly
-  Float_t  rTrackID;	
+  //--- LeadGlass
+  Float_t  rTrackID;
+  
+  //  PMTOnlyPMT
+  G4int PMTOnlyPMTHasBeenHit;
+  G4int PMTOnlyPMTHits;
+  G4float PMTOnlyNPE;
 	
   G4ThreeVector localVertexMomentumDirection;
   Float_t      rLocalVertexMomentumDirectionX;

@@ -30,7 +30,7 @@ QweakSimPMTOnlyMessenger::QweakSimPMTOnlyMessenger(QweakSimPMTOnly* thePMTOnly)
     PMTOnly_SetMaterial_Cmd -> AvailableForStates(G4State_PreInit, G4State_Idle);
 	
     //--- Position
-	
+    //--- Set	
     PMTOnly_SetCenterPositionInX_Cmd =  new G4UIcmdWithADoubleAndUnit("/PMTOnly/SetCenterPositionInX",this);
     PMTOnly_SetCenterPositionInX_Cmd -> SetGuidance("Set the X position of the PMTOnly"); 
     PMTOnly_SetCenterPositionInX_Cmd -> SetParameterName("Size",true);
@@ -48,7 +48,12 @@ QweakSimPMTOnlyMessenger::QweakSimPMTOnlyMessenger(QweakSimPMTOnly* thePMTOnly)
     PMTOnly_SetCenterPositionInZ_Cmd -> SetParameterName("Size",true);
     PMTOnly_SetCenterPositionInZ_Cmd -> SetUnitCategory("Length");
     PMTOnly_SetCenterPositionInZ_Cmd -> AvailableForStates(G4State_PreInit, G4State_Idle);
-	
+
+    //--- Get
+    PMTOnly_FindMotherCenter_Cmd =  new G4UIcmdWithoutParameter("/PMTOnly/FindMotherCenter", this);
+    PMTOnly_FindMotherCenter_Cmd -> SetGuidance("Find Center of PMTOnly Volumes");
+    PMTOnly_FindMotherCenter_Cmd -> AvailableForStates(G4State_PreInit, G4State_Idle);
+
     //--- Rotation
 	
     PMTOnly_SetTiltAngleInX_Cmd = new G4UIcmdWithADoubleAndUnit("/PMTOnly/SetTiltAngleInX",this);
@@ -94,6 +99,8 @@ QweakSimPMTOnlyMessenger::~QweakSimPMTOnlyMessenger()
     if (PMTOnly_SetCenterPositionInX_Cmd)    delete PMTOnly_SetCenterPositionInX_Cmd;
     if (PMTOnly_SetCenterPositionInY_Cmd)    delete PMTOnly_SetCenterPositionInY_Cmd;
     if (PMTOnly_SetCenterPositionInZ_Cmd)    delete PMTOnly_SetCenterPositionInZ_Cmd;
+
+    if (PMTOnly_FindMotherCenter_Cmd) 	     delete PMTOnly_FindMotherCenter_Cmd;
 	
     if (PMTOnly_SetEnabled_Cmd)              delete PMTOnly_SetEnabled_Cmd;
     if (PMTOnly_SetDisabled_Cmd)             delete PMTOnly_SetDisabled_Cmd;
@@ -126,18 +133,26 @@ void QweakSimPMTOnlyMessenger::SetNewValue(G4UIcommand* command, G4String newVal
         myPMTOnly -> SetPMTOnly_CenterPositionInX(PMTOnly_SetCenterPositionInX_Cmd -> GetNewDoubleValue(newValue));
     }
 	
-	if (command == PMTOnly_SetCenterPositionInY_Cmd)
+    if (command == PMTOnly_SetCenterPositionInY_Cmd)
     {
         G4cout << "=== Messenger: Setting PMTOnly Y position to " << newValue << G4endl;	
         myPMTOnly -> SetPMTOnly_CenterPositionInY(PMTOnly_SetCenterPositionInY_Cmd -> GetNewDoubleValue(newValue));
     }
 	
-	if (command == PMTOnly_SetCenterPositionInZ_Cmd)
+    if (command == PMTOnly_SetCenterPositionInZ_Cmd)
     {
         G4cout << "=== Messenger: Setting PMTOnly Z position to " << newValue << G4endl;	
         myPMTOnly -> SetPMTOnly_CenterPositionInZ(PMTOnly_SetCenterPositionInZ_Cmd -> GetNewDoubleValue(newValue));
     }
 	
+	
+    //--- Find New Position
+    if (command == PMTOnly_FindMotherCenter_Cmd) 
+    {
+        G4cout << "=== Messenger: Finding PMTOnly Center position" << G4endl;	
+        myPMTOnly -> FindPMTOnly_MotherCenter();
+    }
+
     //--- Set New Tilting Anngle
 	
     if (command == PMTOnly_SetTiltAngleInX_Cmd)
@@ -168,7 +183,7 @@ void QweakSimPMTOnlyMessenger::SetNewValue(G4UIcommand* command, G4String newVal
 	
     //----Disable
 	
-	if (command == PMTOnly_SetDisabled_Cmd)
+    if (command == PMTOnly_SetDisabled_Cmd)
     {
         G4cout << "=== Messenger: DISABLE the PMTOnly" << G4endl;
         myPMTOnly -> SetPMTOnly_Disabled();

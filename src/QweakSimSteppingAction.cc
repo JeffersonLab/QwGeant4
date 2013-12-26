@@ -37,6 +37,7 @@
 #include "QweakSimTrackInformation.hh"
 #include "QweakSimEPEvent.hh"
 #include "QweakSimCerenkovDetector_PMTSD.hh"
+#include "QweakSimPMTOnly_PMTSD.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -360,7 +361,7 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep){
   }
 
   if(particleType==G4OpticalPhoton::OpticalPhotonDefinition()){
-    boundaryStatus=boundary->GetStatus();
+    boundaryStatus=boundary->GetStatus(); 
     if(thePostPoint->GetStepStatus()==fGeomBoundary){
       switch(boundaryStatus){
       case Absorption:
@@ -372,15 +373,26 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep){
         {
           //std::cout<<"Detected a photon."<<std::endl;
           G4SDManager* SDman = G4SDManager::GetSDMpointer();
-          G4String sdName="/CerenkovPMTSD";
-          QweakSimCerenkovDetector_PMTSD* pmtSD = (QweakSimCerenkovDetector_PMTSD*)SDman->FindSensitiveDetector(sdName);
-          if(pmtSD)
-	    {
+          if(strcmp(thePostPV->GetName(),"PMTOnlyCathode_Physical") == 0) {
+            //std::cout << "Optical Photon hit pmtonl cathode" << std::endl;
+            G4String pmtonlSDName="PMTOnly_PMTSD";
+            QweakSimPMTOnly_PMTSD* pmtonlSD = (QweakSimPMTOnly_PMTSD*)SDman->FindSensitiveDetector(pmtonlSDName);
+            if(pmtonlSD) {
               //myUserInfo->GetCurrentPMTHit()->SetHitValid(True);
-	      pmtSD->ProcessHits_constStep(theStep,NULL); 
+  	      pmtonlSD->ProcessHits_constStep(theStep,NULL); 
+              theTrack->SetTrackStatus(fStopAndKill);
+	    }  
+            break;
+          } else { 
+            G4String CerenkovSDName="/CerenkovPMTSD";
+            QweakSimCerenkovDetector_PMTSD* cerenkovpmtSD = (QweakSimCerenkovDetector_PMTSD*)SDman->FindSensitiveDetector(CerenkovSDName);
+            if(cerenkovpmtSD) {
+              //myUserInfo->GetCurrentPMTHit()->SetHitValid(True);
+  	      cerenkovpmtSD->ProcessHits_constStep(theStep,NULL); 
               theTrack->SetTrackStatus(fStopAndKill);
 	    }
-          break;
+            break;
+          }  
         }
       case FresnelReflection:
         {

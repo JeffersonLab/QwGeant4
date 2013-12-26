@@ -18,7 +18,7 @@
 
 //-- user include
 #include "QweakSimUserPMTOnly_DetectorEvent.hh"
-//#include "QweakSimUserPMTOnly_PMTEvent.hh"
+#include "QweakSimUserPMTOnly_PMTEvent.hh"
 
 /////// --------------------------------------------------------------------
 
@@ -35,6 +35,7 @@ public:
 public:
 	
     QweakSimUserPMTOnly_DetectorEvent  Detector;
+    QweakSimUserPMTOnly_PMTEvent       PMT;                      ///< PMT hit information
 	
 private:
 	

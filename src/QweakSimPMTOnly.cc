@@ -45,20 +45,20 @@ QweakSimPMTOnly::QweakSimPMTOnly(QweakSimUserInformation* userInfo)
     PMTOnly_Material  	= NULL;
     PMTOnly_VisAtt    	= NULL;
     
-    PMTQuartzOpticalFilm_Solid 		= NULL;
-    PMTQuartzOpticalFilm_Logical	= NULL;
-    PMTQuartzOpticalFilm_Physical	= NULL;
-    PMTQuartzOpticalFilm_Material	= NULL;
+    PMTOnlyQuartzOpticalFilm_Solid 	= NULL;
+    PMTOnlyQuartzOpticalFilm_Logical	= NULL;
+    PMTOnlyQuartzOpticalFilm_Physical	= NULL;
+    PMTOnlyQuartzOpticalFilm_Material	= NULL;
     
-    PMTEntranceWindow_Solid	= NULL;
-    PMTEntranceWindow_Logical	= NULL;
-    PMTEntranceWindow_Physical	= NULL;
-    PMTEntranceWindow_Material	= NULL;
+    PMTOnlyEntranceWindow_Solid	= NULL;
+    PMTOnlyEntranceWindow_Logical	= NULL;
+    PMTOnlyEntranceWindow_Physical	= NULL;
+    PMTOnlyEntranceWindow_Material	= NULL;
     
-    Cathode_Solid	= NULL;
-    Cathode_Logical	= NULL;
-    Cathode_Physical	= NULL;
-    Cathode_Material	= NULL;
+    PMTOnlyCathode_Solid	= NULL;
+    PMTOnlyCathode_Logical	= NULL;
+    PMTOnlyCathode_Physical	= NULL;
+    PMTOnlyCathode_Material	= NULL;
     
     //--- Set Initial Values
     MD5_CenterPosition_X = -335.17*cm;
@@ -69,9 +69,12 @@ QweakSimPMTOnly::QweakSimPMTOnly(QweakSimUserInformation* userInfo)
     Mother_FullLength_Y = 20.00*cm;
     Mother_FullLength_Z = 20.00*cm;
 
-    Mother_CenterPosition_X =  -320.0*cm;
-    Mother_CenterPosition_Y =  -50.00*cm;
-    Mother_CenterPosition_Z =  775.00*cm;
+    Mother_CenterPosition_X =  -320.0*cm; 	// Default:-320 cm
+    Mother_CenterPosition_Y =  -50.00*cm;	// Default: -50 cm 	
+    Mother_CenterPosition_Z =  775.00*cm;	// Default: 775 cm
+
+    //--- All following coordinates are w.r.t.
+    //--- the center of the Mother Volume.
 
     PMTOnly_FullLength_X = 18.00*cm;
     PMTOnly_FullLength_Y = 18.00*cm;
@@ -85,16 +88,30 @@ QweakSimPMTOnly::QweakSimPMTOnly(QweakSimUserInformation* userInfo)
     Mother_TiltAngle_Y =  0.00*degree;
     Mother_TiltAngle_Z =  0.00*degree;
     
-    PMTQuartzOpticalFilm_Diameter = 12.70*cm;
-    PMTQuartzOpticalFilm_Thickness = 0.10*mm;
-
-    PMTEntranceWindow_Diameter = 12.70*cm;
-    PMTEntranceWindow_Thickness = 1.00*mm;
-
-    G4double ReductionInPhotocathodeDiameter = 5*mm;
+    PMTOnlyQuartzOpticalFilm_Diameter = 12.70*cm;
+    PMTOnlyQuartzOpticalFilm_Thickness = 0.10*mm;
     
-    Cathode_Thickness   = 1.0*mm;
-    Cathode_Diameter    = PMTEntranceWindow_Diameter - ReductionInPhotocathodeDiameter; 
+    PMTOnlyQuartzOpticalFilm_X = 0.0*cm;
+    PMTOnlyQuartzOpticalFilm_Y = 0.0*cm;
+    PMTOnlyQuartzOpticalFilm_Z = 0.5*(PMTOnly_FullLength_Z + PMTOnlyQuartzOpticalFilm_Thickness);
+
+    PMTOnlyEntranceWindow_Diameter = 12.70*cm;
+    PMTOnlyEntranceWindow_Thickness = 1.00*mm;
+
+    PMTOnlyEntranceWindow_X = 0.0*cm;
+    PMTOnlyEntranceWindow_Y = 0.0*cm;
+    PMTOnlyEntranceWindow_Z = PMTOnlyQuartzOpticalFilm_Z 
+                             + 0.5*(PMTOnlyQuartzOpticalFilm_Thickness+PMTOnlyEntranceWindow_Thickness);
+
+    G4double ReductionInPhotoPMTOnlyCathodeDiameter = 5*mm;
+    
+    PMTOnlyCathode_Thickness   = 1.0*mm;
+    PMTOnlyCathode_Diameter    = PMTOnlyEntranceWindow_Diameter - ReductionInPhotoPMTOnlyCathodeDiameter; 
+
+    PMTOnlyCathode_X = 0.0*cm;
+    PMTOnlyCathode_Y = 0.0*cm;
+    PMTOnlyCathode_Z = PMTOnlyEntranceWindow_Z 
+                       + 0.5*(PMTOnlyEntranceWindow_Thickness + PMTOnlyCathode_Thickness);
 
     PMTOnlyMessenger = new QweakSimPMTOnlyMessenger(this);
 	
@@ -126,20 +143,20 @@ QweakSimPMTOnly::~QweakSimPMTOnly()
     if (PMTOnly_Logical)	delete PMTOnly_Logical;
     if (PMTOnly_Solid)		delete PMTOnly_Solid;
     
-    if (PMTQuartzOpticalFilm_Material)	delete PMTQuartzOpticalFilm_Material;	
-    if (PMTQuartzOpticalFilm_Physical)	delete PMTQuartzOpticalFilm_Physical;
-    if (PMTQuartzOpticalFilm_Logical)	delete PMTQuartzOpticalFilm_Logical;
-    if (PMTQuartzOpticalFilm_Solid)	delete PMTQuartzOpticalFilm_Solid;
+    if (PMTOnlyQuartzOpticalFilm_Material)	delete PMTOnlyQuartzOpticalFilm_Material;	
+    if (PMTOnlyQuartzOpticalFilm_Physical)	delete PMTOnlyQuartzOpticalFilm_Physical;
+    if (PMTOnlyQuartzOpticalFilm_Logical)	delete PMTOnlyQuartzOpticalFilm_Logical;
+    if (PMTOnlyQuartzOpticalFilm_Solid)	delete PMTOnlyQuartzOpticalFilm_Solid;
     
-    if (PMTEntranceWindow_Material)	delete PMTEntranceWindow_Material;	
-    if (PMTEntranceWindow_Physical)	delete PMTEntranceWindow_Physical;
-    if (PMTEntranceWindow_Logical)	delete PMTEntranceWindow_Logical;
-    if (PMTEntranceWindow_Solid)	delete PMTEntranceWindow_Solid;
+    if (PMTOnlyEntranceWindow_Material)	delete PMTOnlyEntranceWindow_Material;	
+    if (PMTOnlyEntranceWindow_Physical)	delete PMTOnlyEntranceWindow_Physical;
+    if (PMTOnlyEntranceWindow_Logical)	delete PMTOnlyEntranceWindow_Logical;
+    if (PMTOnlyEntranceWindow_Solid)	delete PMTOnlyEntranceWindow_Solid;
     
-    if (Cathode_Material)	delete Cathode_Material;	
-    if (Cathode_Physical)	delete Cathode_Physical;
-    if (Cathode_Logical)	delete Cathode_Logical;
-    if (Cathode_Solid)		delete Cathode_Solid;
+    if (PMTOnlyCathode_Material)	delete PMTOnlyCathode_Material;	
+    if (PMTOnlyCathode_Physical)	delete PMTOnlyCathode_Physical;
+    if (PMTOnlyCathode_Logical)	delete PMTOnlyCathode_Logical;
+    if (PMTOnlyCathode_Solid)		delete PMTOnlyCathode_Solid;
     */	
 }
 
@@ -150,11 +167,11 @@ void QweakSimPMTOnly::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 {
 	
     //--- Materials
-    Mother_Material = pMaterial->GetMaterial("Air");    
-    PMTOnly_Material = pMaterial->GetMaterial("Scintillator");
-    PMTQuartzOpticalFilm_Material = pMaterial->GetMaterial("SiElast_Glue");
-    PMTEntranceWindow_Material = pMaterial->GetMaterial("LimeGlass");
-    Cathode_Material = pMaterial->GetMaterial("Photocathode");
+    Mother_Material 		= pMaterial->GetMaterial("Air");    
+    PMTOnly_Material 		= pMaterial->GetMaterial("Scintillator");
+    PMTOnlyQuartzOpticalFilm_Material = pMaterial->GetMaterial("SiElast_Glue");
+    PMTOnlyEntranceWindow_Material 	= pMaterial->GetMaterial("LimeGlass");
+    PMTOnlyCathode_Material 		= pMaterial->GetMaterial("Photocathode");
 
     //--- Define Mother Solid Volume;
     Mother_Solid = new G4Box("Mother_Solid",
@@ -170,18 +187,18 @@ void QweakSimPMTOnly::ConstructComponent(G4VPhysicalVolume* MotherVolume)
     
     //--- Define Mother Placement and Physical Volume
     Mother_CenterPosition = G4ThreeVector(Mother_CenterPosition_X,
-                                             Mother_CenterPosition_Y,
-                                             Mother_CenterPosition_Z);
+                                          Mother_CenterPosition_Y,
+                                          Mother_CenterPosition_Z);
     Mother_RotationMatrix = new G4RotationMatrix();
     Mother_RotationMatrix -> rotateX(Mother_TiltAngle_X);
 	
     Mother_Physical = new G4PVPlacement(Mother_RotationMatrix,
-                                           Mother_CenterPosition,
-                                           "Mother_Phyical",
-                                           Mother_Logical,
-                                           MotherVolume,
-                                           false,
-                                           0);
+                                        Mother_CenterPosition,
+                                        "Mother_Physical",
+                                        Mother_Logical,
+                                        MotherVolume,
+                                        false,
+                                        0);
 	
     //--- Define PMTOnly Solid Volume	
     PMTOnly_Solid = new G4Box("PMTOnly_Solid",
@@ -202,84 +219,90 @@ void QweakSimPMTOnly::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 
     PMTOnly_Physical = new G4PVPlacement(0,
                                          PMTOnly_CenterPosition,
-                                         "PMTOnly_Phyical",
+                                         "PMTOnly_Physical",
                                          PMTOnly_Logical,
                                          Mother_Physical,
                                          false,
                                          0);
 
     
-    //--- Define PMTQuartzOpticalFilm Solid
-    PMTQuartzOpticalFilm_Solid = new G4Tubs("PMTQuartzOpticalFilm_Solid", 
-                                            0.00*cm,
-                                            0.5*PMTQuartzOpticalFilm_Diameter,
-                                            0.5*PMTQuartzOpticalFilm_Thickness,
-                                            0.0*degree,360.0*degree);
+    //--- Define PMTOnlyQuartzOpticalFilm Solid
+    PMTOnlyQuartzOpticalFilm_Solid = new G4Tubs("PMTOnlyQuartzOpticalFilm_Solid", 
+                                                0.00*cm,
+                                                0.5*PMTOnlyQuartzOpticalFilm_Diameter,
+                                                0.5*PMTOnlyQuartzOpticalFilm_Thickness,
+                                                0.0*degree,
+                                                360.0*degree);
 
-    //--- Define PMTQuartzOpticaFilm Logical
-    PMTQuartzOpticalFilm_Logical = new G4LogicalVolume(PMTQuartzOpticalFilm_Solid,
-    						       PMTQuartzOpticalFilm_Material,
-    						       "PMTQuartzOpticalFilm_Logical");
+    //--- Define PMTOnlyQuartzOpticaFilm Logical
+    PMTOnlyQuartzOpticalFilm_Logical = new G4LogicalVolume(PMTOnlyQuartzOpticalFilm_Solid,
+    						           PMTOnlyQuartzOpticalFilm_Material,
+    						           "PMTOnlyQuartzOpticalFilm_Logical");
     
-    //--- Define PMTQuartzOpticalFilm Physical Volume & Placement.
-    G4double PMTQuartzOpticalFilm_Z = 0.5*(PMTOnly_FullLength_Z + PMTQuartzOpticalFilm_Thickness);
-    G4ThreeVector PMTQuartzOpticalFilm_Position(0.0, 0.0, PMTQuartzOpticalFilm_Z); 
+    //--- Define PMTOnlyQuartzOpticalFilm Physical Volume & Placement.
+    G4ThreeVector PMTOnlyQuartzOpticalFilm_Position(PMTOnlyQuartzOpticalFilm_X,
+                                                    PMTOnlyQuartzOpticalFilm_Y,
+                                                    PMTOnlyQuartzOpticalFilm_Z); 
     
-    PMTQuartzOpticalFilm_Physical = new G4PVPlacement(0,
-    						      PMTQuartzOpticalFilm_Position,
-    						      "PMTQuartzOpticalFilm_Physical",
-    						      PMTQuartzOpticalFilm_Logical,    						   
-    						      Mother_Physical,
-    						      false, 
-    						      0);
+    PMTOnlyQuartzOpticalFilm_Physical = new G4PVPlacement(0,
+    						          PMTOnlyQuartzOpticalFilm_Position,
+    						          "PMTOnlyQuartzOpticalFilm_Physical",
+    						          PMTOnlyQuartzOpticalFilm_Logical,    						   
+    						          Mother_Physical,
+    						          false, 
+    						          0);
 
-    //--- Define PMTEntranceWindow Solid
-    PMTEntranceWindow_Solid = new G4Tubs("PMTEntranceWindow_Solid",
-    					 0.00*cm,
-    					 0.5*PMTEntranceWindow_Diameter,
-    					 0.5*PMTEntranceWindow_Thickness,
-    					 0.0*degree, 360.0*degree);
+    //--- Define PMTOnlyEntranceWindow Solid
+    PMTOnlyEntranceWindow_Solid = new G4Tubs("PMTOnlyEntranceWindow_Solid",
+    					     0.00*cm,
+    					     0.5*PMTOnlyEntranceWindow_Diameter,
+    					     0.5*PMTOnlyEntranceWindow_Thickness,
+    					     0.0*degree, 
+    					     360.0*degree);
 
-    //--- Define PMTEntranceWindow Logical
-    PMTEntranceWindow_Logical = new G4LogicalVolume(PMTEntranceWindow_Solid,
-    						    PMTEntranceWindow_Material,
-    						    "PMTEntranceWindow_Logical");
+    //--- Define PMTOnlyEntranceWindow Logical
+    PMTOnlyEntranceWindow_Logical = new G4LogicalVolume(PMTOnlyEntranceWindow_Solid,
+    						        PMTOnlyEntranceWindow_Material,
+    						        "PMTOnlyEntranceWindow_Logical");
 
-    //--- Define PMTEntranceWindow Physical Volume & Placement
-    G4double PMTEntranceWindow_Z = PMTQuartzOpticalFilm_Z + 0.5*(PMTQuartzOpticalFilm_Thickness + PMTEntranceWindow_Thickness);
-    G4ThreeVector PMTEntranceWindow_Position(0.0, 0.0, PMTEntranceWindow_Z);
+    //--- Define PMTOnlyEntranceWindow Physical Volume & Placement
+    G4ThreeVector PMTOnlyEntranceWindow_Position(PMTOnlyEntranceWindow_X,
+    						 PMTOnlyEntranceWindow_Y,
+    						 PMTOnlyEntranceWindow_Z);
 
-    PMTEntranceWindow_Physical = new G4PVPlacement(0,
-    						   PMTEntranceWindow_Position,
-    						   "PMTEntranceWindow_Physical",
-    						   PMTEntranceWindow_Logical,
-    						   Mother_Physical,
-    						   false,
-    						   0);
+    PMTOnlyEntranceWindow_Physical = new G4PVPlacement(0,
+    						       PMTOnlyEntranceWindow_Position,
+    						       "PMTOnlyEntranceWindow_Physical",
+    						       PMTOnlyEntranceWindow_Logical,
+    						       Mother_Physical,
+    						       false,
+    						       0);
 
-    //--- Define Cathode Solid
-    Cathode_Solid = new G4Tubs("Cathode_Solid",
-			       0.00*cm,
-			       0.5*Cathode_Diameter,
-			       0.5*Cathode_Thickness,
-			       0.0*degree, 360.0*degree);
+    //--- Define PMTOnlyCathode Solid
+    PMTOnlyCathode_Solid = new G4Tubs("PMTOnlyCathode_Solid",
+			       	      0.00*cm,
+			              0.5*PMTOnlyCathode_Diameter,
+			              0.5*PMTOnlyCathode_Thickness,
+			              0.0*degree,
+			              360.0*degree);
 
-    //--- Define Cathode Logical
-    Cathode_Logical = new G4LogicalVolume(Cathode_Solid,
-    					  Cathode_Material,
-    					  "Cathode_Logical");
+    //--- Define PMTOnlyCathode Logical
+    PMTOnlyCathode_Logical = new G4LogicalVolume(PMTOnlyCathode_Solid,
+    					         PMTOnlyCathode_Material,
+    					         "PMTOnlyCathode_Logical");
 
-    //--- Define Cathode Placement & Physical Volume
-    G4double Cathode_Z = PMTEntranceWindow_Z + 0.5*(PMTEntranceWindow_Thickness + Cathode_Thickness);
-    G4ThreeVector Cathode_Position(0.0, 0.0, Cathode_Z);
+    //--- Define PMTOnlyCathode Placement & Physical Volume
+    G4ThreeVector PMTOnlyCathode_Position(PMTOnlyCathode_X,
+    					  PMTOnlyCathode_Y,
+    					  PMTOnlyCathode_Z);
     
-    Cathode_Physical = new G4PVPlacement(0,
-    					Cathode_Position,
-    					"Cathode_Physical",
-    					Cathode_Logical,
-    					Mother_Physical,
-    					false,
-    					0);
+    PMTOnlyCathode_Physical = new G4PVPlacement(0,
+    						PMTOnlyCathode_Position,
+    						"PMTOnlyCathode_Physical",
+	    					PMTOnlyCathode_Logical,
+    						Mother_Physical,
+    						false,
+    						0);
 
     ////////////////////////////
     //	Optical Photon Stuff  //
@@ -301,7 +324,7 @@ void QweakSimPMTOnly::ConstructComponent(G4VPhysicalVolume* MotherVolume)
         5.90424*eV   //210.15 nm
     };
 
-    G4double Photocathode_Efficiency[nEntries] = {
+    G4double PhotoPMTOnlyCathode_Efficiency[nEntries] = {
         0.0080,      //800.59 nm
         0.0298,      //700.51 nm
         0.0638,      //600.44 nm
@@ -315,7 +338,7 @@ void QweakSimPMTOnly::ConstructComponent(G4VPhysicalVolume* MotherVolume)
         0.0355       //210.15 nm
     };
     
-    G4double Photocathode_Reflectivity[nEntries] = {
+    G4double PhotoPMTOnlyCathode_Reflectivity[nEntries] = {
         0.25, 	//800 nm
         0.25, 	//700 nm
         0.25, 	//600 nm
@@ -346,20 +369,20 @@ void QweakSimPMTOnly::ConstructComponent(G4VPhysicalVolume* MotherVolume)
     G4MaterialPropertiesTable *quartzST = new G4MaterialPropertiesTable();
     quartzST->AddProperty("REFLECTIVITY",  PhotonEnergy , Reflectivity, nEntries);
 
-    G4OpticalSurface* Photocathode_OpticalSurface =  new G4OpticalSurface("Photocathode_OS");
-    Photocathode_OpticalSurface ->SetType(dielectric_metal); 
-    Photocathode_OpticalSurface ->SetFinish(polished); 
-    Photocathode_OpticalSurface ->SetModel(glisur);
+    G4OpticalSurface* PhotoPMTOnlyCathode_OpticalSurface =  new G4OpticalSurface("PhotoPMTOnlyCathode_OS");
+    PhotoPMTOnlyCathode_OpticalSurface ->SetType(dielectric_metal); 
+    PhotoPMTOnlyCathode_OpticalSurface ->SetFinish(polished); 
+    PhotoPMTOnlyCathode_OpticalSurface ->SetModel(glisur);
 
-    G4MaterialPropertiesTable* Photocathode_MPT = new G4MaterialPropertiesTable();
-    Photocathode_MPT->AddProperty("REFLECTIVITY", PhotonEnergy, Photocathode_Reflectivity,nEntries);
-    Photocathode_MPT->AddProperty("EFFICIENCY", PhotonEnergy, Photocathode_Efficiency,nEntries);
-    Photocathode_OpticalSurface ->SetMaterialPropertiesTable(Photocathode_MPT);
+    G4MaterialPropertiesTable* PhotoPMTOnlyCathode_MPT = new G4MaterialPropertiesTable();
+    PhotoPMTOnlyCathode_MPT->AddProperty("REFLECTIVITY", PhotonEnergy, PhotoPMTOnlyCathode_Reflectivity,nEntries);
+    PhotoPMTOnlyCathode_MPT->AddProperty("EFFICIENCY", PhotonEnergy, PhotoPMTOnlyCathode_Efficiency,nEntries);
+    PhotoPMTOnlyCathode_OpticalSurface ->SetMaterialPropertiesTable(PhotoPMTOnlyCathode_MPT);
 
     new G4LogicalBorderSurface("PMT_BorderSurface",
-                               PMTEntranceWindow_Physical,
-                               Cathode_Physical,
-                               Photocathode_OpticalSurface);
+                               PMTOnlyEntranceWindow_Physical,
+                               PMTOnlyCathode_Physical,
+                               PhotoPMTOnlyCathode_OpticalSurface);
 
     					
     ////////////////////////////////////
@@ -367,7 +390,8 @@ void QweakSimPMTOnly::ConstructComponent(G4VPhysicalVolume* MotherVolume)
     ////////////////////////////////////
     
     Mother_VisAtt = new G4VisAttributes(G4Colour::White());
-    Mother_VisAtt->SetVisibility(false);
+    Mother_VisAtt->SetVisibility(true);
+    Mother_VisAtt->SetForceWireframe(true);
     Mother_Logical->SetVisAttributes(Mother_VisAtt);
 
     PMTOnly_VisAtt = new G4VisAttributes(G4Colour::Blue());
@@ -376,15 +400,15 @@ void QweakSimPMTOnly::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 
     G4VisAttributes* QuartzGlueFilm_VisAtt = new G4VisAttributes(G4Colour::White());
     QuartzGlueFilm_VisAtt->SetVisibility(true);
-    PMTQuartzOpticalFilm_Logical->SetVisAttributes(QuartzGlueFilm_VisAtt);
+    PMTOnlyQuartzOpticalFilm_Logical->SetVisAttributes(QuartzGlueFilm_VisAtt);
     
-    G4VisAttributes* PMTEntranceWindow_VisAtt = new G4VisAttributes(G4Colour::Grey());
-    PMTEntranceWindow_VisAtt->SetVisibility(true);
-    PMTEntranceWindow_Logical->SetVisAttributes(PMTEntranceWindow_VisAtt);
+    G4VisAttributes* PMTOnlyEntranceWindow_VisAtt = new G4VisAttributes(G4Colour::Grey());
+    PMTOnlyEntranceWindow_VisAtt->SetVisibility(true);
+    PMTOnlyEntranceWindow_Logical->SetVisAttributes(PMTOnlyEntranceWindow_VisAtt);
     
-    G4VisAttributes* Cathode_VisAtt = new G4VisAttributes(G4Colour::Magenta());
-    Cathode_VisAtt->SetVisibility(true);
-    Cathode_Logical->SetVisAttributes(Cathode_VisAtt);
+    G4VisAttributes* PMTOnlyCathode_VisAtt = new G4VisAttributes(G4Colour::Magenta());
+    PMTOnlyCathode_VisAtt->SetVisibility(true);
+    PMTOnlyCathode_Logical->SetVisAttributes(PMTOnlyCathode_VisAtt);
 
     ///////////////////////////////////////////
     // Define Sensitive Detectors to PMTOnly //
@@ -398,7 +422,7 @@ void QweakSimPMTOnly::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 
     PMTOnly_PMTSD = new QweakSimPMTOnly_PMTSD("PMTOnly_PMTSD", myUserInfo);
     SDman -> AddNewDetector(PMTOnly_PMTSD);
-    Cathode_Logical -> SetSensitiveDetector(PMTOnly_PMTSD);
+    PMTOnlyCathode_Logical -> SetSensitiveDetector(PMTOnly_PMTSD);
 
 }
 
@@ -440,7 +464,7 @@ void QweakSimPMTOnly::SetPMTOnly_CenterPositionInX(G4double xPos)
 	
     G4cout << "=== Calling QweakSimPMTOnly::SetPMTOnly_CenterPositionInX() " << G4endl;
     Mother_CenterPosition_X = xPos;	 
-    PMTOnly_Physical->SetTranslation(G4ThreeVector(Mother_CenterPosition_X,
+    Mother_Physical->SetTranslation(G4ThreeVector(Mother_CenterPosition_X,
                                                      Mother_CenterPosition_Y, 
                                                      Mother_CenterPosition_Z));
     G4cout << "=== Leaving QweakSimPMTOnly::SetPMTOnly_CenterPositionInX() " << G4endl << G4endl;
@@ -456,7 +480,7 @@ void QweakSimPMTOnly::SetPMTOnly_CenterPositionInY(G4double yPos)
 	
     G4cout << "=== Calling QweakSimPMTOnly::SetPMTOnly_CenterPositionInY() " << G4endl;
     Mother_CenterPosition_Y = yPos;	 
-    PMTOnly_Physical->SetTranslation(G4ThreeVector(Mother_CenterPosition_X,
+    Mother_Physical->SetTranslation(G4ThreeVector(Mother_CenterPosition_X,
                                                      Mother_CenterPosition_Y, 
                                                      Mother_CenterPosition_Z));	
     G4cout << "=== Leaving QweakSimPMTOnly::SetPMTOnly_CenterPositionInY() " << G4endl << G4endl;
@@ -472,14 +496,26 @@ void QweakSimPMTOnly::SetPMTOnly_CenterPositionInZ(G4double zPos)
 	
     G4cout << "=== Calling QweakSimPMTOnly::SetPMTOnly_CenterPositionInZ() " << G4endl;
     Mother_CenterPosition_Z = zPos;	 	
-    PMTOnly_Physical->SetTranslation(G4ThreeVector(Mother_CenterPosition_X,
+    Mother_Physical->SetTranslation(G4ThreeVector(Mother_CenterPosition_X,
                                                      Mother_CenterPosition_Y, 
                                                      Mother_CenterPosition_Z));	
     G4cout << "=== Leaving QweakSimPMTOnly::SetPMTOnly_CenterPositionInZ() " << G4endl << G4endl;
 }
 
 
+/////// --------------------------------------------------------------------
 
+void QweakSimPMTOnly::FindPMTOnly_MotherCenter()
+{
+    //--- Find PMTOnly Center Position
+    G4double x = GetPMTOnly_CenterPositionInX();
+    G4double y = GetPMTOnly_CenterPositionInY();
+    G4double z = GetPMTOnly_CenterPositionInZ();
+    
+    G4cout << "PMTOnly_X: " << x << G4endl;
+    G4cout << "PMTOnly_Y: " << y << G4endl;
+    G4cout << "PMTOnly_Z: " << z << G4endl;
+}
 
 /////// --------------------------------------------------------------------
 
@@ -561,7 +597,7 @@ void QweakSimPMTOnly::SetPMTOnly_Enabled()
 	
     G4cout << "=== Calling QweakSimPMTOnly::SetPMTOnly_Enabled() " << G4endl;
     PMTOnly_VisAtt -> SetVisibility(true);
-    SetPMTOnly_Material(PMTOnly_Material -> GetName());
+    //SetPMTOnly_Material(PMTOnly_Material -> GetName());
     Mother_Physical->SetTranslation(G4ThreeVector(Mother_CenterPosition_X,
                                                      Mother_CenterPosition_Y, 
                                                      Mother_CenterPosition_Z));
@@ -578,7 +614,7 @@ void QweakSimPMTOnly::SetPMTOnly_Disabled()
 	
     G4cout << "=== Calling QweakSimPMTOnly::SetPMTOnly_Disabled() " << G4endl;
     PMTOnly_VisAtt -> SetVisibility(false);
-    SetPMTOnly_Material("Air");
+    //SetPMTOnly_Material("Air");
     Mother_Physical->SetTranslation(G4ThreeVector(Mother_CenterPosition_X,
                                                      Mother_CenterPosition_Y, 
                                                      Mother_CenterPosition_Z + 400.00*cm));

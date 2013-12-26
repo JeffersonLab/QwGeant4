@@ -11,6 +11,7 @@ G4Allocator<QweakSimPMTOnly_PMTHit> QweakSimPMTOnly_PMTHitAllocator;
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 QweakSimPMTOnly_PMTHit::QweakSimPMTOnly_PMTHit()
 {
+  myHitID = 0;
   currentPhotonEnergy = 0.;
 }
 

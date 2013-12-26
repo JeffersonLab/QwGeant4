@@ -314,7 +314,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
             n_hitPMTOnly        = PMTOnlyDetector_HC -> entries();
 	}
 	
-	// get PMTOnly_PMT Hitt Collection
+	// get PMTOnly_PMT Hit Collection
 	if (PMTOnlyDetectorPMT_CollID > -1) {
             PMTOnlyPMT_HC  = (QweakSimPMTOnly_PMTHitsCollection*)(HCE->GetHC(PMTOnlyDetectorPMT_CollID));
             n_hitPMTOnlyPMT        = PMTOnlyPMT_HC -> entries();
@@ -334,12 +334,15 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     }
 
     if (printhits) {
-      G4cout <<",\tVDC_Front "<<n_VDChitDCFront<<",\tVDC_Back "<<n_VDChitDCBack<<",\tTS "<<n_hitTriggerScintillator;
-      G4cout <<",\tLeadGlass "<<n_hitLeadGlass;
-      G4cout <<",\tPMTOnly "<<n_hitPMTOnly;
-      G4cout <<",\tPMTOnlyPMT "<<n_hitPMTOnlyPMT;
-      G4cout <<",\tHDC "<<n_HDChitWirePlane; 
-      G4cout <<",\tCerenkov "<<n_hitCerenkov<<"\tCerenkovPMT "<<n_hitCerenkovPMT<<G4endl;
+      G4cout << "HDC " << n_HDChitWirePlane
+             << ",\tVDC_Front " << n_VDChitDCFront
+             << ",\tVDC_Back " << n_VDChitDCBack
+             << ",\tTS " << n_hitTriggerScintillator
+	     << ",\tLeadGlass " << n_hitLeadGlass
+             << ",\tPMTOnly " << n_hitPMTOnly
+             << ",\tPMTOnlyPMT " << n_hitPMTOnlyPMT
+             << ",\tCerenkov " << n_hitCerenkov
+             << "\tCerenkovPMT " << n_hitCerenkovPMT << G4endl;
     }
 
     // Initialize/Clear Event variables, initialize Cerenkov Detector with NoHit Flag
@@ -398,6 +401,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     // Initialize LeadGlass and PMTOnly //--- with NoHit Flag
     analysis->fRootEvent->LeadGlass.Detector.Initialize();
     analysis->fRootEvent->PMTOnly.Detector.Initialize();
+    analysis->fRootEvent->PMTOnly.PMT.Initialize();
     //analysis->fRootEvent->LeadGlass.Detector.StoreDetectorHasBeenHit(0);
     //-------------------------------------------------------------------------------------------------
 
@@ -570,6 +574,9 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         
         // Store Number of Hits for: PMTOnly Detector
         analysis->fRootEvent->PMTOnly.Detector.StoreDetectorNbOfHits(n_hitPMTOnly);
+        
+        // Store Number of Hits for: PMTOnly PMT Detector
+        analysis->fRootEvent->PMTOnly.PMT.StoreDetectorNbOfHits(n_hitPMTOnlyPMT);
 
         //==========================================================================================================
 
@@ -1906,6 +1913,26 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
             
         } // end    if (n_hitPMTOnly >0)	
 
+        if (n_hitPMTOnlyPMT >0) {	//--- loop over hits  
+            
+            for (int i1=0;i1<n_hitPMTOnlyPMT;i1++) {
+                
+                QweakSimPMTOnly_PMTHit* aHit = (*PMTOnlyPMT_HC)[i1]; // This line causes a seg fault it seems.
+                
+                PMTOnlyPMTHasBeenHit = 5;
+                PMTOnlyPMTHits++;
+                PMTOnlyNPE += myUserInfo->GetNumberOfPhotoelectronsS20(aHit->GetPhotonEnergy()*1.0e6);
+
+            } // end	for(n_hitPMTOnlyPMT)
+                        
+            // Write the PMT results to the ROOTfile
+            analysis->fRootEvent->PMTOnly.PMT.StorePMTHasBeenHit(PMTOnlyPMTHasBeenHit);
+            analysis->fRootEvent->PMTOnly.PMT.StorePMTTotalNbOfHits(PMTOnlyPMTHits);
+            analysis->fRootEvent->PMTOnly.PMT.StorePMTTotalNbOfPEs(PMTOnlyNPE);
+          
+        } // end	if (n_hitPMTOnlyPMT >0)
+        
+
 //  G4cout << "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" << G4endl;
 
         // Finally fill our event ntuple
@@ -1970,6 +1997,7 @@ void QweakSimEventAction::Initialize() {
     n_hitLeadGlass      = 0;
     n_hitLeadGlassPMT   = 0;
     n_hitPMTOnly        = 0;
+    n_hitPMTOnlyPMT 	= 0;
 
     // get local position of hit
     localPosition   = G4ThreeVector(0.,0.,0.);
@@ -2010,6 +2038,11 @@ void QweakSimEventAction::Initialize() {
 	
     //--- LeadGlass
     rTrackID = 0.;
+    
+    // PMTOnlyPMT
+    PMTOnlyPMTHasBeenHit = 0;
+    PMTOnlyPMTHits = 0;
+    PMTOnlyNPE = 0.0;
 	
     localVertexMomentumDirection = G4ThreeVector(0.0,0.0,0.0);
     rLocalVertexMomentumDirectionX = 0.0;

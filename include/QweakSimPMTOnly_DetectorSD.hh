@@ -24,7 +24,7 @@ public:
     ~QweakSimPMTOnly_DetectorSD();
 	
     void   Initialize(G4HCofThisEvent* HCE);
-    G4bool ProcessHits(G4Step* aStep,G4TouchableHistory* ROhist);
+    G4bool ProcessHits(G4Step* aStep, G4TouchableHistory* ROhist);
     void   EndOfEvent(G4HCofThisEvent* HCE);
 	
 private:

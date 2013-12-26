@@ -39,6 +39,8 @@ private:
     G4UIcmdWithADoubleAndUnit* PMTOnly_SetCenterPositionInX_Cmd;
     G4UIcmdWithADoubleAndUnit* PMTOnly_SetCenterPositionInY_Cmd;
     G4UIcmdWithADoubleAndUnit* PMTOnly_SetCenterPositionInZ_Cmd;
+
+    G4UIcmdWithoutParameter*   PMTOnly_FindMotherCenter_Cmd;
 	
     G4UIcmdWithADoubleAndUnit* PMTOnly_SetTiltAngleInX_Cmd;
     G4UIcmdWithADoubleAndUnit* PMTOnly_SetTiltAngleInY_Cmd;

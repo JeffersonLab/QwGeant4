@@ -25,7 +25,11 @@ class QweakSimPMTOnly_PMTSD : public G4VSensitiveDetector
     ~QweakSimPMTOnly_PMTSD();
 	
     void Initialize(G4HCofThisEvent* HCE);
-    G4bool ProcessHits(G4Step* aStep, G4TouchableHistory* theTouchable);
+    virtual G4bool ProcessHits(G4Step* aStep, G4TouchableHistory* );
+    
+    //A version of processHits that keeps aStep constant
+    G4bool ProcessHits_constStep(const G4Step*, G4TouchableHistory* );
+    
     void EndOfEvent(G4HCofThisEvent* HCE);
     QweakSimTrajectory* GetParentTrajectory(G4int parentID);
     	

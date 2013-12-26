@@ -22,7 +22,7 @@ QweakSimPMTOnly_PMTSD::QweakSimPMTOnly_PMTSD(G4String name, QweakSimUserInformat
 {
   collectionName.insert("PMTHitCollection"); 
   PMTOnlyPMT_CollectionID = -1;
-  myUserInfo = userInfo;
+  myUserInfo = userInfo; 
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -40,35 +40,29 @@ void QweakSimPMTOnly_PMTSD::Initialize(G4HCofThisEvent* HCE)
    HCE->AddHitsCollection(PMTOnlyPMT_CollectionID , PMTOnly_PMTHitsCollection);   
 }
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-G4bool QweakSimPMTOnly_PMTSD::ProcessHits(G4Step* aStep, G4TouchableHistory* theTouchable)
-{
+G4bool QweakSimPMTOnly_PMTSD::ProcessHits(G4Step* ,G4TouchableHistory* ){
+  return false;
+}
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+G4bool QweakSimPMTOnly_PMTSD::ProcessHits_constStep(const G4Step* aStep, G4TouchableHistory* )
+{
+  // Make sure that this is a 
   if (aStep->GetTrack()->GetDefinition() != G4OpticalPhoton::OpticalPhotonDefinition()) 
     return false;
 
   G4StepPoint*        preStepPoint  = aStep->GetPreStepPoint();
   G4StepPoint*        postStepPoint = aStep->GetPostStepPoint();
 
-  // From Cerenkov
-  theTouchable  = (G4TouchableHistory*)(preStepPoint->GetTouchable());
-
   if (postStepPoint->GetStepStatus() != fGeomBoundary) return false;
-
-  if (preStepPoint->GetStepStatus() != fGeomBoundary) return false;     // Entering Geometry
+  if (preStepPoint->GetStepStatus() != fGeomBoundary) return false;	// Entering Volume
 
   G4double currentPhotonEnergy = aStep->GetTrack()->GetTotalEnergy();
-  G4int MotherCopyNo      = theTouchable->GetVolume(1)->GetCopyNo();  // From Cerenkov
   QweakSimPMTOnly_PMTHit* aHit = new QweakSimPMTOnly_PMTHit();
-  //G4int MotherReplicaNo2  = theTouchable->GetReplicaNumber(3);        // From Cerenkov
 
   aHit->StorePhotonEnergy(currentPhotonEnergy);
   G4int hitCount = PMTOnly_PMTHitsCollection->insert(aHit); 
   aHit->StoreHitID(hitCount);
-  
-  //myUserInfo->SetCurrentPMTHit(aHit,MotherCopyNo); 			// from Cerenkov
-  
-  MotherCopyNo++;
 
   return true;
 }

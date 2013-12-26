@@ -21,6 +21,8 @@ class QweakSimUserPMTOnly_PMTEvent : public TObject
   private:
 	
     Float_t TrackID;
+    
+    Int_t NbOfHits;
 	
     Int_t PMTHasBeenHit;
 	
@@ -42,7 +44,12 @@ class QweakSimUserPMTOnly_PMTEvent : public TObject
 	
     void     StoreTrackID(Float_t tid)    { TrackID = tid; }
     Float_t    GetTrackID() const {return TrackID;}
-	
+
+    //-----------------	
+    
+    void  StoreDetectorNbOfHits(Int_t nd)     { NbOfHits = nd; }
+    Int_t   GetDetectorNbOfHits() const    {return  NbOfHits;}
+
     //-----------------
 	
     void     StorePMTHasBeenHit(Int_t np)      { PMTHasBeenHit = np; }

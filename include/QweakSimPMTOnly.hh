@@ -11,6 +11,9 @@
 
 //--- geant4 includes
 #include "G4LogicalVolume.hh"
+#include "G4OpticalSurface.hh"
+#include "G4LogicalBorderSurface.hh"
+#include "G4LogicalSkinSurface.hh"
 
 //--- user includes
 #include "QweakSimSolids.hh"
@@ -42,6 +45,8 @@ public:
     void SetPMTOnly_CenterPositionInX(G4double xPos);
     void SetPMTOnly_CenterPositionInY(G4double yPos);
     void SetPMTOnly_CenterPositionInZ(G4double zPos);
+    
+    void FindPMTOnly_MotherCenter();
     
     G4double GetPMTOnly_CenterPositionInX()    {return PMTOnly_CenterPosition_X+Mother_CenterPosition_X;}
     G4double GetPMTOnly_CenterPositionInY()    {return PMTOnly_CenterPosition_Y+Mother_CenterPosition_Y;}
@@ -87,20 +92,20 @@ private:
     G4Material*        	PMTOnly_Material;
     G4VisAttributes*   	PMTOnly_VisAtt;
     
-    G4Tubs*		PMTQuartzOpticalFilm_Solid;
-    G4LogicalVolume*   	PMTQuartzOpticalFilm_Logical;
-    G4VPhysicalVolume* 	PMTQuartzOpticalFilm_Physical;
-    G4Material*        	PMTQuartzOpticalFilm_Material;
+    G4Tubs*		PMTOnlyQuartzOpticalFilm_Solid;
+    G4LogicalVolume*   	PMTOnlyQuartzOpticalFilm_Logical;
+    G4VPhysicalVolume* 	PMTOnlyQuartzOpticalFilm_Physical;
+    G4Material*        	PMTOnlyQuartzOpticalFilm_Material;
     
-    G4Tubs*		PMTEntranceWindow_Solid;
-    G4LogicalVolume*   	PMTEntranceWindow_Logical; 
-    G4VPhysicalVolume* 	PMTEntranceWindow_Physical; 
-    G4Material*        	PMTEntranceWindow_Material;
+    G4Tubs*		PMTOnlyEntranceWindow_Solid;
+    G4LogicalVolume*   	PMTOnlyEntranceWindow_Logical; 
+    G4VPhysicalVolume* 	PMTOnlyEntranceWindow_Physical; 
+    G4Material*        	PMTOnlyEntranceWindow_Material;
     
-    G4Tubs* 		Cathode_Solid;
-    G4LogicalVolume*   	Cathode_Logical; 
-    G4VPhysicalVolume* 	Cathode_Physical; 
-    G4Material*        	Cathode_Material;
+    G4Tubs* 		PMTOnlyCathode_Solid;
+    G4LogicalVolume*   	PMTOnlyCathode_Logical; 
+    G4VPhysicalVolume* 	PMTOnlyCathode_Physical; 
+    G4Material*        	PMTOnlyCathode_Material;
     
     //--- Mother sizes
     G4double Mother_FullLength_X;
@@ -136,14 +141,26 @@ private:
     G4double MD5_CenterPosition_Z;
 
     //--- PMT Stuff
-    G4double PMTQuartzOpticalFilm_Diameter;
-    G4double PMTQuartzOpticalFilm_Thickness;
+    G4double PMTOnlyQuartzOpticalFilm_X;
+    G4double PMTOnlyQuartzOpticalFilm_Y;
+    G4double PMTOnlyQuartzOpticalFilm_Z;
+    
+    G4double PMTOnlyQuartzOpticalFilm_Diameter;
+    G4double PMTOnlyQuartzOpticalFilm_Thickness;
 
-    G4double PMTEntranceWindow_Diameter;
-    G4double PMTEntranceWindow_Thickness;
+    G4double PMTOnlyEntranceWindow_X;
+    G4double PMTOnlyEntranceWindow_Y;
+    G4double PMTOnlyEntranceWindow_Z;
 
-    G4double Cathode_Diameter;
-    G4double Cathode_Thickness;
+    G4double PMTOnlyEntranceWindow_Diameter;
+    G4double PMTOnlyEntranceWindow_Thickness;
+
+    G4double PMTOnlyCathode_X;
+    G4double PMTOnlyCathode_Y;    
+    G4double PMTOnlyCathode_Z;
+
+    G4double PMTOnlyCathode_Diameter;
+    G4double PMTOnlyCathode_Thickness;
 
     //--- PMTOnly sensitive detector
     G4VSensitiveDetector* PMTOnlySD;

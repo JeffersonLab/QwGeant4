@@ -24,16 +24,10 @@ class QweakSimUserPMTOnly_DetectorEvent : public TObject
 {
 	
 private:
-	
-    //TTree   *DataTree;
-    //TBranch *secondaryElectronBranch;
-
-    //std::vector<Float_t> DetectorID;
-	
+		
     Int_t                PrimaryEventNumber;
 	
     std::vector<Float_t> TrackID;
-	
     std::vector<TString> ParticleName;
     std::vector<Int_t>   ParticleType;
 	
@@ -44,28 +38,6 @@ private:
     Int_t                NbOfHits;
     
     Int_t                SecondaryElectronCount;
-	
-    //QweakSimUserPMTOnly_SecondaryElectronEvent *secondaryElectronEvent;
-	
-    //Float_t *SecElecLocalOriginX; //[SecondaryElectronCount]
-    //Float_t *SecElecLocalOriginY; //[SecondaryElectronCount]
-    //Float_t *SecElecLocalOriginZ; //[SecondaryElectronCount]
-    //
-    //Float_t *SecElecLocalMomentumX; //[SecondaryElectronCount]
-    //Float_t *SecElecLocalMomentumY; //[SecondaryElectronCount]
-    //Float_t *SecElecLocalMomentumZ; //[SecondaryElectronCount]
-    //
-    //Float_t *SecElecLocalEnergy; //[SecondaryElectronCount]
-	
-    //vector <Float_t> SecElecLocalOriginX; //[SecondaryElectronCount]
-    //vector <Float_t> SecElecLocalOriginY; //[SecondaryElectronCount]
-    //vector <Float_t> SecElecLocalOriginZ; //[SecondaryElectronCount]
-    //
-    //vector <Float_t> SecElecLocalMomentumX; //[SecondaryElectronCount]
-    //vector <Float_t> SecElecLocalMomentumY; //[SecondaryElectronCount]
-    //vector <Float_t> SecElecLocalMomentumZ; //[SecondaryElectronCount]
-    //
-    //vector <Float_t> SecElecLocalEnergy; //[SecondaryElectronCount]
 	
     std::vector<Float_t> HitGlobalPositionX;
     std::vector<Float_t> HitGlobalPositionY;
@@ -100,15 +72,12 @@ private:
     std::vector<Float_t> LocalVertexKineticEnergy;
     std::vector<Float_t> LocalVertexTotalEnergy;
 	
-    //Float_t PrimaryQ2;
-    //Float_t CrossSection;
-    //Float_t CrossSectionWeight;
-	
     std::vector<Float_t> GlobalPhiAngle;
     std::vector<Float_t> GlobalThetaAngle;
 	
     //--- deposited energy in the PMTOnly in one step
     std::vector<Float_t> DepositedEnergy;
+
     //--- total deposited energy in the PMTOnly in one event
     Float_t TotalDepositedEnergy;
 	
@@ -247,19 +216,6 @@ public:
     void   StoreDetectorLocalVertexTotalEnergy(Float_t etot)    { LocalVertexTotalEnergy.push_back(etot); }
     std::vector<Float_t>  GetDetectorLocalVertexTotalEnergy() const       {return LocalVertexTotalEnergy;}
 	
-    //----------------
-	
-    /*
-    void   StorePrimaryQ2(Float_t pq2)    { PrimaryQ2 = pq2; }
-    Float_t  GetPrimaryQ2() const     {return PrimaryQ2; }
-	 
-    void   StoreCrossSection(Float_t cs)     {CrossSection = cs;}
-    Float_t  GetCrossSection() const     {return CrossSection; }
-	 
-    void   StoreCrossSectionWeight(Float_t csw)    {CrossSectionWeight = csw;}
-    Float_t  GetCrossSectionWeight() const      {return CrossSectionWeight; }
-    */
-	
     //----------------- GlobalThetaAngle & PhiAngle
 	
     void   StoreGlobalThetaAngle(Float_t theta)    { GlobalThetaAngle.push_back(theta); }
@@ -281,11 +237,6 @@ public:
     void     StoreTotalEnergyDeposit(Float_t eng)   { TotalDepositedEnergy = eng; }
     Float_t    GetTotalEnergyDeposit()   const {return TotalDepositedEnergy;}
 	
-    //void AddSecondaryElectronEvent(Float_t XO, Float_t YO, Float_t ZO,
-    //                                  Float_t XM, Float_t YM, Float_t ZM,
-    //                                  Float_t Eng);
-    //
-
     // define a new Class known to ROOT  
     ClassDef(QweakSimUserPMTOnly_DetectorEvent,1)
 	
