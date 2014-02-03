@@ -6,6 +6,12 @@
 */
 
 #include "QweakSimLumiDetector.hh"
+#include "G4RunManager.hh"
+#include "G4VisAttributes.hh"
+#include "QweakSimSolids.hh"
+#include "QweakSimMaterial.hh"
+#include "QweakSimLumi_DetectorSD.hh"
+
 
 QweakSimLumiDetector::QweakSimLumiDetector()
 {
@@ -83,7 +89,12 @@ void QweakSimLumiDetector::ConstructComponent(G4VPhysicalVolume* MotherVolume)
                                          "USLumi_Logical",  // Name for object
                                          0,0,0);            // Set all options to zero for now
 
-    // Create G4PVPlacement with lumi position
+    //DSLumi_Logical = new G4LogicalVolume(DSLumi_Solid,      // Solid placed in lv
+    //                                     QuartzBar,         // Material for lv
+    //                                     "DSLumi_Logical",  // Name for object
+    //                                     0,0,0);            // Set all options to zero for now
+
+    // Create G4PVPlacement with uslumi position
     USLumi_Physical = new G4PVPlacement(USLumi_Rot,
                                         USLumi_XYZ,
                                         "USLumi_Physical",
@@ -91,6 +102,8 @@ void QweakSimLumiDetector::ConstructComponent(G4VPhysicalVolume* MotherVolume)
                                         MotherVolume,
                                         false,
                                         0);
+
+    // Create G4PVPlacement with dslumi position
     //DSLumi_Physical = new G4PVPlacement(DSLumi_Rot,
     //                                    DSLumi_XYZ,
     //                                    "DSLumi_Physical",
@@ -98,6 +111,13 @@ void QweakSimLumiDetector::ConstructComponent(G4VPhysicalVolume* MotherVolume)
     //                                    MotherVolume,
     //                                    false,
     //                                    0);
+    
+    // Define sensitive detectors for USLumi and DSLumi
+    G4SDManager* SDman = G4SDManager::GetSDMpointer();
+
+    USLumiSD = new QweakSimLumi_DetectorSD("USLumiSD");
+    //SDman->AddNewDetector(USLumiSD);
+    //USLumi_Logical->SetSensitiveDetector(USLumiSD);
 
     //Make it pretty...
     G4Colour  red   (1.,0.,0.);

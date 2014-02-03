@@ -41,12 +41,14 @@
 #include "QweakSimPMTOnly_PMTHit.hh"
 #include "QweakSimCerenkov_DetectorHit.hh"
 #include "QweakSimCerenkovDetector_PMTHit.hh"
+#include "QweakSimLumi_DetectorHit.hh"
 #include "QweakSimTrajectory.hh"
 #include "QweakSimUserMainEvent.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 QweakSimEventAction::QweakSimEventAction(QweakSimAnalysis* AN, QweakSimUserInformation* myUI)
 {
+
 //---------------------------------------------------------------------------------------------
 //! Constructor of QweakSimEventAction
     /*!
@@ -73,6 +75,7 @@ QweakSimEventAction::QweakSimEventAction(QweakSimAnalysis* AN, QweakSimUserInfor
     PMTOnlyDetectorPMT_CollID		  = -1;
     CerenkovDetector_CollID               = -1;
     CerenkovDetectorPMT_CollID            = -1;
+    LumiDetector_CollID                   = -1;
 
     analysis    = AN;
     myUserInfo  = myUI;
@@ -93,6 +96,8 @@ QweakSimEventAction::QweakSimEventAction(QweakSimAnalysis* AN, QweakSimUserInfor
         kMapTriggerMode["scint"] = kTriggerScint;
         fTriggerName[kTriggerScint] = "scint";
         kMapTriggerMode["leadglass"] = kTriggerLeadGlass;  // trigger for the lead glass
+        fTriggerName[kTriggerLumi] = "lumi";
+        kMapTriggerMode["lumi"] = kTriggerLumi;  // trigger for the lead glass
         fTriggerName[kTriggerLeadGlass] = "leadglass";
         // kMapTriggerMode["gem"]   = kTriggerGEM;
         // fTriggerName[kTriggerGEM] = "gem";
@@ -201,6 +206,11 @@ void QweakSimEventAction::BeginOfEventAction(const G4Event* /*evt*/)
     if (CerenkovDetectorPMT_CollID==-1) {
         CerenkovDetectorPMT_CollID = SDman->GetCollectionID("CerenkovPMTSD/PMTHitCollection");
     }
+
+    // check for existing LumiDetector Collection ID (if it's -1 it will be assigned)
+    if (LumiDetector_CollID==-1) {
+        LumiDetector_CollID = SDman->GetCollectionID("LumiDetectorSD/LumiDetectorCollection");
+    }
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -252,6 +262,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     QweakSimPMTOnly_DetectorHitsCollection*                  PMTOnlyDetector_HC                 = 0;
     QweakSimPMTOnly_PMTHitsCollection*                       PMTOnlyPMT_HC			= 0;
     QweakSimCerenkovDetectorHitsCollection*                  CerenkovDetector_HC                = 0;
+    QweakSimLumi_DetectorHitsCollection*                  LumiDetector_HC                = 0;
     QweakSimCerenkovDetector_PMTHitsCollection*              CerenkovDetectorPMT_HC             = 0;
 
     if (HCE) {
@@ -331,6 +342,12 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
             CerenkovDetectorPMT_HC = (QweakSimCerenkovDetector_PMTHitsCollection*)(HCE->GetHC(CerenkovDetectorPMT_CollID));
             n_hitCerenkovPMT       = CerenkovDetectorPMT_HC -> entries();
         }
+
+        // get  LumiDetector Hit Collector pointer
+        if (LumiDetector_CollID > -1) {
+            LumiDetector_HC    = (QweakSimLumi_DetectorHitsCollection*)(HCE->GetHC(LumiDetector_CollID));
+            n_hitLumi          = LumiDetector_HC -> entries();
+        }
     }
 
     if (printhits) {
@@ -403,6 +420,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     analysis->fRootEvent->PMTOnly.Detector.Initialize();
     analysis->fRootEvent->PMTOnly.PMT.Initialize();
     //analysis->fRootEvent->LeadGlass.Detector.StoreDetectorHasBeenHit(0);
+    //analysis->fRootEvent->Lumi.Detector.Initialize();
     //-------------------------------------------------------------------------------------------------
 
     //#########################################################################################################################

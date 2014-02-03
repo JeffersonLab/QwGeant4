@@ -68,6 +68,10 @@ class QweakSimLumiDetector
         // Quartz bar for lumis
         G4Material* QuartzBar;  
 
+        // Sensitive detectors
+        G4VSensitiveDetector* USLumiSD;
+        G4VSensitiveDetector* DSLumiSD;
+
     public:
         // Constructor and destructor
         QweakSimLumiDetector();

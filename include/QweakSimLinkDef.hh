@@ -72,6 +72,8 @@
 #pragma link C++ class QweakSimUserPMTOnly_DetectorEvent+;
 #pragma link C++ class QweakSimUserPMTOnly_PMTEvent+;
 
+#pragma link C++ class QweakSimUserLumi_MainEvent+;
+#pragma link C++ class QweakSimUserLumi_DetectorEvent+;
 
 #pragma link C++ class QweakSimUserCerenkov_MainEvent+;
 #pragma link C++ class QweakSimUserCerenkov_OctantEvent+;
