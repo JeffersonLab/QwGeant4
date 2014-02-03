@@ -355,7 +355,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
              << ",\tVDC_Front " << n_VDChitDCFront
              << ",\tVDC_Back " << n_VDChitDCBack
              << ",\tTS " << n_hitTriggerScintillator
-	     << ",\tLeadGlass " << n_hitLeadGlass
+	         << ",\tLeadGlass " << n_hitLeadGlass
              << ",\tPMTOnly " << n_hitPMTOnly
              << ",\tPMTOnlyPMT " << n_hitPMTOnlyPMT
              << ",\tCerenkov " << n_hitCerenkov
@@ -420,7 +420,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     analysis->fRootEvent->PMTOnly.Detector.Initialize();
     analysis->fRootEvent->PMTOnly.PMT.Initialize();
     //analysis->fRootEvent->LeadGlass.Detector.StoreDetectorHasBeenHit(0);
-    //analysis->fRootEvent->Lumi.Detector.Initialize();
+    analysis->fRootEvent->Lumi.Detector.Initialize();
     //-------------------------------------------------------------------------------------------------
 
     //#########################################################################################################################
@@ -443,6 +443,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
             || (fTrigger[kTriggerLeadGlass] && (n_hitLeadGlass >0))         /* a hit in the LeadGlass */
             || (fTrigger[kTriggerPMTOnly] && (n_hitPMTOnly >0))         /* a hit in the PMTOnly */
             || (fTrigger[kTriggerCer]   && (n_hitCerenkov > 0) )            /* Triggering on Main Detector */
+            || (fTrigger[kTriggerLumi] && (n_hitLumi > 0))
        ) {
 
         //========================================
@@ -586,6 +587,9 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 		
         // Store Number of Hits for: Cerenkov PMT Detector
         analysis->fRootEvent->Cerenkov.PMT.StoreDetectorNbOfHits(n_hitCerenkovPMT);
+
+        // Store Number of Hits for: Lumi Detector
+        analysis->fRootEvent->Lumi.Detector.StoreDetectorNbOfHits(n_hitLumi);
 
         // Store Number of Hits for: LeadGlass Detector
         analysis->fRootEvent->LeadGlass.Detector.StoreDetectorNbOfHits(n_hitLeadGlass);
@@ -1593,6 +1597,190 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         } // end    if (n_hitTriggerScintillator >0)
 
 
+////////////////////////////////////////////
+        //===========================================================
+		
+        //===========================================================
+        // Store Lumi hits into /Lumi
+        //===========================================================
+		
+        if (n_hitLumi > 0) {
+			
+            //--- loop over hits
+            for (int i1=0;i1<n_hitLumi;i1++) {
+				
+                QweakSimLumi_DetectorHit* aHit = (*LumiDetector_HC)[i1];
+				
+                //aHit->Print();
+				
+                //--- primary event number --- Done in previous code
+                //G4int PrimaryEventNumber = myUserInfo->GetPrimaryEventNumber();
+				
+                //--- track ID
+                rTrackID = (Float_t) aHit->GetTrackID();
+				
+                //--- particle name & type
+                rParticleName = TString(aHit->GetParticleName());
+                rParticleType = (Int_t) aHit->GetParticleType();
+				
+                //--- get global time of hit
+                rGlobalTime = (Float_t) aHit->GetGlobalTime() / ns;
+				
+                //--- GetHasBeenHit();
+                //GetEdgeEventFlag();
+                //n_hitLumi <---> GetNbOfHits();
+				
+                //--- get world position of hit
+                globalPosition  = aHit->GetWorldPosition();
+                rGlobalPositionX = (Float_t) globalPosition.x() / cm;
+                rGlobalPositionY = (Float_t) globalPosition.y() / cm;
+                rGlobalPositionZ = (Float_t) globalPosition.z() / cm;
+				
+                //--- get local position of hit
+                localPosition  = aHit->GetLocalPosition();
+                rLocalPositionX = (Float_t) localPosition.x() / cm;
+                rLocalPositionY = (Float_t) localPosition.y() / cm;
+                rLocalPositionZ = (Float_t) localPosition.z() / cm;
+				
+                //--- get local exit position of hit
+                //localExitPosition = aHit->GetLocalExitPosition();
+                //rLocalExitPositionX = (Float_t) localExitPosition.x() / cm;
+                //rLocalExitPositionY = (Float_t) localExitPosition.y() / cm;
+                //rLocalExitPositionZ = (Float_t) localExitPosition.z() / cm;
+				
+                //--- get origin vertex position
+                originVertexPosition  = aHit->GetOriginVertexPosition(); 
+                rOriginVertexPositionX = (Float_t) originVertexPosition.x() / cm;
+                rOriginVertexPositionY = (Float_t) originVertexPosition.y() / cm;
+                rOriginVertexPositionZ = (Float_t) originVertexPosition.z() / cm;
+				
+                //--- get world momentum of hit
+                globalMomentum  = aHit->GetWorldMomentum();
+                rGlobalMomentumX = (Float_t) globalMomentum.x() / MeV;
+                rGlobalMomentumY = (Float_t) globalMomentum.y() / MeV;
+                rGlobalMomentumZ = (Float_t) globalMomentum.z() / MeV;
+				
+                //--- get local momentum of hit  
+                localMomentum  = aHit->GetLocalMomentum();
+                rLocalMomentumX = (Float_t) localMomentum.x() / MeV;
+                rLocalMomentumY = (Float_t) localMomentum.y() / MeV;
+                rLocalMomentumZ = (Float_t) localMomentum.z() / MeV;                //--- store particle name & type
+                analysis->fRootEvent->Lumi.Detector.StoreParticleName(rParticleName);
+                analysis->fRootEvent->Lumi.Detector.StoreParticleType(rParticleType);
+				
+                //--- get local vertex momentum direction of hit
+                localVertexMomentumDirection = aHit->GetMomentumDirection();
+                rLocalVertexMomentumDirectionX = (Float_t) localVertexMomentumDirection.x();
+                rLocalVertexMomentumDirectionY = (Float_t) localVertexMomentumDirection.y();
+                rLocalVertexMomentumDirectionZ = (Float_t) localVertexMomentumDirection.z();
+				
+                //--- get origin vertex momentum direction of hit
+                originVertexMomentumDirection = aHit->GetOriginVertexMomentumDirection();
+                rOriginVertexMomentumDirectionX = (Float_t) originVertexMomentumDirection.x();
+                rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
+                rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
+				
+                //--- get origin vertex theta & phi angle
+                rOriginVertexThetaAngle = (Float_t) originVertexMomentumDirection.theta() / degree;
+                rOriginVertexPhiAngle   = (Float_t) originVertexMomentumDirection.phi() / degree;
+				
+                //--- get origin vertex kinetic energy & total energy
+                rOriginVertexKineticEnergy = (Float_t ) aHit->GetOriginVertexKineticEnergy() / MeV;
+                rOriginVertexTotalEnergy   = (Float_t ) aHit->GetOriginVertexTotalEnergy() / MeV;
+				
+                //--- get total energy & total energy of hit
+                rKineticEnergy = (Float_t) aHit->GetKineticEnergy() / MeV;
+                rTotalEnergy = (Float_t) aHit->GetTotalEnergy() / MeV;
+				
+                //rPrimaryQ2 = (Float_t) aHit->GetPrimaryQ2();
+                //rCrossSection = (Float_t) aHit->GetCrossSection();
+                //rCrossSectionWeight = (Float_t) aHit->GetCrossSectionWeight();
+				
+                //--- get global theta & phi angle
+                rGlobalThetaAngle = (Float_t) globalMomentum.theta() / degree;
+                rGlobalPhiAngle   = (Float_t) globalMomentum.phi() / degree - 90.0;
+				
+                //--- get Lumi deposited energy
+                rDepositedEnergy = (Float_t) aHit->GetHitDepositedEnergy() / MeV;				
+                //--------------------------------------------------------------------------------------------
+				
+                //--- store Primary Event Number
+                analysis->fRootEvent->Lumi.Detector.StorePrimaryEventNumber((Int_t) PrimaryEventNumber);
+				
+                //--- store track ID
+                analysis->fRootEvent->Lumi.Detector.StoreTrackID(rTrackID);
+				
+                //--- store particle name & type
+                analysis->fRootEvent->Lumi.Detector.StoreParticleName(rParticleName);
+                analysis->fRootEvent->Lumi.Detector.StoreParticleType(rParticleType);
+				
+                //--- store global time of hit
+                analysis->fRootEvent->Lumi.Detector.StoreGlobalTimeOfHit(rGlobalTime);
+				
+                //--- mark Lumi detector as been hit
+                analysis->fRootEvent->Lumi.Detector.StoreDetectorHasBeenHit(5);
+                //--- edge event flag
+                //--- Store Nb of hits  --- Done in previous code
+                //analysis->fRootEvent->Lumi.Detector.StoreDetectorNbOfHits(n_hitLumi);
+				
+                //--- store global position
+                analysis->fRootEvent->Lumi.Detector.StoreDetectorGlobalPositionX(rGlobalPositionX);
+                analysis->fRootEvent->Lumi.Detector.StoreDetectorGlobalPositionY(rGlobalPositionY);
+                analysis->fRootEvent->Lumi.Detector.StoreDetectorGlobalPositionZ(rGlobalPositionZ);
+				
+                //--- store local position
+                analysis->fRootEvent->Lumi.Detector.StoreDetectorLocalPositionX(rLocalPositionX);
+                analysis->fRootEvent->Lumi.Detector.StoreDetectorLocalPositionY(rLocalPositionY);
+                analysis->fRootEvent->Lumi.Detector.StoreDetectorLocalPositionZ(rLocalPositionZ);
+				
+                //analysis->fRootEvent->Lumi.Detector.StoreDetectorLocalExitPositionX(rLocalExitPositionX);
+                //analysis->fRootEvent->Lumi.Detector.StoreDetectorLocalExitPositionY(rLocalExitPositionY);
+                //analysis->fRootEvent->Lumi.Detector.StoreDetectorLocalExitPositionZ(rLocalExitPositionZ);
+				
+                //--- store origin vertex position
+                analysis->fRootEvent->Lumi.Detector.StoreOriginVertexPositionX(rOriginVertexPositionX);
+                analysis->fRootEvent->Lumi.Detector.StoreOriginVertexPositionY(rOriginVertexPositionY);
+                analysis->fRootEvent->Lumi.Detector.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
+				
+                //--- store local vertex momentum direction
+                analysis->fRootEvent->Lumi.Detector.StoreLocalVertexMomentumDirectionX(rLocalVertexMomentumDirectionX);
+                analysis->fRootEvent->Lumi.Detector.StoreLocalVertexMomentumDirectionY(rLocalVertexMomentumDirectionY);
+                analysis->fRootEvent->Lumi.Detector.StoreLocalVertexMomentumDirectionZ(rLocalVertexMomentumDirectionZ);
+				
+                //--- store origin vertex momentum direction
+                analysis->fRootEvent->Lumi.Detector.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);
+                analysis->fRootEvent->Lumi.Detector.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);
+                analysis->fRootEvent->Lumi.Detector.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
+				
+                //--- store origin theta & phi angle
+                analysis->fRootEvent->Lumi.Detector.StoreOriginVertexThetaAngle(rOriginVertexThetaAngle);
+                analysis->fRootEvent->Lumi.Detector.StoreOriginVertexPhiAngle(rOriginVertexPhiAngle);
+				
+                //--- store origin kinetic energy & total energy
+                analysis->fRootEvent->Lumi.Detector.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
+                analysis->fRootEvent->Lumi.Detector.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
+				
+                //--- store local vertex kinetic & total energy
+                analysis->fRootEvent->Lumi.Detector.StoreDetectorLocalVertexKineticEnergy(rKineticEnergy);
+                analysis->fRootEvent->Lumi.Detector.StoreDetectorLocalVertexTotalEnergy(rTotalEnergy);
+				
+                //analysis->fRootEvent->Lumi.Detector.StorePrimaryQ2(rPrimaryQ2);
+                //analysis->fRootEvent->Lumi.Detector.StoreCrossSection(rCrossSection);
+                //analysis->fRootEvent->Lumi.Detector.StoreCrossSectionWeight(rCrossSectionWeight);		
+				
+                //--- store global track theta & phi angle
+                analysis->fRootEvent->Lumi.Detector.StoreGlobalThetaAngle(rGlobalThetaAngle);
+                analysis->fRootEvent->Lumi.Detector.StoreGlobalPhiAngle(rGlobalPhiAngle);
+				
+                //--- sotre Lumi deposited energy
+                analysis->fRootEvent->Lumi.Detector.StoreDepositedEnergy(rDepositedEnergy);
+		// -- TotalDepositedEnergy is evaluated in UserLumi class
+
+		//--------------------------------------------------------------------------------------------
+				
+            } // end  for(int i1=0;i1<n_hitLumi;i1++)	   
+        } // end    if (n_hitLumi >0)
+////////////////////////////////////////////
 		
 		
         //===========================================================
@@ -2012,6 +2200,7 @@ void QweakSimEventAction::Initialize() {
     n_hitTriggerScintillatorPMT = 0;
     n_hitCerenkov       = 0;
     n_hitCerenkovPMT    = 0;
+    n_hitLumi           = 0;
     n_hitLeadGlass      = 0;
     n_hitLeadGlassPMT   = 0;
     n_hitPMTOnly        = 0;
