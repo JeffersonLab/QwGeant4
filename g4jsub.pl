@@ -14,7 +14,7 @@ use Data::Dumper;
 ###############################################################################
 
 #declaration of global variables, arrays, and hashes
-my $user = "magee";
+my $user = getpwuid($<);  #get user id
 my $original_mac;
 my $jobname;
 my $mac_content;
@@ -38,6 +38,11 @@ GetOptions(
 
 #die helpscreen unless $#ARGV!=0;
 die helpscreen if $help;
+#create necessary directories unless exists
+mkdir "xml" unless (-e "xml");
+mkdir "macros" unless (-e "macros");
+mkdir "jsub" unless (-e "jsub");
+mkdir "jsub/output" unless (-e "jsub/output");
 
 $Njobs  = 10   unless  $Njobs;
 $Nevents=10000 unless $Nevents;
@@ -119,7 +124,6 @@ Options include:
   --dry-run    do a dry run: create all the files
                 but don't submit any.
                 Useful for testing.
-NOTE: you MUST make an xml/ and macros/ folder before using.
 EOF
 die $helpstring if $help;
 }
