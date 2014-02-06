@@ -42,9 +42,9 @@ QweakSimLumiDetector::QweakSimLumiDetector()
     DSLumi_Length_Z = 4.0*cm;
 
     // USLumi positions
-    USLumi_Position_X = 0.0*cm;
+    USLumi_Position_X = 24.0*cm;
     USLumi_Position_Y = 0.0*cm;
-    USLumi_Position_Z = -385*cm;
+    USLumi_Position_Z = -387*cm;
     // DSLumi positions
     DSLumi_Position_X = 0*cm;
     DSLumi_Position_Y = 0*cm;
@@ -116,8 +116,8 @@ void QweakSimLumiDetector::ConstructComponent(G4VPhysicalVolume* MotherVolume)
     G4SDManager* SDman = G4SDManager::GetSDMpointer();
 
     USLumiSD = new QweakSimLumi_DetectorSD("USLumiSD");
-    //SDman->AddNewDetector(USLumiSD);
-    //USLumi_Logical->SetSensitiveDetector(USLumiSD);
+    SDman->AddNewDetector(USLumiSD);
+    USLumi_Logical->SetSensitiveDetector(USLumiSD);
 
     //Make it pretty...
     G4Colour  red   (1.,0.,0.);
