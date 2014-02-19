@@ -16,10 +16,9 @@
 
 int main(int argc, char** argv)
 {
-  // Setup include path
-  gROOT->ProcessLine(".include include");
   // Start QweakSim-Root command prompt
   QweakSimRint* qweaksimrint = new QweakSimRint("QweakSim ROOT Analyzer", &argc, argv);
+  // Setup include path
   gROOT->ProcessLine(".include include");
   qweaksimrint->Run();
   delete qweaksimrint;
