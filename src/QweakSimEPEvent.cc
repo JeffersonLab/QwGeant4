@@ -142,28 +142,37 @@ G4ThreeVector QweakSimEPEvent::GetMomentumDirection()
      * \li else: not defined
      */
 
-    G4double cosTheta = 1.0;
-    G4double sinTheta = 0.0;
+    G4double cosTheta   = 1.0;
+    G4double sinTheta   = 0.0;
+    G4double ThetaAngle = 0.0;
+    G4double E_out      = 0.0;
+    G4double xsec       = 0.0;
+    G4int SuperElastic  = 1;
 
-    if (Isotropy == 0) {
-      // Generate flat theta distribution
-      G4double ThetaAngle = GetThetaAngle_Min() + G4UniformRand()*(GetThetaAngle_Max() - GetThetaAngle_Min());
-      cosTheta = cos(ThetaAngle);
-      sinTheta = sin(ThetaAngle);
+    while (SuperElastic) {
+      if (Isotropy == 0) {
+        // Generate flat theta distribution
+        ThetaAngle = GetThetaAngle_Min() + G4UniformRand()*(GetThetaAngle_Max() - GetThetaAngle_Min());
+        cosTheta = cos(ThetaAngle);
+        sinTheta = sin(ThetaAngle);
 
-    } else if (Isotropy == 1) {
-      // Generate uniform distribution on spherical surface. See for example
-      // http://hypernews.slac.stanford.edu/HyperNews/geant4/get/particles/31/2.html
-      // or more generally http://mathworld.wolfram.com/SpherePointPicking.html
-      G4double cosThetaMax = cos(GetThetaAngle_Max());
-      G4double cosThetaMin = cos(GetThetaAngle_Min());
-      cosTheta = cosThetaMin + G4UniformRand()*(cosThetaMax - cosThetaMin);
-      sinTheta = sqrt(1. - cosTheta * cosTheta);
+      } else if (Isotropy == 1) {
+        // Generate uniform distribution on spherical surface. See for example
+        // http://hypernews.slac.stanford.edu/HyperNews/geant4/get/particles/31/2.html
+        // or more generally http://mathworld.wolfram.com/SpherePointPicking.html
+        G4double cosThetaMax = cos(GetThetaAngle_Max());
+        G4double cosThetaMin = cos(GetThetaAngle_Min());
+        cosTheta = cosThetaMin + G4UniformRand()*(cosThetaMax - cosThetaMin);
+        sinTheta = sqrt(1. - cosTheta * cosTheta);
+        ThetaAngle = acos(cosTheta);
 
-    } else {
-      G4cerr << "Warning: unkown isotropy type.  Pick 0 or 1." << G4endl;
+      } else {
+        G4cerr << "Warning: unkown isotropy type.  Pick 0 or 1." << G4endl;
+      }
+      E_out = (G4UniformRand()*(GetEPrime_Max()-GetEPrime_Min()) + GetEPrime_Min());
+      SuperElastic = SuperElasticCheck(myUserInfo->GetBeamEnergy(), E_out, ThetaAngle, xsec);
     }
-    
+    myUserInfo->SetEPrime(E_out);
 
     G4double ux = sinTheta * cosPhi;
     G4double uy = sinTheta * sinPhi;
@@ -977,10 +986,21 @@ const std::vector< G4double > QweakSimEPEvent::Radiative_Cross_Section_Lookup(G4
                                                          G4double &Q2,
                                                          G4double &E_out)
 {
+  //G4int    SuperElastic = 1;
+  //G4double xsec         = 0.0;
+    Double_t       value[value_n] = {0.0};
+    std::vector< G4double > CrossSection;
     if (Theta<GetThetaAngle_Min())
       Theta = GetThetaAngle_Min();
 
-    E_out = (G4UniformRand()*(GetEPrime_Max()-GetEPrime_Min()) + GetEPrime_Min());
+    //while (SuperElastic) {
+    //E_out = (G4UniformRand()*(GetEPrime_Max()-GetEPrime_Min()) + GetEPrime_Min());
+    //SuperElastic = SuperElasticCheck(E_in, E_out, Theta, xsec);
+      //G4cout << "El XSec:  " << xsec << G4endl;
+    //}
+
+    E_out = myUserInfo->GetEPrime();
+
     Double_t Zpos;
   
     if ( ReactionRegion == 1 ) {
@@ -990,13 +1010,15 @@ const std::vector< G4double > QweakSimEPEvent::Radiative_Cross_Section_Lookup(G4
       Zpos = 0.0;
     }
     const Double_t pos[value_d]   = {Zpos,E_in,E_out,Theta};
-    Double_t       value[value_n] = {0.0};
-    std::vector< G4double > CrossSection;
+    //Double_t       value[value_n] = {0.0};
+    //std::vector< G4double > CrossSection;
    
     fLookupTable->GetValue(pos,value);
     Q2       = value[1];
     fWeightN = value[6]*sin(Theta*degree);
     //fWeightN = value[6];
+    //G4cout << "Rad XSec: " << value[12]*0.001 << G4endl;
+    //}
 
     CrossSection.push_back(value[6]*0.001);  // 0  total radiated cross section
     CrossSection.push_back(value[2]*0.001);  // 1  total born cross section
@@ -1013,6 +1035,49 @@ const std::vector< G4double > QweakSimEPEvent::Radiative_Cross_Section_Lookup(G4
 
     return CrossSection;  //  units   [ub/sr/GeV]
 }
+
+////....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+//  Jim Dowd
+// ---------------------------------------------------------
+//      Checks the event to see if it is Super-Elastic or not. 
+// ---------------------------------------------------------
+
+
+G4int QweakSimEPEvent::SuperElasticCheck(G4double E_in, G4double E_out, G4double theta, G4double &xsec)
+{
+  if (myUserInfo->GetReactionType()!=7) return 0;  // Aborts if not using lookup table
+
+  G4double Weight;   // dummy
+  G4double Q2;       // dummy
+
+  G4double E_elastic;
+
+  xsec = Elastic_Cross_Section_Proton(E_in, theta, Weight, Q2, E_elastic);
+
+  if (E_out > E_elastic) {
+    //G4cout << "###################################################" << G4endl;
+    //G4cout << "---------------------------------------------------" << G4endl;
+    //G4cout << "E_in:     " << E_in  << G4endl;
+    //G4cout << "E_out:    " << E_out << G4endl;
+    //G4cout << "E_elastic:" << E_elastic << G4endl;
+    //G4cout << "Theta:    " << theta*180.0/3.14159 << G4endl;
+    //G4cout << "Event is SuperElestic! Generating new event." << G4endl;
+    return 1;
+  }
+  else {
+    //G4cout << "###################################################" << G4endl;
+    //G4cout << "E_in:     " << E_in  << G4endl;
+    //G4cout << "E_out:    " << E_out << G4endl;
+    //G4cout << "E_elastic:" << E_elastic << G4endl;
+    //G4cout << "Theta:    " << theta*180.0/3.14159 << G4endl;
+    //G4cout << "Event is NOT SuperElastic" << G4endl;
+    return 0;
+  }
+}
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+
+
 
 ////....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 //  Jim Dowd

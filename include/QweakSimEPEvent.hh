@@ -82,6 +82,7 @@ class QweakSimEPEvent {
    QweakSimFieldMap<value_t,value_n> *fLookupTable;
 
    G4ThreeVector GetMomentumDirection();
+  G4int    SuperElasticCheck(G4double E_in, G4double E_out, G4double theta, G4double &xsec);
    G4double ResMod507(G4int sf,G4double w2,G4double q2,G4double *xval);
    G4double Sigma_EEPrime(G4double eni,G4double eprime,G4double theta, G4double &q2);
 

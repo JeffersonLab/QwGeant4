@@ -136,6 +136,7 @@ private:
   G4double fEPrime_Max;
 
   G4double fBeamEnergy;
+  G4double fEPrime;
   G4double fLuminosity;
   G4double fPhaseSpace;
   
@@ -261,6 +262,9 @@ private:
 
   void     SetBeamEnergy(G4double energy) { fBeamEnergy = energy; }
   G4double    GetBeamEnergy() const {return fBeamEnergy;}
+
+  void     SetEPrime(G4double energy) { fEPrime = energy; }
+  G4double    GetEPrime() const {return fEPrime;}
 
   void     SetLuminosity(G4double lum) { fLuminosity = lum; }
   G4double    GetLuminosity() {return fLuminosity;}
