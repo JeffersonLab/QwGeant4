@@ -365,9 +365,10 @@ void QweakSimPMTOnly::ConstructComponent(G4VPhysicalVolume* MotherVolume)
     LightGuide_OpticalSurface->SetFinish(polished);
     LightGuide_OpticalSurface->SetPolish(0.997);
     LightGuide_OpticalSurface->SetModel(glisur);
-
+    
     G4MaterialPropertiesTable *quartzST = new G4MaterialPropertiesTable();
     quartzST->AddProperty("REFLECTIVITY",  PhotonEnergy , Reflectivity, nEntries);
+    LightGuide_OpticalSurface->SetMaterialPropertiesTable(quartzST);
 
     G4OpticalSurface* PhotoPMTOnlyCathode_OpticalSurface =  new G4OpticalSurface("PhotoPMTOnlyCathode_OS");
     PhotoPMTOnlyCathode_OpticalSurface ->SetType(dielectric_metal); 
@@ -377,7 +378,7 @@ void QweakSimPMTOnly::ConstructComponent(G4VPhysicalVolume* MotherVolume)
     G4MaterialPropertiesTable* PhotoPMTOnlyCathode_MPT = new G4MaterialPropertiesTable();
     PhotoPMTOnlyCathode_MPT->AddProperty("REFLECTIVITY", PhotonEnergy, PhotoPMTOnlyCathode_Reflectivity,nEntries);
     PhotoPMTOnlyCathode_MPT->AddProperty("EFFICIENCY", PhotonEnergy, PhotoPMTOnlyCathode_Efficiency,nEntries);
-    PhotoPMTOnlyCathode_OpticalSurface ->SetMaterialPropertiesTable(PhotoPMTOnlyCathode_MPT);
+    PhotoPMTOnlyCathode_OpticalSurface->SetMaterialPropertiesTable(PhotoPMTOnlyCathode_MPT);
 
     new G4LogicalBorderSurface("PMT_BorderSurface",
                                PMTOnlyEntranceWindow_Physical,
