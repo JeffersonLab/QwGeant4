@@ -276,7 +276,8 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
 						"ExpHall_Physical",         // its name
 						0,               // its mother  volume
 						false,           // no boolean operations
-						0);              // no field specific to volume
+						0,               // no field specific to volume
+						pSurfChk);       // check for overlaps
 
   // Get the geometry, which defines the world volume
   //
@@ -319,7 +320,8 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
 					 HallFloor_Logical,             // its logical volume
 					 experimentalHall_Physical ,    // its physical mother volume
 					 false,                         // no boolean operations
-					 0);                            // no field specific to volume
+					 0,                             // no field specific to volume
+					 pSurfChk);                     // check for overlaps
 
 
   G4cout << G4endl << "###### QweakSimDetectorConstruction: Setting Attributes " << G4endl << G4endl;

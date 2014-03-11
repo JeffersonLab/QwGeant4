@@ -94,7 +94,8 @@ void QweakSimWShutters::ConstructWShutters(G4VPhysicalVolume* MotherVolume)
                                         WShutters_Logical,
                                         MotherVolume,
                                         false,
-                                        0);
+                                        0,
+                                        pSurfChk);
   }else if(WShutterNum==2){
 	  WShutters_Physical = new G4PVPlacement(WRot,
 	                                          positionWShutters,
@@ -102,7 +103,8 @@ void QweakSimWShutters::ConstructWShutters(G4VPhysicalVolume* MotherVolume)
 	                                          WShutters_Logical,
 	                                          MotherVolume,
 	                                          false,
-	                                          0);
+	                                          0,
+	                                          pSurfChk);
   }
   //***************************************************************************
 

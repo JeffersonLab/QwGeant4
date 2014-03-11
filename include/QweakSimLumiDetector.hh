@@ -8,20 +8,6 @@
 #ifndef QweakSimLumiDetector_h
 #define QweakSimLumiDetector_h 1
 
-// geant4 includes
-#include "G4LogicalVolume.hh"
-#include "G4Box.hh"
-#include "G4SubtractionSolid.hh"
-#include "G4PVPlacement.hh"
-#include "G4Tubs.hh"
-#include "G4Polycone.hh"
-#include "G4Trd.hh"
-#include "G4Trap.hh"
-#include "G4OpticalSurface.hh"
-#include "G4LogicalBorderSurface.hh"
-#include "G4LogicalSkinSurface.hh"
-#include "G4SDManager.hh"
-
 // user includes
 #include "QweakSimSolids.hh"
 #include "QweakSimMaterial.hh"

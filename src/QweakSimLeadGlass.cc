@@ -129,7 +129,8 @@ void QweakSimLeadGlass::ConstructComponent(G4VPhysicalVolume* MotherVolume)
                                            LeadGlass_Logical,
                                            MotherVolume,
                                            false,
-                                           0);
+                                           0,
+                                           pSurfChk);
 	
     //--- Define Sensitive Detectors to LeadGlass
     

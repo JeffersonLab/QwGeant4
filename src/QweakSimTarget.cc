@@ -195,7 +195,8 @@ void QweakSimTarget::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             TargetContainer_Logical,
             MotherVolume,
             false,
-            0);
+            0,
+            pSurfChk);
 
 
     // define target solid volume
@@ -224,7 +225,8 @@ void QweakSimTarget::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             TargetCell_Logical,
             TargetContainer_Physical, //MotherVolume,
             false,
-            0);
+            0,
+            pSurfChk);
 
 //--------------------------------------
     // define target window solid volume (front, upstream)
@@ -253,7 +255,8 @@ void QweakSimTarget::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             TargetEntranceWindow_Logical,
             TargetContainer_Physical, //MotherVolume,
             false,
-            0);
+            0,
+            pSurfChk);
 
 //--------------------------------------
 
@@ -283,7 +286,8 @@ void QweakSimTarget::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             TargetExitWindow_Logical,
             TargetContainer_Physical, //MotherVolume,
             false,
-            0);
+            0,
+            pSurfChk);
 
     
     // define target window Nipple solid volume (back, downstream)
@@ -312,7 +316,8 @@ void QweakSimTarget::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             TargetExitWindowNipple_Logical,
             TargetContainer_Physical, //MotherVolume,
             false,
-            0);
+            0,
+            pSurfChk);
 
     //*********************** Define Target scattering chamber Vacuum Window ************************
 
@@ -339,7 +344,8 @@ void QweakSimTarget::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             ScatteringChamberWindow_Logical,
             TargetContainer_Physical, //MotherVolume,
             false,
-            0);
+            0,
+            pSurfChk);
 
 //*************************End of Target Vacuum Window *****************************
 
@@ -394,7 +400,8 @@ void QweakSimTarget::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             TargetMaterial_Logical,
             TargetContainer_Physical, //MotherVolume,
             false,
-            0);
+            0,
+            pSurfChk);
 
 
 //--------------------------------------

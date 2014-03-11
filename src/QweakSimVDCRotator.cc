@@ -235,7 +235,8 @@ void QweakSimVDCRotator::ConstructRings()
 					      UpstreamRing_Logical,
 					      theMotherVolume, 
 					      false, 
-					      0);
+					      0,
+					      pSurfChk);
 
   //**********************************************************************************
 
@@ -270,7 +271,8 @@ void QweakSimVDCRotator::ConstructRings()
 						DownstreamRing_Logical,
 						theMotherVolume, 
 						false, 
-						0);
+						0,
+						pSurfChk);
 
   //Make it pretty...
   G4Colour  blue      (0.,0.,1.);
@@ -372,7 +374,8 @@ void QweakSimVDCRotator::PlacePVRails()
 					   Rail_Logical,
 					   theMotherVolume,
 					   false,
-					   0);
+					   0,
+					   pSurfChk);
 
    RightRail_Physical   = new G4PVPlacement(Rotation_Rail,
 					    Translation_RightRail,
@@ -380,7 +383,8 @@ void QweakSimVDCRotator::PlacePVRails()
 					    Rail_Logical,
 					    theMotherVolume,
 					    false,
-					    0);
+					    0,
+					    pSurfChk);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -500,7 +504,8 @@ void QweakSimVDCRotator::PlacePVMount()
 						   Rod_LeftRight_Logical,
 						   theMotherVolume,
 						   false,
-						   0);
+						   0,
+						   pSurfChk);
 
   Rod_LeftRight_Physical[1]   = new G4PVPlacement(Rotation_Rod_LR,
 						    Translation_RodRightUpstream,
@@ -508,7 +513,8 @@ void QweakSimVDCRotator::PlacePVMount()
 						    Rod_LeftRight_Logical,
 						    theMotherVolume,
 						    false,
-						    0);
+						    0,
+						    pSurfChk);
 
   Rod_LeftRight_Physical[2]   = new G4PVPlacement(Rotation_Rod_LR,
 						    Translation_RodLeftDownstream,
@@ -516,7 +522,8 @@ void QweakSimVDCRotator::PlacePVMount()
 						    Rod_LeftRight_Logical,
 						    theMotherVolume,
 						    false,
-						    0);
+						    0,
+						    pSurfChk);
   
   Rod_LeftRight_Physical[3]   = new G4PVPlacement(Rotation_Rod_LR,
 						    Translation_RodRightDownstream,
@@ -524,7 +531,8 @@ void QweakSimVDCRotator::PlacePVMount()
 						    Rod_LeftRight_Logical,
 						    theMotherVolume,
 						    false,
-						    0);
+						    0,
+						    pSurfChk);
 
 }  // end of PlacePVMount()
 
@@ -800,7 +808,8 @@ void QweakSimVDCRotator::PlacePVSliderSupport()
 						      SliderSupportLeft_Logical,
 						      theMotherVolume,
 						      false,
-						      0);
+						      0,
+						      pSurfChk);
 
      SliderSupportRight_Physical   = new G4PVPlacement(Rotation_SliderSupportRight,
 						       Translation_RightSliderSupport,
@@ -808,7 +817,8 @@ void QweakSimVDCRotator::PlacePVSliderSupport()
 						       SliderSupportRight_Logical,
 						       theMotherVolume,
 						       false,
-						       0);
+						       0,
+						       pSurfChk);
 
 }  // end of PlacePV_SliderSupport()
 

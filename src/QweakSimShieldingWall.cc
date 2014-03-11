@@ -536,7 +536,8 @@ G4cout << G4endl << "###### Calling QweakSimShieldingWall::ConstructComponent() 
 				       ShieldingWallHousing_Logical,
 				       MotherVolume, 
 				       false, 
-				       0);
+				       0,
+				       pSurfChk);
 // jpan@nuclear.uwinnipeg.ca
 
 G4cout << G4endl << "###### QweakSimShieldingWall: Setting Attributes " << G4endl << G4endl;
@@ -889,7 +890,8 @@ G4cout << G4endl << "###### Calling QweakSimShieldingWall::ConstructComponent() 
 				       ShieldingWallHousing_Logical,
 				       MotherVolume, 
 				       false, 
-				       0);
+				       0,
+				       pSurfChk);
 
 
 G4cout << G4endl << "###### QweakSimShieldingWall: Setting Attributes " << G4endl << G4endl;
@@ -955,7 +957,8 @@ void QweakSimShieldingWall::ConstructFrontWall(G4VPhysicalVolume* MotherVolume)
 					   FrontWall_Logical,
 					   MotherVolume, 
 					   false, 
-					   0);
+					   0,
+					   pSurfChk);
 
 G4cout << G4endl << "###### QweakSimShieldingWall: Setting Attributes for Front Wall" << G4endl << G4endl;
 
@@ -1018,7 +1021,8 @@ void QweakSimShieldingWall::ConstructBackWall(G4VPhysicalVolume* MotherVolume)
 					   BackWall_Logical,
 					   MotherVolume, 
 					   false, 
-					   0);
+					   0,
+					   pSurfChk);
 
 G4cout << G4endl << "###### QweakSimShieldingWall: Setting Attributes for Back Wall" << G4endl << G4endl;
 
@@ -1065,7 +1069,8 @@ void QweakSimShieldingWall::ConstructBeamLeftSideWall(G4VPhysicalVolume* MotherV
 					   BeamLeftSideWall_Logical,
 					   MotherVolume, 
 					   false, 
-					   0);
+					   0,
+					   pSurfChk);
 
   G4cout << G4endl << "###### QweakSimShieldingWall: Setting Attributes for BeamLeftSide Wall" << G4endl << G4endl;
 
@@ -1113,7 +1118,8 @@ void QweakSimShieldingWall::ConstructBeamRightSideWall(G4VPhysicalVolume* Mother
 					   BeamRightSideWall_Logical,
 					   MotherVolume, 
 					   false, 
-					   0);
+					   0,
+					   pSurfChk);
 
   G4cout << G4endl << "###### QweakSimShieldingWall: Setting Attributes for BeamRightSide Wall" << G4endl << G4endl;
 
@@ -1160,7 +1166,8 @@ void QweakSimShieldingWall::ConstructTopWall(G4VPhysicalVolume* MotherVolume)
 					 TopWall_Logical,
 					 MotherVolume, 
 					   false, 
-					 0);
+					 0,
+					 pSurfChk);
   
   G4cout << G4endl << "###### QweakSimShieldingWall: Setting Attributes for Top Wall" << G4endl << G4endl;
   

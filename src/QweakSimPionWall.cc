@@ -96,7 +96,8 @@ void QweakSimPionWall::ConstructPionWall(G4VPhysicalVolume* MotherVolume)
                                         PionWall_Logical,
                                         MotherVolume,
                                         false,
-                                        0);
+                                        0,
+                                        pSurfChk);
   //***************************************************************************
   
   //  Formating

@@ -31,6 +31,7 @@
 
 // user includes
 #include "QweakSimVDCMessenger.hh"
+#include "QweakSimSolids.hh"
 #include "QweakSimMaterial.hh"
 #include "QweakSimVDC_DriftCellFrontSD.hh"
 #include "QweakSimVDC_DriftCellBackSD.hh"
@@ -275,7 +276,8 @@ void QweakSimVDC::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 							VDC_MasterContainer_Logical,
 							MotherVolume,   
 							false, 
-							0); // copy number for front
+							0,
+							pSurfChk); // copy number for front
 
   G4cout << G4endl << "###### QweakSimVDC: Define VDC_MasterContainerBack_Physical" << G4endl << G4endl;
 
@@ -286,7 +288,8 @@ void QweakSimVDC::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 						       VDC_MasterContainer_Logical,
 						       MotherVolume,
 						       false,
-						       1);// copy number for back
+						       1,
+						       pSurfChk);// copy number for back
 
 
   //-----------------------
@@ -340,7 +343,8 @@ void QweakSimVDC::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 					      "VDC_G10Frame_Physical",
 					      VDC_MasterContainer_Logical,
 					      0,
-					      0); //copy number: 0
+					      0,
+					      pSurfChk); //copy number: 0
 
 
 
@@ -401,7 +405,8 @@ void QweakSimVDC::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 						 "VDC_AluTopFrame_Physical",
 						 VDC_MasterContainer_Logical,
 						 0,
-						 0); //copy number: 0
+						 0,
+						 pSurfChk); //copy number: 0
 
   G4cout << G4endl << "###### QweakSimVDC: Define VDC_AluBottomFrame_Physical" << G4endl << G4endl;
 
@@ -411,7 +416,8 @@ void QweakSimVDC::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 						    "VDC_AluBottomFrame_Physical",
 						    VDC_MasterContainer_Logical,
 						    0,
-						    1); //copy number: 1 , to be checked if necessary
+						    1,
+						    pSurfChk); //copy number: 1 , to be checked if necessary
 
 
 
@@ -447,7 +453,8 @@ void QweakSimVDC::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 						  "VDC_SubContainer_Physical",
 						  VDC_MasterContainer_Logical, 
 						  0, 
-						  0); //copy number: 0
+						  0,
+						  pSurfChk); //copy number: 0
   
 
 
@@ -490,7 +497,8 @@ void QweakSimVDC::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 					  "VDC_UPlane_Physical",
 					  VDC_SubContainer_Logical,
 					  0,
-					  0); //copy number: 0
+					  0,
+					  pSurfChk); //copy number: 0
 
   VDC_VPlane_Physical = new G4PVPlacement(0,
 					  position_Vplane,
@@ -498,7 +506,8 @@ void QweakSimVDC::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 					  "VDC_VPlane_Physical",
 					  VDC_SubContainer_Logical,
 					  0,
-					  1); //copy number: 1
+					  1,
+					  pSurfChk); //copy number: 1
   
 
 
@@ -582,7 +591,8 @@ void QweakSimVDC::ConstructComponent(G4VPhysicalVolume* MotherVolume)
       "VDC_MylarFoil_Physical",
 		    VDC_AMA_FoilContainer_Logical,
 		    0,
-		    0); //copy number 0
+		    0,
+		    pSurfChk); //copy number 0
 
 
   //=========================================================================================
@@ -610,7 +620,8 @@ void QweakSimVDC::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 		    "VDC_TopAluLayer_Physical",
 		    VDC_AMA_FoilContainer_Logical,
 		    0,
-		    0); //copy number for top layer
+		    0,
+		    pSurfChk); //copy number for top layer
 
   G4cout << G4endl << "###### QweakSimVDC: Place Bottom AluLayer inside VDC_AMA_FoilContainer_Logical" << G4endl << G4endl;
   // place alu bottom layer
@@ -620,7 +631,8 @@ void QweakSimVDC::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 		    "VDC_BottomAluLayer_Physical",
 		    VDC_AMA_FoilContainer_Logical,
 		    0,
-		    1); //copy number for bottom layer
+		    1,
+		    pSurfChk); //copy number for bottom layer
 
 
 
@@ -661,7 +673,8 @@ void QweakSimVDC::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 		    "VDC_MylarFoil_Physical",
 		    VDC_AM_FoilContainer_Logical,
 		    0,
-		    0); //copy number
+		    0,
+		    pSurfChk); //copy number
 
 
   //=======================================================================================
@@ -678,7 +691,8 @@ void QweakSimVDC::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 		    "VDC_TopAluLayer_Physical",
 		    VDC_AM_FoilContainer_Logical,
 		    0,
-		    0); //copy number
+		    0,
+		    pSurfChk); //copy number
 
 
   //====================================================================================================
@@ -718,7 +732,8 @@ void QweakSimVDC::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 		    "VDC_MylarFoil_Physical",
 		    VDC_MA_FoilContainer_Logical,
 		    0,
-		    0); //copy number
+		    0,
+		    pSurfChk); //copy number
 
 
   //=======================================================================================
@@ -735,7 +750,8 @@ void QweakSimVDC::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 		    "VDC_TopAluLayer_Physical",
 		    VDC_MA_FoilContainer_Logical,
 		    0,
-		    0); //copy number
+		    0,
+		    pSurfChk); //copy number
 
   //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -766,7 +782,8 @@ void QweakSimVDC::ConstructComponent(G4VPhysicalVolume* MotherVolume)
           VDC_AM_FoilContainer_Logical,
 			VDC_SubContainer_Physical,
 			false,
-			0);
+			0,
+			pSurfChk);
 
   G4cout << G4endl << "###### QweakSimVDC: Place VDC_TopHVFoilContainer_Physical inside VDC_SubContainer_Physical" << G4endl << G4endl;
   //
@@ -777,7 +794,8 @@ void QweakSimVDC::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 			VDC_MA_FoilContainer_Logical,
 			VDC_SubContainer_Physical,
 			false,
-			0);
+			0,
+			pSurfChk);
 
 
   G4cout << G4endl << "###### QweakSimVDC: Place VDC_CenterHVFoilContainer_Physical inside VDC_SubContainer_Physical" << G4endl << G4endl;
@@ -789,7 +807,8 @@ void QweakSimVDC::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 			VDC_AMA_FoilContainer_Logical,
 			VDC_SubContainer_Physical,
 			false,
-			0);
+			0,
+			pSurfChk);
 
   G4cout << G4endl << "###### QweakSimVDC: PlaceVDC_BottomHVFoilContainer_Physical inside VDC_SubContainer_Physical" << G4endl << G4endl;
   //
@@ -800,7 +819,8 @@ void QweakSimVDC::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 			VDC_AM_FoilContainer_Logical,
 			VDC_SubContainer_Physical,
 			false,
-			1); // copy number 1 (second VDC_AM_FoilContainer_Logical placement inside SubContainer)
+			1,
+			pSurfChk); // copy number 1 (second VDC_AM_FoilContainer_Logical placement inside SubContainer)
 
   G4cout << G4endl << "###### QweakSimVDC: Place VDC_BottomGasFoilContainer_Physical inside VDC_SubContainer_Physical" << G4endl << G4endl;
   //
@@ -811,7 +831,8 @@ void QweakSimVDC::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 			VDC_MA_FoilContainer_Logical,
 			VDC_SubContainer_Physical,
 			false,
-			1); // copy number 1 (second  VDC_MA_FoilContainer_Logical placement inside SubContainer)
+			1,
+			pSurfChk); // copy number 1 (second  VDC_MA_FoilContainer_Logical placement inside SubContainer)
 
   //==========================================================================================================
 
@@ -890,7 +911,8 @@ void QweakSimVDC::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 							    VDC_DriftCellMasterContainer_Logical, 
 							    MotherVolume,   
 							    false, 
-							    0);
+							    0,
+							    pSurfChk);
 
 
   //==========================================================
@@ -929,7 +951,8 @@ void QweakSimVDC::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 							   "VDC_DriftCellFrontContainer_Physical", 
 							   VDC_DriftCellMasterContainer_Logical,   
 							   false, 
-							   0);
+							   0,
+							   pSurfChk);
  
   //==========================================================
   //
@@ -996,7 +1019,8 @@ void QweakSimVDC::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 							  "VDC_DriftCellBackContainer_Physical", 
 							  VDC_DriftCellMasterContainer_Logical,   
 							  false, 
-							  0);
+							  0,
+							  pSurfChk);
   
   //==========================================================
   //
@@ -1042,7 +1066,8 @@ void QweakSimVDC::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 			    VDC_DriftCellFrontContainer_Logical, // Mother logical volume
 			    kXAxis,                              // Are placed along this axis
 			    DriftCell_NumberPerPlane,            // Number of drift cells
-			    driftCellParam);                     // The parametrisation
+			    driftCellParam,                      // The parametrisation
+			    pSurfChk);                           // Check overlaps
 
 
   VDC_DriftCellBack_Physical  = 
@@ -1051,7 +1076,8 @@ void QweakSimVDC::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 			    VDC_DriftCellBackContainer_Logical,  // Mother logical volume
 			    kXAxis,                              // Are placed along this axis 
 			    DriftCell_NumberPerPlane,            // Number of drift cells
-			    driftCellParam);                     // The parametrisation
+			    driftCellParam,                      // The parametrisation
+			    pSurfChk);                           // Check overlaps
 
 
 
@@ -1484,7 +1510,8 @@ G4cout << G4endl << "###### Calling QweakSimVDC::SetVDC_DriftCellGeometryUpdate(
 			    VDC_DriftCellFrontContainer_Logical, // Mother logical volume
 			    kXAxis,                              // Are placed along this axis
 			    DriftCell_NumberPerPlane,            // Number of drift cells
-			    driftCellParam);                     // The parametrisation
+			    driftCellParam,                      // The parametrisation
+			    pSurfChk);                           // Check overlaps
 
 
   VDC_DriftCellBack_Physical  = 
@@ -1493,7 +1520,8 @@ G4cout << G4endl << "###### Calling QweakSimVDC::SetVDC_DriftCellGeometryUpdate(
 			    VDC_DriftCellBackContainer_Logical,  // Mother logical volume
 			    kXAxis,                              // Are placed along this axis 
 			    DriftCell_NumberPerPlane,            // Number of drift cells
-			    driftCellParam);                     // The parametrisation
+			    driftCellParam,                      // The parametrisation
+			    pSurfChk);                           // Check overlaps
 
   // we have to update QweakSimVDC_DriftCellSD  about a possible new DriftCell_NumberPerPlane value
   QweakSimVDC_DriftCellFrontSD::SetNumberOfDriftCellsPerPlane(DriftCell_NumberPerPlane);

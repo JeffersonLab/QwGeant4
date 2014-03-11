@@ -101,7 +101,8 @@ void QweakSimLumiDetector::ConstructComponent(G4VPhysicalVolume* MotherVolume)
                                         USLumi_Logical,
                                         MotherVolume,
                                         false,
-                                        0);
+                                        0,
+                                        pSurfChk);
 
     // Create G4PVPlacement with dslumi position
     //DSLumi_Physical = new G4PVPlacement(DSLumi_Rot,

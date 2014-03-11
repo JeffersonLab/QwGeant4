@@ -34,4 +34,7 @@ class G4Tubs;
 class G4Polycone;
 class G4Polyhedra;
 
+// Global variable to enable overlapping volume checks
+static const G4bool pSurfChk = false;
+
 #endif

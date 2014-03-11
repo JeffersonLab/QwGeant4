@@ -306,7 +306,8 @@ void QweakSimGEM::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 							GEM_MasterContainer_Logical,
 							MotherVolume,   
 							false, 
-							0); // copy number for front
+							0,
+							pSurfChk); // copy number for front
 
 
 
@@ -319,7 +320,8 @@ void QweakSimGEM::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 						       GEM_MasterContainer_Logical,
 						       MotherVolume,   
 						       false, 
-						       1);// copy number for back
+						       1,
+						       pSurfChk);// copy number for back
 
 
   //====================================================================
@@ -369,7 +371,8 @@ void QweakSimGEM::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 					   "GEM_Frame_Physical",
 					   GEM_MasterContainer_Logical, 
 					   0, 
-					   0); //copy number: 0
+					   0,
+					   pSurfChk); //copy number: 0
 
 
   //======================================================================================
@@ -404,7 +407,8 @@ void QweakSimGEM::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 						  "GEM_SubContainer_Physical",
 						  GEM_MasterContainer_Logical, 
 						  0, 
-						  0); //copy number: 0
+						  0,
+						  pSurfChk); //copy number: 0
 
 
 
@@ -455,7 +459,8 @@ void QweakSimGEM::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 						      "GEM_KaptonMiddleFoil_Physical",
 						      GEM_MiddleFoilContainer_Logical, 
 						      0, 
-						      0); //copy number 0 
+						      0,
+						      pSurfChk); //copy number 0
 
   //=====================================
   // define 5um thick Middle GEM foil copper layer
@@ -498,7 +503,8 @@ void QweakSimGEM::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 		       "GEM_TopCopperMiddleFoil_Physical",
 		       GEM_MiddleFoilContainer_Logical, 
 		       0, 
-		       0); //copy number for top layer
+		       0,
+		       pSurfChk); //copy number for top layer
 
    // place copper bottom layer
  GEM_BottomCopperMiddleFoil_Physical =
@@ -508,7 +514,8 @@ void QweakSimGEM::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 		       "GEM_BottomCopperMiddleFoil_Physical",
 		       GEM_MiddleFoilContainer_Logical, 
 		       0, 
-		       0); //copy number for bottom layer
+		       0,
+		       pSurfChk); //copy number for bottom layer
 
 
 
@@ -527,7 +534,8 @@ void QweakSimGEM::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 			"GEM_MiddleFoilContainer_Physical",
 			GEM_SubContainer_Logical, 
 			0, 
-			index); //copy number
+			index,
+			pSurfChk); //copy number
       
     } // end for
   
@@ -595,7 +603,8 @@ void QweakSimGEM::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 						       "GEM_AnodeReadoutBoard_Physical",
 						       GEM_AnodeReadoutPlaneContainer_Logical, 
 						       0, 
-						       0); //copy number
+						       0,
+						       pSurfChk); //copy number
   
 
   //=====================================
@@ -635,7 +644,8 @@ void QweakSimGEM::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 						       "GEM_AnodeCopperLayer_Physical",
 						       GEM_AnodeReadoutPlaneContainer_Logical, 
 						       0, 
-						       0); //copy number
+						       0,
+						       pSurfChk); //copy number
 
 
 
@@ -659,7 +669,8 @@ void QweakSimGEM::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 			 "GEM_AnodeReadoutPlaneContainer_Physical",
 			 GEM_SubContainer_Logical, 
 			 0, 
-			 0); //copy number
+			 0,
+			 pSurfChk); //copy number
 
 
    //====================================================================
@@ -725,7 +736,8 @@ void QweakSimGEM::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 							"GEM_CathodeHVCopperLayer_Physical",
 							GEM_CathodeHVPlaneContainer_Logical, 
 							0, 
-							0); //copy number
+							0,
+							pSurfChk); //copy number
 
 
 
@@ -746,7 +758,8 @@ void QweakSimGEM::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 			 "GEM_CathodeHVPlaneContainer_Physical",
 			 GEM_SubContainer_Logical, 
 			 0, 
-			 0); //copy number
+			 0,
+			 pSurfChk); //copy number
 
 
 //================================================================================================

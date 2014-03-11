@@ -248,7 +248,8 @@ void QweakSimCollimator::ConstructCollimator(G4VPhysicalVolume* MotherVolume)
 						   CollimatorHousing_Logical,
 						   MotherVolume, 
 						   false, 
-						   0);
+						   0,
+					           pSurfChk);
 
   //**********************************************************************************
   //Make it pretty...

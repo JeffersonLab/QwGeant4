@@ -217,7 +217,8 @@ static const G4double mil = 0.001*2.54*cm;
 							HDC_MasterContainer_Logical,
 							MotherVolume,   
 							false, 
-							0); // copy number for front
+							0,
+							pSurfChk); // copy number for front
 
 
 
@@ -230,7 +231,8 @@ static const G4double mil = 0.001*2.54*cm;
 						       HDC_MasterContainer_Logical,
 						       MotherVolume,   
 						       false, 
-						       1);// copy number for back
+						       1,
+						       pSurfChk);// copy number for back
 
 
   //====================================================================
@@ -280,7 +282,8 @@ static const G4double mil = 0.001*2.54*cm;
 					   "HDC_Frame_Physical",
 					   HDC_MasterContainer_Logical, 
 					   0, 
-					   0); //copy number: 0
+					   0,
+					   pSurfChk); //copy number: 0
 
 
   //====================================================================================
@@ -315,7 +318,8 @@ static const G4double mil = 0.001*2.54*cm;
 						  "HDC_SubContainer_Physical",
 						  HDC_MasterContainer_Logical, 
 						  0, 
-						  0); //copy number: 0
+						  0,
+						  pSurfChk); //copy number: 0
 
 
 
@@ -356,7 +360,8 @@ static const G4double mil = 0.001*2.54*cm;
 			"HDC_Foil_Physical",
 			HDC_SubContainer_Logical, 
 			0, 
-			index); //copy number
+			index,
+			pSurfChk); //copy number
       
     } // end for
   
@@ -396,7 +401,8 @@ static const G4double mil = 0.001*2.54*cm;
 			"HDC_WirePlane_Physical",
 			HDC_SubContainer_Logical, 
 			0, 
-			index); //copy number
+			index,
+			pSurfChk); //copy number
   } // end for
 
 //================================================================================================

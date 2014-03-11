@@ -160,7 +160,8 @@ void QweakSimTriggerScintillator::ConstructComponent(G4VPhysicalVolume* MotherVo
 							      TriggerScintillatorContainer_Logical,
 							      MotherVolume, 
 							      false, 
-							      0);
+							      0,
+							      pSurfChk);
 
   G4Box* StraightBar_Solid    = new G4Box("StraightBar_Sol",
 					  0.5 * StraightBar_FullLength,       // half X length required by Geant4
@@ -186,7 +187,8 @@ void QweakSimTriggerScintillator::ConstructComponent(G4VPhysicalVolume* MotherVo
 						     "TriggerScintillator_Physical",
 						     TriggerScintillatorContainer_Logical,
 						     false,
-						     0);
+						     0,
+						     pSurfChk);
  
 
   G4cout << G4endl << "###### QweakSimTriggerScintillator: Setting Sensitive Detectors " << G4endl << G4endl;

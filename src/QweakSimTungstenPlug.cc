@@ -91,7 +91,8 @@ void QweakSimTungstenPlug::ConstructTungstenPlug(G4VPhysicalVolume* MotherVolume
 					WPlug_US_Logical,
 					MotherVolume,
 					false,
-					0); 
+					0,
+					pSurfChk);
   
   WPlug_DS_Physical = new G4PVPlacement(0,                  // rotation
 					G4ThreeVector(0,0*cm,-575.7895*cm+6.98*cm),   // plug position
@@ -99,7 +100,8 @@ void QweakSimTungstenPlug::ConstructTungstenPlug(G4VPhysicalVolume* MotherVolume
 					WPlug_DS_Logical,
 					MotherVolume,
 					false,
-					0);  
+					0,
+					pSurfChk);
 
 
   //**********************************************************************************

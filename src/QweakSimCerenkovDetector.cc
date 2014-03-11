@@ -247,7 +247,8 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
                                          Frame_Logical,
                                          "Frame_Physical",
                                          CerenkovContainer_Logical,
-                                         false,0);
+                                         false,0,
+                                         pSurfChk);
 
 
 //****************************************************************************************************
@@ -309,7 +310,8 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
                                         SideBracket_Logical,
                                         "SideBracket_Physical",
                                         CerenkovContainer_Logical,
-                                        false,i));
+                                        false,i,
+                                        pSurfChk));
 
     }
 
@@ -373,7 +375,8 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
                                         SideBracketPad_Logical,
                                         "SideBracketPad_Physical",
                                         CerenkovContainer_Logical,
-                                        false,i));
+                                        false,i,
+                                        pSurfChk));
 
     }
 
@@ -429,7 +432,8 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
                                        EndBracket_Logical,
                                        "EndBracket_Physical",
                                        CerenkovContainer_Logical,
-                                       false,i));
+                                       false,i,
+                                       pSurfChk));
 
     }
 
@@ -487,7 +491,8 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
                                        EndBracketPad_Logical,
                                        "EndBracketPad_Physical",
                                        CerenkovContainer_Logical,
-                                       false,i));
+                                       false,i,
+                                       pSurfChk));
     }
 
 
@@ -515,13 +520,15 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
             CrossBar_Logical,
             "CrossBarR_Physical",
             CerenkovContainer_Logical,
-            false,0);
+            false,0,
+            pSurfChk);
 
     CrossBarL_Physical   = new G4PVPlacement(0,Position_CrossBar_L,
             CrossBar_Logical,
             "CrossBarL_Physical",
             CerenkovContainer_Logical,
-            false,0);
+            false,0,
+            pSurfChk);
 
 //******************************Define Detector Windows *******************************************
 
@@ -543,7 +550,8 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
             FrontWindow_Logical,
             "FrontWindow_Physical",
             CerenkovContainer_Logical,
-            false,0);
+            false,0,
+            pSurfChk);
 
 
     G4Box* BackWindow_Solid  = new G4Box("BackWindow_Solid",
@@ -562,7 +570,8 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
             BackWindow_Logical,
             "BackWindow_Physical",
             CerenkovContainer_Logical,
-            false,0);
+            false,0,
+            pSurfChk);
 
 
 //******************************Define Front Window Clip*******************************************
@@ -600,7 +609,8 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
             FrontClip_Logical,
             "FrontClip_Physical",
             CerenkovContainer_Logical,
-            false,0);
+            false,0,
+            pSurfChk);
 
 //******************************Define Back Window Clip*******************************************
 
@@ -637,7 +647,8 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
                                             BackClip_Logical,
                                             "BackClip_Physical",
                                             CerenkovContainer_Logical,
-                                            false,0);
+                                            false,0,
+                                            pSurfChk);
 
 //******************************Define Square Falange Seal*******************************************
 
@@ -677,13 +688,15 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
             SquareFalangeSeal_Logical,
             "SquareFalangeSealR_Physical",
             CerenkovContainer_Logical,
-            false,0);
+            false,0,
+            pSurfChk);
 
     SquareFalangeSealL_Physical   = new G4PVPlacement(0,Position_SquareFalangeSeal_L,
             SquareFalangeSeal_Logical,
             "SquareFalangeSealL_Physical",
             CerenkovContainer_Logical,
-            false,0);
+            false,0,
+            pSurfChk);
 
 //******************************Define Square Falange *******************************************
 
@@ -727,13 +740,15 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
             SquareFalange_Logical,
             "SquareFalangeR_Physical",
             CerenkovContainer_Logical,
-            false,0);
+            false,0,
+            pSurfChk);
 
     SquareFalangeL_Physical   = new G4PVPlacement(0,Position_SquareFalange_L,
             SquareFalange_Logical,
             "SquareFalangeL_Physical",
             CerenkovContainer_Logical,
-            false,0);
+            false,0,
+            pSurfChk);
 
 //******************************Define PMT Housing Wall *******************************************
 
@@ -764,13 +779,15 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
             PMTHousingWall_Logical,
             "PMTHousingWallR_Physical",
             CerenkovContainer_Logical,
-            false,0);
+            false,0,
+            pSurfChk);
 
     PMTHousingWallL_Physical   = new G4PVPlacement(0,Position_PMTHousingWall_L,
             PMTHousingWall_Logical,
             "PMTHousingWallL_Physical",
             CerenkovContainer_Logical,
-            false,0);
+            false,0,
+            pSurfChk);
 
 //******************************Define PMT Housing Falange ******************
 
@@ -801,13 +818,15 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
             PMTHousingFalange_Logical,
             "PMTHousingFalangeR_Physical",
             CerenkovContainer_Logical,
-            false,0);
+            false,0,
+            pSurfChk);
 
     PMTHousingFalangeL_Physical   = new G4PVPlacement(0,Position_PMTHousingFalange_L,
             PMTHousingFalange_Logical,
             "PMTHousingFalangeL_Physical",
             CerenkovContainer_Logical,
-            false,0);
+            false,0,
+            pSurfChk);
 
 //******************************Define PMT Housing Lid *******************************************
 
@@ -843,13 +862,15 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
             PMTHousingLid_Logical,
             "PMTHousingLidR_Physical",
             CerenkovContainer_Logical,
-            false,0);
+            false,0,
+            pSurfChk);
 
     PMTHousingLidL_Physical   = new G4PVPlacement(0,Position_PMTHousingLid_L,
             PMTHousingLid_Logical,
             "PMTHousingLidL_Physical",
             CerenkovContainer_Logical,
-            false,0);
+            false,0,
+            pSurfChk);
 
 //******************************Define Exo-Skelton Frame*************************
 
@@ -884,7 +905,8 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
                                          ExoSkeltonFrame_Logical,
                                          "ExoSkeltonFrame_Physical",
                                          CerenkovContainer_Logical,
-                                         false,0);
+                                         false,0,
+                                         pSurfChk);
 
 
 //****************************************************************************************************
@@ -908,7 +930,8 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
             ActiveArea_Logical,
             "ActiveArea_Physical",
             CerenkovContainer_Logical,
-            false,0);
+            false,0,
+            pSurfChk);
 
 //****************************************************************************************************
 //****************************************************************************************************
@@ -1032,7 +1055,8 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
             QuartzBar_LogicalRight,
             "QuartzBar_PhysicalRight",
             ActiveArea_Logical,
-            false,0);
+            false,0,
+            pSurfChk);
 
 //****************************************************************************************************
 //****************************************************************************************************
@@ -1057,7 +1081,8 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
             QuartzGlue_Logical,
             "QuartzGlue_PhysicalCenter",
             ActiveArea_Logical,
-            false,0);
+            false,0,
+            pSurfChk);
 
 //****************************************************************************************************
 //****************************************************************************************************
@@ -1071,7 +1096,8 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
             QuartzGlue_Logical,
             "QuartzGlue_PhysicalRight",
             ActiveArea_Logical,
-            false,1);
+            false,1,
+            pSurfChk);
 
 //****************************************************************************************************
 //****************************************************************************************************
@@ -1172,7 +1198,8 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
             QuartzBar_LogicalLeft,
             "QuartzBar_PhysicalLeft",
             ActiveArea_Logical,
-            false,0);
+            false,0,
+            pSurfChk);
 
 //****************************************************************************************************
 //****************************************************************************************************
@@ -1186,7 +1213,8 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
             QuartzGlue_Logical,
             "QuartzGlue_PhysicalLeft",
             ActiveArea_Logical,
-            false,1);
+            false,1,
+            pSurfChk);
 
 //****************************************************************************************************
 //****************************************************************************************************
@@ -1368,7 +1396,8 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
             LightGuide_LogicalLeft,
             "LightGuide_PhysicalLeft",
             ActiveArea_Logical,
-            false,0);
+            false,0,
+            pSurfChk);
 
 
     LightGuide_LogicalRight  = new G4LogicalVolume(RightGuide_Solid[4],
@@ -1381,7 +1410,8 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
             LightGuide_LogicalRight,
             "LightGuide_PhysicalRight",
             ActiveArea_Logical,
-            false,0);
+            false,0,
+            pSurfChk);
 
 
     //******************************Face Mirrors***********************
@@ -1414,7 +1444,8 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 // 				     "mirrorface_physical1",
 // 				     CerenkovContainer_Logical,
 // 				     false,
-// 				     0); // copy number for left PMTContainer
+// 				     0, // copy number for left PMTContainer
+//                                   pSurfChk);
 
 //******************************Face Mirrors******************
 
@@ -1444,7 +1475,8 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 //                                            "mirrorface_physical2",
 //                                            ActiveArea_Logical,
 //                                            false,
-//                                            0); // copy number for left PMTContainer
+//                                            0,  // copy number for left PMTContainer
+//                                            pSurfChk);
 
     Position_LGEdgeMirrorRight.setX(-1.5*GlueFilm_FullLength_X-QuartzBar_FullLength-LightGuide_FullLength-0.1*mm/std::cos(ar)+
                                     0.5*LightGuide_FullThickness*std::tan(ar)-
@@ -1465,7 +1497,8 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 //                                            "mirrorface_physical4",
 //                                            ActiveArea_Logical,
 //                                            false,
-//                                            0);
+//                                            0,
+//                                            pSurfChk);
 
 //******************************Edge Mirrors**************************
 //********************************************************************
@@ -1494,7 +1527,8 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 					  "Radiator_Physical",
 					  CerenkovContainer_Logical,
 					  false,
-					  0);
+					  0,
+					  pSurfChk);
 
 //******************************Radiator****************************
 //******************************************************************
@@ -1521,14 +1555,16 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 					  "PMT_PbShield_Physical",
 					  CerenkovContainer_Logical,
 					  false,
-					  0);
+					  0,
+                                          pSurfChk);
 
     PMT_PbShield_Physical   = new G4PVPlacement(0,Position_PMT_PbShield_Right,
 					  PMT_PbShield_Logical,
 					  "PMT_PbShield_Physical",
 					  CerenkovContainer_Logical,
 					  false,
-					  1);
+					  1,
+                                          pSurfChk);
 //******************************Radiator****************************
 
   
@@ -1625,7 +1661,8 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
             "PMTContainer_Physical",
             ActiveArea_Logical,
             false,
-            0); // copy number for left PMTContainer
+            0, // copy number for left PMTContainer
+            pSurfChk);
 
     // right side
     PMTContainer_PhysicalRight = new G4PVPlacement(Transform3D_PMTContainerRight,
@@ -1633,7 +1670,8 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
             "PMTContainer_Physical",
             ActiveArea_Logical,
             false,
-            1); // copy number for right PMTContainer
+            1, // copy number for right PMTContainer
+            pSurfChk);
 
 
     //----------------------------------------
@@ -1654,7 +1692,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
             PMTQuartzOpticalFilm_Logical,
             "PMTQuartzOpticalFilm_Physical",
             PMTContainer_Logical,
-            false, 0); // copy number for left photon detector
+            false, 0, pSurfChk); // copy number for left photon detector
 
 
 
@@ -1675,7 +1713,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
             PMTEntranceWindow_Logical,
             "PMTEntranceWindow_Physical",
             PMTContainer_Logical,
-            false, 0); // copy number for left photon detector
+            false, 0, pSurfChk); // copy number for left photon detector
 
     //---------------------------
     // define the Photon Detector
@@ -1687,7 +1725,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
     Cathode_Logical  = new G4LogicalVolume(Cathode_Solid,Cathode_Material,"Cathode_Log",0,0,0);
 
     Cathode_Physical = new G4PVPlacement(0,Translation_Cathode,Cathode_Logical,"Cathode_Physical",PMTContainer_Logical,
-                                         false, 0); // copy number for left photon detector
+                                         false, 0, pSurfChk); // copy number for left photon detector
 
 
 
@@ -1715,7 +1753,8 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
                                                    CerenkovContainer_Logical,
                                                    MotherVolume,
                                                    false,
-                                                   0);
+                                                   0,
+                                                   pSurfChk);
      */
     //}
 //----------------------------------------------
@@ -2465,7 +2504,8 @@ void QweakSimCerenkovDetector::PlacePVCerenkovMasterContainer() {
                 CerenkovContainer_Logical,
                 theMotherPV,
                 false,
-                i);
+                i,
+                pSurfChk);
 
     } // end of  for (size_t i=0; i < n; i++)
 }

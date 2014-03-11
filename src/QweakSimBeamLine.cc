@@ -121,7 +121,8 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             R1_Pipe_Logical,
             MotherVolume,
             false,
-            0);
+            0,
+            pSurfChk);
     
     // define R1 - GEM Region flange
     G4Tubs* R1_Flange_Solid    = new G4Tubs("R1_Flange_Solid",
@@ -142,7 +143,8 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             R1_Flange_Logical,
             MotherVolume,
             false,
-            0);
+            0,
+            pSurfChk);
     
     // define Downstream R1 - GEM Region pipe
     G4Tubs* DS_R1_Pipe_Solid    = new G4Tubs("DS_R1_Pipe_Solid",
@@ -163,7 +165,8 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             DS_R1_Pipe_Logical,
             MotherVolume,
             false,
-            0);
+            0,
+            pSurfChk);
     
     // define Downstream R1 - GEM Region flange
     G4Tubs* DS_R1_Flange_Solid    = new G4Tubs("DS_R1_Flange_Solid",
@@ -184,7 +187,8 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             DS_R1_Flange_Logical,
             MotherVolume,
             false,
-            0);
+            0,
+            pSurfChk);
     
     // define Downstream R1 - GEM Region bellow
     G4Tubs* DS_R1_Bellow_Solid    = new G4Tubs("DS_R1_Bellow_Solid",
@@ -205,7 +209,8 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             DS_R1_Bellow_Logical,
             MotherVolume,
             false,
-            0);
+            0,
+            pSurfChk);
 
     // define R2 - inside primary collimator pipe
     G4Tubs* R2_Pipe_Solid    = new G4Tubs("R2_Pipe_Solid",
@@ -226,7 +231,8 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             R2_Pipe_Logical,
             MotherVolume,
             false,
-            0);
+            0,
+            pSurfChk);
     
     // define R2 - inside primary collimator flange
     G4Tubs* R2_Flange_Solid    = new G4Tubs("R2_Flange_Solid",
@@ -247,7 +253,8 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             R2_Flange_Logical,
             MotherVolume,
             false,
-            0);
+            0,
+            pSurfChk);
 
     // define downstream R2 pipe
     G4Tubs* DS_R2_Pipe_Solid    = new G4Tubs("DS_R2_Pipe_Solid",
@@ -268,7 +275,8 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             DS_R2_Pipe_Logical,
             MotherVolume,
             false,
-            0);
+            0,
+            pSurfChk);
  
     // define R2 - rotator pipe
     G4Tubs* R2_RotatorPipe_Solid    = new G4Tubs("R2_RotatorPipe_Solid",
@@ -289,7 +297,8 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             R2_RotatorPipe_Logical,
             MotherVolume,
             false,
-            0);
+            0,
+            pSurfChk);
 
     
     // define R3 - inside collimator pipe
@@ -311,7 +320,8 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             R3_Pipe_Logical,
             MotherVolume,
             false,
-            0);
+            0,
+            pSurfChk);
 
     // define R3 - after collimator pipe
     G4Tubs* DS_R3_Pipe_Solid    = new G4Tubs("DS_R3_Pipe_Solid",
@@ -332,7 +342,8 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             DS_R3_Pipe_Logical,
             MotherVolume,
             false,
-            0);
+            0,
+            pSurfChk);
     
     // define R3 - flange
     G4Tubs* R3_Flange_Solid    = new G4Tubs("R3_Flange_Solid",
@@ -353,7 +364,8 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             R3_Flange_Logical,
             MotherVolume,
             false,
-            0);
+            0,
+            pSurfChk);
 
     // define R3 - before shield wall
     G4Tubs* R3_US_Wall_Pipe_Solid    = new G4Tubs("R3_US_Wall_Pipe_Solid",
@@ -374,7 +386,8 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             R3_US_Wall_Pipe_Logical,
             MotherVolume,
             false,
-            0);
+            0,
+            pSurfChk);
 
     // define 2" lead box in the shield wall
     G4Box* LeadBox_in_Wall_Solid    = new G4Box("LeadBox_in_Wall_Solid",
@@ -404,7 +417,8 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             Sub_LeadBox_in_Wall_Logical,
             MotherVolume,
             false,
-            0);
+            0,
+            pSurfChk);
     
     // define R3 - pipe in shield wall
     G4Tubs* R3_Wall_Pipe_Solid    = new G4Tubs("R3_Wall_Pipe_Solid",
@@ -425,7 +439,8 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             R3_Wall_Pipe_Logical,
             MotherVolume,
             false,
-            0);
+            0,
+            pSurfChk);
         
     // define 2" lead box, extends only to Z=622.625
     G4Box* LeadBox_Extent_Solid    = new G4Box("LeadBox_Extent_Solid",
@@ -455,7 +470,8 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             Sub_LeadBox_Extent_Logical,
             MotherVolume,
             false,
-            0);
+            0,
+            pSurfChk);
     
 
     // define Downstream 18" pipe within lead box
@@ -477,7 +493,8 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             DS_18inch_Pipe1_Logical,
             MotherVolume,
             false,
-            0);
+            0,
+            pSurfChk);
     
     // define Downstream 18" pipe after lead box
     G4Tubs* DS_18inch_Pipe2_Solid    = new G4Tubs("DS_18inch_Pipe2_Solid",
@@ -498,7 +515,8 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             DS_18inch_Pipe2_Logical,
             MotherVolume,
             false,
-            0);
+            0,
+            pSurfChk);
     
     // define Downstream 24" pipe
     G4Tubs* DS_24inch_Pipe_Solid    = new G4Tubs("DS_24inch_Pipe_Solid",
@@ -519,7 +537,8 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             DS_24inch_Pipe_Logical,
             MotherVolume,
             false,
-            0);
+            0,
+            pSurfChk);
 
     // define Downstream 24" pipe flange
     G4Tubs* DS_24inch_Pipe_Flange_Solid    = new G4Tubs("DS_24inch_Pipe_Flange_Solid",
@@ -540,7 +559,8 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             DS_24inch_Pipe_Flange_Logical,
             MotherVolume,
             false,
-            0);
+            0,
+            pSurfChk);
     
 //--------------------------------------
 

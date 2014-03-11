@@ -154,7 +154,8 @@ void QweakSimCollimatorSupport::ConstructSupport(G4VPhysicalVolume* MotherVolume
 							    CollimatorSupport_TopCover_Logical,
 							    MotherVolume, 
 							    false, 
-							    0);
+							    0,
+		                                            pSurfChk);
   //**********************************************************************************
 
   //==============
@@ -185,7 +186,8 @@ void QweakSimCollimatorSupport::ConstructSupport(G4VPhysicalVolume* MotherVolume
 							       CollimatorSupport_BottomCover_Logical,
 							       MotherVolume, 
 							       false, 
-							       0);
+							       0,
+							       pSurfChk);
   //**********************************************************************************
 
 
@@ -217,7 +219,8 @@ void QweakSimCollimatorSupport::ConstructSupport(G4VPhysicalVolume* MotherVolume
 							     CollimatorSupport_LeftCover_Logical,
 							     MotherVolume, 
 							     false, 
-							     0);
+							     0,
+							     pSurfChk);
   //**********************************************************************************
 
 
@@ -250,7 +253,8 @@ void QweakSimCollimatorSupport::ConstructSupport(G4VPhysicalVolume* MotherVolume
 							      CollimatorSupport_RightCover_Logical,
 							      MotherVolume, 
 							      false, 
-							      0);
+							      0,
+							      pSurfChk);
   //**********************************************************************************
 
 

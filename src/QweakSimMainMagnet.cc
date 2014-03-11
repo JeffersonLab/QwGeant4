@@ -664,7 +664,8 @@ G4cout << G4endl << "###### Calling QweakSimMainMagnet::ConstructComponent() " <
 								SingleCoil_Plate_Logical,
 								MotherVolume,
 								false,
-								n);
+								n,
+								pSurfChk);
 
 
 	 SingleCoil_LowerPlate_Physical[n] = new G4PVPlacement( Rotation_SingleCoil[n],
@@ -673,7 +674,8 @@ G4cout << G4endl << "###### Calling QweakSimMainMagnet::ConstructComponent() " <
 								SingleCoil_Plate_Logical,
 								MotherVolume,
 								false,
-								n);
+								n,
+								pSurfChk);
 
 	 //----------------------------------------
 
@@ -701,7 +703,8 @@ G4cout << G4endl << "###### Calling QweakSimMainMagnet::ConstructComponent() " <
 							     SingleCoil_Wing_Logical,
 							     MotherVolume,
 							     false,
-							     n);
+							     n,
+							     pSurfChk);
 
         SingleCoil_RightWing_Physical[n] = new G4PVPlacement(Rotation_SingleCoil_RightWing[n],
 							     Translation_SingleCoil_RightWing[n],
@@ -709,7 +712,8 @@ G4cout << G4endl << "###### Calling QweakSimMainMagnet::ConstructComponent() " <
 							     SingleCoil_Wing_Logical,
 							     MotherVolume,
 							     false,
-							     n);
+							     n,
+							     pSurfChk);
 	 
 	 //----------------------------------------
 
@@ -753,7 +757,8 @@ G4cout << G4endl << "###### Calling QweakSimMainMagnet::ConstructComponent() " <
 						Lintel_Logical,
 						MotherVolume,
 						false,
-						n);
+						n,
+						pSurfChk);
 
      } // end of place lintels
      
@@ -1129,7 +1134,8 @@ void QweakSimMainMagnet::Construct_UpstreamSpider(G4VPhysicalVolume* MotherVolum
 						 UpstreamSpider_Logical,
 						 MotherVolume,
 						 false,
-						 0);
+						 0,
+						 pSurfChk);
         
     G4Colour aluminium ( 169/255., 172/255., 182/255.);
   
@@ -1228,7 +1234,8 @@ void QweakSimMainMagnet::Construct_ClampPlates(G4VPhysicalVolume* MotherVolume)
 								     SingleCoil_ClampPlate_Logical,
 								     MotherVolume,
 								     false,
-								     n);
+								     n,
+								     pSurfChk);
 
 	 SingleCoil_RightClampPlate_Physical[n]   = new G4PVPlacement(Rotation_ClampPlate[n],
 								     Translation_RightClampPlate[n],
@@ -1236,7 +1243,8 @@ void QweakSimMainMagnet::Construct_ClampPlates(G4VPhysicalVolume* MotherVolume)
 								     SingleCoil_ClampPlate_Logical,
 								     MotherVolume,
 								     false,
-								     n);
+								     n,
+								     pSurfChk);
 
 
      } // end of  for (G4int n=0; n<8; n++)
@@ -1412,7 +1420,8 @@ void QweakSimMainMagnet::Construct_UpStreamMiniClampPlates(G4VPhysicalVolume* Mo
 									 SingleCoil_LeftMiniClampPlate_Logical,
 									 MotherVolume,
 									 false,
-									 n);
+									 n,
+									 pSurfChk);
 
 	 SingleCoil_RightMiniClampPlate_Physical[n]  = new G4PVPlacement(Rotation_MiniClampPlate[n],
 									 Translation_RightMiniClampPlate[n],
@@ -1420,7 +1429,8 @@ void QweakSimMainMagnet::Construct_UpStreamMiniClampPlates(G4VPhysicalVolume* Mo
 									 SingleCoil_RightMiniClampPlate_Logical,
 									 MotherVolume,
 									 false,
-									  n);
+									 n,
+									 pSurfChk);
 
 
      } // end of  for (G4int n=0; n<8; n++)
@@ -1596,7 +1606,8 @@ void QweakSimMainMagnet::Construct_CoilFrames(G4VPhysicalVolume* MotherVolume)
 								 SingleCoil_FramePlate_Logical,
 								 MotherVolume,
 								 false,
-								 n);
+								 n,
+								 pSurfChk);
 
      } // end of  for (G4int n=0; n<8; n++)
 
@@ -1700,7 +1711,8 @@ void QweakSimMainMagnet::Construct_RadialMountingBlocks(G4VPhysicalVolume* Mothe
 										       SingleCoil_RadialMountingBlock_Logical,
 										       MotherVolume,
 										       false,
-										       n);
+										       n,
+										       pSurfChk);
 
 	 SingleCoil_RightRadialMountingBlock_Upstream_Physical[n]  = new G4PVPlacement(Rotation_RadialMountingBlock[n],
 										       Translation_RightRadialMountingBlock_Upstream[n],
@@ -1708,7 +1720,8 @@ void QweakSimMainMagnet::Construct_RadialMountingBlocks(G4VPhysicalVolume* Mothe
 										       SingleCoil_RadialMountingBlock_Logical,
 										       MotherVolume,
 										       false,
-										       n);
+										       n,
+										       pSurfChk);
    
 	 SingleCoil_LeftRadialMountingBlock_Downstream_Physical[n]   = new G4PVPlacement(Rotation_RadialMountingBlock[n],
 											 Translation_LeftRadialMountingBlock_Downstream[n],
@@ -1716,7 +1729,8 @@ void QweakSimMainMagnet::Construct_RadialMountingBlocks(G4VPhysicalVolume* Mothe
 											 SingleCoil_RadialMountingBlock_Logical,
 											 MotherVolume,
 											 false,
-											 n);
+											 n,
+											 pSurfChk);
 
 	 SingleCoil_RightRadialMountingBlock_Downstream_Physical[n]  = new G4PVPlacement(Rotation_RadialMountingBlock[n],
 											 Translation_RightRadialMountingBlock_Downstream[n],
@@ -1724,7 +1738,8 @@ void QweakSimMainMagnet::Construct_RadialMountingBlocks(G4VPhysicalVolume* Mothe
 											 SingleCoil_RadialMountingBlock_Logical,
 											 MotherVolume,
 											 false,
-											 n);
+											 n,
+											 pSurfChk);
 
      } // end of  for (G4int n=0; n<8; n++)
 
@@ -1858,7 +1873,8 @@ void QweakSimMainMagnet::Construct_SupportFrame(G4VPhysicalVolume* MotherVolume)
 										 SupportFrame_DownstreamHorizontalDoubleTBeam_Logical,
 										 MotherVolume,
 										 false,
-										 0); // copy number
+										 0,
+										 pSurfChk); // copy number
 
 
     SupportFrame_DownstreamHorizontalDoubleTBeam_Physical[1] = new G4PVPlacement(0,
@@ -1867,7 +1883,8 @@ void QweakSimMainMagnet::Construct_SupportFrame(G4VPhysicalVolume* MotherVolume)
 										 SupportFrame_DownstreamHorizontalDoubleTBeam_Logical,
 										 MotherVolume,
 										 false,
-										 1); // copy number
+										 1,
+										 pSurfChk); // copy number
 
     SupportFrame_DownstreamHorizontalDoubleTBeam_Physical[2] = new G4PVPlacement(0,
 										 Translation_DownstreamHorizontalDoubleTBeam[2],
@@ -1875,7 +1892,8 @@ void QweakSimMainMagnet::Construct_SupportFrame(G4VPhysicalVolume* MotherVolume)
 										 SupportFrame_DownstreamHorizontalDoubleTBeam_Logical,
 										 MotherVolume,
 										 false,
-										 2); // copy number
+										 2,
+										 pSurfChk); // copy number
 
     SupportFrame_DownstreamHorizontalDoubleTBeam_Physical[3] = new G4PVPlacement(0,
 										 Translation_DownstreamHorizontalDoubleTBeam[3],
@@ -1883,7 +1901,8 @@ void QweakSimMainMagnet::Construct_SupportFrame(G4VPhysicalVolume* MotherVolume)
 										 SupportFrame_DownstreamHorizontalDoubleTBeam_Logical,
 										 MotherVolume,
 										 false,
-										 3); // copy number
+										 3,
+										 pSurfChk); // copy number
 
 
     //============================================================================================================================================================
@@ -1986,7 +2005,8 @@ void QweakSimMainMagnet::Construct_SupportFrame(G4VPhysicalVolume* MotherVolume)
 										  SupportFrame_DownstreamVerticalDoubleTBeam_Logical,
 										  MotherVolume,
 										  false,
-										  0); // copy number
+										  0,
+										  pSurfChk); // copy number
 
 
      SupportFrame_DownstreamVerticalDoubleTBeam_Physical[1] = new G4PVPlacement(0,
@@ -1995,7 +2015,8 @@ void QweakSimMainMagnet::Construct_SupportFrame(G4VPhysicalVolume* MotherVolume)
 										  SupportFrame_DownstreamVerticalDoubleTBeam_Logical,
 										  MotherVolume,
 										  false,
-										  1); // copy number
+										  1,
+										  pSurfChk); // copy number
 
      SupportFrame_DownstreamVerticalDoubleTBeam_Physical[2] = new G4PVPlacement(0,
 										  Translation_DownstreamVerticalDoubleTBeam[2],
@@ -2003,7 +2024,8 @@ void QweakSimMainMagnet::Construct_SupportFrame(G4VPhysicalVolume* MotherVolume)
 										  SupportFrame_DownstreamVerticalDoubleTBeam_Logical,
 										  MotherVolume,
 										  false,
-										  2); // copy number
+										  2,
+										  pSurfChk); // copy number
 
      SupportFrame_DownstreamVerticalDoubleTBeam_Physical[3] = new G4PVPlacement(0,
 										  Translation_DownstreamVerticalDoubleTBeam[3],
@@ -2011,7 +2033,8 @@ void QweakSimMainMagnet::Construct_SupportFrame(G4VPhysicalVolume* MotherVolume)
 										  SupportFrame_DownstreamVerticalDoubleTBeam_Logical,
 										  MotherVolume,
 										  false,
-										  3); // copy number
+										  3,
+										  pSurfChk); // copy number
 
      //---------------------------------------------------------------------------------------------------------------------------
      
@@ -2151,7 +2174,8 @@ void QweakSimMainMagnet::Construct_SupportFrame(G4VPhysicalVolume* MotherVolume)
 										   SupportFrame_Downstream45DegDoubleTBeam_Logical,
 										   MotherVolume,
 										   false,
-										   n); // copy number
+										   n,
+										   pSurfChk); // copy number
 
      } // end of  for (G4int n=0; n<4; n++)
 
@@ -2216,7 +2240,8 @@ void QweakSimMainMagnet::Construct_DownstreamSpider(G4VPhysicalVolume* MotherVol
 						   DownstreamSpider_Logical,
 						   MotherVolume,
 						   false,
-						   0);
+						   0,
+						   pSurfChk);
 
 
     //--------------
@@ -2254,7 +2279,8 @@ void QweakSimMainMagnet::Construct_DownstreamSpider(G4VPhysicalVolume* MotherVol
 								     DownstreamSpider_RadialSlab_Logical,
 								     MotherVolume,
 								     false,
-								     n);
+								     n,
+								     pSurfChk);
 	
 	 } // end of  for (G4int n=0; n<8; n++)
 
