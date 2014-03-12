@@ -95,13 +95,14 @@ public:
   G4double   GetWorldFullLengthInY()    {return fWorldLengthInY;}
   G4double   GetWorldFullLengthInZ()    {return fWorldLengthInZ;}
 
+  void DumpGeometry(
+      G4VPhysicalVolume* aVolume = 0,
+      G4int depth = 0);
+
 private:
 
     QweakSimUserInformation* myUserInfo;
     G4VPhysicalVolume*       ConstructQweak();
-
-  void DumpGeometricalTree(G4VPhysicalVolume* aVolume,G4int depth=0);
-
 
   QweakSimGeometry*          pGeometry;
 

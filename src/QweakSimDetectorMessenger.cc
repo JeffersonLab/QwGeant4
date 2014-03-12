@@ -63,6 +63,10 @@ QweakSimDetectorMessenger::QweakSimDetectorMessenger(QweakSimDetectorConstructio
   UpdateCmd->SetGuidance("if you changed geometrical value(s).");
   UpdateCmd->AvailableForStates(G4State_Idle);
 
+  DumpGeometry_Cmd = new G4UIcmdWithoutParameter("/HallC/DumpGeometry",this);
+  DumpGeometry_Cmd->SetGuidance("Dump geometry tree.");
+  DumpGeometry_Cmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+
   ShowHallFloor_Cmd = new G4UIcmdWithoutParameter("/HallC/Visibility/ShowHallFloor",this);
   ShowHallFloor_Cmd->SetGuidance("Make the Hall Floor visible");
   ShowHallFloor_Cmd->AvailableForStates(G4State_PreInit,G4State_Idle);
@@ -80,8 +84,9 @@ QweakSimDetectorMessenger::~QweakSimDetectorMessenger()
   if (UpdateCmd)         delete UpdateCmd;
   if (QweakSimDir)       delete QweakSimDir;
   if (VisibilityDir)     delete VisibilityDir;
+  if (DumpGeometry_Cmd)  delete DumpGeometry_Cmd;
   if (ShowHallFloor_Cmd) delete ShowHallFloor_Cmd;
-  if (HideHallFloor_Cmd) delete HideHallFloor_Cmd ;
+  if (HideHallFloor_Cmd) delete HideHallFloor_Cmd;
   
 }
 
@@ -103,6 +108,13 @@ void QweakSimDetectorMessenger::SetNewValue(G4UIcommand* command, G4String /*new
 //
 //        myDetector->SetHallFloorMaterial(newValue);
 //    }
+
+   if( command == DumpGeometry_Cmd )
+   {
+       G4cout << "#### Messenger: Dump Geometry " << G4endl;
+
+       myDetector->DumpGeometry();
+   }
 
    if( command == ShowHallFloor_Cmd )
    { 

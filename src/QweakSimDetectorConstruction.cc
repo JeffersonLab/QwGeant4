@@ -671,13 +671,6 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   // Invisible Volume
   experimentalHall_Logical->SetVisAttributes (G4VisAttributes::Invisible);
 
-
-  //--------- Dump geometry/materials  -------------------------------
-
-  //G4cout << G4endl << "The geometrical tree defined are : " << G4endl << G4endl;
-  //DumpGeometricalTree(experimentalHall_Physical);
-
-
   //--------- Load magnetic field  -------------------------------
 
   SetGlobalMagneticField();
@@ -690,22 +683,33 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void QweakSimDetectorConstruction::DumpGeometricalTree(G4VPhysicalVolume* aVolume,G4int depth)
+void QweakSimDetectorConstruction::DumpGeometry(G4VPhysicalVolume* aVolume,G4int depth)
 {
+  // Null volume
+  if (aVolume == 0) aVolume = experimentalHall_Physical;
+
+  // Print spaces
   for(int isp=0;isp<depth;isp++)
   { G4cout << "  "; }
+  // Print name
   G4cout << aVolume->GetName() << "[" << aVolume->GetCopyNo() << "] "
          << aVolume->GetLogicalVolume()->GetName() << " "
          << aVolume->GetLogicalVolume()->GetNoDaughters() << " "
          << aVolume->GetLogicalVolume()->GetMaterial()->GetName();
+  // Print sensitive detector
   if(aVolume->GetLogicalVolume()->GetSensitiveDetector())
   {
     G4cout << " " << aVolume->GetLogicalVolume()->GetSensitiveDetector()
                             ->GetFullPathName();
   }
   G4cout << G4endl;
+
+  // Check overlapping volumes
+  if (pSurfChk) aVolume->CheckOverlaps();
+
+  // Descend down the tree
   for(int i=0;i<aVolume->GetLogicalVolume()->GetNoDaughters();i++)
-  { DumpGeometricalTree(aVolume->GetLogicalVolume()->GetDaughter(i),depth+1); }
+  { DumpGeometry(aVolume->GetLogicalVolume()->GetDaughter(i),depth+1); }
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
