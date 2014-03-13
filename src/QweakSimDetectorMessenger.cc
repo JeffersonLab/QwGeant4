@@ -63,8 +63,10 @@ QweakSimDetectorMessenger::QweakSimDetectorMessenger(QweakSimDetectorConstructio
   UpdateCmd->SetGuidance("if you changed geometrical value(s).");
   UpdateCmd->AvailableForStates(G4State_Idle);
 
-  DumpGeometry_Cmd = new G4UIcmdWithoutParameter("/HallC/DumpGeometry",this);
-  DumpGeometry_Cmd->SetGuidance("Dump geometry tree.");
+  DumpGeometry_Cmd = new G4UIcmdWithABool("/HallC/DumpGeometry",this);
+  DumpGeometry_Cmd->SetGuidance("Dump geometry tree, with optional overlap check.");
+  DumpGeometry_Cmd->SetParameterName("check_overlap",true);
+  DumpGeometry_Cmd->SetDefaultValue("false");
   DumpGeometry_Cmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
   ShowHallFloor_Cmd = new G4UIcmdWithoutParameter("/HallC/Visibility/ShowHallFloor",this);
@@ -92,7 +94,7 @@ QweakSimDetectorMessenger::~QweakSimDetectorMessenger()
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void QweakSimDetectorMessenger::SetNewValue(G4UIcommand* command, G4String /*newValue*/)
+void QweakSimDetectorMessenger::SetNewValue(G4UIcommand* command, G4String newValue)
 { 
   
   if( command == UpdateCmd )
@@ -113,7 +115,7 @@ void QweakSimDetectorMessenger::SetNewValue(G4UIcommand* command, G4String /*new
    {
        G4cout << "#### Messenger: Dump Geometry " << G4endl;
 
-       myDetector->DumpGeometry();
+       myDetector->DumpGeometry(DumpGeometry_Cmd->GetNewBoolValue(newValue));
    }
 
    if( command == ShowHallFloor_Cmd )

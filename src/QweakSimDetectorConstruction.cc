@@ -683,7 +683,7 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void QweakSimDetectorConstruction::DumpGeometry(G4VPhysicalVolume* aVolume,G4int depth)
+void QweakSimDetectorConstruction::DumpGeometry(G4bool surfchk, G4VPhysicalVolume* aVolume,G4int depth)
 {
   // Null volume
   if (aVolume == 0) aVolume = experimentalHall_Physical;
@@ -705,11 +705,11 @@ void QweakSimDetectorConstruction::DumpGeometry(G4VPhysicalVolume* aVolume,G4int
   G4cout << G4endl;
 
   // Check overlapping volumes
-  if (pSurfChk) aVolume->CheckOverlaps();
+  if (pSurfChk || surfchk) aVolume->CheckOverlaps();
 
   // Descend down the tree
   for(int i=0;i<aVolume->GetLogicalVolume()->GetNoDaughters();i++)
-  { DumpGeometry(aVolume->GetLogicalVolume()->GetDaughter(i),depth+1); }
+  { DumpGeometry(surfchk, aVolume->GetLogicalVolume()->GetDaughter(i),depth+1); }
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

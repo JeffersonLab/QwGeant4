@@ -96,6 +96,7 @@ public:
   G4double   GetWorldFullLengthInZ()    {return fWorldLengthInZ;}
 
   void DumpGeometry(
+      G4bool surfchk = false,
       G4VPhysicalVolume* aVolume = 0,
       G4int depth = 0);
 

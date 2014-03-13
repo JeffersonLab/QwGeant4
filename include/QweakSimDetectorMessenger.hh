@@ -73,8 +73,8 @@ class QweakSimDetectorMessenger: public G4UImessenger
     G4UIdirectory*             QweakSimDir;
     G4UIdirectory*             VisibilityDir;
 
+    G4UIcmdWithABool*          DumpGeometry_Cmd;
     G4UIcmdWithoutParameter*   UpdateCmd;
-    G4UIcmdWithoutParameter*   DumpGeometry_Cmd;
     G4UIcmdWithoutParameter*   ShowHallFloor_Cmd;
     G4UIcmdWithoutParameter*   HideHallFloor_Cmd;
 
