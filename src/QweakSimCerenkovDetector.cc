@@ -1572,7 +1572,6 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
     // define the PMTContainer
     //-----------------------------------
 
-    G4double mypi   = 4.0*std::atan(1.0);
     G4double thetaY = std::atan(LightGuide_FullThickness*(1 - redfr)/(LightGuide_FullLength));
     G4double Xoffs = 0.0*cm;//7.0*cm;
 
@@ -1591,7 +1590,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 //   Rotation_PMTContainerLeft.rotateY(90.0*degree);
 
     //Flat on guide face configuration
-    Rotation_PMTContainerLeft.rotateY(thetaY*180.0/mypi*degree);
+    Rotation_PMTContainerLeft.rotateY(thetaY);
     G4Transform3D Transform3D_PMTContainerLeft(Rotation_PMTContainerLeft,
             Translation_PMTContainerLeft);
 
@@ -1604,7 +1603,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 //   Rotation_PMTContainerLeft.rotateY(-90.0*cm);
 
     //Flat on guide face configuration
-    Rotation_PMTContainerRight.rotateY(-thetaY*180.0/mypi*degree);
+    Rotation_PMTContainerRight.rotateY(-thetaY);
     G4Transform3D Transform3D_PMTContainerRight(Rotation_PMTContainerRight,
             Translation_PMTContainerRight);
 
@@ -1632,7 +1631,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
     // location and orientation of the cathode WITHIN the PMT
     //-------------------------------------------------------------------------------------
 
-    G4double CathodeZShift = PMTEntranceWindow_Thickness + 0.5*(Cathode_Thickness - PMTContainer_FullLength_Z);
+    G4double CathodeZShift = PMTEntranceWindow_Thickness + 0.5*(Cathode_Thickness - PMTContainer_FullLength_Z) + PMTQuartzOpticalFilm_Thickness;
 
     // location of the Photon Detector relative to  Photon Detector Container
     Translation_Cathode.setX(0.0*cm);
