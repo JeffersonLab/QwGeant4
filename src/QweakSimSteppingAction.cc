@@ -78,6 +78,10 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep){
   //   G4int                 ReplicaNo    = 0;
   G4String              particleName = theTrack->GetDefinition()->GetParticleName();
   G4ProcessManager*     pm           = particleType->GetProcessManager();
+
+//get material
+  G4Material* theMaterial = theTrack->GetMaterial();
+
   //   G4int                 nprocesses   = pm->GetProcessListLength();
   //   G4ProcessVector*      pv           = pm->GetProcessList();  
   //   G4VSteppingVerbose*   theVerbStep  = G4VSteppingVerbose::GetInstance();
@@ -93,6 +97,12 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep){
   
   //jpan@nuclear.uwinnipeg.ca Thu Apr 16 01:33:14 CDT 2009
   // check if it is primary
+
+  //to get the kryptonie to work
+  if(theMaterial->GetName()=="Kryptonite")
+  {
+    theTrack->SetTrackStatus(fKillTrackAndSecondaries);
+  }
 
   G4int parentID = theTrack->GetParentID();
   if( (particleType==G4Electron::ElectronDefinition()||particleType==G4PionMinus::PionMinusDefinition()) && parentID==0 ){

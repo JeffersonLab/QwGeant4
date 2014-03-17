@@ -61,6 +61,20 @@ void QweakSimMaterial::DefineMaterials()
   G4Element* elW = fNistManager->FindOrBuildElement("W");
   G4Element* elCu = fNistManager->FindOrBuildElement("Cu");
 
+  //define Kryptonite
+  // this material will kill every tracks that touch it
+  name      = "Kryptonite";
+  density   = 0.00000001*mg/cm3;
+  nelements = 1;
+  G4Material* __attribute__ ((unused))
+  matKryptonite = new G4Material(name, density, nelements);
+  matKryptonite -> AddElement(elAr,1);
+
+
+  //matLiquidHydrogen -> GetIonisation() -> SetMeanExcitationEnergy(21.8*eV);
+//  G4Material *Kryptonite = new G4Material("Kryptonite", density= 0.00000001*mg/cm3);
+//  Kryptonite->AddElement(elAr, 100.*perCent);
+
   // Let's get Tungsten.  This is not the alooy to be used
   // but it is fine for a test.
 
