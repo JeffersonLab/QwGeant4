@@ -168,7 +168,7 @@ void QweakSimPMTOnly::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 	
     //--- Materials
     Mother_Material 		= pMaterial->GetMaterial("Air");    
-    PMTOnly_Material 		= pMaterial->GetMaterial("Scintillator");
+    PMTOnly_Material 		= pMaterial->GetMaterial("Quartz");
     PMTOnlyQuartzOpticalFilm_Material = pMaterial->GetMaterial("SiElast_Glue");
     PMTOnlyEntranceWindow_Material 	= pMaterial->GetMaterial("LimeGlass");
     PMTOnlyCathode_Material 		= pMaterial->GetMaterial("Photocathode");
@@ -598,7 +598,6 @@ void QweakSimPMTOnly::SetPMTOnly_Enabled()
 	
     G4cout << "=== Calling QweakSimPMTOnly::SetPMTOnly_Enabled() " << G4endl;
     PMTOnly_VisAtt -> SetVisibility(true);
-    //SetPMTOnly_Material(PMTOnly_Material -> GetName());
     Mother_Physical->SetTranslation(G4ThreeVector(Mother_CenterPosition_X,
                                                      Mother_CenterPosition_Y, 
                                                      Mother_CenterPosition_Z));
@@ -615,7 +614,6 @@ void QweakSimPMTOnly::SetPMTOnly_Disabled()
 	
     G4cout << "=== Calling QweakSimPMTOnly::SetPMTOnly_Disabled() " << G4endl;
     PMTOnly_VisAtt -> SetVisibility(false);
-    //SetPMTOnly_Material("Air");
     Mother_Physical->SetTranslation(G4ThreeVector(Mother_CenterPosition_X,
                                                      Mother_CenterPosition_Y, 
                                                      Mother_CenterPosition_Z + 400.00*cm));
