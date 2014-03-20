@@ -38,10 +38,14 @@ QweakSimPionWall::QweakSimPionWall()
   
   PionWall_CenterXPosition = 0*cm;
   PionWall_CenterYPosition = MD7_CenterYPosition + 1*inch;  //  MD7 center Y position + 1"
-  PionWall_CenterZPosition = MD7_CenterZPosition - 6.5*cm - 1*inch - 0.5*PionWall_Length_Z;
-  //                      MDZpos - MDPbCenter - 0.5*MDPbThick - 0.5*PionWallThickness
-  //  This position places the PionWall flush with the Pb PMT shielding of MD7
-  //  in both Z and Y. (Flush along bottom of Pb PMT shielding)
+  PionWall_CenterZPosition = MD7_CenterZPosition       // MD 7 center Z position
+                             - 6.5*cm                  // Center of Pb brick in front of PMT
+                             - 1*inch                  // 1/2 Pb brick thickness
+                             - 0.5*PionWall_Length_Z   // 1/2 pion wall thickness
+                             - 0.5*cm;                 // extra space so the pion wall doesn't overlap MD volume
+
+  //  This position places the PionWall 0.5 cm  upstream of the Pb PMT shielding of MD7
+  //  in Z and flush in Y. (Flush along bottom of Pb PMT shielding)
   
   
   PionWall_Messenger = new QweakSimPionWallMessenger(this);
