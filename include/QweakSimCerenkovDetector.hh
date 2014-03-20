@@ -380,6 +380,13 @@ private:
   G4double Default_Position_CerenkovContainer_X;
   G4double Default_Position_CerenkovContainer_Y;
   G4double Default_Position_CerenkovContainer_Z;
+
+  // Repositions the center point that all components are built around
+  G4double Container_Center_X;
+  G4double Container_Center_Y;
+  G4double Container_Center_Z;
+
+  G4ThreeVector Container_Center;
 };
 #endif
 

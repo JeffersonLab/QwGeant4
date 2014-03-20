@@ -116,9 +116,15 @@ QweakSimCerenkovDetector::QweakSimCerenkovDetector(QweakSimUserInformation *user
     Window_Material            = pMaterial->GetMaterial("Tyvek");
     BracketPad_Material        = pMaterial->GetMaterial("Tyvek");
 
+    Container_Center_X         =  0.0*cm;
+    Container_Center_Y         =  0.0*cm;
+    Container_Center_Z         =  -4.25*cm;
+
+    Container_Center = G4ThreeVector(Container_Center_X, Container_Center_Y, Container_Center_Z);
+
     Default_Position_CerenkovContainer_X =      0*cm;
     Default_Position_CerenkovContainer_Y = 335.17*cm;
-    Default_Position_CerenkovContainer_Z = 577.88*cm;
+    Default_Position_CerenkovContainer_Z = 577.88*cm-Container_Center_Z;
     
     SetNumberOfDetectors(8);
 
@@ -141,7 +147,7 @@ QweakSimCerenkovDetector::QweakSimCerenkovDetector(QweakSimUserInformation *user
 
     Container_FullLength_X     =  95.6*inch;
     Container_FullLength_Y     =  9.6*inch;
-    Container_FullLength_Z     =  14.0*inch;
+    Container_FullLength_Z     =  14.0*inch+2.0*Container_Center_Z;
 
     Chamfer_FullLength         =  120.00*cm;
     Chamfer_FullHeight         =    7.00*mm;
@@ -243,7 +249,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 
     G4ThreeVector Position_Frame  = G4ThreeVector(0,0,0.25*inch);
 
-    Frame_Physical   = new G4PVPlacement(0,Position_Frame,
+    Frame_Physical   = new G4PVPlacement(0,Position_Frame + Container_Center,
                                          Frame_Logical,
                                          "Frame_Physical",
                                          CerenkovContainer_Logical,
@@ -306,7 +312,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 
 
     for (G4int i = 0; i<12; i++) {
-        SideBracket_Physical.push_back( new G4PVPlacement(Rotation_SideBracket.at(i),Position_SideBracket.at(i),
+        SideBracket_Physical.push_back( new G4PVPlacement(Rotation_SideBracket.at(i),Position_SideBracket.at(i) + Container_Center,
                                         SideBracket_Logical,
                                         "SideBracket_Physical",
                                         CerenkovContainer_Logical,
@@ -371,7 +377,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 
 
     for (G4int i = 0; i<12; i++) {
-        SideBracketPad_Physical.push_back( new G4PVPlacement(Rotation_SideBracketPad.at(i),Position_SideBracketPad.at(i),
+        SideBracketPad_Physical.push_back( new G4PVPlacement(Rotation_SideBracketPad.at(i),Position_SideBracketPad.at(i) + Container_Center,
                                         SideBracketPad_Logical,
                                         "SideBracketPad_Physical",
                                         CerenkovContainer_Logical,
@@ -428,7 +434,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
     Position_EndBracket.push_back (G4ThreeVector(-Distance_EndBracketToBarCenter,-3.0*inch,0.25*inch) );
 
     for (G4int i = 0; i<4; i++) {
-        EndBracket_Physical.push_back( new G4PVPlacement(Rotation_EndBracket.at(i),Position_EndBracket.at(i),
+        EndBracket_Physical.push_back( new G4PVPlacement(Rotation_EndBracket.at(i),Position_EndBracket.at(i) + Container_Center,
                                        EndBracket_Logical,
                                        "EndBracket_Physical",
                                        CerenkovContainer_Logical,
@@ -487,7 +493,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
     Position_EndBracketPad.push_back (G4ThreeVector(-Distance_EndBracketPadToBarCenter,-3.0*inch,0.) );
 
     for (G4int i = 0; i<4; i++) {
-        EndBracketPad_Physical.push_back( new G4PVPlacement(Rotation_EndBracketPad.at(i),Position_EndBracketPad.at(i),
+        EndBracketPad_Physical.push_back( new G4PVPlacement(Rotation_EndBracketPad.at(i),Position_EndBracketPad.at(i) + Container_Center,
                                        EndBracketPad_Logical,
                                        "EndBracketPad_Physical",
                                        CerenkovContainer_Logical,
@@ -516,14 +522,14 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
     G4ThreeVector Position_CrossBar_R  = G4ThreeVector((47.75-8.25)*inch,0,0.25*inch+0.625*inch);
     G4ThreeVector Position_CrossBar_L  = G4ThreeVector(-(47.75-8.25)*inch,0,0.25*inch+0.625*inch);
 
-    CrossBarR_Physical   = new G4PVPlacement(0,Position_CrossBar_R,
+    CrossBarR_Physical   = new G4PVPlacement(0,Position_CrossBar_R + Container_Center,
             CrossBar_Logical,
             "CrossBarR_Physical",
             CerenkovContainer_Logical,
             false,0,
             pSurfChk);
 
-    CrossBarL_Physical   = new G4PVPlacement(0,Position_CrossBar_L,
+    CrossBarL_Physical   = new G4PVPlacement(0,Position_CrossBar_L + Container_Center,
             CrossBar_Logical,
             "CrossBarL_Physical",
             CerenkovContainer_Logical,
@@ -546,7 +552,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 
     G4ThreeVector Position_FrontWindow  = G4ThreeVector(0,0,0.25*inch-(1.0*inch+2.5*mm));
 
-    FrontWindow_Physical   = new G4PVPlacement(0,Position_FrontWindow,
+    FrontWindow_Physical   = new G4PVPlacement(0,Position_FrontWindow + Container_Center,
             FrontWindow_Logical,
             "FrontWindow_Physical",
             CerenkovContainer_Logical,
@@ -566,7 +572,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 
     G4ThreeVector Position_BackWindow  = G4ThreeVector(0,0,0.25*inch+1.0*inch+2.5*mm);
 
-    BackWindow_Physical   = new G4PVPlacement(0,Position_BackWindow,
+    BackWindow_Physical   = new G4PVPlacement(0,Position_BackWindow + Container_Center,
             BackWindow_Logical,
             "BackWindow_Physical",
             CerenkovContainer_Logical,
@@ -605,7 +611,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 
     G4ThreeVector Position_FrontClip  = G4ThreeVector(0,0,0.25*inch -(1.0*inch+5.0*mm+0.38/2.0*inch));
 
-    FrontClip_Physical   = new G4PVPlacement(0,Position_FrontClip,
+    FrontClip_Physical   = new G4PVPlacement(0,Position_FrontClip + Container_Center,
             FrontClip_Logical,
             "FrontClip_Physical",
             CerenkovContainer_Logical,
@@ -643,7 +649,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 
     G4ThreeVector Position_BackClip  = G4ThreeVector(0,0,0.25*inch + 1.0*inch+5.0*mm+0.38/2.0*inch);
 
-    BackClip_Physical   = new G4PVPlacement(0,Position_BackClip,
+    BackClip_Physical   = new G4PVPlacement(0,Position_BackClip + Container_Center,
                                             BackClip_Logical,
                                             "BackClip_Physical",
                                             CerenkovContainer_Logical,
@@ -684,14 +690,14 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
             0,
             0.25*inch + 1.0*inch+2.5*mm);
 
-    SquareFalangeSealR_Physical   = new G4PVPlacement(0,Position_SquareFalangeSeal_R,
+    SquareFalangeSealR_Physical   = new G4PVPlacement(0,Position_SquareFalangeSeal_R + Container_Center,
             SquareFalangeSeal_Logical,
             "SquareFalangeSealR_Physical",
             CerenkovContainer_Logical,
             false,0,
             pSurfChk);
 
-    SquareFalangeSealL_Physical   = new G4PVPlacement(0,Position_SquareFalangeSeal_L,
+    SquareFalangeSealL_Physical   = new G4PVPlacement(0,Position_SquareFalangeSeal_L + Container_Center,
             SquareFalangeSeal_Logical,
             "SquareFalangeSealL_Physical",
             CerenkovContainer_Logical,
@@ -736,14 +742,14 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
             0,
             0.25*inch + 1.0*inch+5.0*mm+0.38/2.0*inch);
 
-    SquareFalangeR_Physical   = new G4PVPlacement(0,Position_SquareFalange_R,
+    SquareFalangeR_Physical   = new G4PVPlacement(0,Position_SquareFalange_R + Container_Center,
             SquareFalange_Logical,
             "SquareFalangeR_Physical",
             CerenkovContainer_Logical,
             false,0,
             pSurfChk);
 
-    SquareFalangeL_Physical   = new G4PVPlacement(0,Position_SquareFalange_L,
+    SquareFalangeL_Physical   = new G4PVPlacement(0,Position_SquareFalange_L + Container_Center,
             SquareFalange_Logical,
             "SquareFalangeL_Physical",
             CerenkovContainer_Logical,
@@ -775,14 +781,14 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
             0,
             0.25*inch + 1.0*inch+5.0*mm+0.38*inch+PMTHousingWallLength*0.5);
 
-    PMTHousingWallR_Physical   = new G4PVPlacement(0,Position_PMTHousingWall_R,
+    PMTHousingWallR_Physical   = new G4PVPlacement(0,Position_PMTHousingWall_R + Container_Center,
             PMTHousingWall_Logical,
             "PMTHousingWallR_Physical",
             CerenkovContainer_Logical,
             false,0,
             pSurfChk);
 
-    PMTHousingWallL_Physical   = new G4PVPlacement(0,Position_PMTHousingWall_L,
+    PMTHousingWallL_Physical   = new G4PVPlacement(0,Position_PMTHousingWall_L + Container_Center,
             PMTHousingWall_Logical,
             "PMTHousingWallL_Physical",
             CerenkovContainer_Logical,
@@ -814,14 +820,14 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
             0,
             0.25*inch + 1.0*inch+5.0*mm+0.38*inch+PMTHousingWallLength+PMTHousingFalangeLength*0.5);
 
-    PMTHousingFalangeR_Physical   = new G4PVPlacement(0,Position_PMTHousingFalange_R,
+    PMTHousingFalangeR_Physical   = new G4PVPlacement(0,Position_PMTHousingFalange_R + Container_Center,
             PMTHousingFalange_Logical,
             "PMTHousingFalangeR_Physical",
             CerenkovContainer_Logical,
             false,0,
             pSurfChk);
 
-    PMTHousingFalangeL_Physical   = new G4PVPlacement(0,Position_PMTHousingFalange_L,
+    PMTHousingFalangeL_Physical   = new G4PVPlacement(0,Position_PMTHousingFalange_L + Container_Center,
             PMTHousingFalange_Logical,
             "PMTHousingFalangeL_Physical",
             CerenkovContainer_Logical,
@@ -858,14 +864,14 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
             0,
             0.25*inch+1.0*inch+5.0*mm+0.38*inch+PMTHousingWallLength+PMTHousingFalangeLength);
 
-    PMTHousingLidR_Physical   = new G4PVPlacement(0,Position_PMTHousingLid_R,
+    PMTHousingLidR_Physical   = new G4PVPlacement(0,Position_PMTHousingLid_R + Container_Center,
             PMTHousingLid_Logical,
             "PMTHousingLidR_Physical",
             CerenkovContainer_Logical,
             false,0,
             pSurfChk);
 
-    PMTHousingLidL_Physical   = new G4PVPlacement(0,Position_PMTHousingLid_L,
+    PMTHousingLidL_Physical   = new G4PVPlacement(0,Position_PMTHousingLid_L + Container_Center,
             PMTHousingLid_Logical,
             "PMTHousingLidL_Physical",
             CerenkovContainer_Logical,
@@ -901,7 +907,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 
     G4ThreeVector Position_ExoSkeltonFrame  = G4ThreeVector(0,0,-1.0*inch);
 
-    ExoSkeltonFrame_Physical   = new G4PVPlacement(0,Position_ExoSkeltonFrame,
+    ExoSkeltonFrame_Physical   = new G4PVPlacement(0,Position_ExoSkeltonFrame + Container_Center,
                                          ExoSkeltonFrame_Logical,
                                          "ExoSkeltonFrame_Physical",
                                          CerenkovContainer_Logical,
@@ -926,7 +932,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 
     G4ThreeVector Position_ActiveArea  = G4ThreeVector(0,0,0);
 
-    ActiveArea_Physical   = new G4PVPlacement(0,Position_ActiveArea,
+    ActiveArea_Physical   = new G4PVPlacement(0,Position_ActiveArea + Container_Center,
             ActiveArea_Logical,
             "ActiveArea_Physical",
             CerenkovContainer_Logical,
@@ -1522,7 +1528,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 
   G4ThreeVector Position_Radiator  = G4ThreeVector(0, 0,-5.0*cm);//-2.0*cm);
 
-  Radiator_Physical   = new G4PVPlacement(0,Position_Radiator,
+  Radiator_Physical   = new G4PVPlacement(0,Position_Radiator + Container_Center,
 					  Radiator_Logical,
 					  "Radiator_Physical",
 					  CerenkovContainer_Logical,
@@ -1550,7 +1556,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
   G4ThreeVector Position_PMT_PbShield_Left   = G4ThreeVector(-100.0*cm-4.0*inch, 0, -6.5*cm);
   G4ThreeVector Position_PMT_PbShield_Right  = G4ThreeVector( 100.0*cm+4.0*inch, 0, -6.5*cm);
 
-  PMT_PbShield_Physical   = new G4PVPlacement(0,Position_PMT_PbShield_Left,
+  PMT_PbShield_Physical   = new G4PVPlacement(0,Position_PMT_PbShield_Left + Container_Center,
 					  PMT_PbShield_Logical,
 					  "PMT_PbShield_Physical",
 					  CerenkovContainer_Logical,
@@ -1558,7 +1564,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 					  0,
                                           pSurfChk);
 
-    PMT_PbShield_Physical   = new G4PVPlacement(0,Position_PMT_PbShield_Right,
+    PMT_PbShield_Physical   = new G4PVPlacement(0,Position_PMT_PbShield_Right + Container_Center,
 					  PMT_PbShield_Logical,
 					  "PMT_PbShield_Physical",
 					  CerenkovContainer_Logical,
@@ -1747,7 +1753,7 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
        Rotation_CerenkovContainer -> rotateX(Tilting_Angle);
 
        CerenkovContainer_Physical   = new G4PVPlacement(Rotation_CerenkovContainer,
-                                                   Position_CerenkovContainer,
+                                                   Position_CerenkovContainer + Container_Center,
                                                    "CerenkovContainer_Physical",
                                                    CerenkovContainer_Logical,
                                                    MotherVolume,
