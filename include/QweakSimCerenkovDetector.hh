@@ -34,6 +34,7 @@ public:
 
   void SetCerenkovDetectorMaterial(G4String materialName);
   void SetPreradiatorMaterial(G4String materialName);
+  void SetContainerMaterial(G4String materialName);
 
   void SetCerenkovDetectorCenterPositionInX(G4double xPos, G4int octant);
   void SetCerenkovDetectorCenterPositionInY(G4double yPos, G4int octant);

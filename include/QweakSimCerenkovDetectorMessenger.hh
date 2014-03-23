@@ -50,27 +50,30 @@ class QweakSimCerenkovDetectorMessenger: public G4UImessenger
     G4int GetOctant() {return fOctant;}
     void SetNewValue(G4UIcommand*, G4String);
     
-private:
-  QweakSimCerenkovDetector*            myCerenkovDetector;
-  
-  G4int fOctant;
-  G4UIdirectory*             Dir;
+    void CreateCommands(QweakSimCerenkovDetector*);
 
-  G4UIcmdWithAString*        ContainerMatCmd;
-  G4UIcmdWithAString*        DetectorMatCmd;
-  G4UIcmdWithAString*        PreRadiatorMatCmd;
+private:
+  QweakSimCerenkovDetector*         myCerenkovDetector;
+  
+  static G4UIdirectory*             Dir;
+
+  static G4UIcmdWithAString*        ContainerMatCmd;
+  static G4UIcmdWithAString*        DetectorMatCmd;
+  static G4UIcmdWithAString*        PreRadiatorMatCmd;
+
+  static G4UIcmdWithADoubleAndUnit* ContainerThicknessCmd;
+
+  static G4UIcmdWithADoubleAndUnit* TiltingAngleCmd;
+  static G4UIcmdWithADoubleAndUnit* KinkAngleCmd;
+
+  static G4UIcmdWithAnInteger*      NumberOfDetectorsCmd;
+
+  G4int fOctant;
+  G4UIdirectory*             DirPerOctant;
 
   G4UIcmdWithADoubleAndUnit* ContainerXPositionCmd;
   G4UIcmdWithADoubleAndUnit* ContainerYPositionCmd;
   G4UIcmdWithADoubleAndUnit* ContainerZPositionCmd;
-
-  G4UIcmdWithADoubleAndUnit* ContainerThicknessCmd;
-
-  G4UIcmdWithADoubleAndUnit* TiltingAngleCmd;
-  G4UIcmdWithADoubleAndUnit* KinkAngleCmd;
-
-  G4UIcmdWithAnInteger*      NumberOfDetectorsCmd;
-
 
 };
 
