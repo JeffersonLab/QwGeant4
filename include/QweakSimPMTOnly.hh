@@ -48,9 +48,9 @@ public:
     
     void FindPMTOnly_MotherCenter();
     
-    G4double GetPMTOnly_CenterPositionInX()    {return PMTOnly_CenterPosition_X+Mother_CenterPosition_X;}
-    G4double GetPMTOnly_CenterPositionInY()    {return PMTOnly_CenterPosition_Y+Mother_CenterPosition_Y;}
-    G4double GetPMTOnly_CenterPositionInZ()    {return PMTOnly_CenterPosition_Z+Mother_CenterPosition_Z;}
+    G4double GetPMTOnly_CenterPositionInX()    {return PMTOnly_CenterPosition_X+PMTOnlyContainer_CenterPosition_X;}
+    G4double GetPMTOnly_CenterPositionInY()    {return PMTOnly_CenterPosition_Y+PMTOnlyContainer_CenterPosition_Y;}
+    G4double GetPMTOnly_CenterPositionInZ()    {return PMTOnly_CenterPosition_Z+PMTOnlyContainer_CenterPosition_Z;}
 	
     void SetPMTOnly_FullLengthInX(G4double dim)  {PMTOnly_FullLength_X = dim;}
     void SetPMTOnly_FullLengthInY(G4double dim)  {PMTOnly_FullLength_Y = dim;}
@@ -64,9 +64,9 @@ public:
     void SetPMTOnly_TiltAngleInY(G4double yTiltAngle);
     void SetPMTOnly_TiltAngleInZ(G4double zTiltAngle);
     
-    G4double GetPMTOnly_TiltAngleInX()           {return Mother_TiltAngle_X;}
-    G4double GetPMTOnly_TiltAngleInY()           {return Mother_TiltAngle_Y;}
-    G4double GetPMTOnly_TiltAngleInZ()           {return Mother_TiltAngle_Z;}
+    G4double GetPMTOnly_TiltAngleInX()           {return PMTOnlyContainer_TiltAngle_X;}
+    G4double GetPMTOnly_TiltAngleInY()           {return PMTOnlyContainer_TiltAngle_Y;}
+    G4double GetPMTOnly_TiltAngleInZ()           {return PMTOnlyContainer_TiltAngle_Z;}
 	
     void SetPMTOnly_Enabled();
     void SetPMTOnly_Disabled();
@@ -80,11 +80,11 @@ private:
 	
     QweakSimMaterial* pMaterial;
 
-    G4Box* 		Mother_Solid;
-    G4LogicalVolume*	Mother_Logical;
-    G4VPhysicalVolume*	Mother_Physical;
-    G4Material*		Mother_Material;	
-    G4VisAttributes*   	Mother_VisAtt;
+    G4Box* 		PMTOnlyContainer_Solid;
+    G4LogicalVolume*	PMTOnlyContainer_Logical;
+    G4VPhysicalVolume*	PMTOnlyContainer_Physical;
+    G4Material*		PMTOnlyContainer_Material;	
+    G4VisAttributes*   	PMTOnlyContainer_VisAtt;
 
     G4Box*             	PMTOnly_Solid;
     G4LogicalVolume*   	PMTOnly_Logical;
@@ -108,15 +108,15 @@ private:
     G4Material*        	PMTOnlyCathode_Material;
     
     //--- Mother sizes
-    G4double Mother_FullLength_X;
-    G4double Mother_FullLength_Y;
-    G4double Mother_FullLength_Z;
+    G4double PMTOnlyContainer_FullLength_X;
+    G4double PMTOnlyContainer_FullLength_Y;
+    G4double PMTOnlyContainer_FullLength_Z;
     
     //--- Mother position
-    G4double Mother_CenterPosition_X;
-    G4double Mother_CenterPosition_Y;
-    G4double Mother_CenterPosition_Z;
-    G4ThreeVector Mother_CenterPosition;
+    G4double PMTOnlyContainer_CenterPosition_X;
+    G4double PMTOnlyContainer_CenterPosition_Y;
+    G4double PMTOnlyContainer_CenterPosition_Z;
+    G4ThreeVector PMTOnlyContainer_CenterPosition;
 	
     //--- PMTOnly sizes
     G4double PMTOnly_FullLength_X;
@@ -130,10 +130,10 @@ private:
     G4ThreeVector PMTOnly_CenterPosition;
 	
     //--- Mother rotation
-    G4double Mother_TiltAngle_X;
-    G4double Mother_TiltAngle_Y;
-    G4double Mother_TiltAngle_Z;
-    G4RotationMatrix* Mother_RotationMatrix;
+    G4double PMTOnlyContainer_TiltAngle_X;
+    G4double PMTOnlyContainer_TiltAngle_Y;
+    G4double PMTOnlyContainer_TiltAngle_Z;
+    G4RotationMatrix* PMTOnlyContainer_RotationMatrix;
 
     //--- MD5 position
     G4double MD5_CenterPosition_X;

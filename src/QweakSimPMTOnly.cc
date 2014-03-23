@@ -33,11 +33,11 @@ QweakSimPMTOnly::QweakSimPMTOnly(QweakSimUserInformation* userInfo)
 	
     pMaterial           = NULL;
     
-    Mother_Solid 	= NULL;
-    Mother_Logical	= NULL;
-    Mother_Physical	= NULL;
-    Mother_Material 	= NULL;
-    Mother_VisAtt	= NULL;
+    PMTOnlyContainer_Solid 	= NULL;
+    PMTOnlyContainer_Logical	= NULL;
+    PMTOnlyContainer_Physical	= NULL;
+    PMTOnlyContainer_Material 	= NULL;
+    PMTOnlyContainer_VisAtt	= NULL;
 
     PMTOnly_Solid     	= NULL;
     PMTOnly_Logical   	= NULL;
@@ -65,13 +65,13 @@ QweakSimPMTOnly::QweakSimPMTOnly(QweakSimUserInformation* userInfo)
     MD5_CenterPosition_Y =     0.0*cm;
     MD5_CenterPosition_Z =  577.88*cm;
 
-    Mother_FullLength_X = 20.00*cm;
-    Mother_FullLength_Y = 20.00*cm;
-    Mother_FullLength_Z = 20.00*cm;
+    PMTOnlyContainer_FullLength_X = 20.00*cm;
+    PMTOnlyContainer_FullLength_Y = 20.00*cm;
+    PMTOnlyContainer_FullLength_Z = 20.00*cm;
 
-    Mother_CenterPosition_X =  -320.0*cm; 	// Default:-320 cm
-    Mother_CenterPosition_Y =  -50.00*cm;	// Default: -50 cm 	
-    Mother_CenterPosition_Z =  775.00*cm;	// Default: 775 cm
+    PMTOnlyContainer_CenterPosition_X =  -320.0*cm; 	// Default:-320 cm
+    PMTOnlyContainer_CenterPosition_Y =  -50.00*cm;	// Default: -50 cm
+    PMTOnlyContainer_CenterPosition_Z =  775.00*cm;	// Default: 775 cm
 
     //--- All following coordinates are w.r.t.
     //--- the center of the Mother Volume.
@@ -84,9 +84,9 @@ QweakSimPMTOnly::QweakSimPMTOnly(QweakSimUserInformation* userInfo)
     PMTOnly_CenterPosition_Y =  0.00*cm;
     PMTOnly_CenterPosition_Z =  0.00*cm;
 
-    Mother_TiltAngle_X =  0.00*degree;
-    Mother_TiltAngle_Y =  0.00*degree;
-    Mother_TiltAngle_Z =  0.00*degree;
+    PMTOnlyContainer_TiltAngle_X =  0.00*degree;
+    PMTOnlyContainer_TiltAngle_Y =  0.00*degree;
+    PMTOnlyContainer_TiltAngle_Z =  0.00*degree;
     
     PMTOnlyQuartzOpticalFilm_Diameter = 12.70*cm;
     PMTOnlyQuartzOpticalFilm_Thickness = 0.10*mm;
@@ -131,11 +131,11 @@ QweakSimPMTOnly::~QweakSimPMTOnly()
     if (pMaterial)		delete pMaterial;
     if (PMTOnlyMessenger)	delete PMTOnlyMessenger;
     
-    if (Mother_Solid)		delete Mother_Solid; 		
-    if (Mother_Logical)		delete Mother_Logical;
-    if (Mother_Physical)	delete Mother_Physical;
-    if (Mother_Material)	delete Mother_Material;
-    if (Mother_VisAtt)		delete Mother_VisAtt;
+    if (PMTOnlyContainer_Solid)		delete PMTOnlyContainer_Solid;
+    if (PMTOnlyContainer_Logical)	delete PMTOnlyContainer_Logical;
+    if (PMTOnlyContainer_Physical)	delete PMTOnlyContainer_Physical;
+    if (PMTOnlyContainer_Material)	delete PMTOnlyContainer_Material;
+    if (PMTOnlyContainer_VisAtt)	delete PMTOnlyContainer_VisAtt;
     
     if (PMTOnly_VisAtt)		delete PMTOnly_VisAtt;
     if (PMTOnly_Material)	delete PMTOnly_Material;	
@@ -167,35 +167,35 @@ void QweakSimPMTOnly::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 {
 	
     //--- Materials
-    Mother_Material 		= pMaterial->GetMaterial("Air");    
-    PMTOnly_Material 		= pMaterial->GetMaterial("Quartz");
-    PMTOnlyQuartzOpticalFilm_Material = pMaterial->GetMaterial("SiElast_Glue");
+    PMTOnlyContainer_Material 		= pMaterial->GetMaterial("Air");    
+    PMTOnly_Material 		        = pMaterial->GetMaterial("Quartz");
+    PMTOnlyQuartzOpticalFilm_Material  = pMaterial->GetMaterial("SiElast_Glue");
     PMTOnlyEntranceWindow_Material 	= pMaterial->GetMaterial("LimeGlass");
     PMTOnlyCathode_Material 		= pMaterial->GetMaterial("Photocathode");
 
     //--- Define Mother Solid Volume;
-    Mother_Solid = new G4Box("Mother_Solid",
-    				0.5*Mother_FullLength_X,
-    				0.5*Mother_FullLength_Y,
-    				0.5*Mother_FullLength_Z);
+    PMTOnlyContainer_Solid = new G4Box("PMTOnlyContainer_Solid",
+    				0.5*PMTOnlyContainer_FullLength_X,
+    				0.5*PMTOnlyContainer_FullLength_Y,
+    				0.5*PMTOnlyContainer_FullLength_Z);
     				
     //--- Define Mother Logical Volume;
-    Mother_Logical = new G4LogicalVolume(Mother_Solid,
-                                            Mother_Material,
-                                            "Mother_Logical",
+    PMTOnlyContainer_Logical = new G4LogicalVolume(PMTOnlyContainer_Solid,
+                                            PMTOnlyContainer_Material,
+                                            "PMTOnlyContainer_Logical",
                                              0,0,0);
     
     //--- Define Mother Placement and Physical Volume
-    Mother_CenterPosition = G4ThreeVector(Mother_CenterPosition_X,
-                                          Mother_CenterPosition_Y,
-                                          Mother_CenterPosition_Z);
-    Mother_RotationMatrix = new G4RotationMatrix();
-    Mother_RotationMatrix -> rotateX(Mother_TiltAngle_X);
+    PMTOnlyContainer_CenterPosition = G4ThreeVector(PMTOnlyContainer_CenterPosition_X,
+                                          PMTOnlyContainer_CenterPosition_Y,
+                                          PMTOnlyContainer_CenterPosition_Z);
+    PMTOnlyContainer_RotationMatrix = new G4RotationMatrix();
+    PMTOnlyContainer_RotationMatrix -> rotateX(PMTOnlyContainer_TiltAngle_X);
 	
-    Mother_Physical = new G4PVPlacement(Mother_RotationMatrix,
-                                        Mother_CenterPosition,
-                                        "Mother_Physical",
-                                        Mother_Logical,
+    PMTOnlyContainer_Physical = new G4PVPlacement(PMTOnlyContainer_RotationMatrix,
+                                        PMTOnlyContainer_CenterPosition,
+                                        "PMTOnlyContainer_Physical",
+                                        PMTOnlyContainer_Logical,
                                         MotherVolume,
                                         false,
                                         0);
@@ -221,7 +221,7 @@ void QweakSimPMTOnly::ConstructComponent(G4VPhysicalVolume* MotherVolume)
                                          PMTOnly_CenterPosition,
                                          "PMTOnly_Physical",
                                          PMTOnly_Logical,
-                                         Mother_Physical,
+                                         PMTOnlyContainer_Physical,
                                          false,
                                          0);
 
@@ -248,7 +248,7 @@ void QweakSimPMTOnly::ConstructComponent(G4VPhysicalVolume* MotherVolume)
     						          PMTOnlyQuartzOpticalFilm_Position,
     						          "PMTOnlyQuartzOpticalFilm_Physical",
     						          PMTOnlyQuartzOpticalFilm_Logical,    						   
-    						          Mother_Physical,
+    						          PMTOnlyContainer_Physical,
     						          false, 
     						          0);
 
@@ -274,7 +274,7 @@ void QweakSimPMTOnly::ConstructComponent(G4VPhysicalVolume* MotherVolume)
     						       PMTOnlyEntranceWindow_Position,
     						       "PMTOnlyEntranceWindow_Physical",
     						       PMTOnlyEntranceWindow_Logical,
-    						       Mother_Physical,
+    						       PMTOnlyContainer_Physical,
     						       false,
     						       0);
 
@@ -300,7 +300,7 @@ void QweakSimPMTOnly::ConstructComponent(G4VPhysicalVolume* MotherVolume)
     						PMTOnlyCathode_Position,
     						"PMTOnlyCathode_Physical",
 	    					PMTOnlyCathode_Logical,
-    						Mother_Physical,
+    						PMTOnlyContainer_Physical,
     						false,
     						0);
 
@@ -390,10 +390,10 @@ void QweakSimPMTOnly::ConstructComponent(G4VPhysicalVolume* MotherVolume)
     // Define Visulization Attributes //
     ////////////////////////////////////
     
-    Mother_VisAtt = new G4VisAttributes(G4Colour::White());
-    Mother_VisAtt->SetVisibility(true);
-    Mother_VisAtt->SetForceWireframe(true);
-    Mother_Logical->SetVisAttributes(Mother_VisAtt);
+    PMTOnlyContainer_VisAtt = new G4VisAttributes(G4Colour::White());
+    PMTOnlyContainer_VisAtt->SetVisibility(true);
+    PMTOnlyContainer_VisAtt->SetForceWireframe(true);
+    PMTOnlyContainer_Logical->SetVisAttributes(PMTOnlyContainer_VisAtt);
 
     PMTOnly_VisAtt = new G4VisAttributes(G4Colour::Blue());
     PMTOnly_VisAtt->SetVisibility(true);
@@ -464,10 +464,10 @@ void QweakSimPMTOnly::SetPMTOnly_CenterPositionInX(G4double xPos)
     //--- Set PMTOnly X Position
 	
     G4cout << "=== Calling QweakSimPMTOnly::SetPMTOnly_CenterPositionInX() " << G4endl;
-    Mother_CenterPosition_X = xPos;	 
-    Mother_Physical->SetTranslation(G4ThreeVector(Mother_CenterPosition_X,
-                                                     Mother_CenterPosition_Y, 
-                                                     Mother_CenterPosition_Z));
+    PMTOnlyContainer_CenterPosition_X = xPos;
+    PMTOnlyContainer_Physical->SetTranslation(G4ThreeVector(PMTOnlyContainer_CenterPosition_X,
+                                                     PMTOnlyContainer_CenterPosition_Y,
+                                                     PMTOnlyContainer_CenterPosition_Z));
     G4cout << "=== Leaving QweakSimPMTOnly::SetPMTOnly_CenterPositionInX() " << G4endl << G4endl;
 }
 
@@ -480,10 +480,10 @@ void QweakSimPMTOnly::SetPMTOnly_CenterPositionInY(G4double yPos)
     //--- Set PMTOnly Y Position
 	
     G4cout << "=== Calling QweakSimPMTOnly::SetPMTOnly_CenterPositionInY() " << G4endl;
-    Mother_CenterPosition_Y = yPos;	 
-    Mother_Physical->SetTranslation(G4ThreeVector(Mother_CenterPosition_X,
-                                                     Mother_CenterPosition_Y, 
-                                                     Mother_CenterPosition_Z));	
+    PMTOnlyContainer_CenterPosition_Y = yPos;
+    PMTOnlyContainer_Physical->SetTranslation(G4ThreeVector(PMTOnlyContainer_CenterPosition_X,
+                                                     PMTOnlyContainer_CenterPosition_Y,
+                                                     PMTOnlyContainer_CenterPosition_Z));
     G4cout << "=== Leaving QweakSimPMTOnly::SetPMTOnly_CenterPositionInY() " << G4endl << G4endl;
 }
 
@@ -496,10 +496,10 @@ void QweakSimPMTOnly::SetPMTOnly_CenterPositionInZ(G4double zPos)
     //--- Set PMTOnly Z Position
 	
     G4cout << "=== Calling QweakSimPMTOnly::SetPMTOnly_CenterPositionInZ() " << G4endl;
-    Mother_CenterPosition_Z = zPos;	 	
-    Mother_Physical->SetTranslation(G4ThreeVector(Mother_CenterPosition_X,
-                                                     Mother_CenterPosition_Y, 
-                                                     Mother_CenterPosition_Z));	
+    PMTOnlyContainer_CenterPosition_Z = zPos;
+    PMTOnlyContainer_Physical->SetTranslation(G4ThreeVector(PMTOnlyContainer_CenterPosition_X,
+                                                     PMTOnlyContainer_CenterPosition_Y,
+                                                     PMTOnlyContainer_CenterPosition_Z));
     G4cout << "=== Leaving QweakSimPMTOnly::SetPMTOnly_CenterPositionInZ() " << G4endl << G4endl;
 }
 
@@ -527,15 +527,15 @@ void QweakSimPMTOnly::SetPMTOnly_TiltAngleInX(G4double xTiltAngle)
     G4cout << G4endl << "=== Calling QweakSimPMTOnly::SetPMTOnly_TiltAngleInX() " << G4endl;
 	
     //--- rotate back with old angle
-    Mother_RotationMatrix->rotateX(-1.0*Mother_TiltAngle_X);
-    Mother_Physical->SetRotation(Mother_RotationMatrix);
+    PMTOnlyContainer_RotationMatrix->rotateX(-1.0*PMTOnlyContainer_TiltAngle_X);
+    PMTOnlyContainer_Physical->SetRotation(PMTOnlyContainer_RotationMatrix);
 	
     //--- assign new tilting angle
-    Mother_TiltAngle_X = xTiltAngle;
+    PMTOnlyContainer_TiltAngle_X = xTiltAngle;
 	
     //--- rotate to new angle
-    Mother_RotationMatrix->rotateX(Mother_TiltAngle_X);
-    Mother_Physical->SetRotation(Mother_RotationMatrix);
+    PMTOnlyContainer_RotationMatrix->rotateX(PMTOnlyContainer_TiltAngle_X);
+    PMTOnlyContainer_Physical->SetRotation(PMTOnlyContainer_RotationMatrix);
 	
     G4cout << G4endl << "=== Leaving QweakSimPMTOnly::SetPMTOnly_TiltAngleInX() " << G4endl << G4endl;
 }
@@ -551,15 +551,15 @@ void QweakSimPMTOnly::SetPMTOnly_TiltAngleInY(G4double yTiltAngle)
     G4cout << G4endl << "=== Calling QweakSimPMTOnly::SetPMTOnly_TiltAngleInY() " << G4endl;
 	
     //--- rotate back with old angle
-    Mother_RotationMatrix->rotateY(-1.0*Mother_TiltAngle_Y);
-    Mother_Physical->SetRotation(Mother_RotationMatrix);
+    PMTOnlyContainer_RotationMatrix->rotateY(-1.0*PMTOnlyContainer_TiltAngle_Y);
+    PMTOnlyContainer_Physical->SetRotation(PMTOnlyContainer_RotationMatrix);
 	
     //--- assign new tilting angle
-    Mother_TiltAngle_Y = yTiltAngle;
+    PMTOnlyContainer_TiltAngle_Y = yTiltAngle;
 	
     //--- rotate to new angle
-    Mother_RotationMatrix->rotateY(Mother_TiltAngle_Y);
-    Mother_Physical->SetRotation(Mother_RotationMatrix);
+    PMTOnlyContainer_RotationMatrix->rotateY(PMTOnlyContainer_TiltAngle_Y);
+    PMTOnlyContainer_Physical->SetRotation(PMTOnlyContainer_RotationMatrix);
 	
     G4cout << G4endl << "=== Leaving QweakSimPMTOnly::SetPMTOnly_TiltAngleInY() " << G4endl << G4endl;
 }
@@ -575,15 +575,15 @@ void QweakSimPMTOnly::SetPMTOnly_TiltAngleInZ(G4double zTiltAngle)
     G4cout << G4endl << "=== Calling QweakSimPMTOnly::SetPMTOnly_TiltAngleInZ() " << G4endl;
 	
     //--- rotate back with old angle
-    Mother_RotationMatrix->rotateZ(-1.0*Mother_TiltAngle_Z);
-    Mother_Physical->SetRotation(Mother_RotationMatrix);
+    PMTOnlyContainer_RotationMatrix->rotateZ(-1.0*PMTOnlyContainer_TiltAngle_Z);
+    PMTOnlyContainer_Physical->SetRotation(PMTOnlyContainer_RotationMatrix);
 	
     //--- assign new tilting angle
-    Mother_TiltAngle_Z = zTiltAngle;
+    PMTOnlyContainer_TiltAngle_Z = zTiltAngle;
 	
     //--- rotate to new angle
-    Mother_RotationMatrix->rotateZ(Mother_TiltAngle_Z);
-    Mother_Physical->SetRotation(Mother_RotationMatrix);
+    PMTOnlyContainer_RotationMatrix->rotateZ(PMTOnlyContainer_TiltAngle_Z);
+    PMTOnlyContainer_Physical->SetRotation(PMTOnlyContainer_RotationMatrix);
 	
     G4cout << G4endl << "=== Leaving QweakSimPMTOnly::SetPMTOnly_TiltAngleInZ() " << G4endl << G4endl;
 }
@@ -598,9 +598,9 @@ void QweakSimPMTOnly::SetPMTOnly_Enabled()
 	
     G4cout << "=== Calling QweakSimPMTOnly::SetPMTOnly_Enabled() " << G4endl;
     PMTOnly_VisAtt -> SetVisibility(true);
-    Mother_Physical->SetTranslation(G4ThreeVector(Mother_CenterPosition_X,
-                                                     Mother_CenterPosition_Y, 
-                                                     Mother_CenterPosition_Z));
+    PMTOnlyContainer_Physical->SetTranslation(G4ThreeVector(PMTOnlyContainer_CenterPosition_X,
+                                                     PMTOnlyContainer_CenterPosition_Y,
+                                                     PMTOnlyContainer_CenterPosition_Z));
     G4cout << "=== Leaving QweakSimPMTOnly::SetPMTOnly_Enabled() " << G4endl << G4endl;
 }
 
@@ -614,9 +614,9 @@ void QweakSimPMTOnly::SetPMTOnly_Disabled()
 	
     G4cout << "=== Calling QweakSimPMTOnly::SetPMTOnly_Disabled() " << G4endl;
     PMTOnly_VisAtt -> SetVisibility(false);
-    Mother_Physical->SetTranslation(G4ThreeVector(Mother_CenterPosition_X,
-                                                     Mother_CenterPosition_Y, 
-                                                     Mother_CenterPosition_Z + 400.00*cm));
+    PMTOnlyContainer_Physical->SetTranslation(G4ThreeVector(PMTOnlyContainer_CenterPosition_X,
+                                                     PMTOnlyContainer_CenterPosition_Y,
+                                                     PMTOnlyContainer_CenterPosition_Z + 400.00*cm));
     G4cout << "=== Leaving QweakSimPMTOnly::SetPMTOnly_Disabled() " << G4endl << G4endl;
 }
 
