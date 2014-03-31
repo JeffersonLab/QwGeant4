@@ -249,7 +249,6 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
        Mass = Z*M_p+(A-Z)*M_n;
        fCrossSection[0] = Elastic_Cross_Section_Proton(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
        Asymmetry = GetAsymmetry_EP(RelativeThetaAngle, E_in);
-       SetLuminosity(myUserInfo->TargetLuminosityLH2);
       }
       
    else if(ReactionType==2) // Aluminum window
@@ -259,8 +258,6 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
        Mass = Z*M_p+(A-Z)*M_n;
        fCrossSection[0] = Elastic_Cross_Section_Aluminum(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
        Asymmetry = GetAsymmetry_AL(RelativeThetaAngle, E_in);
-       if (ReactionRegion == 2)      SetLuminosity(myUserInfo->TargetLuminosityUSALWindow);
-       else if (ReactionRegion == 3) SetLuminosity(myUserInfo->TargetLuminosityDSALWindow);
       }
 
    else if(ReactionType==3) // Aluminum window quasi-elastic proton (assume free proton)
@@ -270,8 +267,6 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
        Mass = M_p;    
        fCrossSection[0] = Elastic_Cross_Section_Proton(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
        Asymmetry = GetAsymmetry_EP(RelativeThetaAngle, E_in);
-       if (ReactionRegion == 2)      SetLuminosity(myUserInfo->TargetLuminosityUSALWindow);
-       else if (ReactionRegion == 3) SetLuminosity(myUserInfo->TargetLuminosityDSALWindow);
       }
 
    else if(ReactionType==4) // Aluminum window quasi-elastic neutron (assume free neutron)
@@ -281,8 +276,6 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
        Mass = M_n;    
        fCrossSection[0] = Quasi_Elastic_Neutron(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
        Asymmetry = GetAsymmetry_EN(RelativeThetaAngle, E_in);
-       if (ReactionRegion == 2)      SetLuminosity(myUserInfo->TargetLuminosityUSALWindow);
-       else if (ReactionRegion == 3) SetLuminosity(myUserInfo->TargetLuminosityDSALWindow);
       }
 
    else if(ReactionType==5) // Delta resonances
@@ -290,7 +283,6 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
        fCrossSection[0] = Delta_Resonance(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
        //std::cout<<E_in<<" "<<ThetaAngle/degree<<" "<<fWeightN<<" "<<Q2<<" "<<E_out<<std::endl;
        Asymmetry = GetAsymmetry_Pi(Q2);
-       SetLuminosity(myUserInfo->TargetLuminosityLH2);
       }
    else if(ReactionType==6) // Moller scattering
       {
@@ -301,51 +293,52 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
        fCrossSection[0] = Moller_Scattering(E_in, RelativeThetaAngle, E_out, 
 					 E_recoil, ThetaRecoil, 
                                          Q2, fWeightN, Asymmetry);
-       SetLuminosity(myUserInfo->TargetLuminosityLH2);
       }      
    else if(ReactionType==7) // Radiative Cross Section Lookup Table
       {
        fCrossSection = Radiative_Cross_Section_Lookup(myUserInfo->GetBeamEnergy(), RelativeThetaAngle, fWeightN, Q2, E_out);
        Asymmetry = GetAsymmetry_EP(RelativeThetaAngle, E_in);
-       if (ReactionRegion == 1)      SetLuminosity(myUserInfo->TargetLuminosityLH2);
-       else if (ReactionRegion == 2) SetLuminosity(myUserInfo->TargetLuminosityUSALWindow);
-       else if (ReactionRegion == 3) SetLuminosity(myUserInfo->TargetLuminosityDSALWindow);
-       else if (ReactionRegion == 4) SetLuminosity(myUserInfo->TargetLuminosityUSALDummy1);
-       else if (ReactionRegion == 5) SetLuminosity(myUserInfo->TargetLuminosityUSALDummy2);
-       else if (ReactionRegion == 6) SetLuminosity(myUserInfo->TargetLuminosityUSALDummy4);
-       else if (ReactionRegion == 7) SetLuminosity(myUserInfo->TargetLuminosityDSALDummy2);
-       else if (ReactionRegion == 8) SetLuminosity(myUserInfo->TargetLuminosityDSALDummy4);
-       else if (ReactionRegion == 9) SetLuminosity(myUserInfo->TargetLuminosityDSALDummy8);
-       else if (ReactionRegion == 10) SetLuminosity(myUserInfo->TargetLuminosityUSCDummy);
-       else if (ReactionRegion == 11) SetLuminosity(myUserInfo->TargetLuminosityDSCDummy);
       }
    else if(ReactionType==8) // Quasielastic Bosted - Aluminum
       {
          Z = 13;
          A = 27;
          fCrossSection[0] = Quasi_Elastic_Bosted(E_in, RelativeThetaAngle, Z, A, fWeightN, Q2, E_out);
-	 if (ReactionRegion == 2)      SetLuminosity(myUserInfo->TargetLuminosityUSALWindow);
-	 else if (ReactionRegion == 3) SetLuminosity(myUserInfo->TargetLuminosityDSALWindow);
       }	
    else if(ReactionType==88) //--- LH2 target, pion photo-production cross section 3.35 GeV
      {
        fCrossSection[0] = Pion_PhotoProduction(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
        Asymmetry = GetAsymmetry_EP(RelativeThetaAngle, E_in); //--- use the elastic asymmetry for now
-       SetLuminosity(myUserInfo->TargetLuminosityLH2);
      }
    else if(ReactionType==9) // Nuclear Inelastics Single Particle States - Aluminum
      {
        fCrossSection[0] = AlNuclInel(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
-       if (ReactionRegion == 2)      SetLuminosity(myUserInfo->TargetLuminosityUSALWindow);
-       else if (ReactionRegion == 3) SetLuminosity(myUserInfo->TargetLuminosityDSALWindow);
      }
    else if(ReactionType==10) // GDR - Aluminum
      {
        fCrossSection[0] = AlGDR(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
-       if (ReactionRegion == 2)      SetLuminosity(myUserInfo->TargetLuminosityUSALWindow);
-       else if (ReactionRegion == 3) SetLuminosity(myUserInfo->TargetLuminosityDSALWindow);
      }
-   G4double phase_space = (GetPhiAngle_Max()-GetPhiAngle_Min())*(cos(GetThetaAngle_Min())-cos(GetThetaAngle_Max()));  // units [Sr]
+
+   if      (ReactionRegion == 1)  SetLuminosity(myUserInfo->TargetLuminosityLH2);
+   else if (ReactionRegion == 2)  SetLuminosity(myUserInfo->TargetLuminosityUSALWindow);
+   else if (ReactionRegion == 3)  SetLuminosity(myUserInfo->TargetLuminosityDSALWindow);
+   else if (ReactionRegion == 4)  SetLuminosity(myUserInfo->TargetLuminosityUSALDummy1);
+   else if (ReactionRegion == 5)  SetLuminosity(myUserInfo->TargetLuminosityUSALDummy2);
+   else if (ReactionRegion == 6)  SetLuminosity(myUserInfo->TargetLuminosityUSALDummy4);
+   else if (ReactionRegion == 7)  SetLuminosity(myUserInfo->TargetLuminosityDSALDummy2);
+   else if (ReactionRegion == 8)  SetLuminosity(myUserInfo->TargetLuminosityDSALDummy4);
+   else if (ReactionRegion == 9)  SetLuminosity(myUserInfo->TargetLuminosityDSALDummy8);
+   else if (ReactionRegion == 10) SetLuminosity(myUserInfo->TargetLuminosityUSCDummy);
+   else if (ReactionRegion == 11) SetLuminosity(myUserInfo->TargetLuminosityDSCDummy);
+   else                           SetLuminosity(myUserInfo->TargetLuminosityLH2);
+
+   //G4double phase_space = (GetPhiAngle_Max()-GetPhiAngle_Min())*(cos(GetThetaAngle_Min())-cos(GetThetaAngle_Max()));  // units [Sr]
+
+   G4double phase_space = (GetPhiAngle_Max()-GetPhiAngle_Min());
+
+   if      (GetIsotropy() == 0) phase_space *= (GetThetaAngle_Max()-GetThetaAngle_Min());
+   else if (GetIsotropy() == 1) phase_space *= (cos(GetThetaAngle_Min())-cos(GetThetaAngle_Max()));
+   else                         phase_space *= (cos(GetThetaAngle_Min())-cos(GetThetaAngle_Max()));
 
    // For ReactionTypes that are differential in E'
    if (ReactionType == 7 || ReactionType == 88) phase_space *= (GetEPrime_Max()-GetEPrime_Min())/1000.0;  // units [Sr*GeV]
