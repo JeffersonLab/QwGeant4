@@ -14,7 +14,7 @@ use Data::Dumper;
 ###############################################################################
 
 #declaration of global variables, arrays, and hashes
-my $user = getpwuid($<);  #get user id
+my $user = $ENV{LOGNAME} || $ENV{USER} || getpwuid($<);
 my $original_mac;
 my $jobname;
 my $mac_content;
@@ -27,13 +27,13 @@ sub print_header;   #prints macfile header
 sub print_footer;   #prints macfile footer
 sub print_xml;      #prints xml file
 
-my ($help,$dryrun,$outfile);
+my ($help,$dryrun,$outdir);
 GetOptions(
  "help|h|?"           =>  \$help,
  "Nevents|events=i"   =>  \$Nevents,
  "Njobs|jobs=i"       =>  \$Njobs,
  "dry-run|dry|test"   =>  \$dryrun,
- "outfile|out|o=s"    =>  \$outfile,
+ "out|o=s"    	      =>  \$outdir,
 );
 
 #die helpscreen unless $#ARGV!=0;
@@ -68,8 +68,8 @@ close ORIG;
 
 foreach my $number (1..$Njobs) {
   my $basename = "$jobname\_$number";
-  my $output = "macros\/$basename\.mac";
-  my $xmlout = "xml\/$basename.xml";
+  my $output = "macros/jobs/$basename.mac";
+  my $xmlout = "xml/$basename.xml";
 
   #create individual macfile
   open my $fh, ">", $output or die "can't open/create $output: $!\n";
@@ -147,12 +147,10 @@ sub print_footer {
   my $seed1 = int ( rand(1e10) );
   my $seed2 = int ( rand(1e9 ) );
 
-  if ( $outfile ) {
-    #if the given outfile destination ends with a "/", chop it. I'll add it back in.
-    chop $outfile if $outfile =~ m/\/$/;
-    $outfile = "$outfile/$basename.root";
-  } else {
-    $outfile = "/volatile/hallc/qweak/$user/$basename.root";
+  my $outfile = "/volatile/hallc/qweak/$user/$basename\.root";
+
+  if ( $outdir ) {
+    $outfile = "$outdir/$basename.root";
   }
 
   my $footer =
@@ -180,15 +178,15 @@ my $xmlfile =
   <OS name=\"centos62\"/>
   <Command><![CDATA[
 source /home/$user/.login
-cd /u/home/$user/QwGeant4/
-build/QweakSimG4 macros/$basename\.mac
+cd /u/home/$user/qweak/QwGeant4/
+build/QweakSimG4 macros/jobs/$basename\.mac
   ]]></Command>
 
   <Memory space=\"1200\" unit=\"MB\"/>
 
   <Job>
-    <Stdout dest=\"/u/home/$user/QwGeant4/jsub/output/$basename\.out\"/>
-    <Stderr dest=\"/u/home/$user/QwGeant4/jsub/output/$basename\.err\"/>
+    <Stdout dest=\"/u/home/$user/qweak/QwGeant4/jsub/output/$basename\.out\"/>
+    <Stderr dest=\"/u/home/$user/qweak/QwGeant4/jsub/output/$basename\.err\"/>
   </Job>
 
 </Request>
