@@ -214,6 +214,7 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep){
 	  myUserInfo->StoreCrossSectionRadElasticIntOnly (CrossSection[9]);
 	  myUserInfo->StoreCrossSectionRadQEIntOnly      (CrossSection[10]);
 	  myUserInfo->StoreCrossSectionRadDISIntOnly     (CrossSection[11]);
+	  myUserInfo->StoreCrossSectionRadElasticPeak    (CrossSection[12]);
 	  myUserInfo->StoreAsymmetry ( Asymmetry );
 	  //myUserInfo->StorePrimaryEventNumber(myEventCounter);
 	  myUserInfo->StoreReactionType(myEvent->GetReactionType());

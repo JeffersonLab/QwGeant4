@@ -67,6 +67,9 @@ class QweakSimUserCerenkov_PMTEvent : public TObject
     std::vector<Float_t> PMTLeftRateQE;    ///< Quasi-elastic event rate in left PMTs
     std::vector<Float_t> PMTRightRateQE;   ///< Quasi-elastic event rate in right PMTs
     std::vector<Float_t> PMTTotalRateQE;   ///< Quasi-elastic event rate in both PMTs
+    std::vector<Float_t> PMTLeftRateELPeak;    ///< Elastic Peak event rate in left PMTs
+    std::vector<Float_t> PMTRightRateELPeak;   ///< Elastic Peak event rate in right PMTs
+    std::vector<Float_t> PMTTotalRateELPeak;   ///< Elastic Peak event rate in both PMTs
 
     std::vector<Float_t> PMTLeftYield;     ///< Total PE yield in left PMTs
     std::vector<Float_t> PMTRightYield;    ///< Total PE yield in right PMTs
@@ -80,6 +83,9 @@ class QweakSimUserCerenkov_PMTEvent : public TObject
     std::vector<Float_t> PMTLeftYieldQE;   ///< Quasi-elastic PE yield in left PMTs
     std::vector<Float_t> PMTRightYieldQE;  ///< Quasi-elastic PE yield in right PMTs
     std::vector<Float_t> PMTTotalYieldQE;  ///< Quasi-elastic PE yield in both PMTs
+    std::vector<Float_t> PMTLeftYieldELPeak;   ///< Elastic Peak PE yield in left PMTs
+    std::vector<Float_t> PMTRightYieldELPeak;  ///< Elastic Peak PE yield in right PMTs
+    std::vector<Float_t> PMTTotalYieldELPeak;  ///< Elastic Peak PE yield in both PMTs
 
   public:
 
@@ -161,6 +167,16 @@ class QweakSimUserCerenkov_PMTEvent : public TObject
     std::vector<Float_t> GetPMTTotalRateQE() const {return PMTTotalRateQE;}
 
 
+    void StorePMTLeftRateELPeak(std::vector<Float_t> rl)    { PMTLeftRateELPeak = rl; }
+    std::vector<Float_t> GetPMTLeftRateELPeak() const  {return PMTLeftRateELPeak;}
+
+    void StorePMTRightRateELPeak(std::vector<Float_t> rr)   { PMTRightRateELPeak = rr; }
+    std::vector<Float_t> GetPMTRightRateELPeak() const {return PMTRightRateELPeak;}
+
+    void StorePMTTotalRateELPeak(std::vector<Float_t> rt)   { PMTTotalRateELPeak = rt; }
+    std::vector<Float_t> GetPMTTotalRateELPeak() const {return PMTTotalRateELPeak;}
+
+
     //-----------------
     void StorePMTLeftYield(std::vector<Float_t> yl)    { PMTLeftYield = yl; }
     std::vector<Float_t> GetPMTLeftYield() const  {return PMTLeftYield;}
@@ -200,6 +216,16 @@ class QweakSimUserCerenkov_PMTEvent : public TObject
 
     void StorePMTTotalYieldQE(std::vector<Float_t> yt)   { PMTTotalYieldQE = yt; }
     std::vector<Float_t> GetPMTTotalYieldQE() const {return PMTTotalYieldQE;}
+
+
+    void StorePMTLeftYieldELPeak(std::vector<Float_t> yl)    { PMTLeftYieldELPeak = yl; }
+    std::vector<Float_t> GetPMTLeftYieldELPeak() const  {return PMTLeftYieldELPeak;}
+
+    void StorePMTRightYieldELPeak(std::vector<Float_t> yr)   { PMTRightYieldELPeak = yr; }
+    std::vector<Float_t> GetPMTRightYieldELPeak() const {return PMTRightYieldELPeak;}
+
+    void StorePMTTotalYieldELPeak(std::vector<Float_t> yt)   { PMTTotalYieldELPeak = yt; }
+    std::vector<Float_t> GetPMTTotalYieldELPeak() const {return PMTTotalYieldELPeak;}
 
 
     // define a new Class known to ROOT

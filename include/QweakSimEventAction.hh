@@ -259,6 +259,9 @@ private:
   std::vector<G4float> PmtRateLeftQE;
   std::vector<G4float> PmtRateRightQE;
   std::vector<G4float> PmtRateTotalQE;
+  std::vector<G4float> PmtRateLeftELPeak;
+  std::vector<G4float> PmtRateRightELPeak;
+  std::vector<G4float> PmtRateTotalELPeak;
 
   std::vector<G4float> PmtYieldLeft;
   std::vector<G4float> PmtYieldRight;
@@ -272,6 +275,9 @@ private:
   std::vector<G4float> PmtYieldLeftQE;
   std::vector<G4float> PmtYieldRightQE;
   std::vector<G4float> PmtYieldTotalQE;
+  std::vector<G4float> PmtYieldLeftELPeak;
+  std::vector<G4float> PmtYieldRightELPeak;
+  std::vector<G4float> PmtYieldTotalELPeak;
 
   Int_t edgeEvent;
 

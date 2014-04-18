@@ -471,6 +471,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         G4double CrossSectionRadElasticIntOnly = myUserInfo->GetCrossSectionRadElasticIntOnly();
         G4double CrossSectionRadQEIntOnly      = myUserInfo->GetCrossSectionRadQEIntOnly();
         G4double CrossSectionRadDISIntOnly     = myUserInfo->GetCrossSectionRadDISIntOnly();
+        G4double CrossSectionRadElasticPeak    = myUserInfo->GetCrossSectionRadElasticPeak();
 	G4double Asymmetry = myUserInfo->GetAsymmetry();
         G4double OriginVertexPositionX = myUserInfo->GetOriginVertexPositionX();
         G4double OriginVertexPositionY = myUserInfo->GetOriginVertexPositionY();
@@ -531,6 +532,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         analysis->fRootEvent->Primary.StoreCrossSectionRadElasticIntOnly((Float_t) CrossSectionRadElasticIntOnly);
         analysis->fRootEvent->Primary.StoreCrossSectionRadQEIntOnly     ((Float_t) CrossSectionRadQEIntOnly);
         analysis->fRootEvent->Primary.StoreCrossSectionRadDISIntOnly    ((Float_t) CrossSectionRadDISIntOnly);
+        analysis->fRootEvent->Primary.StoreCrossSectionRadElasticPeak   ((Float_t) CrossSectionRadElasticPeak);
 	analysis->fRootEvent->Primary.StoreAsymmetry((Float_t) Asymmetry);
         analysis->fRootEvent->Primary.StorePrimaryEventNumber((Int_t) PrimaryEventNumber);
         analysis->fRootEvent->Primary.StoreReactionType((Int_t) ReactionType);
@@ -1029,6 +1031,10 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
             PmtRateLeftQE[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadQE(), (Bool_t)PmtNPELeft[octantID] );
             PmtRateRightQE[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadQE(), (Bool_t)PmtNPERight[octantID] );
 
+            PmtRateTotalELPeak[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElasticPeak(), (Bool_t)PmtNPETotal[octantID] );
+            PmtRateLeftELPeak[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElasticPeak(), (Bool_t)PmtNPELeft[octantID] );
+            PmtRateRightELPeak[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElasticPeak(), (Bool_t)PmtNPERight[octantID] );
+
 
 
             PmtYieldTotal[octantID] = CalculateRate( myUserInfo->GetCrossSection(), PmtNPETotal[octantID] );
@@ -1046,6 +1052,10 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
             PmtYieldTotalQE[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadQE(), PmtNPETotal[octantID] );
             PmtYieldLeftQE[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadQE(), PmtNPELeft[octantID] );
             PmtYieldRightQE[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadQE(), PmtNPERight[octantID] );
+
+            PmtYieldTotalELPeak[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElasticPeak(), PmtNPETotal[octantID] );
+            PmtYieldLeftELPeak[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElasticPeak(), PmtNPELeft[octantID] );
+            PmtYieldRightELPeak[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElasticPeak(), PmtNPERight[octantID] );
 
         } // end if (n_hitCerenkovPMT > 0)
 
@@ -1076,6 +1086,9 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftRateQE(PmtRateLeftQE);
         analysis->fRootEvent->Cerenkov.PMT.StorePMTRightRateQE(PmtRateRightQE);
         analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalRateQE(PmtRateTotalQE);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftRateELPeak(PmtRateLeftELPeak);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTRightRateELPeak(PmtRateRightELPeak);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalRateELPeak(PmtRateTotalELPeak);
 
         //---------------------------------------------
         // store yields for left and right PMT
@@ -1092,6 +1105,9 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftYieldQE(PmtYieldLeftQE);
         analysis->fRootEvent->Cerenkov.PMT.StorePMTRightYieldQE(PmtYieldRightQE);
         analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalYieldQE(PmtYieldTotalQE);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftYieldELPeak(PmtYieldLeftELPeak);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTRightYieldELPeak(PmtYieldRightELPeak);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalYieldELPeak(PmtYieldTotalELPeak);
 
         //==============================================================================
 
@@ -2288,6 +2304,9 @@ void QweakSimEventAction::Initialize() {
     PmtRateLeftQE.clear();   PmtRateLeftQE.resize(PmtMaxSize);
     PmtRateRightQE.clear();  PmtRateRightQE.resize(PmtMaxSize);
     PmtRateTotalQE.clear();  PmtRateTotalQE.resize(PmtMaxSize);
+    PmtRateLeftELPeak.clear();   PmtRateLeftELPeak.resize(PmtMaxSize);
+    PmtRateRightELPeak.clear();  PmtRateRightELPeak.resize(PmtMaxSize);
+    PmtRateTotalELPeak.clear();  PmtRateTotalELPeak.resize(PmtMaxSize);
 
     PmtYieldLeft.clear();     PmtYieldLeft.resize(PmtMaxSize);
     PmtYieldRight.clear();    PmtYieldRight.resize(PmtMaxSize);
@@ -2301,6 +2320,9 @@ void QweakSimEventAction::Initialize() {
     PmtYieldLeftQE.clear();   PmtYieldLeftQE.resize(PmtMaxSize);
     PmtYieldRightQE.clear();  PmtYieldRightQE.resize(PmtMaxSize);
     PmtYieldTotalQE.clear();  PmtYieldTotalQE.resize(PmtMaxSize);
+    PmtYieldLeftELPeak.clear();   PmtYieldLeftELPeak.resize(PmtMaxSize);
+    PmtYieldRightELPeak.clear();  PmtYieldRightELPeak.resize(PmtMaxSize);
+    PmtYieldTotalELPeak.clear();  PmtYieldTotalELPeak.resize(PmtMaxSize);
 
    //----------------------
 
@@ -2400,7 +2422,7 @@ void QweakSimEventAction::CalculateKinematicVariables()
 // ---------------------------------------------------------
 G4double QweakSimEventAction::CalculateRate(G4double xsec, G4int PEs) 
 {
-  G4double rate = myUserInfo->GetPhaseSpace()*myUserInfo->GetLuminosity()*xsec*PEs/myUserInfo->GetNumberOfEventToBeProcessed();
+  G4double rate = 2.0*myUserInfo->GetPhaseSpace()*myUserInfo->GetLuminosity()*xsec*PEs/myUserInfo->GetNumberOfEventToBeProcessed();
   return rate;
 }
 

@@ -111,6 +111,7 @@ private:
   G4double CrossSectionRadElasticIntOnly;
   G4double CrossSectionRadQEIntOnly;
   G4double CrossSectionRadDISIntOnly;
+  G4double CrossSectionRadElasticPeak;
   G4double Asymmetry;
   G4double OriginVertexPositionX;
   G4double OriginVertexPositionY;
@@ -337,6 +338,11 @@ private:
   void     StoreCrossSectionRadDISIntOnly(G4double cs)  {CrossSectionRadDISIntOnly = cs;}
   G4double    GetCrossSectionRadDISIntOnly() const {return CrossSectionRadDISIntOnly; }
   //-----------------
+
+  void     StoreCrossSectionRadElasticPeak(G4double cs)  {CrossSectionRadElasticPeak = cs;}
+  G4double    GetCrossSectionRadElasticPeak() const {return CrossSectionRadElasticPeak; }
+  //-----------------
+
 
   void     StoreReactionType(G4int rt)  { ReactionType = rt; }
   G4int      GetReactionType() const {return ReactionType; }

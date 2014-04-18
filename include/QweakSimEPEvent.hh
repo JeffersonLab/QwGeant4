@@ -65,6 +65,7 @@ class QweakSimEPEvent {
   //G4double ThetaAngle_Max;
   //G4double EPrime_Min;
   //G4double EPrime_Max;
+   G4double ElasticPeakDeltaE;
    G4double BeamEnergy;
 
    G4double myPositionZ;

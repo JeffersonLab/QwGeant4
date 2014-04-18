@@ -51,6 +51,8 @@ QweakSimEPEvent::QweakSimEPEvent( QweakSimUserInformation* myUI)
   
   //SetBeamEnergy(1.16*GeV);
 
+  ElasticPeakDeltaE = 15*MeV;
+
   TypeSetting = 1;
   ReactionType = 1;
   ReactionRegion = 1;
@@ -146,10 +148,10 @@ G4ThreeVector QweakSimEPEvent::GetMomentumDirection()
     G4double sinTheta   = 0.0;
     G4double ThetaAngle = 0.0;
     G4double E_out      = 0.0;
-    G4double xsec       = 0.0;
-    G4int SuperElastic  = 1;
+    //G4double xsec       = 0.0;
+    //G4int SuperElastic  = 1;
 
-    while (SuperElastic) {
+    //while (SuperElastic) {
       if (Isotropy == 0) {
         // Generate flat theta distribution
         ThetaAngle = GetThetaAngle_Min() + G4UniformRand()*(GetThetaAngle_Max() - GetThetaAngle_Min());
@@ -170,8 +172,8 @@ G4ThreeVector QweakSimEPEvent::GetMomentumDirection()
         G4cerr << "Warning: unkown isotropy type.  Pick 0 or 1." << G4endl;
       }
       E_out = (G4UniformRand()*(GetEPrime_Max()-GetEPrime_Min()) + GetEPrime_Min());
-      SuperElastic = SuperElasticCheck(myUserInfo->GetBeamEnergy(), E_out, ThetaAngle, xsec);
-    }
+      //SuperElastic = SuperElasticCheck(myUserInfo->GetBeamEnergy(), E_out, ThetaAngle, xsec);
+      //}
     myUserInfo->SetEPrime(E_out);
 
     G4double ux = sinTheta * cosPhi;
@@ -983,6 +985,7 @@ const std::vector< G4double > QweakSimEPEvent::Radiative_Cross_Section_Lookup(G4
   //G4double xsec         = 0.0;
     Double_t       value[value_n] = {0.0};
     std::vector< G4double > CrossSection;
+    G4double xsec = 0.0;
     if (Theta<GetThetaAngle_Min())
       Theta = GetThetaAngle_Min();
 
@@ -1025,6 +1028,15 @@ const std::vector< G4double > QweakSimEPEvent::Radiative_Cross_Section_Lookup(G4
     CrossSection.push_back(value[12]*0.001); // 9  elastic radiated cross section internal only
     CrossSection.push_back(value[14]*0.001); // 10 quasi-elastic radiated cross section internal only
     CrossSection.push_back(value[13]*0.001); // 11 deep-inelastic radiated cross section internal only
+    CrossSection.push_back(0.0);             // 12 elastic peak cross section
+
+    if (SuperElasticCheck(myUserInfo->GetBeamEnergy(), E_out, Theta, xsec)) CrossSection[5] = 0.0;
+    else if (SuperElasticCheck(myUserInfo->GetBeamEnergy(), E_out+ElasticPeakDeltaE, Theta, xsec)) {
+       CrossSection[12] = xsec/(ElasticPeakDeltaE*0.001);
+       CrossSection[5] = 0.0;
+    }
+    CrossSection[4] = CrossSection[5] + CrossSection[6] + CrossSection[7] + CrossSection[12];
+    CrossSection[0] = CrossSection[4];
 
     return CrossSection;  //  units   [ub/sr/GeV]
 }
@@ -1081,6 +1093,7 @@ G4int QweakSimEPEvent::SuperElasticCheck(G4double E_in, G4double E_out, G4double
 
 void QweakSimEPEvent::CreateLookupTable()
 {
+  
     G4cout << "---> Calling CreateLookupTable() <---" << G4endl;
   
     G4double energy = GetBeamEnergy();
@@ -1108,7 +1121,9 @@ void QweakSimEPEvent::CreateLookupTable()
     filename += target;
     filename += "_";
     filename += (Int_t)energy;
-    filename += "MeV.dat";
+    filename += "MeV";
+    if (ReactionRegion == 1 && energy == 1160*MeV) filename += "_v2";
+    filename += ".dat";
 
     TString filepath = "./radiative_lookup_tables/";
     
@@ -1142,10 +1157,11 @@ void QweakSimEPEvent::CreateLookupTable()
 
 
     G4cout << "---> Leaving CreateLookupTable() <---" << G4endl;
+
     
     //********************************************************************
 
-/*
+  /*
   // **********************************************************************
   // **********************************************************************
   // The code below is used to convert the raw output of the Bosted code
@@ -1153,19 +1169,20 @@ void QweakSimEPEvent::CreateLookupTable()
   // **********************************************************************
 
 
-  //G4int entries = 1;
-  G4int entries[3] = { 1295, 1665, 1073};
+  //G4int entries = 93610;
+  G4int entries = 1;
+  //G4int entries[3] = { 1295, 1665, 1073};
 
     coord_t coord[value_d] = {0.0};
     value_t field[value_n] = {0.0};
  
-    //std::vector< G4double > fMin;
-    //std::vector< G4double > fMax;
-    //std::vector< G4double > fStep;
+    std::vector< G4double > fMin;
+    std::vector< G4double > fMax;
+    std::vector< G4double > fStep;
 
-    std::vector< G4double > fMin[3];
-    std::vector< G4double > fMax[3];
-    std::vector< G4double > fStep[3];
+    //std::vector< G4double > fMin[3];
+    //std::vector< G4double > fMax[3];
+    //std::vector< G4double > fStep[3];
 
     std::string target[10] = { "DSALDummy2",
                              "DSALDummy4",
@@ -1191,99 +1208,102 @@ void QweakSimEPEvent::CreateLookupTable()
 
     //  Set min, max, and step size for each coordinate in the lookup table.
     //  Z position in radiation lengths
-    //fMin.push_back(myUserInfo->TargetCenterPositionZ - 0.5*myUserInfo->TargetLength);
-    //fMax.push_back(myUserInfo->TargetCenterPositionZ + 0.5*myUserInfo->TargetLength);
-    //fStep.push_back(myUserInfo->TargetLength/10.0);
+    fMin.push_back(myUserInfo->TargetCenterPositionZ - 0.5*myUserInfo->TargetLength);
+    fMax.push_back(myUserInfo->TargetCenterPositionZ + 0.5*myUserInfo->TargetLength);
+    fStep.push_back(myUserInfo->TargetLength/10.0);
+
     //fMin.push_back(0.0);
     //fMax.push_back(0.0);
     //fStep.push_back(1.0);
     
-    fMin[0].push_back(0.0);
-    fMax[0].push_back(0.0);
-    fStep[0].push_back(1.0);
+    //fMin[0].push_back(0.0);
+    //fMax[0].push_back(0.0);
+    //fStep[0].push_back(1.0);
 
-    fMin[1].push_back(0.0);
-    fMax[1].push_back(0.0);
-    fStep[1].push_back(1.0);
+    //fMin[1].push_back(0.0);
+    //fMax[1].push_back(0.0);
+    //fStep[1].push_back(1.0);
 
-    fMin[2].push_back(0.0);
-    fMax[2].push_back(0.0);
-    fStep[2].push_back(1.0);
+    //fMin[2].push_back(0.0);
+    //fMax[2].push_back(0.0);
+    //fStep[2].push_back(1.0);
     
 
     //  Beam Energy in GeV
-    //fMin.push_back(0.877*GeV);
-    //fMax.push_back(0.877*GeV);
-    //fStep.push_back(0.05*GeV);
+    fMin.push_back(1.16*GeV);
+    fMax.push_back(1.16*GeV);
+    fStep.push_back(0.005*GeV);
     
-    fMin[0].push_back(0.877*GeV);
-    fMax[0].push_back(0.877*GeV);
-    fStep[0].push_back(0.05*GeV);
+    //fMin[0].push_back(0.877*GeV);
+    //fMax[0].push_back(0.877*GeV);
+    //fStep[0].push_back(0.05*GeV);
 
-    fMin[1].push_back(1.16*GeV);
-    fMax[1].push_back(1.16*GeV);
-    fStep[1].push_back(0.05*GeV);
+    //fMin[1].push_back(1.16*GeV);
+    //fMax[1].push_back(1.16*GeV);
+    //fStep[1].push_back(0.05*GeV);
 
-    fMin[2].push_back(3.35*GeV);
-    fMax[2].push_back(3.35*GeV);
-    fStep[2].push_back(0.05*GeV);
+    //fMin[2].push_back(3.35*GeV);
+    //fMax[2].push_back(3.35*GeV);
+    //fStep[2].push_back(0.05*GeV);
     
     //  E prime in GeV
-    //fMin.push_back(0.026*GeV);
-    //fMax.push_back(0.876*GeV);
-    //fStep.push_back(0.025*GeV);
+    fMin.push_back(0.015*GeV);
+    fMax.push_back(1.16*GeV);
+    fStep.push_back(0.005*GeV);
     
-    fMin[0].push_back(0.026*GeV);
-    fMax[0].push_back(0.876*GeV);
-    fStep[0].push_back(0.025*GeV);
+    //fMin[0].push_back(0.026*GeV);
+    //fMax[0].push_back(0.876*GeV);
+    //fStep[0].push_back(0.025*GeV);
 
-    fMin[1].push_back(0.059*GeV);
-    fMax[1].push_back(1.159*GeV);
-    fStep[1].push_back(0.025*GeV);
+    //fMin[1].push_back(0.059*GeV);
+    //fMax[1].push_back(1.159*GeV);
+    //fStep[1].push_back(0.025*GeV);
 
-    fMin[2].push_back(0.150*GeV);
-    fMax[2].push_back(1.550*GeV);
-    fStep[2].push_back(0.050*GeV);
+    //fMin[2].push_back(0.150*GeV);
+    //fMax[2].push_back(1.550*GeV);
+    //fStep[2].push_back(0.050*GeV);
     
     //  Theta angle
-    //fMin.push_back(2.00*degree);
-    //fMax.push_back(20.0*degree);
-    //fStep.push_back(0.5*degree);
+    fMin.push_back(2.00*degree);
+    fMax.push_back(20.0*degree);
+    fStep.push_back(0.5*degree);
     
-    fMin[0].push_back(2.00*degree);
-    fMax[0].push_back(20.0*degree);
-    fStep[0].push_back(0.5*degree);
+    //fMin[0].push_back(2.00*degree);
+    //fMax[0].push_back(20.0*degree);
+    //fStep[0].push_back(0.5*degree);
 
-    fMin[1].push_back(2.00*degree);
-    fMax[1].push_back(20.0*degree);
-    fStep[1].push_back(0.5*degree);
+    //fMin[1].push_back(2.00*degree);
+    //fMax[1].push_back(20.0*degree);
+    //fStep[1].push_back(0.5*degree);
 
-    fMin[2].push_back(2.00*degree);
-    fMax[2].push_back(20.0*degree);
-    fStep[2].push_back(0.5*degree);
+    //fMin[2].push_back(2.00*degree);
+    //fMax[2].push_back(20.0*degree);
+    //fStep[2].push_back(0.5*degree);
     
     //G4cout << "Target Min:      " << fMin[0] << G4endl;
     //G4cout << "Target Max:      " << fMax[0] << G4endl;
     
-    //for (Int_t n = 0; n < (Int_t)fStep.size(); n++) {
-    //  entries *= (G4int)( (fMax[n]-fMin[n])/fStep[n] + 1.5 );
-    //}
+    for (Int_t n = 0; n < (Int_t)fStep.size(); n++) {
+      entries *= (G4int)( (fMax[n]-fMin[n])/fStep[n] + 1.5 );
+    }
     std::ifstream in;
     
-    //G4cout << "!!!!!!!!!!!!!!!!!!!!!!  Debug !!!!!!!!!!!!!!!!!!!!!!" << G4endl;
-    //G4cout << " fMin:   " << fMin[0] << "    " << fMin[1] << "    " << fMin[2] << "    " << fMin[3] << G4endl;
-    //G4cout << " fMax:   " << fMax[0] << "    " << fMax[1] << "    " << fMax[2] << "    " << fMax[3] << G4endl;
-    //G4cout << " fStep:  " << fStep[0]<< "    " << fStep[1]<< "    " << fStep[2]<< "    " << fStep[3]<< G4endl;
-    //G4cout << "===================================================================" << G4endl;
+    G4cout << "!!!!!!!!!!!!!!!!!!!!!!  Debug !!!!!!!!!!!!!!!!!!!!!!" << G4endl;
+    G4cout << " fMin:   " << fMin[0] << "    " << fMin[1] << "    " << fMin[2] << "    " << fMin[3] << G4endl;
+    G4cout << " fMax:   " << fMax[0] << "    " << fMax[1] << "    " << fMax[2] << "    " << fMax[3] << G4endl;
+    G4cout << " fStep:  " << fStep[0]<< "    " << fStep[1]<< "    " << fStep[2]<< "    " << fStep[3]<< G4endl;
+    G4cout << "===================================================================" << G4endl;
 
-    for (Int_t target_num = 0; target_num < 10; target_num++) {
-      for (Int_t energy_num = 0; energy_num < 3; energy_num++) {
+    //for (Int_t target_num = 0; target_num < 10; target_num++) {
+    for (Int_t target_num = 0; target_num < 1; target_num++) {
+      //for (Int_t energy_num = 0; energy_num < 3; energy_num++) {
+      for (Int_t energy_num = 0; energy_num < 1; energy_num++) {
         //in.open("./radiative_lookup.dat");
 
         name = filepath + "lookup_" + target[target_num] + "_" + energy_out[energy_num] + ".out";
 
-        //in.open("./test.out");
-        in.open(name.c_str());
+        in.open("./test_v2.out");
+        //in.open(name.c_str());
         if (!in.is_open())  
             G4cout << "#### Failed to open data file for lookup table" << G4endl;
         else
@@ -1291,8 +1311,8 @@ void QweakSimEPEvent::CreateLookupTable()
           G4cout << "#### Found lookup table data file"  << G4endl;
           if (fLookupTable != 0) delete fLookupTable;
           fLookupTable = new QweakSimFieldMap<value_t,value_n>(value_d);
-          fLookupTable->SetMinimumMaximumStep(fMin[energy_num],fMax[energy_num],fStep[energy_num]);
-          //fLookupTable->SetMinimumMaximumStep(fMin,fMax,fStep);
+          //fLookupTable->SetMinimumMaximumStep(fMin[energy_num],fMax[energy_num],fStep[energy_num]);
+          fLookupTable->SetMinimumMaximumStep(fMin,fMax,fStep);
 
 
           //for (Int_t n = 0; n < (Int_t)fStep[energy_num].size(); n++) {
@@ -1300,7 +1320,8 @@ void QweakSimEPEvent::CreateLookupTable()
           //}
 
           //  Filling Lookup Table
-          for (Int_t line = 0; line <  entries[energy_num]; line++) {
+          //for (Int_t line = 0; line <  entries[energy_num]; line++) {
+          for (Int_t line = 0; line <  entries; line++) {
             if (in.peek() == EOF) {
               G4cout << "#### Error reading \'elastic_lookup.dat\':  File contains only "
                      << line << " of " << entries << " expected lines. ####" << G4endl;
@@ -1314,8 +1335,8 @@ void QweakSimEPEvent::CreateLookupTable()
    
             //  Add units
                                  // Z position converted from rad lengths to GEANT coords
-            //coord[0] = myUserInfo->TargetCenterPositionZ - 0.5*myUserInfo->TargetLength
-            //           + coord[0]*myUserInfo->TargetLength/0.0396;        
+            coord[0] = myUserInfo->TargetCenterPositionZ - 0.5*myUserInfo->TargetLength
+                       + coord[0]*myUserInfo->TargetLength/0.0396;        
             coord[1] *= GeV;     // Beam Energy
             coord[2] *= GeV;     // E prime
             coord[3] *= degree;  // Theta
@@ -1344,18 +1365,18 @@ void QweakSimEPEvent::CreateLookupTable()
           G4cout << "===== Filling of Lookup Table complete! =====" << G4endl;
         }
         in.close();
-        //fLookupTable->WriteTextFile("./radiative_lookup.out");
+        fLookupTable->WriteTextFile("./radiative_lookup_1160_v2.out");
 
         name = filepath + "final/radiative_lookup_" + target[target_num] + "_" + energy_out[energy_num] + ".dat";
         
         //fLookupTable->WriteTextFile("./radiative_lookup_test.out");
-        fLookupTable->WriteTextFile(name.c_str());
+        //fLookupTable->WriteTextFile(name.c_str());
 
         G4cout << "Wrote:  " << name << G4endl;
 
       }
    }
-*/ 
+ */
 }
 
 

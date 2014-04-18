@@ -42,6 +42,9 @@ void QweakSimUserCerenkov_PMTEvent::Initialize()
   PMTLeftRateQE.clear();
   PMTRightRateQE.clear();
   PMTTotalRateQE.clear();
+  PMTLeftRateELPeak.clear();
+  PMTRightRateELPeak.clear();
+  PMTTotalRateELPeak.clear();
   
   PMTLeftYield.clear();
   PMTRightYield.clear();
@@ -55,5 +58,8 @@ void QweakSimUserCerenkov_PMTEvent::Initialize()
   PMTLeftYieldQE.clear();
   PMTRightYieldQE.clear();
   PMTTotalYieldQE.clear();
+  PMTLeftYieldELPeak.clear();
+  PMTRightYieldELPeak.clear();
+  PMTTotalYieldELPeak.clear();
 }
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....

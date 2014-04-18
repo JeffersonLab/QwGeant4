@@ -111,6 +111,7 @@ void QweakSimUserInformation::Initialize()
   CrossSectionRadElasticIntOnly  = 0.0;
   CrossSectionRadQEIntOnly       = 0.0;
   CrossSectionRadDISIntOnly      = 0.0;
+  CrossSectionRadElasticPeak     = 0.0;
   Asymmetry = 0.0;
   OriginVertexPositionX = 0.0;
   OriginVertexPositionY = 0.0;
