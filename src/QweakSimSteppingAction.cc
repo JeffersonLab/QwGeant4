@@ -158,7 +158,7 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep){
 	  G4double WeightN, Q2, E_out, theta, phi;
 	  G4double Asymmetry;
 	  G4ThreeVector MomentumDirection = theTrack->GetMomentumDirection();
-	  G4double E_in = theTrack->GetKineticEnergy()/MeV;  //Event generator needs units of MeV
+	  G4double E_in = theTrack->GetTotalEnergy()/MeV;  //Event generator needs units of MeV
 	  
 	  // evaluate the MomentumDirection, E_out ..
 	  myEvent->GetanEvent(E_in, CrossSection, WeightN, Q2, E_out, MomentumDirection, theta, phi, Asymmetry);
@@ -189,7 +189,7 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep){
 	  //myUserInfo->StoreOriginVertexKineticEnergy(theTrack->GetKineticEnergy());
 	  //myUserInfo->StoreOriginVertexTotalEnergy(theTrack->GetTotalEnergy());     
 
-	  myUserInfo->StorePreScatteringKineticEnergy(E_in);
+	  myUserInfo->StorePreScatteringKineticEnergy(E_in - 0.511*MeV);
 	  if(particleType==G4Electron::ElectronDefinition()){
 	    myUserInfo->StoreOriginVertexKineticEnergy(E_out - 0.511*MeV);
 	    //	    G4cout << "Stepping Action E_out:: " << (E_out - 0.511*MeV)/MeV << G4endl;
