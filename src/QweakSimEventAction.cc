@@ -210,8 +210,7 @@ void QweakSimEventAction::BeginOfEventAction(const G4Event* /*evt*/)
     // check for existing LumiDetector Collection ID (if it's -1 it will be assigned)
     if (LumiDetector_CollID==-1) {
         // Do we want to change this so that both US and DS lumis have the same SD?
-        // FIXME
-        //LumiDetector_CollID = SDman->GetCollectionID("USLumiSD/LumiCollection");
+        LumiDetector_CollID = SDman->GetCollectionID("USLumiSD/LumiCollection");
     }
 }
 
@@ -361,6 +360,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
              << ",\tPMTOnly " << n_hitPMTOnly
              << ",\tPMTOnlyPMT " << n_hitPMTOnlyPMT
              << ",\tCerenkov " << n_hitCerenkov
+             << ",\tLumi " << n_hitLumi
              << "\tCerenkovPMT " << n_hitCerenkovPMT << G4endl;
     }
 

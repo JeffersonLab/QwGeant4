@@ -14,11 +14,13 @@
 
 // user classes
 class QweakSimMaterial;
+class QweakSimLumiMessenger;
 
-class QweakSimLumiDetector
-{
+class QweakSimLumiDetector {
     private:
+        QweakSimLumiMessenger* LumiMessenger;
         QweakSimMaterial* pMaterial;
+        G4VisAttributes*   USLumi_VisAtt;
 
         // Lumi positions and rotations
         G4RotationMatrix* USLumi_Rot;
@@ -63,6 +65,16 @@ class QweakSimLumiDetector
         QweakSimLumiDetector();
         virtual ~QweakSimLumiDetector();
 
+        // fuctions for the messanger class
+        void SetUSLumi_PositionInX(G4double);
+        void SetUSLumi_PositionInY(G4double);
+        void SetUSLumi_PositionInZ(G4double);
+
+        void SetUSLumi_Material(G4String);
+
+        void SetUSLumi_Enabled();
+        void SetUSLumi_Disabled();
+
         void ConstructComponent(G4VPhysicalVolume*);
 
         // For the GDML crap
@@ -72,6 +84,7 @@ class QweakSimLumiDetector
         G4VPhysicalVolume* getDSLumiPhysicalVolume() {
             return DSLumi_Physical;
         }
+
 };
 
 #endif

@@ -11,12 +11,14 @@
 #include "QweakSimSolids.hh"
 #include "QweakSimMaterial.hh"
 #include "QweakSimLumi_DetectorSD.hh"
+#include "QweakSimLumiMessenger.hh"
 
 
 QweakSimLumiDetector::QweakSimLumiDetector()
 {
 
     // Initialize pointers to objects
+    LumiMessenger   = NULL;
     USLumi_Rot      = NULL;
     USLumi_Solid    = NULL;
     USLumi_Logical  = NULL;
@@ -42,13 +44,16 @@ QweakSimLumiDetector::QweakSimLumiDetector()
     DSLumi_Length_Z = 4.0*cm;
 
     // USLumi positions
-    USLumi_Position_X = 24.0*cm;
+    USLumi_Position_X = 25.0*cm;
     USLumi_Position_Y = 0.0*cm;
-    USLumi_Position_Z = -387*cm;
+    USLumi_Position_Z = -387.5*cm;
     // DSLumi positions
     DSLumi_Position_X = 0*cm;
     DSLumi_Position_Y = 0*cm;
     DSLumi_Position_Z = 0*cm;
+
+    // Create lumi messenger
+    LumiMessenger = new QweakSimLumiMessenger(this);
 
     // Access to material definition
     pMaterial = new QweakSimMaterial();
@@ -124,9 +129,86 @@ void QweakSimLumiDetector::ConstructComponent(G4VPhysicalVolume* MotherVolume)
     G4Colour  red   (1.,0.,0.);
     G4Colour  blue      (0.,0.,1.);
 
-    G4VisAttributes* USLumi_VisAtt = new G4VisAttributes(red);
+    USLumi_VisAtt = new G4VisAttributes(red);
     //G4VisAttributes* DSLumi_VisAtt = new G4VisAttributes(blue);
     USLumi_VisAtt->SetVisibility(true);
     USLumi_Logical->SetVisAttributes(USLumi_VisAtt);
 
+}
+
+void QweakSimLumiDetector::SetUSLumi_PositionInX(G4double xPos) {
+    /* Set USLumi X position. */
+
+    G4cout << "=== Calling QweakSimLumi::SetUSLumi_PositionInX() " << G4endl;
+    USLumi_Position_X = xPos;                                                               
+    USLumi_Physical->SetTranslation(G4ThreeVector(USLumi_Position_X,
+                USLumi_Position_Y,
+                USLumi_Position_Z));
+    G4cout << "=== Leaving QweakSimLumi::SetUSLumi_PositionInX() " << G4endl << G4endl;
+}
+
+void QweakSimLumiDetector::SetUSLumi_PositionInY(G4double yPos) {
+    /* Set USLumi Y position. */
+
+    G4cout << "=== Calling QweakSimLumi::SetUSLumi_PositionInY() " << G4endl;
+    USLumi_Position_Y = yPos;                                                               
+    USLumi_Physical->SetTranslation(G4ThreeVector(USLumi_Position_Y,
+                USLumi_Position_Y,
+                USLumi_Position_Z));
+    G4cout << "=== Leaving QweakSimLumi::SetUSLumi_PositionInY() " << G4endl << G4endl;
+}
+
+void QweakSimLumiDetector::SetUSLumi_PositionInZ(G4double zPos) {
+    /* Set USLumi Z position. */
+
+    G4cout << "=== Calling QweakSimLumi::SetUSLumi_PositionInZ() " << G4endl;
+    USLumi_Position_Z = zPos;                                                               
+    USLumi_Physical->SetTranslation(G4ThreeVector(USLumi_Position_Z,
+                USLumi_Position_Y,
+                USLumi_Position_Z));
+    G4cout << "=== Leaving QweakSimLumi::SetUSLumi_PositionInZ() " << G4endl << G4endl;
+}
+
+void QweakSimLumiDetector::SetUSLumi_Material(G4String materialName) {
+    //--- Set USLumi Material
+    
+    G4Material* pttoMaterial = G4Material::GetMaterial(materialName);
+    
+    if (pttoMaterial)
+    {
+        G4cout << "=== Changing USLumi material: Look up material " << G4endl;
+        USLumi_Logical -> SetMaterial(pttoMaterial);
+        G4cout << "=== Changing USLumi material: Now the material is " << materialName << G4endl;
+    }
+    else 
+        G4cerr << "=== Error: Changing USLumi material FAILED! " << G4endl << G4endl;
+
+}
+
+void QweakSimLumiDetector::SetUSLumi_Enabled() {
+    //--- Enable the USLumi
+    
+    G4cout << "=== Calling QweakSimLumi::SetUSLumi_Enabled() " << G4endl;
+    USLumi_VisAtt->SetVisibility(true);
+    SetUSLumi_Material(QuartzBar -> GetName());
+    USLumi_Physical->SetTranslation(G4ThreeVector(USLumi_Position_X,
+                                                  USLumi_Position_Y, 
+                                                  USLumi_Position_Z));
+    G4cout << "=== Leaving QweakSimLumi::SetUSLumi_Enabled() " << G4endl << G4endl;
+}
+
+
+
+/////// --------------------------------------------------------------------
+
+void QweakSimLumiDetector::SetUSLumi_Disabled() {
+    //--- Disable the USLumi
+    
+    G4cout << "=== Calling QweakSimLumi::SetUSLumi_Disabled() " << G4endl;
+    USLumi_VisAtt -> SetVisibility(false);
+    SetUSLumi_Material("Air");
+    USLumi_Physical->SetTranslation(G4ThreeVector(USLumi_Position_X,
+                                                  USLumi_Position_Y, 
+                                                  USLumi_Position_Z));
+    G4cout << "=== Leaving QweakSimLumi::SetLumi_Disabled() " << G4endl << G4endl;
 }
