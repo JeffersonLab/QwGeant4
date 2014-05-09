@@ -245,9 +245,26 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     // preset variables for hit collection
     Initialize();
 
-    // Get current Event Number
-    //G4int event_id = evt->GetEventID();
+    // Get event number
+    G4int myEventCounter = myUserInfo->GetPrimaryEventNumber();
 
+
+    // Odd events: generated upstream and used to calculate prescattering energy loss
+    if (myEventCounter%2 == 1) {
+
+      // Initialize Primary information
+      analysis->fRootEvent->Primary.Initialize();
+
+      // Store random seed
+      G4String RandomSeed = evt->GetRandomNumberStatus();
+      analysis->fRootEvent->Primary.StoreRandomSeed(TString(RandomSeed));
+
+      // That's all for the prescattering energy loss events
+      return;
+    }
+
+
+    // Get hit collection
     G4HCofThisEvent * HCE = evt->GetHCofThisEvent();
 
     // initialize HitsCollection pointers
@@ -364,18 +381,15 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
              << "\tCerenkovPMT " << n_hitCerenkovPMT << G4endl;
     }
 
+
     // Initialize/Clear Event variables, initialize Cerenkov Detector with NoHit Flag
     analysis->fRootEvent->Cerenkov.Detector.Initialize();
     analysis->fRootEvent->Cerenkov.PMT.Initialize();
 
-    //-------------------------------------------------------------------------------
     // Initialize/Clear Event variables in Region 1
     analysis->fRootEvent->Region1.ChamberFront.WirePlane.Initialize();
     analysis->fRootEvent->Region1.ChamberBack.WirePlane.Initialize();
-    //-----------------------------------------------------------------------------------------
 
-
-    //-----------------------------------------------------------------------------
     // Initialize/Clear Event variables in Region 2
     analysis->fRootEvent->Region2.ChamberFront.WirePlane1.Initialize();
     analysis->fRootEvent->Region2.ChamberFront.WirePlane2.Initialize();
@@ -383,7 +397,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     analysis->fRootEvent->Region2.ChamberFront.WirePlane4.Initialize();
     analysis->fRootEvent->Region2.ChamberFront.WirePlane5.Initialize();
     analysis->fRootEvent->Region2.ChamberFront.WirePlane6.Initialize();
-
+    //
     analysis->fRootEvent->Region2.ChamberBack.WirePlane1.Initialize();
     analysis->fRootEvent->Region2.ChamberBack.WirePlane2.Initialize();
     analysis->fRootEvent->Region2.ChamberBack.WirePlane3.Initialize();
@@ -391,39 +405,26 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     analysis->fRootEvent->Region2.ChamberBack.WirePlane5.Initialize();
     analysis->fRootEvent->Region2.ChamberBack.WirePlane6.Initialize();
 
-    //-------------------------------------------------------------------------------------------------
-
-
-    //-------------------------------------------------------------------------------------------------
-    // initialize Region 3 wire planes (2: u,v ) with NoHit Flag
+    // Initialize Region 3 wire planes (2: u,v ) with NoHit Flag
     analysis->fRootEvent->Region3.ChamberFront.WirePlaneU.Initialize();
     analysis->fRootEvent->Region3.ChamberFront.WirePlaneV.Initialize();
     //
     analysis->fRootEvent->Region3.ChamberBack.WirePlaneU.Initialize();
     analysis->fRootEvent->Region3.ChamberBack.WirePlaneV.Initialize();
 
-    //
-    // initialize DriftCells with NoHit Flag
+    // Initialize DriftCells with NoHit Flag
     analysis->fRootEvent->Region3.ChamberFront.DriftCell.Initialize();
     //
     analysis->fRootEvent->Region3.ChamberBack.DriftCell.Initialize();
-    //----------------------------------------------------------------------------------------------------
 
-//---------------------------------------------------------------------------------------------
-
-    // Initialize/Clear Event variables, initialize TriggerScintillator with NoHit Flag
-//    for (int ndet=0;ndet<2;ndet++) {
-//	analysis->fRootEvent->TriggerScintillator.Detector[ndet].Initialize();
-//    }
+    // Initialize TriggerScintillator with NoHit Flag
     analysis->fRootEvent->TriggerScintillator.Detector.Initialize();
-	
+
     // Initialize LeadGlass and PMTOnly //--- with NoHit Flag
     analysis->fRootEvent->LeadGlass.Detector.Initialize();
     analysis->fRootEvent->PMTOnly.Detector.Initialize();
     analysis->fRootEvent->PMTOnly.PMT.Initialize();
-    //analysis->fRootEvent->LeadGlass.Detector.StoreDetectorHasBeenHit(0);
     analysis->fRootEvent->Lumi.Detector.Initialize();
-    //-------------------------------------------------------------------------------------------------
 
     //#########################################################################################################################
     //#########################################################################################################################
@@ -453,7 +454,6 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         //========================================
 
         //-------------------------------------------------------------------------------------------
-        G4String RandomSeed = evt->GetRandomNumberStatus();
         G4int    PrimaryEventNumber = myUserInfo->GetPrimaryEventNumber();
         G4int    ReactionType = myUserInfo->GetReactionType();
         G4int    PDGcode = myUserInfo->GetPDGcode();
@@ -507,7 +507,6 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         G4double EffectiveKinematicX     = myUserInfo->GetEffectiveKinematicX();
         G4double EffectiveKinematicW     = myUserInfo->GetEffectiveKinematicW();
 
-        analysis->fRootEvent->Primary.StoreRandomSeed(TString(RandomSeed));
         analysis->fRootEvent->Primary.StoreTrackID((Int_t) TrackID);
         analysis->fRootEvent->Primary.StoreGlobalTime((Float_t) GlobalTime);
         analysis->fRootEvent->Primary.StoreOriginVertexPositionX((Float_t) OriginVertexPositionX);
@@ -2185,24 +2184,19 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     // NOTE:: in QweakSimPrimaryGenerator.cc, the PrimaryEventNumber is increased 
     //   at the end of GeneratePrimaries. GeneratePrimaries is called before EnfOfEventAction.
     //   Therefore, even though, even events are used to generate physics events up to the 
-    //   scattering vertex Z in GeneratePrimaries, the permuation is flipped inside this
+    //   scattering vertex Z in GeneratePrimaries, the permutation is flipped inside this
     //   routine.
-    if(myUserInfo->GetPrimaryEventNumber()%2==0){ 
-      myUserInfo->ClearELoss();
-    }
+    myUserInfo->ClearELoss();
 
-//=======================================================================
-// Save the Ntuple periodically so we have some data in case of a crash
+
+
+    //=======================================================================
+    // Save the Ntuple periodically so we have some data in case of a crash
 
     G4int eventNumber = evt->GetEventID();
 
-//jpan@nuclear.uwinnipeg.ca
-// if (eventNumber%25000 == 1) analysis->AutoSaveRootNtuple();
-
     if (eventNumber%1000 == 1)
         analysis->AutoSaveRootNtuple();
-
-    if(ELOSS_DEBUG)    G4cout << "***** End of analysis for PrimaryEventNumber " << myUserInfo->GetPrimaryEventNumber() << " *****"<<G4endl;
 
 //=======================================================================
 
