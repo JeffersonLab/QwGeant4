@@ -35,8 +35,13 @@
 #define QweakSimUserPrimaryEvent_h
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
+// system includes
+#include <sstream>
+#include <fstream>
+
 // root includes
 #include "TObject.h"
+#include "TString.h"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 class QweakSimUserPrimaryEvent : public TObject
@@ -112,6 +117,8 @@ private:
   Int_t   ReactionType;         ///< The \ref reaction_type used for this event, e.g. elastic ep = 1, e+p -> e'+p+pi = 2
   Int_t   PDGcode;              ///< The \ref Lund_type of the primary particle, e.g. electron = 11
 
+  TString RandomSeed;           ///< The state of the random number generator when this event was generated
+
   // various energy losses at the target
   Float_t dEIonIn, dEIonOut, dEIonTot;
   Float_t dEBremIn, dEBremOut, dEBremTot;
@@ -132,6 +139,20 @@ public:
 
   void     StoreGlobalTime(Float_t gtime) { GlobalTime = gtime; }
   Float_t    GetGloablTime()  const {return GlobalTime;}
+
+  //-----------------
+  Int_t    WriteRandomSeed() const {
+    std::stringstream name;
+    name << "event" << PrimaryEventNumber << ".rndm";
+    std::ofstream file(name.str().c_str()); // why can't fstream take a string?
+    TString seed(RandomSeed); // copy
+    seed.Remove(0,RandomSeed.First('\n') + 1); // remove first line with garbage
+    file << seed; // write to file
+    return seed.Length();
+  }
+
+  void     StoreRandomSeed(TString seed) { RandomSeed = seed; }
+  TString    GetRandomSeed() const {return RandomSeed; }
 
   //-----------------
   void     StoreOriginVertexPositionX(Float_t vx)   { OriginVertexPositionX = vx; }

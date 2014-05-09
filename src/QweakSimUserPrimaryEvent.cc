@@ -40,6 +40,8 @@ QweakSimUserPrimaryEvent::~QweakSimUserPrimaryEvent()
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 void QweakSimUserPrimaryEvent::Initialize()
 {
+  RandomSeed                     = "";
+
   TrackID                        = 0;
   GlobalTime                     = 0.0;
 

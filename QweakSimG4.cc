@@ -94,6 +94,8 @@ int main(int argc,char** argv) {
   runManager->SetUserAction( new QweakSimEventAction(myQweakSimAnalysis, myQweakSimUserInformation) );
   runManager->SetUserAction( new QweakSimRunAction(myQweakSimAnalysis) );  
 
+  runManager->StoreRandomNumberStatusToG4Event(1);
+
   //Initialize G4 kernel
   runManager->Initialize();
   G4UIsession* session = 0;

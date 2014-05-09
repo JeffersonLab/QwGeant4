@@ -453,6 +453,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         //========================================
 
         //-------------------------------------------------------------------------------------------
+        G4String RandomSeed = evt->GetRandomNumberStatus();
         G4int    PrimaryEventNumber = myUserInfo->GetPrimaryEventNumber();
         G4int    ReactionType = myUserInfo->GetReactionType();
         G4int    PDGcode = myUserInfo->GetPDGcode();
@@ -506,6 +507,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         G4double EffectiveKinematicX     = myUserInfo->GetEffectiveKinematicX();
         G4double EffectiveKinematicW     = myUserInfo->GetEffectiveKinematicW();
 
+        analysis->fRootEvent->Primary.StoreRandomSeed(TString(RandomSeed));
         analysis->fRootEvent->Primary.StoreTrackID((Int_t) TrackID);
         analysis->fRootEvent->Primary.StoreGlobalTime((Float_t) GlobalTime);
         analysis->fRootEvent->Primary.StoreOriginVertexPositionX((Float_t) OriginVertexPositionX);
