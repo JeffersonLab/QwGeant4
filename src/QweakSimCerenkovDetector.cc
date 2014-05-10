@@ -2442,7 +2442,7 @@ void QweakSimCerenkovDetector::SetCerenkovDetectorCenterPositionInY(G4double yPo
 void QweakSimCerenkovDetector::SetCerenkovDetectorCenterPositionInZ(G4double zPos, G4int octant) {
     G4cout << G4endl << "###### Calling QweakSimCerenkovDetector::SetCerenkovCenterPositionInZ() " << G4endl << G4endl;
 
-    Position_CerenkovContainer_Z[octant] = zPos;
+    Position_CerenkovContainer_Z[octant] = zPos-Container_Center_Z;
 
     CerenkovGeometryPVUpdate();
 
