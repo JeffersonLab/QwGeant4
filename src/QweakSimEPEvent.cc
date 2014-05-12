@@ -338,7 +338,7 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
 
    G4double phase_space = (GetPhiAngle_Max()-GetPhiAngle_Min());
 
-   if      (GetIsotropy() == 0) phase_space *= (GetThetaAngle_Max()-GetThetaAngle_Min());
+   if      (GetIsotropy() == 0) phase_space *= (GetThetaAngle_Max()-GetThetaAngle_Min());// * sin(RelativeThetaAngle);
    else if (GetIsotropy() == 1) phase_space *= (cos(GetThetaAngle_Min())-cos(GetThetaAngle_Max()));
    else                         phase_space *= (cos(GetThetaAngle_Min())-cos(GetThetaAngle_Max()));
 
