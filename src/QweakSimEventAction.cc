@@ -2356,7 +2356,7 @@ void QweakSimEventAction::CalculateKinematicVariables()
   // These variables are only valid for events generated with the standard
   // generator (not the lookup table).
   G4double mp    = 938.2796*MeV;
-  G4double E_in  = myUserInfo->GetPreScatteringKineticEnergy();
+  G4double E_in  = myUserInfo->GetPreScatteringKineticEnergy() + 0.511*MeV;
   G4double E_out = myUserInfo->GetOriginVertexTotalEnergy();
   G4double theta = myUserInfo->GetOriginVertexThetaAngle();
 

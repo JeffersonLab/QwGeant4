@@ -555,7 +555,7 @@ G4double QweakSimEPEvent::Delta_Resonance(G4double E_in,
                                           G4double &Q2,
                                           G4double &E_out)
 {
-  G4double E_beam = 1165.0;    // maximum energy (beam energy) in MeV
+  G4double E_beam = myUserInfo->GetBeamEnergy();    // maximum energy (beam energy) in MeV
   G4double M_electron = 0.511;  // minimum energy (electron mass) in MeV
   
   // G4double Theta_Min = 1.745329E-4;
@@ -563,8 +563,8 @@ G4double QweakSimEPEvent::Delta_Resonance(G4double E_in,
       Theta = Theta_Min;
 
   // Generate flat energy distribution of outgoing electron      
-  E_out =  M_electron + G4UniformRand()*(E_beam - M_electron);
-
+  E_out =  G4UniformRand()*(E_beam - M_electron);
+  
   // TODO: total energy phase space should be reduced to improve the efficiency.
   G4double xsect = Sigma_EEPrime(E_in/1000.0, E_out/1000.0, Theta, Q2);  // ub/sr/GeV
   Q2 = Q2*1e6;  // convert to MeV^2 for Q2
