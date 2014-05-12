@@ -455,6 +455,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 
         //-------------------------------------------------------------------------------------------
         G4int    PrimaryEventNumber = myUserInfo->GetPrimaryEventNumber();
+        G4int    ReactionRegion = myUserInfo->GetReactionRegion();
         G4int    ReactionType = myUserInfo->GetReactionType();
         G4int    PDGcode = myUserInfo->GetPDGcode();
         G4int    TrackID = myUserInfo->GetTrackID();
@@ -537,6 +538,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         analysis->fRootEvent->Primary.StoreCrossSectionRadElasticPeak   ((Float_t) CrossSectionRadElasticPeak);
 	analysis->fRootEvent->Primary.StoreAsymmetry((Float_t) Asymmetry);
         analysis->fRootEvent->Primary.StorePrimaryEventNumber((Int_t) PrimaryEventNumber);
+        analysis->fRootEvent->Primary.StoreReactionRegion((Int_t) ReactionRegion);
         analysis->fRootEvent->Primary.StoreReactionType((Int_t) ReactionType);
         analysis->fRootEvent->Primary.StorePDGcode((Int_t) PDGcode);
         analysis->fRootEvent->Primary.StoreNumberOfEventToBeProcessed((Int_t) NumberOfEventToBeProcessed);

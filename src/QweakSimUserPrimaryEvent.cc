@@ -91,6 +91,7 @@ void QweakSimUserPrimaryEvent::Initialize()
   PDGcode                        = 0;
 
   ReactionType                   = 1;   // assume elastic as default
+  ReactionRegion                 = 1;   // assume LH2 cell interior by default
 
   // clear Eloss variables
   dEIonIn= dEIonOut=dEIonTot=0;

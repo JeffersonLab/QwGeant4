@@ -114,6 +114,7 @@ private:
 
   Int_t   PrimaryEventNumber;   ///< The primary event number (increments by two due to target energy loss simulation)
 
+  Int_t   ReactionRegion;       ///< The \ref reaction_region used for this event, e.g. LH2 interior = 1, US window = 2, DS window = 3
   Int_t   ReactionType;         ///< The \ref reaction_type used for this event, e.g. elastic ep = 1, e+p -> e'+p+pi = 2
   Int_t   PDGcode;              ///< The \ref Lund_type of the primary particle, e.g. electron = 11
 
@@ -299,6 +300,9 @@ public:
 
   void     StorePrimaryEventNumber(Int_t pen)    { PrimaryEventNumber = pen; }
   Int_t      GetPrimaryEventNumber() const {return PrimaryEventNumber; }
+
+  void     StoreReactionRegion(Int_t rt)  { ReactionRegion = rt; }
+  Int_t      GetReactionRegion() const {return ReactionRegion; }
 
   void     StoreReactionType(Int_t rt)  { ReactionType = rt; }
   Int_t      GetReactionType() const {return ReactionType; }

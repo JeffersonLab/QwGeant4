@@ -343,6 +343,8 @@ private:
   G4double    GetCrossSectionRadElasticPeak() const {return CrossSectionRadElasticPeak; }
   //-----------------
 
+  void     StoreReactionRegion(G4int rt)  { ReactionRegion = rt; }
+  G4int      GetReactionRegion() const {return ReactionRegion; }
 
   void     StoreReactionType(G4int rt)  { ReactionType = rt; }
   G4int      GetReactionType() const {return ReactionType; }

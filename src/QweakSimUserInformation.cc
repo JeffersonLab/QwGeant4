@@ -93,6 +93,7 @@ void QweakSimUserInformation::Initialize()
   //TargetLuminosityDSCDummy;
 
   PrimaryEventNumber = 0;
+  ReactionRegion = 0;
   ReactionType = 0;         // assign a number to which kind of reaction,e.g. 1 = elastic ep,
   PDGcode = 0;              // particle data code/number for the primary particle, e.g. 3=electron
   TrackID = 0;
