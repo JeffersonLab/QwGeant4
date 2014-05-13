@@ -344,6 +344,9 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
 
    // For ReactionTypes that are differential in E'
    if (ReactionType == 7 || ReactionType == 88) phase_space *= (GetEPrime_Max()-GetEPrime_Min())/1000.0;  // units [Sr*GeV]
+   // Delta_Resonance (reac 5) and Quasi_Elastic_Bosted (reac 8) are also
+   // differential in Eprime, but the xsect returned by these functions 
+   // already includes the additional phase space factor. - K.Mesick 13/May/14
 
 
    //  If events are being thrown in all octants, this increases the phase space accordingly
@@ -563,6 +566,8 @@ G4double QweakSimEPEvent::Delta_Resonance(G4double E_in,
       Theta = Theta_Min;
 
   // Generate flat energy distribution of outgoing electron      
+  // This should have +M_electron, but this causes
+  // errors for particles with negative energy?? - K.Mesick
   E_out =  G4UniformRand()*(E_beam - M_electron);
   
   // TODO: total energy phase space should be reduced to improve the efficiency.
@@ -1628,7 +1633,7 @@ G4double QweakSimEPEvent::Quasi_Elastic_Bosted(G4double E_in, //MeV
   W1qe = F1qe/Mp;
   W2qe = F2qe/Nu;
 
-  xsect = MOTT*(W2qe + 2.0*T2THE*W1qe);
+  xsect = MOTT*(W2qe + 2.0*T2THE*W1qe)*(Ein - M_electron);
   //  G4cout << "F1, F2, W1, W2: " << F1qe << ", " << F2qe << ", " << W1qe << ", " << W2qe << G4endl;
 
   // In some cases a negative F2 is returned giving a negative cross section
@@ -1636,7 +1641,7 @@ G4double QweakSimEPEvent::Quasi_Elastic_Bosted(G4double E_in, //MeV
 
   //  G4cout << "xsect: " << xsect << G4endl;
 
-  fWeightN = xsect*sin(Theta)*(Ein - M_electron);
+  fWeightN = xsect*sin(Theta);
 
   E_out = Eout*1000.;		// Convert back to MeV before leaving
   Q2 = Q2*1.0E6;		// Seems like this needs to be returned in MeV**2
