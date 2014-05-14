@@ -4,6 +4,7 @@ use warnings;
 
 use Getopt::Long;
 use Data::Dumper;
+use Cwd qw();
 
 ###############################################################################
 ##Quick program to submit a series of simulations to 
@@ -15,6 +16,7 @@ use Data::Dumper;
 
 #declaration of global variables, arrays, and hashes
 my $user = $ENV{LOGNAME} || $ENV{USER} || getpwuid($<);
+my $QwGeantDir = Cwd::cwd(); 
 my $original_mac;
 my $jobname;
 my $mac_content;
@@ -27,13 +29,14 @@ sub print_header;   #prints macfile header
 sub print_footer;   #prints macfile footer
 sub print_xml;      #prints xml file
 
-my ($help,$dryrun,$outdir);
+my ($help,$dryrun,$rootdir,$outdir);
 GetOptions(
  "help|h|?"           =>  \$help,
  "Nevents|events=i"   =>  \$Nevents,
  "Njobs|jobs=i"       =>  \$Njobs,
  "dry-run|dry|test"   =>  \$dryrun,
- "out|o=s"    	      =>  \$outdir,
+ "root-dir|r=s"	      =>  \$rootdir,
+ "out|o=s"	      =>  \$outdir
 );
 
 #die helpscreen unless $#ARGV!=0;
@@ -59,7 +62,7 @@ if ($original_mac =~ m/(.*)\.mac/) {
 }
 
 #open and read-in provided mac file
-open ORIG, "<", $original_mac or die "cant open your .mac file: $!\n";
+open ORIG, "<", ("macros/$original_mac" or $original_mac) or die "cant open your .mac file: $!\n";
 {
   local $/;               #restrict slurp to local block
   $mac_content = <ORIG>;  #SLUUUUUURP
@@ -106,12 +109,14 @@ my $helpstring = <<EOF;
 Program designed to submit multiple jobs to the Auger batchfarm.
 Provide this script with a map file, the number of events to
 generate, and the number of files to generate, and it will do
-the rest.
+the rest. Please only execute this file in the current directory.
+Macros may be located in either the current directory or the macros/
+sub-directory.
 
 Calling syntax:
-  g4jsub.pl [options]
+  perl g4jsub.pl [options]
 Example:
-  g4sub.pl sample.mac --events 20000 --jobs 5 -o "/work/username/directory"
+  perl g4sub.pl sample.mac --events 20000 --jobs 5 -r "/work/username/directory" 
 
 Options include:
   --help       displays this helpful message
@@ -119,8 +124,10 @@ Options include:
                 default is 10k
   --jobs       number of jobs to submit
                 default is 10
-  --outfile    provide an output file location
+  --root-dir   provide a ROOTfile location
                 default is /volatile/hallc/qweak/USERNAME
+  --out-dir    location for .err and .out files to go
+                default is /user/path/QwGeant4/jsub/output
   --dry-run    do a dry run: create all the files
                 but don't submit any.
                 Useful for testing.
@@ -147,17 +154,17 @@ sub print_footer {
   my $seed1 = int ( rand(1e10) );
   my $seed2 = int ( rand(1e9 ) );
 
-  my $outfile = "/volatile/hallc/qweak/$user/$basename\.root";
+  my $rootfile = "/volatile/hallc/qweak/$user/$basename\.root";
 
-  if ( $outdir ) {
-    $outfile = "$outdir/$basename.root";
+  if ( $rootdir ) {
+    $rootfile = "$rootdir/$basename.root";
   }
 
   my $footer =
   "
 # load/execute this macro
 /random/setSeeds $seed1 $seed2
-/Analysis/RootFileName $outfile
+/Analysis/RootFileName $rootfile
 /run/beamOn $Nevents
 ";
 
@@ -167,6 +174,14 @@ return;
 
 sub print_xml {
   my ($xml,$basename) = @_;
+
+  my $outfile = "$QwGeantDir/jsub/output/$basename.out";
+  my $errfile = "$QwGeantDir/jsub/output/$basename.err";
+
+  if( $outdir ) {
+    $outfile = "$outdir/$basename.out";
+    $errfile = "$outdir/$basename.err";
+  }
 
 my $xmlfile =
 "
@@ -178,15 +193,15 @@ my $xmlfile =
   <OS name=\"centos62\"/>
   <Command><![CDATA[
 source /home/$user/.login
-cd /u/home/$user/qweak/QwGeant4/
+cd $QwGeantDir
 build/QweakSimG4 macros/jobs/$basename\.mac
   ]]></Command>
 
-  <Memory space=\"1200\" unit=\"MB\"/>
+  <Memory space=\"2000\" unit=\"MB\"/>
 
   <Job>
-    <Stdout dest=\"/u/home/$user/qweak/QwGeant4/jsub/output/$basename\.out\"/>
-    <Stderr dest=\"/u/home/$user/qweak/QwGeant4/jsub/output/$basename\.err\"/>
+    <Stdout dest=\"$outfile\"/>
+    <Stderr dest=\"$errfile\"/>
   </Job>
 
 </Request>
