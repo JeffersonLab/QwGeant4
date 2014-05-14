@@ -231,10 +231,24 @@ class QweakSimEPEvent {
                                 G4double &Q2,
                                 G4double &E_out);
 	
-  G4double Quasi_Elastic_Bosted(G4double E_in, G4double Theta, G4int Zin, G4int Ain,
-                                G4double &fWeightN, G4double &Q2, G4double &E_out);
-  void F1F2QE09(G4int &Z, G4int &A, G4double &QSQ,
-                G4double &wsq, G4double &F1, G4double &F2);
+  G4double Quasi_Elastic_Bosted(G4double E_in, G4double Theta, G4int Zin, 
+                                G4int Ain, G4double &fWeightN, G4double &Q2, G4double &E_out);
+  G4double NuclearInelastic_Bosted(G4double E_in, G4double Theta, 
+                                   G4int Zin, G4int Ain, 
+                                   G4double &fWeightN, G4double &Q2,
+                                   G4double &E_out);
+  void F1F2QE09(G4int Z, G4int A, G4double QSQ,
+                G4double wsq, G4double &F1, G4double &F2);
+  void F1F2IN09(G4int Z, G4int A, G4double QSQ,
+                G4double wsq, G4double &F1, G4double &F2);
+  
+  void christy507(G4double wsq, G4double Q2, G4double &F1,
+                  G4double &R, G4double &sigt, G4double &sigl);
+  void resmodd(G4double w2, G4double q2, G4double xval[50], G4double &sig);
+  G4double resmod507_v2(G4double sf,G4double w2, G4double q2,
+                        G4double xval[50]);
+  G4double MEC2009(G4int a, G4double q2,G4double w2);
+  G4double fitemc(G4double X, G4int A);
 
   G4double GetAsymmetry_EP(G4double theta, G4double energy);
   G4double GetAsymmetry_EN(G4double theta, G4double energy);
