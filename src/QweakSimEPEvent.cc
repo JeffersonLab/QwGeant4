@@ -571,10 +571,8 @@ G4double QweakSimEPEvent::Delta_Resonance(G4double E_in,
   if (Theta<Theta_Min)
       Theta = Theta_Min;
 
-  // Generate flat energy distribution of outgoing electron      
-  // This should have +M_electron, but this causes
-  // errors for particles with negative energy?? - K.Mesick
-  E_out =  G4UniformRand()*(E_beam - M_electron);
+  // Generate flat energy distribution of outgoing electron
+  E_out =  M_electron + G4UniformRand()*(E_beam - M_electron);
   
   // TODO: total energy phase space should be reduced to improve the efficiency.
   G4double xsect = Sigma_EEPrime(E_in/1000.0, E_out/1000.0, Theta, Q2);  // ub/sr/GeV
@@ -587,7 +585,7 @@ G4double QweakSimEPEvent::Delta_Resonance(G4double E_in,
  
   if(xsect == 0)  // if E > E_max, reject the event
   {
-     E_out = 0.0;
+     E_out = M_electron;
      Q2 = 0.0;
   }
   
