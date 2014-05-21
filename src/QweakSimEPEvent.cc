@@ -35,6 +35,7 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 QweakSimEPEvent::QweakSimEPEvent( QweakSimUserInformation* myUI)
+: fLookupTable(0)
 {
   G4cout << "###### Calling QweakSimEPEvent::QweakSimEPEvent () " << G4endl;
 

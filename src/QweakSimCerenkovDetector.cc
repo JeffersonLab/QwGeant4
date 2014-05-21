@@ -125,8 +125,6 @@ QweakSimCerenkovDetector::QweakSimCerenkovDetector(QweakSimUserInformation *user
     Default_Position_CerenkovContainer_X =      0*cm;
     Default_Position_CerenkovContainer_Y = 335.17*cm;
     Default_Position_CerenkovContainer_Z = 577.88*cm-Container_Center_Z;
-    
-    SetNumberOfDetectors(8);
 
     LightGuide_FullLength      =   18.00*cm;
     LightGuide_FullWidth1      =   18.00*cm;
@@ -169,6 +167,8 @@ QweakSimCerenkovDetector::QweakSimCerenkovDetector(QweakSimUserInformation *user
 
     Tilting_Angle   =  0.0*degree;
 
+    NumberOfCerenkovDetectors = 8;
+    SetNumberOfDetectors(8); // needs to be at the end, updates geometry
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

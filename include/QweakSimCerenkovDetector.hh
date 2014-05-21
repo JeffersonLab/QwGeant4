@@ -21,7 +21,7 @@ class QweakSimCerenkovDetector
 {
 public:
   QweakSimCerenkovDetector(QweakSimUserInformation*);
-  ~QweakSimCerenkovDetector();
+  virtual ~QweakSimCerenkovDetector();
 
   void SetMotherVolume(G4VPhysicalVolume* mv) {theMotherPV = mv;}
   void PlacePVCerenkovMasterContainer();
