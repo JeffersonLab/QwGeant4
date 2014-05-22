@@ -15,7 +15,7 @@
 /run/initialize
 #
 /gun/particle proton
-/gun/energy 100. MeV
+/gun/energy 10. MeV
 /testhadr/histo/fileName  p_al
 /testhadr/verbose 0
 /process/eLoss/verbose 0
@@ -29,6 +29,12 @@
 /run/beamOn 0
 /testhadr/targetElm  C
 /testhadr/histo/fileName  p_c
+/run/beamOn 0
+/testhadr/targetElm  O
+/testhadr/histo/fileName  p_o
+/run/beamOn 0
+/testhadr/targetElm  N
+/testhadr/histo/fileName  p_n
 /run/beamOn 0
 /testhadr/targetElm  H
 /testhadr/histo/fileName  p_h
@@ -45,6 +51,12 @@
 /run/beamOn 0
 /testhadr/targetElm  C
 /testhadr/histo/fileName  n_c
+/run/beamOn 0
+/testhadr/targetElm  O
+/testhadr/histo/fileName  n_o
+/run/beamOn 0
+/testhadr/targetElm  N
+/testhadr/histo/fileName  n_n
 /run/beamOn 0
 /testhadr/verbose 0
 /testhadr/targetElm  Al
