@@ -1131,7 +1131,7 @@ void QweakSimEPEvent::CreateLookupTable()
     filename += "_";
     filename += (Int_t)energy;
     filename += "MeV";
-    if (ReactionRegion == 1 && energy == 1160*MeV) filename += "_v2";
+    if (ReactionRegion == 1 && energy != 3350*MeV) filename += "_v2";
     filename += ".dat";
 
     TString filepath = "./radiative_lookup_tables/";
