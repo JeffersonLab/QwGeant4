@@ -1535,7 +1535,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 rParticleName = TString(aHit->GetParticleName());
                 rParticleType = (Int_t) aHit->GetParticleType();
                 
-                //--- get PMTOnly deposited energy
+                //--- get TriggerScintillator deposited energy
                 TSDepositedEnergy = (Float_t) aHit->GetHitDepositedEnergy() / MeV;				
                 TSTotalDepositedEnergy += TSDepositedEnergy;
 

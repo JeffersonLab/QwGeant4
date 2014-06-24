@@ -54,11 +54,7 @@ G4bool QweakSimTriggerScintillator_DetectorSD::ProcessHits(G4Step* aStep, G4Touc
 {
 //   G4cout << G4endl << "###### Calling QweakSimTriggerScintillator_DetectorSD::ProcessHits() " << G4endl << G4endl; 
 
-  // Dismiss Photons
   G4Track *track = aStep->GetTrack();    
-  G4double  charge = track->GetDefinition()->GetPDGCharge();
-  if (fabs(charge)<0.1) 
-    return false;
   G4String  particlename = track->GetDefinition()->GetParticleName();
   G4int     particletype = track->GetDefinition()->GetPDGEncoding();
 
