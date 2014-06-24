@@ -1,51 +1,7 @@
 
-//=============================================================================
-// 
-//   ---------------------------
-//  | Doxygen File Information |
-//  ---------------------------
-/**
- 
-   \file QweakSimTriggerScintillator_DetectorHit.hh
-
-   $Revision: 1.2 $	
-   $Date: 2005/12/27 19:27:53 $
-
-   \author Klaus Hans Grimm
-     
-*/
-//=============================================================================
-// 
-//=============================================================================
-// 
-//   ---------------------------
-//  | Doxygen Class Information |
-//  ---------------------------
-/**
-   \class QweakSimTriggerScintillator_DetectorHit
-    
-   \brief Handling of a Hit of the Trigger Scintillator detector
-
-   Placeholder for a long explaination
-    
- */
-//=============================================================================
-//
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2005/12/27 19:27:53 $
-//  CVS/RCS Revision: $Revision: 1.2 $
-//  Status:           $State: Exp $
-// 
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-// 
-//=============================================================================
+// QweakSimTriggerScintillator_DetectorHit.hh
+// Klaus Grimm
+// 2005-12-27 
   
 #ifndef QweakSimTriggerScintillator_DetectorHit_h
 #define QweakSimTriggerScintillator_DetectorHit_h 
@@ -107,8 +63,13 @@ private:
   G4double      crossSection;
   G4double      crossSectionWeight;
 
+  G4double	depositedEnergy;
 
 public:
+
+  inline void   StoreDepositedEnergy(G4double dpeg)    {depositedEnergy = dpeg;}
+  inline void     AddDepositedEnergy(G4double dpeg)    {depositedEnergy += dpeg;}
+  inline G4double GetHitDepositedEnergy() const       {return depositedEnergy;}
   
   inline void   StoreTrackID(G4int tid)    { TrackID = tid; }
   inline G4int GetTrackID() const { return TrackID; }

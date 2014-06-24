@@ -1,36 +1,6 @@
-//=============================================================================
-// 
-//   ---------------------------
-//  | Doxygen File Information |
-//  ---------------------------
-// 
-/**
- 
-   \file QweakSimTriggerScintillator_DetectorHit.cc
-
-   $Revision: 1.2 $	
-   $Date: 2005/12/27 19:15:59 $
-
-   \author Klaus Hans Grimm   
-
-*/
-//=============================================================================
-
-//=============================================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//  Last Update:      $Author: grimm $
-//  Update Date:      $Date: 2005/12/27 19:15:59 $
-//  CVS/RCS Revision: $Revision: 1.2 $
-//  Status:           $State: Exp $
-// 
-// ===================================
-//  CVS Revision Log at end of file !!
-// ===================================
-//
-//============================================================================
+// QweakSimTriggerScintillator_DetectorHit.cc
+// Klaus Hans Grimm   
+// 2005-12-27     
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -60,6 +30,8 @@ QweakSimTriggerScintillator_DetectorHit::QweakSimTriggerScintillator_DetectorHit
   primaryQ2                       = 0.;
   crossSection                    = 0.;
   crossSectionWeight              = 0.;
+  
+  depositedEnergy		  = 0.;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -102,6 +74,8 @@ QweakSimTriggerScintillator_DetectorHit::QweakSimTriggerScintillator_DetectorHit
   currentMomentumDirection = right.currentMomentumDirection;
   currentKineticEnergy     = right.currentKineticEnergy;
   currentTotalEnergy       = right.currentTotalEnergy;
+  
+  depositedEnergy          = right.depositedEnergy;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -129,6 +103,8 @@ const QweakSimTriggerScintillator_DetectorHit& QweakSimTriggerScintillator_Detec
   currentMomentumDirection = right.currentMomentumDirection;
   currentKineticEnergy     = right.currentKineticEnergy;
   currentTotalEnergy       = right.currentTotalEnergy;
+  
+  depositedEnergy          = right.depositedEnergy;
 
   return *this;
 }
@@ -185,15 +161,4 @@ void QweakSimTriggerScintillator_DetectorHit::Print()
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
  
-//=======================================================
-//   -----------------------
-//  | CVS File Information |
-//  -----------------------
-// 
-//      $Revisions$  
-//      $Log: QweakSimTriggerScintillator_DetectorHit.cc,v $
-//      Revision 1.2  2005/12/27 19:15:59  grimm
-//      - Redesign of Doxygen header containing CVS info like revision and date
-//      - Added CVS revision log at the end of file
-//
-//
+

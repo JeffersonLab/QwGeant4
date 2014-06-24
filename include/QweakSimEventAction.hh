@@ -218,6 +218,10 @@ private:
   //--- LeadGlass
   Float_t  rTrackID;
   
+  //--- TriggerScintillator
+  Float_t TSDepositedEnergy;
+  Float_t TSTotalDepositedEnergy;
+  
   //  PMTOnlyPMT
   G4int PMTOnlyPMTHasBeenHit;
   G4int PMTOnlyPMTHits;

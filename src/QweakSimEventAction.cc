@@ -606,6 +606,9 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         
         // Store Number of Hits for: PMTOnly PMT Detector
         analysis->fRootEvent->PMTOnly.PMT.StoreDetectorNbOfHits(n_hitPMTOnlyPMT);
+        
+        // Store Number of Hits for: Trigger Scintillator
+        analysis->fRootEvent->TriggerScintillator.Detector.StoreDetectorNbOfHits(n_hitTriggerScintillator);
 
         //==========================================================================================================
 
@@ -1531,46 +1534,10 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 rGlobalTime = (Float_t) aHit->GetGlobalTime() / ns;
                 rParticleName = TString(aHit->GetParticleName());
                 rParticleType = (Int_t) aHit->GetParticleType();
-
-                // 	      edgeEvent = myUserInfo->GetEdgeEventDetected();
-
-//jpan@nuclear.uwinnipeg.ca
-                /*
-                	// mark TriggerScintillator detector as been hit
-                	analysis->fRootEvent->TriggerScintillator.Detector[0].StoreDetectorHasBeenHit(5);
-
-                	// store global time of hit
-                	analysis->fRootEvent->TriggerScintillator.Detector[0].StoreGlobalTimeOfHit(rGlobalTime);
-
-                	// store origin vertex info
-                	analysis->fRootEvent->TriggerScintillator.Detector[0].StoreOriginVertexPositionX(rOriginVertexPositionX);
-                	analysis->fRootEvent->TriggerScintillator.Detector[0].StoreOriginVertexPositionY(rOriginVertexPositionY);
-                	analysis->fRootEvent->TriggerScintillator.Detector[0].StoreOriginVertexPositionZ(rOriginVertexPositionZ);
-
-                	analysis->fRootEvent->TriggerScintillator.Detector[0].StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
-                	analysis->fRootEvent->TriggerScintillator.Detector[0].StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
-
-                	analysis->fRootEvent->TriggerScintillator.Detector[0].StorePrimaryQ2(rPrimaryQ2);
-                	analysis->fRootEvent->TriggerScintillator.Detector[0].StoreCrossSectionWeight(rCrossSectionWeight);
-
-                	analysis->fRootEvent->TriggerScintillator.Detector[0].StoreDetectorLocalPositionX(rLocalPositionX);
-                	analysis->fRootEvent->TriggerScintillator.Detector[0].StoreDetectorLocalPositionY(rLocalPositionY);
-                	analysis->fRootEvent->TriggerScintillator.Detector[0].StoreDetectorLocalPositionZ(rLocalPositionZ);
-
-                //         analysis->fRootEvent->TriggerScintillator.Detector[0].StoreDetectorLocalExitPositionX(rLocalExitPositionX);
-                //         analysis->fRootEvent->TriggerScintillator.Detector[0].StoreDetectorLocalExitPositionY(rLocalExitPositionY);
-                //         analysis->fRootEvent->TriggerScintillator.Detector[0].StoreDetectorLocalExitPositionZ(rLocalExitPositionZ);
-
-                	analysis->fRootEvent->TriggerScintillator.Detector[0].StoreDetectorGlobalPositionX(rGlobalPositionX);
-                	analysis->fRootEvent->TriggerScintillator.Detector[0].StoreDetectorGlobalPositionY(rGlobalPositionY);
-                	analysis->fRootEvent->TriggerScintillator.Detector[0].StoreDetectorGlobalPositionZ(rGlobalPositionZ);
-
-                	analysis->fRootEvent->TriggerScintillator.Detector[0].StoreDetectorLocalVertexTotalEnergy((Float_t ) aHit->GetTotalEnergy()/MeV);
-
-                	// store global track angles Phi and Theta
-                	analysis->fRootEvent->TriggerScintillator.Detector[0].StoreGlobalPhiAngle(rGlobalPhiAngle);
-                	analysis->fRootEvent->TriggerScintillator.Detector[0].StoreGlobalThetaAngle(rGlobalThetaAngle);
-                */
+                
+                //--- get PMTOnly deposited energy
+                TSDepositedEnergy = (Float_t) aHit->GetHitDepositedEnergy() / MeV;				
+                TSTotalDepositedEnergy += TSDepositedEnergy;
 
                 // mark TriggerScintillator detector as been hit
                 analysis->fRootEvent->TriggerScintillator.Detector.StoreDetectorHasBeenHit(5);
@@ -1591,17 +1558,12 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 analysis->fRootEvent->TriggerScintillator.Detector.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
                 analysis->fRootEvent->TriggerScintillator.Detector.StoreOriginVertexPhiAngle( rOriginVertexPhiAngle );
                 analysis->fRootEvent->TriggerScintillator.Detector.StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
-
                 analysis->fRootEvent->TriggerScintillator.Detector.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
                 analysis->fRootEvent->TriggerScintillator.Detector.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
 
                 analysis->fRootEvent->TriggerScintillator.Detector.StoreDetectorLocalPositionX(rLocalPositionX);
                 analysis->fRootEvent->TriggerScintillator.Detector.StoreDetectorLocalPositionY(rLocalPositionY);
                 analysis->fRootEvent->TriggerScintillator.Detector.StoreDetectorLocalPositionZ(rLocalPositionZ);
-
-//         analysis->fRootEvent->TriggerScintillator.Detector.StoreDetectorLocalExitPositionX(rLocalExitPositionX);
-//         analysis->fRootEvent->TriggerScintillator.Detector.StoreDetectorLocalExitPositionY(rLocalExitPositionY);
-//         analysis->fRootEvent->TriggerScintillator.Detector.StoreDetectorLocalExitPositionZ(rLocalExitPositionZ);
 
                 analysis->fRootEvent->TriggerScintillator.Detector.StoreDetectorGlobalPositionX(rGlobalPositionX);
                 analysis->fRootEvent->TriggerScintillator.Detector.StoreDetectorGlobalPositionY(rGlobalPositionY);
@@ -1612,9 +1574,16 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 // store global track angles Phi and Theta
                 analysis->fRootEvent->TriggerScintillator.Detector.StoreGlobalPhiAngle(rGlobalPhiAngle);
                 analysis->fRootEvent->TriggerScintillator.Detector.StoreGlobalThetaAngle(rGlobalThetaAngle);
-                //--------------------------------------------------------------------------------------------
+                
+                // Store Energy deposited per hit
+                analysis->fRootEvent->TriggerScintillator.Detector.StoreDepositedEnergy(TSDepositedEnergy);   
 
             } // end  for(int i1=0;i1<n_hitTriggerScintillator;i1++)
+            
+            // Store total deposited energy
+            analysis->fRootEvent->TriggerScintillator.Detector.StoreTotalEnergyDeposit(TSTotalDepositedEnergy);
+            TSTotalDepositedEnergy = 0.0;
+
         } // end    if (n_hitTriggerScintillator >0)
 
 
@@ -2138,7 +2107,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
             analysis->fRootEvent->PMTOnly.Detector.StoreTotalEnergyDeposit(rTotalDepositedEnergy);
             rTotalDepositedEnergy = 0.0;
             
-        } // end    if (n_hitPMTOnly >0)	
+        } // end    if (n_hitPMTOnly >0)
 
         if (n_hitPMTOnlyPMT >0) {	//--- loop over hits  
             
@@ -2258,7 +2227,11 @@ void QweakSimEventAction::Initialize() {
     rPrimaryEventNumber = 0;
 
     rGlobalTime = 0.;
-	
+
+    //--- TriggerScintillator
+    TSDepositedEnergy = 0.;
+    TSTotalDepositedEnergy = 0.;
+    
     //--- LeadGlass
     rTrackID = 0.;
     

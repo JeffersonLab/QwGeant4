@@ -129,7 +129,10 @@ private:
   std::vector <TString> ParticleName; ///< Name of the particle that caused this hit
   std::vector <Int_t>   ParticleType; ///< \ref Lund_type of the particle that caused this hit (until r4757 this used the \ref geant3_type of the particle)
   //@}
-  
+
+  std::vector<Float_t> DepositedEnergy;		//--- deposited energy in one step
+  Float_t TotalDepositedEnergy;			//--- event total
+    
 public:
   
   // Constructor
@@ -225,6 +228,17 @@ public:
   void     StoreGlobalPhiAngle(Float_t phi)  { GlobalPhiAngle = phi; }
   Float_t    GetGlobalPhiAngle() const {return GlobalPhiAngle;}
 
+
+    //--- deposited energy in TS in one step
+    void   StoreDepositedEnergy(Float_t dpeg)    { 
+      DepositedEnergy.push_back(dpeg); 
+      TotalDepositedEnergy += dpeg;
+    }
+    std::vector<Float_t>  GetDepositedEnergy() const      {return DepositedEnergy;}
+	
+    //--- total deposited energy in TS in one event
+    void     StoreTotalEnergyDeposit(Float_t eng)   { TotalDepositedEnergy = eng; }
+    Float_t    GetTotalEnergyDeposit()   const {return TotalDepositedEnergy;}
 
   void AddSecondaryElectronEvent(Float_t XO, Float_t YO, Float_t ZO,
       Float_t XM, Float_t YM, Float_t ZM,
