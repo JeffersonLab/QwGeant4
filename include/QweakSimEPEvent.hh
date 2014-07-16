@@ -158,6 +158,11 @@ class QweakSimEPEvent {
   void SetBeamEnergy(G4double energy = 1.160*GeV); 
   G4double GetBeamEnergy();
   //-----------------------------------------------------------------
+
+  void SetElasticPeakDeltaE(G4double energy = 15*MeV) { if (energy < 15*MeV) { energy = 15*MeV; G4cout << "***** Value Out of Range: ElasticPeakDeltaE set to : 15 MeV *****" << G4endl; } ElasticPeakDeltaE = energy; } ; 
+  G4double GetElasticPeakDeltaE() { return ElasticPeakDeltaE; } ;
+
+  //-----------------------------------------------------------------
   void  SetReactionType(G4int rt) { ReactionType = rt; TypeSetting = rt;};
   G4int GetReactionType() {return ReactionType; };
 

@@ -140,6 +140,13 @@ QweakSimEPEventMessenger::QweakSimEPEventMessenger(QweakSimEPEvent* pEPEvent)
   //SetBeamEnergyCmd->SetRange("BeamEnergy>0");
   SetBeamEnergyCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
+  SetElasticPeakDeltaECmd = new G4UIcmdWithADoubleAndUnit("/EventGen/SetElasticPeakDeltaE",this);
+  SetElasticPeakDeltaECmd->SetGuidance("Set elastic peak delta E range (Used in ReactionType 7).");
+  SetElasticPeakDeltaECmd->SetParameterName("delta_E",true);
+  SetElasticPeakDeltaECmd->SetUnitCategory("Energy");
+  SetElasticPeakDeltaECmd->SetDefaultValue(15*MeV);
+  SetElasticPeakDeltaECmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+
   G4cout << "###### Leaving QweakSimEPEventMessenger::QweakSimEPEventMessenger() " << G4endl;
 }
 
@@ -161,6 +168,7 @@ QweakSimEPEventMessenger::~QweakSimEPEventMessenger()
   delete EPrimeMinLimitCmd;
   delete EPrimeMaxLimitCmd;
   delete SetBeamEnergyCmd;
+  delete SetElasticPeakDeltaECmd;
   delete EventGenDir;
 
   G4cout << "###### Leaving QweakSimEPEventMessenger::~QweakSimEPEventMessenger() " << G4endl;
@@ -236,6 +244,12 @@ void QweakSimEPEventMessenger::SetNewValue(G4UIcommand* command, G4String newVal
     { 
       G4cout << "% % ===> Changing Beam Energy to: "<<newValue<< G4endl;
       pQweakSimEPEvent->SetBeamEnergy(SetBeamEnergyCmd->GetNewDoubleValue(newValue)); 
+    }
+
+  if( command == SetElasticPeakDeltaECmd )
+    { 
+      G4cout << "% % ===> Changing Elastic Peak Energy Range to: "<<newValue<< G4endl;
+      pQweakSimEPEvent->SetElasticPeakDeltaE(SetElasticPeakDeltaECmd->GetNewDoubleValue(newValue)); 
     }
 
 }

@@ -63,6 +63,7 @@ private:
   G4UIcmdWithADoubleAndUnit* EPrimeMinLimitCmd;
   G4UIcmdWithADoubleAndUnit* EPrimeMaxLimitCmd;
   G4UIcmdWithADoubleAndUnit* SetBeamEnergyCmd;
+  G4UIcmdWithADoubleAndUnit* SetElasticPeakDeltaECmd;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
