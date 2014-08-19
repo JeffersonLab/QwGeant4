@@ -29,6 +29,7 @@ private:
   G4int    hitID;
   G4bool   hitValid;
   G4double currentPhotonEnergy;
+  G4double currentHitTime;
   
   public:
 
@@ -46,6 +47,9 @@ private:
 
   inline void   StorePhotonEnergy(G4double eng) { currentPhotonEnergy  = eng; }
   inline G4double GetPhotonEnergy() const { return currentPhotonEnergy; }
+
+  inline void StoreHitTime(G4double time) { currentHitTime = time; }
+  inline G4double GetHitTime() const { return currentHitTime; }
 
  };
 

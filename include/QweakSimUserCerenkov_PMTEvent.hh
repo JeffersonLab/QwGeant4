@@ -47,6 +47,10 @@ class QweakSimUserCerenkov_PMTEvent : public TObject
 
     std::vector<Int_t> PMTHasBeenHit;          ///< Has this PMT been hit? 0 = no, 5 = yes
 
+    std::vector<Float_t> PMTTimeOfHits;
+    std::vector<Float_t> PMTEnergyOfHits;
+    std::vector<Int_t> PMTOctantOfHits;
+
     std::vector<Int_t> PMTLeftNbOfHits;        ///< Number of hits in left PMTs
     std::vector<Int_t> PMTRightNbOfHits;       ///< Number of hits in right PMTs
     std::vector<Int_t> PMTTotalNbOfHits;       ///< Number of hits in both PMTs
@@ -106,6 +110,16 @@ class QweakSimUserCerenkov_PMTEvent : public TObject
     //-----------------
     void StorePMTHasBeenHit(std::vector<Int_t> np)      { PMTHasBeenHit = np; }
     std::vector<Int_t> GetPMTHasBeenHit() const  { return PMTHasBeenHit;}
+
+    //-----------------
+    void StorePMTTimeOfHits(std::vector<Float_t> time)   { PMTTimeOfHits = time; }
+    std::vector<Float_t> GetPMTTimeOfHits() const  {return PMTTimeOfHits;}
+    //-----------------
+    void StorePMTEnergyOfHits(std::vector<Float_t> time)   { PMTEnergyOfHits = time; }
+    std::vector<Float_t> GetPMTEnergyOfHits() const  {return PMTEnergyOfHits;}
+    //-----------------
+    void StorePMTOctantOfHits(std::vector<Int_t> octant) { PMTOctantOfHits = octant; }
+    std::vector<Int_t> GetPMTOctantOfHits() const  {return PMTOctantOfHits;}
 
     //-----------------
     void StorePMTLeftNbOfHits(std::vector<Int_t> npl)    { PMTLeftNbOfHits = npl; }

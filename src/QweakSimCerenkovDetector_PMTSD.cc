@@ -60,6 +60,7 @@ G4bool QweakSimCerenkovDetector_PMTSD::ProcessHits_constStep(const G4Step* aStep
   if (preStepPoint->GetStepStatus() != fGeomBoundary) return false; // Entering Geometry
 
   G4double currentPhotonEnergy = aStep->GetTrack()->GetTotalEnergy();
+  G4double currentHitTime      = aStep->GetTrack()->GetGlobalTime();
   G4int MotherCopyNo      = theTouchable->GetVolume(1)->GetCopyNo();
   QweakSimCerenkovDetector_PMTHit* aHit = new QweakSimCerenkovDetector_PMTHit();
   G4int MotherReplicaNo2  = theTouchable->GetReplicaNumber(3);        // Several MotherVolumes
@@ -69,6 +70,7 @@ G4bool QweakSimCerenkovDetector_PMTSD::ProcessHits_constStep(const G4Step* aStep
   aHit->StorePMTID(MotherCopyNo);          // left or right pmt
 
   aHit->StorePhotonEnergy(currentPhotonEnergy);
+  aHit->StoreHitTime(currentHitTime);
   G4int hitCount = CerenkovDetector_PMTHitsCollection->insert(aHit); 
   aHit->StoreHitID(hitCount);
   //aHit->SetHitValid(False);

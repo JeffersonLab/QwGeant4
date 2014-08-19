@@ -41,6 +41,7 @@ QweakSimCerenkovDetector_PMTHit::QweakSimCerenkovDetector_PMTHit()
   DetectorID          = -1;
   PMTID               = -1;
   currentPhotonEnergy = 0.;
+  currentHitTime = 0.;
 }
 
 QweakSimCerenkovDetector_PMTHit::QweakSimCerenkovDetector_PMTHit(G4int pmt_id)
@@ -61,6 +62,7 @@ QweakSimCerenkovDetector_PMTHit::QweakSimCerenkovDetector_PMTHit(const QweakSimC
   DetectorID          = right.DetectorID;
   PMTID               = right.PMTID;
   currentPhotonEnergy = right.currentPhotonEnergy;
+  currentHitTime      = right.currentHitTime;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -69,6 +71,7 @@ const QweakSimCerenkovDetector_PMTHit& QweakSimCerenkovDetector_PMTHit::operator
   DetectorID          = right.DetectorID;
   PMTID               = right.PMTID;
   currentPhotonEnergy = right.currentPhotonEnergy;
+  currentHitTime      = right.currentHitTime;
 
   return *this;
 }

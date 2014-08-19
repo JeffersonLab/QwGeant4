@@ -244,6 +244,11 @@ private:
 
   static const int PmtMaxSize = 18;
   std::vector<G4int>   PmtHasBeenHit;
+
+  std::vector<G4float> PmtTime;
+  std::vector<G4float> PmtEnergy;
+  std::vector<G4int>   PmtOctant;
+
   std::vector<G4int>   PmtHitsLeft;
   std::vector<G4int>   PmtHitsRight;
   std::vector<G4int>   PmtHitsTotal;

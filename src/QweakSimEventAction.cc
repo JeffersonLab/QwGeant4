@@ -996,9 +996,15 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 }
 
                 //------------------------------------------------------------------------
+                PmtTime.push_back(aHit->GetHitTime());
+                PmtEnergy.push_back(aHit->GetPhotonEnergy());
+                PmtOctant.push_back(0);
+
+                //------------------------------------------------------------------------
                 if (aHit->GetPMTID() == 0) { // left PMT
                     //if(aHit->IsHitValid())
                     {
+                        PmtOctant.back() = -octantID;
                         PmtHitsLeft[octantID]++;
                         PmtNPELeft[octantID] += myUserInfo->GetNumberOfPhotoelectronsS20(aHit->GetPhotonEnergy()*1.0e6);
                         // G4cout<<"pmtNPELeft: "<<pmtNPELeft[octantID]<<G4endl;
@@ -1008,6 +1014,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 if (aHit->GetPMTID() == 1) { // right PMT
                     //if(aHit->IsHitValid())
                     {
+                        PmtOctant.back() = +octantID;
                         PmtHitsRight[octantID]++;
                         PmtNPERight[octantID] += myUserInfo->GetNumberOfPhotoelectronsS20(aHit->GetPhotonEnergy()*1.0e6);
                         // G4cout<<"pmtNPERight: "<<pmtNPERight[octantID]<<G4endl;
@@ -1066,11 +1073,19 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 
         } // end if (n_hitCerenkovPMT > 0)
 
+        // has the detector been hit
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTHasBeenHit(PmtHasBeenHit);
 
         //---------------------------------------------
         // store number of hits for left and right PMT
         //---------------------------------------------
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTHasBeenHit(PmtHasBeenHit);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTTimeOfHits(PmtTime);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTEnergyOfHits(PmtEnergy);
+        analysis->fRootEvent->Cerenkov.PMT.StorePMTOctantOfHits(PmtOctant);
+
+        //---------------------------------------------
+        // store number of hits for left and right PMT
+        //---------------------------------------------
         analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftNbOfHits(PmtHitsLeft);
         analysis->fRootEvent->Cerenkov.PMT.StorePMTRightNbOfHits(PmtHitsRight);
         analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalNbOfHits(PmtHitsTotal);
@@ -2255,6 +2270,10 @@ void QweakSimEventAction::Initialize() {
 
     //----------------------
     PmtHasBeenHit.clear();  PmtHasBeenHit.resize(PmtMaxSize);
+
+    PmtTime.clear();  PmtTime.resize(PmtMaxSize);
+    PmtEnergy.clear();  PmtEnergy.resize(PmtMaxSize);
+    PmtOctant.clear();  PmtOctant.resize(PmtMaxSize);
 
     PmtHitsLeft.clear();  PmtHitsLeft.resize(PmtMaxSize);
     PmtHitsRight.clear(); PmtHitsRight.resize(PmtMaxSize);

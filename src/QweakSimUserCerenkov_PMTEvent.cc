@@ -23,6 +23,9 @@ void QweakSimUserCerenkov_PMTEvent::Initialize()
 {
   PMTHasBeenHit.clear();
 
+  PMTTimeOfHits.clear();
+  PMTOctantOfHits.clear();
+
   PMTLeftNbOfHits.clear();
   PMTRightNbOfHits.clear();
   PMTTotalNbOfHits.clear();
