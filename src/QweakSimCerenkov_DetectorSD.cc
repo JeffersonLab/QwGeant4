@@ -139,6 +139,7 @@ G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistor
    G4String ParticleName      = fpParticleDefinition->GetParticleName();
 //   G4double PDGCharge         = fpParticleDefinition->GetPDGCharge();
    G4int PDGEncoding          = fpParticleDefinition->GetPDGEncoding();
+   G4double particlemass = fpParticleDefinition->GetPDGMass()/MeV;
 
   G4int    MotherCopyNo   = theTouchable->GetVolume(1)->GetCopyNo();   // one Mother Volume
 //  G4int DetectorCopyNo    = theTouchable->GetVolume()->GetCopyNo();    // but several detectors per MV
@@ -180,7 +181,8 @@ G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistor
 
   aHit->StoreOriginVertexPosition(originVertexPosition);
   aHit->StoreOriginVertexKineticEnergy(originVertexKineticEnergy);
-  aHit->StoreOriginVertexTotalEnergy(originVertexKineticEnergy);   /// \todo beware: total.neq.kinetic (testing only)
+  //aHit->StoreOriginVertexTotalEnergy(originVertexKineticEnergy);   /// \todo beware: total.neq.kinetic (testing only)
+  aHit->StoreOriginVertexTotalEnergy(originVertexKineticEnergy + particlemass);
   aHit->StoreOriginVertexMomentumDirection(originVertexMomentumDirection);
 
   aHit->StoreMomentumDirection(currentMomentumDirection);
