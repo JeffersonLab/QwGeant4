@@ -10,7 +10,7 @@
 #==========================
 # defined/used later again
 #/PrimaryEvent/SelectOctant 3
-#/PrimaryEvent/SelectOctant 1	
+#/PrimaryEvent/SelectOctant 1
 
 #==========================
 # Set beam rastering region
@@ -19,15 +19,6 @@
 /PrimaryEvent/SetRasterXmax  2.0 mm
 /PrimaryEvent/SetRasterYmin -2.0 mm
 /PrimaryEvent/SetRasterYmax  2.0 mm
-
-#==========================
-# Target related
-#==========================
-/Target/SetCenterPositionInZ  -652.67 cm
-/Target/SetTargetCellMaterial  Aluminum
-/Target/SetTargetMaterial      H2Liquid
-#/Target/SetTargetCellMaterial  Vacuum
-#/Target/SetTargetMaterial      Vacuum
 
 #==========================
 # Detector Hut related
@@ -243,15 +234,48 @@
 # FullWidthOnFrame = 32/64 = 1/2 inch
 #/VDC/DriftCell/SetFullWidthOnFrame   12.7 mm
 
-
 #====================================
 # Event generator related
 #====================================
 
-#/EventGen/SelectOctant         3
-#/EventGen/SelectReactionType   1
-#/EventGen/SelectReactionRegion 1
+## default unit is degrees
+/EventGen/SetThetaMin  5  degree
+/EventGen/SetThetaMax  13 degree
+/EventGen/SetPhiMin    -17 degree
+/EventGen/SetPhiMax    +17 degree
+/EventGen/SelectOctant         7
 
+/EventGen/SelectReactionType    2
+#  0 - Combination of all reactions
+#  1 - LH2 elastic (default)
+#  2 - Al elastic
+#  3 - Al quasi-elastic (proton)
+#  4 - Al quasi-elastic (neutron)
+#  5 - LH2 inelastic (delta resonance)
+#  6 - Moller scattering
+#  7 - LH2 radiative lookup table (3.35 GeV)
+#  8 - Al quasi-elastic, Bosted
+#  88 - pion
+#  9 - Al nuclera inelastics SPS
+#  10 - Al GDR
+
+#==========================
+# Target related
+#==========================
+
+# LH2, USAl1p, USAl2p, USAl4p, USC, DSAl2p, DSAl4p, DSAl8p, DSC
+/Target/SetTarget DSAl2p
+
+#/Target/SetCenterPositionInZ  -652.67 cm
+#/Target/SetTargetCellMaterial  Aluminum
+#/Target/SetTargetLength        34.346 cm
+#/Target/SetTargetMaterial       Vacuum
+
+# Selects a region of tgt
+/EventGen/SelectReactionRegion 3
+# 1 - LH2 in target, no Al end caps (default)
+# 2 - entrance target window
+# 3 - exit target window
 
 #====================================
 # Magnetic field related

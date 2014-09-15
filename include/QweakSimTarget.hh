@@ -95,9 +95,16 @@ public:
   void SetTargetLength(G4double);
   G4double GetTargetLength();
 
+  void SetTarget(G4String);
+  void SetTargetEntranceWindowLength(G4double);
+  void SetTargetExitWindowLength(G4double);
+  void SetTargetExitWindowNippleLength(G4double);
+
   G4double CalculateLuminosity(G4double mass, G4double density, G4double length);
 
 private:
+
+  G4VPhysicalVolume* theMotherPV;
 
   QweakSimMaterial* pMaterial;
 
@@ -156,7 +163,22 @@ private:
   QweakSimTargetMessenger* targetMessenger;  // pointer to the Messenger
   QweakSimUserInformation *myUserInfo;
 
-  G4double targetLen;
+  G4ThreeVector positionTarget;
+  G4ThreeVector positionTargetEntranceWindow;
+  G4ThreeVector positionTargetExitWindow;
+  G4ThreeVector positionScatteringChamberWindow;
+
+  void CalculateTargetPositions();
+
+  void ConstructTargetContainer(); // scattering chamber
+  void ConstructScatteringChamberWindow();
+
+  void ConstructTargetCell(); // Al cell without end caps
+  void ConstructTargetMaterial();  // LH2 for production target
+
+  void ConstructTargetEntranceWindow();
+  void ConstructTargetExitWindow();
+  void ConstructTargetExitWindowNipple();
 
 };
 

@@ -50,7 +50,7 @@ void QweakSimUserInformation::Initialize()
   fNormMomentumX = 0.0*mrad;
   fNormMomentumY = 0.0*mrad;
   
-  TargetCenterPositionZ = -650*cm;
+  TargetCenterPositionZ = -652.67*cm;
 
   TargetLength = 34.346*cm;
 

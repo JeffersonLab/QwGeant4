@@ -42,6 +42,8 @@ QweakSimTarget::QweakSimTarget(QweakSimUserInformation *myUI)
 
     myUserInfo = myUI;
 
+    theMotherPV               = NULL;
+
     TargetContainer_Logical      = NULL;
     TargetContainer_Physical     = NULL;
     TargetContainer_Material     = NULL;
@@ -115,7 +117,7 @@ QweakSimTarget::QweakSimTarget(QweakSimUserInformation *myUI)
     ScatteringChamberWindowRadius = 0.5*23.5*inch;
     ScatteringChamberWindowThickness = 35*mil;
 
-    myUserInfo->TargetLength = targetCellInnerLength;
+    //    myUserInfo->TargetLength = targetCellInnerLength;
     myUserInfo->TargetEntranceWindowThickness = targetCellEntranceWindowThickness;
     myUserInfo->TargetExitWindowThickness = targetCellExitWindowThickness;
     myUserInfo->TargetExitWindowNippleThickness = targetCellExitWindowNippleThickness;
@@ -154,7 +156,6 @@ QweakSimTarget::QweakSimTarget(QweakSimUserInformation *myUI)
     myUserInfo->TargetLuminosityDSCDummy = CalculateLuminosity(massC, densityDSC, myUserInfo->TargetThicknessDSCDummy);
 
     targetMessenger = new QweakSimTargetMessenger(this);
-
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -170,12 +171,74 @@ void QweakSimTarget::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 {
     G4cout << G4endl << "###### Calling QweakSimTarget::ConstructComponent() " << G4endl << G4endl;
 
-    // define Target position
+    theMotherPV = MotherVolume;
 
-    G4ThreeVector positionTarget = G4ThreeVector(0,0,0);
-    G4ThreeVector positionTargetEntranceWindow = G4ThreeVector(0,0,-0.5*targetCellInnerLength - 0.5*targetCellEntranceWindowThickness);
-    G4ThreeVector positionTargetExitWindow = G4ThreeVector(0,0, 0.5*targetCellInnerLength + 0.5*targetCellExitWindowThickness);
-    G4ThreeVector positionScatteringChamberWindow = G4ThreeVector(0,0,0.5*targetCellInnerLength + 0.5*targetCellExitWindowThickness + 45.0*cm); // Peiqing: should be located at z=-583.41 cm
+    CalculateTargetPositions();
+
+    ConstructTargetContainer(); // scattering chamber
+    ConstructScatteringChamberWindow();
+
+    ConstructTargetCell(); // Al cell without end caps
+    ConstructTargetMaterial();  // LH2 for production target
+
+    ConstructTargetEntranceWindow();
+    ConstructTargetExitWindow();
+    ConstructTargetExitWindowNipple();
+
+//--------------------------------------
+
+    G4cout << G4endl << "###### QweakSimTarget: Setting Attributes " << G4endl << G4endl;
+
+    G4Colour  blue  (0.,0.,1.);
+    G4Colour  red   (1.,0.,0.);
+
+    G4VisAttributes* TargetContainer_VisAtt = new G4VisAttributes(red);
+    TargetContainer_VisAtt -> SetVisibility(false);
+    //TargetContainer_VisAtt -> SetForceWireframe(true);
+    TargetContainer_Logical -> SetVisAttributes(TargetContainer_VisAtt);
+
+    G4VisAttributes* TargetCell_VisAtt = new G4VisAttributes(blue);
+    TargetCell_VisAtt -> SetVisibility(true);
+    //TargetCell_VisAtt -> SetForceWireframe(true);
+    TargetCell_Logical -> SetVisAttributes(TargetCell_VisAtt);
+
+    G4VisAttributes* TargetWindow_VisAtt = new G4VisAttributes(blue);
+    TargetWindow_VisAtt -> SetVisibility(true);
+    //TargetWindow_VisAtt -> SetForceWireframe(true);
+    TargetEntranceWindow_Logical -> SetVisAttributes(TargetWindow_VisAtt);
+    TargetExitWindow_Logical -> SetVisAttributes(TargetWindow_VisAtt);
+
+    G4VisAttributes* ScatteringChamberWindow_VisAtt = new G4VisAttributes(red);
+    ScatteringChamberWindow_VisAtt -> SetVisibility(true);
+    //ScatteringChamberWindow_VisAtt -> SetForceWireframe(true);
+    ScatteringChamberWindow_Logical -> SetVisAttributes(ScatteringChamberWindow_VisAtt);
+
+    G4VisAttributes* TargetMaterial_VisAtt = new G4VisAttributes(red);
+    TargetMaterial_VisAtt -> SetVisibility(true);
+    //TargetVisAtt -> SetForceWireframe(true);
+    TargetMaterial_Logical -> SetVisAttributes(TargetMaterial_VisAtt);
+
+    G4cout << G4endl << "###### Leaving QweakSimTarget::ConstructComponent() " << G4endl << G4endl;
+
+} // end of  QweakSimTarget::ConstructComponent()
+
+void QweakSimTarget::CalculateTargetPositions(){
+
+    // define Target position
+    positionTarget = G4ThreeVector(0,0,0);
+    positionTargetEntranceWindow = G4ThreeVector(0,0,-0.5*targetCellInnerLength - 0.5*targetCellEntranceWindowThickness);
+    positionTargetExitWindow = G4ThreeVector(0,0, 0.5*targetCellInnerLength + 0.5*targetCellExitWindowThickness);
+    positionScatteringChamberWindow = G4ThreeVector(0,0,0.5*targetCellInnerLength + 0.5*targetCellExitWindowThickness + 45.0*cm); // Peiqing: should be located at z=-583.41 cm
+
+    targetCellOuterLength     = targetCellInnerLength
+                                + targetCellEntranceWindowThickness
+                                + targetCellExitWindowThickness;  // Full length of Target
+}
+
+
+void QweakSimTarget::ConstructTargetContainer()
+{
+    G4cout << G4endl << "###### Calling QweakSimTarget::ConstructTargetContainer() " << G4endl << G4endl;
 
     G4Tubs* TargetContainer_Solid    = new G4Tubs("TargetContainer_Sol",
             0, //targetCellRadiusMin, jpan@nuclear.uwinnipeg.ca
@@ -193,11 +256,22 @@ void QweakSimTarget::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             positionTarget,
             "TargetContainer",
             TargetContainer_Logical,
-            MotherVolume,
+            theMotherPV,
             false,
             0,
             pSurfChk);
+    G4cout << G4endl << "###### Leaving QweakSimTarget::ConstructTargetContainer() " << G4endl << G4endl;
+}
 
+void QweakSimTarget::ConstructTargetCell()
+{
+    G4cout << G4endl << "###### Calling QweakSimTarget::ConstructTargetCell() " << G4endl << G4endl;
+
+    if (TargetContainer_Logical)
+          TargetContainer_Logical->RemoveDaughter(TargetCell_Physical);
+
+    delete TargetCell_Physical;
+    TargetCell_Physical = NULL;
 
     // define target solid volume
     G4cout << G4endl << "###### QweakSimTarget: Define TargetCell_Solid " << G4endl << G4endl;
@@ -227,6 +301,18 @@ void QweakSimTarget::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             false,
             0,
             pSurfChk);
+    G4cout << G4endl << "###### Leaving QweakSimTarget::ConstructTargetCell() " << G4endl << G4endl;
+}
+
+void QweakSimTarget::ConstructTargetEntranceWindow()
+{
+    G4cout << G4endl << "###### Calling QweakSimTarget::ConstructTargetEntranceWindow() " << G4endl << G4endl;
+
+    if (TargetContainer_Logical)
+          TargetContainer_Logical->RemoveDaughter(TargetEntranceWindow_Physical);
+
+    delete TargetEntranceWindow_Physical;
+    TargetEntranceWindow_Physical = NULL;
 
 //--------------------------------------
     // define target window solid volume (front, upstream)
@@ -247,6 +333,9 @@ void QweakSimTarget::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             "QweakTargetEntranceWindow_Log",
             0,0,0);
 
+    G4double MaxStepInEntranceWindow = 0.1*targetCellEntranceWindowThickness;
+    TargetEntranceWindow_Logical->SetUserLimits(new G4UserLimits(MaxStepInEntranceWindow));
+
     // define Target window physical volume (front, upstream)
     G4cout << G4endl << "###### QweakSimTarget: Define TargetEntranceWindow_Physical " << G4endl << G4endl;
     TargetEntranceWindow_Physical   = new G4PVPlacement(0,
@@ -257,8 +346,18 @@ void QweakSimTarget::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             false,
             0,
             pSurfChk);
+    G4cout << G4endl << "###### Leaving QweakSimTarget::ConstructTargetEntranceWindow() " << G4endl << G4endl;
+}
 
-//--------------------------------------
+void QweakSimTarget::ConstructTargetExitWindow()
+{
+    G4cout << G4endl << "###### Calling QweakSimTarget::ConstructTargetExitWindow() " << G4endl << G4endl;
+
+    if (TargetContainer_Logical)
+          TargetContainer_Logical->RemoveDaughter(TargetExitWindow_Physical);
+
+    delete TargetExitWindow_Physical;
+    TargetExitWindow_Physical = NULL;
 
     // define target window solid volume (back, downstream)
     G4cout << G4endl << "###### QweakSimTarget: Define TargetExitWindow_Solid " << G4endl << G4endl;
@@ -278,6 +377,13 @@ void QweakSimTarget::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             "QweakTargetExitWindow_Log",
             0,0,0);
 
+    // Set max step size for a certain volume, see
+//         http://geant4.web.cern.ch/geant4/G4UsersDocuments/UsersGuides/
+//         ForApplicationDeveloper/html/TrackingAndPhysics/thresholdVScut.html
+    G4double MaxStepInExitWindow = 0.1*targetCellExitWindowThickness;
+    TargetExitWindow_Logical->SetUserLimits(new G4UserLimits(MaxStepInExitWindow));
+
+
     // define Target window physical volume (back, downstream)
     G4cout << G4endl << "###### QweakSimTarget: Define TargetExitWindow_Physical " << G4endl << G4endl;
     TargetExitWindow_Physical   = new G4PVPlacement(0,
@@ -288,14 +394,26 @@ void QweakSimTarget::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             false,
             0,
             pSurfChk);
+    G4cout << G4endl << "###### Leaving QweakSimTarget::ConstructTargetExitWindow() " << G4endl << G4endl;
+}
 
-    
+void QweakSimTarget::ConstructTargetExitWindowNipple()
+{
+    G4cout << G4endl << "###### Calling QweakSimTarget::ConstructTargetExitWindowNipple() " << G4endl << G4endl;
+
+    if (TargetContainer_Logical)
+          TargetContainer_Logical->RemoveDaughter(TargetExitWindowNipple_Physical);
+
+    delete TargetExitWindowNipple_Physical;
+    TargetExitWindowNipple_Physical = NULL;   
+
     // define target window Nipple solid volume (back, downstream)
     G4cout << G4endl << "###### QweakSimTarget: Define TargetExitWindowNipple_Solid " << G4endl << G4endl;
 
     G4Tubs* TargetExitWindowNipple_Solid    = new G4Tubs("TargetExitWindowNipple_Sol",
             0.,
-            targetCellExitWindowNippleRadius-0.00001*mm,
+            targetCellExitWindowNippleRadius,
+	//            targetCellExitWindowNippleRadius-0.00001*mm,
             0.5*targetCellExitWindowNippleThickness,
             targetCellStartingPhi,
             targetCellDeltaPhi);
@@ -308,6 +426,9 @@ void QweakSimTarget::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             "QweakTargetExitWindowNipple_Log",
             0,0,0);
 
+    G4double MaxStepInExitWindowNipple = 0.1*targetCellExitWindowNippleThickness;
+    TargetExitWindowNipple_Logical->SetUserLimits(new G4UserLimits(MaxStepInExitWindowNipple));
+
     // define Target window nipple physical volume (back, downstream)
     G4cout << G4endl << "###### QweakSimTarget: Define TargetExitWindowNipple_Physical " << G4endl << G4endl;
     TargetExitWindowNipple_Physical   = new G4PVPlacement(0,
@@ -318,9 +439,15 @@ void QweakSimTarget::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             false,
             0,
             pSurfChk);
+    G4cout << G4endl << "###### Leaving QweakSimTarget::ConstructTargetExitWindowNipple() " << G4endl << G4endl;
+}
+
+void QweakSimTarget::ConstructScatteringChamberWindow()
+{
+    G4cout << G4endl << "###### Calling QweakSimTarget::ConstructScatteringChamberWindow() " << G4endl << G4endl;
 
     //*********************** Define Target scattering chamber Vacuum Window ************************
-
+    G4cout << G4endl << "###### QweakSimTarget: Define ScatteringChamberWindow_Solid " << G4endl << G4endl;
     G4Tubs* ScatteringChamberWindow_Solid    = new G4Tubs("ScatteringChamberWindow_Sol",
             0.,
             ScatteringChamberWindowRadius,
@@ -346,22 +473,23 @@ void QweakSimTarget::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             false,
             0,
             pSurfChk);
+    G4cout << G4endl << "###### Leaving QweakSimTarget::ConstructScatteringChamberWindow() " << G4endl << G4endl;
 
 //*************************End of Target Vacuum Window *****************************
-
-// Set max step size for a certain volume, see
-//         http://geant4.web.cern.ch/geant4/G4UsersDocuments/UsersGuides/
-//         ForApplicationDeveloper/html/TrackingAndPhysics/thresholdVScut.html
-
-    G4double MaxStepInEntranceWindow = 0.1*targetCellEntranceWindowThickness;
-    G4double MaxStepInExitWindow = 0.1*targetCellExitWindowThickness;
-    TargetEntranceWindow_Logical->SetUserLimits(new G4UserLimits(MaxStepInEntranceWindow));
-    TargetExitWindow_Logical->SetUserLimits(new G4UserLimits(MaxStepInExitWindow));
+}
 
 //--------------------------------------
 
-    // define target material solid volume
-    G4cout << G4endl << "###### QweakSimTarget: Define TargetMaterial_Solid " << G4endl << G4endl;
+void QweakSimTarget::ConstructTargetMaterial()
+{
+      // define target material solid volume
+    G4cout << G4endl << "###### Calling QweakSimTarget::ConstructTargetMaterial() " << G4endl << G4endl;
+
+    if (TargetContainer_Logical)
+          TargetContainer_Logical->RemoveDaughter(TargetMaterial_Physical);
+
+    delete TargetMaterial_Physical;
+    TargetMaterial_Physical = NULL;   
 
 //   G4Tubs* TargetMaterial_Solid    = new G4Tubs("QweakTargetMaterial_Sol",
 // 				       targetCellFrontRadiusMin,
@@ -402,45 +530,115 @@ void QweakSimTarget::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             false,
             0,
             pSurfChk);
+    G4cout << G4endl << "###### Leaving QweakSimTarget::ConstructTargetMaterial() " << G4endl << G4endl;
+}
 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-//--------------------------------------
+void QweakSimTarget::SetTarget(G4String targName)
+{
+  if (strcmp(targName,"LH2")==0)
+    {
+      G4cout << "==== Target is LH2 by default!! " << G4endl;
+    }
+  else if (strcmp(targName,"USAl1p")==0)
+    {
+      G4cout << "==== Changing Target to " << targName << G4endl;
+      SetTargetEntranceWindowMaterial("Aluminum");
+      SetTargetEntranceWindowLength(0.8812*mm);
+      SetTargetLength(35.43*cm);
+      //SetTargetLength(45.43*cm);
+      SetTargetMaterial("Vacuum");
+      SetTargetExitWindowMaterial("Vacuum");
+      SetTargetExitWindowNippleMaterial("Vacuum");
+      G4cout << "==== Changing Target :  Now the Target is " << targName << G4endl;
+    }
+  else if (strcmp(targName,"USAl2p")==0)
+    {
+      G4cout << "==== Changing Target to " << targName << G4endl;
+      SetTargetEntranceWindowMaterial("Aluminum");
+      SetTargetEntranceWindowLength(1.7987*mm);
+      SetTargetLength(35.43*cm);
+      SetTargetMaterial("Vacuum");
+      SetTargetExitWindowMaterial("Vacuum");
+      SetTargetExitWindowNippleMaterial("Vacuum");
+      G4cout << "==== Changing Target :  Now the Target is " << targName << G4endl;
+    }
+  else if (strcmp(targName,"USAl4p")==0)
+    {
+      G4cout << "==== Changing Target to " << targName << G4endl;
+      SetTargetEntranceWindowMaterial("Aluminum");
+      SetTargetEntranceWindowLength(3.6030*mm);
+      SetTargetLength(35.43*cm);
+      SetTargetMaterial("Vacuum");
+      SetTargetExitWindowMaterial("Vacuum");
+      SetTargetExitWindowNippleMaterial("Vacuum");
+      G4cout << "==== Changing Target :  Now the Target is " << targName << G4endl;
+    }  
+  else if (strcmp(targName,"USC")==0)
+    {
+      G4cout << "==== Changing Target to " << targName << G4endl;
+      SetTargetEntranceWindowMaterial("USCarbon");
+      SetTargetEntranceWindowLength(0.9973*mm);
+      SetTargetLength(35.43*cm);
+      SetTargetMaterial("Vacuum");
+      SetTargetExitWindowMaterial("Vacuum");
+      SetTargetExitWindowNippleMaterial("Vacuum");
+      G4cout << "==== Changing Target :  Now the Target is " << targName << G4endl;
+    }
+  else if (strcmp(targName,"DSAl2p")==0)
+    {
+      G4cout << "==== Changing Target to " << targName << G4endl;
+      SetTargetEntranceWindowMaterial("Vacuum");
+      SetTargetLength(33.36*cm);
+      SetTargetMaterial("Vacuum");
+      SetTargetExitWindowLength(1.8637*mm);
+      SetTargetExitWindowNippleLength(1.8637*mm);
+      SetTargetExitWindowMaterial("Aluminum"); 
+      SetTargetExitWindowNippleMaterial("Aluminum");
+      G4cout << "==== Changing Target :  Now the Target is " << targName << G4endl;
+    }
+  else if (strcmp(targName,"DSAl4p")==0)
+    {
+      G4cout << "==== Changing Target to " << targName << G4endl;
+      SetTargetEntranceWindowMaterial("Vacuum");
+      SetTargetLength(33.36*cm);
+      SetTargetMaterial("Vacuum");
+      SetTargetExitWindowLength(3.6828*mm);
+      SetTargetExitWindowNippleLength(3.6828*mm);
+      SetTargetExitWindowMaterial("Aluminum"); 
+      SetTargetExitWindowNippleMaterial("Aluminum");
+      G4cout << "==== Changing Target :  Now the Target is " << targName << G4endl;
+    }
+  else if (strcmp(targName,"DSAl8p")==0)
+    {
+      G4cout << "==== Changing Target to " << targName << G4endl;
+      SetTargetEntranceWindowMaterial("Vacuum");
+      SetTargetLength(33.36*cm);
+      SetTargetMaterial("Vacuum");
+      SetTargetExitWindowLength(7.1980*mm);
+      SetTargetExitWindowNippleLength(7.1980*mm);
+      SetTargetExitWindowMaterial("Aluminum"); 
+      SetTargetExitWindowNippleMaterial("Aluminum");
+      G4cout << "==== Changing Target :  Now the Target is " << targName << G4endl;
+    }
+  else if (strcmp(targName,"DSC")==0)
+    {
+      G4cout << "==== Changing Target to " << targName << G4endl;
+      SetTargetEntranceWindowMaterial("Vacuum");
+      SetTargetLength(33.36*cm);
+      SetTargetMaterial("Vacuum");
+      SetTargetExitWindowLength(3.1876*mm);
+      SetTargetExitWindowNippleLength(3.1876*mm);
+      SetTargetExitWindowMaterial("DSCarbon"); 
+      SetTargetExitWindowNippleMaterial("DSCarbon");
+      G4cout << "==== Changing Target :  Now the Target is " << targName << G4endl;
+    }
+    else {
+        G4cerr << "==== ERROR: Changing Target failed" << G4endl;
+    }
 
-    G4cout << G4endl << "###### QweakSimTarget: Setting Attributes " << G4endl << G4endl;
-
-    G4Colour  blue  (0.,0.,1.);
-    G4Colour  red   (1.,0.,0.);
-
-    G4VisAttributes* TargetContainer_VisAtt = new G4VisAttributes(red);
-    TargetContainer_VisAtt -> SetVisibility(false);
-    //TargetContainer_VisAtt -> SetForceWireframe(true);
-    TargetContainer_Logical -> SetVisAttributes(TargetContainer_VisAtt);
-
-    G4VisAttributes* TargetCell_VisAtt = new G4VisAttributes(blue);
-    TargetCell_VisAtt -> SetVisibility(true);
-    //TargetCell_VisAtt -> SetForceWireframe(true);
-    TargetCell_Logical -> SetVisAttributes(TargetCell_VisAtt);
-
-    G4VisAttributes* TargetWindow_VisAtt = new G4VisAttributes(blue);
-    TargetWindow_VisAtt -> SetVisibility(true);
-    //TargetWindow_VisAtt -> SetForceWireframe(true);
-    TargetEntranceWindow_Logical -> SetVisAttributes(TargetWindow_VisAtt);
-    TargetExitWindow_Logical -> SetVisAttributes(TargetWindow_VisAtt);
-
-    G4VisAttributes* ScatteringChamberWindow_VisAtt = new G4VisAttributes(red);
-    ScatteringChamberWindow_VisAtt -> SetVisibility(true);
-    //ScatteringChamberWindow_VisAtt -> SetForceWireframe(true);
-    ScatteringChamberWindow_Logical -> SetVisAttributes(ScatteringChamberWindow_VisAtt);
-
-    G4VisAttributes* TargetMaterial_VisAtt = new G4VisAttributes(red);
-    TargetMaterial_VisAtt -> SetVisibility(true);
-    //TargetVisAtt -> SetForceWireframe(true);
-    TargetMaterial_Logical -> SetVisAttributes(TargetMaterial_VisAtt);
-
-
-    G4cout << G4endl << "###### Leaving QweakSimTarget::ConstructComponent() " << G4endl << G4endl;
-
-} // end of  QweakSimTarget::ConstructComponent()
+}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -548,6 +746,7 @@ void QweakSimTarget::SetTargetCenterPositionInZ(G4double zPos)
     myUserInfo->TargetCenterPositionZ = zPos;
 //TargetCell_Physical->SetTranslation(G4ThreeVector(0.,0., zPos));
     TargetContainer_Physical->SetTranslation(G4ThreeVector(0.,0., zPos));
+    G4cout << "==== Changing Target CenterPositionZ:  Now the Target Center Position in Z is " << zPos/cm << " cm" << G4endl;
 }
 
 G4double QweakSimTarget::GetTargetCenterPositionInZ()
@@ -561,14 +760,72 @@ void QweakSimTarget::SetTargetLength(G4double len)
 {
     G4cout << G4endl << "###### Calling QweakSimTarget::SetTargetLength() " << G4endl << G4endl;
 
-    targetLen = len;
+    targetCellInnerLength = len;
     myUserInfo->TargetLength = len;
+    G4cout << "==== Changing Target Length:  Now the Target Length is " << len/cm << " cm" << G4endl;
+
+    CalculateTargetPositions();
+
+    // construct target cell/material of appropriate length
+    ConstructTargetCell(); // Al cell without end caps
+    ConstructTargetMaterial();  // LH2 for production target
+
+    // construct the end caps at the correct location
+    ConstructTargetEntranceWindow(); 
+    ConstructTargetExitWindow();
+    ConstructTargetExitWindowNipple();
+
+    G4cout << G4endl << "###### Leaving QweakSimTarget::SetTargetLength() " << G4endl << G4endl;
 }
 
 G4double QweakSimTarget::GetTargetLength()
 {
     G4cout << G4endl << "###### Calling QweakSimTarget::GetTargetLength() " << G4endl << G4endl;
-    return targetLen;
+    return targetCellInnerLength;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+void QweakSimTarget::SetTargetEntranceWindowLength(G4double len)
+{
+  G4cout << G4endl << "###### Calling QweakSimTarget::SetTargetEntranceWindowLength() " << G4endl << G4endl;
+  
+  myUserInfo->TargetEntranceWindowThickness = len;
+  targetCellEntranceWindowThickness = len;
+
+  G4cout << "==== Changing Target Entrance Window Length:  Now the Target Entrance Window Length is " << len/mm << " mm" << G4endl;
+
+  CalculateTargetPositions();
+  ConstructTargetEntranceWindow();
+
+  G4cout << G4endl << "###### Leaving QweakSimTarget::SetTargetEntranceWindowLength() " << G4endl << G4endl;
+}
+
+void QweakSimTarget::SetTargetExitWindowLength(G4double len)
+{
+  G4cout << G4endl << "###### Calling QweakSimTarget::SetTargetExitWindowLength() " << G4endl << G4endl;
+
+  myUserInfo->TargetExitWindowThickness = len;
+  targetCellExitWindowThickness = len; 
+  G4cout << "==== Changing Target Exit Window Length:  Now the Target Exit Window Length is " << len/mm << " mm" << G4endl;
+
+  CalculateTargetPositions();
+  ConstructTargetExitWindow();
+
+  G4cout << G4endl << "###### Leaving QweakSimTarget::SetTargetExitWindowLength() " << G4endl << G4endl;
+}
+
+void QweakSimTarget::SetTargetExitWindowNippleLength(G4double len)
+{
+  G4cout << G4endl << "###### Calling QweakSimTarget::SetTargetExitWindowNippleLength() " << G4endl << G4endl;
+
+  myUserInfo->TargetExitWindowNippleThickness = len;
+  targetCellExitWindowNippleThickness = len; 
+  G4cout << "==== Changing Target Exit Window Nipple Length:  Now the Target Exit Window Nipple Length is " << len/mm << " mm" << G4endl;
+
+  CalculateTargetPositions();
+  ConstructTargetExitWindowNipple();
+
+  G4cout << G4endl << "###### Leaving QweakSimTarget::SetTargetExitWindowNippleLength() " << G4endl << G4endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....

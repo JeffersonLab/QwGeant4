@@ -70,6 +70,7 @@ class QweakSimTargetMessenger: public G4UImessenger
 
     G4UIdirectory*             TargetDir;
 
+    G4UIcmdWithAString*        TargCmd;
     G4UIcmdWithAString*        TargMatCmd;
     G4UIcmdWithAString*        TargCellMatCmd;
     G4UIcmdWithAString*	       TargEntWinMatCmd;

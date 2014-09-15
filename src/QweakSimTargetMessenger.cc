@@ -33,6 +33,11 @@ QweakSimTargetMessenger::QweakSimTargetMessenger(QweakSimTarget* myTar)
  // Target related
   TargetDir = new G4UIdirectory("/Target/");
   TargetDir -> SetGuidance("target control.");
+
+  TargCmd = new G4UIcmdWithAString("/Target/SetTarget",this);
+  TargCmd->SetGuidance("Select Target.");
+  TargCmd->SetParameterName("choice",false);
+  TargCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
        
   TargZPosCmd =  new G4UIcmdWithADoubleAndUnit("/Target/SetCenterPositionInZ",this);
   TargZPosCmd->SetGuidance("Set the Z position of the target center"); 
@@ -78,6 +83,7 @@ QweakSimTargetMessenger::QweakSimTargetMessenger(QweakSimTarget* myTar)
 
 QweakSimTargetMessenger::~QweakSimTargetMessenger()
 {
+  delete TargCmd;
   delete TargZPosCmd;
   delete TargMatCmd;
   delete TargCellMatCmd;
@@ -93,6 +99,13 @@ QweakSimTargetMessenger::~QweakSimTargetMessenger()
 void QweakSimTargetMessenger::SetNewValue(G4UIcommand* command,G4String newValue)
 { 
   G4cout << "#### Calling QweakSimTargetMessenger::SetNewValue() " << newValue << G4endl;
+
+  if( command == TargCmd )
+  { 
+      G4cout << "#### Messenger: Setting Target to " << newValue << G4endl;
+      
+      myTarget->SetTarget(newValue);
+  }
 
   if( command == TargZPosCmd )
    {

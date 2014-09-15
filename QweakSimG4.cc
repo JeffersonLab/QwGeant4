@@ -22,6 +22,7 @@
 #include "G4UIterminal.hh"
 #include "G4UItcsh.hh"
 
+#include "G4StepLimiterBuilder.hh"
 
 #include "G4OpticalPhysics.hh"
 #include "G4PhysListFactory.hh"
@@ -80,6 +81,7 @@ int main(int argc,char** argv) {
   G4PhysListFactory factory;
   G4VModularPhysicsList* physlist = factory.GetReferencePhysList("QGSP_BERT_LIV");
   physlist->RegisterPhysics(new G4OpticalPhysics());
+  physlist->RegisterPhysics(new G4StepLimiterBuilder()); // new, Jan16, 2014b
   runManager->SetUserInitialization(physlist);
 
   // Original Qweak Physics List, uncomment to use, comment out block above

@@ -341,7 +341,8 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   //
   if (pTarget) {
     pTarget -> ConstructComponent(experimentalHall_Physical);
-    pTarget -> SetTargetCenterPositionInZ(-650.0*cm);
+    //    pTarget -> SetTargetCenterPositionInZ(-650.0*cm);
+    pTarget -> SetTargetCenterPositionInZ(myUserInfo->TargetCenterPositionZ);
     //
     pGeometry->AddModule(pTarget->getTargetPhysicalVolume());
   }

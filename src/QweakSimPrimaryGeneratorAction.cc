@@ -97,7 +97,7 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     myPositionX =  myUserInfo->GetBeamPositionX() + (G4UniformRand()-0.5)*(fPositionX_max-fPositionX_min)+(fPositionX_max+fPositionX_min)/2.0;
     myPositionY =  myUserInfo->GetBeamPositionY() + (G4UniformRand()-0.5)*(fPositionY_max-fPositionY_min)+(fPositionY_max+fPositionY_min)/2.0;
     // select the z position 30 cm upstream of the target center (this is basically a constant)
-    myPositionZ = myUserInfo->TargetCenterPositionZ - 30.0*cm;
+    myPositionZ = myUserInfo->TargetCenterPositionZ - 30.0*cm - G4UniformRand();
 
     myNormMomentumX  = tan(myUserInfo->GetNormMomentumX()); // = 0
     myNormMomentumY  = tan(myUserInfo->GetNormMomentumY()); // = 0

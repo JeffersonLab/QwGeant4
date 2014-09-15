@@ -115,7 +115,8 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep){
     G4double theX = thePosition.getX();
     G4double theY = thePosition.getY();
     G4double theZ = thePosition.getZ();
-    //      G4cout << "Track pos:: " << theX << "\t" << theY << "\t" << theZ << G4endl;
+    // G4cout << "Track pos:: " << theX/mm << "\t" << theY/mm << "\t" << theZ/mm << G4endl;
+    // G4cout << "RandomPositionZ :: " << RandomPositionZ << G4endl; 
 
     G4String procName = thePostPoint->GetProcessDefinedStep()->GetProcessName();   
     // dEE in MeV -> all Elosses are in MeV
@@ -178,7 +179,8 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep){
 	  myUserInfo->StoreGlobalTime(theTrack->GetGlobalTime());
 	  myUserInfo->StoreOriginVertexPositionX(theX);
 	  myUserInfo->StoreOriginVertexPositionY(theY);
-	  myUserInfo->StoreOriginVertexPositionZ(theZ);
+	  //	  myUserInfo->StoreOriginVertexPositionZ(theZ);
+	  myUserInfo->StoreOriginVertexPositionZ(RandomPositionZ);
 
 	  myUserInfo->StoreOriginVertexMomentumDirectionX(MomentumDirection.getX());
 	  myUserInfo->StoreOriginVertexMomentumDirectionY(MomentumDirection.getY());

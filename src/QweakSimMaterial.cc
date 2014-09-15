@@ -37,7 +37,7 @@ void QweakSimMaterial::DefineMaterials()
   G4Element* elO  = fNistManager->FindOrBuildElement("O");
   //G4Element* elF  = fNistManager->FindOrBuildElement("F");
   //G4Element* elNa = fNistManager->FindOrBuildElement("Na");
-  //G4Element* elMg = fNistManager->FindOrBuildElement("Mg");
+  G4Element* elMg = fNistManager->FindOrBuildElement("Mg");
   G4Element* elAl = fNistManager->FindOrBuildElement("Al");
   G4Element* elSi = fNistManager->FindOrBuildElement("Si");
   //G4Element* elCl = fNistManager->FindOrBuildElement("Cl");
@@ -51,6 +51,7 @@ void QweakSimMaterial::DefineMaterials()
   G4Element* elXe = fNistManager->FindOrBuildElement("Xe");
   //G4Element* elSb = fNistManager->FindOrBuildElement("Sb");
   //G4Element* elPb = fNistManager->FindOrBuildElement("Pb");
+  G4Element* elZn = fNistManager->FindOrBuildElement("Zn");
 	
   // elements for the LeadGlass
   G4Element* elPb = fNistManager->FindOrBuildElement("Pb");
@@ -118,7 +119,6 @@ void QweakSimMaterial::DefineMaterials()
   matLiquidHelium = new G4Material(name, density, nelements);
   matLiquidHelium -> AddElement(elHe,1);
 
-
   // Al material
   name      = "Aluminum";
   density   = 2.700*g/cm3;
@@ -127,6 +127,35 @@ void QweakSimMaterial::DefineMaterials()
   matAl = new G4Material(name,density,nelements);
   matAl -> AddElement(elAl,1);
   //matAl -> GetIonisation() -> SetMeanExcitationEnergy(166*eV);
+
+  // Al Alloy material
+  name      = "AlAlloy";
+  density   = 2.800*g/cm3; // from survey
+  ncomponents = 6;
+  G4Material* __attribute__ ((unused))
+    matAlAlloy = new G4Material(name,density,ncomponents);
+  matAlAlloy-> AddElement(elAl   , fractionmass = 0.897);
+  matAlAlloy-> AddElement(elCu   , fractionmass = 0.016);
+  matAlAlloy-> AddElement(elMg   , fractionmass = 0.0255);
+  matAlAlloy-> AddElement(elZn   , fractionmass = 0.058);
+  matAlAlloy-> AddElement(elFe   , fractionmass = 0.0013);
+  matAlAlloy-> AddElement(elSi   , fractionmass = 0.0022);
+
+  // USCarbon material
+  name      = "USCarbon";
+  density   = 1.700*g/cm3;
+  nelements = 1;
+  G4Material* __attribute__ ((unused))
+  matUSC = new G4Material(name,density,nelements);
+  matUSC -> AddElement(elC,1);
+
+  // DSCarbon material
+  name      = "DSCarbon";
+  density   = 2.205*g/cm3;
+  nelements = 1;
+  G4Material* __attribute__ ((unused))
+  matDSC = new G4Material(name,density,nelements);
+  matDSC -> AddElement(elC,1);
 
   // gaseous Argon
   name      = "ArgonGas";
