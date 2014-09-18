@@ -239,13 +239,14 @@
 #====================================
 
 ## default unit is degrees
-/EventGen/SetThetaMin  5  degree
-/EventGen/SetThetaMax  13 degree
-/EventGen/SetPhiMin    -17 degree
-/EventGen/SetPhiMax    +17 degree
-/EventGen/SelectOctant         7
+#/EventGen/SetThetaMin  5  degree
+#/EventGen/SetThetaMax  13 degree
+#/EventGen/SetPhiMin    -17 degree
+#/EventGen/SetPhiMax    +17 degree
+#/EventGen/SelectOctant         7
 
-/EventGen/SelectReactionType    2
+/EventGen/SelectReactionType    1
+
 #  0 - Combination of all reactions
 #  1 - LH2 elastic (default)
 #  2 - Al elastic
@@ -264,15 +265,15 @@
 #==========================
 
 # LH2, USAl1p, USAl2p, USAl4p, USC, DSAl2p, DSAl4p, DSAl8p, DSC
-/Target/SetTarget DSAl2p
+#/Target/SetTarget DSAl2p
 
-#/Target/SetCenterPositionInZ  -652.67 cm
-#/Target/SetTargetCellMaterial  Aluminum
-#/Target/SetTargetLength        34.346 cm
-#/Target/SetTargetMaterial       Vacuum
+/Target/SetCenterPositionInZ  -652.67 cm
+/Target/SetTargetCellMaterial  Aluminum
+/Target/SetTargetLength        34.346 cm
+/Target/SetTargetMaterial       Vacuum
 
 # Selects a region of tgt
-/EventGen/SelectReactionRegion 3
+/EventGen/SelectReactionRegion 1
 # 1 - LH2 in target, no Al end caps (default)
 # 2 - entrance target window
 # 3 - exit target window
