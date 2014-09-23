@@ -86,8 +86,6 @@ QweakSimTarget::QweakSimTarget(QweakSimUserInformation *myUI)
     // define target geometry values
 
     targetCellEntranceWindowThickness =  3.8*mil; // from Katherine's A&S ELOG 893
-    //    targetCellEntranceWindowThickness =  5*mil;
-    //targetCellEntranceWindowThickness =  0.89*mm;
     targetCellExitWindowThickness =  20*mil;
     targetCellExitWindowNippleThickness =  5*mil;
     targetCellWallThickness   = 10.0*mil;
@@ -117,7 +115,6 @@ QweakSimTarget::QweakSimTarget(QweakSimUserInformation *myUI)
     ScatteringChamberWindowRadius = 0.5*23.5*inch;
     ScatteringChamberWindowThickness = 35*mil;
 
-    //    myUserInfo->TargetLength = targetCellInnerLength;
     myUserInfo->TargetEntranceWindowThickness = targetCellEntranceWindowThickness;
     myUserInfo->TargetExitWindowThickness = targetCellExitWindowThickness;
     myUserInfo->TargetExitWindowNippleThickness = targetCellExitWindowNippleThickness;
@@ -178,7 +175,7 @@ void QweakSimTarget::ConstructComponent(G4VPhysicalVolume* MotherVolume)
     ConstructTargetContainer(); // scattering chamber
     ConstructScatteringChamberWindow();
 
-    ConstructTargetCell(); // Al cell without end caps
+    ConstructTargetCell();      // Al cell without end caps
     ConstructTargetMaterial();  // LH2 for production target
 
     ConstructTargetEntranceWindow();
@@ -261,6 +258,7 @@ void QweakSimTarget::ConstructTargetContainer()
             0,
             pSurfChk);
     G4cout << G4endl << "###### Leaving QweakSimTarget::ConstructTargetContainer() " << G4endl << G4endl;
+    
 }
 
 void QweakSimTarget::ConstructTargetCell()
@@ -302,6 +300,7 @@ void QweakSimTarget::ConstructTargetCell()
             0,
             pSurfChk);
     G4cout << G4endl << "###### Leaving QweakSimTarget::ConstructTargetCell() " << G4endl << G4endl;
+    
 }
 
 void QweakSimTarget::ConstructTargetEntranceWindow()
@@ -347,6 +346,7 @@ void QweakSimTarget::ConstructTargetEntranceWindow()
             0,
             pSurfChk);
     G4cout << G4endl << "###### Leaving QweakSimTarget::ConstructTargetEntranceWindow() " << G4endl << G4endl;
+
 }
 
 void QweakSimTarget::ConstructTargetExitWindow()
@@ -395,6 +395,7 @@ void QweakSimTarget::ConstructTargetExitWindow()
             0,
             pSurfChk);
     G4cout << G4endl << "###### Leaving QweakSimTarget::ConstructTargetExitWindow() " << G4endl << G4endl;
+    
 }
 
 void QweakSimTarget::ConstructTargetExitWindowNipple()
@@ -440,6 +441,7 @@ void QweakSimTarget::ConstructTargetExitWindowNipple()
             0,
             pSurfChk);
     G4cout << G4endl << "###### Leaving QweakSimTarget::ConstructTargetExitWindowNipple() " << G4endl << G4endl;
+
 }
 
 void QweakSimTarget::ConstructScatteringChamberWindow()
@@ -489,14 +491,7 @@ void QweakSimTarget::ConstructTargetMaterial()
           TargetContainer_Logical->RemoveDaughter(TargetMaterial_Physical);
 
     delete TargetMaterial_Physical;
-    TargetMaterial_Physical = NULL;   
-
-//   G4Tubs* TargetMaterial_Solid    = new G4Tubs("QweakTargetMaterial_Sol",
-// 				       targetCellFrontRadiusMin,
-// 				       targetCellFrontInnerRadiusMax,
-// 				   0.5*targetCellInnerLength,
-// 				       targetCellStartingPhi,
-// 				       targetCellDeltaPhi);
+    TargetMaterial_Physical = NULL;
 
     G4Cons* TargetMaterial_Solid = new G4Cons("QweakTargetMaterial_Sol",
             0., //targetCellFrontRadiusMin, // G4double  pRmin1,
@@ -531,12 +526,22 @@ void QweakSimTarget::ConstructTargetMaterial()
             0,
             pSurfChk);
     G4cout << G4endl << "###### Leaving QweakSimTarget::ConstructTargetMaterial() " << G4endl << G4endl;
+
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void QweakSimTarget::SetTarget(G4String targName)
-{
+{ // NOTE: Can only make one call at a time.  To change targets you must
+  // make a new run, otherwise the positions of the dummy target will be wrong.
+  
+  double zlength = 0.0; // Use for setting dummy position such that
+                        // US face's are aligned (see Target ELOG 18).
+  // Technically the US targets are on average 1.39 mm upstream of the entrance window
+  // and the DS targets are on average 2.97 mm upstream of the exit window.  For simplicity
+  // just align the US faces at -(+)17.173 cm for the US(DS) targets.
+  // K.E. Mesick 23/September/2014
+  
   if (strcmp(targName,"LH2")==0)
     {
       G4cout << "==== Target is LH2 by default!! " << G4endl;
@@ -544,10 +549,10 @@ void QweakSimTarget::SetTarget(G4String targName)
   else if (strcmp(targName,"USAl1p")==0)
     {
       G4cout << "==== Changing Target to " << targName << G4endl;
+      zlength = targetCellInnerLength - 2.0*myUserInfo->TargetThicknessUSALDummy1;
       SetTargetEntranceWindowMaterial("Aluminum");
-      SetTargetEntranceWindowLength(0.8812*mm);
-      SetTargetLength(35.43*cm);
-      //SetTargetLength(45.43*cm);
+      SetTargetEntranceWindowLength(myUserInfo->TargetThicknessUSALDummy1);
+      SetTargetLength(zlength);
       SetTargetMaterial("Vacuum");
       SetTargetExitWindowMaterial("Vacuum");
       SetTargetExitWindowNippleMaterial("Vacuum");
@@ -556,9 +561,10 @@ void QweakSimTarget::SetTarget(G4String targName)
   else if (strcmp(targName,"USAl2p")==0)
     {
       G4cout << "==== Changing Target to " << targName << G4endl;
+      zlength = targetCellInnerLength - 2.0*myUserInfo->TargetThicknessUSALDummy2;
       SetTargetEntranceWindowMaterial("Aluminum");
-      SetTargetEntranceWindowLength(1.7987*mm);
-      SetTargetLength(35.43*cm);
+      SetTargetEntranceWindowLength(myUserInfo->TargetThicknessUSALDummy2);
+      SetTargetLength(zlength);
       SetTargetMaterial("Vacuum");
       SetTargetExitWindowMaterial("Vacuum");
       SetTargetExitWindowNippleMaterial("Vacuum");
@@ -567,9 +573,10 @@ void QweakSimTarget::SetTarget(G4String targName)
   else if (strcmp(targName,"USAl4p")==0)
     {
       G4cout << "==== Changing Target to " << targName << G4endl;
+      zlength = targetCellInnerLength - 2.0*myUserInfo->TargetThicknessUSALDummy4;
       SetTargetEntranceWindowMaterial("Aluminum");
-      SetTargetEntranceWindowLength(3.6030*mm);
-      SetTargetLength(35.43*cm);
+      SetTargetEntranceWindowLength(myUserInfo->TargetThicknessUSALDummy4);
+      SetTargetLength(zlength);
       SetTargetMaterial("Vacuum");
       SetTargetExitWindowMaterial("Vacuum");
       SetTargetExitWindowNippleMaterial("Vacuum");
@@ -578,9 +585,10 @@ void QweakSimTarget::SetTarget(G4String targName)
   else if (strcmp(targName,"USC")==0)
     {
       G4cout << "==== Changing Target to " << targName << G4endl;
+      zlength = targetCellInnerLength - 2.0*myUserInfo->TargetThicknessUSCDummy;
       SetTargetEntranceWindowMaterial("USCarbon");
-      SetTargetEntranceWindowLength(0.9973*mm);
-      SetTargetLength(35.43*cm);
+      SetTargetEntranceWindowLength(myUserInfo->TargetThicknessUSCDummy);
+      SetTargetLength(zlength);
       SetTargetMaterial("Vacuum");
       SetTargetExitWindowMaterial("Vacuum");
       SetTargetExitWindowNippleMaterial("Vacuum");
@@ -589,11 +597,12 @@ void QweakSimTarget::SetTarget(G4String targName)
   else if (strcmp(targName,"DSAl2p")==0)
     {
       G4cout << "==== Changing Target to " << targName << G4endl;
+      zlength = targetCellInnerLength;
       SetTargetEntranceWindowMaterial("Vacuum");
-      SetTargetLength(33.36*cm);
+      SetTargetLength(zlength);
       SetTargetMaterial("Vacuum");
-      SetTargetExitWindowLength(1.8637*mm);
-      SetTargetExitWindowNippleLength(1.8637*mm);
+      SetTargetExitWindowLength(myUserInfo->TargetThicknessDSALDummy2);
+      SetTargetExitWindowNippleLength(myUserInfo->TargetThicknessDSALDummy2);
       SetTargetExitWindowMaterial("Aluminum"); 
       SetTargetExitWindowNippleMaterial("Aluminum");
       G4cout << "==== Changing Target :  Now the Target is " << targName << G4endl;
@@ -601,11 +610,12 @@ void QweakSimTarget::SetTarget(G4String targName)
   else if (strcmp(targName,"DSAl4p")==0)
     {
       G4cout << "==== Changing Target to " << targName << G4endl;
+      zlength = targetCellInnerLength;
       SetTargetEntranceWindowMaterial("Vacuum");
-      SetTargetLength(33.36*cm);
+      SetTargetLength(zlength);
       SetTargetMaterial("Vacuum");
-      SetTargetExitWindowLength(3.6828*mm);
-      SetTargetExitWindowNippleLength(3.6828*mm);
+      SetTargetExitWindowLength(myUserInfo->TargetThicknessDSALDummy4);
+      SetTargetExitWindowNippleLength(myUserInfo->TargetThicknessDSALDummy4);
       SetTargetExitWindowMaterial("Aluminum"); 
       SetTargetExitWindowNippleMaterial("Aluminum");
       G4cout << "==== Changing Target :  Now the Target is " << targName << G4endl;
@@ -613,11 +623,12 @@ void QweakSimTarget::SetTarget(G4String targName)
   else if (strcmp(targName,"DSAl8p")==0)
     {
       G4cout << "==== Changing Target to " << targName << G4endl;
+      zlength = targetCellInnerLength;
       SetTargetEntranceWindowMaterial("Vacuum");
-      SetTargetLength(33.36*cm);
+      SetTargetLength(zlength);
       SetTargetMaterial("Vacuum");
-      SetTargetExitWindowLength(7.1980*mm);
-      SetTargetExitWindowNippleLength(7.1980*mm);
+      SetTargetExitWindowLength(myUserInfo->TargetThicknessDSALDummy8);
+      SetTargetExitWindowNippleLength(myUserInfo->TargetThicknessDSALDummy8);
       SetTargetExitWindowMaterial("Aluminum"); 
       SetTargetExitWindowNippleMaterial("Aluminum");
       G4cout << "==== Changing Target :  Now the Target is " << targName << G4endl;
@@ -625,11 +636,12 @@ void QweakSimTarget::SetTarget(G4String targName)
   else if (strcmp(targName,"DSC")==0)
     {
       G4cout << "==== Changing Target to " << targName << G4endl;
+      zlength = targetCellInnerLength;
       SetTargetEntranceWindowMaterial("Vacuum");
-      SetTargetLength(33.36*cm);
+      SetTargetLength(zlength);
       SetTargetMaterial("Vacuum");
-      SetTargetExitWindowLength(3.1876*mm);
-      SetTargetExitWindowNippleLength(3.1876*mm);
+      SetTargetExitWindowLength(myUserInfo->TargetThicknessDSCDummy);
+      SetTargetExitWindowNippleLength(myUserInfo->TargetThicknessDSCDummy);
       SetTargetExitWindowMaterial("DSCarbon"); 
       SetTargetExitWindowNippleMaterial("DSCarbon");
       G4cout << "==== Changing Target :  Now the Target is " << targName << G4endl;
@@ -744,7 +756,6 @@ void QweakSimTarget::SetTargetCenterPositionInZ(G4double zPos)
 
     targetZPos = zPos;
     myUserInfo->TargetCenterPositionZ = zPos;
-//TargetCell_Physical->SetTranslation(G4ThreeVector(0.,0., zPos));
     TargetContainer_Physical->SetTranslation(G4ThreeVector(0.,0., zPos));
     G4cout << "==== Changing Target CenterPositionZ:  Now the Target Center Position in Z is " << zPos/cm << " cm" << G4endl;
 }
@@ -767,7 +778,7 @@ void QweakSimTarget::SetTargetLength(G4double len)
     CalculateTargetPositions();
 
     // construct target cell/material of appropriate length
-    ConstructTargetCell(); // Al cell without end caps
+    ConstructTargetCell();      // Al cell without end caps
     ConstructTargetMaterial();  // LH2 for production target
 
     // construct the end caps at the correct location
