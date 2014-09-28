@@ -42,8 +42,8 @@
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-QweakSimVDCMessenger::QweakSimVDCMessenger(QweakSimVDC* theVDC)
-:myVDC(theVDC)
+QweakSimVDCMessenger::QweakSimVDCMessenger(QweakSimVDC* theVDC,G4int pkg)
+:myVDC(theVDC),fPackage(pkg)
 { 
  // VDC related
   VDCDir = new G4UIdirectory("/VDC/");
@@ -161,6 +161,38 @@ QweakSimVDCMessenger::QweakSimVDCMessenger(QweakSimVDC* theVDC)
   DCNumberPerPlaneCmd->SetDefaultValue(401);
   DCNumberPerPlaneCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
+
+  //-----------------------Individual Package Commands-------------------------------
+
+  G4String DirPerPackage_name = "/VDC/VDC" + G4UIcommand::ConvertToString(pkg+1);
+  DirPerPackage = new  G4UIdirectory(G4String(DirPerPackage_name + "/"));
+  DirPerPackage -> SetGuidance("Individual VDC detector control.");
+
+  VDC_FrontCenterPositionInX_Pkg_Cmd =  new G4UIcmdWithADoubleAndUnit(G4String(DirPerPackage_name + "/SetFrontCenterPositionInX"),this);
+  VDC_FrontCenterPositionInX_Pkg_Cmd->SetGuidance("Set the X position of the VDC Front container center");
+  VDC_FrontCenterPositionInX_Pkg_Cmd->SetParameterName("Size",true);
+  VDC_FrontCenterPositionInX_Pkg_Cmd->SetUnitCategory("Length");
+  VDC_FrontCenterPositionInX_Pkg_Cmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+
+  VDC_FrontCenterPositionInY_Pkg_Cmd =  new G4UIcmdWithADoubleAndUnit(G4String(DirPerPackage_name + "/SetFrontCenterPositionInY"),this);
+  VDC_FrontCenterPositionInY_Pkg_Cmd->SetGuidance("Set the Y position of the VDC Front container center");
+  VDC_FrontCenterPositionInY_Pkg_Cmd->SetParameterName("Size",true);
+  VDC_FrontCenterPositionInY_Pkg_Cmd->SetUnitCategory("Length");
+  VDC_FrontCenterPositionInY_Pkg_Cmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+
+  VDC_FrontCenterPositionInZ_Pkg_Cmd =  new G4UIcmdWithADoubleAndUnit(G4String(DirPerPackage_name + "/SetFrontCenterPositionInZ"),this);
+  VDC_FrontCenterPositionInZ_Pkg_Cmd->SetGuidance("Set the Z position of the VDC Front container center");
+  VDC_FrontCenterPositionInZ_Pkg_Cmd->SetParameterName("Size",true);
+  VDC_FrontCenterPositionInZ_Pkg_Cmd->SetUnitCategory("Length");
+  VDC_FrontCenterPositionInZ_Pkg_Cmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+
+  VDC_RotationAngleInPhi_Pkg_Cmd =  new G4UIcmdWithADoubleAndUnit(G4String(DirPerPackage_name + "/SetRotationAngleInPhi"),this);
+  VDC_RotationAngleInPhi_Pkg_Cmd->SetGuidance("Set the rotation angle in phi");
+  VDC_RotationAngleInPhi_Pkg_Cmd->SetParameterName("Size",true);
+  VDC_RotationAngleInPhi_Pkg_Cmd->SetUnitCategory("Angle");
+  VDC_RotationAngleInPhi_Pkg_Cmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+
+
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -184,7 +216,15 @@ QweakSimVDCMessenger::~QweakSimVDCMessenger()
   if (VDC_RotationAngleInPhi_Cmd)     delete VDC_RotationAngleInPhi_Cmd;
   if (VDC_MeanTrackAngleInTheta_Cmd)  delete VDC_MeanTrackAngleInTheta_Cmd;
 
+
+  if (VDC_FrontCenterPositionInX_Pkg_Cmd) delete VDC_FrontCenterPositionInX_Pkg_Cmd;
+  if (VDC_FrontCenterPositionInY_Pkg_Cmd) delete VDC_FrontCenterPositionInY_Pkg_Cmd;
+  if (VDC_FrontCenterPositionInZ_Pkg_Cmd) delete VDC_FrontCenterPositionInZ_Pkg_Cmd;
+
+  if (VDC_RotationAngleInPhi_Pkg_Cmd)     delete VDC_RotationAngleInPhi_Pkg_Cmd;
+
   if (VDCDir)               delete VDCDir;
+  if (DirPerPackage)               delete DirPerPackage;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -243,28 +283,29 @@ void QweakSimVDCMessenger::SetNewValue(G4UIcommand* command,G4String newValue)
   { 
       G4cout << "#### Messenger: Setting VDC FrontCenter Xpos to " << newValue << G4endl;
       
-     myVDC->SetFrontVDC_CenterPositionInX(VDC_FrontCenterPositionInX_Cmd->GetNewDoubleValue(newValue));
+     myVDC->SetFrontVDC_CenterPositionInX(VDC_FrontCenterPositionInX_Cmd->GetNewDoubleValue(newValue),0);
   }
   
   if( command == VDC_FrontCenterPositionInY_Cmd )
   { 
       G4cout << "#### Messenger: Setting VDC FrontCenter Ypos to " << newValue << G4endl;
       
-      myVDC->SetFrontVDC_CenterPositionInY(VDC_FrontCenterPositionInY_Cmd->GetNewDoubleValue(newValue));
+      myVDC->SetFrontVDC_CenterPositionInY(VDC_FrontCenterPositionInY_Cmd->GetNewDoubleValue(newValue),0);
   }
   
   if( command == VDC_FrontCenterPositionInZ_Cmd )
   { 
      G4cout << "#### Messenger: Setting VDC FrontCenter Zpos to " << newValue << G4endl;
      
-     myVDC->SetFrontVDC_CenterPositionInZ(VDC_FrontCenterPositionInZ_Cmd->GetNewDoubleValue(newValue));
+     myVDC->SetFrontVDC_CenterPositionInZ(VDC_FrontCenterPositionInZ_Cmd->GetNewDoubleValue(newValue),0);
   }
 
    if( command == VDC_RotationAngleInPhi_Cmd )
   { 
      G4cout << "#### Messenger: Setting VDC rotation angle in phi to " << newValue << G4endl;
      
-     myVDC->SetVDC_RotationAngleInPhi(VDC_RotationAngleInPhi_Cmd->GetNewDoubleValue(newValue));
+     myVDC->SetVDC_RotationAngleInPhi(VDC_RotationAngleInPhi_Cmd->GetNewDoubleValue(newValue),0);
+     myVDC->SetVDC_RotationAngleInPhi(VDC_RotationAngleInPhi_Cmd->GetNewDoubleValue(newValue)+180.0*degree,1);
    }
 
 
@@ -275,6 +316,35 @@ void QweakSimVDCMessenger::SetNewValue(G4UIcommand* command,G4String newValue)
      myVDC->SetVDC_MeanTrackAngleInTheta(VDC_MeanTrackAngleInTheta_Cmd->GetNewDoubleValue(newValue));
    }
    
+//-------------------------------Individual Package Commands-------------------------
+
+   if( command == VDC_FrontCenterPositionInX_Pkg_Cmd )
+   {
+       G4cout << "#### Messenger: Setting VDC FrontCenter Xpos to " << newValue << G4endl;
+
+      myVDC->SetFrontVDC_CenterPositionInX(VDC_FrontCenterPositionInX_Pkg_Cmd->GetNewDoubleValue(newValue),fPackage);
+   }
+
+   if( command == VDC_FrontCenterPositionInY_Pkg_Cmd )
+   {
+       G4cout << "#### Messenger: Setting VDC FrontCenter Ypos to " << newValue << G4endl;
+
+       myVDC->SetFrontVDC_CenterPositionInY(VDC_FrontCenterPositionInY_Pkg_Cmd->GetNewDoubleValue(newValue),fPackage);
+   }
+
+   if( command == VDC_FrontCenterPositionInZ_Pkg_Cmd )
+   {
+      G4cout << "#### Messenger: Setting VDC FrontCenter Zpos to " << newValue << G4endl;
+
+      myVDC->SetFrontVDC_CenterPositionInZ(VDC_FrontCenterPositionInZ_Pkg_Cmd->GetNewDoubleValue(newValue),fPackage);
+   }
+
+    if( command == VDC_RotationAngleInPhi_Pkg_Cmd )
+   {
+      G4cout << "#### Messenger: Setting VDC rotation angle in phi to " << newValue << G4endl;
+
+      myVDC->SetVDC_RotationAngleInPhi(VDC_RotationAngleInPhi_Pkg_Cmd->GetNewDoubleValue(newValue),fPackage);
+    }
 
 
   //========================

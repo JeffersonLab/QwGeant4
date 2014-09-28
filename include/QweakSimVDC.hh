@@ -91,11 +91,11 @@ public:
   void SetVDC_DriftCellNumberPerPlane(G4int numberPerPlane);
   void SetVDC_DriftCellGeometryUpdate();
 
-  void SetFrontVDC_CenterPositionInX(G4double xPos);
-  void SetFrontVDC_CenterPositionInY(G4double yPos);
-  void SetFrontVDC_CenterPositionInZ(G4double zPos);
+  void SetFrontVDC_CenterPositionInX(G4double xPos, G4int pkg);
+  void SetFrontVDC_CenterPositionInY(G4double yPos, G4int pkg);
+  void SetFrontVDC_CenterPositionInZ(G4double zPos, G4int pkg);
 
-  void SetVDC_RotationAngleInPhi(G4double vdc_phiangle);
+  void SetVDC_RotationAngleInPhi(G4double vdc_phiangle, G4int pkg);
   void SetVDC_MeanTrackAngleInTheta(G4double angle) {  MeanTrackAngle = angle; }
 
 
@@ -105,15 +105,15 @@ public:
   
   G4LogicalVolume*   getVDC_LogicalVolume()    {return VDC_MasterContainer_Logical;} 
 
-  G4VPhysicalVolume* getVDCFront_PhysicalVolume()   {return VDC_MasterContainerFront_Physical;} 
-  G4VPhysicalVolume* getVDCBack_PhysicalVolume()   {return VDC_MasterContainerBack_Physical;} 
+  G4VPhysicalVolume* getVDCFront_PhysicalVolume()   {return VDC_MasterContainerFront_Physical[0];}
+  G4VPhysicalVolume* getVDCBack_PhysicalVolume()   {return VDC_MasterContainerBack_Physical[0];}
 
   G4LogicalVolume*   getVDC_WirePlane_LogicalVolume()    {return VDC_WirePlane_Logical;} 
   G4VPhysicalVolume* getVDC_UWirePlane_PhysicalVolume()   {return VDC_UPlane_Physical;} 
   G4VPhysicalVolume* getVDC_VWirePlane_PhysicalVolume()   {return VDC_VPlane_Physical;} 
 
   G4LogicalVolume*   getVDC_DriftCellMasterContainer_LogicalVolume()    {return VDC_DriftCellMasterContainer_Logical;} 
-  G4VPhysicalVolume* getVDC_DriftCellMasterContainer_PhysicalVolume()   {return VDC_DriftCellMasterContainer_Physical;} 
+  G4VPhysicalVolume* getVDC_DriftCellMasterContainer_PhysicalVolume()   {return VDC_DriftCellMasterContainer_Physical[0];}
 
   G4LogicalVolume*   getVDC_DriftCellFrontContainer_LogicalVolume()    {return VDC_DriftCellFrontContainer_Logical;} 
   G4VPhysicalVolume* getVDC_DriftCellFrontContainer_PhysicalVolume()   {return VDC_DriftCellFrontContainer_Physical;} 
@@ -132,27 +132,31 @@ public:
   G4double GetDCUPlaneWireAngle() {return DriftCell_WireAngleFront;} 
   G4double GetDCVPlaneWireAngle() {return DriftCell_WireAngleBack;} 
 
-  G4double GetVDC_RotationAngleInPhi() {return VDC_RotationAngleInPhi;} 
+  G4double GetVDC_RotationAngleInPhi() {return VDC_RotationAngleInPhi;}
 
 private:
 
-    void SetVDC_BackVDC_CenterPosition();
-    void SetVDC_DriftCell_MasterContainer_CenterPosition();
+    void SetVDC_BackVDC_CenterPosition(G4int pkg);
+    void SetVDC_DriftCell_MasterContainer_CenterPosition(G4int pkg);
 
-    G4RotationMatrix*     Rotation_VDC_MasterContainer; // for Phi angle orientation
+    void PlaceVDC_MasterContainers();
+    void PlaceVDC_DriftCellMasterContainers();
+
+    std::vector<G4RotationMatrix*>     Rotation_VDC_MasterContainer; // for Phi angle orientation
  
    // mean bending angle after MainMagnet
     G4double MeanTrackAngle;  // ~ 20.8*degree
     G4double VDC_RotationAngleInPhi;
 
 
-    QweakSimVDCMessenger* VDC_Messenger;  // pointer to the Messenger
+    std::vector< QweakSimVDCMessenger* > VDC_Messenger;  // pointer to the Messenger
 
     QweakSimMaterial*  pMaterial;
 
-  
+    G4VPhysicalVolume* theMotherPV;  //pointer to MotherVolume
+
   G4LogicalVolume*   VDC_DriftCellMasterContainer_Logical; 
-  G4VPhysicalVolume* VDC_DriftCellMasterContainer_Physical; 
+  std::vector< G4VPhysicalVolume* > VDC_DriftCellMasterContainer_Physical;
 
   G4LogicalVolume*   VDC_DriftCellFrontContainer_Logical; 
   G4VPhysicalVolume* VDC_DriftCellFrontContainer_Physical; 
@@ -184,19 +188,19 @@ private:
   G4double AluFrame_InnerLength;
   G4double AluFrame_InnerWidth; 
 
-  G4double VDC_CenterFront_XPos;
-  G4double VDC_CenterFront_YPos;
-  G4double VDC_CenterFront_ZPos;
+  std::vector<G4double> VDC_CenterFront_XPos;
+  std::vector<G4double> VDC_CenterFront_YPos;
+  std::vector<G4double> VDC_CenterFront_ZPos;
 
-  G4double VDC_CenterBack_XPos;
-  G4double VDC_CenterBack_YPos;
-  G4double VDC_CenterBack_ZPos;
+  std::vector<G4double> VDC_CenterBack_XPos;
+  std::vector<G4double> VDC_CenterBack_YPos;
+  std::vector<G4double> VDC_CenterBack_ZPos;
 
   G4double VDC_FrontBackDistance;
 
-  G4double VDC_DriftCell_MasterContainer_XPos;
-  G4double VDC_DriftCell_MasterContainer_YPos;
-  G4double VDC_DriftCell_MasterContainer_ZPos;
+  std::vector<G4double> VDC_DriftCell_MasterContainer_XPos;
+  std::vector<G4double> VDC_DriftCell_MasterContainer_YPos;
+  std::vector<G4double> VDC_DriftCell_MasterContainer_ZPos;
 
 
   G4int    DriftCell_NumberPerPlane;
@@ -231,8 +235,8 @@ private:
   
 
   G4LogicalVolume*      VDC_MasterContainer_Logical; 
-  G4VPhysicalVolume*    VDC_MasterContainerFront_Physical;
-  G4VPhysicalVolume*    VDC_MasterContainerBack_Physical;
+  std::vector< G4VPhysicalVolume* >    VDC_MasterContainerFront_Physical;
+  std::vector< G4VPhysicalVolume* >    VDC_MasterContainerBack_Physical;
 
   G4LogicalVolume*      VDC_SubContainer_Logical; 
   G4VPhysicalVolume*    VDC_SubContainer_Physical;

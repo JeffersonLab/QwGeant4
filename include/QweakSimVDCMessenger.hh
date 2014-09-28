@@ -68,15 +68,20 @@ class QweakSimVDC;
 class QweakSimVDCMessenger: public G4UImessenger
 {
   public:
-    QweakSimVDCMessenger(QweakSimVDC*);
+    QweakSimVDCMessenger(QweakSimVDC*,G4int pkg = 0);
    ~QweakSimVDCMessenger();
     
+    G4int GetPackage() {return fPackage;}
     void SetNewValue(G4UIcommand*, G4String);
     
 private:
   QweakSimVDC*               myVDC;
-  
+
+
   G4UIdirectory*             VDCDir;
+  
+  G4int 					 fPackage;
+  G4UIdirectory*             DirPerPackage;
 
   G4UIcmdWithAString*        VDC_MasterContainerMatCmd;
   G4UIcmdWithAString*        VDC_SubContainerMatCmd;
@@ -102,6 +107,12 @@ private:
   G4UIcmdWithADoubleAndUnit* DCHeightCmd;
   G4UIcmdWithADoubleAndUnit* DCWidthOnFrameCmd;
   G4UIcmdWithAnInteger*      DCNumberPerPlaneCmd;
+
+  //-------------------individual package commands------------------
+  G4UIcmdWithADoubleAndUnit* VDC_FrontCenterPositionInX_Pkg_Cmd;
+  G4UIcmdWithADoubleAndUnit* VDC_FrontCenterPositionInY_Pkg_Cmd;
+  G4UIcmdWithADoubleAndUnit* VDC_FrontCenterPositionInZ_Pkg_Cmd;
+  G4UIcmdWithADoubleAndUnit* VDC_RotationAngleInPhi_Pkg_Cmd;
 
 };
 

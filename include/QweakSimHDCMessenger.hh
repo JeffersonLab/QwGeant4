@@ -60,7 +60,7 @@ class QweakSimHDC;
 class QweakSimHDCMessenger: public G4UImessenger
 {
   public:
-    QweakSimHDCMessenger(QweakSimHDC*);
+    QweakSimHDCMessenger(QweakSimHDC*,G4int pkg = 0);
    ~QweakSimHDCMessenger();
     
     void SetNewValue(G4UIcommand*, G4String);
@@ -68,7 +68,11 @@ class QweakSimHDCMessenger: public G4UImessenger
 private:
   QweakSimHDC*            myHDC;
   
+
   G4UIdirectory*             HDCDir;
+
+  G4int 				 	 fPackage;
+  G4UIdirectory*             DirPerPackage;
 
   G4UIcmdWithAString*        HDC_MasterContainerMatCmd;
   G4UIcmdWithAString*        HDC_SubContainerMatCmd;
@@ -87,6 +91,18 @@ private:
 
   G4UIcmdWithADoubleAndUnit* HDC_RotationAngleInPhi_Cmd;
   
+  //------------------------------------------------------
+
+  G4UIcmdWithADoubleAndUnit* HDC_FrontCenterPositionInX_Pkg_Cmd;
+  G4UIcmdWithADoubleAndUnit* HDC_FrontCenterPositionInY_Pkg_Cmd;
+  G4UIcmdWithADoubleAndUnit* HDC_FrontCenterPositionInZ_Pkg_Cmd;
+
+  G4UIcmdWithADoubleAndUnit* HDC_BackCenterPositionInX_Pkg_Cmd;
+  G4UIcmdWithADoubleAndUnit* HDC_BackCenterPositionInY_Pkg_Cmd;
+  G4UIcmdWithADoubleAndUnit* HDC_BackCenterPositionInZ_Pkg_Cmd;
+
+  G4UIcmdWithADoubleAndUnit* HDC_RotationAngleInPhi_Pkg_Cmd;
+
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

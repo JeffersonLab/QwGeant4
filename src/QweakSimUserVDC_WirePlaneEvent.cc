@@ -46,6 +46,7 @@ void QweakSimUserVDC_WirePlaneEvent::Clear(const Option_t*)
 {
   NbOfHits = 0;
 
+  PackageID.clear();
   TrackID.clear();
   GlobalTimeOfHit.clear();
 

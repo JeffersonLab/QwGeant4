@@ -48,6 +48,7 @@ class QweakSimUserHDC_WirePlaneEvent : public TObject
 
 private:
 
+  std::vector <Int_t>	PackageID;				///< Package number
   std::vector <Int_t>   TrackID;                ///< ID of the track from which this hit was generated
   std::vector <Float_t> GlobalTimeOfHit;        ///< Global time when this hit was generated
 
@@ -136,6 +137,9 @@ public:
 
   void     StoreNbOfHits(Int_t noh)    { NbOfHits = noh; }
   Int_t      GetNbOfHits() const {return NbOfHits;}
+
+  void     StorePackageID(Int_t pid)    { PackageID.push_back(pid); }
+    std::vector <Int_t>      GetPackageID() const {return PackageID;}
 
   void     StoreTrackID(Int_t tid)    { TrackID.push_back(tid); }
   std::vector <Int_t>      GetTrackID() const {return TrackID;}

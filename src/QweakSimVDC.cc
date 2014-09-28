@@ -57,7 +57,7 @@ QweakSimVDC::QweakSimVDC()
   //=======================	
 
  VDC_DriftCellMasterContainer_Logical  = NULL;
- VDC_DriftCellMasterContainer_Physical = NULL;
+ //VDC_DriftCellMasterContainer_Physical = NULL;
 
  VDC_DriftCellFrontContainer_Logical  = NULL;
  VDC_DriftCellFrontContainer_Physical = NULL;
@@ -98,18 +98,27 @@ QweakSimVDC::QweakSimVDC()
   AluFrame_InnerLength      = 210.0*cm; 
   AluFrame_InnerWidth       =  50.0*cm; 
 
-  VDC_CenterFront_XPos        =   0.0*cm;
-  VDC_CenterFront_YPos        = 276.165*cm; // 280.0*cm;  // SW for 20.75 deg
-  VDC_CenterFront_ZPos        = 443.920*cm; //480.0*cm;   // SW: 330.0 +107.0
+  VDC_CenterFront_XPos.resize(2,0);
+  VDC_CenterFront_YPos.resize(2,0);
+  VDC_CenterFront_ZPos.resize(2,0);
+  VDC_CenterBack_XPos.resize(2,0);
+  VDC_CenterBack_YPos.resize(2,0);
+  VDC_CenterBack_ZPos.resize(2,0);
+
+  for(int i = 0; i < 2; i++){//temp loop to assign values for package 2. Although same as package 1, will be rotated to different octant.
+  VDC_CenterFront_XPos[i]        =   0.0*cm;
+  VDC_CenterFront_YPos[i]        = 276.165*cm; // 280.0*cm;  // SW for 20.75 deg
+  VDC_CenterFront_ZPos[i]        = 443.920*cm; //480.0*cm;   // SW: 330.0 +107.0
   //VDC_CenterFront_ZPos        = -700*cm;   // for testing
 
   VDC_FrontBackDistance       = 53.18*cm; // center to center
   // updated 2012-04-09 by wdconinc based on qwanalysis geometry
-
+  SetVDC_BackVDC_CenterPosition(i);
+  }
   MeanTrackAngle             =  24.43*degree;  //20.57*degree;  // also tilting angle of VDcs  // 
   VDC_RotationAngleInPhi     =   0.0*degree;   // normally 0.0*degree = 12 o'clock = octant 1
   
-  SetVDC_BackVDC_CenterPosition();
+
 
 
   // How many drift cells per plane
@@ -124,14 +133,15 @@ QweakSimVDC::QweakSimVDC()
   DriftCell_MasterContainer_FullHeight       =   85.00*cm;  //extral large value
   DriftCell_MasterContainer_FullLength       =  600.00*cm;  //extral large value
 
+  VDC_DriftCell_MasterContainer_XPos.resize(2,0);
+  VDC_DriftCell_MasterContainer_YPos.resize(2,0);
+  VDC_DriftCell_MasterContainer_ZPos.resize(2,0);
 
-
-  SetVDC_DriftCell_MasterContainer_CenterPosition();
-
+  SetVDC_DriftCell_MasterContainer_CenterPosition(0);
+  SetVDC_DriftCell_MasterContainer_CenterPosition(1);
  
 
-  VDC_Messenger = new QweakSimVDCMessenger(this);
-  
+
   pMaterial = new QweakSimMaterial();
   pMaterial->DefineMaterials();
 
@@ -142,12 +152,12 @@ QweakSimVDC::QweakSimVDC()
   //===============
 
   // define Rotation matrix for MasterContainer orientated in MotherVolume
-  Rotation_VDC_MasterContainer      = NULL;  
-  Rotation_VDC_MasterContainer      = new G4RotationMatrix();
+  //Rotation_VDC_MasterContainer      = NULL;
+  //Rotation_VDC_MasterContainer      = new G4RotationMatrix();
 
   VDC_MasterContainer_Logical       = NULL;
-  VDC_MasterContainerFront_Physical = NULL;
-  VDC_MasterContainerBack_Physical  = NULL;
+  //VDC_MasterContainerFront_Physical = NULL;
+  //VDC_MasterContainerBack_Physical  = NULL;
 
   VDC_SubContainer_Logical          = NULL;
   VDC_SubContainer_Physical         = NULL;
@@ -172,8 +182,16 @@ QweakSimVDC::QweakSimVDC()
   VDC_AluLayer_Thickness            = 1000*angstrom;   //   0.1um
   VDC_MylarFoil_Thickness           = 6.25*micrometer; //   1/4*mil
 
+  //Resizing vectors and setting values to 0
+  VDC_MasterContainerFront_Physical.resize(2,0);
+  VDC_MasterContainerBack_Physical.resize(2,0);
+  VDC_DriftCellMasterContainer_Physical.resize(2,0);
+  Rotation_VDC_MasterContainer.resize(2,0);
+  VDC_Messenger.resize(2,0);
 
-
+  // Creates a messenger for each VDC package (0 for Package 1 and 1 for Package 2)
+  for(size_t i = 0; i < VDC_Messenger.size(); i++)
+    VDC_Messenger[i] = new QweakSimVDCMessenger(this, i);
 
 }
 
@@ -193,7 +211,6 @@ QweakSimVDC::~QweakSimVDC()
   if (VDC_WirePlane_VisAtt)                delete VDC_WirePlane_VisAtt;
 
   if (pMaterial)      delete pMaterial; 
-  if (VDC_Messenger)  delete VDC_Messenger;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -201,7 +218,7 @@ QweakSimVDC::~QweakSimVDC()
 void QweakSimVDC::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 {
   G4cout << G4endl << "###### Calling QweakSimVDC::ConstructComponent() " << G4endl << G4endl;
- 
+  theMotherPV = MotherVolume;
 
   // assign material-
 
@@ -248,50 +265,8 @@ void QweakSimVDC::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 						     "VDC_MasterContainer_Log",
 						     0,0,0);
 
-  G4cout << G4endl << "###### QweakSimVDC: Define VDC_MasterContainerFront Position" << G4endl << G4endl;
 
-  // define VDC MasterContainer Front position in MotherVolume
-  //VDC_CenterFront_ZPos = -600*cm; // just make an z offset for display
-  //VDC_CenterBack_ZPos  = -560*cm; // just make an z offset for display
-
-  G4ThreeVector position_MasterContainerFront = G4ThreeVector(VDC_CenterFront_XPos,VDC_CenterFront_YPos,VDC_CenterFront_ZPos );
-
-  // define VDC MasterContainer Back position in MotherVolume
-  SetVDC_BackVDC_CenterPosition();
-  
-  G4ThreeVector position_MasterContainerBack = G4ThreeVector(VDC_CenterBack_XPos,VDC_CenterBack_YPos,VDC_CenterBack_ZPos );
-
-  G4cout << G4endl << "###### QweakSimVDC: Define VDC_MasterContainerFront Orientation" << G4endl << G4endl;
-
-  // define VDC Container Orientation in MotherVolume
-  G4double Angle_VDC_MasterContainer = (-90.0+45.0+20.82)*degree;
-  Rotation_VDC_MasterContainer       ->rotateX(Angle_VDC_MasterContainer);
- 
-  G4cout << G4endl << "###### QweakSimVDC: Define VDC_MasterContainerFront_Physical" << G4endl << G4endl;
-
-  // define VDC physical volume of drift chamber container
-  VDC_MasterContainerFront_Physical = new G4PVPlacement(Rotation_VDC_MasterContainer, 
-							position_MasterContainerFront, 
-							"VDC_MasterContainerFront_Physical", 
-							VDC_MasterContainer_Logical,
-							MotherVolume,   
-							false, 
-							0,
-							pSurfChk); // copy number for front
-
-  G4cout << G4endl << "###### QweakSimVDC: Define VDC_MasterContainerBack_Physical" << G4endl << G4endl;
-
-  // define VDC physical volume of drift chamber container
-  VDC_MasterContainerBack_Physical = new G4PVPlacement(Rotation_VDC_MasterContainer,
-						       position_MasterContainerBack,
-						       "VDC_MasterContainerBack_Physical",
-						       VDC_MasterContainer_Logical,
-						       MotherVolume,
-						       false,
-						       1,
-						       pSurfChk);// copy number for back
-
-
+  PlaceVDC_MasterContainers(); //Places physical volumes of VDCs
   //-----------------------
   // Define Stesalit frame
   //-----------------------
@@ -895,24 +870,9 @@ void QweakSimVDC::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 							     "VDC_DriftCellMasterContainer_Log",
 							     0,0,0);
   
-  // define VDC Drift Cell Container position in MotherVolume
-  SetVDC_DriftCell_MasterContainer_CenterPosition();
-
-  G4ThreeVector position_DriftCellMasterContainer = G4ThreeVector(VDC_DriftCell_MasterContainer_XPos,
-								  VDC_DriftCell_MasterContainer_YPos,
-								  VDC_DriftCell_MasterContainer_ZPos );
 
 
-  G4cout << G4endl << "###### QweakSimVDC: Define VDC_DriftCellMasterContainer_Physical " << G4endl << G4endl;
-  // define VDC physical volume of drift chamber container
-  VDC_DriftCellMasterContainer_Physical = new G4PVPlacement(Rotation_VDC_MasterContainer, 
-							    position_DriftCellMasterContainer, 
-							    "VDC_DriftCellMasterContainer_Physical",
-							    VDC_DriftCellMasterContainer_Logical, 
-							    MotherVolume,   
-							    false, 
-							    0,
-							    pSurfChk);
+  PlaceVDC_DriftCellMasterContainers();
 
 
   //==========================================================
@@ -1533,103 +1493,104 @@ G4cout << G4endl << "###### Calling QweakSimVDC::SetVDC_DriftCellGeometryUpdate(
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void QweakSimVDC::SetFrontVDC_CenterPositionInX(G4double xPos)
+void QweakSimVDC::SetFrontVDC_CenterPositionInX(G4double xPos, G4int pkg)
 {
     G4cout << G4endl << "###### Calling QweakSimVDC::SetFrontVDC_CenterPositionInX() " << G4endl << G4endl;
 
-    VDC_CenterFront_XPos = xPos;	 
+    VDC_CenterFront_XPos[pkg] = xPos;
 
-    SetVDC_BackVDC_CenterPosition();
-    SetVDC_DriftCell_MasterContainer_CenterPosition();
+    SetVDC_BackVDC_CenterPosition(pkg);
+    SetVDC_DriftCell_MasterContainer_CenterPosition(pkg);
 
-    VDC_MasterContainerFront_Physical->SetTranslation(G4ThreeVector(VDC_CenterFront_XPos,
-								    VDC_CenterFront_YPos, 
-								    VDC_CenterFront_ZPos));
+    VDC_MasterContainerFront_Physical[pkg]->SetTranslation(G4ThreeVector(VDC_CenterFront_XPos[pkg],
+								    VDC_CenterFront_YPos[pkg],
+								    VDC_CenterFront_ZPos[pkg]));
 
-    VDC_MasterContainerBack_Physical->SetTranslation(G4ThreeVector(VDC_CenterBack_XPos,
-								   VDC_CenterBack_YPos, 
-								   VDC_CenterBack_ZPos));
+    VDC_MasterContainerBack_Physical[pkg]->SetTranslation(G4ThreeVector(VDC_CenterBack_XPos[pkg],
+								   VDC_CenterBack_YPos[pkg],
+								   VDC_CenterBack_ZPos[pkg]));
 
-    VDC_DriftCellMasterContainer_Physical->SetTranslation(G4ThreeVector(VDC_DriftCell_MasterContainer_XPos,
-									VDC_DriftCell_MasterContainer_YPos, 
-									VDC_DriftCell_MasterContainer_ZPos));
+    VDC_DriftCellMasterContainer_Physical[pkg]->SetTranslation(G4ThreeVector(VDC_DriftCell_MasterContainer_XPos[pkg],
+									VDC_DriftCell_MasterContainer_YPos[pkg],
+									VDC_DriftCell_MasterContainer_ZPos[pkg]));
 
     G4cout << G4endl << "###### Leaving QweakSimVDC::SetFrontVDC_CenterPositionInX() " << G4endl << G4endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void QweakSimVDC::SetFrontVDC_CenterPositionInY(G4double yPos)
+void QweakSimVDC::SetFrontVDC_CenterPositionInY(G4double yPos, G4int pkg)
 {
     G4cout << G4endl << "###### Calling QweakSimVDC::SetFrontVDC_CenterPositionInY() " << G4endl << G4endl;
 
-    VDC_CenterFront_YPos = yPos;
+    VDC_CenterFront_YPos[pkg] = yPos;
 
-    SetVDC_BackVDC_CenterPosition();
-    SetVDC_DriftCell_MasterContainer_CenterPosition();
+    SetVDC_BackVDC_CenterPosition(pkg);
+    SetVDC_DriftCell_MasterContainer_CenterPosition(pkg);
 
-    VDC_MasterContainerFront_Physical->SetTranslation(G4ThreeVector(VDC_CenterFront_XPos,
-								    VDC_CenterFront_YPos, 
-								    VDC_CenterFront_ZPos));
+    VDC_MasterContainerFront_Physical[pkg]->SetTranslation(G4ThreeVector(VDC_CenterFront_XPos[pkg],
+								    VDC_CenterFront_YPos[pkg],
+								    VDC_CenterFront_ZPos[pkg]));
 
-    VDC_MasterContainerBack_Physical->SetTranslation(G4ThreeVector(VDC_CenterBack_XPos,
-								   VDC_CenterBack_YPos, 
-								   VDC_CenterBack_ZPos));
+    VDC_MasterContainerBack_Physical[pkg]->SetTranslation(G4ThreeVector(VDC_CenterBack_XPos[pkg],
+								   VDC_CenterBack_YPos[pkg],
+								   VDC_CenterBack_ZPos[pkg]));
 
-    VDC_DriftCellMasterContainer_Physical->SetTranslation(G4ThreeVector(VDC_DriftCell_MasterContainer_XPos,
-									VDC_DriftCell_MasterContainer_YPos, 
-									VDC_DriftCell_MasterContainer_ZPos));
+    VDC_DriftCellMasterContainer_Physical[pkg]->SetTranslation(G4ThreeVector(VDC_DriftCell_MasterContainer_XPos[pkg],
+									VDC_DriftCell_MasterContainer_YPos[pkg],
+									VDC_DriftCell_MasterContainer_ZPos[pkg]));
 
 
  G4cout << G4endl << "###### Leaving QweakSimVDC::SetFrontVDC_CenterPositionInY() " << G4endl << G4endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void QweakSimVDC::SetFrontVDC_CenterPositionInZ(G4double zPos)
+void QweakSimVDC::SetFrontVDC_CenterPositionInZ(G4double zPos, G4int pkg)
 {
     G4cout << G4endl << "###### Calling QweakSimVDC::SetFrontVDC_CenterPositionInZ() " << G4endl << G4endl;
 
-    VDC_CenterFront_ZPos = zPos;
+    VDC_CenterFront_ZPos[pkg] = zPos;
 
-    SetVDC_BackVDC_CenterPosition();
-    SetVDC_DriftCell_MasterContainer_CenterPosition();
+    SetVDC_BackVDC_CenterPosition(pkg);
+    SetVDC_DriftCell_MasterContainer_CenterPosition(pkg);
 
 
-    VDC_MasterContainerFront_Physical->SetTranslation(G4ThreeVector(VDC_CenterFront_XPos,
-								    VDC_CenterFront_YPos, 
-								    VDC_CenterFront_ZPos));
+    VDC_MasterContainerFront_Physical[pkg]->SetTranslation(G4ThreeVector(VDC_CenterFront_XPos[pkg],
+								    VDC_CenterFront_YPos[pkg],
+								    VDC_CenterFront_ZPos[pkg]));
 
-    VDC_MasterContainerBack_Physical->SetTranslation(G4ThreeVector(VDC_CenterBack_XPos,
-								   VDC_CenterBack_YPos, 
-								   VDC_CenterBack_ZPos));
+    VDC_MasterContainerBack_Physical[pkg]->SetTranslation(G4ThreeVector(VDC_CenterBack_XPos[pkg],
+								   VDC_CenterBack_YPos[pkg],
+								   VDC_CenterBack_ZPos[pkg]));
 
-    VDC_DriftCellMasterContainer_Physical->SetTranslation(G4ThreeVector(VDC_DriftCell_MasterContainer_XPos,
-									VDC_DriftCell_MasterContainer_YPos, 
-									VDC_DriftCell_MasterContainer_ZPos));
+    VDC_DriftCellMasterContainer_Physical[pkg]->SetTranslation(G4ThreeVector(VDC_DriftCell_MasterContainer_XPos[pkg],
+									VDC_DriftCell_MasterContainer_YPos[pkg],
+									VDC_DriftCell_MasterContainer_ZPos[pkg]));
 
     G4cout << G4endl << "###### Leaving QweakSimVDC::SetFrontVDC_CenterPositionInZ() " << G4endl << G4endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void QweakSimVDC::SetVDC_BackVDC_CenterPosition()
+void QweakSimVDC::SetVDC_BackVDC_CenterPosition(G4int pkg)
 {
 
   // define VDC ContainerBack position in MotherVolume
-  VDC_CenterBack_XPos   = VDC_CenterFront_XPos;
-  VDC_CenterBack_YPos   = VDC_CenterFront_YPos + VDC_FrontBackDistance*TMath::Tan(MeanTrackAngle/degree*TMath::DegToRad());
-  VDC_CenterBack_ZPos   = VDC_CenterFront_ZPos + VDC_FrontBackDistance;
+  VDC_CenterBack_XPos[pkg]   = VDC_CenterFront_XPos[pkg];
+  VDC_CenterBack_YPos[pkg]   = VDC_CenterFront_YPos[pkg] + VDC_FrontBackDistance*TMath::Tan(MeanTrackAngle/degree*TMath::DegToRad());
+  VDC_CenterBack_ZPos[pkg]   = VDC_CenterFront_ZPos[pkg] + VDC_FrontBackDistance;
 
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void QweakSimVDC::SetVDC_DriftCell_MasterContainer_CenterPosition()
+void QweakSimVDC::SetVDC_DriftCell_MasterContainer_CenterPosition(G4int pkg)
 {
-  VDC_DriftCell_MasterContainer_XPos = VDC_CenterFront_XPos;
-  VDC_DriftCell_MasterContainer_YPos = VDC_CenterFront_YPos;
-  VDC_DriftCell_MasterContainer_ZPos = VDC_CenterFront_ZPos + 15.0*cm;
+  VDC_DriftCell_MasterContainer_XPos[pkg] = VDC_CenterFront_XPos[pkg];
+  VDC_DriftCell_MasterContainer_YPos[pkg] = VDC_CenterFront_YPos[pkg];
+  VDC_DriftCell_MasterContainer_ZPos[pkg] = VDC_CenterFront_ZPos[pkg] + 15.0*cm;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void QweakSimVDC::SetVDC_RotationAngleInPhi(G4double vdc_phiangle)
+// pkg = 0  for package one, pkg = 1 for package 2.
+void QweakSimVDC::SetVDC_RotationAngleInPhi(G4double vdc_phiangle, G4int pkg)
 {
     G4cout << G4endl << "###### Calling QweakSimVDC::SetVDC_RotationAngleInPhi() " << G4endl << G4endl;
 
@@ -1639,45 +1600,45 @@ void QweakSimVDC::SetVDC_RotationAngleInPhi(G4double vdc_phiangle)
     //   VDC related
     //------------------------------------------------------
     G4ThreeVector Translation_VDC_ContainerFront;
-    G4double VDCFront_RadialDistance = sqrt(VDC_CenterFront_XPos*VDC_CenterFront_XPos + VDC_CenterFront_YPos*VDC_CenterFront_YPos);
+    G4double VDCFront_RadialDistance = sqrt(VDC_CenterFront_XPos[pkg]*VDC_CenterFront_XPos[pkg] + VDC_CenterFront_YPos[pkg]*VDC_CenterFront_YPos[pkg]);
     //
     Translation_VDC_ContainerFront.setX(cos(vdc_phiangle)*VDCFront_RadialDistance) ;
     Translation_VDC_ContainerFront.setY(sin(vdc_phiangle)*VDCFront_RadialDistance) ;
-    Translation_VDC_ContainerFront.setZ(VDC_CenterFront_ZPos) ;
+    Translation_VDC_ContainerFront.setZ(VDC_CenterFront_ZPos[pkg]) ;
     //---    
     G4ThreeVector Translation_VDC_ContainerBack;
-    G4double VDCBack_RadialDistance = sqrt(VDC_CenterBack_XPos*VDC_CenterBack_XPos + VDC_CenterBack_YPos*VDC_CenterBack_YPos);
+    G4double VDCBack_RadialDistance = sqrt(VDC_CenterBack_XPos[pkg]*VDC_CenterBack_XPos[pkg] + VDC_CenterBack_YPos[pkg]*VDC_CenterBack_YPos[pkg]);
     //
     Translation_VDC_ContainerBack.setX(cos(vdc_phiangle)*VDCBack_RadialDistance) ;
     Translation_VDC_ContainerBack.setY(sin(vdc_phiangle)*VDCBack_RadialDistance) ;
-    Translation_VDC_ContainerBack.setZ(VDC_CenterBack_ZPos);
+    Translation_VDC_ContainerBack.setZ(VDC_CenterBack_ZPos[pkg]);
     //------------------------------------------------------
 
     //------------------------------------------------------
     //   DriftCell related
     //------------------------------------------------------
     G4ThreeVector Translation_DriftCell_MasterContainer;
-    G4double DriftCell_MasterContainer_RadialDistance = sqrt(VDC_DriftCell_MasterContainer_XPos*VDC_DriftCell_MasterContainer_XPos + VDC_DriftCell_MasterContainer_YPos*VDC_DriftCell_MasterContainer_YPos);
+    G4double DriftCell_MasterContainer_RadialDistance = sqrt(VDC_DriftCell_MasterContainer_XPos[pkg]*VDC_DriftCell_MasterContainer_XPos[pkg] + VDC_DriftCell_MasterContainer_YPos[pkg]*VDC_DriftCell_MasterContainer_YPos[pkg]);
     //
     Translation_DriftCell_MasterContainer.setX(cos(vdc_phiangle)*DriftCell_MasterContainer_RadialDistance) ;
     Translation_DriftCell_MasterContainer.setY(sin(vdc_phiangle)*DriftCell_MasterContainer_RadialDistance) ;
-    Translation_DriftCell_MasterContainer.setZ(VDC_DriftCell_MasterContainer_ZPos) ;
+    Translation_DriftCell_MasterContainer.setZ(VDC_DriftCell_MasterContainer_ZPos[pkg]) ;
     //------------------------------------------------------
 
 
     // assign new phi tilting angle 
     VDC_RotationAngleInPhi = vdc_phiangle;
-    Rotation_VDC_MasterContainer      -> setPhi(VDC_RotationAngleInPhi -90*degree);
+    Rotation_VDC_MasterContainer[pkg]      -> setPhi(VDC_RotationAngleInPhi -90*degree);
 
     // Rotation of VDCs
-    VDC_MasterContainerFront_Physical -> SetRotation(Rotation_VDC_MasterContainer);
-    VDC_MasterContainerBack_Physical  -> SetRotation(Rotation_VDC_MasterContainer);
-    VDC_MasterContainerFront_Physical -> SetTranslation(Translation_VDC_ContainerFront);
-    VDC_MasterContainerBack_Physical  -> SetTranslation(Translation_VDC_ContainerBack);
+    VDC_MasterContainerFront_Physical[pkg] -> SetRotation(Rotation_VDC_MasterContainer[pkg]);
+    VDC_MasterContainerBack_Physical[pkg]  -> SetRotation(Rotation_VDC_MasterContainer[pkg]);
+    VDC_MasterContainerFront_Physical[pkg] -> SetTranslation(Translation_VDC_ContainerFront);
+    VDC_MasterContainerBack_Physical[pkg]  -> SetTranslation(Translation_VDC_ContainerBack);
 
     // Rotation of DriftCells
-    VDC_DriftCellMasterContainer_Physical -> SetRotation(Rotation_VDC_MasterContainer);
-    VDC_DriftCellMasterContainer_Physical -> SetTranslation(Translation_DriftCell_MasterContainer);
+    VDC_DriftCellMasterContainer_Physical[pkg] -> SetRotation(Rotation_VDC_MasterContainer[pkg]);
+    VDC_DriftCellMasterContainer_Physical[pkg] -> SetTranslation(Translation_DriftCell_MasterContainer);
 
 
 
@@ -1685,3 +1646,90 @@ void QweakSimVDC::SetVDC_RotationAngleInPhi(G4double vdc_phiangle)
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+void QweakSimVDC::PlaceVDC_MasterContainers()
+{
+	 G4cout << G4endl << "###### Calling QweakSimVDC::PlaceHDC_MasterContainers() " << G4endl << G4endl;
+
+
+	  G4cout << G4endl << "###### QweakSimVDC: Define VDC_MasterContainerFront Orientation" << G4endl << G4endl;
+
+	  // define VDC Container Orientation in MotherVolume
+	  for (size_t i = 0; i < Rotation_VDC_MasterContainer.size(); i++) {
+	  Rotation_VDC_MasterContainer[i]      = new G4RotationMatrix();
+	  G4double Angle_VDC_MasterContainer = (-90.0+45.0+20.82)*degree;
+	  Rotation_VDC_MasterContainer[i]       ->rotateX(Angle_VDC_MasterContainer);
+	  }
+
+
+	  for (size_t i=0; i< VDC_MasterContainerFront_Physical.size();i++) {
+
+	  G4cout << G4endl << "###### QweakSimVDC: Define VDC_MasterContainerFront Position" << G4endl << G4endl;
+
+	  // define VDC MasterContainer Front position in MotherVolume
+	  //VDC_CenterFront_ZPos = -600*cm; // just make an z offset for display
+	  //VDC_CenterBack_ZPos  = -560*cm; // just make an z offset for display
+
+
+
+	  G4ThreeVector position_MasterContainerFront = G4ThreeVector(VDC_CenterFront_XPos[i],VDC_CenterFront_YPos[i],VDC_CenterFront_ZPos[i] );
+
+	  // define VDC MasterContainer Back position in MotherVolume
+	  SetVDC_BackVDC_CenterPosition(i);
+
+	  G4ThreeVector position_MasterContainerBack = G4ThreeVector(VDC_CenterBack_XPos[i],VDC_CenterBack_YPos[i],VDC_CenterBack_ZPos[i] );
+
+
+	  G4cout << G4endl << "###### QweakSimVDC: Define VDC_MasterContainerFront_Physical" << G4endl << G4endl;
+
+	  // define VDC physical volume of drift chamber container
+	  VDC_MasterContainerFront_Physical[i] = new G4PVPlacement(Rotation_VDC_MasterContainer[i],
+								position_MasterContainerFront,
+								"VDC_MasterContainerFront_Physical",
+								VDC_MasterContainer_Logical,
+								theMotherPV,
+								false,
+								2*i,
+								pSurfChk); // copy number for front
+
+	  G4cout << G4endl << "###### QweakSimVDC: Define VDC_MasterContainerBack_Physical" << G4endl << G4endl;
+
+	  // define VDC physical volume of drift chamber container
+	  VDC_MasterContainerBack_Physical[i] = new G4PVPlacement(Rotation_VDC_MasterContainer[i],
+							       position_MasterContainerBack,
+							       "VDC_MasterContainerBack_Physical",
+							       VDC_MasterContainer_Logical,
+							       theMotherPV,
+							       false,
+							       2*i+1,
+							       pSurfChk);// copy number for back
+	  }
+
+
+}
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+void QweakSimVDC::PlaceVDC_DriftCellMasterContainers()
+{
+
+
+	  for (size_t i=0; i< VDC_DriftCellMasterContainer_Physical.size();i++) {
+
+		  // define VDC Drift Cell Container position in MotherVolume
+		  SetVDC_DriftCell_MasterContainer_CenterPosition(i);
+
+		  G4ThreeVector position_DriftCellMasterContainer = G4ThreeVector(VDC_DriftCell_MasterContainer_XPos[i],
+										  VDC_DriftCell_MasterContainer_YPos[i],
+										  VDC_DriftCell_MasterContainer_ZPos[i] );
+
+	  G4cout << G4endl << "###### QweakSimVDC: Define VDC_DriftCellMasterContainer_Physical " << G4endl << G4endl;
+	  // define VDC physical volume of drift chamber container
+	  VDC_DriftCellMasterContainer_Physical[i] = new G4PVPlacement(Rotation_VDC_MasterContainer[i],
+								    position_DriftCellMasterContainer,
+								    "VDC_DriftCellMasterContainer_Physical",
+								    VDC_DriftCellMasterContainer_Logical,
+								    theMotherPV,
+								    false,
+								    i,
+								    pSurfChk);
+	  }
+
+}

@@ -686,15 +686,24 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 
             //-----------------------------------
             int iVDCID = aHit->GetVDCID();
+            int iVDC_Chamber = -1; // 0 corresponds to Front, 1 corresponds to Back
             QweakSimUserVDC_SingleVDCEvent* single_vdc_event = 0;
-            if (iVDCID == 0)
-              single_vdc_event = &(analysis->fRootEvent->Region3.ChamberFront);
-            if (iVDCID == 1)
-              single_vdc_event = &(analysis->fRootEvent->Region3.ChamberBack);
-
+            if (iVDCID == 0 || iVDCID == 2){
+               iVDC_Chamber = 0;
+               single_vdc_event = &(analysis->fRootEvent->Region3.ChamberFront);
+            }
+            if (iVDCID == 1 || iVDCID == 3){
+               iVDC_Chamber = 1;
+               single_vdc_event = &(analysis->fRootEvent->Region3.ChamberBack);
+            }
+            int iVDCpackage = -1;  // 0 Corresponds to pkg 1, 1 corresponds to pkg 2
+            if(iVDCID == 0 || iVDCID == 1)
+            	iVDCpackage = 1;
+            if(iVDCID == 2 || iVDCID == 3)
+            	iVDCpackage = 2;
             //-----------------------------------
             if (single_vdc_event == 0) {
-                G4cerr << "VDC hit with incorrect chamber ID." << G4endl;
+                G4cerr << "VDC hit with incorrect chamber ID: " << iVDCID << G4endl;
                 break;
             }
 
@@ -713,11 +722,13 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
             }
 
             //-----------------------------------
-            VDC_Chamber_Plane_NbOfHits[iVDCID][iWirePlaneID]++;
-            wire_plane_event->StoreNbOfHits(VDC_Chamber_Plane_NbOfHits[iVDCID][iWirePlaneID]);
+            VDC_Chamber_Plane_NbOfHits[iVDC_Chamber][iWirePlaneID]++;
+            wire_plane_event->StoreNbOfHits(VDC_Chamber_Plane_NbOfHits[iVDC_Chamber][iWirePlaneID]);
 
             // mark wire plane as been hit
             wire_plane_event->StoreHasBeenHit(5);
+
+            wire_plane_event->StorePackageID(iVDCpackage);
 
             wire_plane_event->StoreParticleName(rParticleName);
             wire_plane_event->StoreParticleType(rParticleType);
@@ -1204,18 +1215,27 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 
                 //-----------------------------------
                 int iHDCID = aHit->GetHDCID();
+                int iHDC_Chamber = -1; //0 Corresponds to Front, 1 Corresponds to Back
                 QweakSimUserHDC_SingleHDCEvent* single_hdc_event = 0;
-                if (iHDCID == 0)
+                if (iHDCID == 0 || iHDCID == 2){
+                  iHDC_Chamber = 0;
                   single_hdc_event = &(analysis->fRootEvent->Region2.ChamberFront);
-                if (iHDCID == 1)
+                }
+                if (iHDCID == 1 || iHDCID == 3){
+                  iHDC_Chamber = 1;
                   single_hdc_event = &(analysis->fRootEvent->Region2.ChamberBack);
+                }
 
                 //-----------------------------------
                 if (single_hdc_event == 0) {
                     G4cerr << "HDC hit with incorrect chamber ID." << G4endl;
                     break;
                 }
-
+                int iHDCpackage = -1; // 0 correponds to package 1, 1 corresponds to package 2
+                           if(iHDCID == 0 || iHDCID == 1)
+                           	iHDCpackage = 1;
+                           if(iHDCID == 2 || iHDCID == 3)
+                           	iHDCpackage = 2;
                 //-----------------------------------
                 int iWirePlaneID = aHit->GetWirePlaneID();
                 QweakSimUserHDC_WirePlaneEvent* wire_plane_event = 0;
@@ -1240,11 +1260,14 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 
                 //-----------------------------------
                 // store number of hits
-                HDC_Chamber_Plane_NbOfHits[iHDCID][iWirePlaneID]++;
-                wire_plane_event->StoreNbOfHits(HDC_Chamber_Plane_NbOfHits[iHDCID][iWirePlaneID]);
+                HDC_Chamber_Plane_NbOfHits[iHDC_Chamber][iWirePlaneID]++;
+                wire_plane_event->StoreNbOfHits(HDC_Chamber_Plane_NbOfHits[iHDC_Chamber][iWirePlaneID]);
 
                 // mark wire plane as been hit
                 wire_plane_event->StorePlaneHasBeenHit(5);
+
+                // store package hit occurred in
+                wire_plane_event->StorePackageID(iHDCpackage);
 
                 // store origin vertex info
                 wire_plane_event->StoreOriginVertexPositionX(rOriginVertexPositionX);

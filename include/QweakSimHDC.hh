@@ -80,15 +80,15 @@ public:
   void SetHDC_FoilMaterial(G4String);
   void SetHDC_WirePlaneMaterial(G4String);
 
-  void SetFrontHDC_CenterPositionInX(G4double xPos);
-  void SetFrontHDC_CenterPositionInY(G4double yPos);
-  void SetFrontHDC_CenterPositionInZ(G4double zPos);
+  void SetFrontHDC_CenterPositionInX(G4double xPos, G4int pkg);
+  void SetFrontHDC_CenterPositionInY(G4double yPos, G4int pkg);
+  void SetFrontHDC_CenterPositionInZ(G4double zPos, G4int pkg);
 
-  void SetBackHDC_CenterPositionInX(G4double xPos);
-  void SetBackHDC_CenterPositionInY(G4double yPos);
-  void SetBackHDC_CenterPositionInZ(G4double zPos);
+  void SetBackHDC_CenterPositionInX(G4double xPos, G4int pkg);
+  void SetBackHDC_CenterPositionInY(G4double yPos, G4int pkg);
+  void SetBackHDC_CenterPositionInZ(G4double zPos, G4int pkg);
 
-  void SetHDC_RotationAngleInPhi(G4double HDC_phiangle);
+  void SetHDC_RotationAngleInPhi(G4double HDC_phiangle, G4int pkg);
 
 
   //=============
@@ -97,11 +97,11 @@ public:
   
   G4LogicalVolume*   getHDC_LogicalVolume()    {return HDC_MasterContainer_Logical;} 
 
-  G4VPhysicalVolume* getHDCFront_PhysicalVolume()   {return HDC_MasterContainerFront_Physical;} 
-  G4VPhysicalVolume* getHDCBack_PhysicalVolume()    {return HDC_MasterContainerBack_Physical;} 
+  G4VPhysicalVolume* getHDCFront_PhysicalVolume()   {return HDC_MasterContainerFront_Physical[0];}
+  G4VPhysicalVolume* getHDCBack_PhysicalVolume()    {return HDC_MasterContainerBack_Physical[0];}
 
   G4LogicalVolume*   getHDC_Frame_LogicalVolume()    {return HDC_Frame_Logical;} 
-G4VPhysicalVolume*   getHDC_Frame_PhysicalVolume()   {return HDC_Frame_Physical;} 
+  G4VPhysicalVolume* getHDC_Frame_PhysicalVolume()   {return HDC_Frame_Physical;}
 
 
   G4LogicalVolume*   getHDC_Foil_LogicalVolume()    {return HDC_Foil_Logical;} 
@@ -115,20 +115,21 @@ G4VPhysicalVolume*   getHDC_Frame_PhysicalVolume()   {return HDC_Frame_Physical;
 
 private:
 
+   void PlaceHDC_MasterContainers();
 
    // mean bending angle after MainMagnet
     G4double MeanTrackAngle;  // ~ 20.8*degree
 
   QweakSimMaterial*  pMaterial;
 
+  G4VPhysicalVolume* theMotherPV;  //pointer to MotherVolume
 
-
-  G4RotationMatrix* Rotation_HDC; // for Phi angle orientation
+  std::vector<G4RotationMatrix*> Rotation_HDC; // for Phi angle orientation
   G4double          HDC_RotationAngleInPhi;
 
   G4LogicalVolume*   HDC_MasterContainer_Logical; 
-  G4VPhysicalVolume* HDC_MasterContainerFront_Physical; 
-  G4VPhysicalVolume* HDC_MasterContainerBack_Physical; 
+  std::vector<G4VPhysicalVolume*> HDC_MasterContainerFront_Physical;
+  std::vector<G4VPhysicalVolume*> HDC_MasterContainerBack_Physical;
 
   G4LogicalVolume*   HDC_SubContainer_Logical; 
   G4VPhysicalVolume* HDC_SubContainer_Physical; 
@@ -142,7 +143,7 @@ private:
   G4LogicalVolume*   HDC_WirePlane_Logical; 
   G4VPhysicalVolume* HDC_WirePlane_Physical; 
 
-  QweakSimHDCMessenger* HDC_Messenger;  // pointer to the Messenger
+  std::vector<QweakSimHDCMessenger*> HDC_Messenger;  // pointer to the Messenger
 
   G4double HDCFrame_Thickness; 
   G4double HDCFrame_OuterLength;
@@ -160,13 +161,13 @@ private:
   G4double AluFrame_InnerLength;
   G4double AluFrame_InnerWidth; 
 
-  G4double HDC_CenterFront_XPos;
-  G4double HDC_CenterFront_YPos;
-  G4double HDC_CenterFront_ZPos;
+  std::vector<G4double> HDC_CenterFront_XPos;
+  std::vector<G4double> HDC_CenterFront_YPos;
+  std::vector<G4double> HDC_CenterFront_ZPos;
 
-  G4double HDC_CenterBack_XPos;
-  G4double HDC_CenterBack_YPos;
-  G4double HDC_CenterBack_ZPos;
+  std::vector<G4double> HDC_CenterBack_XPos;
+  std::vector<G4double> HDC_CenterBack_YPos;
+  std::vector<G4double> HDC_CenterBack_ZPos;
 
  
   G4VisAttributes* HDC_MasterContainer_VisAtt;

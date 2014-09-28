@@ -160,12 +160,19 @@
 
 /HDC/SetRotationAngleInPhi           90.0   degree
 
+#Individual Phi Angle Control
+#/HDC/HDC1/SetRotationAngleInPhi     45.0   degree
+#/HDC/HDC2/SetRotationAngleInPhi     135.0  degree
+
 /HDC/SetMasterContainerMaterial     Air
 /HDC/SetSubContainerMaterial        ArCO2
 /HDC/SetFoilMaterial                Mylar
 /HDC/SetFrameMaterial               NemaG10
 /HDC/SetWirePlaneMaterial           ArCO2
 
+#Disable Package 2 HDC
+/HDC/HDC2/SetFrontCenterPositionInY  200.104 cm
+/HDC/HDC2/SetBackCenterPositionInY   204.872 cm
 
 #==========================
 #   VDC related   (Region3)
@@ -189,6 +196,10 @@
 #/VDC/SetRotationAngleInPhi  45.0 degree
 #/VDC/SetRotationAngleInPhi  0.0 degree
 
+#Individual phi angle control
+/VDC/VDC1/SetRotationAngleInPhi  135.0 degree
+/VDC/VDC2/SetRotationAngleInPhi  45.0 degree
+
 # angle in respect to SHORT Frame side
 # 90-26.57=63.43
 /VDC/DriftCell/SetWireAngleFront     65.57 degree
@@ -200,6 +211,10 @@
 #/VDC/DriftCell/SetMaterial           NemaG10
 /VDC/DriftCell/SetFullHeight         70.0 cm
 /VDC/DriftCell/SetDCNumberPerPlane    341
+
+#Disable Package 2 VDC (Must have phi of 270 degree)
+/VDC/VDC2/SetRotationAngleInPhi       270.0 degree
+/VDC/VDC2/SetFrontCenterPositionInY  -115.225  cm
 
 #==============================================
 # Thickness = 64/64 inch
