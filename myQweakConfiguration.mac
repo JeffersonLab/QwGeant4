@@ -197,8 +197,8 @@
 #/VDC/SetRotationAngleInPhi  0.0 degree
 
 #Individual phi angle control
-/VDC/VDC1/SetRotationAngleInPhi  135.0 degree
-/VDC/VDC2/SetRotationAngleInPhi  45.0 degree
+#/VDC/VDC1/SetRotationAngleInPhi  135.0 degree
+#/VDC/VDC2/SetRotationAngleInPhi  45.0 degree
 
 # angle in respect to SHORT Frame side
 # 90-26.57=63.43
