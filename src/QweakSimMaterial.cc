@@ -130,16 +130,21 @@ void QweakSimMaterial::DefineMaterials()
 
   // Al Alloy material
   name      = "AlAlloy";
-  density   = 2.800*g/cm3; // from survey
-  ncomponents = 6;
+  density   = 2.804*g/cm3; //Mean density from Greg's Target Elog 21
+  ncomponents = 9;
   G4Material* __attribute__ ((unused))
     matAlAlloy = new G4Material(name,density,ncomponents);
+	//Element composition breakdown from Greg's Target Elog 22
   matAlAlloy-> AddElement(elAl   , fractionmass = 0.897);
-  matAlAlloy-> AddElement(elCu   , fractionmass = 0.016);
-  matAlAlloy-> AddElement(elMg   , fractionmass = 0.0255);
   matAlAlloy-> AddElement(elZn   , fractionmass = 0.058);
+  matAlAlloy-> AddElement(elMg   , fractionmass = 0.0255);
+  matAlAlloy-> AddElement(elCu   , fractionmass = 0.016);
+	matAlAlloy-> AddElement(elCr	 , fractionmass = 0.0019);
   matAlAlloy-> AddElement(elFe   , fractionmass = 0.0013);
-  matAlAlloy-> AddElement(elSi   , fractionmass = 0.0022);
+  matAlAlloy-> AddElement(elSi   , fractionmass = 0.0001);
+	matAlAlloy-> AddElement(elTi 	 , fractionmass = 0.0001);
+	matAlAlloy-> AddElement(elMn	 , fractionmass = 0.0001);
+	//Note that the last three elements in the alloy have their %s modified to make the total 100%.
 
   // USCarbon material
   name      = "USCarbon";

@@ -85,14 +85,13 @@ QweakSimTarget::QweakSimTarget(QweakSimUserInformation *myUI)
 
     // define target geometry values
 
-    targetCellEntranceWindowThickness =  3.8*mil; // from Katherine's A&S ELOG 893
-    targetCellExitWindowThickness =  20*mil;
-    targetCellExitWindowNippleThickness =  5*mil;
+    targetCellEntranceWindowThickness = 4.105*mil; //Avg of Run 1 & 2 (Greg's Target Elog 19)
+    targetCellExitWindowThickness =  29.06*mil; //Greg's Target Elog 19 
+    targetCellExitWindowNippleThickness =  5.165*mil; //Avg of Run 1 & 2 (Greg's Target Elog 19)
     targetCellWallThickness   = 10.0*mil;
 
     targetCellExitWindowNippleRadius = 0.5*0.622*inch;
 
-    //    targetCellInnerLength     = 34.346*cm;
     targetCellInnerLength     = myUserInfo->TargetLength;
     targetCellOuterLength     = targetCellInnerLength
                                 + targetCellEntranceWindowThickness
@@ -109,7 +108,6 @@ QweakSimTarget::QweakSimTarget(QweakSimUserInformation *myUI)
     targetCellStartingPhi =  0.0*deg;
     targetCellDeltaPhi    = 360*deg;
 
-    //targetZPos        = -650.0*cm - 3.77*cm;
     targetZPos        = myUserInfo->TargetCenterPositionZ; //-650.0*cm;
 
     ScatteringChamberWindowRadius = 0.5*23.5*inch;
@@ -119,7 +117,7 @@ QweakSimTarget::QweakSimTarget(QweakSimUserInformation *myUI)
     myUserInfo->TargetExitWindowThickness = targetCellExitWindowThickness;
     myUserInfo->TargetExitWindowNippleThickness = targetCellExitWindowNippleThickness;
 
-    // Thicknesses taken from 2012 target survey (https://qweak.jlab.org/elog/Target/21)
+    //Thicknesses taken from 2012 target survey (https://qweak.jlab.org/elog/Target/21)
     myUserInfo->TargetThicknessUSALDummy1    = 0.8812*mm;
     myUserInfo->TargetThicknessUSALDummy2    = 1.7987*mm;
     myUserInfo->TargetThicknessUSALDummy4    = 3.6030*mm;
@@ -130,7 +128,7 @@ QweakSimTarget::QweakSimTarget(QweakSimUserInformation *myUI)
     myUserInfo->TargetThicknessDSCDummy      = 3.1876*mm;
 
     G4double densityLH2 = 0.0713 /(cm*cm*cm);  // [g/cm^3] 
-    G4double densityAL  = 2.80   /(cm*cm*cm);  // From 2012 target survey
+    G4double densityAL  = 2.804   /(cm*cm*cm);  // Avg density, Greg's Target Elog 21
     G4double densityUSC = 1.70   /(cm*cm*cm);  //
     G4double densityDSC = 2.205  /(cm*cm*cm); //
 

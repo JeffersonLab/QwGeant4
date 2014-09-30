@@ -1,14 +1,20 @@
 #=================================================
-#   Macro file myQweakConfiguration.mac
+# Macro file myQweakConfiguration.mac
+# Base configuration of the Qweak Apparatus
+# Defaults to production LH2 simulation
 #=================================================
 
-# store tracks
+#==========================
+# Store Tracks
+#==========================
 /tracking/storeTrajectory 1
 
 #==========================
 # Primary Event related
 #==========================
-# defined/used later again
+# Valid values range from 1 to 8
+# Mostly used for testing, usually changed in a user macro.
+
 #/PrimaryEvent/SelectOctant 3
 #/PrimaryEvent/SelectOctant 1
 
@@ -28,30 +34,23 @@
 #==========================
 # Cerenkov Detector related
 #==========================
-#  Air    : without Cerenkov light production 
+#  Air     :without Cerenkov light production 
 #  Quartz  :with    Cerenkov light production
 # 
-# angle is definedagaing vertical (y) axis
+# Angle is definedagaing vertical (y) axis
 # - a tilt angle of 0.0*deg means vertical 
 # - negative angle will tilt detector towards target
-#
-#/Cerenkov/SetCerenkovMaterial HeGas
-#/Cerenkov/SetCerenkovMaterial SiO2
-/Cerenkov/SetCerenkovMaterial Quartz
-#/Cerenkov/SetCerenkovMaterial Vacuum
 
-# positions to be extracted from SolidWorks
-# on the vertical detector plane
- 
-#/Cerenkov/SetCenterPositionInX      0.0 cm
-#/Cerenkov/SetCenterPositionInY   335.17 cm
-#/Cerenkov/SetCenterPositionInZ   577.88 cm
+/Cerenkov/SetCerenkovMaterial Quartz
+
 /Cerenkov/SetTiltingAngle           0.0 degree
 
 /Cerenkov/SetPreradiatorMaterial PBA
 
-# Move Cerenkov Detectors to actual position 
+# Define the number of Cereknov Bars
 /Cerenkov/SetNumberOfDetectors 9
+
+# Move Cerenkov Detectors to actual position 
 
 /Cerenkov/Cerenkov1/SetCenterPositionInY  334.724 cm
 /Cerenkov/Cerenkov1/SetCenterPositionInZ  576.665 cm
@@ -92,7 +91,7 @@
 # X position of Det. Origin = 377.84 cm
 #   - 9 cm (half width bar) = 368.84 cm (Y in MC)
 # Y position of Det. Origin =  72.86 cm (X in MC)
-# 
+
 /Cerenkov/Cerenkov9/SetCenterPositionInX  -72.86 cm
 /Cerenkov/Cerenkov9/SetCenterPositionInY  368.84 cm
 /Cerenkov/Cerenkov9/SetCenterPositionInZ  736.86 cm
@@ -109,23 +108,20 @@
 #==================================
 #  Trigger Scintillator related
 #==================================
-#  Air    : without Cerenkov light production 
+#  Air     :without Cerenkov light production 
 #  Quartz  :with    Cerenkov light production
 # 
 # angle is definedagaing vertical (y) axis
 # - a tilt angle of 0.0*deg means vertical 
 # - positive angle will tilt detector against target
-#
-#/TriggerScintillator/SetScintillatorMaterial  Vacuum
+
 /TriggerScintillator/SetScintillatorMaterial  Polyethylene
-#/TriggerScintillator/SetScintillatorMaterial SiO2
-#/TriggerScintillator/SetScintillatorMaterial Quartz
  
 /TriggerScintillator/SetCenterPositionInX     0.0 cm
 /TriggerScintillator/SetCenterPositionInY   328.0 cm 
 /TriggerScintillator/SetCenterPositionInZ   545.0 cm
-/TriggerScintillator/SetTiltingAngle          0.0 degree
 
+/TriggerScintillator/SetTiltingAngle          0.0 degree
 
 #=============================
 #     GEM related  (Region1)
@@ -253,15 +249,10 @@
 # Event generator related
 #====================================
 
-## default unit is degrees
-#/EventGen/SetThetaMin  5  degree
-#/EventGen/SetThetaMax  13 degree
-#/EventGen/SetPhiMin    -17 degree
-#/EventGen/SetPhiMax    +17 degree
-#/EventGen/SelectOctant         7
+# Usually this will be changed by a user macro that calls this 
+# configuration macro.
 
-/EventGen/SelectReactionType    1
-
+# List of Generators (Included in src/QweakSimEPEvent.cc):
 #  0 - Combination of all reactions
 #  1 - LH2 elastic (default)
 #  2 - Al elastic
@@ -275,45 +266,47 @@
 #  9 - Al nuclera inelastics SPS
 #  10 - Al GDR
 
+/EventGen/SelectReactionType    1
+
 #==========================
 # Target related
 #==========================
 
-# LH2, USAl1p, USAl2p, USAl4p, USC, DSAl2p, DSAl4p, DSAl8p, DSC
-#/Target/SetTarget DSAl2p
-
+# LH2 Target by default
 /Target/SetCenterPositionInZ  -652.67 cm
 /Target/SetTargetCellMaterial  Aluminum
 /Target/SetTargetLength        34.346 cm
-/Target/SetTargetMaterial       Vacuum
+/Target/SetTargetMaterial       H2Liquid
 
-# Selects a region of tgt
-/EventGen/SelectReactionRegion 1
+#Target Selection: LH2 (default), USAl1p, USAl2p, USAl4p, USC, DSAl2p, DSAl4p, DSAl8p, DSC
+/Target/SetTarget LH2
+
+# Selects a region of target:
 # 1 - LH2 in target, no Al end caps (default)
 # 2 - entrance target window
 # 3 - exit target window
 
-#====================================
-# Magnetic field related
-#====================================
+/EventGen/SelectReactionRegion 1
 
-# This is only valid for peiqing_2007.dat
-#/MagneticField/SetRotation -67.5 degree
-#/MagneticField/SetRotation 45.0 degree
-#/MagneticField/SetActualCurrent 8921.0
-#/MagneticField/SetReferenceCurrent 8615.0
-#/MagneticField/ReadFieldMap peiqing_2007.dat 
+#====================================
+# Magnetic Field related
+#====================================
 
 # The preferred way to load a field map is to use
 # the macros in macros/peiqing_*.mac
 /control/execute macros/peiqing_2011.mac
 
+# Older Magnetic Field map that is no longer used.
+#/control/execute macros/peiqing_2007.mac
+
 #====================================
-# Random seed handling
+# Random Seed Handling
 #====================================
 
 # Inform the RunManager to systematically save the seed
+
 /random/setSavingFlag 0
+
 # Copy the following command line to your user macro and uncomment it 
 # to use the seeds of the last event in last run
 #/random/resetEngineFrom currentEvent.rndm
