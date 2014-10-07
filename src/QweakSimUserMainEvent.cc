@@ -25,11 +25,3 @@
 ClassImp(QweakSimUserMainEvent)
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-QweakSimUserMainEvent::QweakSimUserMainEvent()
-{;} 
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-QweakSimUserMainEvent::~QweakSimUserMainEvent()
-{;}
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....

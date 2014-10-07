@@ -46,6 +46,9 @@
 
 #pragma link C++ class QweakSimUserPrimaryEvent+;
 
+#pragma link C++ class QweakSimUserTarget_MainEvent+;
+#pragma link C++ class QweakSimUserTarget_DetectorEvent+;
+
 #pragma link C++ class QweakSimUserGEM_MainEvent+;
 #pragma link C++ class QweakSimUserGEM_SingleGEMEvent+;
 #pragma link C++ class QweakSimUserGEM_WirePlaneEvent+;

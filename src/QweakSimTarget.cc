@@ -33,6 +33,7 @@ class QweakSimTargetMessenger;
 #include "QweakSimSolids.hh"
 #include "QweakSimMaterial.hh"
 #include "QweakSimTargetMessenger.hh"
+#include "QweakSimTarget_DetectorSD.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -64,9 +65,13 @@ QweakSimTarget::QweakSimTarget(QweakSimUserInformation *myUI)
     TargetExitWindowNipple_Physical = NULL;
     TargetExitWindowNipple_Material = NULL;
 
+    ScatteringChamberWindow_Logical  = NULL;
+    ScatteringChamberWindow_Physical = NULL;
+    ScatteringChamberWindow_Material = NULL;
+
     TargetMaterial_Logical  = NULL;
     TargetMaterial_Physical = NULL;
-    Target_Material         = NULL;
+    TargetMaterial_Material = NULL;
 
 
     // definition of a mil = inch/1000
@@ -81,7 +86,8 @@ QweakSimTarget::QweakSimTarget(QweakSimUserInformation *myUI)
     TargetEntranceWindow_Material = pMaterial->GetMaterial("Aluminum");
     TargetExitWindow_Material     = pMaterial->GetMaterial("Aluminum");
     TargetExitWindowNipple_Material = pMaterial->GetMaterial("Aluminum");
-    Target_Material               = pMaterial->GetMaterial("H2Liquid");
+    ScatteringChamberWindow_Material = pMaterial->GetMaterial("Aluminum");
+    TargetMaterial_Material       = pMaterial->GetMaterial("H2Liquid");
 
     // define target geometry values
 
@@ -150,6 +156,8 @@ QweakSimTarget::QweakSimTarget(QweakSimUserInformation *myUI)
     myUserInfo->TargetLuminosityUSCDummy = CalculateLuminosity(massC, densityUSC, myUserInfo->TargetThicknessUSCDummy);
     myUserInfo->TargetLuminosityDSCDummy = CalculateLuminosity(massC, densityDSC, myUserInfo->TargetThicknessDSCDummy);
 
+    TargetSD = NULL;
+
     targetMessenger = new QweakSimTargetMessenger(this);
 }
 
@@ -212,6 +220,17 @@ void QweakSimTarget::ConstructComponent(G4VPhysicalVolume* MotherVolume)
     TargetMaterial_VisAtt -> SetVisibility(true);
     //TargetVisAtt -> SetForceWireframe(true);
     TargetMaterial_Logical -> SetVisAttributes(TargetMaterial_VisAtt);
+
+    ///////////////////////////////////////////
+    // Define Sensitive Detectors to Target  //
+    ///////////////////////////////////////////
+
+    G4SDManager* SDman = G4SDManager::GetSDMpointer();
+
+    TargetSD = new QweakSimTarget_DetectorSD("TargetSD");
+    SDman->AddNewDetector(TargetSD);
+    ScatteringChamberWindow_Logical->SetSensitiveDetector(TargetSD);
+
 
     G4cout << G4endl << "###### Leaving QweakSimTarget::ConstructComponent() " << G4endl << G4endl;
 
@@ -459,7 +478,7 @@ void QweakSimTarget::ConstructScatteringChamberWindow()
     G4cout << G4endl << "###### QweakSimTarget: Define ScatteringChamberWindow_Logical " << G4endl << G4endl;
 
     ScatteringChamberWindow_Logical  = new G4LogicalVolume(ScatteringChamberWindow_Solid,
-            TargetCell_Material,
+            ScatteringChamberWindow_Material,
             "ScatteringChamberWindow_Log",
             0,0,0);
 
@@ -505,7 +524,7 @@ void QweakSimTarget::ConstructTargetMaterial()
     G4cout << G4endl << "###### QweakSimTarget: Define Target_Logical " << G4endl << G4endl;
 
     TargetMaterial_Logical  = new G4LogicalVolume(TargetMaterial_Solid,
-            Target_Material,
+            TargetMaterial_Material,
             "QweakTargetMaterial_Log",
             0,0,0);
 

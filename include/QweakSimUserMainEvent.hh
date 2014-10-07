@@ -46,6 +46,7 @@
 
 // user includes
 #include "QweakSimUserPrimaryEvent.hh"
+#include "QweakSimUserTarget_MainEvent.hh"
 #include "QweakSimUserGEM_MainEvent.hh"
 #include "QweakSimUserHDC_MainEvent.hh"
 #include "QweakSimUserVDC_MainEvent.hh"
@@ -109,26 +110,28 @@ public:
 
   QweakSimUserPrimaryEvent                     Primary;              ///< object containing primary particle info
 
+  QweakSimUserTarget_MainEvent                 Target;               ///< object containing target hits
+
   QweakSimUserGEM_MainEvent                    Region1;              ///< object containing HDC info
   QweakSimUserHDC_MainEvent                    Region2;              ///< object containing HDC info
   QweakSimUserVDC_MainEvent                    Region3;              ///< object containing VDC info
 
   QweakSimUserTriggerScintillator_MainEvent    TriggerScintillator;  ///< object containing TriggerScintilliator info
 	
-  QweakSimUserLeadGlass_MainEvent              LeadGlass;            // tree containing LeadGlass info
+  QweakSimUserLeadGlass_MainEvent              LeadGlass;            ///< tree containing LeadGlass info
   
-  QweakSimUserPMTOnly_MainEvent			PMTOnly;	     // tree containing PMTOnly info
+  QweakSimUserPMTOnly_MainEvent		       PMTOnly;	             ///< tree containing PMTOnly info
 	
   QweakSimUserCerenkov_MainEvent               Cerenkov;             ///< object containing Cerenkov detector info
 
-  QweakSimUserLumi_MainEvent                    Lumi;                // tree containing Lumi detector info
+  QweakSimUserLumi_MainEvent                   Lumi;                 ///< tree containing Lumi detector info
 
 public:
     
   // Constructor
-  QweakSimUserMainEvent();
+  QweakSimUserMainEvent() { };
   // Destructor 
-  virtual ~QweakSimUserMainEvent();
+  virtual ~QweakSimUserMainEvent() { };
   
   // define a new Class known to ROOT  
   ClassDef(QweakSimUserMainEvent,1)

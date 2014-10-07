@@ -124,16 +124,17 @@ private:
   G4VPhysicalVolume* TargetExitWindowNipple_Physical;
   G4Material*        TargetExitWindowNipple_Material;  
   
-  G4LogicalVolume*   ScatteringChamberWindow_Logical; 
-  G4VPhysicalVolume* ScatteringChamberWindow_Physical; 
+  G4LogicalVolume*   ScatteringChamberWindow_Logical;
+  G4VPhysicalVolume* ScatteringChamberWindow_Physical;
+  G4Material*        ScatteringChamberWindow_Material;
   
-  G4LogicalVolume*   TargetMaterial_Logical; 
-  G4VPhysicalVolume* TargetMaterial_Physical; 
-  G4Material*        Target_Material;  
+  G4LogicalVolume*   TargetMaterial_Logical;
+  G4VPhysicalVolume* TargetMaterial_Physical;
+  G4Material*        TargetMaterial_Material;
 
-  G4LogicalVolume*   TargetContainer_Logical; 
-  G4VPhysicalVolume* TargetContainer_Physical; 
-  G4Material*        TargetContainer_Material;  
+  G4LogicalVolume*   TargetContainer_Logical;
+  G4VPhysicalVolume* TargetContainer_Physical;
+  G4Material*        TargetContainer_Material;
 
   G4double targetCellEntranceWindowThickness;
   G4double targetCellExitWindowThickness;
@@ -167,6 +168,8 @@ private:
   G4ThreeVector positionTargetEntranceWindow;
   G4ThreeVector positionTargetExitWindow;
   G4ThreeVector positionScatteringChamberWindow;
+
+  G4VSensitiveDetector* TargetSD;
 
   void CalculateTargetPositions();
 

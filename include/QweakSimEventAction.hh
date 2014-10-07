@@ -57,7 +57,7 @@ public:
     QweakSimEventAction(QweakSimAnalysis* AN, QweakSimUserInformation* myUI);
 
     //!Destructor
-    ~QweakSimEventAction();
+    virtual ~QweakSimEventAction();
 
 public:
 
@@ -88,6 +88,7 @@ private:
   std::map < G4String, EQweakSimTriggerMode > kMapTriggerMode;
 
 
+  G4int TargetDetector_CollID;
   G4int GEM_WirePlane_CollID;
   G4int HDC_WirePlane_CollID;
   G4int VDC_WirePlane_CollID;
@@ -114,6 +115,7 @@ private:
   static const G4bool print_TriggerScintillator_DetectorHit = false;
   static const G4bool print_Cerenkov_DetectorHit = false;
 
+  G4int n_hitTarget;
   G4int n_GEMhitWirePlane;
   G4int n_HDChitWirePlane;
   G4int n_VDChitWirePlane;
