@@ -233,7 +233,7 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   //pGEM                 = new QweakSimGEM();
   pHDC                 = new QweakSimHDC();
   pVDC                 = new QweakSimVDC();
-  pVDCRotator 		   = new QweakSimVDCRotator(pVDC);
+  pVDCRotator          = new QweakSimVDCRotator();
 
   pCerenkovDetector    = new QweakSimCerenkovDetector(myUserInfo);
   pLumiDetector        = new QweakSimLumiDetector();
@@ -616,25 +616,29 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
     pGeometry->AddModule(pHDC->getHDCFront_PhysicalVolume());
     pGeometry->AddModule(pHDC->getHDCBack_PhysicalVolume());
   }
-  //
-  if (pVDC) {
-    pVDC->ConstructComponent(experimentalHall_Physical);
-    pGeometry->AddModule(pVDC->getVDCFront_PhysicalVolume());
-    pGeometry->AddModule(pVDC->getVDCBack_PhysicalVolume());
-  }
-
   //===============================================
   // create/place VDC Rotator into MotherVolume
   //===============================================
   //
   if (pVDCRotator) {
     pVDCRotator->SetMotherVolume(experimentalHall_Physical);
+    pVDCRotator->ConstructRotatorMasterContainer();
     pVDCRotator->ConstructRings();
     pVDCRotator->ConstructRails();
     pVDCRotator->ConstructMount();
     pVDCRotator->ConstructSliderSupport();
-    pVDCRotator->SetRotationAngleInPhi( 0.0*degree);
+    pVDCRotator->SetRotationAngleInPhi( 90.0*degree);
   }
+  //
+  if (pVDC) {
+    pVDC->ConstructComponent(experimentalHall_Physical);
+    pGeometry->AddModule(pVDC->getVDCFront_PhysicalVolume());
+    pGeometry->AddModule(pVDC->getVDCBack_PhysicalVolume());
+    pVDC->SetVDCRotator(pVDCRotator);
+    pVDC->SetVDC_RotationAngleInPhi(90.0*degree,0);
+    pVDC->SetVDC_RotationAngleInPhi(270.0*degree,1);
+  }
+
 
   //=========================================
   // create/place Cerenkov into MotherVolume

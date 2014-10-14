@@ -39,12 +39,14 @@
 // user includes
 #include "QweakSimMessengerDefinition.hh"
 #include "QweakSimVDC.hh"
+#include "QweakSimVDCRotator.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 QweakSimVDCMessenger::QweakSimVDCMessenger(QweakSimVDC* theVDC,G4int pkg)
 :myVDC(theVDC),fPackage(pkg)
 { 
+  
  // VDC related
   VDCDir = new G4UIdirectory("/VDC/");
   VDCDir -> SetGuidance("VDC control.");
@@ -304,8 +306,11 @@ void QweakSimVDCMessenger::SetNewValue(G4UIcommand* command,G4String newValue)
   { 
      G4cout << "#### Messenger: Setting VDC rotation angle in phi to " << newValue << G4endl;
      
-     myVDC->SetVDC_RotationAngleInPhi(VDC_RotationAngleInPhi_Cmd->GetNewDoubleValue(newValue),0);
-     myVDC->SetVDC_RotationAngleInPhi(VDC_RotationAngleInPhi_Cmd->GetNewDoubleValue(newValue)+180.0*degree,1);
+     double phi = VDC_RotationAngleInPhi_Cmd->GetNewDoubleValue(newValue);
+     myVDC->SetVDC_RotationAngleInPhi(phi,0);
+     myVDC->SetVDC_RotationAngleInPhi(phi+180.0*degree,1);
+     myRotator = myVDC->GetVDCRotator();
+     myRotator->SetRotationAngleInPhi(phi);
    }
 
 
@@ -343,7 +348,11 @@ void QweakSimVDCMessenger::SetNewValue(G4UIcommand* command,G4String newValue)
    {
       G4cout << "#### Messenger: Setting VDC rotation angle in phi to " << newValue << G4endl;
 
-      myVDC->SetVDC_RotationAngleInPhi(VDC_RotationAngleInPhi_Pkg_Cmd->GetNewDoubleValue(newValue),fPackage);
+      double phi = VDC_RotationAngleInPhi_Pkg_Cmd->GetNewDoubleValue(newValue);
+      myVDC->SetVDC_RotationAngleInPhi(phi,fPackage);
+      myVDC->SetVDC_RotationAngleInPhi(phi+180.0*degree,abs(fPackage-1));
+      myRotator = myVDC->GetVDCRotator();
+      myRotator->SetRotationAngleInPhi(phi);
     }
 
 

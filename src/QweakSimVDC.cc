@@ -116,7 +116,8 @@ QweakSimVDC::QweakSimVDC()
   SetVDC_BackVDC_CenterPosition(i);
   }
   MeanTrackAngle             =  24.43*degree;  //20.57*degree;  // also tilting angle of VDcs  // 
-  VDC_RotationAngleInPhi     =   0.0*degree;   // normally 0.0*degree = 12 o'clock = octant 1
+  VDC_RotationAngleInPhi[0]     =   0.0*degree;   // normally 0.0*degree = 12 o'clock = octant 1
+  VDC_RotationAngleInPhi[1]     =  90*degree; //VDC_RotationAngleInPhi[0] + 180.0*degree;
   
 
 
@@ -190,9 +191,10 @@ QweakSimVDC::QweakSimVDC()
   VDC_Messenger.resize(2,0);
 
   // Creates a messenger for each VDC package (0 for Package 1 and 1 for Package 2)
-  for(size_t i = 0; i < VDC_Messenger.size(); i++)
+  for(size_t i = 0; i < VDC_Messenger.size(); i++){
     VDC_Messenger[i] = new QweakSimVDCMessenger(this, i);
-
+    VDC_Messenger.at(i)->SetVDCRotator(myRotator);
+  }
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -211,6 +213,7 @@ QweakSimVDC::~QweakSimVDC()
   if (VDC_WirePlane_VisAtt)                delete VDC_WirePlane_VisAtt;
 
   if (pMaterial)      delete pMaterial; 
+  
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -1593,9 +1596,7 @@ void QweakSimVDC::SetVDC_DriftCell_MasterContainer_CenterPosition(G4int pkg)
 void QweakSimVDC::SetVDC_RotationAngleInPhi(G4double vdc_phiangle, G4int pkg)
 {
     G4cout << G4endl << "###### Calling QweakSimVDC::SetVDC_RotationAngleInPhi() " << G4endl << G4endl;
-
-
-
+       
     //------------------------------------------------------
     //   VDC related
     //------------------------------------------------------
@@ -1627,8 +1628,8 @@ void QweakSimVDC::SetVDC_RotationAngleInPhi(G4double vdc_phiangle, G4int pkg)
 
 
     // assign new phi tilting angle 
-    VDC_RotationAngleInPhi = vdc_phiangle;
-    Rotation_VDC_MasterContainer[pkg]      -> setPhi(VDC_RotationAngleInPhi -90*degree);
+    VDC_RotationAngleInPhi[pkg] = vdc_phiangle;
+    Rotation_VDC_MasterContainer[pkg]      -> setPhi(VDC_RotationAngleInPhi[pkg] -90*degree);
 
     // Rotation of VDCs
     VDC_MasterContainerFront_Physical[pkg] -> SetRotation(Rotation_VDC_MasterContainer[pkg]);
@@ -1658,6 +1659,7 @@ void QweakSimVDC::PlaceVDC_MasterContainers()
 	  Rotation_VDC_MasterContainer[i]      = new G4RotationMatrix();
 	  G4double Angle_VDC_MasterContainer = (-90.0+45.0+20.82)*degree;
 	  Rotation_VDC_MasterContainer[i]       ->rotateX(Angle_VDC_MasterContainer);
+	  
 	  }
 
 
@@ -1684,7 +1686,7 @@ void QweakSimVDC::PlaceVDC_MasterContainers()
 	  // define VDC physical volume of drift chamber container
 	  VDC_MasterContainerFront_Physical[i] = new G4PVPlacement(Rotation_VDC_MasterContainer[i],
 								position_MasterContainerFront,
-								"VDC_MasterContainerFront_Physical",
+								Form("VDC_MasterContainerFront_Physical%d",i+1),
 								VDC_MasterContainer_Logical,
 								theMotherPV,
 								false,
@@ -1696,15 +1698,14 @@ void QweakSimVDC::PlaceVDC_MasterContainers()
 	  // define VDC physical volume of drift chamber container
 	  VDC_MasterContainerBack_Physical[i] = new G4PVPlacement(Rotation_VDC_MasterContainer[i],
 							       position_MasterContainerBack,
-							       "VDC_MasterContainerBack_Physical",
+							       Form("VDC_MasterContainerBack_Physical%d",i+1),
 							       VDC_MasterContainer_Logical,
 							       theMotherPV,
 							       false,
 							       2*i+1,
 							       pSurfChk);// copy number for back
 	  }
-
-
+  
 }
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void QweakSimVDC::PlaceVDC_DriftCellMasterContainers()

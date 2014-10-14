@@ -208,9 +208,13 @@
 /VDC/DriftCell/SetFullHeight         70.0 cm
 /VDC/DriftCell/SetDCNumberPerPlane    341
 
-#Disable Package 2 VDC (Must have phi of 270 degree)
-/VDC/VDC2/SetRotationAngleInPhi       270.0 degree
-/VDC/VDC2/SetFrontCenterPositionInY  -115.225  cm
+#Put Package 1 VDC in contraction position (Must have phi of 90 degree)
+#/VDC/VDC2/SetRotationAngleInPhi       90.0 degree
+#/VDC/VDC2/SetFrontCenterPositionInY  -115.225  cm
+
+#Put Package 2 VDC in contraction position (Must have phi of 270 degree)
+#/VDC/VDC2/SetRotationAngleInPhi       270.0 degree
+#/VDC/VDC2/SetFrontCenterPositionInY  -115.225  cm
 
 #==============================================
 # Thickness = 64/64 inch

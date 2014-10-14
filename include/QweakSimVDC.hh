@@ -52,10 +52,12 @@
 // user includes
 #include "QweakSimSolids.hh"
 #include "QweakSimVDC_WirePlaneSD.hh"
+#include <TString.h>
 
 // user classes
 class QweakSimVDCMessenger;
 class QweakSimMaterial;
+class QweakSimVDCRotator;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -131,11 +133,13 @@ public:
   G4double GetDCFullThickness()   {return DriftCell_FullThickness;}
   G4double GetDCUPlaneWireAngle() {return DriftCell_WireAngleFront;} 
   G4double GetDCVPlaneWireAngle() {return DriftCell_WireAngleBack;} 
-
-  G4double GetVDC_RotationAngleInPhi() {return VDC_RotationAngleInPhi;}
+  
+  void SetVDCRotator(QweakSimVDCRotator* theRotator){myRotator = theRotator;};
+  QweakSimVDCRotator* GetVDCRotator() {return myRotator;};
 
 private:
 
+    QweakSimVDCRotator* myRotator;
     void SetVDC_BackVDC_CenterPosition(G4int pkg);
     void SetVDC_DriftCell_MasterContainer_CenterPosition(G4int pkg);
 
@@ -146,7 +150,7 @@ private:
  
    // mean bending angle after MainMagnet
     G4double MeanTrackAngle;  // ~ 20.8*degree
-    G4double VDC_RotationAngleInPhi;
+    G4double VDC_RotationAngleInPhi[2];
 
 
     std::vector< QweakSimVDCMessenger* > VDC_Messenger;  // pointer to the Messenger

@@ -62,25 +62,27 @@ class G4UIcmdWithADoubleAndUnit;
 
 // user classes
 class QweakSimVDC;
+class QweakSimVDCRotator;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 class QweakSimVDCMessenger: public G4UImessenger
 {
   public:
-    QweakSimVDCMessenger(QweakSimVDC*,G4int pkg = 0);
+    QweakSimVDCMessenger(QweakSimVDC*, G4int pkg = 0);
    ~QweakSimVDCMessenger();
     
     G4int GetPackage() {return fPackage;}
     void SetNewValue(G4UIcommand*, G4String);
+    void SetVDCRotator(QweakSimVDCRotator* theRotator){myRotator = theRotator;};
     
 private:
   QweakSimVDC*               myVDC;
-
+  QweakSimVDCRotator*        myRotator;
 
   G4UIdirectory*             VDCDir;
   
-  G4int 					 fPackage;
+  G4int                      fPackage;
   G4UIdirectory*             DirPerPackage;
 
   G4UIcmdWithAString*        VDC_MasterContainerMatCmd;

@@ -5,6 +5,7 @@
 //  ---------------------------
 // 
 /**
+
  
    \file QweakSimVDCRotator.cc
 
@@ -46,16 +47,15 @@
 #include "QweakSimVDCMessenger.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-QweakSimVDCRotator::QweakSimVDCRotator(QweakSimVDC* theVDC)
-: DualVDC(theVDC)
+// QweakSimVDCRotator::QweakSimVDCRotator(QweakSimVDC* theVDC)
+// : DualVDC(theVDC)
+ QweakSimVDCRotator::QweakSimVDCRotator()
 {
     G4cout << G4endl << "###### Calling QweakSimVDCRotator::QweakCollimatorSupport() " << G4endl << G4endl;
 
     theMotherVolume = NULL;
 
-  //kAngle_GlobalRotation = 45.0*degree;
-  kAngle_GlobalRotation = theVDC->GetVDC_RotationAngleInPhi() ;
-  G4cout <<"================> kAngle_GlobalRotation = " << kAngle_GlobalRotation << G4endl;
+  kAngle_GlobalRotation = 90.0*degree;
 
   // Upstream Ring
   UpstreamRing_Logical  = NULL;
@@ -163,11 +163,13 @@ QweakSimVDCRotator::QweakSimVDCRotator(QweakSimVDC* theVDC)
   Rotation_SliderSupportLeft  = NULL;
   Rotation_SliderSupportRight = NULL;
 
-  SliderSupportLeft_Logical   = NULL; 
-  SliderSupportLeft_Physical  = NULL; 
+  SliderSupportLeft_Logical   = NULL;
+  SliderSupportLeft_Physical.clear();
+  SliderSupportLeft_Physical.resize(2);
 
   SliderSupportRight_Logical  = NULL; 
-  SliderSupportRight_Physical = NULL;
+  SliderSupportRight_Physical.clear();
+  SliderSupportRight_Physical.resize(2);
 
   // needed for shaping
   SliderSupportSubtraction_TempSolid.clear();
@@ -194,6 +196,48 @@ QweakSimVDCRotator::~QweakSimVDCRotator()
 
     G4cout << G4endl << "###### Calling QweakSimVDCRotator::~QweakCollimatorSupport() " << G4endl << G4endl;
 }
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+void QweakSimVDCRotator::ConstructRotatorMasterContainer()
+{
+    G4cout << G4endl << "###### Calling QweakSimVDCRotator::RotatorMasterContainer() " << G4endl << G4endl;
+   
+   G4Box* RotatorMasterContainer_Solid = new G4Box("RotatorMasterContainer_Solid",
+				 0.5 * (5.6*m), 
+				 0.5 * (2.0*kRail_CenterPositionInR+50*cm),
+				 0.5 * (kSliderSupport_FullLength_Z +2.0*cm ));
+   
+   G4LogicalVolume* RotatorMasterContainer_Logical  = new G4LogicalVolume(  RotatorMasterContainer_Solid,
+					 pMaterial->GetMaterial("Air"),
+					 "RotatorMasterContainer_Logical",
+					 0,
+					 0,0);
+
+  G4Colour  aluminum      ( 169/255. , 172/255. , 182/255.);
+  G4VisAttributes* RotatorMasterContainer_VisAtt = new G4VisAttributes(aluminum);
+  RotatorMasterContainer_VisAtt->SetForceWireframe(true);
+  RotatorMasterContainer_VisAtt->SetVisibility(false);
+  RotatorMasterContainer_Logical->SetVisAttributes(RotatorMasterContainer_VisAtt); 
+
+  // Place the physical volume into theMotherVolume
+
+   G4ThreeVector Translation_RotatorMasterContainer;
+   Translation_RotatorMasterContainer.setZ(kRail_CenterPositionInZ);
+
+   G4RotationMatrix* Rotation_RotatorMasterContainer = new G4RotationMatrix();
+   Rotation_RotatorMasterContainer->rotateZ(kAngle_GlobalRotation);
+   
+   RotatorMasterContainer_Physical   = new G4PVPlacement(Rotation_RotatorMasterContainer,
+					   Translation_RotatorMasterContainer,
+					   "RotatorMasterContainer_Physical",
+					   RotatorMasterContainer_Logical,
+					   theMotherVolume,
+					   false,
+					   0,
+					   pSurfChk);
+   
+}
+
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void QweakSimVDCRotator::ConstructRings()
@@ -351,28 +395,29 @@ void QweakSimVDCRotator::PlacePVRails()
    CenterRailRight->setZ(0.0*cm);
 
    // rotate center vectors of rails
-    CenterRailLeft  ->rotateZ(kAngle_GlobalRotation);
-    CenterRailRight ->rotateZ(kAngle_GlobalRotation);
+   // CenterRailLeft  ->rotateZ(kAngle_GlobalRotation);
+   // CenterRailRight ->rotateZ(kAngle_GlobalRotation);
 
    Translation_LeftRail.setX( CenterRailLeft->y() );
    Translation_LeftRail.setY( CenterRailLeft->x() );
-   Translation_LeftRail.setZ(kRail_CenterPositionInZ);
+   //Translation_LeftRail.setZ(kRail_CenterPositionInZ);
    
    Translation_RightRail.setX( CenterRailRight->y() );
    Translation_RightRail.setY( CenterRailRight->x() );
-   Translation_RightRail.setZ(kRail_CenterPositionInZ);
+   //Translation_RightRail.setZ(kRail_CenterPositionInZ);
    
    // since the SingleCoil_ClampPlate_Logical is defined for a vertical orientation
    // but the translation assumes a horizontal orinetation, we have to subtract 90*deg
    Rotation_Rail = new G4RotationMatrix();
-   Rotation_Rail->rotateZ(kAngle_GlobalRotation -90*degree);
+   //Rotation_Rail->rotateZ(kAngle_GlobalRotation -90*degree);
+   Rotation_Rail->rotateZ( -90*degree);
    
 
    LeftRail_Physical   = new G4PVPlacement(Rotation_Rail,
 					   Translation_LeftRail,
 					   "LeftRail_Physical",
 					   Rail_Logical,
-					   theMotherVolume,
+					   RotatorMasterContainer_Physical,
 					   false,
 					   0,
 					   pSurfChk);
@@ -381,7 +426,7 @@ void QweakSimVDCRotator::PlacePVRails()
 					    Translation_RightRail,
 					    "RightRail_Physical",
 					    Rail_Logical,
-					    theMotherVolume,
+					    RotatorMasterContainer_Physical,
 					    false,
 					    0,
 					    pSurfChk);
@@ -449,52 +494,53 @@ void QweakSimVDCRotator::PlacePVMount()
 
   CenterRodLeftUpstream->setX(kRod_LR_CenterPositionInX[0]);
   CenterRodLeftUpstream->setY(kRod_LR_CenterPositionInY[0]);
-  CenterRodLeftUpstream->setZ(kRod_LR_CenterPositionInZ[0]);
+  //CenterRodLeftUpstream->setZ(kRod_LR_CenterPositionInZ[0]);
   //
   CenterRodLeftDownstream->setX(kRod_LR_CenterPositionInX[1]);
   CenterRodLeftDownstream->setY(kRod_LR_CenterPositionInY[1]);
-  CenterRodLeftDownstream->setZ(kRod_LR_CenterPositionInZ[1]);
+  //CenterRodLeftDownstream->setZ(kRod_LR_CenterPositionInZ[1]);
 
 
   CenterRodRightUpstream->setX(kRod_LR_CenterPositionInX[2]);
   CenterRodRightUpstream->setY(kRod_LR_CenterPositionInY[2]);
-  CenterRodRightUpstream->setZ(kRod_LR_CenterPositionInZ[2]);
+  //CenterRodRightUpstream->setZ(kRod_LR_CenterPositionInZ[2]);
   //
   CenterRodRightDownstream->setX(kRod_LR_CenterPositionInX[3]);
   CenterRodRightDownstream->setY(kRod_LR_CenterPositionInY[3]);
-  CenterRodRightDownstream->setZ(kRod_LR_CenterPositionInZ[3]);
+  //CenterRodRightDownstream->setZ(kRod_LR_CenterPositionInZ[3]);
 
 
 
    // rotate center vectors of rails
-  CenterRodLeftUpstream    ->rotateZ(kAngle_GlobalRotation);
-  CenterRodLeftDownstream  ->rotateZ(kAngle_GlobalRotation);
-  CenterRodRightUpstream   ->rotateZ(kAngle_GlobalRotation);
-  CenterRodRightDownstream ->rotateZ(kAngle_GlobalRotation);
+//   CenterRodLeftUpstream    ->rotateZ(kAngle_GlobalRotation);
+//   CenterRodLeftDownstream  ->rotateZ(kAngle_GlobalRotation);
+//   CenterRodRightUpstream   ->rotateZ(kAngle_GlobalRotation);
+//   CenterRodRightDownstream ->rotateZ(kAngle_GlobalRotation);
 
 
   Translation_RodLeftUpstream.setX( CenterRodLeftUpstream->y() );
   Translation_RodLeftUpstream.setY( CenterRodLeftUpstream->x() );
-  Translation_RodLeftUpstream.setZ( CenterRodLeftUpstream->z() );
+  //Translation_RodLeftUpstream.setZ( CenterRodLeftUpstream->z() );
   //
   Translation_RodLeftDownstream.setX( CenterRodLeftDownstream->y() );
   Translation_RodLeftDownstream.setY( CenterRodLeftDownstream->x() );
-  Translation_RodLeftDownstream.setZ( CenterRodLeftDownstream->z() );
+  //Translation_RodLeftDownstream.setZ( CenterRodLeftDownstream->z() );
 
 
   Translation_RodRightUpstream.setX( CenterRodRightUpstream->y() );
   Translation_RodRightUpstream.setY( CenterRodRightUpstream->x() );
-  Translation_RodRightUpstream.setZ( CenterRodRightUpstream->z() );
+  //Translation_RodRightUpstream.setZ( CenterRodRightUpstream->z() );
   //
   Translation_RodRightDownstream.setX( CenterRodRightDownstream->y() );
   Translation_RodRightDownstream.setY( CenterRodRightDownstream->x() );
-  Translation_RodRightDownstream.setZ( CenterRodRightDownstream->z() );
+  //Translation_RodRightDownstream.setZ( CenterRodRightDownstream->z() );
 
  
 
   Rotation_Rod_LR = new G4RotationMatrix();
   Rotation_Rod_LR->rotateY(90*degree);
-  Rotation_Rod_LR->rotateX(kAngle_GlobalRotation -90*degree);
+  //Rotation_Rod_LR->rotateX(kAngle_GlobalRotation -90*degree);
+  Rotation_Rod_LR->rotateX(-90*degree);
  
 
   
@@ -502,7 +548,7 @@ void QweakSimVDCRotator::PlacePVMount()
 						   Translation_RodLeftUpstream,
 						   "RodLR_LeftUpstream_Physical",
 						   Rod_LeftRight_Logical,
-						   theMotherVolume,
+						   RotatorMasterContainer_Physical,
 						   false,
 						   0,
 						   pSurfChk);
@@ -511,7 +557,7 @@ void QweakSimVDCRotator::PlacePVMount()
 						    Translation_RodRightUpstream,
 						    "RodLR_RightUpstream_Physical",
 						    Rod_LeftRight_Logical,
-						    theMotherVolume,
+						    RotatorMasterContainer_Physical,
 						    false,
 						    0,
 						    pSurfChk);
@@ -520,7 +566,7 @@ void QweakSimVDCRotator::PlacePVMount()
 						    Translation_RodLeftDownstream,
 						    "RodLR_LeftDownstream_Physical",
 						    Rod_LeftRight_Logical,
-						    theMotherVolume,
+						    RotatorMasterContainer_Physical,
 						    false,
 						    0,
 						    pSurfChk);
@@ -529,7 +575,7 @@ void QweakSimVDCRotator::PlacePVMount()
 						    Translation_RodRightDownstream,
 						    "RodLR_RightDownstream_Physical",
 						    Rod_LeftRight_Logical,
-						    theMotherVolume,
+						    RotatorMasterContainer_Physical,
 						    false,
 						    0,
 						    pSurfChk);
@@ -753,12 +799,16 @@ void QweakSimVDCRotator::ConstructSliderSupport()
     SliderSupportRight_Logical ->SetVisAttributes(SliderSupport_VisAtt); 
     //**********************************************************************************
 
-    PlacePVSliderSupport();
+    PlacePVSliderSupport(1);
+    PlacePVSliderSupport(2);
 
 } // end of ConstructSliderSupport()
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void QweakSimVDCRotator::PlacePVSliderSupport()
+
+// pkg = 1 or pkg = 2
+
+void QweakSimVDCRotator::PlacePVSliderSupport(int pkg)
 {
 
    G4ThreeVector* leftcenter  = new G4ThreeVector();
@@ -773,49 +823,57 @@ void QweakSimVDCRotator::PlacePVSliderSupport()
 
      leftcenter->setX(-1.0*kSliderSupport_CenterPositionInX);    
      leftcenter->setY(     kSliderSupport_CenterPositionInY);    
-     leftcenter->setZ(     kSliderSupport_CenterPositionInZ);    
+     //leftcenter->setZ(     kSliderSupport_CenterPositionInZ);
 
      rightcenter->setX(    kSliderSupport_CenterPositionInX);
      rightcenter->setY(    kSliderSupport_CenterPositionInY);
-     rightcenter->setZ(    kSliderSupport_CenterPositionInZ);
+     //rightcenter->setZ(    kSliderSupport_CenterPositionInZ);
 
      // rotate center vector to coils
-     leftcenter  ->rotateZ(kAngle_GlobalRotation);
-     rightcenter ->rotateZ(kAngle_GlobalRotation);
+     //leftcenter  ->rotateZ(kAngle_GlobalRotation);
+     //rightcenter ->rotateZ(kAngle_GlobalRotation);
 
 
-     Translation_LeftSliderSupport.setX( leftcenter->y() );
-     Translation_LeftSliderSupport.setY( leftcenter->x() );
-     Translation_LeftSliderSupport.setZ( leftcenter->z() );
+     double reverser = 1.0;
+     if(pkg == 2)
+       reverser = -1.0;
+     
+     Translation_LeftSliderSupport.setX( reverser*leftcenter->y() );
+     Translation_LeftSliderSupport.setY( reverser*leftcenter->x() );
+     //Translation_LeftSliderSupport.setZ( leftcenter->z() );
 
-     Translation_RightSliderSupport.setX( rightcenter->y() );
-     Translation_RightSliderSupport.setY( rightcenter->x() );
-     Translation_RightSliderSupport.setZ( rightcenter->z() );
+     Translation_RightSliderSupport.setX( reverser*rightcenter->y() );
+     Translation_RightSliderSupport.setY( reverser*rightcenter->x() );
+     //Translation_RightSliderSupport.setZ( rightcenter->z() );
 
 
      // since the SingleCoil_ClampPlate_Logical is defined for a vertical orientation
      // but the translation assumes a horizontal orinetation, we have to subtract 90*deg
      Rotation_SliderSupportLeft = new G4RotationMatrix();
-     Rotation_SliderSupportLeft->rotateZ(kAngle_GlobalRotation -90*degree);
+     //Rotation_SliderSupportLeft->rotateZ(kAngle_GlobalRotation -90*degree + (pkg-1)*180.0*degree);
+     Rotation_SliderSupportLeft->rotateZ( -90*degree + (pkg-1)*180.0*degree);
 
      Rotation_SliderSupportRight = new G4RotationMatrix();
-     Rotation_SliderSupportRight->rotateZ(kAngle_GlobalRotation -90*degree);
+     //Rotation_SliderSupportRight->rotateZ(kAngle_GlobalRotation -90*degree + (pkg-1)*180.0*degree);
+     Rotation_SliderSupportRight->rotateZ( -90*degree + (pkg-1)*180.0*degree);
 
 
-     SliderSupportLeft_Physical   = new G4PVPlacement(Rotation_SliderSupportLeft,
+     //place sliders for package 1, 2
+
+     SliderSupportLeft_Physical.at(pkg-1)   = new G4PVPlacement(Rotation_SliderSupportLeft,
 						      Translation_LeftSliderSupport,
-						      "SliderSupportLeft_Physical",
+						      Form("SliderSupportLeft_Pkg%d_Physical",pkg),
 						      SliderSupportLeft_Logical,
-						      theMotherVolume,
+						      RotatorMasterContainer_Physical,
 						      false,
 						      0,
 						      pSurfChk);
-
-     SliderSupportRight_Physical   = new G4PVPlacement(Rotation_SliderSupportRight,
+   
+     SliderSupportRight_Physical.at(pkg-1)   = new G4PVPlacement(Rotation_SliderSupportRight,
 						       Translation_RightSliderSupport,
-						       "SliderSupportRight_Physical",
+						       Form("SliderSupportRight_Pkg%d_Physical",pkg),
 						       SliderSupportRight_Logical,
-						       theMotherVolume,
+						       RotatorMasterContainer_Physical,
 						       false,
 						       0,
 						       pSurfChk);
@@ -849,54 +907,11 @@ void QweakSimVDCRotator::SetRotationAngleInPhi(G4double vdc_phiangle)
     G4cout << G4endl << "###### Calling QweakSimVDCRotator::SetRotationAngleInPhi() " << G4endl << G4endl;
 
     kAngle_GlobalRotation = vdc_phiangle -90.0*degree;
-
- //-----------------------------------------------------------------------------
- // if exist, remove the current left/right slider
- if(SliderSupportLeft_Physical)
- {
-     SliderSupportLeft_Logical->RemoveDaughter(SliderSupportLeft_Physical);
-     delete SliderSupportLeft_Physical;
- }
-
- if(SliderSupportRight_Physical)
- {
-     SliderSupportRight_Logical->RemoveDaughter(SliderSupportRight_Physical);
-     delete SliderSupportRight_Physical;
- }
  
- // Place the physical volume of the sliders with the new phi angle
- PlacePVSliderSupport();
-
- //-----------------------------------------------------------------------------
- for (size_t i=0; i<Rod_LeftRight_Physical.size();i++)
- {
-     Rod_LeftRight_Logical->RemoveDaughter(Rod_LeftRight_Physical[i]);
-     delete Rod_LeftRight_Physical[i];
- }
- Rod_LeftRight_Physical.clear(); 
- Rod_LeftRight_Physical.resize(4); 
+ G4RotationMatrix* Rotation_RotatorMasterContainer = new G4RotationMatrix();
+ Rotation_RotatorMasterContainer->setPhi(vdc_phiangle);
+ RotatorMasterContainer_Physical->SetRotation(Rotation_RotatorMasterContainer);
  
-
- // Place the physical volume of the rods with the new phi angle
- PlacePVMount();
-//-----------------------------------------------------------------------------
-// if exist, remove the current left/right rails
- if(LeftRail_Physical)
- {
-     Rail_Logical->RemoveDaughter(LeftRail_Physical);
-     delete LeftRail_Physical;
- }
-
- if(RightRail_Physical)
- {
-     Rail_Logical->RemoveDaughter(RightRail_Physical);
-     delete RightRail_Physical;
- }
- 
- // Place the physical volume of the left/right rails with the new phi angle
- PlacePVRails();
- //-----------------------------------------------------------------------------
-
 }	
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 

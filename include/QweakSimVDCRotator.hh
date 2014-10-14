@@ -59,6 +59,7 @@
 #include "G4Types.hh"
 #include "G4ThreeVector.hh"
 #include "G4RotationMatrix.hh"
+#include <TString.h>
 
 // geant4 classes
 class G4VPhysicalVolume;
@@ -83,6 +84,8 @@ private:
   G4double           kAngle_GlobalRotation;
 
   G4VPhysicalVolume* theMotherVolume;
+  
+  G4VPhysicalVolume* RotatorMasterContainer_Physical;
 
   G4double kRing_RadiusMin;
   G4double kRing_RadiusMax;
@@ -170,10 +173,10 @@ private:
   G4RotationMatrix*  Rotation_SliderSupportRight;
 
   G4LogicalVolume*   SliderSupportLeft_Logical; 
-  G4VPhysicalVolume* SliderSupportLeft_Physical; 
+  std::vector <G4VPhysicalVolume*> SliderSupportLeft_Physical;
 
   G4LogicalVolume*   SliderSupportRight_Logical; 
-  G4VPhysicalVolume* SliderSupportRight_Physical;
+  std::vector <G4VPhysicalVolume*> SliderSupportRight_Physical;
 
   // needed for shaping
   std::vector< G4SubtractionSolid* >  SliderSupportSubtraction_TempSolid;
@@ -181,18 +184,20 @@ private:
 
  public:
     //!Constructor
-  QweakSimVDCRotator(QweakSimVDC*);
+  //QweakSimVDCRotator(QweakSimVDC*);
+  QweakSimVDCRotator();
 
   //!Destructor
   ~QweakSimVDCRotator();
 
   void SetMotherVolume(G4VPhysicalVolume* mv) { theMotherVolume = mv;}
+  void ConstructRotatorMasterContainer();
   void ConstructRings();
   void ConstructRails();
   void ConstructMount();
   void ConstructSliderSupport();
 
-  void PlacePVSliderSupport();
+  void PlacePVSliderSupport(int pkg);
   void PlacePVRails();
   void PlacePVMount();
 
