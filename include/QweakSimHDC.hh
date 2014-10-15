@@ -52,6 +52,7 @@
 // user includes
 #include "QweakSimSolids.hh"
 #include "QweakSimHDC_WirePlaneSD.hh"
+#include <TString.h>
 
 // user classes
 class QweakSimHDCMessenger;
@@ -111,7 +112,7 @@ public:
   G4VPhysicalVolume* getHDC_WirePlane_PhysicalVolume()   {return HDC_WirePlane_Physical;} 
 
 
-  G4double GetHDC_RotationAngleInPhi() {return HDC_RotationAngleInPhi;} 
+  G4double GetHDC_RotationAngleInPhi() {return HDC_RotationAngleInPhi[0];} 
 
 private:
 
@@ -123,9 +124,11 @@ private:
   QweakSimMaterial*  pMaterial;
 
   G4VPhysicalVolume* theMotherPV;  //pointer to MotherVolume
+  
+  G4VPhysicalVolume* HDC_PackageContainer_Physical;
 
   std::vector<G4RotationMatrix*> Rotation_HDC; // for Phi angle orientation
-  G4double          HDC_RotationAngleInPhi;
+  G4double          HDC_RotationAngleInPhi[2];
 
   G4LogicalVolume*   HDC_MasterContainer_Logical; 
   std::vector<G4VPhysicalVolume*> HDC_MasterContainerFront_Physical;
@@ -161,6 +164,8 @@ private:
   G4double AluFrame_InnerLength;
   G4double AluFrame_InnerWidth; 
 
+  G4double HDC_CenterPositionInZ;
+  
   std::vector<G4double> HDC_CenterFront_XPos;
   std::vector<G4double> HDC_CenterFront_YPos;
   std::vector<G4double> HDC_CenterFront_ZPos;

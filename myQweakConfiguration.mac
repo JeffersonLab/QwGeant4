@@ -167,8 +167,8 @@
 /HDC/SetWirePlaneMaterial           ArCO2
 
 #Disable Package 2 HDC
-/HDC/HDC2/SetFrontCenterPositionInY  200.104 cm
-/HDC/HDC2/SetBackCenterPositionInY   204.872 cm
+#/HDC/HDC2/SetFrontCenterPositionInY  200.104 cm
+#/HDC/HDC2/SetBackCenterPositionInY   204.872 cm
 
 #==========================
 #   VDC related   (Region3)

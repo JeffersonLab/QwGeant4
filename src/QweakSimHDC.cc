@@ -106,17 +106,30 @@ QweakSimHDC::QweakSimHDC()
   HDC_CenterBack_ZPos.resize(2,0);
 
   for(int i = 0; i < 2; i++){ //temporary loop, setting both HDC packages to same coordinates, but pkg2 will be rotated.
-  HDC_CenterFront_XPos[i]        =    0.0*cm;
-  HDC_CenterFront_YPos[i]        =   51.0*cm;
-  HDC_CenterFront_ZPos[i]        = -337.355*cm; //-325.459*cm;  // Allena's keepout info
+  HDC_CenterFront_XPos[i]      =      0.0*cm;
+  HDC_CenterFront_YPos[i]      =     51.0*cm;
+  HDC_CenterFront_ZPos[i]      = -337.355*cm; //-325.459*cm;  // Allena's keepout info
   // updated 2012-04-09 wdconinc based on input Mark Pitt
 
-  HDC_CenterBack_XPos[i]        =    0.0*cm;
-  HDC_CenterBack_YPos[i]        =   54.9*cm;
+  HDC_CenterBack_XPos[i]       =      0.0*cm;
+  HDC_CenterBack_YPos[i]       =     54.9*cm;
   HDC_CenterBack_ZPos[i]       = -294.655*cm;
   // updated 2012-04-09 wdconinc based on input Mark Pitt
+  
+  HDC_RotationAngleInPhi[i]     =   90.0*degree;   // normally 0.0*degree = 12 o'clock = octant 1
+    
+  if(i==1)
+  {
+      HDC_CenterFront_XPos[i]      =      0.0*cm;
+      HDC_CenterFront_YPos[i]      =    -51.0*cm;
+      
+      HDC_CenterBack_XPos[i]       =      0.0*cm;
+      HDC_CenterBack_YPos[i]       =    -54.9*cm;
+      
+      HDC_RotationAngleInPhi[i]     =   270.0*degree;   // normally 0.0*degree = 12 o'clock = octant 1
   }
-  HDC_RotationAngleInPhi     =   0.0*degree;   // normally 0.0*degree = 12 o'clock = octant 1
+
+  }
   
   // define Rotation matrix for Container orientated in MotherVolume
 //  Rotation_HDC  = new G4RotationMatrix();
@@ -545,7 +558,7 @@ void QweakSimHDC::SetFrontHDC_CenterPositionInX(G4double xPos, G4int pkg)
  
     HDC_MasterContainerFront_Physical[pkg]->SetTranslation(G4ThreeVector(HDC_CenterFront_XPos[pkg],
 								    HDC_CenterFront_YPos[pkg],
-								    HDC_CenterFront_ZPos[pkg]));
+								    HDC_CenterFront_ZPos[pkg]-HDC_CenterPositionInZ));
  
     G4cout << G4endl << "###### Leaving QweakSimHDC::SetFrontHDC_CenterPositionInX() " << G4endl << G4endl;
 }
@@ -559,7 +572,7 @@ void QweakSimHDC::SetFrontHDC_CenterPositionInY(G4double yPos, G4int pkg)
 
     HDC_MasterContainerFront_Physical[pkg]->SetTranslation(G4ThreeVector(HDC_CenterFront_XPos[pkg],
 								    HDC_CenterFront_YPos[pkg],
-								    HDC_CenterFront_ZPos[pkg]));
+								    HDC_CenterFront_ZPos[pkg]-HDC_CenterPositionInZ));
 
  G4cout << G4endl << "###### Leaving QweakSimHDC::SetFrontHDC_CenterPositionInY() " << G4endl << G4endl;
 }
@@ -573,7 +586,7 @@ void QweakSimHDC::SetFrontHDC_CenterPositionInZ(G4double zPos, G4int pkg)
 
     HDC_MasterContainerFront_Physical[pkg]->SetTranslation(G4ThreeVector(HDC_CenterFront_XPos[pkg],
 								    HDC_CenterFront_YPos[pkg],
-								    HDC_CenterFront_ZPos[pkg]));
+								    HDC_CenterFront_ZPos[pkg]-HDC_CenterPositionInZ));
 
     G4cout << G4endl << "###### Leaving QweakSimHDC::SetFrontHDC_CenterPositionInZ() " << G4endl << G4endl;
 }
@@ -588,7 +601,7 @@ void QweakSimHDC::SetBackHDC_CenterPositionInX(G4double xPos, G4int pkg)
  
     HDC_MasterContainerBack_Physical[pkg]->SetTranslation(G4ThreeVector(HDC_CenterBack_XPos[pkg],
 								   HDC_CenterBack_YPos[pkg],
-								   HDC_CenterBack_ZPos[pkg]));
+								   HDC_CenterBack_ZPos[pkg]-HDC_CenterPositionInZ));
  
     G4cout << G4endl << "###### Leaving QweakSimHDC::SetBackHDC_CenterPositionInX() " << G4endl << G4endl;
 }
@@ -602,7 +615,7 @@ void QweakSimHDC::SetBackHDC_CenterPositionInY(G4double yPos, G4int pkg)
 
     HDC_MasterContainerBack_Physical[pkg]->SetTranslation(G4ThreeVector(HDC_CenterBack_XPos[pkg],
 								   HDC_CenterBack_YPos[pkg],
-								   HDC_CenterBack_ZPos[pkg]));
+								   HDC_CenterBack_ZPos[pkg]-HDC_CenterPositionInZ));
 
  G4cout << G4endl << "###### Leaving QweakSimHDC::SetBackHDC_CenterPositionInY() " << G4endl << G4endl;
 }
@@ -613,10 +626,9 @@ void QweakSimHDC::SetBackHDC_CenterPositionInZ(G4double zPos, G4int pkg)
     G4cout << G4endl << "###### Calling QweakSimHDC::SetBackHDC_CenterPositionInZ() " << G4endl << G4endl;
 
     HDC_CenterBack_ZPos[pkg] = zPos;
-
     HDC_MasterContainerBack_Physical[pkg]->SetTranslation(G4ThreeVector(HDC_CenterBack_XPos[pkg],
 								   HDC_CenterBack_YPos[pkg],
-								   HDC_CenterBack_ZPos[pkg]));
+								   HDC_CenterBack_ZPos[pkg]-HDC_CenterPositionInZ));
 
     G4cout << G4endl << "###### Leaving QweakSimHDC::SetBackHDC_CenterPositionInZ() " << G4endl << G4endl;
 }
@@ -626,30 +638,15 @@ void QweakSimHDC::SetHDC_RotationAngleInPhi(G4double HDC_phiangle, G4int pkg)
 {
     G4cout << G4endl << "###### Calling QweakSimHDC::SetHDC_RotationAngleInPhi() " << G4endl << G4endl;
 
-    G4ThreeVector Translation_MasterContainerFront;
-    G4double HDCFront_RadialDistance = sqrt(HDC_CenterFront_XPos[pkg]*HDC_CenterFront_XPos[pkg] + HDC_CenterFront_YPos[pkg]*HDC_CenterFront_YPos[pkg]);
+    // assign new azimuthal angle 
+    G4double kAngle_GlobalRotation = HDC_phiangle -90.0*degree;
     
-    Translation_MasterContainerFront.setX(cos(HDC_phiangle)*HDCFront_RadialDistance) ;
-    Translation_MasterContainerFront.setY(sin(HDC_phiangle)*HDCFront_RadialDistance) ;
-    Translation_MasterContainerFront.setZ(HDC_CenterFront_ZPos[pkg]) ;
-	    
-
-
-    G4ThreeVector Translation_MasterContainerBack;
-    G4double HDCBack_RadialDistance = sqrt(HDC_CenterBack_XPos[pkg]*HDC_CenterBack_XPos[pkg] + HDC_CenterBack_YPos[pkg]*HDC_CenterBack_YPos[pkg]);
+    if(pkg==1)
+       kAngle_GlobalRotation += 180*degree;
     
-    Translation_MasterContainerBack.setX(cos(HDC_phiangle)*HDCBack_RadialDistance) ;
-    Translation_MasterContainerBack.setY(sin(HDC_phiangle)*HDCBack_RadialDistance) ;
-    Translation_MasterContainerBack.setZ(HDC_CenterBack_ZPos[pkg]);
-
-    // assign new tilting 
-    HDC_RotationAngleInPhi = HDC_phiangle;
-
-    Rotation_HDC[pkg]                      -> setPhi(HDC_RotationAngleInPhi -90*degree);
-    HDC_MasterContainerFront_Physical[pkg] -> SetRotation(Rotation_HDC[pkg]);
-    HDC_MasterContainerBack_Physical[pkg]  -> SetRotation(Rotation_HDC[pkg]);
-    HDC_MasterContainerFront_Physical[pkg] -> SetTranslation(Translation_MasterContainerFront);
-    HDC_MasterContainerBack_Physical[pkg]  -> SetTranslation(Translation_MasterContainerBack);
+    G4RotationMatrix* Rotation_HDCPackageContainer = new G4RotationMatrix();
+    Rotation_HDCPackageContainer->setPhi(kAngle_GlobalRotation);
+    HDC_PackageContainer_Physical->SetRotation(Rotation_HDCPackageContainer);
 
     G4cout << G4endl << "###### Leaving QweakSimHDC::SetHDC_RotationAngleInPhi() " << G4endl << G4endl;
 }
@@ -657,30 +654,64 @@ void QweakSimHDC::SetHDC_RotationAngleInPhi(G4double HDC_phiangle, G4int pkg)
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void QweakSimHDC::PlaceHDC_MasterContainers()
 {
+    G4Box* HDC_PackageContainer_Solid = new G4Box("HDC_PackageContainer_Solid",
+				 0.5 * (3.0*m), 
+				 0.5 * (3.0*m),
+				 0.5 * (0.7*m));
+   
+   G4LogicalVolume* HDC_PackageContainer_Logical  = new G4LogicalVolume(  HDC_PackageContainer_Solid,
+					 pMaterial->GetMaterial("Air"),
+					 "HDC_PackageContainer_Logical",
+					 0,
+					 0,0);
 
+  G4Colour  aluminum      ( 169/255. , 172/255. , 182/255.);
+  G4VisAttributes* HDC_PackageContainer_VisAtt = new G4VisAttributes(aluminum);
+  HDC_PackageContainer_VisAtt->SetForceWireframe(true);
+  HDC_PackageContainer_VisAtt->SetVisibility(false);
+  HDC_PackageContainer_Logical->SetVisAttributes(HDC_PackageContainer_VisAtt); 
 
-	  // define HDC Container Orientation in MotherVolume
-	  G4double Angle_HDC = 0.0*degree;
+  // Place the physical volume into theMotherVolume
+
+   HDC_CenterPositionInZ = 0.5*(HDC_CenterBack_ZPos[0]+HDC_CenterFront_ZPos[0]);
+   G4ThreeVector Translation_HDC_PackageContainer;
+   Translation_HDC_PackageContainer.setZ(HDC_CenterPositionInZ);
+
+   G4RotationMatrix* Rotation_HDC_PackageContainer = new G4RotationMatrix();
+   //Rotation_HDC_PackageContainer->rotateZ(-90.0*deg);
+   
+   HDC_PackageContainer_Physical   = new G4PVPlacement(Rotation_HDC_PackageContainer,
+					   Translation_HDC_PackageContainer,
+					   "HDC_PackageContainer_Physical",
+					   HDC_PackageContainer_Logical,
+					   theMotherPV,
+					   false,
+					   0,
+					   pSurfChk);
 
 
 	  for (size_t i=0; i< HDC_MasterContainerFront_Physical.size();i++) {
 
-
 	  Rotation_HDC[i]  = new G4RotationMatrix();
-	  Rotation_HDC[i]->rotateX(Angle_HDC);
+	  //Rotation_HDC[i]->setPhi(HDC_RotationAngleInPhi[i]-90.0*deg);
 
 	  // define HDC MasterContainer positions in MotherVolume
-	  G4ThreeVector position_MasterContainerFront = G4ThreeVector(HDC_CenterFront_XPos[i] , HDC_CenterFront_YPos[i] , HDC_CenterFront_ZPos[i] );
-	  G4ThreeVector position_MasterContainerBack  = G4ThreeVector(HDC_CenterBack_XPos[i]  , HDC_CenterBack_YPos[i]  , HDC_CenterBack_ZPos[i] );
+	  G4ThreeVector position_MasterContainerFront(HDC_CenterFront_XPos[i], 
+						      HDC_CenterFront_YPos[i], 
+					              HDC_CenterFront_ZPos[i]-HDC_CenterPositionInZ );
+	  
+	  G4ThreeVector position_MasterContainerBack(HDC_CenterBack_XPos[i], 
+						     HDC_CenterBack_YPos[i], 
+					             HDC_CenterBack_ZPos[i]-HDC_CenterPositionInZ );
 
 	  // define HDC physical volume of drift chamber container
 	  G4cout << G4endl << "###### QweakSimHDC: Define HDC_MasterContainerFront_Physical" << G4endl << G4endl;
 
 	  HDC_MasterContainerFront_Physical[i] = new G4PVPlacement(Rotation_HDC[i],
 								position_MasterContainerFront,
-								"HDC_MasterContainerFront_Physical",
+								Form("HDC_MasterContainerFront_Physical%d",i),
 								HDC_MasterContainer_Logical,
-								theMotherPV,
+								HDC_PackageContainer_Physical,
 								false,
 								2*i,
 								pSurfChk); // copy number for front
@@ -690,13 +721,14 @@ void QweakSimHDC::PlaceHDC_MasterContainers()
 	  // define HDC physical volume of drift chamber container
 
 	  HDC_MasterContainerBack_Physical[i] = new G4PVPlacement(Rotation_HDC[i],
-			  	  	  	  	  	   position_MasterContainerBack,
-							       "HDC_MasterContainerBack_Physical",
+			  	  	  	  	       position_MasterContainerBack,
+							       Form("HDC_MasterContainerBack_Physical%d",i),
 							       HDC_MasterContainer_Logical,
-							       theMotherPV,
+							       HDC_PackageContainer_Physical,
 							       false,
 							       2*i+1,
 							       pSurfChk);// copy number for back
+	  
 	  }
 
 
