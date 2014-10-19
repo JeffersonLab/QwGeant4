@@ -40,6 +40,7 @@
 #include "QweakSimMessengerDefinition.hh"
 #include "QweakSimVDC.hh"
 #include "QweakSimVDCRotator.hh"
+#include "QweakSimTriggerScintillator.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -311,6 +312,8 @@ void QweakSimVDCMessenger::SetNewValue(G4UIcommand* command,G4String newValue)
      myVDC->SetVDC_RotationAngleInPhi(phi+180.0*degree,1);
      myRotator = myVDC->GetVDCRotator();
      myRotator->SetRotationAngleInPhi(phi);
+     myTriggerScintillator = myVDC->GetTriggerScintillator();
+     myTriggerScintillator->SetTriggerScintillatorPhiAngle(phi);
    }
 
 

@@ -37,7 +37,8 @@ QweakSimTriggerScintillator::QweakSimTriggerScintillator()
   pMaterial                 = NULL;
   
   TriggerScintillatorContainer_Logical  = NULL;
-  TriggerScintillatorContainer_Physical = NULL;
+ // TriggerScintillatorContainer_Physical = NULL;
+  TriggerScintillatorContainer_Physical.resize(2,0);
   TriggerScintillatorContainer_Material = NULL;
   
   TriggerScintillator_Logical   = NULL;
@@ -45,7 +46,7 @@ QweakSimTriggerScintillator::QweakSimTriggerScintillator()
   TriggerScintillator_Material  = NULL;
   
   
-  Rotation_TriggerScintillatorContainer = NULL;
+  //Rotation_TriggerScintillatorContainer = NULL;
   
   // pointer to the sensitive detector
   TriggerScintillatorSD      = NULL;
@@ -75,23 +76,30 @@ QweakSimTriggerScintillator::QweakSimTriggerScintillator()
    // tilting angle of V-shaped TriggerScintillator against the vertical plane    
   Tilting_Angle   =  0.0*degree;
   
+  //Phi angle of TriggerScintillator of Package 1
+  Phi_Angle	= 0.0*degree;
+
+  Position_TriggerScintillatorContainer_X.resize(2,0);
+  Position_TriggerScintillatorContainer_Y.resize(2,0);
+  Position_TriggerScintillatorContainer_Z.resize(2,0);
+  Rotation_TriggerScintillatorContainer.resize(2,0);
+  for (size_t i=0; i< Position_TriggerScintillatorContainer_Z.size();i++)
+  {
   // define center position of Container in MotherVolume
-  Position_TriggerScintillatorContainer_X =   0.0*cm;
+  Position_TriggerScintillatorContainer_X[i] =   0.0*cm;
 
 //jpan@nuclear.uwinnipeg.ca
   //Position_TriggerScintillatorContainer_Y = 319.0*cm;
-  Position_TriggerScintillatorContainer_Y = 328.0*cm;
+  Position_TriggerScintillatorContainer_Y[i] = 328.0*cm;
 
 //jpan@nuclear.uwinnipeg.ca
   //Position_TriggerScintillatorContainer_Z = 555.0*cm; // adjusted by Jie
-  Position_TriggerScintillatorContainer_Z = 545.0*cm; // adjusted by Jie
-
-  Position_TriggerScintillatorContainer  = G4ThreeVector(Position_TriggerScintillatorContainer_X,
-							 Position_TriggerScintillatorContainer_Y,
-							 Position_TriggerScintillatorContainer_Z);
+  Position_TriggerScintillatorContainer_Z[i] = 545.0*cm; // adjusted by Jie
   
   // define Rotation matrix for Container orientated in MotherVolume
-  Rotation_TriggerScintillatorContainer = new G4RotationMatrix();
+  Rotation_TriggerScintillatorContainer[i] = new G4RotationMatrix();
+
+  }
   
  }
 
@@ -99,12 +107,12 @@ QweakSimTriggerScintillator::QweakSimTriggerScintillator()
 QweakSimTriggerScintillator::~QweakSimTriggerScintillator()
 {
 
-    if (Rotation_TriggerScintillatorContainer)    delete Rotation_TriggerScintillatorContainer;
+//    if (Rotation_TriggerScintillatorContainer)    delete Rotation_TriggerScintillatorContainer;
 
     if (TriggerScintillator_Physical)             delete TriggerScintillator_Physical;
     if (TriggerScintillator_Logical)              delete TriggerScintillator_Logical;
 
-    if (TriggerScintillatorContainer_Physical)    delete TriggerScintillatorContainer_Physical;
+  //  if (TriggerScintillatorContainer_Physical)    delete TriggerScintillatorContainer_Physical;
     if (TriggerScintillatorContainer_Logical)     delete TriggerScintillatorContainer_Logical;
 
 
@@ -124,7 +132,7 @@ void QweakSimTriggerScintillator::DefineTriggerScintillatorGeometry()
 void QweakSimTriggerScintillator::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 {
   G4cout << G4endl << "###### Calling QweakSimTriggerScintillator::ConstructComponent() " << G4endl << G4endl;
- 
+  theMotherPV = MotherVolume; //Saving pointer to the MotherVolume
   //-----------------------------------------------------------
   // location and orientation of the TriggerScintillator Container
   //-----------------------------------------------------------
@@ -133,7 +141,7 @@ void QweakSimTriggerScintillator::ConstructComponent(G4VPhysicalVolume* MotherVo
   // tilting the container. Why? I don't know what to do if
   // I want to place 8 containers, each tilted by Tilting_Angle,
   // but to which axis then ?!
-  Rotation_TriggerScintillatorContainer->rotateX(Tilting_Angle);
+ // Rotation_TriggerScintillatorContainer->rotateX(Tilting_Angle);
   
   
   // define Container for the V shape Scintillator Detector
@@ -152,16 +160,9 @@ void QweakSimTriggerScintillator::ConstructComponent(G4VPhysicalVolume* MotherVo
 							      "TriggerScintillatorContainer_Logical",
 							      0,0,0);
 
+
   // define ScintillatorContainer physical volume
-  G4cout << G4endl << "###### QweakSimTriggerScintillator: Define TriggerScintillatorContainer_Physical " << G4endl << G4endl;
-  TriggerScintillatorContainer_Physical   = new G4PVPlacement(Rotation_TriggerScintillatorContainer,  
-							      Position_TriggerScintillatorContainer, 
-							      "TriggerScintillatorContainer_Physical", 
-							      TriggerScintillatorContainer_Logical,
-							      MotherVolume, 
-							      false, 
-							      0,
-							      pSurfChk);
+  PlaceTriggerScintillator_MasterContainers();
 
   G4Box* StraightBar_Solid    = new G4Box("StraightBar_Sol",
 					  0.5 * StraightBar_FullLength,       // half X length required by Geant4
@@ -294,70 +295,122 @@ void QweakSimTriggerScintillator::SetTriggerScintillatorThickness(G4double thick
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void QweakSimTriggerScintillator::SetTriggerScintillatorCenterPositionInX(G4double xPos)
+void QweakSimTriggerScintillator::SetTriggerScintillatorCenterPositionInX(G4double xPos, G4int pkg)
 {
     G4cout << G4endl << "###### Calling QweakSimTriggerScintillator::SetScintillatorCenterPositionInX() " << G4endl << G4endl;
 
-    Position_TriggerScintillatorContainer_X =xPos;	 
+    Position_TriggerScintillatorContainer_X[pkg] =xPos;
 
-    TriggerScintillatorContainer_Physical->SetTranslation(G4ThreeVector(Position_TriggerScintillatorContainer_X,
-									Position_TriggerScintillatorContainer_Y, 
-									Position_TriggerScintillatorContainer_Z));
+    TriggerScintillatorContainer_Physical[pkg]->SetTranslation(G4ThreeVector(Position_TriggerScintillatorContainer_X[pkg],
+									Position_TriggerScintillatorContainer_Y[pkg],
+									Position_TriggerScintillatorContainer_Z[pkg]));
 
     G4cout << G4endl << "###### Leaving QweakSimTriggerScintillator::SetTriggerScintillatorCenterPositionInX() " << G4endl << G4endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void QweakSimTriggerScintillator::SetTriggerScintillatorCenterPositionInY(G4double yPos)
+void QweakSimTriggerScintillator::SetTriggerScintillatorCenterPositionInY(G4double yPos, G4int pkg)
 {
     G4cout << G4endl << "###### Calling QweakSimTriggerScintillator::SetTriggerScintillatorCenterPositionInY() " << G4endl << G4endl;
 
-    Position_TriggerScintillatorContainer_Y = yPos;
+    Position_TriggerScintillatorContainer_Y[pkg] = yPos;
 
-    TriggerScintillatorContainer_Physical->SetTranslation(G4ThreeVector(Position_TriggerScintillatorContainer_X,
-									Position_TriggerScintillatorContainer_Y, 
-									Position_TriggerScintillatorContainer_Z));
+    TriggerScintillatorContainer_Physical[pkg]->SetTranslation(G4ThreeVector(Position_TriggerScintillatorContainer_X[pkg],
+									Position_TriggerScintillatorContainer_Y[pkg],
+									Position_TriggerScintillatorContainer_Z[pkg]));
 
  G4cout << G4endl << "###### Leaving QweakSimTriggerScintillator::SetTriggerScintillatorCenterPositionInY() " << G4endl << G4endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void QweakSimTriggerScintillator::SetTriggerScintillatorCenterPositionInZ(G4double zPos)
+void QweakSimTriggerScintillator::SetTriggerScintillatorCenterPositionInZ(G4double zPos, G4int pkg)
 {
     G4cout << G4endl << "###### Calling QweakSimTriggerScintillator::SetTriggerScintillatorCenterPositionInZ() " << G4endl << G4endl;
 
-    Position_TriggerScintillatorContainer_Z = zPos;
+    Position_TriggerScintillatorContainer_Z[pkg] = zPos;
 
-    TriggerScintillatorContainer_Physical->SetTranslation(G4ThreeVector(Position_TriggerScintillatorContainer_X,
-									Position_TriggerScintillatorContainer_Y, 
-									Position_TriggerScintillatorContainer_Z));
+    TriggerScintillatorContainer_Physical[pkg]->SetTranslation(G4ThreeVector(Position_TriggerScintillatorContainer_X[pkg],
+									Position_TriggerScintillatorContainer_Y[pkg],
+									Position_TriggerScintillatorContainer_Z[pkg]));
     
     G4cout << G4endl << "###### Leaving QweakSimTriggerScintillator::SetTriggerScintillatorCenterPositionInZ() " << G4endl << G4endl;
 }
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......	
-void QweakSimTriggerScintillator::TriggerScintillatorGeometryUpdate()
-{
-G4cout << G4endl << "###### Calling QweakSimTriggerScintillator::ScintillatorGeometryUpdate()" << G4endl << G4endl;
-
-}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void QweakSimTriggerScintillator::SetTriggerScintillatorTiltAngle(G4double tiltangle)
 {
     G4cout << G4endl << "###### Calling QweakSimTriggerScintillator::SetTriggerScintillatorTiltAngle() " << G4endl << G4endl;
 
-    // rotate back with old angle
-    Rotation_TriggerScintillatorContainer->rotateX(-1.0*Tilting_Angle);
-    TriggerScintillatorContainer_Physical->SetRotation(Rotation_TriggerScintillatorContainer);
-
     // assign new tilting 
     Tilting_Angle = tiltangle;
 
-    Rotation_TriggerScintillatorContainer->rotateX(Tilting_Angle);
-    TriggerScintillatorContainer_Physical->SetRotation(Rotation_TriggerScintillatorContainer);
+    TriggerScintillatorGeometryPVUpdate();
 
     G4cout << G4endl << "###### Leaving QweakSimTriggerScintillator::SetTriggerScintillatorTiltAngle() " << G4endl << G4endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+void QweakSimTriggerScintillator::SetTriggerScintillatorPhiAngle(G4double phiangle)
+{
+    G4cout << G4endl << "###### Calling QweakSimTriggerScintillator::SetTriggerScintillatorPhiAngle() " << G4endl << G4endl;
+
+
+       // assign new azimuthal angle
+       Phi_Angle = phiangle -90.0*degree;
+
+       TriggerScintillatorGeometryPVUpdate();
+
+       G4cout << G4endl << "###### Leaving QweakSimTriggerScintillator::SetTriggerScintillatorPhiAngle() " << G4endl << G4endl;
+
+}
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+void QweakSimTriggerScintillator::PlaceTriggerScintillator_MasterContainers()
+{
+
+	  G4cout << G4endl << "###### QweakSimTriggerScintillator: Define TriggerScintillatorContainer_Physical " << G4endl << G4endl;
+	  for (size_t i=0; i< TriggerScintillatorContainer_Physical.size();i++)
+	  {
+
+	   G4double phi = Phi_Angle + i * 180.0 * degree;
+	   Rotation_TriggerScintillatorContainer[i] = new G4RotationMatrix();
+	   Rotation_TriggerScintillatorContainer[i]->rotateZ(-phi);
+	   Rotation_TriggerScintillatorContainer[i]->rotateX(Tilting_Angle);
+
+
+	   Position_TriggerScintillatorContainer  = G4ThreeVector(Position_TriggerScintillatorContainer_X[i],
+									 Position_TriggerScintillatorContainer_Y[i],
+									 Position_TriggerScintillatorContainer_Z[i]);
+
+	   Position_TriggerScintillatorContainer.rotateZ(phi);
+
+	   Position_TriggerScintillatorContainer_X[i] = Position_TriggerScintillatorContainer.x();
+	   Position_TriggerScintillatorContainer_Y[i] = Position_TriggerScintillatorContainer.y();
+	   Position_TriggerScintillatorContainer_Z[i] = Position_TriggerScintillatorContainer.z();
+
+	   TriggerScintillatorContainer_Physical[i]   = new G4PVPlacement(Rotation_TriggerScintillatorContainer[i],
+								      Position_TriggerScintillatorContainer,
+								      "TriggerScintillatorContainer_Physical",
+								      TriggerScintillatorContainer_Logical,
+								      theMotherPV,
+								      false,
+								      i,
+								      pSurfChk);
+	  }
+}
+void QweakSimTriggerScintillator::TriggerScintillatorGeometryPVUpdate()
+{
+	  for (size_t i=0; i< TriggerScintillatorContainer_Physical.size();i++) {
+	        if (TriggerScintillatorContainer_Logical)
+	        	TriggerScintillatorContainer_Logical->RemoveDaughter(TriggerScintillatorContainer_Physical[i]);
+
+	        delete TriggerScintillatorContainer_Physical[i];
+	        TriggerScintillatorContainer_Physical[i] = 0;
+
+	        delete Rotation_TriggerScintillatorContainer[i];
+	        Rotation_TriggerScintillatorContainer[i] = 0;
+
+	    }
+
+	  PlaceTriggerScintillator_MasterContainers();
+}

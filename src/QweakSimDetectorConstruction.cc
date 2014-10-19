@@ -629,12 +629,25 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
     pVDCRotator->ConstructSliderSupport();
     pVDCRotator->SetRotationAngleInPhi( 90.0*degree);
   }
+
+
+  //=====================================================
+  // create/place Trigger Scintillator into MotherVolume
+  //=====================================================
+  //
+  if (pTriggerScintillator) {
+    pTriggerScintillator->ConstructComponent(experimentalHall_Physical);
+    //
+    pGeometry->AddModule(pTriggerScintillator->GetTriggerScintillator_PhysicalVolume());
+  }
+
   //
   if (pVDC) {
     pVDC->ConstructComponent(experimentalHall_Physical);
     pGeometry->AddModule(pVDC->getVDCFront_PhysicalVolume());
     pGeometry->AddModule(pVDC->getVDCBack_PhysicalVolume());
     pVDC->SetVDCRotator(pVDCRotator);
+    pVDC->SetTriggerScintillator(pTriggerScintillator);
     pVDC->SetVDC_RotationAngleInPhi(90.0*degree,0);
     pVDC->SetVDC_RotationAngleInPhi(270.0*degree,1);
   }
@@ -659,16 +672,6 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
     
     pGeometry->AddModule(pLumiDetector->getUSLumiPhysicalVolume());
     //pGeometry->AddModule(pLumiDetector->getDSLumiPhysicalVolume());
-  }
-
-  //=====================================================
-  // create/place Trigger Scintillator into MotherVolume
-  //=====================================================
-  //
-  if (pTriggerScintillator) {
-    pTriggerScintillator->ConstructComponent(experimentalHall_Physical);
-    //
-    pGeometry->AddModule(pTriggerScintillator->GetTriggerScintillator_PhysicalVolume());
   }
 
   //--------- Visualization attributes -------------------------------

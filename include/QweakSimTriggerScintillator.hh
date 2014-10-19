@@ -65,29 +65,34 @@ public:
   void DestroyComponent();
   void SetTriggerScintillatorMaterial(G4String materialName);
 
-  void SetTriggerScintillatorCenterPositionInX(G4double xPos);
-  void SetTriggerScintillatorCenterPositionInY(G4double yPos);
-  void SetTriggerScintillatorCenterPositionInZ(G4double zPos) ;
+  void SetTriggerScintillatorCenterPositionInX(G4double xPos, G4int pkg = 0);
+  void SetTriggerScintillatorCenterPositionInY(G4double yPos, G4int pkg = 0);
+  void SetTriggerScintillatorCenterPositionInZ(G4double zPos, G4int pkg = 0);
   void SetTriggerScintillatorTiltAngle(G4double tiltangle);
+  void SetTriggerScintillatorPhiAngle(G4double phiangle);
   void SetTriggerScintillatorThickness(G4double thickness);
 
-  void TriggerScintillatorGeometryUpdate();
 
   G4LogicalVolume*   GetTriggerScintillator_LogicalVolume()    {return TriggerScintillator_Logical;} 
-  G4VPhysicalVolume* GetTriggerScintillator_PhysicalVolume()   {return TriggerScintillator_Physical;} 
+  G4VPhysicalVolume* GetTriggerScintillator_PhysicalVolume()   {return TriggerScintillator_Physical;}
 
 private:
+
+  void TriggerScintillatorGeometryPVUpdate();
+  void PlaceTriggerScintillator_MasterContainers();
 
   QweakSimTriggerScintillatorMessenger* TriggerScintillatorMessenger;  // pointer to the Messenger
 
   QweakSimMaterial*  pMaterial;
 
+  G4VPhysicalVolume* theMotherPV; // pointer to the Mother Volume
+
   G4LogicalVolume*   TriggerScintillatorContainer_Logical; 
-  G4VPhysicalVolume* TriggerScintillatorContainer_Physical; 
+  std::vector<G4VPhysicalVolume*> TriggerScintillatorContainer_Physical;
   G4Material*        TriggerScintillatorContainer_Material;
 
   G4LogicalVolume*   TriggerScintillator_Logical; 
-  G4VPhysicalVolume* TriggerScintillator_Physical; 
+  G4VPhysicalVolume* TriggerScintillator_Physical;
   G4Material*        TriggerScintillator_Material;
 
   G4double Container_FullLength_X;
@@ -102,12 +107,13 @@ private:
 
  
   G4double Tilting_Angle;      // total tilting angle towards mean track
+  G4double Phi_Angle;			//Phi angle of Trigger Scintillator of package 1
   G4double Thickness;         
 
 
   // placing the container
   G4ThreeVector     Position_TriggerScintillatorContainer;
-  G4RotationMatrix* Rotation_TriggerScintillatorContainer;  
+  std::vector<G4RotationMatrix*> Rotation_TriggerScintillatorContainer;
 
   // placing the right SingleBar
   G4ThreeVector    Translation_SingleBarRight; 
@@ -115,9 +121,9 @@ private:
  // pointer to the sensitive detector
   G4VSensitiveDetector* TriggerScintillatorSD;
 
-  G4double Position_TriggerScintillatorContainer_X;
-  G4double Position_TriggerScintillatorContainer_Y;
-  G4double Position_TriggerScintillatorContainer_Z;
+  std::vector<G4double> Position_TriggerScintillatorContainer_X;
+  std::vector<G4double> Position_TriggerScintillatorContainer_Y;
+  std::vector<G4double> Position_TriggerScintillatorContainer_Z;
 
 
 };

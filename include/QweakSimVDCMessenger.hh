@@ -63,6 +63,7 @@ class G4UIcmdWithADoubleAndUnit;
 // user classes
 class QweakSimVDC;
 class QweakSimVDCRotator;
+class QweakSimTriggerScintillator;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -79,6 +80,7 @@ class QweakSimVDCMessenger: public G4UImessenger
 private:
   QweakSimVDC*               myVDC;
   QweakSimVDCRotator*        myRotator;
+  QweakSimTriggerScintillator* myTriggerScintillator;
 
   G4UIdirectory*             VDCDir;
   

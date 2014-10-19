@@ -203,8 +203,8 @@ void QweakSimVDCRotator::ConstructRotatorMasterContainer()
     G4cout << G4endl << "###### Calling QweakSimVDCRotator::RotatorMasterContainer() " << G4endl << G4endl;
    
    G4Box* RotatorMasterContainer_Solid = new G4Box("RotatorMasterContainer_Solid",
-				 0.5 * (5.6*m), 
-				 0.5 * (2.0*kRail_CenterPositionInR+50*cm),
+				 0.5 * (6.6*m),
+				 0.5 * (2.0*kRail_CenterPositionInR+50.0*cm),
 				 0.5 * (kSliderSupport_FullLength_Z +2.0*cm ));
    
    G4LogicalVolume* RotatorMasterContainer_Logical  = new G4LogicalVolume(  RotatorMasterContainer_Solid,

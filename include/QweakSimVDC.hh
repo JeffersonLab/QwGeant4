@@ -58,6 +58,7 @@
 class QweakSimVDCMessenger;
 class QweakSimMaterial;
 class QweakSimVDCRotator;
+class QweakSimTriggerScintillator;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -137,9 +138,13 @@ public:
   void SetVDCRotator(QweakSimVDCRotator* theRotator){myRotator = theRotator;};
   QweakSimVDCRotator* GetVDCRotator() {return myRotator;};
 
+  void SetTriggerScintillator(QweakSimTriggerScintillator* theTriggerScintillator){myTriggerScintillator = theTriggerScintillator;};
+  QweakSimTriggerScintillator* GetTriggerScintillator() {return myTriggerScintillator;};
+
 private:
 
     QweakSimVDCRotator* myRotator;
+    QweakSimTriggerScintillator* myTriggerScintillator;
     void SetVDC_BackVDC_CenterPosition(G4int pkg);
     void SetVDC_DriftCell_MasterContainer_CenterPosition(G4int pkg);
 
