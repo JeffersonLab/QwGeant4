@@ -1655,8 +1655,8 @@ G4double QweakSimEPEvent::Quasi_Elastic_Bosted(G4double E_in, //MeV
 // Nuclear inelastic fit from Bosted et al
 // Added 14/May/2014 kamyers@jlab.org
 
-G4double QweakSimEPEvent::NuclearInelastic_Bosted(G4double E_in,
-                                               G4double Theta,
+G4double QweakSimEPEvent::NuclearInelastic_Bosted(G4double E_in, //MeV
+                                               G4double Theta, //radians
                                                G4int Zin, 
                                                G4int Ain,
                                                G4double &fWeightN,
@@ -2173,9 +2173,9 @@ void QweakSimEPEvent::F1F2IN09(G4int Z, G4int IA, G4double qsq,
       F1p = F1p + F1pp * Fyuse;
       sigt = sigt + sigtp * Fyuse;
       sigl = sigl + siglp * Fyuse;
-//      G4cout << "F1d, F1p, sigt, sigl = " << F1d << ", " << F1p << ", " << sigt << ", " << sigl << G4endl;
     }
   }
+
   Rc = 0.;
   if(sigt > 0.) Rc = sigl / sigt;
   W1 = (2. * Z * F1d + (A - 2. * Z) * (2. * F1d - F1p)) / PM;
@@ -2352,8 +2352,8 @@ void QweakSimEPEvent::resmodd(G4double w2, G4double q2,
     intwidth[6] = 0.380;
 
     // ! precalculate w-dependent quantites in 0.1 MeV bins
-    for (iw = 1072; iw < 5000; iw++) {
-      W = 0.001 * ((iw+1)+0.5);
+    for (iw = 1073; iw <= 5000; iw++) {
+      W = 0.001 * (iw+0.5);
       w2 = W*W;
       wdif = W - (mp + mpi);
 
@@ -2382,7 +2382,7 @@ void QweakSimEPEvent::resmodd(G4double w2, G4double q2,
         if(i != 1) {
           pwid[i][1] = intwidth[i]*pow((ppi2cm/ppi2cmr[i]),(2.*ang[i]+4.))*pow(((ppi2cmr[i]*ppi2cmr[i]+x0[i]*x0[i])/(ppi2cm*ppi2cm+x0[i]*x0[i])),(ang[i]+2.))* W / mass[i];
         } else {
-          pwid[i][1] =  intwidth[2]*pow((petacm/petacmr[i]),(2.*ang[i]+1.))*pow(((petacmr[i]*petacmr[i]+x0[i]*x0[i])/(petacm*petacm+x0[i]*x0[i])),ang[i]);
+          pwid[i][1] =  intwidth[1]*pow((petacm/petacmr[i]),(2.*ang[i]+1.))*pow(((petacmr[i]*petacmr[i]+x0[i]*x0[i])/(petacm*petacm+x0[i]*x0[i])),ang[i]);
         }
         
         pgam[i] = pow((kcm/kcmr[i]),2)*(kcmr[i]*kcmr[i]+x0[i]*x0[i])/(kcm*kcm+x0[i]*x0[i]);
@@ -2427,7 +2427,7 @@ void QweakSimEPEvent::resmodd(G4double w2, G4double q2,
   sig_res = 0.;
       
   for (i = 0; i < 7; i++) { 
-    sigrsv[i] =  height[i]*height[i] * sigr[iw-1][i];
+    sigrsv[i] =  height[i]*height[i] * sigr[iw][i];
     sig_res = sig_res + sigrsv[i];
   }
 
