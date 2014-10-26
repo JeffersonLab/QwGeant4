@@ -42,8 +42,8 @@
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-QweakSimTriggerScintillatorMessenger::QweakSimTriggerScintillatorMessenger(QweakSimTriggerScintillator* theTriggerScintillator)
-:myTriggerScintillator(theTriggerScintillator)
+QweakSimTriggerScintillatorMessenger::QweakSimTriggerScintillatorMessenger(QweakSimTriggerScintillator* theTriggerScintillator, G4int pkg)
+:myTriggerScintillator(theTriggerScintillator), fPackage(pkg)
 { 
 
   Dir = new G4UIdirectory("/TriggerScintillator/");
@@ -89,6 +89,29 @@ QweakSimTriggerScintillatorMessenger::QweakSimTriggerScintillatorMessenger(Qweak
   DetectorMatCmd->SetParameterName("choice",false);
   DetectorMatCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
+  //-------------------------Individual TS Control-----------------------------------------
+  G4String DirPerPackage_name = "/TriggerScintillator/TriggerScintillator" + G4UIcommand::ConvertToString(fPackage+1);
+  DirPerPackage = new  G4UIdirectory(G4String(DirPerPackage_name + "/"));
+  DirPerPackage -> SetGuidance("Individual TriggerScintillator detector control.");
+
+
+  ContainerZPosition_Pkg_Cmd =  new G4UIcmdWithADoubleAndUnit(G4String(DirPerPackage_name + "/SetCenterPositionInZ"),this);
+  ContainerZPosition_Pkg_Cmd->SetGuidance("Set the Z position of the TriggerScintillator container center");
+  ContainerZPosition_Pkg_Cmd->SetParameterName("Size",true);
+  ContainerZPosition_Pkg_Cmd->SetUnitCategory("Length");
+  ContainerZPosition_Pkg_Cmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+
+  ContainerYPosition_Pkg_Cmd =  new G4UIcmdWithADoubleAndUnit(G4String(DirPerPackage_name + "/SetCenterPositionInY"),this);
+  ContainerYPosition_Pkg_Cmd->SetGuidance("Set the Y position of the TriggerScintillator container center");
+  ContainerYPosition_Pkg_Cmd->SetParameterName("Size",true);
+  ContainerYPosition_Pkg_Cmd->SetUnitCategory("Length");
+  ContainerYPosition_Pkg_Cmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+
+  ContainerXPosition_Pkg_Cmd =  new G4UIcmdWithADoubleAndUnit(G4String(DirPerPackage_name + "/SetCenterPositionInX"),this);
+  ContainerXPosition_Pkg_Cmd->SetGuidance("Set the X position of the TriggerScintillator container center");
+  ContainerXPosition_Pkg_Cmd->SetParameterName("Size",true);
+  ContainerXPosition_Pkg_Cmd->SetUnitCategory("Length");
+  ContainerXPosition_Pkg_Cmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -99,11 +122,16 @@ QweakSimTriggerScintillatorMessenger::~QweakSimTriggerScintillatorMessenger()
   if (ContainerYPositionCmd)      delete ContainerYPositionCmd;
   if (ContainerZPositionCmd)      delete ContainerZPositionCmd;
 
+  if (ContainerXPosition_Pkg_Cmd)      delete ContainerXPosition_Pkg_Cmd;
+  if (ContainerYPosition_Pkg_Cmd)      delete ContainerYPosition_Pkg_Cmd;
+  if (ContainerZPosition_Pkg_Cmd)      delete ContainerZPosition_Pkg_Cmd;
+
   if (ContainerThicknessCmd)      delete ContainerThicknessCmd;
   if (DetectorMatCmd)             delete DetectorMatCmd;  
   if (ContainerMatCmd)            delete ContainerMatCmd;
   if (TiltingAngleCmd)            delete TiltingAngleCmd;
   if (Dir)                        delete Dir;
+  if(DirPerPackage)				  delete DirPerPackage;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -139,6 +167,28 @@ void QweakSimTriggerScintillatorMessenger::SetNewValue(G4UIcommand* command,G4St
 
       myTriggerScintillator->SetTriggerScintillatorCenterPositionInZ(ContainerZPositionCmd->GetNewDoubleValue(newValue));
   }
+  //--------------------------Individual Coordinate Control--------------------------------------------------
+  if( command == ContainerXPosition_Pkg_Cmd )
+     {
+       G4cout << "#### Messenger: Setting TriggerScintillator Container X position to " << newValue << G4endl;
+
+       myTriggerScintillator->SetTriggerScintillatorCenterPositionInX(ContainerXPositionCmd->GetNewDoubleValue(newValue),fPackage);
+     }
+
+    if( command == ContainerYPosition_Pkg_Cmd )
+    {
+        G4cout << "#### Messenger: Setting TriggerScintillator Container Y position to " << newValue << G4endl;
+
+        myTriggerScintillator->SetTriggerScintillatorCenterPositionInY(ContainerYPositionCmd->GetNewDoubleValue(newValue),fPackage);
+     }
+
+    if( command == ContainerZPosition_Pkg_Cmd )
+    {
+        G4cout << "#### Messenger: Setting TriggerScintillator Container Z position to " << newValue << G4endl;
+
+        myTriggerScintillator->SetTriggerScintillatorCenterPositionInZ(ContainerZPositionCmd->GetNewDoubleValue(newValue),fPackage);
+    }
+  //------------------------------------End of Individual Control---------------------------------------
   
   
   if( command == ContainerMatCmd )

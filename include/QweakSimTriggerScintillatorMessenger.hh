@@ -61,7 +61,7 @@ class QweakSimTriggerScintillator;
 class QweakSimTriggerScintillatorMessenger: public G4UImessenger
 {
   public:
-    QweakSimTriggerScintillatorMessenger(QweakSimTriggerScintillator*);
+    QweakSimTriggerScintillatorMessenger(QweakSimTriggerScintillator*,G4int pkg = 0);
    ~QweakSimTriggerScintillatorMessenger();
     
     void SetNewValue(G4UIcommand*, G4String);
@@ -71,12 +71,19 @@ private:
   
   G4UIdirectory*             Dir;
 
+  G4int 		     fPackage;
+  G4UIdirectory*             DirPerPackage;
+
   G4UIcmdWithAString*        ContainerMatCmd;
   G4UIcmdWithAString*        DetectorMatCmd;
 
   G4UIcmdWithADoubleAndUnit* ContainerXPositionCmd;
   G4UIcmdWithADoubleAndUnit* ContainerYPositionCmd;
   G4UIcmdWithADoubleAndUnit* ContainerZPositionCmd;
+
+  G4UIcmdWithADoubleAndUnit* ContainerXPosition_Pkg_Cmd;
+  G4UIcmdWithADoubleAndUnit* ContainerYPosition_Pkg_Cmd;
+  G4UIcmdWithADoubleAndUnit* ContainerZPosition_Pkg_Cmd;
 
   G4UIcmdWithADoubleAndUnit* ContainerThicknessCmd;
 

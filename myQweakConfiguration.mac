@@ -116,10 +116,16 @@
 # - positive angle will tilt detector against target
 
 /TriggerScintillator/SetScintillatorMaterial  Polyethylene
- 
+
+#TS SetCenterPosition works using local coordinates. Set values as if in top octant. 
 /TriggerScintillator/SetCenterPositionInX     0.0 cm
 /TriggerScintillator/SetCenterPositionInY   328.0 cm 
 /TriggerScintillator/SetCenterPositionInZ   545.0 cm
+
+#Example of setting position of second TS below. Note that above commands
+# by default only translates TriggerScintillator1
+
+#/TriggerScintillator/TriggerScintillator2/SetCenterPositionInZ 540.0 cm
 
 /TriggerScintillator/SetTiltingAngle         0.0 degree
 
@@ -210,7 +216,7 @@
 #Put Package 2 VDC in contraction position (Must have phi of 270 degree)
 #/VDC/VDC2/SetRotationAngleInPhi       270.0 degree
 #/VDC/VDC2/SetFrontCenterPositionInY  -115.225  cm
-#/TriggerScintillator/SetCenterPositionInZ  200  cm
+
 #==============================================
 # Thickness = 64/64 inch
 /VDC/DriftCell/SetFullThickness      25.4 mm 
