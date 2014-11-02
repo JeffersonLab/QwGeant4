@@ -8,12 +8,12 @@
 class QweakSimStackingAction : public G4UserStackingAction
 {
 public:
-  QweakSimStackingAction();
-  ~QweakSimStackingAction();
+  QweakSimStackingAction() { };
+  virtual ~QweakSimStackingAction() { };
   
   virtual G4ClassificationOfNewTrack ClassifyNewTrack(const G4Track* aTrack);
-  virtual void NewStage();
-  virtual void PrepareNewEvent();
+  virtual void NewStage() { };
+  virtual void PrepareNewEvent() { };
 
 private:
 };

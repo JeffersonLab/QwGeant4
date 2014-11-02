@@ -10,18 +10,9 @@
 #include "QweakSimTrajectory.hh"
 
 //_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
-QweakSimStackingAction::QweakSimStackingAction()
-{}
-
-//_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
-QweakSimStackingAction::~QweakSimStackingAction()
-{}
-
-//_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 G4ClassificationOfNewTrack
 QweakSimStackingAction::ClassifyNewTrack(const G4Track* /*aTrack*/)
 {
-
   G4ClassificationOfNewTrack classification = fUrgent;
 
   //QweakSimTrackInformation* trackInfo;
@@ -64,14 +55,6 @@ QweakSimStackingAction::ClassifyNewTrack(const G4Track* /*aTrack*/)
 //    }
 
 }
-
-//_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
-void QweakSimStackingAction::NewStage()
-{}	
-
-//_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
-void QweakSimStackingAction::PrepareNewEvent()
-{}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
