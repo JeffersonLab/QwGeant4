@@ -243,6 +243,16 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
     * \li 6: Moller scattering (see QweakSimEPEvent::Moller_Scattering)
     * \li 7: Radiative Scattering (see QweakSimEPEvent::Radiative_Cross_Section_Proton)
     * \li 8: Quasielastic scattering from aluminum using the Bosted fit
+    * \li 88: Pion photoprodcution
+    * \li 9: Aluminum Nuclear inelastic Single Particle States
+    * \li 10: Aluminum GDR
+    * \li 11: Aluminum Nuclear Radiated Inelastic from Bosted fit
+    * \li 12: Zn scattering approximation
+    * \li 13: Mg scattering approximation
+    * \li 14: Cu scattering approximation
+    * \li 15: Cr scattering approximation
+    * \li 16: Fe scattering approximation
+    * \li 17: Si scattering approximation
     */
 
    if(ReactionType==1) //LH2 target
@@ -326,6 +336,42 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
        Z = 13;
        A = 27;
        fCrossSection[0] = NuclearInelastic_Bosted(E_in, RelativeThetaAngle, Z, A, fWeightN, Q2, E_out);
+     }
+   else if(ReactionType==12) // Alloy: Zinc elastic scattering approximation
+     {
+       Z = 30;
+       A = 64;
+       fCrossSection[0] = AlloyScattering(E_in, RelativeThetaAngle, Z, A, fWeightN, Q2, E_out);
+     }
+   else if(ReactionType==13) // Alloy: Magnesium elastic scattering approximation
+     {
+       Z = 12;
+       A = 24;
+       fCrossSection[0] = AlloyScattering(E_in, RelativeThetaAngle, Z, A, fWeightN, Q2, E_out);
+     }
+   else if(ReactionType==14) // Alloy: Copper elastic scattering approximation
+     {
+       Z = 29;
+       A = 65;
+       fCrossSection[0] = AlloyScattering(E_in, RelativeThetaAngle, Z, A, fWeightN, Q2, E_out);
+     }
+   else if(ReactionType==15) // Alloy: Chromium elastic scattering approximation
+     {
+       Z = 24;
+       A = 52;
+       fCrossSection[0] = AlloyScattering(E_in, RelativeThetaAngle, Z, A, fWeightN, Q2, E_out);
+     }
+   else if(ReactionType==16) // Alloy: Iron elastic scattering approximation
+     {
+       Z = 26;
+       A = 56;
+       fCrossSection[0] = AlloyScattering(E_in, RelativeThetaAngle, Z, A, fWeightN, Q2, E_out);
+     }
+   else if(ReactionType==17) // Alloy: Silicon elastic scattering approximation
+     {
+       Z = 14;
+       A = 28;
+       fCrossSection[0] = AlloyScattering(E_in, RelativeThetaAngle, Z, A, fWeightN, Q2, E_out);
      }
 
    if      (ReactionRegion == 1)  SetLuminosity(myUserInfo->TargetLuminosityLH2);
@@ -2783,6 +2829,339 @@ G4double QweakSimEPEvent::fitemc(G4double X, G4int A)
 
   fitval = C*pow(A,ALPHA);
   return fitval;
+}
+
+
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+G4double QweakSimEPEvent::AlloyScattering(G4double E_in, //MeV
+                                          G4double Theta,
+                                          G4int Zin, 
+                                          G4int Ain,
+                                          G4double &fWeightN,
+                                          G4double &Q2,
+                                          G4double &E_out)
+{
+  G4double M_p = 938.2796;
+  G4double mm = M_p*Ain;
+  
+  G4double STH = sin(Theta/2.);
+  G4double CTH = cos(Theta/2.);
+
+  E_out = E_in/(1+2*E_in/mm*STH*STH);
+  Q2 = 4.*E_in*E_out*STH*STH; // MeV^2
+
+
+  // Mott cross section
+  G4double sigMott = pow(Zin*0.719982/E_in*CTH/(STH*STH),2);
+  sigMott = sigMott/(1+2*E_in/mm*STH*STH)*10000;
+  
+  // Form factor
+  G4int NUC_MODEL = 1; // USE Fourier-Bessel if available
+  G4bool OUT_OF_RANGE = 0;
+  G4double eng = E_in/1e-3; // GeV
+  G4double qsq = Q2/1e6; // GeV^2
+  M_p = M_p/1e-3;
+  
+  G4double FF = 1;
+  
+  if (Ain < 3) {
+    G4cout << "** No generator fo A < 3 ** " << G4endl;
+    return 0;
+  } 
+  else if (Ain >= 3) {
+    OUT_OF_RANGE = 0;
+    if (NUC_MODEL == 1) {
+      FF = FF_BESSEL(Zin,Ain,qsq,OUT_OF_RANGE);// !only for some Nuclei,feor limited Q2
+    }
+    if (OUT_OF_RANGE || (NUC_MODEL == 0)) { //!use if FF_BESSEL out of range
+      if (Ain == 3) { // !3HE  ! added 5/30/96  SER
+        G4cout << "** No generator for He3 **" << G4endl;
+        return 0;
+      }
+      else if (Ain <= 20) {
+        FF  = Fshell(Zin,Ain,qsq);
+      }
+      else { //    !ia >20
+        FF  = Fgauss(Zin,Ain,qsq);
+      }
+    }
+  }
+
+  G4double xsec = sigMott*FF*FF;
+  fWeightN = xsec*sin(Theta);
+  
+  return xsec;
+}
+
+G4double QweakSimEPEvent::Fgauss(G4int iZ, G4int iA, G4double T)
+{
+  //  cout << "** Calling Fgauss **" << endl;
+
+  G4double fgauss = 0.;
+
+  G4double avgA = iA;
+  G4double radius = 1.07*pow(avgA,1./3.);  
+
+  //! from H. de Vries: Nuclear Charge Density Distributions from Elastic Electron
+  //!   Scattering. in Atomic Data and Nuclear Data Tables 36, 495(1987)
+  //! 8/9/96
+  if(iA==205)radius=5.470;
+  if(iA==56) radius=3.729;    
+  if(iA==28) radius=3.085;
+  if(iA==27) radius=3.035;
+  if(iA==24) radius=3.08;// Mg-24
+
+  G4double x2     = (T/pow(.197328,2))*pow(radius,2);
+  G4double CHARR   = (T/pow(.197328,2))*(2.4*2.4)/6.;
+
+  //cout << "  T (Q^2), CHARR: " << T << ", " << CHARR << endl;
+  //  cout << "** Fgauss CHARR:: " << CHARR << endl;
+  if (CHARR<80) fgauss = exp(-CHARR)/(1.+x2/6.);
+  
+  return fgauss;
+}
+
+G4double QweakSimEPEvent::Fshell(G4int iZ, G4int iA, G4double T)
+{
+  //  cout << "** Calling Fshell **" << endl;
+
+  G4double fshell = 0.;
+  G4double avgA = iA;
+  G4double radius = 1.07*pow(avgA,1./3.);
+  //! from H. de Vries: Nuclear Charge Density Distributions from Elastic Electron
+  //!   Scattering. in Atomic Data and Nuclear Data Tables 36, 495(1987)
+  //!8/9/96
+  if(iA==16) radius=2.737;
+  if(iA==15) radius=2.611;
+  if(iA==14) radius=2.540;
+  if(iA==12) radius=2.464;
+  if(iA== 9) radius=2.519;
+  if(iA== 7) radius=2.39;
+  if(iA== 6) radius=2.56;
+  if(iA== 4) radius=1.676;
+  G4double x2     = (T/pow(.197328,2))*pow(radius,2);
+  G4double alp    = (iZ-2.)/3.;
+  G4double CHARR   = x2*(2.+3.*alp)/(12.+30.*alp);
+
+  //  cout << "** Fshell CHARR:: " << CHARR << endl;
+  if (CHARR<80) fshell = exp(-CHARR)*(1.-alp*x2/(6.+15.*alp));
+
+  return fshell;
+}
+
+G4double QweakSimEPEvent::FF_BESSEL (G4int iZ, G4int iA, 
+                                     G4double T, G4bool &OUT_OF_RANGE)
+{
+
+  //  cout << "** Calling FF_BESSEL **" << endl;
+  //C   Calculates PWBA form factor  for Si-28 or O-16 using 
+  //C   Fourier-Bessel coefficients given by H. de Vries et al., 
+  //C   Atomic Data and Nuclear Data Tables (1986).
+  //C
+  //C   Note: Other nuclides can be entered, but at this time this
+  //C        is only good for 
+  //C       He-3, C-12, N-15, O-16, Al-27, Si-28, Fe-56, Cu-65, Zn-64, Cr-52
+  //!----------------------------------------------------------------
+  //!3/28/03 Corrected for divide 0/0 when qm =0  - Steve Rock
+
+  G4double a[20];
+  //C
+  //C     de Vries, de Vries & de Jager FB coefficients:
+
+  //!3He
+ G4double a3[] = {0.20020E-01, 0.41934E-01, 0.36254E-01, 0.17941E-01,
+          0.46608E-02, 0.46834E-02, 0.52042E-02, 0.38280E-02,
+          0.25661E-02, 0.14182E-02, 0.61390E-03, 0.22929E-03};
+  //!12C
+  G4double a12[] = {0.15721E-01, 0.38732E-01, 0.36808E-01, 0.14671E-01,
+           -0.43277E-02,-0.97752E-02,-0.68908E-02,-0.27631E-02,
+           -0.63568E-03, 0.71809E-04, 0.18441E-03, 0.75066E-04,
+           0.51069E-04, 0.14308E-04, 0.23170E-05, 0.68465E-06};
+  //!15N7
+  G4double a15[] = {0.25491E-01, 0.50618E-01, 0.29822E-01, -0.55196E-02,
+           -0.15913E-01,-0.76184E-02, -.23992E-02, -0.47940E-03};
+
+  //!16 O8
+  G4double a16[] = {0.20238E-01, 0.44793E-01, 0.33533E-01, 0.35030E-02,
+           -0.12293E-01,-0.10329E-01,-0.34036E-02,-0.41627E-03,
+           -0.94435E-03,-0.25571E-03, 0.23759E-03,-0.10603E-03,
+           0.41480E-04, 0.00000E-03};
+  //!27Al
+  G4double a27[] = {0.43418E-01, 0.60298E-01,  0.28950E-02, -0.23522E-01,
+           -0.79791E-02, 0.23010E-02,  0.10794E-02,  0.12574E-03,
+           -0.13021E-03, 0.56563E-04, -0.18011E-04,  0.42869E-05};
+
+  //!28Si
+  G4double a28[] = {0.33495E-01, 0.59533E-01, 0.20979E-01,-0.16900E-01,
+           -0.14998E-01,-0.93248E-03, 0.33266E-02, 0.59244E-03,
+           -0.40013E-03, 0.12242E-03,-0.12994E-04,-0.92784E-05,
+           0.72595E-05,-0.42096E-05};
+  //!52Cr24
+  G4double a52[] = {0.39287e-1,0.62477e-1,0.62482e-2,-0.32885e-1,
+           -0.10648e-1,0.10520e-1,0.85478e-2,-0.24003e-3,-0.20499e-2,
+           -0.12001e-2,-0.56649e-3};
+  //!56Fe26
+  G4double a56[] = {0.42018E-1, 0.62337E-1, 0.23995e-3,-0.32776E-1,-0.79941E-2,
+           0.10844E-1, 0.49123e-2,-0.22144e-2,-0.18146E-3,0.37261E-3,
+           -0.23296E-3,0.11494E-3,-0.50596E-4, 0.20652E-4,-0.79428E-5,
+           0.28986E-5,-0.10075E-5};
+  //!64Zn30
+  G4double a64[] = {0.47038E-01, 0.61536E-01, -0.90045E-02, -0.30669E-01,
+                -0.78705E-03, 0.10034E-01, 0.14053E-02, -0.20640E-02,
+                0.35105E-03, 0.27303E-04, -0.63811E-04, 0.40893E-04, 
+                -0.20311E-04, 0.88986E-05, -0.35849E-05, 0.13522E-05,
+                -0.38635E-06};
+  //!65Cu29
+  G4double a65[] = {0.45444E-01, 0.59544E-01, -0.94968E-02, -0.31561e-01,
+                0.22898E-03, 0.11189E-01, 0.37360E-02, -0.64873E-03,
+                -0.51133E-03, 0.43765E-03, -0.24276E-03, 0.11507E-03,
+                -0.49761E-04, 0.20140E-04, -0.76945E-05, 0.28055E-05,
+                -0.97411E-06};
+  //!196Pt78
+  G4double a196[] = 
+    {0.50218e-1,  0.53722e-1, -0.35015e-1, -0.34588e-1, 0.23564e-1,
+     0.14340e-1, -0.13270e-1, -0.51212e-2,  0.56088e-2, 0.14890e-2,
+     -0.10928e-2, 0.55662e-3, -0.50557e-4, -0.19708e-3, 0.24016e-3};
+  //////
+
+  //C   Change to units of fm**(-1)
+  G4double qq = sqrt ( T ) / 0.197328; // used to be q
+
+  //  cout << "q(1/fm):: " << qq << endl;
+
+  G4double ff_bessel=0;
+
+  if( qq <= 0.005 ){
+    OUT_OF_RANGE=false; //! line added 4/29/98
+    ff_bessel = 1.00000;
+    return 0;
+  }
+
+  ff_bessel=0.0;
+  OUT_OF_RANGE=false;
+  Float_t R_max=0.;
+  G4int i=0,n=0;
+
+  if(iA == 28){ // 28Si
+    if(qq>2.64)  OUT_OF_RANGE=true;
+    //if(qq<0.25)  OUT_OF_RANGE=true;
+    R_max = 8.;
+    n = 14;
+    for(G4int i=0;i<n;i++)
+      a[i] = a28[i];
+  }
+  else if(iA == 16){ // 16O
+    if(qq>2.77) OUT_OF_RANGE=true;
+    R_max=8.;
+    n = 13;
+    for(G4int i=0;i<n;i++)
+      a[i] = a16[i];
+  }
+  else if(iA == 3){ // 3He
+    if(qq>10. ) OUT_OF_RANGE=true;
+    R_max=5.;
+    n = 12;
+    for(G4int i=0;i<n;i++)
+      a[i] = a3[i];
+  }
+  else if(iA == 12){ // 12C
+    if(qq>4.01 ) OUT_OF_RANGE=true;
+    R_max=8.;
+    n = 16;
+    for(G4int i=0;i<n;i++)
+      a[i] = a12[i];
+      //      cout << i << "\t" << a[i] << "\t" << a12[i] << endl;
+  }
+  else if(iA == 15){ // 15N7
+    if(qq>3.17) OUT_OF_RANGE=true;
+    R_max=7;
+    n = 8;
+    for(G4int i=0;i<n;i++)
+      a[i] = a15[i];
+  }
+  else if(iA == 27){ // 27Al
+    if(qq>2.70) OUT_OF_RANGE=true;
+    //if(qq<0.47) OUT_OF_RANGE=true;
+    R_max=7;
+    n = 12;
+    for(G4int i=0;i<n;i++)
+      a[i] = a27[i];
+  }
+  else if(iA == 56){ // 56Fe26
+    if(qq>2.22) OUT_OF_RANGE=true;
+    //if(qq<0.51) OUT_OF_RANGE=true;
+    R_max=9;
+    n = 17;
+    for(G4int i=0;i<n;i++)
+      a[i] = a56[i];
+  }
+  else if(iA == 64){ // 64-Zn
+    if(qq>2.22) OUT_OF_RANGE=true;
+    //if(qq<0.51) OUT_OF_RANGE=true;
+    R_max=9;
+    n = 17;
+    for(G4int i=0;i<n;i++)
+      a[i] = a64[i];
+  }
+  else if(iA == 65){ // 65Cu29
+    if(qq>2.22) OUT_OF_RANGE=true;
+    //if(qq<0.51) OUT_OF_RANGE=true;
+    R_max=9;
+    n = 17;
+    for(G4int i=0;i<n;i++)
+      a[i] = a65[i];
+  }
+  else if(iA == 196){ // 196Pt78
+    if(qq>2.28) OUT_OF_RANGE=true;
+    if(qq<0.34) OUT_OF_RANGE=true;
+    R_max=12;
+    n = 15;
+    for(G4int i=0;i<n;i++)
+      a[i] = a196[i];
+  }
+  else if (iA == 52) {// 52-Cr
+    if (qq>2.59) OUT_OF_RANGE=true;
+    //if (qq<0.15) OUT_OF_RANGE=true;
+    R_max=9.0;
+    n=11;
+    for(G4int i=0;i<n;i++)
+      a[i] = a52[i];
+  }
+  else
+    OUT_OF_RANGE=true;
+
+  if(OUT_OF_RANGE || (R_max == 0.)){
+    ff_bessel=0.;
+    return 0;
+  }
+
+  G4double qmu = 3.14159265 / R_max;
+  G4double ff=0.;
+  G4double sinqR = sin(qq*R_max);
+  G4double qmux,qm,qp;
+
+  G4double PI4=12.56637062; //! 4*PI
+  G4double PI2=6.28318531; //! 2*PI
+
+  for(G4int j=0;j<n;j++){
+    qmux = qmu * Float_t(j+1);
+    qm =  qq - qmux;
+    qp =  qq + qmux;
+    if(fabs(qm)>1.E-6)
+      ff = ff + a[j]*(pow((-1.),(j+1)))*sinqR/(qm*qp);
+    else
+      ff = ff + a[j]*pow(R_max,2)/(PI2*(j+1));
+  }
+
+  if((qq*R_max>1.E-20) && (ff<1.E20))
+    ff_bessel = PI4/Float_t(iZ)/qq *ff;
+  else
+    ff_bessel = 0.;
+
+  if (ff_bessel < 0) ff_bessel*=-1;
+
+  return ff_bessel;
 }
 
 ////....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

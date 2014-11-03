@@ -255,6 +255,13 @@ class QweakSimEPEvent {
   G4double MEC2009(G4int a, G4double q2,G4double w2);
   G4double fitemc(G4double X, G4int A);
 
+  G4double AlloyScattering(G4double E_in, G4double Theta, G4int Zin, 
+                           G4int Ain, G4double &fWeightN, G4double &Q2,
+                           G4double &E_out);
+  G4double Fshell(G4int Z, G4int A, G4double q2);
+  G4double Fgauss(G4int Z, G4int A, G4double q2);
+  G4double FF_BESSEL(G4int Z, G4int A, G4double q2, G4bool &ofr);
+  
   G4double GetAsymmetry_EP(G4double theta, G4double energy);
   G4double GetAsymmetry_EN(G4double theta, G4double energy);
   G4double GetAsymmetry_AL(G4double theta, G4double energy);

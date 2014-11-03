@@ -268,8 +268,10 @@
 #  7 - LH2 radiative lookup table (3.35 GeV)
 #  8 - Al quasi-elastic, Bosted
 #  88 - pion
-#  9 - Al nuclera inelastics SPS
+#  9 - Al nuclear inelastics SPS
 #  10 - Al GDR
+#  11 - Al inelastic (Bosted)
+#  12-17 - Al alloy (Zn, Mg, Cu, Cr, Fe, Si, respectively)
 
 /EventGen/SelectReactionType    1
 
