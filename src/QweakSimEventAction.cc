@@ -1620,8 +1620,8 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 Double_t rElasticMomentumTransfer = 0;
                 Double_t rElasticScatteredEnergy = 0;
                 myUserInfo->GetEPEvent()->Elastic_Cross_Section_Proton(
-                    /* input  */ rTotalEnergy,
-                                 rGlobalThetaAngle,
+                    /* input  */ aHit->GetTotalEnergy(),
+                                 aHit->GetWorldMomentum().theta(),
                     /* output */ rElasticCrossSection,
                                  rElasticMomentumTransfer,
                                  rElasticScatteredEnergy);
