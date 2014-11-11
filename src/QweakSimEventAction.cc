@@ -1615,6 +1615,17 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 rDepositedEnergy = (Float_t) aHit->GetHitDepositedEnergy() / MeV;
                 rTotalDepositedEnergy += rDepositedEnergy;
 
+                //--- deteremine elastic cross section
+                Double_t rElasticCrossSection = 0;
+                Double_t rElasticMomentumTransfer = 0;
+                Double_t rElasticScatteredEnergy = 0;
+                myUserInfo->GetEPEvent()->Elastic_Cross_Section_Proton(
+                    /* input  */ rTotalEnergy,
+                                 rGlobalThetaAngle,
+                    /* output */ rElasticCrossSection,
+                                 rElasticMomentumTransfer,
+                                 rElasticScatteredEnergy);
+
                 //--- store Primary Event Number
                 analysis->fRootEvent->Target.Detector.StorePrimaryEventNumber((Int_t) PrimaryEventNumber);
 
@@ -1674,6 +1685,11 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 
                 //--- store PMTOnly deposited energy
                 analysis->fRootEvent->Target.Detector.StoreDepositedEnergy(rDepositedEnergy);
+
+                //--- store elastic cross section
+                analysis->fRootEvent->Target.Detector.StoreElasticCrossSection(rElasticCrossSection);
+                analysis->fRootEvent->Target.Detector.StoreElasticScatteredEnergy(rElasticScatteredEnergy);
+                analysis->fRootEvent->Target.Detector.StoreElasticMomentumTransfer(rElasticMomentumTransfer);
 
             } // end  for(int i1=0;i1<n_hitTarget;i1++)
 

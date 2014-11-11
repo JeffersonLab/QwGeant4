@@ -60,6 +60,8 @@ QweakSimEPEvent::QweakSimEPEvent( QweakSimUserInformation* myUI)
   kActiveOctantNumber = 0;  //default octant all, choose from [0,8]
 
   myUserInfo = myUI;
+  myUserInfo->SetEPEvent(this);
+
   EventGen_Messenger = new QweakSimEPEventMessenger(this);
 
   G4cout << "###### Leaving QweakSimEPEvent::QweakSimEPEvent () " << G4endl;

@@ -62,7 +62,11 @@ void QweakSimUserTarget_DetectorEvent::Initialize()
 
     GlobalPhiAngle.clear(); 
     GlobalThetaAngle.clear();
-	
+
+    ElasticCrossSection.clear();
+    ElasticScatteredEnergy.clear();
+    ElasticMomentumTransfer.clear();
+
     //--- deposited energy in the Target in one step
     DepositedEnergy.clear(); 
     //--- total deposited energy in the Target in one event

@@ -11,6 +11,9 @@
 
 #include "QweakSimPrimaryGeneratorAction.hh"
 
+// forward declarations
+class QweakSimEPEvent;
+
 #define ELOSS_DEBUG 0
 
 class QweakSimUserInformation 
@@ -176,7 +179,14 @@ private:
   std::vector <G4double> CerenkovPhotonEnergy;
 
   QweakSimCerenkovDetector_PMTHit *PMTHit;
+
   G4int PMTSide;
+
+ private:
+  QweakSimEPEvent* EPEvent;
+ public:
+  void SetEPEvent(QweakSimEPEvent* EP) { EPEvent = EP; };
+  QweakSimEPEvent* GetEPEvent() { return EPEvent; };
 
  public:
 

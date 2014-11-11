@@ -74,6 +74,11 @@ private:
     //--- deposited energy in the Target in one step
     std::vector<Float_t> DepositedEnergy;
 
+    //--- elastic scattering cross section and kinematic variables
+    std::vector<Float_t> ElasticCrossSection;
+    std::vector<Float_t> ElasticScatteredEnergy;
+    std::vector<Float_t> ElasticMomentumTransfer;
+
     //--- total deposited energy in the Target in one event
     Float_t TotalDepositedEnergy;
 	
@@ -229,7 +234,18 @@ public:
     //--- total deposited energy in the Target in one event
     void     StoreTotalEnergyDeposit(Float_t eng)   { TotalDepositedEnergy = eng; }
     Float_t    GetTotalEnergyDeposit()   const {return TotalDepositedEnergy;}
-	
+
+    //----------------- Elastic scattering cross section and kinematic variables
+    void   StoreElasticCrossSection(Float_t xs) { ElasticCrossSection.push_back(xs); }
+    std::vector<Float_t>  GetElasticCrossSection() const {return ElasticCrossSection;}
+
+    void   StoreElasticScatteredEnergy(Float_t ep) { ElasticScatteredEnergy.push_back(ep); }
+    std::vector<Float_t>  GetElasticScatteredEnergy() const {return ElasticScatteredEnergy;}
+
+    void   StoreElasticMomentumTransfer(Float_t q2) { ElasticMomentumTransfer.push_back(q2); }
+    std::vector<Float_t>  GetElasticMomentumTransfer() const {return ElasticMomentumTransfer;}
+
+
     // define a new Class known to ROOT  
     ClassDef(QweakSimUserTarget_DetectorEvent,1)
 	
