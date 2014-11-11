@@ -36,6 +36,7 @@
 #include "G4TransportationManager.hh"
 //
 #include "G4Mag_UsualEqRhs.hh"
+#include "G4Mag_SpinEqRhs.hh"
 #include "G4PropagatorInField.hh"
 #include "G4ChordFinder.hh"
 #include "G4SimpleRunge.hh"
@@ -769,7 +770,14 @@ void QweakSimDetectorConstruction::SetGlobalMagneticField()
 
   fGlobalFieldManager->SetDetectorField(pMagneticField);
 
+#define TRACK_ELECTRON_SPIN
+#ifdef  TRACK_ELECTRON_SPIN
+  fGlobalEquation = new G4Mag_SpinEqRhs(pMagneticField);
+  G4int numberOfVariables = 12;
+#else
   fGlobalEquation = new G4Mag_UsualEqRhs(pMagneticField);
+  G4int numberOfVariables = 6;
+#endif
 
   // taken from one of the Geant4 presentation:
   // - If the field is calculated from a field map, a lower order stepper
@@ -778,10 +786,10 @@ void QweakSimDetectorConstruction::SetGlobalMagneticField()
   //   stepper, for a somewhat smooth field one must choose between 1st and 2nd
   //   order stepper.
 
-  //fGlobalStepper  = new G4ClassicalRK4(fGlobalEquation);  // classical 4th order stepper
-  //fGlobalStepper  = new G4ExplicitEuler(fGlobalEquation); //           1st order stepper
-  //fGlobalStepper  = new G4ImplicitEuler(fGlobalEquation); //           2nd order stepper
-  fGlobalStepper  = new G4SimpleRunge(fGlobalEquation);   //           2nd order stepper
+  //fGlobalStepper  = new G4ClassicalRK4(fGlobalEquation, numberOfVariables);  // classical 4th order stepper
+  //fGlobalStepper  = new G4ExplicitEuler(fGlobalEquation, numberOfVariables); //           1st order stepper
+  //fGlobalStepper  = new G4ImplicitEuler(fGlobalEquation, numberOfVariables); //           2nd order stepper
+  fGlobalStepper  = new G4SimpleRunge(fGlobalEquation, numberOfVariables);   //           2nd order stepper
 
 
   // Provides a driver that talks to the Integrator Stepper, and insures that

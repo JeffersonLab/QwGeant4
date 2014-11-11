@@ -42,7 +42,7 @@ class G4Material;
 class G4VisAttributes;
 class G4FieldManager;
 class G4ChordFinder;
-class G4Mag_UsualEqRhs;
+class G4Mag_EqRhs;
 class G4MagIntegratorStepper;
 
 // user classes
@@ -175,7 +175,7 @@ private:
 
      G4FieldManager*         fGlobalFieldManager;
      G4ChordFinder*          fGlobalChordFinder;
-     G4Mag_UsualEqRhs*       fGlobalEquation;
+     G4Mag_EqRhs*            fGlobalEquation;
      G4MagIntegratorStepper* fGlobalStepper;
 
      G4double                fMinStep;

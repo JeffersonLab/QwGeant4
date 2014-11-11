@@ -156,6 +156,10 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
                                                           myNormMomentumY,
                                                           myNormMomentumZ));
 
+  particleGun->SetParticlePolarization(-(G4ThreeVector(myNormMomentumX,
+                                                       myNormMomentumY,
+                                                       myNormMomentumZ)));
+
   particleGun->SetParticleEnergy(E_beam);
 
   // finally : fire !!!
