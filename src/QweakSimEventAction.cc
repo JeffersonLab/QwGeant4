@@ -1013,7 +1013,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 
         if (n_hitCerenkovPMT > 0) {
 
-        	// loop over hits
+            // loop over hits
             for (int i1 = 0; i1 < n_hitCerenkovPMT; i1++) {
 
                 QweakSimCerenkovDetector_PMTHit* aHit = (*CerenkovDetectorPMT_HC)[i1];
@@ -1058,47 +1058,54 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 //------------------------------------------------------------------------
 
             } // end for (int i1 = 0; i1 < n_hitCerenkovPMT; i1++)
-            PmtRateTotal[octantID] = CalculateRate( myUserInfo->GetCrossSection(), (Bool_t)PmtNPETotal[octantID] );
-            PmtRateLeft[octantID] = CalculateRate( myUserInfo->GetCrossSection(), (Bool_t)PmtNPELeft[octantID] );
-            PmtRateRight[octantID] = CalculateRate( myUserInfo->GetCrossSection(), (Bool_t)PmtNPERight[octantID] );
 
-            PmtRateTotalEL[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElastic(), (Bool_t)PmtNPETotal[octantID] );
-            PmtRateLeftEL[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElastic(), (Bool_t)PmtNPELeft[octantID] );
-            PmtRateRightEL[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElastic(), (Bool_t)PmtNPERight[octantID] );
+            // Loop over all octants
+            for (int octantID = 0; octantID < PmtMaxSize; octantID++) {
+                if (PmtHasBeenHit[octantID] != 5) continue; // skip octants without hits
 
-            PmtRateTotalDIS[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadDIS(), (Bool_t)PmtNPETotal[octantID] );
-            PmtRateLeftDIS[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadDIS(), (Bool_t)PmtNPELeft[octantID] );
-            PmtRateRightDIS[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadDIS(), (Bool_t)PmtNPERight[octantID] );
+                PmtRateTotal[octantID] = CalculateRate( myUserInfo->GetCrossSection(), (Bool_t)PmtNPETotal[octantID] );
+                PmtRateLeft[octantID] = CalculateRate( myUserInfo->GetCrossSection(), (Bool_t)PmtNPELeft[octantID] );
+                PmtRateRight[octantID] = CalculateRate( myUserInfo->GetCrossSection(), (Bool_t)PmtNPERight[octantID] );
 
-            PmtRateTotalQE[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadQE(), (Bool_t)PmtNPETotal[octantID] );
-            PmtRateLeftQE[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadQE(), (Bool_t)PmtNPELeft[octantID] );
-            PmtRateRightQE[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadQE(), (Bool_t)PmtNPERight[octantID] );
+                PmtRateTotalEL[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElastic(), (Bool_t)PmtNPETotal[octantID] );
+                PmtRateLeftEL[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElastic(), (Bool_t)PmtNPELeft[octantID] );
+                PmtRateRightEL[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElastic(), (Bool_t)PmtNPERight[octantID] );
 
-            PmtRateTotalELPeak[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElasticPeak(), (Bool_t)PmtNPETotal[octantID] );
-            PmtRateLeftELPeak[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElasticPeak(), (Bool_t)PmtNPELeft[octantID] );
-            PmtRateRightELPeak[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElasticPeak(), (Bool_t)PmtNPERight[octantID] );
+                PmtRateTotalDIS[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadDIS(), (Bool_t)PmtNPETotal[octantID] );
+                PmtRateLeftDIS[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadDIS(), (Bool_t)PmtNPELeft[octantID] );
+                PmtRateRightDIS[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadDIS(), (Bool_t)PmtNPERight[octantID] );
+
+                PmtRateTotalQE[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadQE(), (Bool_t)PmtNPETotal[octantID] );
+                PmtRateLeftQE[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadQE(), (Bool_t)PmtNPELeft[octantID] );
+                PmtRateRightQE[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadQE(), (Bool_t)PmtNPERight[octantID] );
+
+                PmtRateTotalELPeak[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElasticPeak(), (Bool_t)PmtNPETotal[octantID] );
+                PmtRateLeftELPeak[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElasticPeak(), (Bool_t)PmtNPELeft[octantID] );
+                PmtRateRightELPeak[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElasticPeak(), (Bool_t)PmtNPERight[octantID] );
 
 
 
-            PmtYieldTotal[octantID] = CalculateRate( myUserInfo->GetCrossSection(), PmtNPETotal[octantID] );
-            PmtYieldLeft[octantID] = CalculateRate( myUserInfo->GetCrossSection(), PmtNPELeft[octantID] );
-            PmtYieldRight[octantID] = CalculateRate( myUserInfo->GetCrossSection(), PmtNPERight[octantID] );
+                PmtYieldTotal[octantID] = CalculateRate( myUserInfo->GetCrossSection(), PmtNPETotal[octantID] );
+                PmtYieldLeft[octantID] = CalculateRate( myUserInfo->GetCrossSection(), PmtNPELeft[octantID] );
+                PmtYieldRight[octantID] = CalculateRate( myUserInfo->GetCrossSection(), PmtNPERight[octantID] );
 
-            PmtYieldTotalEL[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElastic(), PmtNPETotal[octantID] );
-            PmtYieldLeftEL[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElastic(), PmtNPELeft[octantID] );
-            PmtYieldRightEL[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElastic(), PmtNPERight[octantID] );
+                PmtYieldTotalEL[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElastic(), PmtNPETotal[octantID] );
+                PmtYieldLeftEL[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElastic(), PmtNPELeft[octantID] );
+                PmtYieldRightEL[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElastic(), PmtNPERight[octantID] );
 
-            PmtYieldTotalDIS[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadDIS(), PmtNPETotal[octantID] );
-            PmtYieldLeftDIS[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadDIS(), PmtNPELeft[octantID] );
-            PmtYieldRightDIS[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadDIS(), PmtNPERight[octantID] );
+                PmtYieldTotalDIS[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadDIS(), PmtNPETotal[octantID] );
+                PmtYieldLeftDIS[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadDIS(), PmtNPELeft[octantID] );
+                PmtYieldRightDIS[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadDIS(), PmtNPERight[octantID] );
 
-            PmtYieldTotalQE[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadQE(), PmtNPETotal[octantID] );
-            PmtYieldLeftQE[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadQE(), PmtNPELeft[octantID] );
-            PmtYieldRightQE[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadQE(), PmtNPERight[octantID] );
+                PmtYieldTotalQE[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadQE(), PmtNPETotal[octantID] );
+                PmtYieldLeftQE[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadQE(), PmtNPELeft[octantID] );
+                PmtYieldRightQE[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadQE(), PmtNPERight[octantID] );
 
-            PmtYieldTotalELPeak[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElasticPeak(), PmtNPETotal[octantID] );
-            PmtYieldLeftELPeak[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElasticPeak(), PmtNPELeft[octantID] );
-            PmtYieldRightELPeak[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElasticPeak(), PmtNPERight[octantID] );
+                PmtYieldTotalELPeak[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElasticPeak(), PmtNPETotal[octantID] );
+                PmtYieldLeftELPeak[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElasticPeak(), PmtNPELeft[octantID] );
+                PmtYieldRightELPeak[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElasticPeak(), PmtNPERight[octantID] );
+
+            } // end for (int octantID = 0; octantID < PmtMaxSize; octantID++)
 
         } // end if (n_hitCerenkovPMT > 0)
 
