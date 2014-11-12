@@ -656,7 +656,7 @@ void QweakSimHDC::PlaceHDC_MasterContainers()
 {
     G4Box* HDC_PackageContainer_Solid = new G4Box("HDC_PackageContainer_Solid",
 				 0.5 * (3.0*m), 
-				 0.5 * (3.0*m),
+				 0.5 * (7.0*m),
 				 0.5 * (0.7*m));
    
    G4LogicalVolume* HDC_PackageContainer_Logical  = new G4LogicalVolume(  HDC_PackageContainer_Solid,
