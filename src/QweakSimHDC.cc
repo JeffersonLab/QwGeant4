@@ -709,7 +709,7 @@ void QweakSimHDC::PlaceHDC_MasterContainers()
 
 	  HDC_MasterContainerFront_Physical[i] = new G4PVPlacement(Rotation_HDC[i],
 								position_MasterContainerFront,
-								Form("HDC_MasterContainerFront_Physical%d",i),
+								Form("HDC_MasterContainerFront_Physical%ld",i),
 								HDC_MasterContainer_Logical,
 								HDC_PackageContainer_Physical,
 								false,
@@ -722,7 +722,7 @@ void QweakSimHDC::PlaceHDC_MasterContainers()
 
 	  HDC_MasterContainerBack_Physical[i] = new G4PVPlacement(Rotation_HDC[i],
 			  	  	  	  	       position_MasterContainerBack,
-							       Form("HDC_MasterContainerBack_Physical%d",i),
+							       Form("HDC_MasterContainerBack_Physical%ld",i),
 							       HDC_MasterContainer_Logical,
 							       HDC_PackageContainer_Physical,
 							       false,
