@@ -70,7 +70,7 @@ QweakSimEventAction::QweakSimEventAction(QweakSimAnalysis* AN, QweakSimUserInfor
     VDC_DriftCellFront_CollID          = -1;
     VDC_DriftCellBack_CollID           = -1;
     TriggerScintillatorDetector_CollID = -1;
-    //TriggerScintillatorPMT_CollID      = -1;
+    TriggerScintillatorPMT_CollID      = -1;
     LeadGlassDetector_CollID           = -1;
     //LeadGlassPMT_CollID                = -1;
     PMTOnlyDetector_CollID	       = -1;
@@ -287,6 +287,23 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     QweakSimCerenkovDetectorHitsCollection*             CerenkovDetector_HC            = 0;
     QweakSimCerenkovDetector_PMTHitsCollection*         CerenkovDetectorPMT_HC         = 0;
     QweakSimLumi_DetectorHitsCollection*                LumiDetector_HC                = 0;
+
+    G4int n_hitTarget = 0;
+    G4int n_GEMhitWirePlane = 0;
+    G4int n_HDChitWirePlane = 0;
+    G4int n_VDChitWirePlane = 0;
+    G4int n_VDChitDCFront = 0;
+    G4int n_VDChitDCBack = 0;
+    G4int n_hitTriggerScintillator = 0;
+    G4int n_hitTriggerScintillatorPMT = 0;
+    G4int n_hitLeadGlass = 0;
+    G4int n_hitLeadGlassPMT = 0;
+    G4int n_hitPMTOnly = 0;
+    G4int n_hitPMTOnlyPMT = 0;
+    G4int n_hitCerenkov = 0;
+    G4int n_hitCerenkovPMT = 0;
+    G4int n_hitLumi = 0;
+    G4int n_hitLumiPMT = 0;
 
     if (HCE) {
 
@@ -649,58 +666,58 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
             if (print_VDC_WirePlaneHit) aHit->Print();
 
             // get local position of hit
-            localPosition  = aHit->GetLocalPosition();
-            rLocalPositionX = (Float_t) localPosition.x() / cm;
-            rLocalPositionY = (Float_t) localPosition.y() / cm;
-            rLocalPositionZ = (Float_t) localPosition.z() / cm;
+            G4ThreeVector localPosition  = aHit->GetLocalPosition();
+            Float_t rLocalPositionX = (Float_t) localPosition.x() / cm;
+            Float_t rLocalPositionY = (Float_t) localPosition.y() / cm;
+            Float_t rLocalPositionZ = (Float_t) localPosition.z() / cm;
 
             // get world position of hit
-            globalPosition  = aHit->GetWorldPosition();
-            rGlobalPositionX = (Float_t) globalPosition.x() / cm;
-            rGlobalPositionY = (Float_t) globalPosition.y() / cm;
-            rGlobalPositionZ = (Float_t) globalPosition.z() / cm;
+            G4ThreeVector globalPosition  = aHit->GetWorldPosition();
+            Float_t rGlobalPositionX = (Float_t) globalPosition.x() / cm;
+            Float_t rGlobalPositionY = (Float_t) globalPosition.y() / cm;
+            Float_t rGlobalPositionZ = (Float_t) globalPosition.z() / cm;
 
             // get local Momentum of hit
-            localMomentum  = aHit->GetLocalMomentum();
-            rLocalMomentumX = (Float_t) localMomentum.x() / MeV;
-            rLocalMomentumY = (Float_t) localMomentum.y() / MeV;
-            rLocalMomentumZ = (Float_t) localMomentum.z() / MeV;
+            G4ThreeVector localMomentum = aHit->GetLocalMomentum();
+            Float_t rLocalMomentumX = (Float_t) localMomentum.x() / MeV;
+            Float_t rLocalMomentumY = (Float_t) localMomentum.y() / MeV;
+            Float_t rLocalMomentumZ = (Float_t) localMomentum.z() / MeV;
 
             // get world Momentum of hit
-            globalMomentum  = aHit->GetWorldMomentum();
-            rGlobalMomentumX = (Float_t) globalMomentum.x() / MeV;
-            rGlobalMomentumY = (Float_t) globalMomentum.y() / MeV;
-            rGlobalMomentumZ = (Float_t) globalMomentum.z() / MeV;
-            rGlobalThetaAngle = (Float_t) globalMomentum.theta() / degree;
-            rGlobalPhiAngle   = (Float_t) globalMomentum.phi() / degree - 90.0;
+            G4ThreeVector globalMomentum  = aHit->GetWorldMomentum();
+            Float_t rGlobalMomentumX = (Float_t) globalMomentum.x() / MeV;
+            Float_t rGlobalMomentumY = (Float_t) globalMomentum.y() / MeV;
+            Float_t rGlobalMomentumZ = (Float_t) globalMomentum.z() / MeV;
+            Float_t rGlobalThetaAngle = (Float_t) globalMomentum.theta() / degree;
+            Float_t rGlobalPhiAngle   = (Float_t) globalMomentum.phi() / degree - 90.0;
 
             // get total Energy of hit
-            rTotalEnergy     = (Float_t) aHit->GetTotalEnergy() / MeV;
+            Float_t rTotalEnergy     = (Float_t) aHit->GetTotalEnergy() / MeV;
 
             // get kinetic Energy of hit
-            rKineticEnergy     = (Float_t) aHit->GetKineticEnergy() / MeV;
+            Float_t rKineticEnergy     = (Float_t) aHit->GetKineticEnergy() / MeV;
 
 
-            originVertexPosition  = aHit->GetOriginVertexPosition();
-            rOriginVertexPositionX      = (Float_t) originVertexPosition.x() / cm;
-            rOriginVertexPositionY      = (Float_t) originVertexPosition.y() / cm;
-            rOriginVertexPositionZ      = (Float_t) originVertexPosition.z() / cm;
+            G4ThreeVector originVertexPosition  = aHit->GetOriginVertexPosition();
+            Float_t rOriginVertexPositionX      = (Float_t) originVertexPosition.x() / cm;
+            Float_t rOriginVertexPositionY      = (Float_t) originVertexPosition.y() / cm;
+            Float_t rOriginVertexPositionZ      = (Float_t) originVertexPosition.z() / cm;
 
 
-            originVertexMomentumDirection = aHit->GetOriginVertexMomentumDirection();
-            rOriginVertexMomentumDirectionX = (Float_t) originVertexMomentumDirection.x();
-            rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
-            rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
-            rOriginVertexPhiAngle   = (Float_t) originVertexMomentumDirection.phi() / degree;
-            rOriginVertexThetaAngle = (Float_t) originVertexMomentumDirection.theta() / degree;
+            G4ThreeVector originVertexMomentumDirection = aHit->GetOriginVertexMomentumDirection();
+            Float_t rOriginVertexMomentumDirectionX = (Float_t) originVertexMomentumDirection.x();
+            Float_t rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
+            Float_t rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
+            Float_t rOriginVertexPhiAngle   = (Float_t) originVertexMomentumDirection.phi() / degree;
+            Float_t rOriginVertexThetaAngle = (Float_t) originVertexMomentumDirection.theta() / degree;
 
-            rOriginVertexKineticEnergy = (Float_t) aHit->GetOriginVertexKineticEnergy() / MeV;
-            rOriginVertexTotalEnergy   = (Float_t) aHit->GetOriginVertexTotalEnergy() / MeV;
+            Float_t rOriginVertexKineticEnergy = (Float_t) aHit->GetOriginVertexKineticEnergy() / MeV;
+            Float_t rOriginVertexTotalEnergy   = (Float_t) aHit->GetOriginVertexTotalEnergy() / MeV;
 
-            rGlobalTime = (Float_t) aHit->GetGlobalTime() / ns;
+            Float_t rGlobalTime = (Float_t) aHit->GetGlobalTime() / ns;
 
-            rParticleName = TString(aHit->GetParticleName());
-            rParticleType = (Int_t) aHit->GetParticleType();
+            TString rParticleName = TString(aHit->GetParticleName());
+            Int_t rParticleType = (Int_t) aHit->GetParticleType();
 
             //-----------------------------------
             int iVDCID = aHit->GetVDCID();
@@ -767,7 +784,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
             wire_plane_event->StoreOriginVertexThetaAngle(rOriginVertexThetaAngle);
 
             wire_plane_event->StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
-            wire_plane_event->StoreOriginVertexTotalEnergy(rOriginVertexKineticEnergy);
+            wire_plane_event->StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
 
             wire_plane_event->StoreGlobalTimeOfHit(rGlobalTime);
 
@@ -815,10 +832,10 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
             QweakSimVDC_DriftCellHit* aHit = (*VDC_DriftCellFront_HC)[0];
 
 
-            rDCWidthOnFrame    = (Float_t) aHit->GetDCWidthOnFrame()/mm;
-            rDCFullThickness   = (Float_t) aHit->GetDCFullThickness()/mm;
-            rDCUPlaneWireAngle = (Float_t) aHit->GetDCUPlaneWireAngle()/degree;
-            rDCVPlaneWireAngle = (Float_t) aHit->GetDCVPlaneWireAngle()/degree;
+            Float_t rDCWidthOnFrame    = (Float_t) aHit->GetDCWidthOnFrame()/mm;
+            Float_t rDCFullThickness   = (Float_t) aHit->GetDCFullThickness()/mm;
+            Float_t rDCUPlaneWireAngle = (Float_t) aHit->GetDCUPlaneWireAngle()/degree;
+            Float_t rDCVPlaneWireAngle = (Float_t) aHit->GetDCVPlaneWireAngle()/degree;
 
             // Store DriftCell Setup Parameter
             analysis->fRootEvent->Region3.Config.StoreDCWidthOnFrame(rDCWidthOnFrame);
@@ -852,76 +869,76 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         // Store Cerenkov Detector hits into /Cerenkov
         //=========================================================
 
+        if (n_hitCerenkov > 0) {
 
-        if (n_hitCerenkov >0) {
             // loop over hits
-            for (int i1=0;i1<n_hitCerenkov;i1++) {
+            for (int i1 = 0; i1 < n_hitCerenkov; i1++) {
 
                 QweakSimCerenkov_DetectorHit* aHit = (*CerenkovDetector_HC)[i1];
 
-                octantID = (Int_t) aHit->GetDetectorID() + 1;
+                G4int octantID = (Int_t) aHit->GetDetectorID() + 1;
 
                 if (print_Cerenkov_DetectorHit) aHit->Print();
 
                 // get local position of hit
-                localPosition  = aHit->GetLocalPosition();
-                rLocalPositionX = (Float_t) localPosition.x() / cm;
-                rLocalPositionY = (Float_t) localPosition.y() / cm;
-                rLocalPositionZ = (Float_t) localPosition.z() / cm;
+                G4ThreeVector localPosition  = aHit->GetLocalPosition();
+                Float_t rLocalPositionX = (Float_t) localPosition.x() / cm;
+                Float_t rLocalPositionY = (Float_t) localPosition.y() / cm;
+                Float_t rLocalPositionZ = (Float_t) localPosition.z() / cm;
 
                 // get world position of hit
-                globalPosition  = aHit->GetWorldPosition();
-                rGlobalPositionX = (Float_t) globalPosition.x() / cm;
-                rGlobalPositionY = (Float_t) globalPosition.y() / cm;
-                rGlobalPositionZ = (Float_t) globalPosition.z() / cm;
+                G4ThreeVector globalPosition  = aHit->GetWorldPosition();
+                Float_t rGlobalPositionX = (Float_t) globalPosition.x() / cm;
+                Float_t rGlobalPositionY = (Float_t) globalPosition.y() / cm;
+                Float_t rGlobalPositionZ = (Float_t) globalPosition.z() / cm;
 
                 // get local Momentum of hit
-                localMomentum  = aHit->GetLocalMomentum();
-                rLocalMomentumX = (Float_t) localMomentum.x() / MeV;
-                rLocalMomentumY = (Float_t) localMomentum.y() / MeV;
-                rLocalMomentumZ = (Float_t) localMomentum.z() / MeV;
+                //G4ThreeVector localMomentum  = aHit->GetLocalMomentum();
+                //Float_t rLocalMomentumX = (Float_t) localMomentum.x() / MeV;
+                //Float_t rLocalMomentumY = (Float_t) localMomentum.y() / MeV;
+                //Float_t rLocalMomentumZ = (Float_t) localMomentum.z() / MeV;
 
                 // get world Momentum of hit
-                globalMomentum  = aHit->GetWorldMomentum();
-                rGlobalMomentumX = (Float_t) globalMomentum.x() / MeV;
-                rGlobalMomentumY = (Float_t) globalMomentum.y() / MeV;
-                rGlobalMomentumZ = (Float_t) globalMomentum.z() / MeV;
-                rGlobalThetaAngle = (Float_t) globalMomentum.theta() / degree;
-                rGlobalPhiAngle   = (Float_t) globalMomentum.phi() / degree - 90.0;
+                G4ThreeVector globalMomentum  = aHit->GetWorldMomentum();
+                //Float_t rGlobalMomentumX = (Float_t) globalMomentum.x() / MeV;
+                //Float_t rGlobalMomentumY = (Float_t) globalMomentum.y() / MeV;
+                //Float_t rGlobalMomentumZ = (Float_t) globalMomentum.z() / MeV;
+                Float_t rGlobalPhiAngle   = (Float_t) globalMomentum.phi() / degree - 90.0;
+                Float_t rGlobalThetaAngle = (Float_t) globalMomentum.theta() / degree;
 
-                localExitPosition = myUserInfo->GetLocalCerenkovExitPosition();
-                rLocalExitPositionX = (Float_t) localExitPosition.x() / cm;
-                rLocalExitPositionY = (Float_t) localExitPosition.y() / cm;
-                rLocalExitPositionZ = (Float_t) localExitPosition.z() / cm;
+                G4ThreeVector localExitPosition = myUserInfo->GetLocalCerenkovExitPosition();
+                Float_t rLocalExitPositionX = (Float_t) localExitPosition.x() / cm;
+                Float_t rLocalExitPositionY = (Float_t) localExitPosition.y() / cm;
+                Float_t rLocalExitPositionZ = (Float_t) localExitPosition.z() / cm;
 
-                originVertexPosition  = aHit->GetOriginVertexPosition();
-                rOriginVertexPositionX      = (Float_t) originVertexPosition.x() / cm;
-                rOriginVertexPositionY      = (Float_t) originVertexPosition.y() / cm;
-                rOriginVertexPositionZ      = (Float_t) originVertexPosition.z() / cm;
+                G4ThreeVector originVertexPosition  = aHit->GetOriginVertexPosition();
+                Float_t rOriginVertexPositionX = (Float_t) originVertexPosition.x() / cm;
+                Float_t rOriginVertexPositionY = (Float_t) originVertexPosition.y() / cm;
+                Float_t rOriginVertexPositionZ = (Float_t) originVertexPosition.z() / cm;
 
-                originVertexMomentumDirection = aHit->GetOriginVertexMomentumDirection();
-                rOriginVertexMomentumDirectionX = (Float_t) originVertexMomentumDirection.x();
-                rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
-                rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
-                rOriginVertexPhiAngle   = (Float_t) originVertexMomentumDirection.phi() / degree;
-                rOriginVertexThetaAngle = (Float_t) originVertexMomentumDirection.theta() / degree;
+                G4ThreeVector originVertexMomentumDirection = aHit->GetOriginVertexMomentumDirection();
+                Float_t rOriginVertexMomentumDirectionX = (Float_t) originVertexMomentumDirection.x();
+                Float_t rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
+                Float_t rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
+                Float_t rOriginVertexPhiAngle   = (Float_t) originVertexMomentumDirection.phi() / degree;
+                Float_t rOriginVertexThetaAngle = (Float_t) originVertexMomentumDirection.theta() / degree;
 
-                rOriginVertexKineticEnergy = (Float_t) aHit->GetOriginVertexKineticEnergy() / MeV;
-                rOriginVertexTotalEnergy   = (Float_t) aHit->GetOriginVertexTotalEnergy() / MeV;
+                Float_t rOriginVertexKineticEnergy = (Float_t) aHit->GetOriginVertexKineticEnergy() / MeV;
+                Float_t rOriginVertexTotalEnergy   = (Float_t) aHit->GetOriginVertexTotalEnergy() / MeV;
 
-                rGlobalTime = (Float_t) aHit->GetGlobalTime() / ns;
+                Float_t rGlobalTime = (Float_t) aHit->GetGlobalTime() / ns;
 
-                rParticleName = TString(aHit->GetParticleName());
-                rParticleType = (Int_t) aHit->GetParticleType();
+                TString rParticleName = TString(aHit->GetParticleName());
+                G4int rParticleType = (Int_t) aHit->GetParticleType();
 
                 // get total Energy of hit
-                rTotalEnergy     = (Float_t) aHit->GetTotalEnergy() / MeV;
+                Float_t rTotalEnergy     = (Float_t) aHit->GetTotalEnergy() / MeV;
 
                 // get kinetic Energy of hit
-                rKineticEnergy     = (Float_t) aHit->GetKineticEnergy() / MeV;
+                Float_t rKineticEnergy     = (Float_t) aHit->GetKineticEnergy() / MeV;
 
 
-                // 	      edgeEvent = myUserInfo->GetEdgeEventDetected();
+                //  edgeEvent = myUserInfo->GetEdgeEventDetected();
 
                 //==========================================================
                 analysis->fRootEvent->Cerenkov.Detector.StoreDetectorID(octantID);
@@ -992,6 +1009,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 //--------------------------------------------------------------------------------------------
                 // Check if the track passed entirely thru the cerenkov detector without getting stuck
                 // or hitting an edge
+                Int_t edgeEvent;
                 if (GetDistance(localPosition,localExitPosition)/cm < 1.15)
                     edgeEvent = 1;
                 else
@@ -1013,11 +1031,56 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 
         if (n_hitCerenkovPMT > 0) {
 
+            std::vector<G4int>   PmtHasBeenHit(PmtMaxSize);
+
+            std::vector<G4float> PmtTime(PmtMaxSize);
+            std::vector<G4float> PmtEnergy(PmtMaxSize);
+            std::vector<G4int>   PmtOctant(PmtMaxSize);
+
+            std::vector<G4int>   PmtHitsLeft(PmtMaxSize);
+            std::vector<G4int>   PmtHitsRight(PmtMaxSize);
+            std::vector<G4int>   PmtHitsTotal(PmtMaxSize);
+            std::vector<G4float> PmtNPELeft(PmtMaxSize);
+            std::vector<G4float> PmtNPERight(PmtMaxSize);
+            std::vector<G4float> PmtNPETotal(PmtMaxSize);
+
+            std::vector<G4float> PmtRateLeft(PmtMaxSize);
+            std::vector<G4float> PmtRateRight(PmtMaxSize);
+            std::vector<G4float> PmtRateTotal(PmtMaxSize);
+            std::vector<G4float> PmtRateLeftEL(PmtMaxSize);
+            std::vector<G4float> PmtRateRightEL(PmtMaxSize);
+            std::vector<G4float> PmtRateTotalEL(PmtMaxSize);
+            std::vector<G4float> PmtRateLeftDIS(PmtMaxSize);
+            std::vector<G4float> PmtRateRightDIS(PmtMaxSize);
+            std::vector<G4float> PmtRateTotalDIS(PmtMaxSize);
+            std::vector<G4float> PmtRateLeftQE(PmtMaxSize);
+            std::vector<G4float> PmtRateRightQE(PmtMaxSize);
+            std::vector<G4float> PmtRateTotalQE(PmtMaxSize);
+            std::vector<G4float> PmtRateLeftELPeak(PmtMaxSize);
+            std::vector<G4float> PmtRateRightELPeak(PmtMaxSize);
+            std::vector<G4float> PmtRateTotalELPeak(PmtMaxSize);
+
+            std::vector<G4float> PmtYieldLeft(PmtMaxSize);
+            std::vector<G4float> PmtYieldRight(PmtMaxSize);
+            std::vector<G4float> PmtYieldTotal(PmtMaxSize);
+            std::vector<G4float> PmtYieldLeftEL(PmtMaxSize);
+            std::vector<G4float> PmtYieldRightEL(PmtMaxSize);
+            std::vector<G4float> PmtYieldTotalEL(PmtMaxSize);
+            std::vector<G4float> PmtYieldLeftDIS(PmtMaxSize);
+            std::vector<G4float> PmtYieldRightDIS(PmtMaxSize);
+            std::vector<G4float> PmtYieldTotalDIS(PmtMaxSize);
+            std::vector<G4float> PmtYieldLeftQE(PmtMaxSize);
+            std::vector<G4float> PmtYieldRightQE(PmtMaxSize);
+            std::vector<G4float> PmtYieldTotalQE(PmtMaxSize);
+            std::vector<G4float> PmtYieldLeftELPeak(PmtMaxSize);
+            std::vector<G4float> PmtYieldRightELPeak(PmtMaxSize);
+            std::vector<G4float> PmtYieldTotalELPeak(PmtMaxSize);
+
             // loop over hits
             for (int i1 = 0; i1 < n_hitCerenkovPMT; i1++) {
 
                 QweakSimCerenkovDetector_PMTHit* aHit = (*CerenkovDetectorPMT_HC)[i1];
-                octantID = (Int_t) aHit->GetDetectorID() + 1;
+                G4int octantID = (Int_t) aHit->GetDetectorID() + 1;
 
                 if (octantID > (Int_t) PmtHitsLeft.size()) {
                   G4cerr << "octantID is larger than size of vectorPmtHitsLeft in QweakSimEventAction!" << G4endl;
@@ -1083,8 +1146,6 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 PmtRateLeftELPeak[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElasticPeak(), (Bool_t)PmtNPELeft[octantID] );
                 PmtRateRightELPeak[octantID] = CalculateRate( myUserInfo->GetCrossSectionRadElasticPeak(), (Bool_t)PmtNPERight[octantID] );
 
-
-
                 PmtYieldTotal[octantID] = CalculateRate( myUserInfo->GetCrossSection(), PmtNPETotal[octantID] );
                 PmtYieldLeft[octantID] = CalculateRate( myUserInfo->GetCrossSection(), PmtNPELeft[octantID] );
                 PmtYieldRight[octantID] = CalculateRate( myUserInfo->GetCrossSection(), PmtNPERight[octantID] );
@@ -1107,67 +1168,67 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 
             } // end for (int octantID = 0; octantID < PmtMaxSize; octantID++)
 
+            // has the detector been hit
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTHasBeenHit(PmtHasBeenHit);
+
+            //---------------------------------------------
+            // store number of hits for left and right PMT
+            //---------------------------------------------
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTTimeOfHits(PmtTime);
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTEnergyOfHits(PmtEnergy);
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTOctantOfHits(PmtOctant);
+
+            //---------------------------------------------
+            // store number of hits for left and right PMT
+            //---------------------------------------------
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftNbOfHits(PmtHitsLeft);
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTRightNbOfHits(PmtHitsRight);
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalNbOfHits(PmtHitsTotal);
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftNbOfPEs(PmtNPELeft);
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTRightNbOfPEs(PmtNPERight);
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalNbOfPEs(PmtNPETotal);
+
+            //---------------------------------------------
+            // store rates for left and right PMT
+            //---------------------------------------------
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftRate(PmtRateLeft);
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTRightRate(PmtRateRight);
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalRate(PmtRateTotal);
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftRateEL(PmtRateLeftEL);
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTRightRateEL(PmtRateRightEL);
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalRateEL(PmtRateTotalEL);
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftRateDIS(PmtRateLeftDIS);
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTRightRateDIS(PmtRateRightDIS);
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalRateDIS(PmtRateTotalDIS);
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftRateQE(PmtRateLeftQE);
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTRightRateQE(PmtRateRightQE);
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalRateQE(PmtRateTotalQE);
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftRateELPeak(PmtRateLeftELPeak);
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTRightRateELPeak(PmtRateRightELPeak);
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalRateELPeak(PmtRateTotalELPeak);
+
+            //---------------------------------------------
+            // store yields for left and right PMT
+            //---------------------------------------------
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftYield(PmtYieldLeft);
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTRightYield(PmtYieldRight);
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalYield(PmtYieldTotal);
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftYieldEL(PmtYieldLeftEL);
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTRightYieldEL(PmtYieldRightEL);
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalYieldEL(PmtYieldTotalEL);
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftYieldDIS(PmtYieldLeftDIS);
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTRightYieldDIS(PmtYieldRightDIS);
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalYieldDIS(PmtYieldTotalDIS);
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftYieldQE(PmtYieldLeftQE);
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTRightYieldQE(PmtYieldRightQE);
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalYieldQE(PmtYieldTotalQE);
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftYieldELPeak(PmtYieldLeftELPeak);
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTRightYieldELPeak(PmtYieldRightELPeak);
+            analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalYieldELPeak(PmtYieldTotalELPeak);
+
+            //==============================================================================
+
         } // end if (n_hitCerenkovPMT > 0)
-
-        // has the detector been hit
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTHasBeenHit(PmtHasBeenHit);
-
-        //---------------------------------------------
-        // store number of hits for left and right PMT
-        //---------------------------------------------
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTTimeOfHits(PmtTime);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTEnergyOfHits(PmtEnergy);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTOctantOfHits(PmtOctant);
-
-        //---------------------------------------------
-        // store number of hits for left and right PMT
-        //---------------------------------------------
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftNbOfHits(PmtHitsLeft);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTRightNbOfHits(PmtHitsRight);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalNbOfHits(PmtHitsTotal);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftNbOfPEs(PmtNPELeft);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTRightNbOfPEs(PmtNPERight);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalNbOfPEs(PmtNPETotal);
-
-        //---------------------------------------------
-        // store rates for left and right PMT
-        //---------------------------------------------
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftRate(PmtRateLeft);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTRightRate(PmtRateRight);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalRate(PmtRateTotal);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftRateEL(PmtRateLeftEL);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTRightRateEL(PmtRateRightEL);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalRateEL(PmtRateTotalEL);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftRateDIS(PmtRateLeftDIS);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTRightRateDIS(PmtRateRightDIS);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalRateDIS(PmtRateTotalDIS);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftRateQE(PmtRateLeftQE);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTRightRateQE(PmtRateRightQE);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalRateQE(PmtRateTotalQE);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftRateELPeak(PmtRateLeftELPeak);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTRightRateELPeak(PmtRateRightELPeak);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalRateELPeak(PmtRateTotalELPeak);
-
-        //---------------------------------------------
-        // store yields for left and right PMT
-        //---------------------------------------------
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftYield(PmtYieldLeft);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTRightYield(PmtYieldRight);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalYield(PmtYieldTotal);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftYieldEL(PmtYieldLeftEL);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTRightYieldEL(PmtYieldRightEL);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalYieldEL(PmtYieldTotalEL);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftYieldDIS(PmtYieldLeftDIS);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTRightYieldDIS(PmtYieldRightDIS);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalYieldDIS(PmtYieldTotalDIS);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftYieldQE(PmtYieldLeftQE);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTRightYieldQE(PmtYieldRightQE);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalYieldQE(PmtYieldTotalQE);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTLeftYieldELPeak(PmtYieldLeftELPeak);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTRightYieldELPeak(PmtYieldRightELPeak);
-        analysis->fRootEvent->Cerenkov.PMT.StorePMTTotalYieldELPeak(PmtYieldTotalELPeak);
-
-        //==============================================================================
 
         //==============================
         // Store HDC hits into /Region2
@@ -1187,56 +1248,56 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 QweakSimHDC_WirePlaneHit* aHit = (*HDC_WirePlane_HC)[i1];
 
                 // get local position of hit
-                localPosition  = aHit->GetLocalPosition();
-                rLocalPositionX = (Float_t) localPosition.x() / cm;
-                rLocalPositionY = (Float_t) localPosition.y() / cm;
-                rLocalPositionZ = (Float_t) localPosition.z() / cm;
+                G4ThreeVector localPosition  = aHit->GetLocalPosition();
+                Float_t rLocalPositionX = (Float_t) localPosition.x() / cm;
+                Float_t rLocalPositionY = (Float_t) localPosition.y() / cm;
+                Float_t rLocalPositionZ = (Float_t) localPosition.z() / cm;
 
                 // get world position of hit
-                globalPosition  = aHit->GetWorldPosition();
-                rGlobalPositionX = (Float_t) globalPosition.x() / cm;
-                rGlobalPositionY = (Float_t) globalPosition.y() / cm;
-                rGlobalPositionZ = (Float_t) globalPosition.z() / cm;
+                G4ThreeVector globalPosition  = aHit->GetWorldPosition();
+                Float_t rGlobalPositionX = (Float_t) globalPosition.x() / cm;
+                Float_t rGlobalPositionY = (Float_t) globalPosition.y() / cm;
+                Float_t rGlobalPositionZ = (Float_t) globalPosition.z() / cm;
 
                 // get local Momentum of hit
-                localMomentum  = aHit->GetLocalMomentum();
-                rLocalMomentumX = (Float_t) localMomentum.x() / MeV;
-                rLocalMomentumY = (Float_t) localMomentum.y() / MeV;
-                rLocalMomentumZ = (Float_t) localMomentum.z() / MeV;
+                G4ThreeVector localMomentum = aHit->GetLocalMomentum();
+                Float_t rLocalMomentumX = (Float_t) localMomentum.x() / MeV;
+                Float_t rLocalMomentumY = (Float_t) localMomentum.y() / MeV;
+                Float_t rLocalMomentumZ = (Float_t) localMomentum.z() / MeV;
 
                 // get world Momentum of hit
-                globalMomentum  = aHit->GetWorldMomentum();
-                rGlobalMomentumX = (Float_t) globalMomentum.x() / MeV;
-                rGlobalMomentumY = (Float_t) globalMomentum.y() / MeV;
-                rGlobalMomentumZ = (Float_t) globalMomentum.z() / MeV;
-                rGlobalThetaAngle = (Float_t) globalMomentum.theta() / degree;
-                rGlobalPhiAngle   = (Float_t) globalMomentum.phi() / degree - 90.0;
+                G4ThreeVector globalMomentum  = aHit->GetWorldMomentum();
+                Float_t rGlobalMomentumX = (Float_t) globalMomentum.x() / MeV;
+                Float_t rGlobalMomentumY = (Float_t) globalMomentum.y() / MeV;
+                Float_t rGlobalMomentumZ = (Float_t) globalMomentum.z() / MeV;
+                Float_t rGlobalThetaAngle = (Float_t) globalMomentum.theta() / degree;
+                Float_t rGlobalPhiAngle   = (Float_t) globalMomentum.phi() / degree - 90.0;
 
-                originVertexPosition  = aHit->GetOriginVertexPosition();
-                rOriginVertexPositionX      = (Float_t) originVertexPosition.x() / cm;
-                rOriginVertexPositionY      = (Float_t) originVertexPosition.y() / cm;
-                rOriginVertexPositionZ      = (Float_t) originVertexPosition.z() / cm;
+                G4ThreeVector originVertexPosition  = aHit->GetOriginVertexPosition();
+                Float_t rOriginVertexPositionX      = (Float_t) originVertexPosition.x() / cm;
+                Float_t rOriginVertexPositionY      = (Float_t) originVertexPosition.y() / cm;
+                Float_t rOriginVertexPositionZ      = (Float_t) originVertexPosition.z() / cm;
 
 
-                originVertexMomentumDirection = aHit->GetOriginVertexMomentumDirection();
-                rOriginVertexMomentumDirectionX = (Float_t) originVertexMomentumDirection.x();
-                rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
-                rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
-                rOriginVertexPhiAngle   = (Float_t) originVertexMomentumDirection.phi() / degree;
-                rOriginVertexThetaAngle = (Float_t) originVertexMomentumDirection.theta() / degree;
+                G4ThreeVector originVertexMomentumDirection = aHit->GetOriginVertexMomentumDirection();
+                Float_t rOriginVertexMomentumDirectionX = (Float_t) originVertexMomentumDirection.x();
+                Float_t rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
+                Float_t rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
+                Float_t rOriginVertexPhiAngle   = (Float_t) originVertexMomentumDirection.phi() / degree;
+                Float_t rOriginVertexThetaAngle = (Float_t) originVertexMomentumDirection.theta() / degree;
 
-                rOriginVertexKineticEnergy = (Float_t) aHit->GetOriginVertexKineticEnergy() / MeV;
-                rOriginVertexTotalEnergy   = (Float_t) aHit->GetOriginVertexTotalEnergy() / MeV;
+                Float_t rOriginVertexKineticEnergy = (Float_t) aHit->GetOriginVertexKineticEnergy() / MeV;
+                Float_t rOriginVertexTotalEnergy   = (Float_t) aHit->GetOriginVertexTotalEnergy() / MeV;
 
-                rGlobalTime = (Float_t) aHit->GetGlobalTime() / ns;
-                rParticleName = TString(aHit->GetParticleName());
-                rParticleType = (Int_t) aHit->GetParticleType();
+                Float_t rGlobalTime = (Float_t) aHit->GetGlobalTime() / ns;
+                TString rParticleName = TString(aHit->GetParticleName());
+                Int_t rParticleType = (Int_t) aHit->GetParticleType();
 
                 // get total Energy of hit
-                rTotalEnergy     = (Float_t) aHit->GetTotalEnergy() / MeV;
+                Float_t rTotalEnergy     = (Float_t) aHit->GetTotalEnergy() / MeV;
 
                 // get kinetic Energy of hit
-                rKineticEnergy     = (Float_t) aHit->GetKineticEnergy() / MeV;
+                Float_t rKineticEnergy     = (Float_t) aHit->GetKineticEnergy() / MeV;
 
                 //-----------------------------------
                 int iHDCID = aHit->GetHDCID();
@@ -1370,53 +1431,53 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 if (print_GEM_WirePlaneHit) aHit->Print();
 
                 // get local position of hit
-                localPosition  = aHit->GetLocalPosition();
-                rLocalPositionX = (Float_t) localPosition.x() / cm;
-                rLocalPositionY = (Float_t) localPosition.y() / cm;
-                rLocalPositionZ = (Float_t) localPosition.z() / cm;
+                G4ThreeVector localPosition  = aHit->GetLocalPosition();
+                Float_t rLocalPositionX = (Float_t) localPosition.x() / cm;
+                Float_t rLocalPositionY = (Float_t) localPosition.y() / cm;
+                Float_t rLocalPositionZ = (Float_t) localPosition.z() / cm;
 
                 // get world position of hit
-                globalPosition  = aHit->GetWorldPosition();
-                rGlobalPositionX = (Float_t) globalPosition.x() / cm;
-                rGlobalPositionY = (Float_t) globalPosition.y() / cm;
-                rGlobalPositionZ = (Float_t) globalPosition.z() / cm;
+                G4ThreeVector globalPosition  = aHit->GetWorldPosition();
+                Float_t rGlobalPositionX = (Float_t) globalPosition.x() / cm;
+                Float_t rGlobalPositionY = (Float_t) globalPosition.y() / cm;
+                Float_t rGlobalPositionZ = (Float_t) globalPosition.z() / cm;
 
                 // get local Momentum of hit
-                localMomentum  = aHit->GetLocalMomentum();
-                rLocalMomentumX = (Float_t) localMomentum.x() / MeV;
-                rLocalMomentumY = (Float_t) localMomentum.y() / MeV;
-                rLocalMomentumZ = (Float_t) localMomentum.z() / MeV;
+                G4ThreeVector localMomentum = aHit->GetLocalMomentum();
+                Float_t rLocalMomentumX = (Float_t) localMomentum.x() / MeV;
+                Float_t rLocalMomentumY = (Float_t) localMomentum.y() / MeV;
+                Float_t rLocalMomentumZ = (Float_t) localMomentum.z() / MeV;
 
                 // get world Momentum of hit
-                globalMomentum  = aHit->GetWorldMomentum();
-                rGlobalMomentumX = (Float_t) globalMomentum.x() / MeV;
-                rGlobalMomentumY = (Float_t) globalMomentum.y() / MeV;
-                rGlobalMomentumZ = (Float_t) globalMomentum.z() / MeV;
-                rGlobalThetaAngle = globalMomentum.theta() / degree;
-                rGlobalPhiAngle   = globalMomentum.phi() / degree - 90.0;
+                G4ThreeVector globalMomentum  = aHit->GetWorldMomentum();
+                Float_t rGlobalMomentumX = (Float_t) globalMomentum.x() / MeV;
+                Float_t rGlobalMomentumY = (Float_t) globalMomentum.y() / MeV;
+                Float_t rGlobalMomentumZ = (Float_t) globalMomentum.z() / MeV;
+                Float_t rGlobalThetaAngle = globalMomentum.theta() / degree;
+                Float_t rGlobalPhiAngle   = globalMomentum.phi() / degree - 90.0;
 
-                originVertexPosition  = aHit->GetOriginVertexPosition();
-                rOriginVertexPositionX      = (Float_t) originVertexPosition.x() / cm;
-                rOriginVertexPositionY      = (Float_t) originVertexPosition.y() / cm;
-                rOriginVertexPositionZ      = (Float_t) originVertexPosition.z() / cm;
+                G4ThreeVector originVertexPosition  = aHit->GetOriginVertexPosition();
+                Float_t rOriginVertexPositionX      = (Float_t) originVertexPosition.x() / cm;
+                Float_t rOriginVertexPositionY      = (Float_t) originVertexPosition.y() / cm;
+                Float_t rOriginVertexPositionZ      = (Float_t) originVertexPosition.z() / cm;
 
-                originVertexMomentumDirection = aHit->GetOriginVertexMomentumDirection();
-                rOriginVertexMomentumDirectionX = (Float_t) originVertexMomentumDirection.x();
-                rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
-                rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
-                rOriginVertexPhiAngle   = (Float_t) originVertexMomentumDirection.phi() / degree;
-                rOriginVertexThetaAngle = (Float_t) originVertexMomentumDirection.theta() / degree;
+                G4ThreeVector originVertexMomentumDirection = aHit->GetOriginVertexMomentumDirection();
+                Float_t rOriginVertexMomentumDirectionX = (Float_t) originVertexMomentumDirection.x();
+                Float_t rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
+                Float_t rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
+                Float_t rOriginVertexPhiAngle   = (Float_t) originVertexMomentumDirection.phi() / degree;
+                Float_t rOriginVertexThetaAngle = (Float_t) originVertexMomentumDirection.theta() / degree;
 
-                rOriginVertexKineticEnergy = (Float_t) aHit->GetOriginVertexKineticEnergy() / MeV;
-                rOriginVertexTotalEnergy = (Float_t) aHit->GetOriginVertexTotalEnergy() / MeV;
+                Float_t rOriginVertexKineticEnergy = (Float_t) aHit->GetOriginVertexKineticEnergy() / MeV;
+                Float_t rOriginVertexTotalEnergy = (Float_t) aHit->GetOriginVertexTotalEnergy() / MeV;
 
-                rGlobalTime = (Float_t) aHit->GetGlobalTime() / ns;
+                Float_t rGlobalTime = (Float_t) aHit->GetGlobalTime() / ns;
 
                 // get total Energy of hit
-                rtotalEnergy     = (Float_t) aHit->GetTotalEnergy() / MeV;
+                Float_t rtotalEnergy     = (Float_t) aHit->GetTotalEnergy() / MeV;
 
                 // get kinetic Energy of hit
-                rkineticEnergy     = (Float_t) aHit->GetKineticEnergy() / MeV;
+                Float_t rkineticEnergy     = (Float_t) aHit->GetKineticEnergy() / MeV;
 
                 //-----------------------------------
 
@@ -1543,83 +1604,84 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         //===========================================================
 
         if (n_hitTarget >0) {
+            // initialize deposited energy
+            Float_t rTotalDepositedEnergy = 0.0;
+
             //--- loop over hits
             for (int i1=0;i1<n_hitTarget;i1++) {
 
                 QweakSimTarget_DetectorHit* aHit = (*TargetDetector_HC)[i1];
 
                 //--- track ID
-                rTrackID = (Float_t) aHit->GetTrackID();
+                Float_t rTrackID = (Float_t) aHit->GetTrackID();
 
                 //--- particle name & type
-                rParticleName = TString(aHit->GetParticleName());
-                rParticleType = (Int_t) aHit->GetParticleType();
+                TString rParticleName = TString(aHit->GetParticleName());
+                Int_t rParticleType = (Int_t) aHit->GetParticleType();
 
                 //--- get global time of hit
-                rGlobalTime = (Float_t) aHit->GetGlobalTime() / ns;
+                Float_t rGlobalTime = (Float_t) aHit->GetGlobalTime() / ns;
 
                 //--- get world position of hit
-                globalPosition  = aHit->GetWorldPosition();
-                rGlobalPositionX = (Float_t) globalPosition.x() / cm;
-                rGlobalPositionY = (Float_t) globalPosition.y() / cm;
-                rGlobalPositionZ = (Float_t) globalPosition.z() / cm;
+                G4ThreeVector globalPosition  = aHit->GetWorldPosition();
+                Float_t rGlobalPositionX = (Float_t) globalPosition.x() / cm;
+                Float_t rGlobalPositionY = (Float_t) globalPosition.y() / cm;
+                Float_t rGlobalPositionZ = (Float_t) globalPosition.z() / cm;
 
                 //--- get local position of hit
-                localPosition  = aHit->GetLocalPosition();
-                rLocalPositionX = (Float_t) localPosition.x() / cm;
-                rLocalPositionY = (Float_t) localPosition.y() / cm;
-                rLocalPositionZ = (Float_t) localPosition.z() / cm;
+                G4ThreeVector localPosition  = aHit->GetLocalPosition();
+                Float_t rLocalPositionX = (Float_t) localPosition.x() / cm;
+                Float_t rLocalPositionY = (Float_t) localPosition.y() / cm;
+                Float_t rLocalPositionZ = (Float_t) localPosition.z() / cm;
 
                 //--- get origin vertex position
-                originVertexPosition  = aHit->GetOriginVertexPosition();
-                rOriginVertexPositionX = (Float_t) originVertexPosition.x() / cm;
-                rOriginVertexPositionY = (Float_t) originVertexPosition.y() / cm;
-                rOriginVertexPositionZ = (Float_t) originVertexPosition.z() / cm;
+                G4ThreeVector originVertexPosition  = aHit->GetOriginVertexPosition();
+                Float_t rOriginVertexPositionX = (Float_t) originVertexPosition.x() / cm;
+                Float_t rOriginVertexPositionY = (Float_t) originVertexPosition.y() / cm;
+                Float_t rOriginVertexPositionZ = (Float_t) originVertexPosition.z() / cm;
 
                 //--- get world momentum of hit
-                globalMomentum  = aHit->GetWorldMomentum();
-                rGlobalMomentumX = (Float_t) globalMomentum.x() / MeV;
-                rGlobalMomentumY = (Float_t) globalMomentum.y() / MeV;
-                rGlobalMomentumZ = (Float_t) globalMomentum.z() / MeV;
-
-                //--- get local momentum of hit
-                localMomentum  = aHit->GetLocalMomentum();
-                rLocalMomentumX = (Float_t) localMomentum.x() / MeV;
-                rLocalMomentumY = (Float_t) localMomentum.y() / MeV;
-                rLocalMomentumZ = (Float_t) localMomentum.z() / MeV;                //--- store particle name & type
-                analysis->fRootEvent->PMTOnly.Detector.StoreParticleName(rParticleName);
-                analysis->fRootEvent->PMTOnly.Detector.StoreParticleType(rParticleType);
-
-                //--- get local vertex momentum direction of hit
-                localVertexMomentumDirection = aHit->GetMomentumDirection();
-                rLocalVertexMomentumDirectionX = (Float_t) localVertexMomentumDirection.x();
-                rLocalVertexMomentumDirectionY = (Float_t) localVertexMomentumDirection.y();
-                rLocalVertexMomentumDirectionZ = (Float_t) localVertexMomentumDirection.z();
-
-                //--- get origin vertex momentum direction of hit
-                originVertexMomentumDirection = aHit->GetOriginVertexMomentumDirection();
-                rOriginVertexMomentumDirectionX = (Float_t) originVertexMomentumDirection.x();
-                rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
-                rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
-
-                //--- get origin vertex theta & phi angle
-                rOriginVertexThetaAngle = (Float_t) originVertexMomentumDirection.theta() / degree;
-                rOriginVertexPhiAngle   = (Float_t) originVertexMomentumDirection.phi() / degree;
-
-                //--- get origin vertex kinetic energy & total energy
-                rOriginVertexKineticEnergy = (Float_t ) aHit->GetOriginVertexKineticEnergy() / MeV;
-                rOriginVertexTotalEnergy   = (Float_t ) aHit->GetOriginVertexTotalEnergy() / MeV;
-
-                //--- get total energy & total energy of hit
-                rKineticEnergy = (Float_t) aHit->GetKineticEnergy() / MeV;
-                rTotalEnergy = (Float_t) aHit->GetTotalEnergy() / MeV;
+                G4ThreeVector globalMomentum  = aHit->GetWorldMomentum();
+                //Float_t rGlobalMomentumX = (Float_t) globalMomentum.x() / MeV;
+                //Float_t rGlobalMomentumY = (Float_t) globalMomentum.y() / MeV;
+                //Float_t rGlobalMomentumZ = (Float_t) globalMomentum.z() / MeV;
 
                 //--- get global theta & phi angle
-                rGlobalThetaAngle = (Float_t) globalMomentum.theta() / degree;
-                rGlobalPhiAngle   = (Float_t) globalMomentum.phi() / degree - 90.0;
+                Float_t rGlobalThetaAngle = (Float_t) globalMomentum.theta() / degree;
+                Float_t rGlobalPhiAngle   = (Float_t) globalMomentum.phi() / degree - 90.0;
+
+                //--- get local momentum of hit
+                //G4ThreeVector localMomentum = aHit->GetLocalMomentum();
+                //Float_t rLocalMomentumX = (Float_t) localMomentum.x() / MeV;
+                //Float_t rLocalMomentumY = (Float_t) localMomentum.y() / MeV;
+                //Float_t rLocalMomentumZ = (Float_t) localMomentum.z() / MeV;
+
+                //--- get local vertex momentum direction of hit
+                G4ThreeVector localVertexMomentumDirection = aHit->GetMomentumDirection();
+                Float_t rLocalVertexMomentumDirectionX = (Float_t) localVertexMomentumDirection.x();
+                Float_t rLocalVertexMomentumDirectionY = (Float_t) localVertexMomentumDirection.y();
+                Float_t rLocalVertexMomentumDirectionZ = (Float_t) localVertexMomentumDirection.z();
+
+                //--- get origin vertex momentum direction of hit
+                G4ThreeVector originVertexMomentumDirection = aHit->GetOriginVertexMomentumDirection();
+                Float_t rOriginVertexMomentumDirectionX = (Float_t) originVertexMomentumDirection.x();
+                Float_t rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
+                Float_t rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
+
+                //--- get origin vertex theta & phi angle
+                Float_t rOriginVertexThetaAngle = (Float_t) originVertexMomentumDirection.theta() / degree;
+                Float_t rOriginVertexPhiAngle   = (Float_t) originVertexMomentumDirection.phi() / degree;
+
+                //--- get origin vertex kinetic energy & total energy
+                Float_t rOriginVertexKineticEnergy = (Float_t ) aHit->GetOriginVertexKineticEnergy() / MeV;
+                Float_t rOriginVertexTotalEnergy   = (Float_t ) aHit->GetOriginVertexTotalEnergy() / MeV;
+
+                //--- get total energy & total energy of hit
+                Float_t rKineticEnergy = (Float_t) aHit->GetKineticEnergy() / MeV;
+                Float_t rTotalEnergy = (Float_t) aHit->GetTotalEnergy() / MeV;
 
                 //--- get PMTOnly deposited energy
-                rDepositedEnergy = (Float_t) aHit->GetHitDepositedEnergy() / MeV;
+                Float_t rDepositedEnergy = (Float_t) aHit->GetHitDepositedEnergy() / MeV;
                 rTotalDepositedEnergy += rDepositedEnergy;
 
                 //--- deteremine elastic cross section
@@ -1646,7 +1708,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 //--- store global time of hit
                 analysis->fRootEvent->Target.Detector.StoreGlobalTimeOfHit(rGlobalTime);
 
-                //--- mark PMTOnly detector as been hit
+                //--- mark target detector as been hit
                 analysis->fRootEvent->Target.Detector.StoreDetectorHasBeenHit(5);
 
                 //--- store global position
@@ -1690,7 +1752,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 analysis->fRootEvent->Target.Detector.StoreGlobalThetaAngle(rGlobalThetaAngle);
                 analysis->fRootEvent->Target.Detector.StoreGlobalPhiAngle(rGlobalPhiAngle);
 
-                //--- store PMTOnly deposited energy
+                //--- store target deposited energy
                 analysis->fRootEvent->Target.Detector.StoreDepositedEnergy(rDepositedEnergy);
 
                 //--- store elastic cross section
@@ -1702,7 +1764,6 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 
             // Put the total energy into the thing.
             analysis->fRootEvent->Target.Detector.StoreTotalEnergyDeposit(rTotalDepositedEnergy);
-            rTotalDepositedEnergy = 0.0;
 
         } // end    if (n_hitTarget >0)
 
@@ -1714,6 +1775,8 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         //===========================================================
 
         if (n_hitTriggerScintillator >0) {
+            // initialize deposited energy
+            Float_t rTotalDepositedEnergy = 0.0;
 
             // loop over hits
             for (int i1=0;i1<n_hitTriggerScintillator;i1++) {
@@ -1723,53 +1786,55 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 if (print_TriggerScintillator_DetectorHit) aHit->Print();
 
                 // get local position of hit
-                localPosition  = aHit->GetLocalPosition();
-                rLocalPositionX = (Float_t) localPosition.x() / cm;
-                rLocalPositionY = (Float_t) localPosition.y() / cm;
-                rLocalPositionZ = (Float_t) localPosition.z() / cm;
+                G4ThreeVector localPosition  = aHit->GetLocalPosition();
+                Float_t rLocalPositionX = (Float_t) localPosition.x() / cm;
+                Float_t rLocalPositionY = (Float_t) localPosition.y() / cm;
+                Float_t rLocalPositionZ = (Float_t) localPosition.z() / cm;
 
                 // get world position of hit
-                globalPosition  = aHit->GetWorldPosition();
-                rGlobalPositionX = (Float_t) globalPosition.x() / cm;
-                rGlobalPositionY = (Float_t) globalPosition.y() / cm;
-                rGlobalPositionZ = (Float_t) globalPosition.z() / cm;
+                G4ThreeVector globalPosition  = aHit->GetWorldPosition();
+                Float_t rGlobalPositionX = (Float_t) globalPosition.x() / cm;
+                Float_t rGlobalPositionY = (Float_t) globalPosition.y() / cm;
+                Float_t rGlobalPositionZ = (Float_t) globalPosition.z() / cm;
 
                 // get local Momentum of hit
-                localMomentum  = aHit->GetLocalMomentum();
-                rLocalMomentumX = (Float_t) localMomentum.x() / MeV;
-                rLocalMomentumY = (Float_t) localMomentum.y() / MeV;
-                rLocalMomentumZ = (Float_t) localMomentum.z() / MeV;
+                //G4ThreeVector localMomentum = aHit->GetLocalMomentum();
+                //Float_t rLocalMomentumX = (Float_t) localMomentum.x() / MeV;
+                //Float_t rLocalMomentumY = (Float_t) localMomentum.y() / MeV;
+                //Float_t rLocalMomentumZ = (Float_t) localMomentum.z() / MeV;
 
                 // get world Momentum of hit
-                globalMomentum  = aHit->GetWorldMomentum();
-                rGlobalMomentumX = (Float_t) globalMomentum.x() / MeV;
-                rGlobalMomentumY = (Float_t) globalMomentum.y() / MeV;
-                rGlobalMomentumZ = (Float_t) globalMomentum.z() / MeV;
-                rGlobalThetaAngle = (Float_t) globalMomentum.theta() / degree;
-                rGlobalPhiAngle   = (Float_t) globalMomentum.phi() / degree - 90.0;
+                G4ThreeVector globalMomentum  = aHit->GetWorldMomentum();
+                //Float_t rGlobalMomentumX = (Float_t) globalMomentum.x() / MeV;
+                //Float_t rGlobalMomentumY = (Float_t) globalMomentum.y() / MeV;
+                //Float_t rGlobalMomentumZ = (Float_t) globalMomentum.z() / MeV;
 
-                originVertexPosition  = aHit->GetOriginVertexPosition();
-                rOriginVertexPositionX      = (Float_t) originVertexPosition.x() / cm;
-                rOriginVertexPositionY      = (Float_t) originVertexPosition.y() / cm;
-                rOriginVertexPositionZ      = (Float_t) originVertexPosition.z() / cm;
+                // get global theta & phi angle
+                Float_t rGlobalThetaAngle = (Float_t) globalMomentum.theta() / degree;
+                Float_t rGlobalPhiAngle   = (Float_t) globalMomentum.phi() / degree - 90.0;
 
-                originVertexMomentumDirection = aHit->GetOriginVertexMomentumDirection();
-                rOriginVertexMomentumDirectionX = (Float_t) originVertexMomentumDirection.x();
-                rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
-                rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
-                rOriginVertexPhiAngle   = (Float_t) originVertexMomentumDirection.phi() / degree;
-                rOriginVertexThetaAngle = (Float_t) originVertexMomentumDirection.theta() / degree;
+                G4ThreeVector originVertexPosition  = aHit->GetOriginVertexPosition();
+                Float_t rOriginVertexPositionX      = (Float_t) originVertexPosition.x() / cm;
+                Float_t rOriginVertexPositionY      = (Float_t) originVertexPosition.y() / cm;
+                Float_t rOriginVertexPositionZ      = (Float_t) originVertexPosition.z() / cm;
 
-                rOriginVertexKineticEnergy =  (Float_t) aHit->GetOriginVertexKineticEnergy() / MeV;
-                rOriginVertexTotalEnergy = (Float_t) aHit->GetOriginVertexTotalEnergy() / MeV;
+                G4ThreeVector originVertexMomentumDirection = aHit->GetOriginVertexMomentumDirection();
+                Float_t rOriginVertexMomentumDirectionX = (Float_t) originVertexMomentumDirection.x();
+                Float_t rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
+                Float_t rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
+                Float_t rOriginVertexPhiAngle   = (Float_t) originVertexMomentumDirection.phi() / degree;
+                Float_t rOriginVertexThetaAngle = (Float_t) originVertexMomentumDirection.theta() / degree;
 
-                rGlobalTime = (Float_t) aHit->GetGlobalTime() / ns;
-                rParticleName = TString(aHit->GetParticleName());
-                rParticleType = (Int_t) aHit->GetParticleType();
+                Float_t rOriginVertexKineticEnergy =  (Float_t) aHit->GetOriginVertexKineticEnergy() / MeV;
+                Float_t rOriginVertexTotalEnergy = (Float_t) aHit->GetOriginVertexTotalEnergy() / MeV;
+
+                Float_t rGlobalTime = (Float_t) aHit->GetGlobalTime() / ns;
+                TString rParticleName = TString(aHit->GetParticleName());
+                Int_t rParticleType = (Int_t) aHit->GetParticleType();
                 
                 //--- get TriggerScintillator deposited energy
-                TSDepositedEnergy = (Float_t) aHit->GetHitDepositedEnergy() / MeV;				
-                TSTotalDepositedEnergy += TSDepositedEnergy;
+                Float_t rDepositedEnergy = (Float_t) aHit->GetHitDepositedEnergy() / MeV;
+                rTotalDepositedEnergy += rDepositedEnergy;
 
                 // mark TriggerScintillator detector as been hit
                 analysis->fRootEvent->TriggerScintillator.Detector.StoreDetectorHasBeenHit(5);
@@ -1808,13 +1873,12 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 analysis->fRootEvent->TriggerScintillator.Detector.StoreGlobalThetaAngle(rGlobalThetaAngle);
                 
                 // Store Energy deposited per hit
-                analysis->fRootEvent->TriggerScintillator.Detector.StoreDepositedEnergy(TSDepositedEnergy);   
+                analysis->fRootEvent->TriggerScintillator.Detector.StoreDepositedEnergy(rDepositedEnergy);
 
             } // end  for(int i1=0;i1<n_hitTriggerScintillator;i1++)
             
             // Store total deposited energy
-            analysis->fRootEvent->TriggerScintillator.Detector.StoreTotalEnergyDeposit(TSTotalDepositedEnergy);
-            TSTotalDepositedEnergy = 0.0;
+            analysis->fRootEvent->TriggerScintillator.Detector.StoreTotalEnergyDeposit(rTotalDepositedEnergy);
 
         } // end    if (n_hitTriggerScintillator >0)
 
@@ -1832,100 +1896,89 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
             for (int i1=0;i1<n_hitLumi;i1++) {
 				
                 QweakSimLumi_DetectorHit* aHit = (*LumiDetector_HC)[i1];
-				
-                //aHit->Print();
-				
-                //--- primary event number --- Done in previous code
-                //G4int PrimaryEventNumber = myUserInfo->GetPrimaryEventNumber();
-				
+
                 //--- track ID
-                rTrackID = (Float_t) aHit->GetTrackID();
+                Float_t rTrackID = (Float_t) aHit->GetTrackID();
 				
                 //--- particle name & type
-                rParticleName = TString(aHit->GetParticleName());
-                rParticleType = (Int_t) aHit->GetParticleType();
+                TString rParticleName = TString(aHit->GetParticleName());
+                Int_t rParticleType = (Int_t) aHit->GetParticleType();
 				
                 //--- get global time of hit
-                rGlobalTime = (Float_t) aHit->GetGlobalTime() / ns;
+                Float_t rGlobalTime = (Float_t) aHit->GetGlobalTime() / ns;
 				
                 //--- GetHasBeenHit();
                 //GetEdgeEventFlag();
                 //n_hitLumi <---> GetNbOfHits();
 				
                 //--- get world position of hit
-                globalPosition  = aHit->GetWorldPosition();
-                rGlobalPositionX = (Float_t) globalPosition.x() / cm;
-                rGlobalPositionY = (Float_t) globalPosition.y() / cm;
-                rGlobalPositionZ = (Float_t) globalPosition.z() / cm;
+                G4ThreeVector globalPosition  = aHit->GetWorldPosition();
+                Float_t rGlobalPositionX = (Float_t) globalPosition.x() / cm;
+                Float_t rGlobalPositionY = (Float_t) globalPosition.y() / cm;
+                Float_t rGlobalPositionZ = (Float_t) globalPosition.z() / cm;
 				
                 //--- get local position of hit
-                localPosition  = aHit->GetLocalPosition();
-                rLocalPositionX = (Float_t) localPosition.x() / cm;
-                rLocalPositionY = (Float_t) localPosition.y() / cm;
-                rLocalPositionZ = (Float_t) localPosition.z() / cm;
+                G4ThreeVector localPosition  = aHit->GetLocalPosition();
+                Float_t rLocalPositionX = (Float_t) localPosition.x() / cm;
+                Float_t rLocalPositionY = (Float_t) localPosition.y() / cm;
+                Float_t rLocalPositionZ = (Float_t) localPosition.z() / cm;
 				
                 //--- get local exit position of hit
-                //localExitPosition = aHit->GetLocalExitPosition();
-                //rLocalExitPositionX = (Float_t) localExitPosition.x() / cm;
-                //rLocalExitPositionY = (Float_t) localExitPosition.y() / cm;
-                //rLocalExitPositionZ = (Float_t) localExitPosition.z() / cm;
+                //G4ThreeVector localExitPosition = aHit->GetLocalExitPosition();
+                //Float_t rLocalExitPositionX = (Float_t) localExitPosition.x() / cm;
+                //Float_t rLocalExitPositionY = (Float_t) localExitPosition.y() / cm;
+                //Float_t rLocalExitPositionZ = (Float_t) localExitPosition.z() / cm;
 				
                 //--- get origin vertex position
-                originVertexPosition  = aHit->GetOriginVertexPosition(); 
-                rOriginVertexPositionX = (Float_t) originVertexPosition.x() / cm;
-                rOriginVertexPositionY = (Float_t) originVertexPosition.y() / cm;
-                rOriginVertexPositionZ = (Float_t) originVertexPosition.z() / cm;
+                G4ThreeVector originVertexPosition  = aHit->GetOriginVertexPosition();
+                Float_t rOriginVertexPositionX = (Float_t) originVertexPosition.x() / cm;
+                Float_t rOriginVertexPositionY = (Float_t) originVertexPosition.y() / cm;
+                Float_t rOriginVertexPositionZ = (Float_t) originVertexPosition.z() / cm;
 				
                 //--- get world momentum of hit
-                globalMomentum  = aHit->GetWorldMomentum();
-                rGlobalMomentumX = (Float_t) globalMomentum.x() / MeV;
-                rGlobalMomentumY = (Float_t) globalMomentum.y() / MeV;
-                rGlobalMomentumZ = (Float_t) globalMomentum.z() / MeV;
+                G4ThreeVector globalMomentum  = aHit->GetWorldMomentum();
+                //Float_t rGlobalMomentumX = (Float_t) globalMomentum.x() / MeV;
+                //Float_t rGlobalMomentumY = (Float_t) globalMomentum.y() / MeV;
+                //Float_t rGlobalMomentumZ = (Float_t) globalMomentum.z() / MeV;
+
+                //--- get global theta & phi angle
+                Float_t rGlobalThetaAngle = (Float_t) globalMomentum.theta() / degree;
+                Float_t rGlobalPhiAngle   = (Float_t) globalMomentum.phi() / degree - 90.0;
 				
                 //--- get local momentum of hit  
-                localMomentum  = aHit->GetLocalMomentum();
-                rLocalMomentumX = (Float_t) localMomentum.x() / MeV;
-                rLocalMomentumY = (Float_t) localMomentum.y() / MeV;
-                rLocalMomentumZ = (Float_t) localMomentum.z() / MeV;                //--- store particle name & type
-                analysis->fRootEvent->Lumi.Detector.StoreParticleName(rParticleName);
-                analysis->fRootEvent->Lumi.Detector.StoreParticleType(rParticleType);
+                //G4ThreeVector localMomentum = aHit->GetLocalMomentum();
+                //Float_t rLocalMomentumX = (Float_t) localMomentum.x() / MeV;
+                //Float_t rLocalMomentumY = (Float_t) localMomentum.y() / MeV;
+                //Float_t rLocalMomentumZ = (Float_t) localMomentum.z() / MeV;
 				
                 //--- get local vertex momentum direction of hit
-                localVertexMomentumDirection = aHit->GetMomentumDirection();
-                rLocalVertexMomentumDirectionX = (Float_t) localVertexMomentumDirection.x();
-                rLocalVertexMomentumDirectionY = (Float_t) localVertexMomentumDirection.y();
-                rLocalVertexMomentumDirectionZ = (Float_t) localVertexMomentumDirection.z();
+                G4ThreeVector localVertexMomentumDirection = aHit->GetMomentumDirection();
+                Float_t rLocalVertexMomentumDirectionX = (Float_t) localVertexMomentumDirection.x();
+                Float_t rLocalVertexMomentumDirectionY = (Float_t) localVertexMomentumDirection.y();
+                Float_t rLocalVertexMomentumDirectionZ = (Float_t) localVertexMomentumDirection.z();
 				
                 //--- get origin vertex momentum direction of hit
-                originVertexMomentumDirection = aHit->GetOriginVertexMomentumDirection();
-                rOriginVertexMomentumDirectionX = (Float_t) originVertexMomentumDirection.x();
-                rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
-                rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
+                G4ThreeVector originVertexMomentumDirection = aHit->GetOriginVertexMomentumDirection();
+                Float_t rOriginVertexMomentumDirectionX = (Float_t) originVertexMomentumDirection.x();
+                Float_t rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
+                Float_t rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
 				
                 //--- get origin vertex theta & phi angle
-                rOriginVertexThetaAngle = (Float_t) originVertexMomentumDirection.theta() / degree;
-                rOriginVertexPhiAngle   = (Float_t) originVertexMomentumDirection.phi() / degree;
+                Float_t rOriginVertexThetaAngle = (Float_t) originVertexMomentumDirection.theta() / degree;
+                Float_t rOriginVertexPhiAngle   = (Float_t) originVertexMomentumDirection.phi() / degree;
 				
                 //--- get origin vertex kinetic energy & total energy
-                rOriginVertexKineticEnergy = (Float_t ) aHit->GetOriginVertexKineticEnergy() / MeV;
-                rOriginVertexTotalEnergy   = (Float_t ) aHit->GetOriginVertexTotalEnergy() / MeV;
+                Float_t rOriginVertexKineticEnergy = (Float_t ) aHit->GetOriginVertexKineticEnergy() / MeV;
+                Float_t rOriginVertexTotalEnergy   = (Float_t ) aHit->GetOriginVertexTotalEnergy() / MeV;
 				
                 //--- get total energy & total energy of hit
-                rKineticEnergy = (Float_t) aHit->GetKineticEnergy() / MeV;
-                rTotalEnergy = (Float_t) aHit->GetTotalEnergy() / MeV;
-				
-                //rPrimaryQ2 = (Float_t) aHit->GetPrimaryQ2();
-                //rCrossSection = (Float_t) aHit->GetCrossSection();
-                //rCrossSectionWeight = (Float_t) aHit->GetCrossSectionWeight();
-				
-                //--- get global theta & phi angle
-                rGlobalThetaAngle = (Float_t) globalMomentum.theta() / degree;
-                rGlobalPhiAngle   = (Float_t) globalMomentum.phi() / degree - 90.0;
+                Float_t rKineticEnergy = (Float_t) aHit->GetKineticEnergy() / MeV;
+                Float_t rTotalEnergy = (Float_t) aHit->GetTotalEnergy() / MeV;
 				
                 //--- get Lumi deposited energy
-                rDepositedEnergy = (Float_t) aHit->GetHitDepositedEnergy() / MeV;				
+                Float_t rDepositedEnergy = (Float_t) aHit->GetHitDepositedEnergy() / MeV;
                 //--------------------------------------------------------------------------------------------
-				
+
                 //--- store Primary Event Number
                 analysis->fRootEvent->Lumi.Detector.StorePrimaryEventNumber((Int_t) PrimaryEventNumber);
 				
@@ -1985,16 +2038,12 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 //--- store local vertex kinetic & total energy
                 analysis->fRootEvent->Lumi.Detector.StoreDetectorLocalVertexKineticEnergy(rKineticEnergy);
                 analysis->fRootEvent->Lumi.Detector.StoreDetectorLocalVertexTotalEnergy(rTotalEnergy);
-				
-                //analysis->fRootEvent->Lumi.Detector.StorePrimaryQ2(rPrimaryQ2);
-                //analysis->fRootEvent->Lumi.Detector.StoreCrossSection(rCrossSection);
-                //analysis->fRootEvent->Lumi.Detector.StoreCrossSectionWeight(rCrossSectionWeight);		
-				
+
                 //--- store global track theta & phi angle
                 analysis->fRootEvent->Lumi.Detector.StoreGlobalThetaAngle(rGlobalThetaAngle);
                 analysis->fRootEvent->Lumi.Detector.StoreGlobalPhiAngle(rGlobalPhiAngle);
 				
-                //--- sotre Lumi deposited energy
+                //--- store Lumi deposited energy
                 analysis->fRootEvent->Lumi.Detector.StoreDepositedEnergy(rDepositedEnergy);
 		// -- TotalDepositedEnergy is evaluated in UserLumi class
 
@@ -2017,100 +2066,89 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
             for (int i1=0;i1<n_hitLeadGlass;i1++) {
 				
                 QweakSimLeadGlass_DetectorHit* aHit = (*LeadGlassDetector_HC)[i1];
-				
-                //aHit->Print();
-				
-                //--- primary event number --- Done in previous code
-                //G4int PrimaryEventNumber = myUserInfo->GetPrimaryEventNumber();
-				
+
                 //--- track ID
-                rTrackID = (Float_t) aHit->GetTrackID();
+                Float_t rTrackID = (Float_t) aHit->GetTrackID();
 				
                 //--- particle name & type
-                rParticleName = TString(aHit->GetParticleName());
-                rParticleType = (Int_t) aHit->GetParticleType();
+                TString rParticleName = TString(aHit->GetParticleName());
+                Int_t rParticleType = (Int_t) aHit->GetParticleType();
 				
                 //--- get global time of hit
-                rGlobalTime = (Float_t) aHit->GetGlobalTime() / ns;
+                Float_t rGlobalTime = (Float_t) aHit->GetGlobalTime() / ns;
 				
                 //--- GetHasBeenHit();
                 //GetEdgeEventFlag();
                 //n_hitLeadGlass <---> GetNbOfHits();
 				
                 //--- get world position of hit
-                globalPosition  = aHit->GetWorldPosition();
-                rGlobalPositionX = (Float_t) globalPosition.x() / cm;
-                rGlobalPositionY = (Float_t) globalPosition.y() / cm;
-                rGlobalPositionZ = (Float_t) globalPosition.z() / cm;
+                G4ThreeVector globalPosition  = aHit->GetWorldPosition();
+                Float_t rGlobalPositionX = (Float_t) globalPosition.x() / cm;
+                Float_t rGlobalPositionY = (Float_t) globalPosition.y() / cm;
+                Float_t rGlobalPositionZ = (Float_t) globalPosition.z() / cm;
 				
                 //--- get local position of hit
-                localPosition  = aHit->GetLocalPosition();
-                rLocalPositionX = (Float_t) localPosition.x() / cm;
-                rLocalPositionY = (Float_t) localPosition.y() / cm;
-                rLocalPositionZ = (Float_t) localPosition.z() / cm;
+                G4ThreeVector localPosition  = aHit->GetLocalPosition();
+                Float_t rLocalPositionX = (Float_t) localPosition.x() / cm;
+                Float_t rLocalPositionY = (Float_t) localPosition.y() / cm;
+                Float_t rLocalPositionZ = (Float_t) localPosition.z() / cm;
 				
                 //--- get local exit position of hit
-                //localExitPosition = aHit->GetLocalExitPosition();
-                //rLocalExitPositionX = (Float_t) localExitPosition.x() / cm;
-                //rLocalExitPositionY = (Float_t) localExitPosition.y() / cm;
-                //rLocalExitPositionZ = (Float_t) localExitPosition.z() / cm;
+                //G4ThreeVector localExitPosition = aHit->GetLocalExitPosition();
+                //Float_t rLocalExitPositionX = (Float_t) localExitPosition.x() / cm;
+                //Float_t rLocalExitPositionY = (Float_t) localExitPosition.y() / cm;
+                //Float_t rLocalExitPositionZ = (Float_t) localExitPosition.z() / cm;
 				
                 //--- get origin vertex position
-                originVertexPosition  = aHit->GetOriginVertexPosition(); 
-                rOriginVertexPositionX = (Float_t) originVertexPosition.x() / cm;
-                rOriginVertexPositionY = (Float_t) originVertexPosition.y() / cm;
-                rOriginVertexPositionZ = (Float_t) originVertexPosition.z() / cm;
+                G4ThreeVector originVertexPosition  = aHit->GetOriginVertexPosition();
+                Float_t rOriginVertexPositionX = (Float_t) originVertexPosition.x() / cm;
+                Float_t rOriginVertexPositionY = (Float_t) originVertexPosition.y() / cm;
+                Float_t rOriginVertexPositionZ = (Float_t) originVertexPosition.z() / cm;
 				
                 //--- get world momentum of hit
-                globalMomentum  = aHit->GetWorldMomentum();
-                rGlobalMomentumX = (Float_t) globalMomentum.x() / MeV;
-                rGlobalMomentumY = (Float_t) globalMomentum.y() / MeV;
-                rGlobalMomentumZ = (Float_t) globalMomentum.z() / MeV;
-				
-                //--- get local momentum of hit  
-                localMomentum  = aHit->GetLocalMomentum();
-                rLocalMomentumX = (Float_t) localMomentum.x() / MeV;
-                rLocalMomentumY = (Float_t) localMomentum.y() / MeV;
-                rLocalMomentumZ = (Float_t) localMomentum.z() / MeV;                //--- store particle name & type
-                analysis->fRootEvent->LeadGlass.Detector.StoreParticleName(rParticleName);
-                analysis->fRootEvent->LeadGlass.Detector.StoreParticleType(rParticleType);
-				
-                //--- get local vertex momentum direction of hit
-                localVertexMomentumDirection = aHit->GetMomentumDirection();
-                rLocalVertexMomentumDirectionX = (Float_t) localVertexMomentumDirection.x();
-                rLocalVertexMomentumDirectionY = (Float_t) localVertexMomentumDirection.y();
-                rLocalVertexMomentumDirectionZ = (Float_t) localVertexMomentumDirection.z();
-				
-                //--- get origin vertex momentum direction of hit
-                originVertexMomentumDirection = aHit->GetOriginVertexMomentumDirection();
-                rOriginVertexMomentumDirectionX = (Float_t) originVertexMomentumDirection.x();
-                rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
-                rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
-				
-                //--- get origin vertex theta & phi angle
-                rOriginVertexThetaAngle = (Float_t) originVertexMomentumDirection.theta() / degree;
-                rOriginVertexPhiAngle   = (Float_t) originVertexMomentumDirection.phi() / degree;
-				
-                //--- get origin vertex kinetic energy & total energy
-                rOriginVertexKineticEnergy = (Float_t ) aHit->GetOriginVertexKineticEnergy() / MeV;
-                rOriginVertexTotalEnergy   = (Float_t ) aHit->GetOriginVertexTotalEnergy() / MeV;
-				
-                //--- get total energy & total energy of hit
-                rKineticEnergy = (Float_t) aHit->GetKineticEnergy() / MeV;
-                rTotalEnergy = (Float_t) aHit->GetTotalEnergy() / MeV;
-				
-                //rPrimaryQ2 = (Float_t) aHit->GetPrimaryQ2();
-                //rCrossSection = (Float_t) aHit->GetCrossSection();
-                //rCrossSectionWeight = (Float_t) aHit->GetCrossSectionWeight();
+                G4ThreeVector globalMomentum  = aHit->GetWorldMomentum();
+                //Float_t rGlobalMomentumX = (Float_t) globalMomentum.x() / MeV;
+                //Float_t rGlobalMomentumY = (Float_t) globalMomentum.y() / MeV;
+                //Float_t rGlobalMomentumZ = (Float_t) globalMomentum.z() / MeV;
 				
                 //--- get global theta & phi angle
-                rGlobalThetaAngle = (Float_t) globalMomentum.theta() / degree;
-                rGlobalPhiAngle   = (Float_t) globalMomentum.phi() / degree - 90.0;
+                Float_t rGlobalThetaAngle = (Float_t) globalMomentum.theta() / degree;
+                Float_t rGlobalPhiAngle   = (Float_t) globalMomentum.phi() / degree - 90.0;
+
+                //--- get local momentum of hit  
+                //G4ThreeVector localMomentum = aHit->GetLocalMomentum();
+                //Float_t rLocalMomentumX = (Float_t) localMomentum.x() / MeV;
+                //Float_t rLocalMomentumY = (Float_t) localMomentum.y() / MeV;
+                //Float_t rLocalMomentumZ = (Float_t) localMomentum.z() / MeV;
 				
+                //--- get local vertex momentum direction of hit
+                G4ThreeVector localVertexMomentumDirection = aHit->GetMomentumDirection();
+                Float_t rLocalVertexMomentumDirectionX = (Float_t) localVertexMomentumDirection.x();
+                Float_t rLocalVertexMomentumDirectionY = (Float_t) localVertexMomentumDirection.y();
+                Float_t rLocalVertexMomentumDirectionZ = (Float_t) localVertexMomentumDirection.z();
+				
+                //--- get origin vertex momentum direction of hit
+                G4ThreeVector originVertexMomentumDirection = aHit->GetOriginVertexMomentumDirection();
+                Float_t rOriginVertexMomentumDirectionX = (Float_t) originVertexMomentumDirection.x();
+                Float_t rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
+                Float_t rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
+				
+                //--- get origin vertex theta & phi angle
+                Float_t rOriginVertexThetaAngle = (Float_t) originVertexMomentumDirection.theta() / degree;
+                Float_t rOriginVertexPhiAngle   = (Float_t) originVertexMomentumDirection.phi() / degree;
+				
+                //--- get origin vertex kinetic energy & total energy
+                Float_t rOriginVertexKineticEnergy = (Float_t ) aHit->GetOriginVertexKineticEnergy() / MeV;
+                Float_t rOriginVertexTotalEnergy   = (Float_t ) aHit->GetOriginVertexTotalEnergy() / MeV;
+				
+                //--- get total energy & total energy of hit
+                Float_t rKineticEnergy = (Float_t) aHit->GetKineticEnergy() / MeV;
+                Float_t rTotalEnergy = (Float_t) aHit->GetTotalEnergy() / MeV;
+
                 //--- get LeadGlass deposited energy
-                rDepositedEnergy = (Float_t) aHit->GetHitDepositedEnergy() / MeV;				
+                Float_t rDepositedEnergy = (Float_t) aHit->GetHitDepositedEnergy() / MeV;
                 //--------------------------------------------------------------------------------------------
-				
+
                 //--- store Primary Event Number
                 analysis->fRootEvent->LeadGlass.Detector.StorePrimaryEventNumber((Int_t) PrimaryEventNumber);
 				
@@ -2171,10 +2209,6 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 analysis->fRootEvent->LeadGlass.Detector.StoreDetectorLocalVertexKineticEnergy(rKineticEnergy);
                 analysis->fRootEvent->LeadGlass.Detector.StoreDetectorLocalVertexTotalEnergy(rTotalEnergy);
 				
-                //analysis->fRootEvent->LeadGlass.Detector.StorePrimaryQ2(rPrimaryQ2);
-                //analysis->fRootEvent->LeadGlass.Detector.StoreCrossSection(rCrossSection);
-                //analysis->fRootEvent->LeadGlass.Detector.StoreCrossSectionWeight(rCrossSectionWeight);		
-				
                 //--- store global track theta & phi angle
                 analysis->fRootEvent->LeadGlass.Detector.StoreGlobalThetaAngle(rGlobalThetaAngle);
                 analysis->fRootEvent->LeadGlass.Detector.StoreGlobalPhiAngle(rGlobalPhiAngle);
@@ -2194,85 +2228,86 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         //===========================================================
 		
         if (n_hitPMTOnly >0) {
+            // initialize deposited energy
+            Float_t rTotalDepositedEnergy = 0.0;
+
             //--- loop over hits
             for (int i1=0;i1<n_hitPMTOnly;i1++) {
 				
                 QweakSimPMTOnly_DetectorHit* aHit = (*PMTOnlyDetector_HC)[i1];
 				
                 //--- track ID
-                rTrackID = (Float_t) aHit->GetTrackID();
+                Float_t rTrackID = (Float_t) aHit->GetTrackID();
 				
                 //--- particle name & type
-                rParticleName = TString(aHit->GetParticleName());
-                rParticleType = (Int_t) aHit->GetParticleType();
+                TString rParticleName = TString(aHit->GetParticleName());
+                Int_t rParticleType = (Int_t) aHit->GetParticleType();
 				
                 //--- get global time of hit
-                rGlobalTime = (Float_t) aHit->GetGlobalTime() / ns;
+                Float_t rGlobalTime = (Float_t) aHit->GetGlobalTime() / ns;
 				
                 //--- get world position of hit
-                globalPosition  = aHit->GetWorldPosition();
-                rGlobalPositionX = (Float_t) globalPosition.x() / cm;
-                rGlobalPositionY = (Float_t) globalPosition.y() / cm;
-                rGlobalPositionZ = (Float_t) globalPosition.z() / cm;
+                G4ThreeVector globalPosition  = aHit->GetWorldPosition();
+                Float_t rGlobalPositionX = (Float_t) globalPosition.x() / cm;
+                Float_t rGlobalPositionY = (Float_t) globalPosition.y() / cm;
+                Float_t rGlobalPositionZ = (Float_t) globalPosition.z() / cm;
 				
                 //--- get local position of hit
-                localPosition  = aHit->GetLocalPosition();
-                rLocalPositionX = (Float_t) localPosition.x() / cm;
-                rLocalPositionY = (Float_t) localPosition.y() / cm;
-                rLocalPositionZ = (Float_t) localPosition.z() / cm;
+                G4ThreeVector localPosition  = aHit->GetLocalPosition();
+                Float_t rLocalPositionX = (Float_t) localPosition.x() / cm;
+                Float_t rLocalPositionY = (Float_t) localPosition.y() / cm;
+                Float_t rLocalPositionZ = (Float_t) localPosition.z() / cm;
 				
                 //--- get origin vertex position
-                originVertexPosition  = aHit->GetOriginVertexPosition(); 
-                rOriginVertexPositionX = (Float_t) originVertexPosition.x() / cm;
-                rOriginVertexPositionY = (Float_t) originVertexPosition.y() / cm;
-                rOriginVertexPositionZ = (Float_t) originVertexPosition.z() / cm;
+                G4ThreeVector originVertexPosition  = aHit->GetOriginVertexPosition();
+                Float_t rOriginVertexPositionX = (Float_t) originVertexPosition.x() / cm;
+                Float_t rOriginVertexPositionY = (Float_t) originVertexPosition.y() / cm;
+                Float_t rOriginVertexPositionZ = (Float_t) originVertexPosition.z() / cm;
 				
                 //--- get world momentum of hit
-                globalMomentum  = aHit->GetWorldMomentum();
-                rGlobalMomentumX = (Float_t) globalMomentum.x() / MeV;
-                rGlobalMomentumY = (Float_t) globalMomentum.y() / MeV;
-                rGlobalMomentumZ = (Float_t) globalMomentum.z() / MeV;
+                G4ThreeVector globalMomentum  = aHit->GetWorldMomentum();
+                //Float_t rGlobalMomentumX = (Float_t) globalMomentum.x() / MeV;
+                //Float_t rGlobalMomentumY = (Float_t) globalMomentum.y() / MeV;
+                //Float_t rGlobalMomentumZ = (Float_t) globalMomentum.z() / MeV;
+
+                //--- get global theta & phi angle
+                Float_t rGlobalThetaAngle = (Float_t) globalMomentum.theta() / degree;
+                Float_t rGlobalPhiAngle   = (Float_t) globalMomentum.phi() / degree - 90.0;
 				
                 //--- get local momentum of hit  
-                localMomentum  = aHit->GetLocalMomentum();
-                rLocalMomentumX = (Float_t) localMomentum.x() / MeV;
-                rLocalMomentumY = (Float_t) localMomentum.y() / MeV;
-                rLocalMomentumZ = (Float_t) localMomentum.z() / MeV;                //--- store particle name & type
-                analysis->fRootEvent->PMTOnly.Detector.StoreParticleName(rParticleName);
-                analysis->fRootEvent->PMTOnly.Detector.StoreParticleType(rParticleType);
+                //G4ThreeVector localMomentum = aHit->GetLocalMomentum();
+                //Float_t rLocalMomentumX = (Float_t) localMomentum.x() / MeV;
+                //Float_t rLocalMomentumY = (Float_t) localMomentum.y() / MeV;
+                //Float_t rLocalMomentumZ = (Float_t) localMomentum.z() / MeV;
 				
                 //--- get local vertex momentum direction of hit
-                localVertexMomentumDirection = aHit->GetMomentumDirection();
-                rLocalVertexMomentumDirectionX = (Float_t) localVertexMomentumDirection.x();
-                rLocalVertexMomentumDirectionY = (Float_t) localVertexMomentumDirection.y();
-                rLocalVertexMomentumDirectionZ = (Float_t) localVertexMomentumDirection.z();
+                G4ThreeVector localVertexMomentumDirection = aHit->GetMomentumDirection();
+                Float_t rLocalVertexMomentumDirectionX = (Float_t) localVertexMomentumDirection.x();
+                Float_t rLocalVertexMomentumDirectionY = (Float_t) localVertexMomentumDirection.y();
+                Float_t rLocalVertexMomentumDirectionZ = (Float_t) localVertexMomentumDirection.z();
 				
                 //--- get origin vertex momentum direction of hit
-                originVertexMomentumDirection = aHit->GetOriginVertexMomentumDirection();
-                rOriginVertexMomentumDirectionX = (Float_t) originVertexMomentumDirection.x();
-                rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
-                rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
+                G4ThreeVector originVertexMomentumDirection = aHit->GetOriginVertexMomentumDirection();
+                Float_t rOriginVertexMomentumDirectionX = (Float_t) originVertexMomentumDirection.x();
+                Float_t rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
+                Float_t rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
 				
                 //--- get origin vertex theta & phi angle
-                rOriginVertexThetaAngle = (Float_t) originVertexMomentumDirection.theta() / degree;
-                rOriginVertexPhiAngle   = (Float_t) originVertexMomentumDirection.phi() / degree;
+                Float_t rOriginVertexThetaAngle = (Float_t) originVertexMomentumDirection.theta() / degree;
+                Float_t rOriginVertexPhiAngle   = (Float_t) originVertexMomentumDirection.phi() / degree;
 				
                 //--- get origin vertex kinetic energy & total energy
-                rOriginVertexKineticEnergy = (Float_t ) aHit->GetOriginVertexKineticEnergy() / MeV;
-                rOriginVertexTotalEnergy   = (Float_t ) aHit->GetOriginVertexTotalEnergy() / MeV;
+                Float_t rOriginVertexKineticEnergy = (Float_t ) aHit->GetOriginVertexKineticEnergy() / MeV;
+                Float_t rOriginVertexTotalEnergy   = (Float_t ) aHit->GetOriginVertexTotalEnergy() / MeV;
 				
                 //--- get total energy & total energy of hit
-                rKineticEnergy = (Float_t) aHit->GetKineticEnergy() / MeV;
-                rTotalEnergy = (Float_t) aHit->GetTotalEnergy() / MeV;
-				
-                //--- get global theta & phi angle
-                rGlobalThetaAngle = (Float_t) globalMomentum.theta() / degree;
-                rGlobalPhiAngle   = (Float_t) globalMomentum.phi() / degree - 90.0;
+                Float_t rKineticEnergy = (Float_t) aHit->GetKineticEnergy() / MeV;
+                Float_t rTotalEnergy = (Float_t) aHit->GetTotalEnergy() / MeV;
 				
                 //--- get PMTOnly deposited energy
-                rDepositedEnergy = (Float_t) aHit->GetHitDepositedEnergy() / MeV;				
+                Float_t rDepositedEnergy = (Float_t) aHit->GetHitDepositedEnergy() / MeV;
                 rTotalDepositedEnergy += rDepositedEnergy;
-                		
+
                 //--- store Primary Event Number
                 analysis->fRootEvent->PMTOnly.Detector.StorePrimaryEventNumber((Int_t) PrimaryEventNumber);
 				
@@ -2337,12 +2372,15 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
             
             // Put the total energy into the thing. 
             analysis->fRootEvent->PMTOnly.Detector.StoreTotalEnergyDeposit(rTotalDepositedEnergy);
-            rTotalDepositedEnergy = 0.0;
             
         } // end    if (n_hitPMTOnly >0)
 
         if (n_hitPMTOnlyPMT >0) {	//--- loop over hits  
             
+            G4int PMTOnlyPMTHasBeenHit = 0;
+            G4int PMTOnlyPMTHits = 0;
+            G4float PMTOnlyNPE = 0;
+
             for (int i1=0;i1<n_hitPMTOnlyPMT;i1++) {
                 
                 QweakSimPMTOnly_PMTHit* aHit = (*PMTOnlyPMT_HC)[i1]; // This line causes a seg fault it seems.
@@ -2406,144 +2444,10 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 } // end of  QweakSimEventAction::EndOfEventAction()
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void QweakSimEventAction::Initialize() {
-
-    n_GEMhitWirePlane   = 0;
-    n_HDChitWirePlane   = 0;
-    n_VDChitWirePlane   = 0;
-    n_VDChitDCFront     = 0;
-    n_VDChitDCBack      = 0;
-    n_hitTriggerScintillator = 0;
-    n_hitTriggerScintillatorPMT = 0;
-    n_hitCerenkov       = 0;
-    n_hitCerenkovPMT    = 0;
-    n_hitTarget         = 0;
-    n_hitLumi           = 0;
-    n_hitLeadGlass      = 0;
-    n_hitLeadGlassPMT   = 0;
-    n_hitPMTOnly        = 0;
-    n_hitPMTOnlyPMT 	= 0;
-
-    // get local position of hit
-    localPosition   = G4ThreeVector(0.,0.,0.);
-    rLocalPositionX  = 0.;
-    rLocalPositionY  = 0.;
-    rLocalPositionZ  = 0.;
-
-    // get world position of hit
-    globalPosition   = G4ThreeVector(0.,0.,0.);
-    rGlobalPositionX  = 0.;
-    rGlobalPositionY  = 0.;
-    rGlobalPositionZ  = 0.;
-
-
-    originVertexPosition   = G4ThreeVector(0.,0.,0.);
-    rOriginVertexPositionX  = 0.;
-    rOriginVertexPositionY  = 0.;
-    rOriginVertexPositionZ  = 0.;
-
-
-    originVertexMomentumDirection = G4ThreeVector(0.,0.,0.);
-
-    rOriginVertexKineticEnergy = 0.;
-    rOriginVertexTotalEnergy = 0.;
-
-    rGlobalThetaAngle = 0.0;
-    rGlobalPhiAngle   = 0.0;
-
-
-    rPrimaryQ2 = 0.;
-    rCrossSection = 0.0;
-    rCrossSectionWeight = 0.0;
-    rAsymmetry = 0.0;
-    
-    rPrimaryEventNumber = 0;
-
-    rGlobalTime = 0.;
-
-    //--- TriggerScintillator
-    TSDepositedEnergy = 0.;
-    TSTotalDepositedEnergy = 0.;
-    
-    //--- LeadGlass
-    rTrackID = 0.;
-    
-    // PMTOnlyPMT
-    PMTOnlyPMTHasBeenHit = 0;
-    PMTOnlyPMTHits = 0;
-    PMTOnlyNPE = 0.0;
-	
-    localVertexMomentumDirection = G4ThreeVector(0.0,0.0,0.0);
-    rLocalVertexMomentumDirectionX = 0.0;
-    rLocalVertexMomentumDirectionY = 0.0;
-    rLocalVertexMomentumDirectionZ = 0.0;
-	
-    rDepositedEnergy = 0.0;
-    rTotalDepositedEnergy = 0.0;
-
-    rDCWidthOnFrame     = 0.;
-    rDCFullThickness    = 0.;
-    rDCUPlaneWireAngle  = 0.;
-    rDCVPlaneWireAngle  = 0.;
-
+void QweakSimEventAction::Initialize()
+{
     //----------------------
-    PmtHasBeenHit.clear();  PmtHasBeenHit.resize(PmtMaxSize);
-
-    PmtTime.clear();  PmtTime.resize(PmtMaxSize);
-    PmtEnergy.clear();  PmtEnergy.resize(PmtMaxSize);
-    PmtOctant.clear();  PmtOctant.resize(PmtMaxSize);
-
-    PmtHitsLeft.clear();  PmtHitsLeft.resize(PmtMaxSize);
-    PmtHitsRight.clear(); PmtHitsRight.resize(PmtMaxSize);
-    PmtHitsTotal.clear(); PmtHitsTotal.resize(PmtMaxSize);
-
-    PmtNPELeft.clear();     PmtNPELeft.resize(PmtMaxSize);
-    PmtNPERight.clear();    PmtNPERight.resize(PmtMaxSize);
-    PmtNPETotal.clear();    PmtNPETotal.resize(PmtMaxSize);
-
-    PmtRateLeft.clear();     PmtRateLeft.resize(PmtMaxSize);
-    PmtRateRight.clear();    PmtRateRight.resize(PmtMaxSize);
-    PmtRateTotal.clear();    PmtRateTotal.resize(PmtMaxSize);
-    PmtRateLeftEL.clear();   PmtRateLeftEL.resize(PmtMaxSize);
-    PmtRateRightEL.clear();  PmtRateRightEL.resize(PmtMaxSize);
-    PmtRateTotalEL.clear();  PmtRateTotalEL.resize(PmtMaxSize);
-    PmtRateLeftDIS.clear();  PmtRateLeftDIS.resize(PmtMaxSize);
-    PmtRateRightDIS.clear(); PmtRateRightDIS.resize(PmtMaxSize);
-    PmtRateTotalDIS.clear(); PmtRateTotalDIS.resize(PmtMaxSize);
-    PmtRateLeftQE.clear();   PmtRateLeftQE.resize(PmtMaxSize);
-    PmtRateRightQE.clear();  PmtRateRightQE.resize(PmtMaxSize);
-    PmtRateTotalQE.clear();  PmtRateTotalQE.resize(PmtMaxSize);
-    PmtRateLeftELPeak.clear();   PmtRateLeftELPeak.resize(PmtMaxSize);
-    PmtRateRightELPeak.clear();  PmtRateRightELPeak.resize(PmtMaxSize);
-    PmtRateTotalELPeak.clear();  PmtRateTotalELPeak.resize(PmtMaxSize);
-
-    PmtYieldLeft.clear();     PmtYieldLeft.resize(PmtMaxSize);
-    PmtYieldRight.clear();    PmtYieldRight.resize(PmtMaxSize);
-    PmtYieldTotal.clear();    PmtYieldTotal.resize(PmtMaxSize);
-    PmtYieldLeftEL.clear();   PmtYieldLeftEL.resize(PmtMaxSize);
-    PmtYieldRightEL.clear();  PmtYieldRightEL.resize(PmtMaxSize);
-    PmtYieldTotalEL.clear();  PmtYieldTotalEL.resize(PmtMaxSize);
-    PmtYieldLeftDIS.clear();  PmtYieldLeftDIS.resize(PmtMaxSize);
-    PmtYieldRightDIS.clear(); PmtYieldRightDIS.resize(PmtMaxSize);
-    PmtYieldTotalDIS.clear(); PmtYieldTotalDIS.resize(PmtMaxSize);
-    PmtYieldLeftQE.clear();   PmtYieldLeftQE.resize(PmtMaxSize);
-    PmtYieldRightQE.clear();  PmtYieldRightQE.resize(PmtMaxSize);
-    PmtYieldTotalQE.clear();  PmtYieldTotalQE.resize(PmtMaxSize);
-    PmtYieldLeftELPeak.clear();   PmtYieldLeftELPeak.resize(PmtMaxSize);
-    PmtYieldRightELPeak.clear();  PmtYieldRightELPeak.resize(PmtMaxSize);
-    PmtYieldTotalELPeak.clear();  PmtYieldTotalELPeak.resize(PmtMaxSize);
-
-   //----------------------
-
-
-    rParticleType = -1;
-
-    rKineticEnergy  = 0.;
-    rTotalEnergy  = 0.;
-
-    detectorID = 0;
     octantID   = 0;
-
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
