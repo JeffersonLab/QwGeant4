@@ -10,13 +10,14 @@
 /tracking/storeTrajectory 1
 
 #==========================
-# Primary Event related
+# Octant Selection
 #==========================
-# Valid values range from 1 to 8
-# Mostly used for testing, usually changed in a user macro.
+# Valid values range from 0 to 12
+# default 0: events thrown in all octants
+# 1-8: events thrown in corresponding octant
+# 9-12: events thrown in two octants (9 for 1+5, 12 for 4+8)
 
-#/PrimaryEvent/SelectOctant 3
-#/PrimaryEvent/SelectOctant 1
+#/EventGen/SelectOctant 11
 
 #==========================
 # Set beam rastering region

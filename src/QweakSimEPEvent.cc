@@ -185,8 +185,12 @@ G4ThreeVector QweakSimEPEvent::GetMomentumDirection()
     G4ThreeVector myNormMomentum(ux,uy,uz);
        
     // Rotate the momentum to the active octant (if octant = 0 all octants are used)
-    if (kActiveOctantNumber > 0)
+    if (kActiveOctantNumber > 8 )
+    {
+    	myNormMomentum.rotateZ( (kActiveOctantNumber-9 +4*G4RandFlat::shootInt(2))*45.0*degree);
+    }else if (kActiveOctantNumber > 0){
       myNormMomentum.rotateZ( (kActiveOctantNumber-1)*45.0*degree);
+    }
 
     return myNormMomentum; 
 }
