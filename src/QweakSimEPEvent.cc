@@ -114,11 +114,19 @@ G4double QweakSimEPEvent::GetVertexZ()
     myPositionZ =  myUserInfo->TargetCenterPositionZ + 0.5*(myUserInfo->TargetLength)
                    + (myUserInfo->TargetExitWindowNippleThickness)*G4UniformRand();
 
-  else if(ReactionRegion == 4 || ReactionRegion == 5 || ReactionRegion == 6 || ReactionRegion == 10) // US Dummy Targets
+  else if(ReactionType == 7 && (ReactionRegion == 4 || ReactionRegion == 5 || ReactionRegion == 6 || ReactionRegion == 10)) // Generator 7 US Dummy Targets
     myPositionZ =  myUserInfo->TargetCenterPositionZ + myUserInfo->TargetUSDummyPositionOffsetZ;
 
-  else if(ReactionRegion == 7 || ReactionRegion == 8 || ReactionRegion == 9 || ReactionRegion == 11) // DS Dummy Targets
+  else if(ReactionType == 7 && (ReactionRegion == 7 || ReactionRegion == 8 || ReactionRegion == 9 || ReactionRegion == 11)) // Generator 7 DS Dummy Targets
     myPositionZ =  myUserInfo->TargetCenterPositionZ + myUserInfo->TargetDSDummyPositionOffsetZ;
+
+  else if(ReactionRegion == 4 || ReactionRegion == 5 || ReactionRegion == 6 || ReactionRegion == 10) // Al US Dummy Targets
+    myPositionZ =  myUserInfo->TargetCenterPositionZ - 0.5*(myUserInfo->TargetLength)
+                   - (myUserInfo->TargetEntranceWindowThickness)*G4UniformRand();
+
+  else if(ReactionRegion == 7 || ReactionRegion == 8 || ReactionRegion == 9 || ReactionRegion == 11) // Al DS Dummy Targets
+    myPositionZ =  myUserInfo->TargetCenterPositionZ + 0.5*(myUserInfo->TargetLength)
+                   + (myUserInfo->TargetExitWindowNippleThickness)*G4UniformRand();
 
   else
     myPositionZ =  myUserInfo->TargetCenterPositionZ + (G4UniformRand()-0.5)*(myUserInfo->TargetLength); //default region

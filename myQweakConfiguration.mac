@@ -291,8 +291,16 @@
 
 # Selects a region of target:
 # 1 - LH2 in target, no Al end caps (default)
-# 2 - entrance target window
-# 3 - exit target window
+# 2 - Entrance target window
+# 3 - Exit target window
+# 4 - 1% US Al Dummy Target
+# 5 - 2% US Al Dummy Target
+# 6 - 4% US Al Dummy Target
+# 7 - 2% DS Al Dummy Target
+# 8 - 4% DS Al Dummy Target
+# 9 - 8% DS Al Dummy Target
+# 10 - US C Dummy Target
+# 11 - DS C Dummy Target
 
 /EventGen/SelectReactionRegion 1
 
