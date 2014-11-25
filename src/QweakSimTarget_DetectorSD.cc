@@ -45,7 +45,7 @@ G4bool QweakSimTarget_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistory*
 	
     G4ParticleDefinition*  fpParticleDefinition = aStep->GetTrack()->GetDefinition();
     G4String	particleName = fpParticleDefinition->GetParticleName();
-    G4double	pdgCharge    = fpParticleDefinition->GetPDGCharge();
+    //G4double	pdgCharge    = fpParticleDefinition->GetPDGCharge();
     G4int	pdgEncoding  = fpParticleDefinition->GetPDGEncoding();
 	
     //GlobalTimeOfHit

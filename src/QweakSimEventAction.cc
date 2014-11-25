@@ -289,21 +289,21 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     QweakSimLumi_DetectorHitsCollection*                LumiDetector_HC                = 0;
 
     G4int n_hitTarget = 0;
-    G4int n_GEMhitWirePlane = 0;
+    //G4int n_GEMhitWirePlane = 0;
     G4int n_HDChitWirePlane = 0;
     G4int n_VDChitWirePlane = 0;
     G4int n_VDChitDCFront = 0;
     G4int n_VDChitDCBack = 0;
     G4int n_hitTriggerScintillator = 0;
-    G4int n_hitTriggerScintillatorPMT = 0;
+    //G4int n_hitTriggerScintillatorPMT = 0;
     G4int n_hitLeadGlass = 0;
-    G4int n_hitLeadGlassPMT = 0;
+    //G4int n_hitLeadGlassPMT = 0;
     G4int n_hitPMTOnly = 0;
     G4int n_hitPMTOnlyPMT = 0;
     G4int n_hitCerenkov = 0;
     G4int n_hitCerenkovPMT = 0;
     G4int n_hitLumi = 0;
-    G4int n_hitLumiPMT = 0;
+    //G4int n_hitLumiPMT = 0;
 
     if (HCE) {
 

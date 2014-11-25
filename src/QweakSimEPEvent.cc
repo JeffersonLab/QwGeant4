@@ -2269,12 +2269,11 @@ void QweakSimEPEvent::christy507(G4double w2,G4double q2,G4double &F1,
 //    (arXiv:0712.3731). To be submitted to Phys. Rev. C.
 
   G4double xval1[50],xvalL[50];
-  G4double mp,mp2,pi,alpha,xb,FL;
- 
-  mp = .9382727;
-  mp2 = mp*mp;
-  pi = 3.141593;
-  alpha = 1./137.036;
+
+  G4double mp = .9382727;
+  G4double mp2 = mp*mp;
+  G4double pi = 3.141593;
+  G4double alpha = 1./137.036;
 
   G4double xval[100] = {
       0.12298E+01,0.15304E+01,0.15057E+01,0.16980E+01,0.16650E+01,
@@ -2306,13 +2305,13 @@ void QweakSimEPEvent::christy507(G4double w2,G4double q2,G4double &F1,
   xvalL[42] = xval1[46];
   xvalL[43] = xval1[47];
   xvalL[49] = xval1[49];
- 
-  xb = q2/(w2+q2-mp2);
+
+  G4double xb = q2/(w2+q2-mp2);
   sigT = resmod507_v2(1,w2,q2,xval1);
   sigL = resmod507_v2(2,w2,q2,xvalL);
 
   F1 = sigT*(w2-mp2)/8./pi/pi/alpha/0.3894e3;
-  FL = sigL*2.*xb*(w2-mp2)/8./pi/pi/alpha/0.3894e3;
+  //G4double FL = sigL*2.*xb*(w2-mp2)/8./pi/pi/alpha/0.3894e3;
   R = sigL/sigT;
 
   return;
@@ -2873,7 +2872,7 @@ G4double QweakSimEPEvent::AlloyScattering(G4double E_in, //MeV
   // Form factor
   G4int NUC_MODEL = 1; // USE Fourier-Bessel if available
   G4bool OUT_OF_RANGE = 0;
-  G4double eng = E_in/1e-3; // GeV
+  //G4double eng = E_in/1e-3; // GeV // unused
   G4double qsq = Q2/1e6; // GeV^2
   M_p = M_p/1e-3;
   
@@ -2908,7 +2907,7 @@ G4double QweakSimEPEvent::AlloyScattering(G4double E_in, //MeV
   return xsec;
 }
 
-G4double QweakSimEPEvent::Fgauss(G4int iZ, G4int iA, G4double T)
+G4double QweakSimEPEvent::Fgauss(G4int /* iZ */ /* unused */, G4int iA, G4double T)
 {
   //  cout << "** Calling Fgauss **" << endl;
 
@@ -3055,7 +3054,7 @@ G4double QweakSimEPEvent::FF_BESSEL (G4int iZ, G4int iA,
   ff_bessel=0.0;
   OUT_OF_RANGE=false;
   Float_t R_max=0.;
-  G4int i=0,n=0;
+  G4int n=0;
 
   if(iA == 28){ // 28Si
     if(qq>2.64)  OUT_OF_RANGE=true;

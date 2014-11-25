@@ -133,7 +133,7 @@ QweakSimTrackInformation::QweakSimTrackInformation(const QweakSimTrackInformatio
     CerenkovHitEnergy.resize(aTrackInfo->ParticleHistory.size());
     ParticleCreatorProcess.resize(aTrackInfo->ParticleHistory.size());
     OriginVertex.resize(aTrackInfo->ParticleHistory.size());
-    for(int i = 0; i < aTrackInfo->ParticleHistory.size(); i++)
+    for(size_t i = 0; i < aTrackInfo->ParticleHistory.size(); i++)
     {
 	ParticleHistory[i]   = aTrackInfo->ParticleHistory[i];
 	ParentEnergy[i]      = aTrackInfo->ParentEnergy[i];

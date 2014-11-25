@@ -1686,7 +1686,7 @@ void QweakSimVDC::PlaceVDC_MasterContainers()
 	  // define VDC physical volume of drift chamber container
 	  VDC_MasterContainerFront_Physical[i] = new G4PVPlacement(Rotation_VDC_MasterContainer[i],
 								position_MasterContainerFront,
-								Form("VDC_MasterContainerFront_Physical%d",i+1),
+								Form("VDC_MasterContainerFront_Physical%ld",i+1),
 								VDC_MasterContainer_Logical,
 								theMotherPV,
 								false,
@@ -1698,7 +1698,7 @@ void QweakSimVDC::PlaceVDC_MasterContainers()
 	  // define VDC physical volume of drift chamber container
 	  VDC_MasterContainerBack_Physical[i] = new G4PVPlacement(Rotation_VDC_MasterContainer[i],
 							       position_MasterContainerBack,
-							       Form("VDC_MasterContainerBack_Physical%d",i+1),
+							       Form("VDC_MasterContainerBack_Physical%ld",i+1),
 							       VDC_MasterContainer_Logical,
 							       theMotherPV,
 							       false,

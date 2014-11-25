@@ -128,6 +128,8 @@ const QweakSimLumi_DetectorHit& QweakSimLumi_DetectorHit::operator=(const QweakS
     cellPos                       = right.cellPos;
     cellRot                       = right.cellRot;
     pLogV                         = right.pLogV;
+
+    return *this;
 }
 
 int QweakSimLumi_DetectorHit::operator==(const QweakSimLumi_DetectorHit&) const {
