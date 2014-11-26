@@ -893,16 +893,18 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 Float_t rGlobalPositionZ = (Float_t) globalPosition.z() / cm;
 
                 // get local Momentum of hit
-                //G4ThreeVector localMomentum  = aHit->GetLocalMomentum();
-                //Float_t rLocalMomentumX = (Float_t) localMomentum.x() / MeV;
-                //Float_t rLocalMomentumY = (Float_t) localMomentum.y() / MeV;
-                //Float_t rLocalMomentumZ = (Float_t) localMomentum.z() / MeV;
+                G4ThreeVector localMomentum  = aHit->GetLocalMomentum();
+                Float_t rLocalMomentumX = (Float_t) localMomentum.x() / MeV;
+                Float_t rLocalMomentumY = (Float_t) localMomentum.y() / MeV;
+                Float_t rLocalMomentumZ = (Float_t) localMomentum.z() / MeV;
+                Float_t rLocalPhiAngle   = (Float_t) localMomentum.phi() / degree - 90.0;
+                Float_t rLocalThetaAngle = (Float_t) localMomentum.theta() / degree;
 
                 // get world Momentum of hit
                 G4ThreeVector globalMomentum  = aHit->GetWorldMomentum();
-                //Float_t rGlobalMomentumX = (Float_t) globalMomentum.x() / MeV;
-                //Float_t rGlobalMomentumY = (Float_t) globalMomentum.y() / MeV;
-                //Float_t rGlobalMomentumZ = (Float_t) globalMomentum.z() / MeV;
+                Float_t rGlobalMomentumX = (Float_t) globalMomentum.x() / MeV;
+                Float_t rGlobalMomentumY = (Float_t) globalMomentum.y() / MeV;
+                Float_t rGlobalMomentumZ = (Float_t) globalMomentum.z() / MeV;
                 Float_t rGlobalPhiAngle   = (Float_t) globalMomentum.phi() / degree - 90.0;
                 Float_t rGlobalThetaAngle = (Float_t) globalMomentum.theta() / degree;
 
@@ -937,6 +939,20 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 // get kinetic Energy of hit
                 Float_t rKineticEnergy     = (Float_t) aHit->GetKineticEnergy() / MeV;
 
+                // get polarization of hit
+                G4ThreeVector rGlobalPolarizationVector = aHit->GetPolarization();
+                Float_t rGlobalPolarizationX = rGlobalPolarizationVector.x();
+                Float_t rGlobalPolarizationY = rGlobalPolarizationVector.y();
+                Float_t rGlobalPolarizationZ = rGlobalPolarizationVector.z();
+                // longitudinal polarization is along the momentum direction
+                Float_t rLongitudinalPolarization = rGlobalPolarizationVector.dot(globalMomentum)/globalMomentum.mag()/rGlobalPolarizationVector.mag();
+                // transverse polarization is all except longitudinal
+                G4ThreeVector rTransversePolarizationVector = rGlobalPolarizationVector - rLongitudinalPolarization*globalMomentum/globalMomentum.mag();
+                Float_t rTransversePolarization = rTransversePolarizationVector.mag();
+                Float_t rTransversePolarizationX = rTransversePolarizationVector.x();
+                Float_t rTransversePolarizationY = rTransversePolarizationVector.y();
+                Float_t rTransversePolarizationZ = rTransversePolarizationVector.z();
+                Float_t rTransversePolarizationPhiAngle = rTransversePolarizationVector.phi() / degree;
 
                 //  edgeEvent = myUserInfo->GetEdgeEventDetected();
 
@@ -968,7 +984,28 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 analysis->fRootEvent->Cerenkov.Detector.StoreDetectorGlobalPositionY(rGlobalPositionY);
                 analysis->fRootEvent->Cerenkov.Detector.StoreDetectorGlobalPositionZ(rGlobalPositionZ);
 
-                // store global track angles Phi and Theta
+                // store polarization of hit
+                analysis->fRootEvent->Cerenkov.Detector.StorePolarizationX(rGlobalPolarizationX);
+                analysis->fRootEvent->Cerenkov.Detector.StorePolarizationY(rGlobalPolarizationY);
+                analysis->fRootEvent->Cerenkov.Detector.StorePolarizationZ(rGlobalPolarizationZ);
+                analysis->fRootEvent->Cerenkov.Detector.StoreLongitudinalPolarization(rLongitudinalPolarization);
+                analysis->fRootEvent->Cerenkov.Detector.StoreTransversePolarization(rTransversePolarization);
+                analysis->fRootEvent->Cerenkov.Detector.StoreTransversePolarizationX(rTransversePolarizationX);
+                analysis->fRootEvent->Cerenkov.Detector.StoreTransversePolarizationY(rTransversePolarizationY);
+                analysis->fRootEvent->Cerenkov.Detector.StoreTransversePolarizationZ(rTransversePolarizationZ);
+                analysis->fRootEvent->Cerenkov.Detector.StoreTransversePolarizationPhiAngle(rTransversePolarizationPhiAngle);
+
+                // store local momentum and track angles Phi and Theta
+                analysis->fRootEvent->Cerenkov.Detector.StoreLocalMomentumX(rLocalMomentumX);
+                analysis->fRootEvent->Cerenkov.Detector.StoreLocalMomentumY(rLocalMomentumY);
+                analysis->fRootEvent->Cerenkov.Detector.StoreLocalMomentumZ(rLocalMomentumZ);
+                analysis->fRootEvent->Cerenkov.Detector.StoreLocalPhiAngle(rLocalPhiAngle);
+                analysis->fRootEvent->Cerenkov.Detector.StoreLocalThetaAngle(rLocalThetaAngle);
+
+                // store global momentum and track angles Phi and Theta
+                analysis->fRootEvent->Cerenkov.Detector.StoreGlobalMomentumX(rGlobalMomentumX);
+                analysis->fRootEvent->Cerenkov.Detector.StoreGlobalMomentumY(rGlobalMomentumY);
+                analysis->fRootEvent->Cerenkov.Detector.StoreGlobalMomentumZ(rGlobalMomentumZ);
                 analysis->fRootEvent->Cerenkov.Detector.StoreGlobalPhiAngle(rGlobalPhiAngle);
                 analysis->fRootEvent->Cerenkov.Detector.StoreGlobalThetaAngle(rGlobalThetaAngle);
 
