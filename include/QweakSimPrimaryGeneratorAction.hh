@@ -63,7 +63,7 @@ class QweakSimPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
 {
 public:
    QweakSimPrimaryGeneratorAction( QweakSimUserInformation* myUI, QweakSimEPEvent* myEPEvent);    
-  ~QweakSimPrimaryGeneratorAction();
+   virtual ~QweakSimPrimaryGeneratorAction();
   
 public:
 
@@ -84,6 +84,10 @@ public:
   void GeneratePrimaries(G4Event* anEvent);
   void ResetNtupleEventCounter() {myEventCounter = 0;}
   void SetNtupleEventCounter(G4int cnt) {myEventCounter = cnt;}
+
+  void SetPolarization(G4String polarization) {
+    fPolarization = polarization;
+  }
 
   void SetParticleType(G4String type = "e-") {
     G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
@@ -107,6 +111,8 @@ private:
   QweakSimEPEvent* myEvent;
 
   QweakSimPrimaryGeneratorActionMessenger* myMessenger;  // pointer to the Messenger
+
+  G4String fPolarization;
 
   G4double fPositionX_min;
   G4double fPositionX_max;

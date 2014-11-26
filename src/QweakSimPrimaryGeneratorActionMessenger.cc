@@ -55,6 +55,12 @@ QweakSimPrimaryGeneratorActionMessenger::QweakSimPrimaryGeneratorActionMessenger
   SetParticleType_Cmd->SetDefaultValue("e-");
   SetParticleType_Cmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
+  SetPolarization_Cmd = new G4UIcmdWithAString("/PrimaryEvent/SetPolarization",this);
+  SetPolarization_Cmd->SetGuidance("set particle polarization for primary generator (L, H, V)");
+  SetPolarization_Cmd->SetParameterName("polarization",true);
+  SetPolarization_Cmd->SetDefaultValue("L");
+  SetPolarization_Cmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+
   InitEventCounterCmd = new G4UIcmdWithAnInteger("/PrimaryEvent/StartingEvent",this);
   InitEventCounterCmd->SetGuidance("set starting event count for primary generator");
   InitEventCounterCmd->SetParameterName("StartingEvent",true);
@@ -133,6 +139,7 @@ QweakSimPrimaryGeneratorActionMessenger::~QweakSimPrimaryGeneratorActionMessenge
   delete SetRasterYmin_Cmd;
   delete SetRasterYmax_Cmd;
   delete InitEventCounterCmd;
+  delete SetPolarization_Cmd;
   delete verboseCmd;
   delete resetCmd;
   delete Dir;
@@ -153,6 +160,9 @@ void QweakSimPrimaryGeneratorActionMessenger::SetNewValue(G4UIcommand* command, 
 
   if( command == SetParticleType_Cmd )
     { pPrimaryGeneratorAction->SetParticleType(newValue); }
+
+  if( command == SetPolarization_Cmd )
+    { pPrimaryGeneratorAction->SetPolarization(newValue); }
 
   if( command == SetPositionX_Cmd )
     {

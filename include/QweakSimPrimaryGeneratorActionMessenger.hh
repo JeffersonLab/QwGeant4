@@ -45,7 +45,7 @@ class QweakSimPrimaryGeneratorActionMessenger: public G4UImessenger
 {
 public:  
    QweakSimPrimaryGeneratorActionMessenger(QweakSimPrimaryGeneratorAction* );
-  ~QweakSimPrimaryGeneratorActionMessenger();
+   virtual ~QweakSimPrimaryGeneratorActionMessenger();
     
   void SetNewValue(G4UIcommand*, G4String);
     
@@ -58,6 +58,7 @@ private:
   G4UIcmdWithoutParameter* resetCmd;
   G4UIcmdWithAnInteger*    InitEventCounterCmd;
   G4UIcmdWithAString*      SetParticleType_Cmd;
+  G4UIcmdWithAString*      SetPolarization_Cmd;
 
   G4UIcmdWithADoubleAndUnit*    SetPositionX_Cmd;
   G4UIcmdWithADoubleAndUnit*    SetPositionY_Cmd;
