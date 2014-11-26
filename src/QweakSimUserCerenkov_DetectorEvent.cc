@@ -56,7 +56,7 @@ void QweakSimUserCerenkov_DetectorEvent::Initialize()
     SecPartLocalType.clear();
 
 
-    OpticalPhotonCount             = 0;
+    OpticalPhotonCount = 0;
     CerenkovPhotonEnergy.clear();
 
     SecondaryParticleCount = 0;
@@ -67,6 +67,16 @@ void QweakSimUserCerenkov_DetectorEvent::Initialize()
     HitLocalPositionX.clear();
     HitLocalPositionY.clear();
     HitLocalPositionZ.clear();
+
+    PolarizationX.clear();
+    PolarizationY.clear();
+    PolarizationZ.clear();
+    LongitudinalPolarization.clear();
+    TransversePolarization.clear();
+    TransversePolarizationX.clear();
+    TransversePolarizationY.clear();
+    TransversePolarizationZ.clear();
+    TransversePolarizationPhiAngle.clear();
 
     HitLocalExitPositionX.clear();
     HitLocalExitPositionY.clear();
@@ -89,6 +99,15 @@ void QweakSimUserCerenkov_DetectorEvent::Initialize()
     OriginVertexKineticEnergy.clear();
     OriginVertexTotalEnergy.clear(); 
     
+    LocalMomentumX.clear();
+    LocalMomentumY.clear();
+    LocalMomentumZ.clear();
+    LocalThetaAngle.clear();
+    LocalPhiAngle.clear();
+
+    GlobalMomentumX.clear();
+    GlobalMomentumY.clear();
+    GlobalMomentumZ.clear();
     GlobalThetaAngle.clear();
     GlobalPhiAngle.clear();
     

@@ -145,9 +145,22 @@ private:
   std::vector<Float_t> OriginVertexKineticEnergy;
   std::vector<Float_t> OriginVertexTotalEnergy;
 
+  /// \name Direction of the hit in local coordinates
+  /// The local coordinates are defined in the \ref local_coordinate_system.
+  //@{
+  std::vector<Float_t> LocalMomentumX;      ///< (GeV/c)
+  std::vector<Float_t> LocalMomentumY;      ///< (GeV/c)
+  std::vector<Float_t> LocalMomentumZ;      ///< (GeV/c)
+  std::vector<Float_t> LocalThetaAngle;     ///< (degrees)
+  std::vector<Float_t> LocalPhiAngle;       ///< (degrees, but 90 degrees rotated to keep things interesting)
+  //@}
+
   /// \name Direction of the hit in global coordinates
   /// The global coordinates are defined in the \ref global_coordinate_system.
   //@{
+  std::vector<Float_t> GlobalMomentumX;      ///< (GeV/c)
+  std::vector<Float_t> GlobalMomentumY;      ///< (GeV/c)
+  std::vector<Float_t> GlobalMomentumZ;      ///< (GeV/c)
   std::vector<Float_t> GlobalThetaAngle;     ///< (degrees)
   std::vector<Float_t> GlobalPhiAngle;       ///< (degrees, but 90 degrees rotated to keep things interesting)
   //@}
@@ -156,6 +169,21 @@ private:
   //@{
   std::vector<TString> ParticleName;         ///< Name of the particle type of this hit
   std::vector<Int_t>   ParticleType;         ///< \ref Lund_type of the particle type of this hit
+  //@}
+
+  /// \name Polarization of the hit in local coordinates
+  /// The local coordinates are defined in the \ref local_coordinate_system.
+  //@{
+  std::vector<Float_t> PolarizationX;        ///< (dimensionless, normalized)
+  std::vector<Float_t> PolarizationY;        ///< (dimensionless, normalized)
+  std::vector<Float_t> PolarizationZ;        ///< (dimensionless, normalized)
+  std::vector<Float_t> LongitudinalPolarization; ///< (dimensionless, normalized)
+  std::vector<Float_t> TransversePolarization;  ///< (dimensionless, normalized)
+  std::vector<Float_t> TransversePolarizationX; ///< (dimensionless, normalized)
+  std::vector<Float_t> TransversePolarizationY; ///< (dimensionless, normalized)
+  std::vector<Float_t> TransversePolarizationZ; ///< (dimensionless, normalized)
+  std::vector<Float_t> TransversePolarizationPhiAngle; ///< (degrees)
+
   //@}
 
   /// \name Total and kinetic energy of the track at the hit
@@ -197,8 +225,37 @@ public:
   void     StoreKineticEnergy(Float_t ke)   { KineticEnergy.push_back(ke); }
   std::vector<Float_t>    GetKineticEnergy() const {return KineticEnergy;}
 
+  //-----------------
+
+  void     StorePolarizationX(Float_t px)   { PolarizationX.push_back(px); }
+  std::vector<Float_t>    GetPolarizationX() const {return PolarizationX;}
+
+  void     StorePolarizationY(Float_t py)   { PolarizationY.push_back(py); }
+  std::vector<Float_t>    GetPolarizationY() const {return PolarizationY;}
+
+  void     StorePolarizationZ(Float_t pz)   { PolarizationZ.push_back(pz); }
+  std::vector<Float_t>    GetPolarizationZ() const {return PolarizationZ;}
+
+  void     StoreLongitudinalPolarization(Float_t pl)   { LongitudinalPolarization.push_back(pl); }
+  std::vector<Float_t>    GetLongitudinalPolarization() const {return LongitudinalPolarization;}
+
+  void     StoreTransversePolarization(Float_t pt)   { TransversePolarization.push_back(pt); }
+  std::vector<Float_t>    GetTransversePolarization() const {return TransversePolarization;}
+
+  void     StoreTransversePolarizationX(Float_t pt)   { TransversePolarizationX.push_back(pt); }
+  std::vector<Float_t>    GetTransversePolarizationX() const {return TransversePolarizationX;}
+
+  void     StoreTransversePolarizationY(Float_t pt)   { TransversePolarizationY.push_back(pt); }
+  std::vector<Float_t>    GetTransversePolarizationY() const {return TransversePolarizationY;}
+
+  void     StoreTransversePolarizationZ(Float_t pt)   { TransversePolarizationZ.push_back(pt); }
+  std::vector<Float_t>    GetTransversePolarizationZ() const {return TransversePolarizationZ;}
+
+  void     StoreTransversePolarizationPhiAngle(Float_t phi)   { TransversePolarizationPhiAngle.push_back(phi); }
+  std::vector<Float_t>    GetTransversePolarizationPhiAngle() const {return TransversePolarizationPhiAngle;}
 
   //-----------------
+
   void     StoreDetectorHasBeenHit(Int_t n)      { HasBeenHit = n; }
   Int_t      GetDetectorHasBeenHit() const {return HasBeenHit;}
   //-----------------
@@ -261,13 +318,42 @@ public:
 
   void     StoreOriginVertexTotalEnergy(Float_t etot) { OriginVertexTotalEnergy.push_back(etot); }
   std::vector<Float_t>    GetOriginVertexTotalEnergy() const {return OriginVertexTotalEnergy;}
+
   //----------------
+
+  void     StoreLocalMomentumX(Float_t px) { LocalMomentumX.push_back(px); }
+  std::vector<Float_t>    GetLocalMomentumX() const  {return LocalMomentumX;}
+
+  void     StoreLocalMomentumY(Float_t py) { LocalMomentumY.push_back(py); }
+  std::vector<Float_t>    GetLocalMomentumY() const  {return LocalMomentumY;}
+
+  void     StoreLocalMomentumZ(Float_t pz) { LocalMomentumZ.push_back(pz); }
+  std::vector<Float_t>    GetLocalMomentumZ() const  {return LocalMomentumZ;}
+
+  void     StoreLocalThetaAngle(Float_t theta) { LocalThetaAngle.push_back(theta); }
+  std::vector<Float_t>    GetLocalThetaAngle() const  {return LocalThetaAngle;}
+
+  void     StoreLocalPhiAngle(Float_t phi)  { LocalPhiAngle.push_back(phi); }
+  std::vector<Float_t>    GetLocalPhiAngle() const {return LocalPhiAngle;}
+
+  //----------------
+
+  void     StoreGlobalMomentumX(Float_t px) { GlobalMomentumX.push_back(px); }
+  std::vector<Float_t>    GetGlobalMomentumX() const  {return GlobalMomentumX;}
+
+  void     StoreGlobalMomentumY(Float_t py) { GlobalMomentumY.push_back(py); }
+  std::vector<Float_t>    GetGlobalMomentumY() const  {return GlobalMomentumY;}
+
+  void     StoreGlobalMomentumZ(Float_t pz) { GlobalMomentumZ.push_back(pz); }
+  std::vector<Float_t>    GetGlobalMomentumZ() const  {return GlobalMomentumZ;}
+
   void     StoreGlobalThetaAngle(Float_t theta) { GlobalThetaAngle.push_back(theta); }
   std::vector<Float_t>    GetGlobalThetaAngle() const  {return GlobalThetaAngle;}
 
   void     StoreGlobalPhiAngle(Float_t phi)  { GlobalPhiAngle.push_back(phi); }
   std::vector<Float_t>    GetGlobalPhiAngle() const {return GlobalPhiAngle;}
 
+  //----------------
 
   void AddSecondaryParticleEvent(Float_t XO, Float_t YO, Float_t ZO,
 				 Float_t XM, Float_t YM, Float_t ZM,
