@@ -132,6 +132,7 @@ G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistor
   G4double      currentKineticEnergy     = aStep->GetTrack()->GetKineticEnergy();
   G4double      currentTotalEnergy       = aStep->GetTrack()->GetTotalEnergy();
   G4ThreeVector currentMomentumDirection = aStep->GetTrack()->GetMomentumDirection();
+  G4ThreeVector currentPolarization      = aStep->GetTrack()->GetPolarization();
 
   G4int trackID = aStep->GetTrack()->GetTrackID();
 
@@ -188,6 +189,7 @@ G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistor
   aHit->StoreMomentumDirection(currentMomentumDirection);
   aHit->StoreKineticEnergy(currentKineticEnergy);
   aHit->StoreTotalEnergy(currentTotalEnergy);
+  aHit->StorePolarization(currentPolarization);
 
   aHit->StoreParticleName(ParticleName);
   aHit->StoreParticleType(PDGEncoding);

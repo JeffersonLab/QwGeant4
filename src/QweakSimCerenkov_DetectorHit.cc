@@ -30,6 +30,7 @@ QweakSimCerenkov_DetectorHit::QweakSimCerenkov_DetectorHit()
   currentMomentumDirection        = G4ThreeVector(0.0,0.0,0.0);
   currentKineticEnergy            = 0.;
   currentTotalEnergy              = 0.;
+  currentPolarization             = G4ThreeVector(0.0,0.0,0.0);
 
   primaryQ2                       = 0.;
   crossSection                    = 0.;
@@ -78,7 +79,8 @@ QweakSimCerenkov_DetectorHit::QweakSimCerenkov_DetectorHit(const QweakSimCerenko
   currentMomentumDirection = right.currentMomentumDirection;
   currentKineticEnergy     = right.currentKineticEnergy;
   currentTotalEnergy       = right.currentTotalEnergy;
-    
+  currentPolarization      = right.currentPolarization;
+
   particleName             = right.particleName;
   particleType             = right.particleType;
 }
@@ -106,6 +108,7 @@ const QweakSimCerenkov_DetectorHit& QweakSimCerenkov_DetectorHit::operator=(cons
   currentMomentumDirection = right.currentMomentumDirection;
   currentKineticEnergy     = right.currentKineticEnergy;
   currentTotalEnergy       = right.currentTotalEnergy;
+  currentPolarization      = right.currentPolarization;
 
   particleName             = right.particleName;
   particleType             = right.particleType;

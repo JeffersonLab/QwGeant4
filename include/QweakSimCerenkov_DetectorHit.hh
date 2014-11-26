@@ -69,6 +69,7 @@ private:
   G4ThreeVector currentMomentumDirection;
   G4double      currentKineticEnergy;
   G4double      currentTotalEnergy;
+  G4ThreeVector currentPolarization;
 
   G4double      primaryQ2;
   G4double      crossSection;
@@ -132,8 +133,13 @@ public:
 
   inline void   StoreTotalEnergy(G4double etot) { currentTotalEnergy  = etot; }
   inline G4double GetTotalEnergy() const { return currentTotalEnergy; }
+
+  //------
  
- //------
+  inline void   StorePolarization(G4ThreeVector p) { currentPolarization  = p; }
+  inline G4ThreeVector GetPolarization() const { return currentPolarization; }
+
+  //------
 
   inline void     StorePrimaryQ2(G4double q2)   { primaryQ2 = q2; }
   inline G4double   GetPrimaryQ2() const { return primaryQ2; }
