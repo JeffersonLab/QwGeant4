@@ -1684,13 +1684,13 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 Float_t rDepositedEnergy = (Float_t) aHit->GetHitDepositedEnergy() / MeV;
                 rTotalDepositedEnergy += rDepositedEnergy;
 
-                //--- deteremine elastic cross section
+                //--- determine elastic cross section
                 Double_t rElasticCrossSection = 0;
                 Double_t rElasticMomentumTransfer = 0;
                 Double_t rElasticScatteredEnergy = 0;
                 myUserInfo->GetEPEvent()->Elastic_Cross_Section_Proton(
-                    /* input  */ aHit->GetTotalEnergy(),
-                                 aHit->GetWorldMomentum().theta(),
+                    /* input  */ myUserInfo->GetBeamEnergy(),
+                                 myUserInfo->GetOriginVertexThetaAngle(),
                     /* output */ rElasticCrossSection,
                                  rElasticMomentumTransfer,
                                  rElasticScatteredEnergy);
