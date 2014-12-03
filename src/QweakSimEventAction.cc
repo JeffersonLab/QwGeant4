@@ -1721,13 +1721,22 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 Float_t rDepositedEnergy = (Float_t) aHit->GetHitDepositedEnergy() / MeV;
                 rTotalDepositedEnergy += rDepositedEnergy;
 
+                // beam energy (before energy loss in target), explicitly in MeV
+                G4double beamEnergy = myUserInfo->GetBeamEnergy() / MeV;
+
+                // incoming and outgoing momentum (taking into account rastering)
+                G4ThreeVector p_in = myUserInfo->GetNormMomentum();
+                G4ThreeVector p_out = globalMomentum;
+                // scattering angle between incoming and outgoing momentum direction
+                G4double scatteringAngle = acos(p_out.dot(p_in)/p_in.mag()/p_out.mag());
+
                 //--- determine elastic cross section
-                Double_t rElasticCrossSection = 0;
-                Double_t rElasticMomentumTransfer = 0;
-                Double_t rElasticScatteredEnergy = 0;
+                G4double rElasticCrossSection = 0;
+                G4double rElasticMomentumTransfer = 0;
+                G4double rElasticScatteredEnergy = 0;
                 myUserInfo->GetEPEvent()->Elastic_Cross_Section_Proton(
-                    /* input  */ myUserInfo->GetBeamEnergy(),
-                                 myUserInfo->GetOriginVertexThetaAngle(),
+                    /* input  */ beamEnergy,
+                                 scatteringAngle,
                     /* output */ rElasticCrossSection,
                                  rElasticMomentumTransfer,
                                  rElasticScatteredEnergy);
