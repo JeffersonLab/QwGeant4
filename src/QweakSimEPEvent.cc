@@ -449,8 +449,11 @@ G4double QweakSimEPEvent::Elastic_Cross_Section_Proton(G4double E_in,
 
 //    E_in units is MeV
 
-      if (Theta<GetThetaAngle_Min())
+      if (Theta < GetThetaAngle_Min()) {
 	Theta = GetThetaAngle_Min();
+	G4cout << "Warning: Elastic_Cross_Section_Proton: theta less than " << GetThetaAngle_Min() << G4endl;
+        G4cout << "Warning: Elastic_Cross_Section_Proton: theta was set to " << GetThetaAngle_Min() << G4endl;
+      }
 
       G4double CTH = cos(Theta/2.);
       G4double STH = sin(Theta/2.);
@@ -3478,10 +3481,8 @@ G4double  QweakSimEPEvent::GetPhaseSpace()  {return myUserInfo->GetPhaseSpace();
 
 void QweakSimEPEvent::SetBeamEnergy(G4double energy) {
     if (energy>0) { 
-      //BeamEnergy = energy; 
       CheckLookupTableBounds();
       myUserInfo->SetBeamEnergy(energy); 
-      //G4cout << "#### Changing Beam Energy to " << energy/1000 << " GeV" << G4endl;
     }
     else {
       G4cout << G4endl << "##### Beam Energy must be greater than zero" << G4endl << G4endl;
