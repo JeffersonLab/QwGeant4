@@ -41,7 +41,7 @@ QweakSimCerenkovDetectorMessenger::QweakSimCerenkovDetectorMessenger(QweakSimCer
 {
   G4String Dir_name = "/Cerenkov";
   if (Dir == 0) {
-    Dir = new  G4UIdirectory(Dir_name);
+    Dir = new  G4UIdirectory(G4String(Dir_name+"/"));
     Dir -> SetGuidance("Cerenkov Detector control.");
   }
 
