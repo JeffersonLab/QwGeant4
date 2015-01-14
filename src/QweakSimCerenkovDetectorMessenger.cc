@@ -39,7 +39,7 @@ G4UIcmdWithADoubleAndUnit* QweakSimCerenkovDetectorMessenger::KinkAngleCmd = 0;
 QweakSimCerenkovDetectorMessenger::QweakSimCerenkovDetectorMessenger(QweakSimCerenkovDetector* theCerenkovDetector, G4int octant)
 :myCerenkovDetector(theCerenkovDetector),fOctant(octant)
 {
-  G4String Dir_name = "/Cerenkov";
+  G4String Dir_name = "/Cerenkov/";
   if (Dir == 0) {
     Dir = new  G4UIdirectory(Dir_name);
     Dir -> SetGuidance("Cerenkov Detector control.");
