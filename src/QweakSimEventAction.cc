@@ -944,11 +944,16 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 Float_t rGlobalPolarizationX = rGlobalPolarizationVector.x();
                 Float_t rGlobalPolarizationY = rGlobalPolarizationVector.y();
                 Float_t rGlobalPolarizationZ = rGlobalPolarizationVector.z();
-                // longitudinal polarization is along the momentum direction
-                Float_t rLongitudinalPolarization = rGlobalPolarizationVector.dot(globalMomentum)/globalMomentum.mag()/rGlobalPolarizationVector.mag();
-                // transverse polarization is all except longitudinal
-                G4ThreeVector rTransversePolarizationVector = rGlobalPolarizationVector - rLongitudinalPolarization*globalMomentum/globalMomentum.mag();
-                Float_t rTransversePolarization = rTransversePolarizationVector.mag();
+
+                Float_t rLongitudinalPolarization = 0.0;
+								G4ThreeVector	rTransversePolarizationVector =  G4ThreeVector(0.0,0.0,0.0);
+								if  (globalMomentum.mag() > 0){
+                	// longitudinal polarization is along the momentum direction
+                	rLongitudinalPolarization = rGlobalPolarizationVector.dot(globalMomentum)/globalMomentum.mag()/rGlobalPolarizationVector.mag();
+                	// transverse polarization is all except longitudinal
+									rTransversePolarizationVector = rGlobalPolarizationVector - rLongitudinalPolarization*globalMomentum/globalMomentum.mag();
+								}
+								Float_t rTransversePolarization = rTransversePolarizationVector.mag();
                 Float_t rTransversePolarizationX = rTransversePolarizationVector.x();
                 Float_t rTransversePolarizationY = rTransversePolarizationVector.y();
                 Float_t rTransversePolarizationZ = rTransversePolarizationVector.z();

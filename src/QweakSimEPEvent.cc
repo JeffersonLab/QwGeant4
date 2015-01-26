@@ -1587,6 +1587,10 @@ G4double QweakSimEPEvent::AlGDR(G4double E_in, //MeV
 
   fWeightN = xsect*sin(Theta);
 
+	//G4cerr << "-----CrossSection: " << xsect << G4endl;
+
+
+
   return xsect;
 }
 
