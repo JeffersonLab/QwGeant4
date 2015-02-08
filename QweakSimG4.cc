@@ -28,21 +28,6 @@
 #include "G4PhysListFactory.hh"
 #include "G4VModularPhysicsList.hh"
 
-// user includes
-#include "QweakSimUserInformation.hh"
-#include "QweakSimDetectorConstruction.hh"
-#include "QweakSimPhysicsList.hh"
-#include "QweakSimPrimaryGeneratorAction.hh"
-#include "QweakSimRunAction.hh"
-#include "QweakSimEventAction.hh"
-#include "QweakSimStackingAction.hh"
-#include "QweakSimSteppingAction.hh"
-#include "QweakSimTrackingAction.hh"
-#include "QweakSimSteppingVerbose.hh"
-#include "QweakSimAnalysis.hh"
-#include "QweakSimEPEvent.hh"
-#include "G4UIExecutive.hh"
-
 #ifdef G4UI_USE_QT
     #include "G4UIQt.hh"
 #endif
@@ -54,6 +39,21 @@
 #ifdef G4VIS_USE
     #include "G4VisExecutive.hh"
 #endif
+
+
+// user includes
+#include "QweakSimUserInformation.hh"
+#include "QweakSimDetectorConstruction.hh"
+#include "QweakSimPrimaryGeneratorAction.hh"
+#include "QweakSimRunAction.hh"
+#include "QweakSimEventAction.hh"
+#include "QweakSimStackingAction.hh"
+#include "QweakSimSteppingAction.hh"
+#include "QweakSimTrackingAction.hh"
+#include "QweakSimSteppingVerbose.hh"
+#include "QweakSimAnalysis.hh"
+#include "QweakSimEPEvent.hh"
+#include "G4UIExecutive.hh"
 
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -84,7 +84,7 @@ int main(int argc,char** argv) {
   physlist->RegisterPhysics(new G4StepLimiterBuilder()); // new, Jan16, 2014b
   runManager->SetUserInitialization(physlist);
 
-  // Original Qweak Physics List, uncomment to use, comment out block above
+  // Original Qweak Physics List, uncomment to use and add correct #include lines
   //runManager->SetUserInitialization(new QweakSimPhysicsList() );
 
   // UserAction classes
