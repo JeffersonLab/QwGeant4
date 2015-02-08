@@ -55,6 +55,7 @@
 #include <vector>
 
 // geant4 includes
+#include "G4Version.hh"
 #include "G4Allocator.hh"
 #include "G4VTrajectory.hh"
 
@@ -110,7 +111,11 @@ class QweakSimTrajectory : public G4VTrajectory
 // Other member functions
 //   virtual void ShowTrajectory() const;
    virtual void ShowTrajectory(std::ostream& os=G4cout) const;
+   #if G4VERSION_NUMBER < 1000
    virtual void DrawTrajectory(G4int i_mode=0) const;
+   #else
+   virtual void DrawTrajectory() const;
+   #endif
    virtual void AppendStep(const G4Step* aStep);
    virtual void MergeTrajectory(G4VTrajectory* secondTrajectory);
 

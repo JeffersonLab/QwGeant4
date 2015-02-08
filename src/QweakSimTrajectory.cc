@@ -168,7 +168,11 @@ void QweakSimTrajectory::ShowTrajectory(std::ostream& os) const
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+#if G4VERSION_NUMBER < 1000
 void QweakSimTrajectory::DrawTrajectory(G4int) const
+#else
+void QweakSimTrajectory::DrawTrajectory() const
+#endif
 {
  //  G4cout << G4endl << "###### Calling QweakSimTrajectory::DrawTrajectory()" << G4endl << G4endl;
 
