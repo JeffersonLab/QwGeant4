@@ -32,8 +32,8 @@ G4double Alinel_crsec_gen(G4double E_in=1160, G4double th=8.0){
   G4double E_out = E_in/ETA;
   
   G4double Q2 = 4*E_in*E_out*STH*STH;     //unit: MeV^2
-  G4double hbarc = 197.3269631; // MeV fm
-  G4double q2 = Q2/(hbarc*hbarc);  //convert MeV^2 into fm^(-2)
+  G4double myhbarc = hbarc / MeV / fermi; // 197.3269631 MeV fm
+  G4double q2 = Q2/(myhbarc*myhbarc);  //convert MeV^2 into fm^(-2)
   G4double qq = sqrt(q2);
 
   G4double FF2 = getAlinel_FF2(qq);

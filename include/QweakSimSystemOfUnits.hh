@@ -3,6 +3,7 @@
 using CLHEP::angstrom;
 using CLHEP::micrometer;
 using CLHEP::nanometer;
+using CLHEP::fermi;
 using CLHEP::mm;
 using CLHEP::cm;
 using CLHEP::m;
