@@ -154,7 +154,7 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep){
         if( fabs(theZ - RandomPositionZ)<=theStepLength && sqrt(theX*theX+theY*theY)<2.54*cm){
 
 	  std::vector< G4double > CrossSection;
-	  for (Int_t i = 0; i<16; i++) { CrossSection.push_back(0.0); }
+	  for (int i = 0; i<16; i++) { CrossSection.push_back(0.0); }
 	  
 	  G4double WeightN, Q2, E_out, theta, phi;
 	  G4double Asymmetry;
