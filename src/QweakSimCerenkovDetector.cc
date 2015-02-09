@@ -1249,9 +1249,9 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
                                             0.5*LGAngCutXDim,
                                             0.5*LGAngCutYDim,
                                             0.5*LGAngCutZDim);
-    Double_t ad = 0.0; //45.0;  //0.0;
-    Double_t ar = ad*4.0*std::atan(1.0)/180.0;
-    Double_t dx = 0.5*LGAngCutZDim*std::cos(ar)-0.5*(LightGuide_FullThickness -
+    G4double ad = 0.0; //45.0;  //0.0;
+    G4double ar = ad*4.0*std::atan(1.0)/180.0;
+    G4double dx = 0.5*LGAngCutZDim*std::cos(ar)-0.5*(LightGuide_FullThickness -
                   LGAngCutZDim*std::sin(ar))*std::tan(ar)
                   + LightGuide_FullThickness*(1 - redfr)*std::tan(ar);
 
