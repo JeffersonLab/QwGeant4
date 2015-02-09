@@ -119,8 +119,6 @@ private:
 
   static const int PmtMaxSize = 18;
 
-  G4int  octantID;
-
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

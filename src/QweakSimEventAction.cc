@@ -239,7 +239,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         for (G4int i=0; i<n_trajectories; i++) {
 
             QweakSimTrajectory* trj = (QweakSimTrajectory*) ((*(evt->GetTrajectoryContainer()))[i]);
-            trj->DrawTrajectory(50);
+            trj->DrawTrajectory();
 
         }
     }
@@ -2497,8 +2497,6 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void QweakSimEventAction::Initialize()
 {
-    //----------------------
-    octantID   = 0;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
