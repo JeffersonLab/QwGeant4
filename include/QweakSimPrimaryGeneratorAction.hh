@@ -44,6 +44,7 @@
 #include "G4ParticleTable.hh"
 #include "G4VUserPrimaryGeneratorAction.hh"
 
+// user includes
 #include "QweakSimUserInformation.hh"
 #include "QweakSimEPEvent.hh"
 
@@ -52,8 +53,6 @@ class G4ParticleGun;
 
 // user classes
 class QweakSimPrimaryGeneratorActionMessenger;
-
-//infomation class
 class QweakSimUserInformation;
 class QweakSimEPEvent;
 
@@ -82,8 +81,8 @@ public:
 
 
   void GeneratePrimaries(G4Event* anEvent);
-  void ResetNtupleEventCounter() {myEventCounter = 0;}
-  void SetNtupleEventCounter(G4int cnt) {myEventCounter = cnt;}
+  void ResetNtupleEventCounter();
+  void SetNtupleEventCounter(G4int cnt);
 
   void SetPolarization(G4String polarization) {
     fPolarization = polarization;
@@ -100,8 +99,6 @@ public:
 
   QweakSimUserInformation* GetUserInfo() const { return myUserInfo; };
 
-  G4int             myEventCounter;
-  
 private:
 
   G4ParticleGun*                      particleGun;

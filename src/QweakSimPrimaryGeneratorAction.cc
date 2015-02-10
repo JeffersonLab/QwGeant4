@@ -192,3 +192,15 @@ void QweakSimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+void QweakSimPrimaryGeneratorAction::ResetNtupleEventCounter() {
+  myUserInfo->StorePrimaryEventNumber(0);
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+void QweakSimPrimaryGeneratorAction::SetNtupleEventCounter(G4int cnt) {
+  myUserInfo->StorePrimaryEventNumber(cnt);
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
