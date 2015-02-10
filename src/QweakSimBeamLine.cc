@@ -110,7 +110,7 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             0,
             360*degree);
 
-    G4LogicalVolume* R1_Pipe_Logical  = new G4LogicalVolume(R1_Pipe_Solid,
+    R1_Pipe_Logical  = new G4LogicalVolume(R1_Pipe_Solid,
             BeamPipe_Material,
             "R1_Pipe_Log",
             0,0,0);
@@ -132,7 +132,7 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             0,
             360*degree);
 
-    G4LogicalVolume* R1_Flange_Logical  = new G4LogicalVolume(R1_Flange_Solid,
+    R1_Flange_Logical  = new G4LogicalVolume(R1_Flange_Solid,
             BeamPipe_Material,
             "R1_Flange_Log",
             0,0,0);
@@ -154,7 +154,7 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             0,
             360*degree);
 
-    G4LogicalVolume* DS_R1_Pipe_Logical  = new G4LogicalVolume(DS_R1_Pipe_Solid,
+    DS_R1_Pipe_Logical  = new G4LogicalVolume(DS_R1_Pipe_Solid,
             BeamPipe_Material,
             "DS_R1_Pipe_Log",
             0,0,0);
@@ -176,7 +176,7 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             0,
             360*degree);
 
-    G4LogicalVolume* DS_R1_Flange_Logical  = new G4LogicalVolume(DS_R1_Flange_Solid,
+    DS_R1_Flange_Logical  = new G4LogicalVolume(DS_R1_Flange_Solid,
             BeamPipe_Material,
             "DS_R1_Flange_Log",
             0,0,0);
@@ -198,7 +198,7 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             0,
             360*degree);
 
-    G4LogicalVolume* DS_R1_Bellow_Logical  = new G4LogicalVolume(DS_R1_Bellow_Solid,
+    DS_R1_Bellow_Logical  = new G4LogicalVolume(DS_R1_Bellow_Solid,
             Shield_Material,
             "DS_R1_Bellow_Log",
             0,0,0);
@@ -220,7 +220,7 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             0,
             360*degree);
 
-    G4LogicalVolume* R2_Pipe_Logical  = new G4LogicalVolume(R2_Pipe_Solid,
+    R2_Pipe_Logical  = new G4LogicalVolume(R2_Pipe_Solid,
             BeamPipe_Material,
             "R2_Pipe_Log",
             0,0,0);
@@ -242,7 +242,7 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             0,
             360*degree);
 
-    G4LogicalVolume* R2_Flange_Logical  = new G4LogicalVolume(R2_Flange_Solid,
+    R2_Flange_Logical  = new G4LogicalVolume(R2_Flange_Solid,
             BeamPipe_Material,
             "R2_Flange_Log",
             0,0,0);
@@ -264,7 +264,7 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             0,
             360*degree);
 
-    G4LogicalVolume* DS_R2_Pipe_Logical  = new G4LogicalVolume(DS_R2_Pipe_Solid,
+    DS_R2_Pipe_Logical  = new G4LogicalVolume(DS_R2_Pipe_Solid,
             BeamPipe_Material,
             "DS_R2_Pipe_Log",
             0,0,0);
@@ -286,7 +286,7 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             0,
             360*degree);
 
-    G4LogicalVolume* R2_RotatorPipe_Logical  = new G4LogicalVolume(R2_RotatorPipe_Solid,
+    R2_RotatorPipe_Logical  = new G4LogicalVolume(R2_RotatorPipe_Solid,
             BeamPipe_Material,
             "R2_RotatorPipe_Log",
             0,0,0);
@@ -309,7 +309,7 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             0,
             360*degree);
 
-    G4LogicalVolume* R3_Pipe_Logical  = new G4LogicalVolume(R3_Pipe_Solid,
+    R3_Pipe_Logical  = new G4LogicalVolume(R3_Pipe_Solid,
             BeamPipe_Material,
             "R3_Pipe_Log",
             0,0,0);
@@ -331,7 +331,7 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             0,
             360*degree);
 
-    G4LogicalVolume* DS_R3_Pipe_Logical  = new G4LogicalVolume(DS_R3_Pipe_Solid,
+    DS_R3_Pipe_Logical  = new G4LogicalVolume(DS_R3_Pipe_Solid,
             BeamPipe_Material,
             "DS_R3_Pipe_Log",
             0,0,0);
@@ -353,7 +353,7 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             0,
             360*degree);
 
-    G4LogicalVolume* R3_Flange_Logical  = new G4LogicalVolume(R3_Flange_Solid,
+    R3_Flange_Logical  = new G4LogicalVolume(R3_Flange_Solid,
             BeamPipe_Material,
             "R3_Flange_Log",
             0,0,0);
@@ -375,7 +375,7 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             0,
             360*degree);
 
-    G4LogicalVolume* R3_US_Wall_Pipe_Logical  = new G4LogicalVolume(R3_US_Wall_Pipe_Solid,
+    R3_US_Wall_Pipe_Logical  = new G4LogicalVolume(R3_US_Wall_Pipe_Solid,
             BeamPipe_Material,
             "R3_US_Wall_Pipe_Log",
             0,0,0);
@@ -406,7 +406,7 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 								   LeadBox_in_Wall_Solid, 
 								   R3_Wall_Pipe_Vacuum_Solid);
     
-    G4LogicalVolume* Sub_LeadBox_in_Wall_Logical  = new G4LogicalVolume(Sub_LeadBox_in_Wall_Solid,
+    Sub_LeadBox_in_Wall_Logical  = new G4LogicalVolume(Sub_LeadBox_in_Wall_Solid,
             Shield_Material,
             "Sub_LeadBox_in_Wall_Log",
             0,0,0);
@@ -428,7 +428,7 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             0,
             360*degree);
 
-    G4LogicalVolume* R3_Wall_Pipe_Logical  = new G4LogicalVolume(R3_Wall_Pipe_Solid,
+    R3_Wall_Pipe_Logical  = new G4LogicalVolume(R3_Wall_Pipe_Solid,
             BeamPipe_Material,
             "R3_Wall_Pipe_Log",
             0,0,0);
@@ -459,7 +459,7 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 								   LeadBox_Extent_Solid, 
 								   DS_18inch_Pipe1_Vacuum_Solid);
 
-    G4LogicalVolume* Sub_LeadBox_Extent_Logical  = new G4LogicalVolume(Sub_LeadBox_Extent_Solid,
+    Sub_LeadBox_Extent_Logical  = new G4LogicalVolume(Sub_LeadBox_Extent_Solid,
             Shield_Material,
             "Sub_LeadBox_Extent_Log",
             0,0,0);
@@ -482,7 +482,7 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             0,
             360*degree);
 
-    G4LogicalVolume* DS_18inch_Pipe1_Logical  = new G4LogicalVolume(DS_18inch_Pipe1_Solid,
+    DS_18inch_Pipe1_Logical  = new G4LogicalVolume(DS_18inch_Pipe1_Solid,
             BeamPipe_Material,
             "DS_18inch_Pipe1_Log",
             0,0,0);
@@ -504,7 +504,7 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             0,
             360*degree);
 
-    G4LogicalVolume* DS_18inch_Pipe2_Logical  = new G4LogicalVolume(DS_18inch_Pipe2_Solid,
+    DS_18inch_Pipe2_Logical  = new G4LogicalVolume(DS_18inch_Pipe2_Solid,
             BeamPipe_Material,
             "DS_18inch_Pipe2_Log",
             0,0,0);
@@ -526,7 +526,7 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             0,
             360*degree);
 
-    G4LogicalVolume* DS_24inch_Pipe_Logical  = new G4LogicalVolume(DS_24inch_Pipe_Solid,
+    DS_24inch_Pipe_Logical  = new G4LogicalVolume(DS_24inch_Pipe_Solid,
             BeamPipe_Material,
             "DS_24inch_Pipe_Log",
             0,0,0);
@@ -548,7 +548,7 @@ void QweakSimBeamLine::ConstructComponent(G4VPhysicalVolume* MotherVolume)
             0,
             360*degree);
 
-    G4LogicalVolume* DS_24inch_Pipe_Flange_Logical  = new G4LogicalVolume(DS_24inch_Pipe_Flange_Solid,
+    DS_24inch_Pipe_Flange_Logical  = new G4LogicalVolume(DS_24inch_Pipe_Flange_Solid,
             BeamPipe_Material,
             "DS_24inch_Pipe_Flange_Log",
             0,0,0);
