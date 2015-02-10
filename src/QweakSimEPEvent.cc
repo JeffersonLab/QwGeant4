@@ -21,6 +21,7 @@
 // user includes
 #include "QweakSimEPEventMessenger.hh"
 #include "QweakSimUserInformation.hh"
+#include "QweakSimPhysicalConstants.hh"
 
 #include "wiser_pion.h"
 #include "Alinel_crsec_gen.h"
@@ -271,36 +272,36 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
 
    if(ReactionType==1) //LH2 target
       {
-       A = 1.0;
-       Z = 1.0;
-       Mass = Z*M_p+(A-Z)*M_n;
+       //G4double A = 1.0;
+       //G4double Z = 1.0;
+       //G4double Mass = Z*M_p+(A-Z)*M_n;
        fCrossSection[0] = Elastic_Cross_Section_Proton(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
        Asymmetry = GetAsymmetry_EP(RelativeThetaAngle, E_in);
       }
       
    else if(ReactionType==2) // Aluminum window
       {
-       A = 27.0;
-       Z = 13.0;
-       Mass = Z*M_p+(A-Z)*M_n;
+       //G4double A = 27.0;
+       //G4double Z = 13.0;
+       //G4double Mass = Z*M_p+(A-Z)*M_n;
        fCrossSection[0] = Elastic_Cross_Section_Aluminum(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
        Asymmetry = GetAsymmetry_AL(RelativeThetaAngle, E_in);
       }
 
    else if(ReactionType==3) // Aluminum window quasi-elastic proton (assume free proton)
       {
-       A = 1.0;
-       Z = 1.0;   
-       Mass = M_p;    
+       //G4double A = 1.0;
+       //G4double Z = 1.0;
+       //G4double Mass = M_p;
        fCrossSection[0] = Elastic_Cross_Section_Proton(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
        Asymmetry = GetAsymmetry_EP(RelativeThetaAngle, E_in);
       }
 
    else if(ReactionType==4) // Aluminum window quasi-elastic neutron (assume free neutron)
       {
-       A = 1.0;
-       Z = 1.0;   // Z needs to be set to 1 for neutron quasi elastic scattering
-       Mass = M_n;    
+       //G4double A = 1.0;
+       //G4double Z = 1.0;   // Z needs to be set to 1 for neutron quasi elastic scattering
+       //G4double Mass = M_n;
        fCrossSection[0] = Quasi_Elastic_Neutron(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
        Asymmetry = GetAsymmetry_EN(RelativeThetaAngle, E_in);
       }
@@ -328,8 +329,8 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
       }
    else if(ReactionType==8) // Quasielastic Bosted - Aluminum
       {
-         Z = 13;
-         A = 27;
+         G4int Z = 13;
+         G4int A = 27;
          fCrossSection[0] = Quasi_Elastic_Bosted(E_in, RelativeThetaAngle, Z, A, fWeightN, Q2, E_out);
       }	
    else if(ReactionType==88) //--- LH2 target, pion photo-production cross section 3.35 GeV
@@ -347,44 +348,44 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
      }
    else if(ReactionType==11) // Nuclear Inelastic Bosted - Aluminum
      {
-       Z = 13;
-       A = 27;
+       G4double Z = 13;
+       G4double A = 27;
        fCrossSection[0] = NuclearInelastic_Bosted(E_in, RelativeThetaAngle, Z, A, fWeightN, Q2, E_out);
      }
    else if(ReactionType==12) // Alloy: Zinc elastic scattering approximation
      {
-       Z = 30;
-       A = 64;
+       G4double Z = 30;
+       G4double A = 64;
        fCrossSection[0] = AlloyScattering(E_in, RelativeThetaAngle, Z, A, fWeightN, Q2, E_out);
      }
    else if(ReactionType==13) // Alloy: Magnesium elastic scattering approximation
      {
-       Z = 12;
-       A = 24;
+       G4double Z = 12;
+       G4double A = 24;
        fCrossSection[0] = AlloyScattering(E_in, RelativeThetaAngle, Z, A, fWeightN, Q2, E_out);
      }
    else if(ReactionType==14) // Alloy: Copper elastic scattering approximation
      {
-       Z = 29;
-       A = 65;
+       G4double Z = 29;
+       G4double A = 65;
        fCrossSection[0] = AlloyScattering(E_in, RelativeThetaAngle, Z, A, fWeightN, Q2, E_out);
      }
    else if(ReactionType==15) // Alloy: Chromium elastic scattering approximation
      {
-       Z = 24;
-       A = 52;
+       G4double Z = 24;
+       G4double A = 52;
        fCrossSection[0] = AlloyScattering(E_in, RelativeThetaAngle, Z, A, fWeightN, Q2, E_out);
      }
    else if(ReactionType==16) // Alloy: Iron elastic scattering approximation
      {
-       Z = 26;
-       A = 56;
+       G4double Z = 26;
+       G4double A = 56;
        fCrossSection[0] = AlloyScattering(E_in, RelativeThetaAngle, Z, A, fWeightN, Q2, E_out);
      }
    else if(ReactionType==17) // Alloy: Silicon elastic scattering approximation
      {
-       Z = 14;
-       A = 28;
+       G4double Z = 14;
+       G4double A = 28;
        fCrossSection[0] = AlloyScattering(E_in, RelativeThetaAngle, Z, A, fWeightN, Q2, E_out);
      }
 
@@ -443,9 +444,9 @@ G4double QweakSimEPEvent::Elastic_Cross_Section_Proton(G4double E_in,
       G4double Z = 1.0;
       G4double A = 1.0;
       G4double M = M_p*A;
-      G4double hbarc = 197.3269718;  // in MeV fm 
+      G4double myhbarc = hbarc / MeV / fermi; // 197.3269718 in MeV fm 
       G4double alpha = 1.0/137.035999074;
-      G4double CC = hbarc*alpha/2.0;  // 0.719982242379
+      G4double CC = myhbarc*alpha/2.0;  // 0.719982242379
 
 //    E_in units is MeV
 
@@ -678,7 +679,6 @@ G4double QweakSimEPEvent::Sigma_EEPrime(G4double eni, G4double eprime, G4double 
  
       G4double mp = 0.9382727;
       G4double mp2 = mp*mp;   
-      G4double pi = 3.141593;
       G4double alpha = 1.0/137.036;
       G4double mpion = 0.135;
     
@@ -1903,7 +1903,7 @@ void QweakSimEPEvent::F1F2QE09(G4int Z, G4int IA, G4double QSQ,
   // equivalent W resolution
   F1 = 0.;
   F2 = 0.;
-  avgN = A - Z;
+  avgN = IA - Z;
   if (IA==1) return;
 
   // some kinematic factors. Return if Nu or QSQ is negative
@@ -2083,7 +2083,7 @@ void QweakSimEPEvent::F1F2QE09(G4int Z, G4int IA, G4double QSQ,
 
 
   // apply correction factors
-  if ( A > 2 ) {
+  if ( IA > 2 ) {
     y = (wsq -amp*amp) / QV;
     //         F1 = F1 * (1. + pb(8) + pb(9) * y +
     //     >        pb(10)*y**2 + pb(11)*y**3 + pb(12)*y**4 )
@@ -2246,15 +2246,15 @@ void QweakSimEPEvent::F1F2IN09(G4int Z, G4int IA, G4double qsq,
 
   Rc = 0.;
   if(sigt > 0.) Rc = sigl / sigt;
-  W1 = (2. * Z * F1d + (A - 2. * Z) * (2. * F1d - F1p)) / PM;
+  W1 = (2. * Z * F1d + (IA - 2. * Z) * (2. * F1d - F1p)) / PM;
   W1= W1*(1.0+P[13]*x+P[14]*pow(x,2)+P[15]*pow(x,3)+P[16]*pow(x,4)+P[17]*pow(x,5));
       
   if(W > 0.0) {
     W1=W1*pow((1.0+(P[20]*W+P[21]*pow(W,2))/(1.0+P[22]*qsq)),2);
-    F1M = MEC2009(A,qsq,wsq);
+    F1M = MEC2009(IA,qsq,wsq);
     W1 = W1 + F1M;
     if(wsq > 0.0 ) {
-      Rc = Rc * ( 1.0 + P[6] + P[23]*A );
+      Rc = Rc * ( 1.0 + P[6] + P[23]*IA );
       W2 = W1 * (1. + Rc) / (1. + nu*nu / qsq);
     }
    }
@@ -2280,7 +2280,6 @@ void QweakSimEPEvent::christy507(G4double w2,G4double q2,G4double &F1,
 
   G4double mp = .9382727;
   G4double mp2 = mp*mp;
-  G4double pi = 3.141593;
   G4double alpha = 1./137.036;
 
   G4double xval[100] = {
@@ -2314,7 +2313,7 @@ void QweakSimEPEvent::christy507(G4double w2,G4double q2,G4double &F1,
   xvalL[43] = xval1[47];
   xvalL[49] = xval1[49];
 
-  G4double xb = q2/(w2+q2-mp2);
+  //G4double xb = q2/(w2+q2-mp2);
   sigT = resmod507_v2(1,w2,q2,xval1);
   sigL = resmod507_v2(2,w2,q2,xvalL);
 
@@ -2339,7 +2338,7 @@ void QweakSimEPEvent::resmodd(G4double w2, G4double q2,
   G4double petacm,ppicmr[7],ppi2cmr[7],petacmr[7],epicmr[7],epi2cmr[7];
   G4double eetacmr[7],epicm,epi2cm,eetacm,br[7][2],ang[7],sigrsv[7];
   G4double pgam[7],pwid[7][2],x0[7],dip;
-  G4double sig_res,xpr,alpha,pi,F1;
+  G4double sig_res,xpr,alpha,F1;
   G4int i,j,num,iw;
   
   G4double xval0[12] = {
@@ -2354,7 +2353,6 @@ void QweakSimEPEvent::resmodd(G4double w2, G4double q2,
   mpi = 0.135;
   meta = 0.547;
   mp2 = mp*mp;
-  pi = 3.141593;
   alpha = 1./137.036;
 
   sig = 0.;
@@ -2766,7 +2764,7 @@ G4double QweakSimEPEvent::MEC2009(G4int a, G4double q2,G4double w2)
   if(a > 50.) p18 = 230;
 
        
-  f1corr = P[0]*exp(-pow(w-P[1],2)/P[2])/(pow(1.0 + std::max(0.3,q2)/P[3],P[4]))*pow(nu,P[5])*(1.0 + p18 * pow(A,(1.0 + P[19] * x)));
+  f1corr = P[0]*exp(-pow(w-P[1],2)/P[2])/(pow(1.0 + std::max(0.3,q2)/P[3],P[4]))*pow(nu,P[5])*(1.0 + p18 * pow(a,(1.0 + P[19] * x)));
 
   f1 = f1corr;
 
@@ -2864,18 +2862,18 @@ G4double QweakSimEPEvent::AlloyScattering(G4double E_in, //MeV
                                           G4double &E_out)
 {
   G4double M_p = 938.2796;
-  G4double mm = M_p*Ain;
+  G4double M = M_p*Ain;
   
   G4double STH = sin(Theta/2.);
   G4double CTH = cos(Theta/2.);
 
-  E_out = E_in/(1+2*E_in/mm*STH*STH);
+  E_out = E_in/(1+2*E_in/M*STH*STH);
   Q2 = 4.*E_in*E_out*STH*STH; // MeV^2
 
 
   // Mott cross section
   G4double sigMott = pow(Zin*0.719982/E_in*CTH/(STH*STH),2);
-  sigMott = sigMott/(1+2*E_in/mm*STH*STH)*10000;
+  sigMott = sigMott/(1+2*E_in/M*STH*STH)*10000;
   
   // Form factor
   G4int NUC_MODEL = 1; // USE Fourier-Bessel if available

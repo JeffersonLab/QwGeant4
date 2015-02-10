@@ -49,11 +49,6 @@ class QweakSimEPEvent {
 
    static const G4double Theta_Min;
 
-   G4double A;  // mass number A, Al_A = 27.0
-   G4double Z;  // charge number Z, Al_Z = 13.0
-
-   G4double Mass;
-
    G4int TypeSetting;
    G4int ReactionType;          ///< \ref reaction_type used for event generation
    G4int ReactionRegion;        ///< \ref reaction_region used for event generation
