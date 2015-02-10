@@ -6,6 +6,9 @@
 #include "G4String.hh"
 #include "G4ThreeVector.hh"
 
+// user includes
+#include "QweakSimSystemOfUnits.hh"
+
 // geant4 classes
 class G4ParticleDefinition;
 class G4Track;

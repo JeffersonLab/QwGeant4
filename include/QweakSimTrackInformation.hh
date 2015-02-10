@@ -39,6 +39,9 @@
 #include "G4ThreeVector.hh"
 #include "G4VUserTrackInformation.hh"
 
+// user includes
+#include "QweakSimSystemOfUnits.hh"
+
 // geant4 classes
 class G4Track;
 class G4ParticleDefinition;

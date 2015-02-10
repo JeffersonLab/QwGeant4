@@ -25,6 +25,10 @@
 #include "G4Colour.hh"
 #include "G4VisAttributes.hh"
 
+// user includes
+#include "QweakSimSystemOfUnits.hh"
+#include "QweakSimPhysicalConstants.hh"
+
 // geant4 classes
 class G4Box;
 class G4Trd;

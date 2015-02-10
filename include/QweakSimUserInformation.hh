@@ -5,11 +5,12 @@
 
 //user includes
 #include "QweakSimCerenkovDetector_PMTHit.hh"
-#include "QweakSimUserPrimaryEvent.hh"
 
 #include "G4PhysicsOrderedFreeVector.hh"
 
 #include "QweakSimPrimaryGeneratorAction.hh"
+#include "QweakSimSystemOfUnits.hh"
+#include "QweakSimPhysicalConstants.hh"
 
 // forward declarations
 class QweakSimEPEvent;

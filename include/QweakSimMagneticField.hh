@@ -9,8 +9,10 @@
 // geant4 includes
 #include "G4ios.hh"
 #include "G4String.hh"
-#include "G4SystemOfUnits.hh"
 #include "G4MagneticField.hh"
+
+// user includes
+#include "QweakSimSystemOfUnits.hh"
 
 // user classes
 template <class value_t, unsigned int value_n>

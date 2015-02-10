@@ -10,4 +10,7 @@
 #include "G4VVisManager.hh"
 #include "G4VisAttributes.hh"
 
+// user includes
+#include "QweakSimSystemOfUnits.hh"
+
 #endif

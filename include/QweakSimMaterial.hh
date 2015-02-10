@@ -52,6 +52,9 @@
 // geant4 includes
 #include "G4NistManager.hh"
 
+// user includes
+#include "QweakSimSystemOfUnits.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 class QweakSimMaterial
 {
