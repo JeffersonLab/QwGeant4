@@ -17,12 +17,13 @@
 #define QWEAKSIMEPEVENT_H
 
 // geant4 includes
+#include "Randomize.hh"
 #include "G4Types.hh"
 #include "G4ThreeVector.hh"
 
 //  user includes
-#include <QweakSimFieldMap.hh>
-#include "Randomize.hh"
+#include "QweakSimSystemOfUnits.hh"
+#include "QweakSimFieldMap.hh"
 
 // user classes
 class QweakSimEPEventMessenger;
