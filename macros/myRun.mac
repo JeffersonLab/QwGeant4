@@ -39,9 +39,9 @@
 #  3: track all primaries and their secondaries
 # 
 #/TrackingAction/TrackingFlag 0
-/TrackingAction/TrackingFlag 1
+#/TrackingAction/TrackingFlag 1
 #/TrackingAction/TrackingFlag 2
-#/TrackingAction/TrackingFlag 3
+/TrackingAction/TrackingFlag 3
 
 #/Analysis/RootFileName QweakSimNew.root
 #/Analysis/RootFileStem QwSim

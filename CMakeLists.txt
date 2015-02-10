@@ -11,6 +11,9 @@ file(GLOB my_project_sources ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc)
 # Local path for cmake modules, before ${CMAKE_ROOT}/Modules/ is checked
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
+# Explicitly add compiler flag -fPIC as required by geant4.10 on ifarm65
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+
 # Custom target that is always built
 add_custom_target(QweakSimVersion ALL)
 
