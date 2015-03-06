@@ -226,8 +226,7 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
     // outgoing momentum
     OutgoingMomentumDirection = GetMomentumDirection();
     theta = OutgoingMomentumDirection.theta()/degree;
-    phi = OutgoingMomentumDirection.phi()/degree;
-    
+    phi = OutgoingMomentumDirection.phi()/degree; 
     // relative theta angle
     
     G4double dot = OutgoingMomentumDirection.dot(IncomingMomentumDirection);
@@ -277,6 +276,7 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
        //G4double Mass = Z*M_p+(A-Z)*M_n;
        fCrossSection[0] = Elastic_Cross_Section_Proton(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
        Asymmetry = GetAsymmetry_EP(RelativeThetaAngle, E_in);
+      
       }
       
    else if(ReactionType==2) // Aluminum window
@@ -286,7 +286,8 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
        //G4double Mass = Z*M_p+(A-Z)*M_n;
        fCrossSection[0] = Elastic_Cross_Section_Aluminum(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
        Asymmetry = GetAsymmetry_AL(RelativeThetaAngle, E_in);
-      }
+    
+       }
 
    else if(ReactionType==3) // Aluminum window quasi-elastic proton (assume free proton)
       {
@@ -308,7 +309,7 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
 
    else if(ReactionType==5) // Delta resonances
       {
-       fCrossSection[0] = Delta_Resonance(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
+       fCrossSection[0] = Delta_Resonance(E_in,RelativeThetaAngle, fWeightN, Q2, E_out);
        //std::cout<<E_in<<" "<<ThetaAngle/degree<<" "<<fWeightN<<" "<<Q2<<" "<<E_out<<std::endl;
        Asymmetry = GetAsymmetry_Pi(Q2);
       }
@@ -447,6 +448,8 @@ G4double QweakSimEPEvent::Elastic_Cross_Section_Proton(G4double E_in,
       G4double myhbarc = hbarc / MeV / fermi; // 197.3269718 in MeV fm 
       G4double alpha = 1.0/137.035999074;
       G4double CC = myhbarc*alpha/2.0;  // 0.719982242379
+	G4double Electon_Mass = 0.511;  //electorn mass in MeV
+	  G4double pi = 3.14159265359;
 
 //    E_in units is MeV
 
@@ -473,9 +476,15 @@ G4double QweakSimEPEvent::Elastic_Cross_Section_Proton(G4double E_in,
       G4double GMP_DIPOLE = GEP_DIPOLE*mu;
       G4double FAC = 1.0/(1.0+tau);
 
-      G4double Sigma_Dipole = Mott*(GEP_DIPOLE*GEP_DIPOLE*FAC+tau*GMP_DIPOLE*GMP_DIPOLE*(FAC+2.*T2THE));
-      fWeightN = Sigma_Dipole*sin(Theta);
-      return Sigma_Dipole;
+	  //The next two line is to add schwinger
+        G4double FunctionofTheta = log (STH*STH) * log (CTH*CTH);
+	G4double delta_Schwinger = (-2*alpha/pi)*((log(E_in/15)-13/12)*(log(Q2/(Electon_Mass*Electon_Mass))-1)+17/36+ FunctionofTheta/2);
+//	G4double omega_Sch = E_in - 15;
+        G4double Sigma_Dipole;
+        Sigma_Dipole = Mott*(GEP_DIPOLE*GEP_DIPOLE*FAC+tau*GMP_DIPOLE*GMP_DIPOLE*(FAC+2.*T2THE));
+        Sigma_Dipole = Sigma_Dipole * (1+delta_Schwinger);
+        fWeightN = Sigma_Dipole*sin(Theta);
+        return Sigma_Dipole;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -550,6 +559,14 @@ G4double QweakSimEPEvent::Elastic_Cross_Section_Aluminum(G4double E_in,
       G4double F_2 = Fe_2;//+(1.0+2.0*T2THE)*mu*mu/3.0*(J+1.0)/J*q2/4.0/pow((M_p/0.197),2)*Fm_2;
 
 //  EventDataFile<<"F_2="<<F_2<<"  "<<G4endl;
+    
+    //The next lines are to add schwinger
+    G4double Electon_Mass = 0.511;  //electorn mass in MeV
+    G4double pi = 3.14159265359;
+    G4double alpha = 1.0/137.035999074;
+
+    G4double FunctionofTheta = log (STH*STH) * log (CTH*CTH);
+    G4double delta_Schwinger = (-2*alpha/pi)*((log(E_in/15)-13/12)*(log(Q2/(Electon_Mass*Electon_Mass))-1)+17/36+ FunctionofTheta/2);
 
 //    cross section units: ub/sr
 //    G4double SigmaMott = ((0.72/E_in)*cos(Theta/2)/(sin(Theta/2)^2))^2 /( 1+2*E_in/M*(sin(Theta/2)^2))*10000 ;
@@ -559,6 +576,7 @@ G4double QweakSimEPEvent::Elastic_Cross_Section_Aluminum(G4double E_in,
 //  EventDataFile<<"SigmaMott="<<SigmaMott<<"  "<<"SigmaMott*F_2="<<SigmaMott*F_2<<"  "<<"weight_n="<<SigmaMott*F_2*sin(Theta)<<G4endl;
 
       G4double Xsect = SigmaMott*F_2;
+      Xsect = Xsect * (1+delta_Schwinger);
       fWeightN = Xsect*sin(Theta);
 
       //      G4cout<< "q(1/fm)"<<sqrt(q2) <<"  SigmaMott="<<SigmaMott<<"  F_2="<<F_2<<"  SigmaMott*F_2="<<Xsect<<G4endl;
