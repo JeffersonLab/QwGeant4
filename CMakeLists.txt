@@ -11,6 +11,16 @@ file(GLOB my_project_sources ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc)
 # Local path for cmake modules, before ${CMAKE_ROOT}/Modules/ is checked
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
+# Find Geant4
+if(NOT DEFINED Geant4_DIR)
+	set(Geant4_DIR $ENV{G4INSTALL}/build)
+endif(NOT DEFINED Geant4_DIR)
+find_package(Geant4 REQUIRED COMPONENTS gdml qt ui_all vis_all)
+execute_process(COMMAND geant4-config --version
+                OUTPUT_VARIABLE GEANT4_VERSION
+                OUTPUT_STRIP_TRAILING_WHITESPACE)
+message(STATUS "Found Geant4 ${GEANT4_VERSION}")
+
 # Explicitly add compiler flag -fPIC as required by geant4.10 on ifarm65
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
 
@@ -44,10 +54,6 @@ set(my_project_sources ${my_project_sources} ${CMAKE_CURRENT_BINARY_DIR}/QweakSi
 
 # Load Geant4 through Find and Use files (the Geant4_DIR directory is where
 # the Geant4 cmake Find and Use files can be found)
-if(NOT DEFINED Geant4_DIR)
-	set(Geant4_DIR $ENV{G4INSTALL}/build)
-endif(NOT DEFINED Geant4_DIR)
-find_package(Geant4 REQUIRED COMPONENTS gdml qt ui_all vis_all)
 include(${Geant4_USE_FILE})
 
 # Link the ROOT and Geant4 libraries
