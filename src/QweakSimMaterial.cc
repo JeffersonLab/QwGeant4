@@ -6,8 +6,10 @@ void QweakSimMaterial::DefineMaterials()
 {
   G4cout << G4endl << "###### Calling QweakSimMaterial::DefineMaterials() " << G4endl << G4endl;
 
-  // Define required materials
+  // Return if we have already defined materials
+  if (fMaterialsHaveBeenDefined) return;
 
+  // Define required materials
   G4double A;        // atomic mass
   G4double Z;        // atomic number
   G4double density;  // density
@@ -825,6 +827,8 @@ void QweakSimMaterial::DefineMaterials()
 
 //   matPhotocathode->SetMaterialPropertiesTable(myMPT_Photocathode);
 
-  G4cout << G4endl << "###### Leaving QweakSimMaterial::DefineMaterials() " << G4endl << G4endl;
+  // Mark materials as having been defined
+  fMaterialsHaveBeenDefined = true;
 
+  G4cout << G4endl << "###### Leaving QweakSimMaterial::DefineMaterials() " << G4endl << G4endl;
 }

@@ -62,6 +62,7 @@ class QweakSimMaterial
     QweakSimMaterial() {
       fNistManager = G4NistManager::Instance();
       fNistManager->SetVerbose(1);
+      fMaterialsHaveBeenDefined = false;
     };
     virtual ~QweakSimMaterial() { };
 
@@ -78,7 +79,11 @@ class QweakSimMaterial
       return ptrToMaterial;
     }
 
-  G4NistManager* fNistManager;
+    G4NistManager* fNistManager;
+
+  private:
+
+    G4bool fMaterialsHaveBeenDefined;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
