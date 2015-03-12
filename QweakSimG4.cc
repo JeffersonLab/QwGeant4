@@ -44,6 +44,7 @@
 #ifdef G4VIS_USE
     #include "G4VisExecutive.hh"
 #endif
+#include "G4UIExecutive.hh"
 
 
 // user includes
@@ -58,8 +59,12 @@
 #include "QweakSimSteppingVerbose.hh"
 #include "QweakSimAnalysis.hh"
 #include "QweakSimEPEvent.hh"
-#include "G4UIExecutive.hh"
 
+#define USE_CUSTOM_NUCLEAR_SCATTERING 0
+#ifdef USE_CUSTOM_NUCLEAR_SCATTERING
+#include "physics_lists/constructors/electromagnetic/QweakSimEmStandardPhysics.hh"
+#include "physics_lists/constructors/electromagnetic/QweakSimEmLivermorePhysics.hh"
+#endif
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -91,6 +96,11 @@ int main(int argc,char** argv) {
   #else
   physlist->RegisterPhysics(new G4StepLimiterPhysics());
   #endif
+  // Replace the standard EM with the customized version to add Pb A_T
+  #ifdef  USE_CUSTOM_NUCLEAR_SCATTERING
+  physlist->ReplacePhysics(new QweakSimEmLivermorePhysics());
+  #endif
+
   runManager->SetUserInitialization(physlist);
 
   // Original Qweak Physics List, uncomment to use and add correct #include lines
