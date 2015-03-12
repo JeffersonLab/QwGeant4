@@ -4,10 +4,6 @@ cmake_minimum_required(VERSION 2.6.0 FATAL_ERROR)
 # Name of this project
 project(QweakSimG4)
 
-# Add the project include directory and put all source files in my_project_sources
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
-file(GLOB my_project_sources ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc)
-
 # Local path for cmake modules, before ${CMAKE_ROOT}/Modules/ is checked
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
@@ -23,6 +19,16 @@ message(STATUS "Found Geant4 ${GEANT4_VERSION}")
 
 # Explicitly add compiler flag -fPIC as required by geant4.10 on ifarm65
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+
+# Add the project include directory and put all source files in my_project_sources
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+if(GEANT4_VERSION VERSION_LESS "10.0.0")
+       message(STATUS "Geant4 < 10.0.0: skip building custom physics processes")
+       file(GLOB my_project_sources ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc)
+else(GEANT4_VERSION VERSION_LESS "10.0.0")
+       message(STATUS "Geant4 > 10.0.0: include building custom physics processes")
+       file(GLOB_RECURSE my_project_sources ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc)
+endif(GEANT4_VERSION VERSION_LESS "10.0.0")
 
 # Custom target that is always built
 add_custom_target(QweakSimVersion ALL)
