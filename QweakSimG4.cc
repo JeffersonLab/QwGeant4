@@ -61,7 +61,7 @@
 #include "QweakSimEPEvent.hh"
 
 #define USE_CUSTOM_NUCLEAR_SCATTERING 0
-#ifdef USE_CUSTOM_NUCLEAR_SCATTERING
+#if USE_CUSTOM_NUCLEAR_SCATTERING
 #include "physics_lists/constructors/electromagnetic/QweakSimEmStandardPhysics.hh"
 #include "physics_lists/constructors/electromagnetic/QweakSimEmLivermorePhysics.hh"
 #endif
@@ -97,7 +97,7 @@ int main(int argc,char** argv) {
   physlist->RegisterPhysics(new G4StepLimiterPhysics());
   #endif
   // Replace the standard EM with the customized version to add Pb A_T
-  #ifdef  USE_CUSTOM_NUCLEAR_SCATTERING
+  #if USE_CUSTOM_NUCLEAR_SCATTERING
   physlist->ReplacePhysics(new QweakSimEmLivermorePhysics());
   #endif
 
