@@ -448,8 +448,7 @@ G4double QweakSimEPEvent::Elastic_Cross_Section_Proton(G4double E_in,
       G4double myhbarc = hbarc / MeV / fermi; // 197.3269718 in MeV fm 
       G4double alpha = 1.0/137.035999074;
       G4double CC = myhbarc*alpha/2.0;  // 0.719982242379
-	G4double Electon_Mass = 0.511;  //electorn mass in MeV
-	  G4double pi = 3.14159265359;
+      G4double Electon_Mass = 0.511;  //electorn mass in MeV
 
 //    E_in units is MeV
 
@@ -562,7 +561,6 @@ G4double QweakSimEPEvent::Elastic_Cross_Section_Aluminum(G4double E_in,
     
     //The next lines are to add schwinger
     G4double Electon_Mass = 0.511;  //electorn mass in MeV
-    G4double pi = 3.14159265359;
     G4double alpha = 1.0/137.035999074;
 
     G4double FunctionofTheta = log (STH*STH) * log (CTH*CTH);
