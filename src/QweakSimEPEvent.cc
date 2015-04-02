@@ -2265,15 +2265,11 @@ void QweakSimEPEvent::F1F2IN09(G4int Z, G4int IA, G4double qsq,
   W1 = (2. * Z * F1d + (IA - 2. * Z) * (2. * F1d - F1p)) / PM;
   W1= W1*(1.0+P[13]*x+P[14]*pow(x,2)+P[15]*pow(x,3)+P[16]*pow(x,4)+P[17]*pow(x,5));
       
-  if(W > 0.0) {
-    W1=W1*pow((1.0+(P[20]*W+P[21]*pow(W,2))/(1.0+P[22]*qsq)),2);
-    F1M = MEC2009(IA,qsq,wsq);
-    W1 = W1 + F1M;
-    if(wsq > 0.0 ) {
-      Rc = Rc * ( 1.0 + P[6] + P[23]*IA );
-      W2 = W1 * (1. + Rc) / (1. + nu*nu / qsq);
-    }
-   }
+  if(W > 0.0) W1=W1*pow((1.0+(P[20]*W+P[21]*pow(W,2))/(1.0+P[22]*qsq)),2);
+  F1M = MEC2009(IA,qsq,wsq);
+  W1 = W1 + F1M;
+  if(wsq > 0.0 ) Rc = Rc * ( 1.0 + P[6] + P[23]*IA );
+  W2 = W1 * (1. + Rc) / (1. + nu*nu / qsq);
 
   x4 = qsq / 2. / PM / nu;
   emcfac = fitemc(x4, IA);
