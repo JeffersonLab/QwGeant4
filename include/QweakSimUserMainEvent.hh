@@ -54,7 +54,6 @@
 #include "QweakSimUserLeadGlass_MainEvent.hh"
 #include "QweakSimUserPMTOnly_MainEvent.hh"
 #include "QweakSimUserCerenkov_MainEvent.hh"
-#include "QweakSimUserLumi_MainEvent.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 class QweakSimUserMainEvent : public TObject
@@ -123,8 +122,6 @@ public:
   QweakSimUserPMTOnly_MainEvent		       PMTOnly;	             ///< tree containing PMTOnly info
 	
   QweakSimUserCerenkov_MainEvent               Cerenkov;             ///< object containing Cerenkov detector info
-
-  QweakSimUserLumi_MainEvent                   Lumi;                 ///< tree containing Lumi detector info
 
 public:
     

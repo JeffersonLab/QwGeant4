@@ -47,7 +47,7 @@ class QweakSimEventActionMessenger;
 
 enum EQweakSimTriggerMode
   { kTriggerAll, kTrigger4Fold, kTrigger3Fold,
-    kTriggerScint, kTriggerLeadGlass, kTriggerCer, kTriggerLumi,
+    kTriggerScint, kTriggerLeadGlass, kTriggerCer,
     kTriggerHDC, kTriggerPMTOnly, kNumTriggers};
 
 class QweakSimEventAction : public G4UserEventAction
@@ -102,8 +102,6 @@ private:
   G4int PMTOnlyDetectorPMT_CollID;
   G4int CerenkovDetector_CollID;
   G4int CerenkovDetectorPMT_CollID;
-  G4int LumiDetector_CollID;
-  G4int LumiDetectorPMT_CollID;
 
   QweakSimAnalysis*             analysis;
   QweakSimUserInformation*      myUserInfo;

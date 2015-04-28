@@ -67,7 +67,6 @@
 //#include "QweakSimGEM.hh"
 #include "QweakSimTriggerScintillator.hh"
 #include "QweakSimCerenkovDetector.hh"
-#include "QweakSimLumiDetector.hh"
 #include "QweakSimMagneticField.hh"
 #include "QweakSimUserInformation.hh"
 
@@ -105,7 +104,6 @@ QweakSimDetectorConstruction::QweakSimDetectorConstruction(QweakSimUserInformati
 
   pTriggerScintillator  = NULL;
   pCerenkovDetector     = NULL;
-  pLumiDetector     = NULL;
 
   pTungstenPlug      = NULL;
   pCollimator1       = NULL;
@@ -169,7 +167,6 @@ QweakSimDetectorConstruction::~QweakSimDetectorConstruction()
   if (pHDC)        delete pHDC;
   if (pVDC)        delete pVDC;
 
-  if (pLumiDetector)    delete pLumiDetector;
   if (pCerenkovDetector)    delete pCerenkovDetector;
   if (pTriggerScintillator) delete pTriggerScintillator;
 
@@ -237,7 +234,6 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   pVDCRotator          = new QweakSimVDCRotator();
 
   pCerenkovDetector    = new QweakSimCerenkovDetector(myUserInfo);
-  pLumiDetector        = new QweakSimLumiDetector();
 
   pTriggerScintillator = new QweakSimTriggerScintillator();
 
@@ -662,17 +658,6 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
     pCerenkovDetector->ConstructComponent(experimentalHall_Physical);
     //
     pGeometry->AddModule(pCerenkovDetector->GetCerenkovDetector_PhysicalVolume());
-  }
-
-  //=========================================
-  // create/place Lumis into MotherVolume
-  //=========================================
-  //
-  if (pLumiDetector) {
-    pLumiDetector->ConstructComponent(experimentalHall_Physical);
-    
-    pGeometry->AddModule(pLumiDetector->getUSLumiPhysicalVolume());
-    //pGeometry->AddModule(pLumiDetector->getDSLumiPhysicalVolume());
   }
 
   //--------- Visualization attributes -------------------------------
