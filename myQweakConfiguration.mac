@@ -354,7 +354,3 @@
 
 # Comment out the line below to leave the PMTOnly in
 /PMTOnly/Disable
-
-/random/setSeeds 4851619513 501651206          
-#/Analysis/RootFileName /home/wsduvall/rootfiles
-/run/beamOn 5000                              
