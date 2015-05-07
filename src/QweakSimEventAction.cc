@@ -40,6 +40,7 @@
 #include "QweakSimLeadGlass_PMTHit.hh"
 #include "QweakSimPMTOnly_DetectorHit.hh"
 #include "QweakSimPMTOnly_PMTHit.hh"
+#include "QweakSimTungstenPlug_DetectorHit.hh"
 #include "QweakSimCerenkov_DetectorHit.hh"
 #include "QweakSimCerenkovDetector_PMTHit.hh"
 #include "QweakSimTrajectory.hh"
@@ -74,6 +75,7 @@ QweakSimEventAction::QweakSimEventAction(QweakSimAnalysis* AN, QweakSimUserInfor
     //LeadGlassPMT_CollID                = -1;
     PMTOnlyDetector_CollID	       = -1;
     PMTOnlyDetectorPMT_CollID	       = -1;
+    TungstenPlugDetector_CollID        = -1;
     CerenkovDetector_CollID            = -1;
     CerenkovDetectorPMT_CollID         = -1;
 
@@ -101,7 +103,9 @@ QweakSimEventAction::QweakSimEventAction(QweakSimAnalysis* AN, QweakSimUserInfor
 	kMapTriggerMode["hdc"] = kTriggerHDC;
 	fTriggerName[kTriggerHDC] = "hdc";
 	kMapTriggerMode["pmtonly"] = kTriggerPMTOnly;
-	fTriggerName[kTriggerHDC] = "pmtonly";
+	fTriggerName[kTriggerPMTOnly] = "pmtonly";
+        kMapTriggerMode["wplug"] = kTriggerTungstenPlug;
+	fTriggerName[kTriggerTungstenPlug] = "wplug";
     }
     if (kMapTriggerMode.size() != kNumTriggers)
         G4cout << "Number of software triggers is not defined correctly!" << G4endl;
@@ -146,7 +150,7 @@ void QweakSimEventAction::BeginOfEventAction(const G4Event* /*evt*/)
 {
     G4SDManager * SDman = G4SDManager::GetSDMpointer();
 
-    // check for existing PMTOnly Collection ID (if it's -1 it will be assigned)
+    // check for existing Target Collection ID (if it's -1 it will be assigned)
     if (TargetDetector_CollID==-1) {
         TargetDetector_CollID = SDman->GetCollectionID("TargetSD/TargetCollection");
     }
@@ -190,13 +194,18 @@ void QweakSimEventAction::BeginOfEventAction(const G4Event* /*evt*/)
     // check for existing PMTOnly Collection ID (if it's -1 it will be assigned)
     if (PMTOnlyDetector_CollID==-1) {
         PMTOnlyDetector_CollID = SDman->GetCollectionID("PMTOnlySD/PMTOnlyCollection");
-    }
-    
-        // check for existing PMTOnly Collection ID (if it's -1 it will be assigned)
+    }    
+
+    // check for existing PMTOnly Collection ID (if it's -1 it will be assigned)
     if (PMTOnlyDetectorPMT_CollID==-1) {
         PMTOnlyDetectorPMT_CollID = SDman->GetCollectionID("PMTOnly_PMTSD/PMTHitCollection");
     }
 	
+    // check for existing TungstenPlug Collection ID (if it's -1 it will be assigned)
+    if (TungstenPlugDetector_CollID==-1) {
+        TungstenPlugDetector_CollID = SDman->GetCollectionID("TungstenPlugSD/TungstenPlugCollection");
+    }
+
     // check for existing CerenkovDetector Collection ID (if it's -1 it will be assigned)
     if (CerenkovDetector_CollID==-1) {
         CerenkovDetector_CollID = SDman->GetCollectionID("CerenkovDetectorSD/CerenkovDetectorCollection");
@@ -274,6 +283,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     //QweakSimLeadGlass_PMTHitsCollection*                LeadGlassPMT_HC                = 0;
     QweakSimPMTOnly_DetectorHitsCollection*             PMTOnlyDetector_HC             = 0;
     QweakSimPMTOnly_PMTHitsCollection*                  PMTOnlyPMT_HC		       = 0;
+    QweakSimTungstenPlug_DetectorHitsCollection*        TungstenPlugDetector_HC     = 0;
     QweakSimCerenkovDetectorHitsCollection*             CerenkovDetector_HC            = 0;
     QweakSimCerenkovDetector_PMTHitsCollection*         CerenkovDetectorPMT_HC         = 0;
 
@@ -289,12 +299,13 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     //G4int n_hitLeadGlassPMT = 0;
     G4int n_hitPMTOnly = 0;
     G4int n_hitPMTOnlyPMT = 0;
+    G4int n_hitTungstenPlug = 0;
     G4int n_hitCerenkov = 0;
     G4int n_hitCerenkovPMT = 0;
 
     if (HCE) {
 
-        // get  PMTOnly Hit Collector pointer
+        // get  Target Hit Collector pointer
         if (TargetDetector_CollID > -1) {
             TargetDetector_HC  = (QweakSimTarget_DetectorHitsCollection*)(HCE->GetHC(TargetDetector_CollID));
             n_hitTarget        = TargetDetector_HC -> entries();
@@ -354,15 +365,21 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 
         // get  PMTOnly Hit Collector pointer
         if (PMTOnlyDetector_CollID > -1) {
-            PMTOnlyDetector_HC  = (QweakSimPMTOnly_DetectorHitsCollection*)(HCE->GetHC(PMTOnlyDetector_CollID));
-            n_hitPMTOnly        = PMTOnlyDetector_HC -> entries();
+            PMTOnlyDetector_HC = (QweakSimPMTOnly_DetectorHitsCollection*)(HCE->GetHC(PMTOnlyDetector_CollID));
+            n_hitPMTOnly = PMTOnlyDetector_HC->entries();
 	}
 	
 	// get PMTOnly_PMT Hit Collection
 	if (PMTOnlyDetectorPMT_CollID > -1) {
-            PMTOnlyPMT_HC  = (QweakSimPMTOnly_PMTHitsCollection*)(HCE->GetHC(PMTOnlyDetectorPMT_CollID));
-            n_hitPMTOnlyPMT        = PMTOnlyPMT_HC -> entries();
+            PMTOnlyPMT_HC = (QweakSimPMTOnly_PMTHitsCollection*)(HCE->GetHC(PMTOnlyDetectorPMT_CollID));
+            n_hitPMTOnlyPMT = PMTOnlyPMT_HC->entries();
 	}
+  
+        // get TungstenPlug Hit Collector pointer
+        if (TungstenPlugDetector_CollID > -1) {
+            TungstenPlugDetector_HC = (QweakSimTungstenPlug_DetectorHitsCollection*)(HCE->GetHC(TungstenPlugDetector_CollID));
+            n_hitTungstenPlug = TungstenPlugDetector_HC->entries();
+        }
 
         // get  CerenkovDetector Hit Collector pointer
         if (CerenkovDetector_CollID > -1) {
@@ -383,9 +400,10 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
              << ",\tVDC_Front " << n_VDChitDCFront
              << ",\tVDC_Back " << n_VDChitDCBack
              << ",\tTS " << n_hitTriggerScintillator
-	         << ",\tLeadGlass " << n_hitLeadGlass
+             << ",\tLeadGlass " << n_hitLeadGlass
              << ",\tPMTOnly " << n_hitPMTOnly
              << ",\tPMTOnlyPMT " << n_hitPMTOnlyPMT
+             << ",\tTungstenPlug " << n_hitTungstenPlug
              << ",\tCerenkov " << n_hitCerenkov
              << "\tCerenkovPMT " << n_hitCerenkovPMT << G4endl;
     }
@@ -432,10 +450,11 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     // Initialize TriggerScintillator with NoHit Flag
     analysis->fRootEvent->TriggerScintillator.Detector.Initialize();
 
-    // Initialize LeadGlass and PMTOnly //--- with NoHit Flag
+    // Initialize LeadGlass, PMTOnly, and TungstenPlug //--- with NoHit Flag
     analysis->fRootEvent->LeadGlass.Detector.Initialize();
     analysis->fRootEvent->PMTOnly.Detector.Initialize();
     analysis->fRootEvent->PMTOnly.PMT.Initialize();
+    analysis->fRootEvent->TungstenPlug.Detector.Initialize();
 
     //#########################################################################################################################
     //#########################################################################################################################
@@ -456,6 +475,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 	    || (fTrigger[kTriggerHDC]   && (n_HDChitWirePlane >= 6))         /* HDC Trigger */
             || (fTrigger[kTriggerLeadGlass] && (n_hitLeadGlass >0))         /* a hit in the LeadGlass */
             || (fTrigger[kTriggerPMTOnly] && (n_hitPMTOnly >0))         /* a hit in the PMTOnly */
+            || (fTrigger[kTriggerTungstenPlug] && (n_hitTungstenPlug>0) )    // Hit on the TungstenPlug
             || (fTrigger[kTriggerCer]   && (n_hitCerenkov > 0) )            /* Triggering on Main Detector */
        ) {
 
@@ -616,7 +636,10 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         
         // Store Number of Hits for: PMTOnly PMT Detector
         analysis->fRootEvent->PMTOnly.PMT.StoreDetectorNbOfHits(n_hitPMTOnlyPMT);
-        
+
+        // Store Number of Hits for: TungstenPlug Detector
+        analysis->fRootEvent->TungstenPlug.Detector.StoreDetectorNbOfHits(n_hitTungstenPlug);
+
         // Store Number of Hits for: Trigger Scintillator
         analysis->fRootEvent->TriggerScintillator.Detector.StoreDetectorNbOfHits(n_hitTriggerScintillator);
 
@@ -1697,7 +1720,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 Float_t rKineticEnergy = (Float_t) aHit->GetKineticEnergy() / MeV;
                 Float_t rTotalEnergy = (Float_t) aHit->GetTotalEnergy() / MeV;
 
-                //--- get PMTOnly deposited energy
+                //--- get Target deposited energy
                 Float_t rDepositedEnergy = (Float_t) aHit->GetHitDepositedEnergy() / MeV;
                 rTotalDepositedEnergy += rDepositedEnergy;
 
@@ -1868,21 +1891,23 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 // store global time of hit
                 analysis->fRootEvent->TriggerScintillator.Detector.StoreGlobalTimeOfHit(rGlobalTime);
 
-                //--- store particle name & type
+                //--- store particle name & type                
                 analysis->fRootEvent->TriggerScintillator.Detector.StoreParticleName(rParticleName);
                 analysis->fRootEvent->TriggerScintillator.Detector.StoreParticleType(rParticleType);
 
-                // store origin vertex info
-                analysis->fRootEvent->TriggerScintillator.Detector.StoreOriginVertexPositionX(rOriginVertexPositionX);
-                analysis->fRootEvent->TriggerScintillator.Detector.StoreOriginVertexPositionY(rOriginVertexPositionY);
-                analysis->fRootEvent->TriggerScintillator.Detector.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
-                analysis->fRootEvent->TriggerScintillator.Detector.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);
-                analysis->fRootEvent->TriggerScintillator.Detector.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);
-                analysis->fRootEvent->TriggerScintillator.Detector.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
-                analysis->fRootEvent->TriggerScintillator.Detector.StoreOriginVertexPhiAngle( rOriginVertexPhiAngle );
-                analysis->fRootEvent->TriggerScintillator.Detector.StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
-                analysis->fRootEvent->TriggerScintillator.Detector.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
-                analysis->fRootEvent->TriggerScintillator.Detector.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
+                // Store origin vertex info for first hit
+                if(i1==0) {
+                  analysis->fRootEvent->TriggerScintillator.Detector.StoreOriginVertexPositionX(rOriginVertexPositionX);
+                  analysis->fRootEvent->TriggerScintillator.Detector.StoreOriginVertexPositionY(rOriginVertexPositionY);
+                  analysis->fRootEvent->TriggerScintillator.Detector.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
+                  analysis->fRootEvent->TriggerScintillator.Detector.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);
+                  analysis->fRootEvent->TriggerScintillator.Detector.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);
+                  analysis->fRootEvent->TriggerScintillator.Detector.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
+                  analysis->fRootEvent->TriggerScintillator.Detector.StoreOriginVertexPhiAngle( rOriginVertexPhiAngle );
+                  analysis->fRootEvent->TriggerScintillator.Detector.StoreOriginVertexThetaAngle( rOriginVertexThetaAngle );
+                  analysis->fRootEvent->TriggerScintillator.Detector.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
+                  analysis->fRootEvent->TriggerScintillator.Detector.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
+                }
 
                 analysis->fRootEvent->TriggerScintillator.Detector.StoreDetectorLocalPositionX(rLocalPositionX);
                 analysis->fRootEvent->TriggerScintillator.Detector.StoreDetectorLocalPositionY(rLocalPositionY);
@@ -2250,7 +2275,158 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
             analysis->fRootEvent->PMTOnly.PMT.StorePMTTotalNbOfPEs(PMTOnlyNPE);
           
         } // end	if (n_hitPMTOnlyPMT >0)
-        
+
+	//===========================================================
+        // Store TungstenPlug hits into /TungstenPlug
+        //===========================================================
+		
+        if (n_hitTungstenPlug >0) {
+            // initialize deposited energy
+            Float_t rTotalDepositedEnergy = 0.0;
+
+            //--- loop over hits
+            for (int i1=0;i1<n_hitTungstenPlug;i1++) {
+				
+                QweakSimTungstenPlug_DetectorHit* aHit = (*TungstenPlugDetector_HC)[i1];
+				
+                //--- track ID
+                Float_t rTrackID = (Float_t) aHit->GetTrackID();
+				
+                //--- particle name & type
+                TString rParticleName = TString(aHit->GetParticleName());
+                Int_t rParticleType = (Int_t) aHit->GetParticleType();
+				
+                //--- get global time of hit
+                Float_t rGlobalTime = (Float_t) aHit->GetGlobalTime() / ns;
+				
+                //--- get world position of hit
+                G4ThreeVector globalPosition  = aHit->GetWorldPosition();
+                Float_t rGlobalPositionX = (Float_t) globalPosition.x() / cm;
+                Float_t rGlobalPositionY = (Float_t) globalPosition.y() / cm;
+                Float_t rGlobalPositionZ = (Float_t) globalPosition.z() / cm;
+				
+                //--- get local position of hit
+                G4ThreeVector localPosition  = aHit->GetLocalPosition();
+                Float_t rLocalPositionX = (Float_t) localPosition.x() / cm;
+                Float_t rLocalPositionY = (Float_t) localPosition.y() / cm;
+                Float_t rLocalPositionZ = (Float_t) localPosition.z() / cm;
+				
+                //--- get origin vertex position
+                G4ThreeVector originVertexPosition  = aHit->GetOriginVertexPosition();
+                Float_t rOriginVertexPositionX = (Float_t) originVertexPosition.x() / cm;
+                Float_t rOriginVertexPositionY = (Float_t) originVertexPosition.y() / cm;
+                Float_t rOriginVertexPositionZ = (Float_t) originVertexPosition.z() / cm;
+				
+                //--- get world momentum of hit
+                G4ThreeVector globalMomentum  = aHit->GetWorldMomentum();
+                //Float_t rGlobalMomentumX = (Float_t) globalMomentum.x() / MeV;
+                //Float_t rGlobalMomentumY = (Float_t) globalMomentum.y() / MeV;
+                //Float_t rGlobalMomentumZ = (Float_t) globalMomentum.z() / MeV;
+
+                //--- get global theta & phi angle
+                Float_t rGlobalThetaAngle = (Float_t) globalMomentum.theta() / degree;
+                Float_t rGlobalPhiAngle   = (Float_t) globalMomentum.phi() / degree - 90.0;
+				
+                //--- get local momentum of hit  
+                //G4ThreeVector localMomentum = aHit->GetLocalMomentum();
+                //Float_t rLocalMomentumX = (Float_t) localMomentum.x() / MeV;
+                //Float_t rLocalMomentumY = (Float_t) localMomentum.y() / MeV;
+                //Float_t rLocalMomentumZ = (Float_t) localMomentum.z() / MeV;
+				
+                //--- get local vertex momentum direction of hit
+                G4ThreeVector localVertexMomentumDirection = aHit->GetMomentumDirection();
+                Float_t rLocalVertexMomentumDirectionX = (Float_t) localVertexMomentumDirection.x();
+                Float_t rLocalVertexMomentumDirectionY = (Float_t) localVertexMomentumDirection.y();
+                Float_t rLocalVertexMomentumDirectionZ = (Float_t) localVertexMomentumDirection.z();
+				
+                //--- get origin vertex momentum direction of hit
+                G4ThreeVector originVertexMomentumDirection = aHit->GetOriginVertexMomentumDirection();
+                Float_t rOriginVertexMomentumDirectionX = (Float_t) originVertexMomentumDirection.x();
+                Float_t rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
+                Float_t rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
+				
+                //--- get origin vertex theta & phi angle
+                Float_t rOriginVertexThetaAngle = (Float_t) originVertexMomentumDirection.theta() / degree;
+                Float_t rOriginVertexPhiAngle   = (Float_t) originVertexMomentumDirection.phi() / degree;
+				
+                //--- get origin vertex kinetic energy & total energy
+                Float_t rOriginVertexKineticEnergy = (Float_t ) aHit->GetOriginVertexKineticEnergy() / MeV;
+                Float_t rOriginVertexTotalEnergy   = (Float_t ) aHit->GetOriginVertexTotalEnergy() / MeV;
+				
+                //--- get total energy & total energy of hit
+                Float_t rKineticEnergy = (Float_t) aHit->GetKineticEnergy() / MeV;
+                Float_t rTotalEnergy = (Float_t) aHit->GetTotalEnergy() / MeV;
+				
+                //--- get TungstenPlug deposited energy
+                Float_t rDepositedEnergy = (Float_t) aHit->GetHitDepositedEnergy() / MeV;
+                rTotalDepositedEnergy += rDepositedEnergy;
+
+                //--- store Primary Event Number
+                analysis->fRootEvent->TungstenPlug.Detector.StorePrimaryEventNumber((Int_t) PrimaryEventNumber);
+				
+                //--- store track ID
+                analysis->fRootEvent->TungstenPlug.Detector.StoreTrackID(rTrackID);
+				
+                //--- store particle name & type
+                analysis->fRootEvent->TungstenPlug.Detector.StoreParticleName(rParticleName);
+                analysis->fRootEvent->TungstenPlug.Detector.StoreParticleType(rParticleType);
+				
+                //--- store global time of hit
+                analysis->fRootEvent->TungstenPlug.Detector.StoreGlobalTimeOfHit(rGlobalTime);
+				
+                //--- mark TungstenPlug detector as been hit
+                analysis->fRootEvent->TungstenPlug.Detector.StoreDetectorHasBeenHit(5);
+				
+                //--- store global position
+                analysis->fRootEvent->TungstenPlug.Detector.StoreDetectorGlobalPositionX(rGlobalPositionX);
+                analysis->fRootEvent->TungstenPlug.Detector.StoreDetectorGlobalPositionY(rGlobalPositionY);
+                analysis->fRootEvent->TungstenPlug.Detector.StoreDetectorGlobalPositionZ(rGlobalPositionZ);
+				
+                //--- store local position
+                analysis->fRootEvent->TungstenPlug.Detector.StoreDetectorLocalPositionX(rLocalPositionX);
+                analysis->fRootEvent->TungstenPlug.Detector.StoreDetectorLocalPositionY(rLocalPositionY);
+                analysis->fRootEvent->TungstenPlug.Detector.StoreDetectorLocalPositionZ(rLocalPositionZ);
+				
+                //--- store origin vertex position
+                analysis->fRootEvent->TungstenPlug.Detector.StoreOriginVertexPositionX(rOriginVertexPositionX);
+                analysis->fRootEvent->TungstenPlug.Detector.StoreOriginVertexPositionY(rOriginVertexPositionY);
+                analysis->fRootEvent->TungstenPlug.Detector.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
+				
+                //--- store local vertex momentum direction
+                analysis->fRootEvent->TungstenPlug.Detector.StoreLocalVertexMomentumDirectionX(rLocalVertexMomentumDirectionX);
+                analysis->fRootEvent->TungstenPlug.Detector.StoreLocalVertexMomentumDirectionY(rLocalVertexMomentumDirectionY);
+                analysis->fRootEvent->TungstenPlug.Detector.StoreLocalVertexMomentumDirectionZ(rLocalVertexMomentumDirectionZ);
+				
+                //--- store origin vertex momentum direction
+                analysis->fRootEvent->TungstenPlug.Detector.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);
+                analysis->fRootEvent->TungstenPlug.Detector.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);
+                analysis->fRootEvent->TungstenPlug.Detector.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
+				
+                //--- store origin theta & phi angle
+                analysis->fRootEvent->TungstenPlug.Detector.StoreOriginVertexThetaAngle(rOriginVertexThetaAngle);
+                analysis->fRootEvent->TungstenPlug.Detector.StoreOriginVertexPhiAngle(rOriginVertexPhiAngle);
+				
+                //--- store origin kinetic energy & total energy
+                analysis->fRootEvent->TungstenPlug.Detector.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
+                analysis->fRootEvent->TungstenPlug.Detector.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
+				
+                //--- store local vertex kinetic & total energy
+                analysis->fRootEvent->TungstenPlug.Detector.StoreDetectorLocalVertexKineticEnergy(rKineticEnergy);
+                analysis->fRootEvent->TungstenPlug.Detector.StoreDetectorLocalVertexTotalEnergy(rTotalEnergy);
+				
+                //--- store global track theta & phi angle
+                analysis->fRootEvent->TungstenPlug.Detector.StoreGlobalThetaAngle(rGlobalThetaAngle);
+                analysis->fRootEvent->TungstenPlug.Detector.StoreGlobalPhiAngle(rGlobalPhiAngle);
+				
+                //--- store TungstenPlug deposited energy
+                analysis->fRootEvent->TungstenPlug.Detector.StoreDepositedEnergy(rDepositedEnergy);
+				
+            } // end  for(int i1=0;i1<n_hitTungstenPlug;i1++)	   
+            
+            // Put the total energy into the thing. 
+            analysis->fRootEvent->TungstenPlug.Detector.StoreTotalEnergyDeposit(rTotalDepositedEnergy);
+            
+        } // end    if (n_hitTungstenPlug >0)
 
 //  G4cout << "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" << G4endl;
 

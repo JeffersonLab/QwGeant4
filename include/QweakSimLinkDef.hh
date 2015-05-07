@@ -75,6 +75,9 @@
 #pragma link C++ class QweakSimUserPMTOnly_DetectorEvent+;
 #pragma link C++ class QweakSimUserPMTOnly_PMTEvent+;
 
+#pragma link C++ class QweakSimUserTungstenPlug_MainEvent+;
+#pragma link C++ class QweakSimUserTungstenPlug_DetectorEvent+;
+
 #pragma link C++ class QweakSimUserCerenkov_MainEvent+;
 #pragma link C++ class QweakSimUserCerenkov_OctantEvent+;
 #pragma link C++ class QweakSimUserCerenkov_DetectorEvent+;

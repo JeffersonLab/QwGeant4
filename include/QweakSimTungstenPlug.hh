@@ -32,14 +32,13 @@ private:
   QweakSimMaterial* pMaterial;
   
   // W-Plug
+  G4LogicalVolume*   TungstenPlugLogical;
+  G4VPhysicalVolume* TungstenPlugPhysical;
 
-  G4LogicalVolume*   WPlug_US_Logical;
-  G4VPhysicalVolume* WPlug_US_Physical;
-  G4LogicalVolume*   WPlug_DS_Logical;
-  G4VPhysicalVolume* WPlug_DS_Physical;
+  G4Material*        TungstenPlug_Material;  
 
-  G4Material*        WPlug_Material;  
-  G4Material*        WPlug_Material_Vac;  
+  // Sensitive Detectors
+  G4VSensitiveDetector* TungstenPlugSD;
 
 public:
   //! Constructor
@@ -50,8 +49,8 @@ public:
 
   void ConstructTungstenPlug(G4VPhysicalVolume*);
 
-  G4VPhysicalVolume* getTungstenPlugUSPhysicalVolume()   {return WPlug_US_Physical;}
-  G4VPhysicalVolume* getTungstenPlugDSPhysicalVolume()   {return WPlug_DS_Physical;}
+  G4VPhysicalVolume* getTungstenPlugPhysicalVolume()   {return TungstenPlugPhysical;}
+
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....

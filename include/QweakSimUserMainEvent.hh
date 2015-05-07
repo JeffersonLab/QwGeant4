@@ -53,6 +53,7 @@
 #include "QweakSimUserTriggerScintillator_MainEvent.hh"
 #include "QweakSimUserLeadGlass_MainEvent.hh"
 #include "QweakSimUserPMTOnly_MainEvent.hh"
+#include "QweakSimUserTungstenPlug_MainEvent.hh"
 #include "QweakSimUserCerenkov_MainEvent.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
@@ -120,6 +121,8 @@ public:
   QweakSimUserLeadGlass_MainEvent              LeadGlass;            ///< tree containing LeadGlass info
   
   QweakSimUserPMTOnly_MainEvent		       PMTOnly;	             ///< tree containing PMTOnly info
+
+  QweakSimUserTungstenPlug_MainEvent	       TungstenPlug;         ///< tree containing TungstenPlug info
 	
   QweakSimUserCerenkov_MainEvent               Cerenkov;             ///< object containing Cerenkov detector info
 

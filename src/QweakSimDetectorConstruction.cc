@@ -379,8 +379,7 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   if (pTungstenPlug) {
     pTungstenPlug->ConstructTungstenPlug(experimentalHall_Physical);
     //
-    pGeometry->AddModule(pTungstenPlug->getTungstenPlugUSPhysicalVolume());
-    pGeometry->AddModule(pTungstenPlug->getTungstenPlugDSPhysicalVolume());
+    pGeometry->AddModule(pTungstenPlug->getTungstenPlugPhysicalVolume());
   }
 
   //jpan@nuclear.uwinnipeg.ca: Fri Jun  5 12:24:18 CDT 2009
