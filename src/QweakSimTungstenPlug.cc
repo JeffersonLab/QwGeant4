@@ -35,50 +35,32 @@ QweakSimTungstenPlug::~QweakSimTungstenPlug()
 void QweakSimTungstenPlug::ConstructTungstenPlug(G4VPhysicalVolume* MotherVolume)
 {
   // Dimensions of W-plug
-  // Numbers found on drawings at https://qweak.jlab.org/doc-private/ShowDocument?docid=903
+  // Updated Numbers found on drawings provided by Greg Smith
+  // Page 13 of 
   G4double inch = 25.4*mm;
   
   G4double WPlugOD = 3.125*inch;			// Outer Diameter of Plug
-  G4double WPlugID1 = 0.588*inch; 			// Front Face Inner Diameter
-  G4double WPlugID2 = 0.691*inch;			// Cone Transition ending Inner Diameter
-  G4double WPlugID3 = WPlugOD/2;			// Rear Face Inner Diameter
-
-  G4double WPlugLength1 = 3.250*inch;			// Full Length of Conical Section (Upstream end)
-  G4double WPlugLength2 = 5.000*inch;			// Full Length of Cylindrical Section
-  
-  G4double FrontSectionZLocation = -579.2895*cm;	// Global Z position of the center of the conical section.
+  G4double WPlugID1 = 0.508*inch; 			// Front Face Inner Diameter
+  G4double WPlugID2 = 0.848*inch;			// Rear Face Inner Diameter
+  G4double WPlugLength = 8.250*inch;			// Full Length of Conical Section (Upstream end)
+  G4double ZLocation = -579.2895*cm+2.5*inch;	        // Global Z position of the center of the W Plug
 
   // Define Upstream W-plug
-  G4Cons* TungstenPlug_US_Solid = new G4Cons("TungstenPlug_Solid_US",
+  G4Cons* TungstenPlugSolid = new G4Cons("TungstenPlugSolid",
 				      WPlugID1/2.0,
 				      WPlugOD/2.0,
 				      WPlugID2/2.0,
 				      WPlugOD/2.0,  
-				      WPlugLength1/2.0,
+				      WPlugLength/2.0,
 				      0,
 				      360*degree);
-  // Downstream W-plug  
-  G4Tubs* TungstenPlug_DS_Solid = new G4Tubs("TungstenPlug_Solid_DS",
-				      WPlugID3/2.0,
-				      WPlugOD/2.0,
-				      WPlugLength2/2.0,
-				      0,
-				      360*degree);
-  // Add them together end on end
-  G4ThreeVector unionTranslation( 0.0, 0.0, WPlugLength1/2.0 + WPlugLength2/2.0 );
-  G4UnionSolid* TungstenPlugSolid = new G4UnionSolid(
-					"TungstenPlugSolid",
-					TungstenPlug_US_Solid,
-					TungstenPlug_DS_Solid,
-					0,
-					unionTranslation);
   
   TungstenPlugLogical = new G4LogicalVolume(TungstenPlugSolid,
 			    TungstenPlug_Material,
 			    "TungstenPlugLogical");
   
   TungstenPlugPhysical = new G4PVPlacement(0,   
-			     G4ThreeVector(0.0,0.0,FrontSectionZLocation),   // plug position
+			     G4ThreeVector(0.0,0.0,ZLocation),		// plug position
 			     "TungstenPlugPhysical",
 			     TungstenPlugLogical,
 			     MotherVolume,
