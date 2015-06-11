@@ -155,7 +155,7 @@ print $fh "$header\n";
 sub print_footer {
   my ($fh,$basename,$Nevents) = @_;
 
-  my $seed1 = int ( rand(1e10) );
+  my $seed1 = int ( rand(1e9 ) );
   my $seed2 = int ( rand(1e9 ) );
 
   my $rootfile = "/volatile/hallc/qweak/$user/$basename\.root";
