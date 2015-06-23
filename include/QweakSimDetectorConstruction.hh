@@ -62,6 +62,7 @@ class QweakSimPionWall;
 class QweakSimWShutters;
 class QweakSimLeadGlass;
 class QweakSimPMTOnly;
+class QweakSimLumiDetector;
 class QweakSimMainMagnet;
 class QweakSimVDC;
 class QweakSimVDCRotator;
@@ -128,6 +129,8 @@ private:
   QweakSimLeadGlass*         pLeadGlass;
 
   QweakSimPMTOnly* 		pPMTOnly;
+
+  QweakSimLumiDetector*     pLumiDetector;
 
   QweakSimMainMagnet*        pMainMagnet;
 

@@ -354,3 +354,10 @@
 
 # Comment out the line below to leave the PMTOnly in
 /PMTOnly/Disable
+
+#=====================================
+# Lumi related
+#=====================================
+
+# Comment out the line below to leave the Lumi in
+/Lumi/USDisable
