@@ -19,6 +19,16 @@ void QweakSimLumi_DetectorSD::Initialize(G4HCofThisEvent* HCE) {
 }
 
 G4bool QweakSimLumi_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistory*) {
+    // Kill chargeless particles that don't deposit much energy
+    G4double charge = aStep->GetTrack()->GetDefinition()->GetPDGCharge();
+    if(charge==0. && aStep->GetTrack()->GetTotalEnergy()/MeV < 0.1) {
+        return false;
+    }
+
+    // Kill optical photons (don't need to save these tracks
+    if( aStep->GetTrack()->GetDefinition()->GetParticleName() == "opticalphoton") {
+        return false;
+    }
     // begin experimental
     if(aStep->GetPreStepPoint()->GetStepStatus() != fGeomBoundary)
         return false;
