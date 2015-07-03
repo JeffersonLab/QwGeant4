@@ -2460,6 +2460,8 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 //--- store Lumi deposited energy
                 analysis->fRootEvent->Lumi.Detector.StoreDepositedEnergy(rDepositedEnergy);
 		// -- TotalDepositedEnergy is evaluated in UserLumi class
+		        analysis->fRootEvent->Lumi.Detector.StoreRate(CalculateRate( myUserInfo->GetCrossSection(), 1));
+		        //G4cout <<CalculateRate( myUserInfo->GetCrossSection(), 1)<<G4endl;
 
 		//--------------------------------------------------------------------------------------------
 				

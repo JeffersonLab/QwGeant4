@@ -43,28 +43,6 @@ private:
     
     Int_t                SecondaryElectronCount;
 	
-    //QweakSimUserLumi_SecondaryElectronEvent *secondaryElectronEvent;
-	
-    //Float_t *SecElecLocalOriginX; //[SecondaryElectronCount]
-    //Float_t *SecElecLocalOriginY; //[SecondaryElectronCount]
-    //Float_t *SecElecLocalOriginZ; //[SecondaryElectronCount]
-    //
-    //Float_t *SecElecLocalMomentumX; //[SecondaryElectronCount]
-    //Float_t *SecElecLocalMomentumY; //[SecondaryElectronCount]
-    //Float_t *SecElecLocalMomentumZ; //[SecondaryElectronCount]
-    //
-    //Float_t *SecElecLocalEnergy; //[SecondaryElectronCount]
-	
-    //vector <Float_t> SecElecLocalOriginX; //[SecondaryElectronCount]
-    //vector <Float_t> SecElecLocalOriginY; //[SecondaryElectronCount]
-    //vector <Float_t> SecElecLocalOriginZ; //[SecondaryElectronCount]
-    //
-    //vector <Float_t> SecElecLocalMomentumX; //[SecondaryElectronCount]
-    //vector <Float_t> SecElecLocalMomentumY; //[SecondaryElectronCount]
-    //vector <Float_t> SecElecLocalMomentumZ; //[SecondaryElectronCount]
-    //
-    //vector <Float_t> SecElecLocalEnergy; //[SecondaryElectronCount]
-	
     std::vector<Float_t> HitGlobalPositionX;
     std::vector<Float_t> HitGlobalPositionY;
     std::vector<Float_t> HitGlobalPositionZ;
@@ -108,6 +86,7 @@ private:
     //--- deposited energy in the Lumi in one step
     std::vector<Float_t> DepositedEnergy;
     Float_t TotalDepositedEnergy;
+    Float_t Rate;
 
 	
 public:
@@ -273,13 +252,13 @@ public:
       DepositedEnergy.push_back(dpeg); 
       TotalDepositedEnergy += dpeg;
     }
+
     std::vector<Float_t>  GetDepositedEnergy() const      {return DepositedEnergy;}	
     Float_t    GetTotalEnergyDeposit()   const {return TotalDepositedEnergy;}
+
+    void StoreRate(Float_t rate) { Rate = rate; }
+    Float_t GetRate(void) { return Rate; }
 	
-    //void AddSecondaryElectronEvent(Float_t XO, Float_t YO, Float_t ZO,
-    //                                  Float_t XM, Float_t YM, Float_t ZM,
-    //                                  Float_t Eng);
-    //
 
     // define a new Class known to ROOT  
     ClassDef(QweakSimUserLumi_DetectorEvent,1)
