@@ -20,7 +20,9 @@ lastjob=50
 nevents=125000
 #batch system
 batch=xml
-qwgeant4=~/QwGeant4
+qwgeant4=`dirname $0`
+qwgeant4=`readlink -f $qwgeant4/..`
+mkdir /home/${USER}/scratch
 
 let jobid=${firstjob}
  while [[ ${jobid} -le ${lastjob} ]] ; do
@@ -55,6 +57,7 @@ let jobid=${firstjob}
 			-e "s|%seedB%|${seedB}|g" \
 			-e "s|%jobid%|${jobid}|g" \
 			-e "s|%name%|${name}|g" \
+			-e "s|%user%|${USER}|g" \
 		../jobs/job.${batch}.in \
 	> ../jobs/${batch}/${name}_${jobid}.${batch}
 

@@ -36,7 +36,9 @@ lastjob=50
 nevents=125000
 #batch system
 batch=xml
-qwgeant4=~/QwGeant4
+qwgeant4=`dirname $0`
+qwgeant4=`readlink -f $qwgeant4/..`
+mkdir /home/${USER}/scratch
 
 #go through each axis changing postion and direction
 for axis in X Y ; do
@@ -93,6 +95,7 @@ for axis in X Y ; do
 					-e "s|%jobid%|${jobid}|g" \
 					-e "s|%basename%|${basename}|g" \
 					-e "s|%name%|${name}|g" \
+					-e "s|%user%|${USER}|g" \
 				jobs/job.${batch}.in \
 			> jobs/${batch}/${name}_${jobid}.${batch}
 
@@ -170,6 +173,7 @@ for axis in X Y ; do
 					-e "s|%jobid%|${jobid}|g" \
 					-e "s|%basename%|${basename}|g" \
 					-e "s|%name%|${name}|g" \
+					-e "s|%user%|${USER}|g" \
 				jobs/job.${batch}.in \
 			> jobs/${batch}/${name}_${jobid}.${batch}
 

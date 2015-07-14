@@ -1,0 +1,35 @@
+# Programmer: Wouter Deconinck
+# Purpose: This is the basis for a macro file that include HDC, VDC, and TS in simulation
+#
+# Date: 2015-07-13
+# Modified: 
+# Assisted By:
+#
+
+# Load/execute the default Qweak configuration setup
+/control/execute myQweakConfiguration.mac
+/control/execute macros/peiqing_2011.mac
+
+# Do not write out random seed information for every event
+/random/setSavingFlag 0
+/random/setDirectoryName random/%name%_%jobid%
+# Start from the specified seeds
+/random/setSeeds %seedA% %seedB%
+
+# Track all primaries and all secondaries
+/TrackingAction/TrackingFlag 3
+
+# Set reaction region and type
+/EventGen/SelectReactionRegion 1
+/EventGen/SelectReactionType 1
+
+# Trigger on scintillator detector only
+/Trigger/Disable cer
+/Trigger/Enable scint
+/Trigger/Show
+
+# Set the rootfile name
+/Analysis/RootFileName rootfiles/%name%_%jobid%_workdir/%name%_%jobid%.root
+
+# Simulate number of events
+/run/beamOn %nevents%
