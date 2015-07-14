@@ -22,7 +22,7 @@ nevents=125000
 batch=xml
 qwgeant4=`dirname $0`
 qwgeant4=`readlink -f $qwgeant4/..`
-mkdir /home/${USER}/scratch
+mkdir -p /home/${USER}/scratch
 
 let jobid=${firstjob}
  while [[ ${jobid} -le ${lastjob} ]] ; do

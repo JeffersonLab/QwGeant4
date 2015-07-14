@@ -40,7 +40,7 @@ nevents=125000
 batch=xml
 qwgeant4=`dirname $0`
 qwgeant4=`readlink -f $qwgeant4/..`
-mkdir /home/${USER}/scratch
+mkdir -p /home/${USER}/scratch
 
 #go throught each octant that a simulation is looking at
 #since in this case only one octant is active in the simulation

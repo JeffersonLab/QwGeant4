@@ -38,7 +38,7 @@ nevents=125000
 batch=xml
 qwgeant4=`dirname $0`
 qwgeant4=`readlink -f $qwgeant4/..`
-mkdir /home/${USER}/scratch
+mkdir -p /home/${USER}/scratch
 
 #go through each axis changing postion and direction
 for axis in X Y ; do

@@ -29,7 +29,7 @@ nevents=5000
 batch=sh
 qwgeant4=`dirname $0`
 qwgeant4=`readlink -f $qwgeant4/..`
-mkdir /home/${USER}/scratch
+mkdir -p /home/${USER}/scratch
 
 let current=${current_min}
 while [[ ${current} -le ${current_max} ]] ; do
