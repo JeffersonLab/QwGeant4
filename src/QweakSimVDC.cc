@@ -105,20 +105,21 @@ QweakSimVDC::QweakSimVDC()
   VDC_CenterBack_YPos.resize(2,0);
   VDC_CenterBack_ZPos.resize(2,0);
 
-  for(int i = 0; i < 2; i++){//temp loop to assign values for package 2. Although same as package 1, will be rotated to different octant.
-  VDC_CenterFront_XPos[i]        =   0.0*cm;
-  VDC_CenterFront_YPos[i]        = 276.165*cm; // 280.0*cm;  // SW for 20.75 deg
-  VDC_CenterFront_ZPos[i]        = 443.920*cm; //480.0*cm;   // SW: 330.0 +107.0
-  //VDC_CenterFront_ZPos        = -700*cm;   // for testing
-
-  VDC_FrontBackDistance       = 53.18*cm; // center to center
-  // updated 2012-04-09 by wdconinc based on qwanalysis geometry
-  SetVDC_BackVDC_CenterPosition(i);
-  }
-  MeanTrackAngle             =  24.43*degree;  //20.57*degree;  // also tilting angle of VDcs  // 
+  MeanTrackAngle                =  24.43*degree;  //20.57*degree;  // also tilting angle of VDcs  // 
   VDC_RotationAngleInPhi[0]     =   0.0*degree;   // normally 0.0*degree = 12 o'clock = octant 1
   VDC_RotationAngleInPhi[1]     =  90*degree; //VDC_RotationAngleInPhi[0] + 180.0*degree;
   
+  for(int i = 0; i < 2; i++){//temp loop to assign values for package 2. Although same as package 1, will be rotated to different octant.
+    VDC_CenterFront_XPos[i]        =   0.0*cm;
+    VDC_CenterFront_YPos[i]        = 276.165*cm; // 280.0*cm;  // SW for 20.75 deg
+    VDC_CenterFront_ZPos[i]        = 443.920*cm; //480.0*cm;   // SW: 330.0 +107.0
+    //VDC_CenterFront_ZPos        = -700*cm;   // for testing
+
+    VDC_FrontBackDistance       = 53.18*cm; // center to center
+    // updated 2012-04-09 by wdconinc based on qwanalysis geometry
+    SetVDC_BackVDC_CenterPosition(i);
+  }
+
 
 
 
