@@ -12,8 +12,6 @@
 
 #include "QweakSimWShutters.hh"
 
-static const G4double inch = 2.54*cm;
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 QweakSimWShutters::QweakSimWShutters(G4int n)
 {

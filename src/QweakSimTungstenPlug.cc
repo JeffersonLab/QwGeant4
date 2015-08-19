@@ -33,8 +33,6 @@ void QweakSimTungstenPlug::ConstructTungstenPlug(G4VPhysicalVolume* MotherVolume
   // Dimensions of W-plug
   // Updated Numbers found on drawings provided by Greg Smith
   // Page 13 of 
-  G4double inch = 25.4*mm;
-  
   G4double WPlugOD = 3.125*inch;			// Outer Diameter of Plug
   G4double WPlugID1 = 0.508*inch; 			// Front Face Inner Diameter
   G4double WPlugID2 = 0.848*inch;			// Rear Face Inner Diameter

@@ -1,3 +1,6 @@
+#ifndef QweakSimSystemOfUnits_h
+#define QweakSimSystemOfUnits_h 1
+
 #include <CLHEP/Units/SystemOfUnits.h>
 
 using CLHEP::angstrom;
@@ -24,3 +27,6 @@ using CLHEP::eV;
 using CLHEP::MeV;
 using CLHEP::GeV;
 
+static const G4double inch = 2.54*cm;
+
+#endif

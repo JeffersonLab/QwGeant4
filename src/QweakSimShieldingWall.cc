@@ -47,8 +47,6 @@ QweakSimShieldingWall::QweakSimShieldingWall()
 {
 G4cout << G4endl << "###### Calling QweakSimShieldingWall::QweakSimShieldingWall() " << G4endl << G4endl;
 
-static const G4double inch = 2.54*cm;
-
 pMaterial = QweakSimMaterial::GetInstance();
 
 //--------------------
