@@ -440,7 +440,7 @@ G4double QweakSimEPEvent::Elastic_Cross_Section_Proton(G4double E_in,
                                                        G4double &E_out)
 {
       G4double Lamda_2 = 0.710;
-      G4double M_p = 938.2796;  // proton mass in MeV
+      G4double M_p = 938.2796 * MeV;  // proton mass in MeV
       G4double mu = 2.793;
       G4double Z = 1.0;
       G4double A = 1.0;
@@ -448,7 +448,7 @@ G4double QweakSimEPEvent::Elastic_Cross_Section_Proton(G4double E_in,
       G4double myhbarc = hbarc / MeV / fermi; // 197.3269718 in MeV fm 
       G4double alpha = 1.0/137.035999074;
       G4double CC = myhbarc*alpha/2.0;  // 0.719982242379
-      G4double Electon_Mass = 0.511;  //electorn mass in MeV
+      G4double Electron_Mass = 0.511 * MeV;  //electron mass in MeV
 
 //    E_in units is MeV
 
@@ -477,11 +477,11 @@ G4double QweakSimEPEvent::Elastic_Cross_Section_Proton(G4double E_in,
 
 	  //The next two line is to add schwinger
         G4double FunctionofTheta = log (STH*STH) * log (CTH*CTH);
-	G4double delta_Schwinger = (-2*alpha/pi)*((log(E_in/15)-13/12)*(log(Q2/(Electon_Mass*Electon_Mass))-1)+17/36+ FunctionofTheta/2);
+	G4double delta_Schwinger = (-2.0*alpha/pi) * ((log(E_in/15.0) - 13.0/12.0) * (log(Q2/(Electron_Mass*Electron_Mass)) - 1.0) + 17.0/36.0 + FunctionofTheta/2.0);
 //	G4double omega_Sch = E_in - 15;
         G4double Sigma_Dipole;
         Sigma_Dipole = Mott*(GEP_DIPOLE*GEP_DIPOLE*FAC+tau*GMP_DIPOLE*GMP_DIPOLE*(FAC+2.*T2THE));
-        Sigma_Dipole = Sigma_Dipole * (1+delta_Schwinger);
+        Sigma_Dipole *= (1.0 + delta_Schwinger);
         fWeightN = Sigma_Dipole*sin(Theta);
         return Sigma_Dipole;
 }
@@ -560,11 +560,11 @@ G4double QweakSimEPEvent::Elastic_Cross_Section_Aluminum(G4double E_in,
 //  EventDataFile<<"F_2="<<F_2<<"  "<<G4endl;
     
     //The next lines are to add schwinger
-    G4double Electon_Mass = 0.511;  //electorn mass in MeV
+    G4double Electron_Mass = 0.511 * MeV;  //electorn mass in MeV
     G4double alpha = 1.0/137.035999074;
 
     G4double FunctionofTheta = log (STH*STH) * log (CTH*CTH);
-    G4double delta_Schwinger = (-2*alpha/pi)*((log(E_in/15)-13/12)*(log(Q2/(Electon_Mass*Electon_Mass))-1)+17/36+ FunctionofTheta/2);
+    G4double delta_Schwinger = (-2.0*alpha/pi) * ((log(E_in/15.0) - 13.0/12.0) * (log(Q2/(Electron_Mass*Electron_Mass)) - 1.0) + 17.0/36.0 + FunctionofTheta/2.0);
 
 //    cross section units: ub/sr
 //    G4double SigmaMott = ((0.72/E_in)*cos(Theta/2)/(sin(Theta/2)^2))^2 /( 1+2*E_in/M*(sin(Theta/2)^2))*10000 ;
@@ -574,7 +574,7 @@ G4double QweakSimEPEvent::Elastic_Cross_Section_Aluminum(G4double E_in,
 //  EventDataFile<<"SigmaMott="<<SigmaMott<<"  "<<"SigmaMott*F_2="<<SigmaMott*F_2<<"  "<<"weight_n="<<SigmaMott*F_2*sin(Theta)<<G4endl;
 
       G4double Xsect = SigmaMott*F_2;
-      Xsect = Xsect * (1+delta_Schwinger);
+      Xsect = Xsect * (1.0 + delta_Schwinger);
       fWeightN = Xsect*sin(Theta);
 
       //      G4cout<< "q(1/fm)"<<sqrt(q2) <<"  SigmaMott="<<SigmaMott<<"  F_2="<<F_2<<"  SigmaMott*F_2="<<Xsect<<G4endl;
@@ -2352,7 +2352,7 @@ void QweakSimEPEvent::resmodd(G4double w2, G4double q2,
   G4double petacm,ppicmr[7],ppi2cmr[7],petacmr[7],epicmr[7],epi2cmr[7];
   G4double eetacmr[7],epicm,epi2cm,eetacm,br[7][2],ang[7],sigrsv[7];
   G4double pgam[7],pwid[7][2],x0[7],dip;
-  G4double sig_res,xpr,alpha,pi,F1;
+  G4double sig_res,xpr,alpha,F1;
   G4int i,j,num,iw;
   
   G4double xval0[12] = {
@@ -2367,7 +2367,6 @@ void QweakSimEPEvent::resmodd(G4double w2, G4double q2,
   mpi = 0.135;
   meta = 0.547;
   mp2 = mp*mp;
-  pi = 3.141593;
   alpha = 1./137.036;
   
   sig = 0.;
@@ -2860,9 +2859,9 @@ G4double QweakSimEPEvent::AlloyScattering(G4double E_in, //MeV
                                           G4double &Q2,
                                           G4double &E_out)
 {
-  G4double M_p = 938.2796;
-  G4double M = M_p*Ain;
-  
+  G4double M_p = 938.2796 * MeV;
+  G4double M = M_p * Ain;
+
   G4double STH = sin(Theta/2.);
   G4double CTH = cos(Theta/2.);
 
@@ -2873,20 +2872,19 @@ G4double QweakSimEPEvent::AlloyScattering(G4double E_in, //MeV
   // Mott cross section
   G4double sigMott = pow(Zin*0.719982/E_in*CTH/(STH*STH),2);
   sigMott = sigMott/(1+2*E_in/M*STH*STH)*10000;
-  
+
   // Form factor
   G4int NUC_MODEL = 1; // USE Fourier-Bessel if available
   G4bool OUT_OF_RANGE = 0;
   //G4double eng = E_in/1e-3; // GeV // unused
   G4double qsq = Q2/1e6; // GeV^2
-  M_p = M_p/1e-3;
-  
+
   G4double FF = 1;
-  
+
   if (Ain < 3) {
     G4cout << "** No generator fo A < 3 ** " << G4endl;
     return 0;
-  } 
+  }
   else if (Ain >= 3) {
     OUT_OF_RANGE = 0;
     if (NUC_MODEL == 1) {
@@ -2908,7 +2906,7 @@ G4double QweakSimEPEvent::AlloyScattering(G4double E_in, //MeV
 
   G4double xsec = sigMott*FF*FF;
   fWeightN = xsec*sin(Theta);
-  
+
   return xsec;
 }
 
