@@ -56,17 +56,13 @@ QweakSimLumiDetector::QweakSimLumiDetector()
     LumiMessenger = new QweakSimLumiMessenger(this);
 
     // Access to material definition
-    pMaterial = new QweakSimMaterial();
-    pMaterial->DefineMaterials();
+    pMaterial = QweakSimMaterial::GetInstance();
 
     // Get quartz for lumi bars
     QuartzBar = pMaterial->GetMaterial("Quartz");
 }
 
-QweakSimLumiDetector::~QweakSimLumiDetector()
-{
-    if (pMaterial) delete pMaterial;
-}
+QweakSimLumiDetector::~QweakSimLumiDetector() { }
 
 void QweakSimLumiDetector::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 {

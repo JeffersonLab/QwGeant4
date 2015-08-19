@@ -99,22 +99,14 @@ QweakSimCollimatorSupport::QweakSimCollimatorSupport(QweakSimCollimator* Colli1,
   //Collimator_Messenger = new QweakSimCollimatorMessenger(this);
 
  // get access to material definition
-  pMaterial = new QweakSimMaterial();
-  pMaterial->DefineMaterials();
+  pMaterial = QweakSimMaterial::GetInstance();
 
   G4cout << G4endl << "###### Leaving QweakSimCollimatorSupport::QweakCollimatorSupport() " << G4endl << G4endl;
 
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-QweakSimCollimatorSupport::~QweakSimCollimatorSupport()
-{
-    G4cout << G4endl << "###### Calling QweakSimCollimatorSupport::~QweakCollimatorSupport() " << G4endl << G4endl;
-
-    if (pMaterial) delete pMaterial;
-  
-    G4cout << G4endl << "###### Calling QweakSimCollimatorSupport::~QweakCollimatorSupport() " << G4endl << G4endl;
-}
+QweakSimCollimatorSupport::~QweakSimCollimatorSupport() { }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void QweakSimCollimatorSupport::ConstructSupport(G4VPhysicalVolume* MotherVolume)

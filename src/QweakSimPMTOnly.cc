@@ -115,9 +115,7 @@ QweakSimPMTOnly::QweakSimPMTOnly(QweakSimUserInformation* userInfo)
 
     PMTOnlyMessenger = new QweakSimPMTOnlyMessenger(this);
 	
-    pMaterial = new QweakSimMaterial();
-    pMaterial->DefineMaterials();  
-	
+    pMaterial = QweakSimMaterial::GetInstance();
 }
 
 

@@ -51,16 +51,11 @@ QweakSimPionWall::QweakSimPionWall()
   PionWall_Messenger = new QweakSimPionWallMessenger(this);
   
  // get access to material definition
-  pMaterial = new QweakSimMaterial();
-  pMaterial->DefineMaterials();
-
+  pMaterial = QweakSimMaterial::GetInstance();
 }
   
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-QweakSimPionWall::~QweakSimPionWall()
-{
-  if (pMaterial)  delete pMaterial;
-}
+QweakSimPionWall::~QweakSimPionWall() { }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void QweakSimPionWall::ConstructPionWall(G4VPhysicalVolume* MotherVolume)

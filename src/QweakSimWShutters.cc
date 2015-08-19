@@ -41,16 +41,11 @@ QweakSimWShutters::QweakSimWShutters(G4int n)
   WShutters_Messenger = new QweakSimWShuttersMessenger(this,n);
 
  // get access to material definition
-  pMaterial = new QweakSimMaterial();
-  pMaterial->DefineMaterials();
-
+  pMaterial = QweakSimMaterial::GetInstance();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-QweakSimWShutters::~QweakSimWShutters()
-{
-  if (pMaterial)  delete pMaterial;
-}
+QweakSimWShutters::~QweakSimWShutters() { }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void QweakSimWShutters::ConstructWShutters(G4VPhysicalVolume* MotherVolume)

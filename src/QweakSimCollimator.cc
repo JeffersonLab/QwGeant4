@@ -54,16 +54,11 @@ QweakSimCollimator::QweakSimCollimator()
   OctantCutOutRadialOffset          = 0.0*cm;
 
   // get access to material definition
-  pMaterial = new QweakSimMaterial();
-  pMaterial->DefineMaterials();
-
+  pMaterial = QweakSimMaterial::GetInstance();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-QweakSimCollimator::~QweakSimCollimator()
-{
-  if (pMaterial) delete pMaterial;
-}
+QweakSimCollimator::~QweakSimCollimator() { }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void QweakSimCollimator::DestroyComponent()

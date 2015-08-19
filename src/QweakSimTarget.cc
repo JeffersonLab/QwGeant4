@@ -22,10 +22,6 @@
 
 #include "QweakSimTarget.hh"
 
-// user classes
-class QweakSimMaterial;
-class QweakSimTargetMessenger;
-
 // geant4 includes
 #include "G4UserLimits.hh"
 
@@ -78,8 +74,7 @@ QweakSimTarget::QweakSimTarget(QweakSimUserInformation *myUI)
     static const G4double mil = 0.001*2.54*cm;
     static const G4double inch = 2.54*cm;
 
-    pMaterial = new QweakSimMaterial();
-    pMaterial->DefineMaterials();
+    pMaterial = QweakSimMaterial::GetInstance();
 
     TargetContainer_Material      = pMaterial->GetMaterial("Vacuum");
     TargetCell_Material           = pMaterial->GetMaterial("Aluminum");
@@ -164,7 +159,6 @@ QweakSimTarget::QweakSimTarget(QweakSimUserInformation *myUI)
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 QweakSimTarget::~QweakSimTarget()
 {
-    delete pMaterial;
     delete targetMessenger;
 }
 

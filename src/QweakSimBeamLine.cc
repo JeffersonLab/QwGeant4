@@ -67,8 +67,7 @@ QweakSimBeamLine::QweakSimBeamLine(QweakSimUserInformation *myUI)
     // static const G4double mil = 0.001*2.54*cm;
     // static const G4double inch = 2.54*cm;
 
-    pMaterial = new QweakSimMaterial();
-    pMaterial->DefineMaterials();
+    pMaterial = QweakSimMaterial::GetInstance();
 
     //BeamLineContainer_Material      = pMaterial->GetMaterial("Vacuum");
     BeamPipe_Material               = pMaterial->GetMaterial("Aluminum");
@@ -83,7 +82,6 @@ QweakSimBeamLine::QweakSimBeamLine(QweakSimUserInformation *myUI)
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 QweakSimBeamLine::~QweakSimBeamLine()
 {
-    delete pMaterial;
     delete beamlineMessenger;
 }
 

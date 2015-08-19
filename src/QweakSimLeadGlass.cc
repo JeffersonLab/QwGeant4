@@ -60,9 +60,7 @@ QweakSimLeadGlass::QweakSimLeadGlass()
 	
     LeadGlassMessenger = new QweakSimLeadGlassMessenger(this);
 	
-    pMaterial = new QweakSimMaterial();
-    pMaterial->DefineMaterials();  
-	
+    pMaterial = QweakSimMaterial::GetInstance();
 }
 
 
@@ -82,11 +80,8 @@ QweakSimLeadGlass::~QweakSimLeadGlass()
     if (LeadGlass_Physical)        delete LeadGlass_Physical;
     if (LeadGlass_Logical)         delete LeadGlass_Logical;
     if (LeadGlass_Solid)           delete LeadGlass_Solid;
-	
-    if (pMaterial)                 delete pMaterial;
-	
+
     if (LeadGlassMessenger)        delete LeadGlassMessenger;
-	
 }
 
 

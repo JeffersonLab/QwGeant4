@@ -180,22 +180,13 @@
   // get access to material definition
   //==================================
   //
-  pMaterial = new QweakSimMaterial();
-  pMaterial->DefineMaterials();
+  pMaterial = QweakSimMaterial::GetInstance();
 
   G4cout << G4endl << "###### Leaving QweakSimVDCRotator::QweakCollimatorSupport() " << G4endl << G4endl;
-
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-QweakSimVDCRotator::~QweakSimVDCRotator()
-{
-    G4cout << G4endl << "###### Calling QweakSimVDCRotator::~QweakCollimatorSupport() " << G4endl << G4endl;
-
-    if (pMaterial)             delete pMaterial;
-
-    G4cout << G4endl << "###### Calling QweakSimVDCRotator::~QweakCollimatorSupport() " << G4endl << G4endl;
-}
+QweakSimVDCRotator::~QweakSimVDCRotator() { }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void QweakSimVDCRotator::ConstructRotatorMasterContainer()

@@ -55,8 +55,7 @@ QweakSimTriggerScintillator::QweakSimTriggerScintillator()
   TriggerScintillatorMessenger = new QweakSimTriggerScintillatorMessenger(this); //Messenger for first TS Control
   TriggerScintillatorMessenger = new QweakSimTriggerScintillatorMessenger(this,1); // Messenger for second TS Control
   
-  pMaterial = new QweakSimMaterial();
-  pMaterial->DefineMaterials();
+  pMaterial = QweakSimMaterial::GetInstance();
 
   // get cerenkov material
   //CerenkovContainer_Material = pMaterial->GetMaterial("HeGas");  
@@ -116,8 +115,6 @@ QweakSimTriggerScintillator::~QweakSimTriggerScintillator()
   //  if (TriggerScintillatorContainer_Physical)    delete TriggerScintillatorContainer_Physical;
     if (TriggerScintillatorContainer_Logical)     delete TriggerScintillatorContainer_Logical;
 
-
-    if (pMaterial)                                delete pMaterial;
     if (TriggerScintillatorMessenger)             delete TriggerScintillatorMessenger;
 }
 

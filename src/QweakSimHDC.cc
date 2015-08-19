@@ -135,8 +135,7 @@ QweakSimHDC::QweakSimHDC()
 //  Rotation_HDC  = new G4RotationMatrix();
 
   
-  pMaterial = new QweakSimMaterial();
-  pMaterial->DefineMaterials();
+  pMaterial = QweakSimMaterial::GetInstance();
 
   //Resizing vectors and setting values to 0
   HDC_MasterContainerFront_Physical.resize(2,0);
@@ -181,8 +180,6 @@ QweakSimHDC::~QweakSimHDC()
     if (HDC_Frame_Solid)                     delete HDC_Frame_Solid;
 
     //if (Rotation_HDC)                        delete Rotation_HDC ;
-
-    if (pMaterial)                           delete pMaterial; 
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

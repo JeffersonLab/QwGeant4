@@ -368,8 +368,7 @@ QweakSimMainMagnet::QweakSimMainMagnet()
 
 
     // get access to material definition
-  pMaterial = new QweakSimMaterial();
-  pMaterial -> DefineMaterials();
+  pMaterial = QweakSimMaterial::GetInstance();
 
   // get material
   MainMagnet_MasterContainer_Material      = pMaterial->GetMaterial("HeGas"); 
@@ -569,14 +568,7 @@ QweakSimMainMagnet::QweakSimMainMagnet()
 }	
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-QweakSimMainMagnet::~QweakSimMainMagnet()
-{  
-G4cout << G4endl << "###### Calling QweakSimMainMagnet::~QweakSimMainMagnet() " << G4endl << G4endl;
-
-      if (pMaterial) delete pMaterial;
-
-G4cout << G4endl << "###### Leaving QweakSimMainMagnet::~QweakSimMainMagnet() " << G4endl << G4endl;
-}
+QweakSimMainMagnet::~QweakSimMainMagnet() { }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void QweakSimMainMagnet::ConstructComponent(G4VPhysicalVolume* MotherVolume)

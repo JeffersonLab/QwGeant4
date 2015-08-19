@@ -144,8 +144,7 @@ QweakSimVDC::QweakSimVDC()
  
 
 
-  pMaterial = new QweakSimMaterial();
-  pMaterial->DefineMaterials();
+  pMaterial = QweakSimMaterial::GetInstance();
 
 
 
@@ -212,9 +211,6 @@ QweakSimVDC::~QweakSimVDC()
   if (VDC_DriftCellMasterContainer_VisAtt) delete VDC_DriftCellMasterContainer_VisAtt;
 
   if (VDC_WirePlane_VisAtt)                delete VDC_WirePlane_VisAtt;
-
-  if (pMaterial)      delete pMaterial; 
-  
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

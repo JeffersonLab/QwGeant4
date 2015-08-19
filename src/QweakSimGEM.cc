@@ -163,11 +163,7 @@ fRegGasDet = NULL;
 
   GEM_Messenger = new QweakSimGEMMessenger(this);
   
-  pMaterial = new QweakSimMaterial();
-  pMaterial->DefineMaterials();
-
- 
-
+  pMaterial = QweakSimMaterial::GetInstance();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -244,7 +240,6 @@ QweakSimGEM::~QweakSimGEM()
  
   if (GEM_Frame_Solid)                          delete GEM_Frame_Solid; 	
       
-  if (pMaterial)                                delete pMaterial; 
   if (GEM_Messenger)                            delete GEM_Messenger;
   
   //if (GEMdriftChamberSD)                        delete GEMdriftChamberSD; // causes crash

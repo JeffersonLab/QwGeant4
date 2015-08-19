@@ -96,8 +96,7 @@ QweakSimCerenkovDetector::QweakSimCerenkovDetector(QweakSimUserInformation *user
     Rotation_SideBracketPad.clear();
     Position_SideBracketPad.clear();
 
-    pMaterial = new QweakSimMaterial();
-    pMaterial->DefineMaterials();
+    pMaterial = QweakSimMaterial::GetInstance();
 
     //CerenkovContainer_Material = pMaterial->GetMaterial("Air");
     CerenkovContainer_Material = pMaterial->GetMaterial("Air");
@@ -173,7 +172,6 @@ QweakSimCerenkovDetector::QweakSimCerenkovDetector(QweakSimUserInformation *user
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 QweakSimCerenkovDetector::~QweakSimCerenkovDetector() {
-    delete pMaterial;
     for(size_t h=0; h<CerenkovDetectorMessenger.size(); h++){
       delete CerenkovDetectorMessenger[h];
     }

@@ -18,18 +18,14 @@ QweakSimTungstenPlug::QweakSimTungstenPlug()
   TungstenPlugPhysical     = NULL;
 
   // get access to material definition
-  pMaterial = new QweakSimMaterial();
-  pMaterial->DefineMaterials();
+  pMaterial = QweakSimMaterial::GetInstance();
 
   // TungstenPlug Material
   TungstenPlug_Material = pMaterial->GetMaterial("G4_W");  // For now...I thought this was an alloy....
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-QweakSimTungstenPlug::~QweakSimTungstenPlug()
-{
-  if (pMaterial) delete pMaterial;
-}
+QweakSimTungstenPlug::~QweakSimTungstenPlug() { }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void QweakSimTungstenPlug::ConstructTungstenPlug(G4VPhysicalVolume* MotherVolume)

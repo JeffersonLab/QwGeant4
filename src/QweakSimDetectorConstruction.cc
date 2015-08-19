@@ -155,8 +155,7 @@ QweakSimDetectorConstruction::QweakSimDetectorConstruction(QweakSimUserInformati
 
   detectorMessenger = new QweakSimDetectorMessenger(this);
 
-  pMaterial         = new QweakSimMaterial();
-  pMaterial->DefineMaterials();
+  pMaterial         = QweakSimMaterial::GetInstance();
 }
 
 QweakSimDetectorConstruction::~QweakSimDetectorConstruction()
@@ -198,7 +197,6 @@ QweakSimDetectorConstruction::~QweakSimDetectorConstruction()
   if (pMainMagnet)          delete pMainMagnet;
 
   if (detectorMessenger)    delete detectorMessenger;
-  if (pMaterial)            delete pMaterial;
   if (pGeometry)            delete pGeometry;
 
 }

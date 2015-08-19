@@ -58,17 +58,26 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 class QweakSimMaterial
 {
-  public:
-    QweakSimMaterial() {
-      fNistManager = G4NistManager::Instance();
-      fNistManager->SetVerbose(1);
-      fMaterialsHaveBeenDefined = false;
-    };
+  private:
+
+    // Private constructor
+    QweakSimMaterial();
+
+    // Prevent creation of automatic copy constructors
+    QweakSimMaterial(QweakSimMaterial const& copy);
+    QweakSimMaterial& operator=(QweakSimMaterial const& copy);
+
+    // Destructor
     virtual ~QweakSimMaterial() { };
 
   public:
-    void  DefineMaterials();
+    // Get the instance of the Qweak materials manager
+    static QweakSimMaterial* GetInstance() {
+      static QweakSimMaterial material;
+      return &material;
+    };
 
+    // Get the material
     G4Material* GetMaterial(G4String material) {
       // Search list of custom materials
       G4Material* ptrToMaterial = G4Material::GetMaterial(material);
@@ -79,11 +88,11 @@ class QweakSimMaterial
       return ptrToMaterial;
     }
 
-    G4NistManager* fNistManager;
-
   private:
 
-    G4bool fMaterialsHaveBeenDefined;
+    // NIST materials manager
+    G4NistManager* fNistManager;
+
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

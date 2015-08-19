@@ -2,12 +2,13 @@
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void QweakSimMaterial::DefineMaterials()
+QweakSimMaterial::QweakSimMaterial()
 {
-  G4cout << G4endl << "###### Calling QweakSimMaterial::DefineMaterials() " << G4endl << G4endl;
+  G4cout << G4endl << "###### Calling QweakSimMaterial::QweakSimMaterial() " << G4endl << G4endl;
 
-  // Return if we have already defined materials
-  if (fMaterialsHaveBeenDefined) return;
+  // Get the instance of the NIST materials manager
+  fNistManager = G4NistManager::Instance();
+  fNistManager->SetVerbose(1);
 
   // Define required materials
   G4double A;        // atomic mass
@@ -827,8 +828,5 @@ void QweakSimMaterial::DefineMaterials()
 
 //   matPhotocathode->SetMaterialPropertiesTable(myMPT_Photocathode);
 
-  // Mark materials as having been defined
-  fMaterialsHaveBeenDefined = true;
-
-  G4cout << G4endl << "###### Leaving QweakSimMaterial::DefineMaterials() " << G4endl << G4endl;
+  G4cout << G4endl << "###### Leaving QweakSimMaterial::QweakSimMaterial() " << G4endl << G4endl;
 }

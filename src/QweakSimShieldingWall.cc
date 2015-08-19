@@ -49,8 +49,7 @@ G4cout << G4endl << "###### Calling QweakSimShieldingWall::QweakSimShieldingWall
 
 static const G4double inch = 2.54*cm;
 
-    pMaterial = new QweakSimMaterial();
-    pMaterial->DefineMaterials();
+pMaterial = QweakSimMaterial::GetInstance();
 
 //--------------------
 // Front Shielding Wall related
@@ -259,7 +258,6 @@ ShieldingWallMessenger = new QweakSimShieldingWallMessenger(this);
 QweakSimShieldingWall::~QweakSimShieldingWall()
 {
   if (ShieldingWallMessenger) delete ShieldingWallMessenger;
-  if (pMaterial)              delete pMaterial;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
