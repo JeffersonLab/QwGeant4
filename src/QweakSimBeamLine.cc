@@ -63,20 +63,13 @@ QweakSimBeamLine::QweakSimBeamLine(QweakSimUserInformation *myUI)
     DS_24inch_Pipe_Logical= NULL;
     DS_24inch_Pipe_Flange_Logical= NULL;
     
-    // definition of a mil = inch/1000
-    // static const G4double mil = 0.001*2.54*cm;
-    // static const G4double inch = 2.54*cm;
-
     pMaterial = QweakSimMaterial::GetInstance();
 
     //BeamLineContainer_Material      = pMaterial->GetMaterial("Vacuum");
     BeamPipe_Material               = pMaterial->GetMaterial("Aluminum");
     Shield_Material                 = pMaterial->GetMaterial("Lead");
     
-    // define geometry values
-
     beamlineMessenger = new QweakSimBeamLineMessenger(this);
-
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

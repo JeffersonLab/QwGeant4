@@ -70,10 +70,6 @@ QweakSimTarget::QweakSimTarget(QweakSimUserInformation *myUI)
     TargetMaterial_Material = NULL;
 
 
-    // definition of a mil = inch/1000
-    static const G4double mil = 0.001*2.54*cm;
-    static const G4double inch = 2.54*cm;
-
     pMaterial = QweakSimMaterial::GetInstance();
 
     TargetContainer_Material      = pMaterial->GetMaterial("Vacuum");

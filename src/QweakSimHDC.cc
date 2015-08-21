@@ -186,20 +186,16 @@ QweakSimHDC::~QweakSimHDC()
 
 void QweakSimHDC::ConstructComponent(G4VPhysicalVolume* MotherVolume)
 {
-G4cout << G4endl << "###### Calling QweakSimHDC::ConstructComponent() " << G4endl << G4endl;
+  G4cout << G4endl << "###### Calling QweakSimHDC::ConstructComponent() " << G4endl << G4endl;
 
-theMotherPV = MotherVolume;
- 
-// definition of a mil = inch/1000
-static const G4double mil = 0.001*2.54*cm;
+  theMotherPV = MotherVolume;
 
-
-// assign material
- G4Material* HDC_MasterContainer_Material    = pMaterial->GetMaterial("Air");   
- G4Material* HDC_SubContainer_Material       = pMaterial->GetMaterial("ArCO2");   
- G4Material* HDC_Frame_Material              = pMaterial->GetMaterial("NemaG10");  
- G4Material* HDC_Foil_Material               = pMaterial->GetMaterial("Mylar"); 
- G4Material* HDC_WirePlane_Material          = pMaterial->GetMaterial("ArCO2"); 
+  // assign material
+  G4Material* HDC_MasterContainer_Material    = pMaterial->GetMaterial("Air");   
+  G4Material* HDC_SubContainer_Material       = pMaterial->GetMaterial("ArCO2");   
+  G4Material* HDC_Frame_Material              = pMaterial->GetMaterial("NemaG10");  
+  G4Material* HDC_Foil_Material               = pMaterial->GetMaterial("Mylar"); 
+  G4Material* HDC_WirePlane_Material          = pMaterial->GetMaterial("ArCO2"); 
 
 
 

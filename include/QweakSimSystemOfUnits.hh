@@ -28,5 +28,6 @@ using CLHEP::MeV;
 using CLHEP::GeV;
 
 static const G4double inch = 2.54*cm;
+static const G4double mil = 0.001*inch;
 
 #endif
