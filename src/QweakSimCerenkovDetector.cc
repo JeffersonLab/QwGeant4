@@ -1972,31 +1972,31 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 
     RightEndPad_Quartz_OpticalSurface->SetType(dielectric_metal);
     RightEndPad_Quartz_OpticalSurface->SetFinish(polished);
-    LeftEndPad_Quartz_OpticalSurface->SetPolish(0.9);
+    RightEndPad_Quartz_OpticalSurface->SetPolish(0.9);
     RightEndPad_Quartz_OpticalSurface->SetModel(glisur);
     RightEndPad_Quartz_OpticalSurface->SetMaterialPropertiesTable(BracketPad_MPT);
 
     SidePad_LeftLightGuide_OpticalSurface->SetType(dielectric_metal);
     SidePad_LeftLightGuide_OpticalSurface->SetFinish(polished);
-    LeftEndPad_Quartz_OpticalSurface->SetPolish(0.9);
+    SidePad_LeftLightGuide_OpticalSurface->SetPolish(0.9);
     SidePad_LeftLightGuide_OpticalSurface->SetModel(glisur);
     SidePad_LeftLightGuide_OpticalSurface->SetMaterialPropertiesTable(BracketPad_MPT);
 
     SidePad_RightLightGuide_OpticalSurface->SetType(dielectric_metal);
     SidePad_RightLightGuide_OpticalSurface->SetFinish(polished);
-    LeftEndPad_Quartz_OpticalSurface->SetPolish(0.9);
+    SidePad_RightLightGuide_OpticalSurface->SetPolish(0.9);
     SidePad_RightLightGuide_OpticalSurface->SetModel(glisur);
     SidePad_RightLightGuide_OpticalSurface->SetMaterialPropertiesTable(BracketPad_MPT);
 
     SidePad_QuartzBarLeft_OpticalSurface->SetType(dielectric_metal);
     SidePad_QuartzBarLeft_OpticalSurface->SetFinish(polished);
-    LeftEndPad_Quartz_OpticalSurface->SetPolish(0.9);
+    SidePad_QuartzBarLeft_OpticalSurface->SetPolish(0.9);
     SidePad_QuartzBarLeft_OpticalSurface->SetModel(glisur);
     SidePad_QuartzBarLeft_OpticalSurface->SetMaterialPropertiesTable(BracketPad_MPT);
 
     SidePad_QuartzBarRight_OpticalSurface->SetType(dielectric_metal);
     SidePad_QuartzBarRight_OpticalSurface->SetFinish(polished);
-    LeftEndPad_Quartz_OpticalSurface->SetPolish(0.9);
+    SidePad_QuartzBarRight_OpticalSurface->SetPolish(0.9);
     SidePad_QuartzBarRight_OpticalSurface->SetModel(glisur);
     SidePad_QuartzBarRight_OpticalSurface->SetMaterialPropertiesTable(BracketPad_MPT);
 
@@ -2008,6 +2008,8 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
     QuartzBarRight_OpticalSurface->SetMaterialPropertiesTable(quartzST);
     LightGuideLeft_OpticalSurface->SetMaterialPropertiesTable(quartzST);
     LightGuideRight_OpticalSurface->SetMaterialPropertiesTable(quartzST);
+    GlueFilmLeft_OpticalSurface->SetMaterialPropertiesTable(quartzST);
+    GlueFilmCenter_OpticalSurface->SetMaterialPropertiesTable(quartzST);
     GlueFilmRight_OpticalSurface->SetMaterialPropertiesTable(quartzST);
 
     G4OpticalSurface* ActiveArea_OpticalSurface = new G4OpticalSurface("ActiveAreaOpticalSurface");
