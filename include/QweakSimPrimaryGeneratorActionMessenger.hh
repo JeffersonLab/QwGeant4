@@ -65,6 +65,7 @@ private:
   G4UIcmdWithADoubleAndUnit*    SetDirectionX_Cmd;
   G4UIcmdWithADoubleAndUnit*    SetDirectionY_Cmd;
 
+  G4UIcmdWithADoubleAndUnit*    SetRasterSize_Cmd;
   G4UIcmdWithADoubleAndUnit*    SetRasterXmin_Cmd;
   G4UIcmdWithADoubleAndUnit*    SetRasterXmax_Cmd;
   G4UIcmdWithADoubleAndUnit*    SetRasterYmin_Cmd;
