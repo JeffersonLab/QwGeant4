@@ -418,7 +418,7 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
 
     pCollimator1->ConstructCollimator(experimentalHall_Physical);
 
-    pCollimator1->SetCollimatorHousing_CenterPositionInZ(-575.7895*cm);
+    pCollimator1->SetCollimatorHousing_CenterPositionInZ(-575.375*cm); //from ELOG Target/27
     pCollimator1->SetCollimatorHousingMaterial("PBA"); //housing material - Lead with 5% Antimony
     //
     pGeometry->AddModule(pCollimator1->getCollimatorHousingPhysicalVolume());
@@ -459,7 +459,7 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
 
     pCollimator2->ConstructCollimator(experimentalHall_Physical);
 
-    pCollimator2->SetCollimatorHousing_CenterPositionInZ(-378.2195*cm);
+    pCollimator2->SetCollimatorHousing_CenterPositionInZ(-377.99*cm); //from Target ELOG 27
     pCollimator2->SetCollimatorHousingMaterial("PBA");
     //
     pGeometry->AddModule(pCollimator2->getCollimatorHousingPhysicalVolume());

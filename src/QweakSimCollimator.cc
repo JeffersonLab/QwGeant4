@@ -32,7 +32,7 @@ QweakSimCollimator::QweakSimCollimator()
   CollimatorHousing_Physical = NULL;
 
 
-  CollimatorHousing_CenterZPosition = -575.7895*cm;//-579.79*cm
+  CollimatorHousing_CenterZPosition = -575.375*cm;//default US collimator location
   CollimatorHousing_FullLength_X    = 120.0*cm;//should be update to 86.36*cm
   CollimatorHousing_FullLength_Y    = 120.0*cm;//86.36*cm
   CollimatorHousing_FullLength_Z    = 15.24*cm;

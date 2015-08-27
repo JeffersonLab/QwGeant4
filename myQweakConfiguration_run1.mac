@@ -1,6 +1,6 @@
 /control/execute myQweakConfiguration.mac
 
-/Target/SetCenterPositionInZ -652.67 cm
+/Target/SetCenterPositionInZ -6524.66 mm
 
 /MagneticField/SetActualCurrent 8920.10 A
 
