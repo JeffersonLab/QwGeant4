@@ -652,68 +652,68 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
                                             false,0,
                                             pSurfChk);
 
-//******************************Define Square Falange Seal*******************************************
+//******************************Define Square Flange Seal*******************************************
 
-    G4double SquareFalangeSeal_FullLength_X = 8.21*inch;
-    G4double SquareFalangeSeal_FullLength_Y = 9.50*inch;
-    G4double SquareFalangeSeal_FullLength_Z = 5.0*mm;
+    G4double SquareFlangeSeal_FullLength_X = 8.21*inch;
+    G4double SquareFlangeSeal_FullLength_Y = 9.50*inch;
+    G4double SquareFlangeSeal_FullLength_Z = 5.0*mm;
 
     G4Box* SquareSealOuter_Solid  = new G4Box("SquareSealOuter_Solid",
-            0.5 * SquareFalangeSeal_FullLength_X,
-            0.5 * SquareFalangeSeal_FullLength_Y,
-            0.5 * SquareFalangeSeal_FullLength_Z);
+            0.5 * SquareFlangeSeal_FullLength_X,
+            0.5 * SquareFlangeSeal_FullLength_Y,
+            0.5 * SquareFlangeSeal_FullLength_Z);
 
     G4Box* SquareSealInner_Solid  = new G4Box("SquareSealInner_Solid",
-            0.5 * SquareFalangeSeal_FullLength_X - 0.75*inch,
-            0.5 * SquareFalangeSeal_FullLength_Y - 0.75*inch,
-            0.5 * SquareFalangeSeal_FullLength_Z + 0.1*mm);
+            0.5 * SquareFlangeSeal_FullLength_X - 0.75*inch,
+            0.5 * SquareFlangeSeal_FullLength_Y - 0.75*inch,
+            0.5 * SquareFlangeSeal_FullLength_Z + 0.1*mm);
 
-    G4SubtractionSolid* SquareFalangeSeal_Solid
+    G4SubtractionSolid* SquareFlangeSeal_Solid
     = new G4SubtractionSolid("SquareSealOuter_Solid-SquareSealInner_Solid",
                              SquareSealOuter_Solid,
                              SquareSealInner_Solid);
 
-    SquareFalangeSeal_Logical  = new G4LogicalVolume(SquareFalangeSeal_Solid,
+    SquareFlangeSeal_Logical  = new G4LogicalVolume(SquareFlangeSeal_Solid,
             Window_Material,
-            "SquareFalangeSeal_Log",
+            "SquareFlangeSeal_Log",
             0,0,0);
 
-    G4ThreeVector Position_SquareFalangeSeal_R = G4ThreeVector((47.75-8.21/2.0)*inch,
+    G4ThreeVector Position_SquareFlangeSeal_R = G4ThreeVector((47.75-8.21/2.0)*inch,
             0,
             0.25*inch + 1.0*inch+2.5*mm);
 
-    G4ThreeVector Position_SquareFalangeSeal_L = G4ThreeVector(-(47.75-8.21/2.0)*inch,
+    G4ThreeVector Position_SquareFlangeSeal_L = G4ThreeVector(-(47.75-8.21/2.0)*inch,
             0,
             0.25*inch + 1.0*inch+2.5*mm);
 
-    SquareFalangeSealR_Physical   = new G4PVPlacement(0,Position_SquareFalangeSeal_R + Container_Center,
-            SquareFalangeSeal_Logical,
-            "SquareFalangeSealR_Physical",
+    SquareFlangeSealR_Physical   = new G4PVPlacement(0,Position_SquareFlangeSeal_R + Container_Center,
+            SquareFlangeSeal_Logical,
+            "SquareFlangeSealR_Physical",
             CerenkovContainer_Logical,
             false,0,
             pSurfChk);
 
-    SquareFalangeSealL_Physical   = new G4PVPlacement(0,Position_SquareFalangeSeal_L + Container_Center,
-            SquareFalangeSeal_Logical,
-            "SquareFalangeSealL_Physical",
+    SquareFlangeSealL_Physical   = new G4PVPlacement(0,Position_SquareFlangeSeal_L + Container_Center,
+            SquareFlangeSeal_Logical,
+            "SquareFlangeSealL_Physical",
             CerenkovContainer_Logical,
             false,0,
             pSurfChk);
 
-//******************************Define Square Falange *******************************************
+//******************************Define Square Flange *******************************************
 
-    G4double SquareFalange_FullLength_X = 8.21*inch;
-    G4double SquareFalange_FullLength_Y = 9.50*inch;
-    G4double SquareFalange_FullLength_Z = 0.38*inch;
+    G4double SquareFlange_FullLength_X = 8.21*inch;
+    G4double SquareFlange_FullLength_Y = 9.50*inch;
+    G4double SquareFlange_FullLength_Z = 0.38*inch;
 
     G4double CutOuterRadius = 5.75*0.5*inch;
     G4double CutInnerRadius = 0.0*inch;
     G4double CutThickness = 0.38*inch+0.1*mm;
 
     G4Box* SquareBase_Solid  = new G4Box("SquareBase_Solid",
-                                         0.5 * SquareFalange_FullLength_X,
-                                         0.5 * SquareFalange_FullLength_Y,
-                                         0.5 * SquareFalange_FullLength_Z);
+                                         0.5 * SquareFlange_FullLength_X,
+                                         0.5 * SquareFlange_FullLength_Y,
+                                         0.5 * SquareFlange_FullLength_Z);
 
     G4Tubs* CylinderCut_Solid = new G4Tubs("CylinderCut_Solid",
                                            CutInnerRadius,
@@ -721,33 +721,33 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
                                            0.5 * CutThickness,
                                            0.0, 360.0*degree);
 
-    G4SubtractionSolid* SquareFalange_Solid = new G4SubtractionSolid("SquareBase_Solid-CylinderCut_Solid",
+    G4SubtractionSolid* SquareFlange_Solid = new G4SubtractionSolid("SquareBase_Solid-CylinderCut_Solid",
             SquareBase_Solid,
             CylinderCut_Solid);
 
-    SquareFalange_Logical  = new G4LogicalVolume(SquareFalange_Solid,
+    SquareFlange_Logical  = new G4LogicalVolume(SquareFlange_Solid,
             Frame_Material,
-            "SquareFalange_Log",
+            "SquareFlange_Log",
             0,0,0);
 
-    G4ThreeVector Position_SquareFalange_R = G4ThreeVector((47.75-8.21/2.0)*inch,
+    G4ThreeVector Position_SquareFlange_R = G4ThreeVector((47.75-8.21/2.0)*inch,
             0,
             0.25*inch + 1.0*inch+5.0*mm+0.38/2.0*inch);
 
-    G4ThreeVector Position_SquareFalange_L = G4ThreeVector(-(47.75-8.21/2.0)*inch,
+    G4ThreeVector Position_SquareFlange_L = G4ThreeVector(-(47.75-8.21/2.0)*inch,
             0,
             0.25*inch + 1.0*inch+5.0*mm+0.38/2.0*inch);
 
-    SquareFalangeR_Physical   = new G4PVPlacement(0,Position_SquareFalange_R + Container_Center,
-            SquareFalange_Logical,
-            "SquareFalangeR_Physical",
+    SquareFlangeR_Physical   = new G4PVPlacement(0,Position_SquareFlange_R + Container_Center,
+            SquareFlange_Logical,
+            "SquareFlangeR_Physical",
             CerenkovContainer_Logical,
             false,0,
             pSurfChk);
 
-    SquareFalangeL_Physical   = new G4PVPlacement(0,Position_SquareFalange_L + Container_Center,
-            SquareFalange_Logical,
-            "SquareFalangeL_Physical",
+    SquareFlangeL_Physical   = new G4PVPlacement(0,Position_SquareFlange_L + Container_Center,
+            SquareFlange_Logical,
+            "SquareFlangeL_Physical",
             CerenkovContainer_Logical,
             false,0,
             pSurfChk);
@@ -791,41 +791,41 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
             false,0,
             pSurfChk);
 
-//******************************Define PMT Housing Falange ******************
+//******************************Define PMT Housing Flange ******************
 
-    G4double PMTHousingFalangeOuterRadius = 7.88*0.5*inch;
-    G4double PMTHousingFalangeInnerRadius = 5.75*0.5*inch;
-    G4double PMTHousingFalangeLength = 0.75*inch;
+    G4double PMTHousingFlangeOuterRadius = 7.88*0.5*inch;
+    G4double PMTHousingFlangeInnerRadius = 5.75*0.5*inch;
+    G4double PMTHousingFlangeLength = 0.75*inch;
 
-    G4Tubs* PMTHousingFalange_Solid = new G4Tubs("PMTHousingFalange_Solid",
-            PMTHousingFalangeInnerRadius,
-            PMTHousingFalangeOuterRadius,
-            0.5 * PMTHousingFalangeLength,
+    G4Tubs* PMTHousingFlange_Solid = new G4Tubs("PMTHousingFlange_Solid",
+            PMTHousingFlangeInnerRadius,
+            PMTHousingFlangeOuterRadius,
+            0.5 * PMTHousingFlangeLength,
             0.0, 360.0*degree);
 
-    PMTHousingFalange_Logical  = new G4LogicalVolume(PMTHousingFalange_Solid,
+    PMTHousingFlange_Logical  = new G4LogicalVolume(PMTHousingFlange_Solid,
             Frame_Material,
-            "PMTHousingFalange_Log",
+            "PMTHousingFlange_Log",
             0,0,0);
 
-    G4ThreeVector Position_PMTHousingFalange_R = G4ThreeVector((47.75-8.21/2.0)*inch,
+    G4ThreeVector Position_PMTHousingFlange_R = G4ThreeVector((47.75-8.21/2.0)*inch,
             0,
-            0.25*inch + 1.0*inch+5.0*mm+0.38*inch+PMTHousingWallLength+PMTHousingFalangeLength*0.5);
+            0.25*inch + 1.0*inch+5.0*mm+0.38*inch+PMTHousingWallLength+PMTHousingFlangeLength*0.5);
 
-    G4ThreeVector Position_PMTHousingFalange_L = G4ThreeVector(-(47.75-8.21/2.0)*inch,
+    G4ThreeVector Position_PMTHousingFlange_L = G4ThreeVector(-(47.75-8.21/2.0)*inch,
             0,
-            0.25*inch + 1.0*inch+5.0*mm+0.38*inch+PMTHousingWallLength+PMTHousingFalangeLength*0.5);
+            0.25*inch + 1.0*inch+5.0*mm+0.38*inch+PMTHousingWallLength+PMTHousingFlangeLength*0.5);
 
-    PMTHousingFalangeR_Physical   = new G4PVPlacement(0,Position_PMTHousingFalange_R + Container_Center,
-            PMTHousingFalange_Logical,
-            "PMTHousingFalangeR_Physical",
+    PMTHousingFlangeR_Physical   = new G4PVPlacement(0,Position_PMTHousingFlange_R + Container_Center,
+            PMTHousingFlange_Logical,
+            "PMTHousingFlangeR_Physical",
             CerenkovContainer_Logical,
             false,0,
             pSurfChk);
 
-    PMTHousingFalangeL_Physical   = new G4PVPlacement(0,Position_PMTHousingFalange_L + Container_Center,
-            PMTHousingFalange_Logical,
-            "PMTHousingFalangeL_Physical",
+    PMTHousingFlangeL_Physical   = new G4PVPlacement(0,Position_PMTHousingFlange_L + Container_Center,
+            PMTHousingFlange_Logical,
+            "PMTHousingFlangeL_Physical",
             CerenkovContainer_Logical,
             false,0,
             pSurfChk);
@@ -854,11 +854,11 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
 
     G4ThreeVector Position_PMTHousingLid_R = G4ThreeVector( (47.75-8.21/2.0)*inch,
             0,
-            0.25*inch+1.0*inch+5.0*mm+0.38*inch+PMTHousingWallLength+PMTHousingFalangeLength);
+            0.25*inch+1.0*inch+5.0*mm+0.38*inch+PMTHousingWallLength+PMTHousingFlangeLength);
 
     G4ThreeVector Position_PMTHousingLid_L = G4ThreeVector( -(47.75-8.21/2.0)*inch,
             0,
-            0.25*inch+1.0*inch+5.0*mm+0.38*inch+PMTHousingWallLength+PMTHousingFalangeLength);
+            0.25*inch+1.0*inch+5.0*mm+0.38*inch+PMTHousingWallLength+PMTHousingFlangeLength);
 
     PMTHousingLidR_Physical   = new G4PVPlacement(0,Position_PMTHousingLid_R + Container_Center,
             PMTHousingLid_Logical,

@@ -152,21 +152,21 @@ private:
   G4LogicalVolume*   BackClip_Logical; 
   G4VPhysicalVolume* BackClip_Physical; 
 
-  G4LogicalVolume*   SquareFalange_Logical;
-  G4VPhysicalVolume* SquareFalangeR_Physical; 
-  G4VPhysicalVolume* SquareFalangeL_Physical; 
+  G4LogicalVolume*   SquareFlange_Logical;
+  G4VPhysicalVolume* SquareFlangeR_Physical;
+  G4VPhysicalVolume* SquareFlangeL_Physical;
 
-  G4LogicalVolume*   SquareFalangeSeal_Logical;
-  G4VPhysicalVolume* SquareFalangeSealR_Physical; 
-  G4VPhysicalVolume* SquareFalangeSealL_Physical;
+  G4LogicalVolume*   SquareFlangeSeal_Logical;
+  G4VPhysicalVolume* SquareFlangeSealR_Physical;
+  G4VPhysicalVolume* SquareFlangeSealL_Physical;
 
   G4LogicalVolume*   PMTHousingWall_Logical;
   G4VPhysicalVolume* PMTHousingWallR_Physical; 
   G4VPhysicalVolume* PMTHousingWallL_Physical;
 
-  G4LogicalVolume*   PMTHousingFalange_Logical;
-  G4VPhysicalVolume* PMTHousingFalangeR_Physical; 
-  G4VPhysicalVolume* PMTHousingFalangeL_Physical;
+  G4LogicalVolume*   PMTHousingFlange_Logical;
+  G4VPhysicalVolume* PMTHousingFlangeR_Physical;
+  G4VPhysicalVolume* PMTHousingFlangeL_Physical;
 
   G4LogicalVolume*   PMTHousingLid_Logical;
   G4VPhysicalVolume* PMTHousingLidR_Physical; 
