@@ -975,11 +975,11 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
     Position_Chamfer1.setY(0.5*QuartzBar_FullHeight + delta);
     Position_Chamfer1.setZ(-(0.5*QuartzBar_FullThickness + delta));
     Rotation_Chamfer1.rotateX(45.0*degree);
-    Rotation_Chamfer1.rotateY(ChamferAdjRotY*radian);
-    Rotation_Chamfer1.rotateZ(ChamferAdjRotZ*radian);
+    Rotation_Chamfer1.rotateY(ChamferAdjRotY);
+    Rotation_Chamfer1.rotateZ(ChamferAdjRotZ);
     G4Transform3D Transform_Chamfer1(Rotation_Chamfer1,Position_Chamfer1);
-    Rotation_Chamfer1.rotateZ(-ChamferAdjRotZ*radian);
-    Rotation_Chamfer1.rotateY(-ChamferAdjRotY*radian);
+    Rotation_Chamfer1.rotateZ(-ChamferAdjRotZ);
+    Rotation_Chamfer1.rotateY(-ChamferAdjRotY);
 
     RightQuartz_Solid[0]=  new G4SubtractionSolid ("UpperUpstreamChamfer-RightQuartzBar",
             QuartzBar_Solid,
@@ -997,11 +997,11 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
     Position_Chamfer2.setY(0.5*QuartzBar_FullHeight + delta);
     Position_Chamfer2.setZ(0.5*QuartzBar_FullThickness + delta);
     Rotation_Chamfer2.rotateX(45.0*degree);
-    Rotation_Chamfer2.rotateY(-ChamferAdjRotY*radian);
-    Rotation_Chamfer2.rotateZ(ChamferAdjRotZ*radian);
+    Rotation_Chamfer2.rotateY(-ChamferAdjRotY);
+    Rotation_Chamfer2.rotateZ(ChamferAdjRotZ);
     G4Transform3D Transform_Chamfer2(Rotation_Chamfer2,Position_Chamfer2);
-    Rotation_Chamfer2.rotateZ(-ChamferAdjRotZ*radian);
-    Rotation_Chamfer2.rotateY(ChamferAdjRotY*radian);
+    Rotation_Chamfer2.rotateZ(-ChamferAdjRotZ);
+    Rotation_Chamfer2.rotateY(ChamferAdjRotY);
 
     RightQuartz_Solid[1] =  new G4SubtractionSolid ("UpperDownstreamChamfer-RightQuartzBar",
             RightQuartz_Solid[0],
@@ -1016,11 +1016,11 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
     Position_Chamfer3.setY(-(0.5*QuartzBar_FullHeight + delta));
     Position_Chamfer3.setZ(-(0.5*QuartzBar_FullThickness + delta));
     Rotation_Chamfer3.rotateX(45.0*degree);
-    Rotation_Chamfer3.rotateY(ChamferAdjRotY*radian);
-    Rotation_Chamfer3.rotateZ(-ChamferAdjRotZ*radian);
+    Rotation_Chamfer3.rotateY(ChamferAdjRotY);
+    Rotation_Chamfer3.rotateZ(-ChamferAdjRotZ);
     G4Transform3D Transform_Chamfer3(Rotation_Chamfer3,Position_Chamfer3);
-    Rotation_Chamfer3.rotateZ(ChamferAdjRotZ*radian);
-    Rotation_Chamfer3.rotateY(-ChamferAdjRotY*radian);
+    Rotation_Chamfer3.rotateZ(ChamferAdjRotZ);
+    Rotation_Chamfer3.rotateY(-ChamferAdjRotY);
 
     RightQuartz_Solid[2] =  new G4SubtractionSolid ("LowerUpstreamChamfer-RightQuartzBar",
             RightQuartz_Solid[1],Chamfer_Solid,
@@ -1034,11 +1034,11 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
     Position_Chamfer4.setY(-(0.5*QuartzBar_FullHeight + delta));
     Position_Chamfer4.setZ(0.5*QuartzBar_FullThickness + delta);
     Rotation_Chamfer4.rotateX(45.0*degree);
-    Rotation_Chamfer4.rotateY(-ChamferAdjRotY*radian);
-    Rotation_Chamfer4.rotateZ(-ChamferAdjRotZ*radian);
+    Rotation_Chamfer4.rotateY(-ChamferAdjRotY);
+    Rotation_Chamfer4.rotateZ(-ChamferAdjRotZ);
     G4Transform3D Transform_Chamfer4(Rotation_Chamfer4,Position_Chamfer4);
-    Rotation_Chamfer4.rotateY(ChamferAdjRotY*radian);
-    Rotation_Chamfer4.rotateZ(ChamferAdjRotZ*radian);
+    Rotation_Chamfer4.rotateY(ChamferAdjRotY);
+    Rotation_Chamfer4.rotateZ(ChamferAdjRotZ);
 
     RightQuartz_Solid[3] =  new G4SubtractionSolid ("LowerUpstreamChamfer-RightQuartzBar",
             RightQuartz_Solid[2], Chamfer_Solid,
@@ -1118,11 +1118,11 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
     Position_Chamfer1.setY(0.5*QuartzBar_FullHeight + delta);
     Position_Chamfer1.setZ(-(0.5*QuartzBar_FullThickness + delta));
 //   Rotation_Chamfer1.rotateX(45.0*degree);
-    Rotation_Chamfer1.rotateY(ChamferAdjRotY*radian);
-    Rotation_Chamfer1.rotateZ(ChamferAdjRotZ*radian);
+    Rotation_Chamfer1.rotateY(ChamferAdjRotY);
+    Rotation_Chamfer1.rotateZ(ChamferAdjRotZ);
     G4Transform3D Transform_Chamfer5(Rotation_Chamfer1,Position_Chamfer1);
-    Rotation_Chamfer1.rotateZ(-ChamferAdjRotZ*radian);
-    Rotation_Chamfer1.rotateY(-ChamferAdjRotY*radian);
+    Rotation_Chamfer1.rotateZ(-ChamferAdjRotZ);
+    Rotation_Chamfer1.rotateY(-ChamferAdjRotY);
 
     LeftQuartz_Solid[0]=  new G4SubtractionSolid ("UpperUpstreamChamfer-LeftQuartzBar",
             QuartzBar_Solid,
@@ -1140,11 +1140,11 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
     Position_Chamfer2.setY(0.5*QuartzBar_FullHeight + delta);
     Position_Chamfer2.setZ(0.5*QuartzBar_FullThickness + delta);
 //   Rotation_Chamfer2.rotateX(45.0*degree);
-    Rotation_Chamfer2.rotateY(-ChamferAdjRotY*radian);
-    Rotation_Chamfer2.rotateZ(ChamferAdjRotZ*radian);
+    Rotation_Chamfer2.rotateY(-ChamferAdjRotY);
+    Rotation_Chamfer2.rotateZ(ChamferAdjRotZ);
     G4Transform3D Transform_Chamfer6(Rotation_Chamfer2,Position_Chamfer2);
-    Rotation_Chamfer2.rotateZ(-ChamferAdjRotZ*radian);
-    Rotation_Chamfer2.rotateY(ChamferAdjRotY*radian);
+    Rotation_Chamfer2.rotateZ(-ChamferAdjRotZ);
+    Rotation_Chamfer2.rotateY(ChamferAdjRotY);
 
     LeftQuartz_Solid[1] =  new G4SubtractionSolid ("UpperDownstreamChamfer-LeftQuartzBar",
             LeftQuartz_Solid[0],
@@ -1159,11 +1159,11 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
     Position_Chamfer3.setY(-(0.5*QuartzBar_FullHeight + delta));
     Position_Chamfer3.setZ(-(0.5*QuartzBar_FullThickness + delta));
 //   Rotation_Chamfer3.rotateX(45.0*degree);
-    Rotation_Chamfer3.rotateY(ChamferAdjRotY*radian);
-    Rotation_Chamfer3.rotateZ(-ChamferAdjRotZ*radian);
+    Rotation_Chamfer3.rotateY(ChamferAdjRotY);
+    Rotation_Chamfer3.rotateZ(-ChamferAdjRotZ);
     G4Transform3D Transform_Chamfer7(Rotation_Chamfer3,Position_Chamfer3);
-    Rotation_Chamfer3.rotateZ(ChamferAdjRotZ*radian);
-    Rotation_Chamfer3.rotateY(-ChamferAdjRotY*radian);
+    Rotation_Chamfer3.rotateZ(ChamferAdjRotZ);
+    Rotation_Chamfer3.rotateY(-ChamferAdjRotY);
 
     LeftQuartz_Solid[2] =  new G4SubtractionSolid ("LowerUpstreamChamfer-LeftQuartzBar",
             LeftQuartz_Solid[1],Chamfer_Solid,
@@ -1177,11 +1177,11 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
     Position_Chamfer4.setY(-(0.5*QuartzBar_FullHeight + delta));
     Position_Chamfer4.setZ(0.5*QuartzBar_FullThickness + delta);
 //   Rotation_Chamfer4.rotateX(45.0*degree);
-    Rotation_Chamfer4.rotateY(-ChamferAdjRotY*radian);
-    Rotation_Chamfer4.rotateZ(-ChamferAdjRotZ*radian);
+    Rotation_Chamfer4.rotateY(-ChamferAdjRotY);
+    Rotation_Chamfer4.rotateZ(-ChamferAdjRotZ);
     G4Transform3D Transform_Chamfer8(Rotation_Chamfer4,Position_Chamfer4);
-    Rotation_Chamfer4.rotateY(ChamferAdjRotY*radian);
-    Rotation_Chamfer4.rotateZ(ChamferAdjRotZ*radian);
+    Rotation_Chamfer4.rotateY(ChamferAdjRotY);
+    Rotation_Chamfer4.rotateZ(ChamferAdjRotZ);
 
     LeftQuartz_Solid[3] =  new G4SubtractionSolid ("LowerUpstreamChamfer-LeftQuartzBar",
             LeftQuartz_Solid[2], Chamfer_Solid,
