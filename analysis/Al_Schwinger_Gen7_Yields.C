@@ -460,7 +460,7 @@ void walk_tree(TChain *tree, const char tag, std::vector<TH1D*> &hist, const cha
     // Fill appropriate histogram depending on passed tree
 		if(tag == 's'){ //Schwinger Elastic Peak Region with 15MeV window cut
     	for(UInt_t oct = 1; oct < 9; oct++ ){
-				if(detector->GetDetectorHasBeenHit() == 5 && pmt->GetPMTLeftNbOfPEs().size() > 8 && pmt->GetPMTLeftNbOfPEs()[oct]>0 && pmt->GetPMTRightNbOfPEs().size() > 8 && pmt->GetPMTRightNbOfPEs()[oct]>0){
+				if(detector->GetDetectorHasBeenHit() == 5 && pmt->GetPMTTotalNbOfPEs().size() > 8 && pmt->GetPMTTotalNbOfPEs()[oct]>0){
         	for(UInt_t j = 0; j < target->GetElasticScatteredEnergy().size(); j++){
           	if((target->GetElasticScatteredEnergy()[j] - target->GetDetectorLocalVertexTotalEnergy()[j]) < 15){
             	if(pmt->GetPMTTotalYield().size() > 8 && pmt->GetPMTTotalYield()[oct]>0){
@@ -474,7 +474,7 @@ void walk_tree(TChain *tree, const char tag, std::vector<TH1D*> &hist, const cha
 	  else if(tag == 'e'){ //Radiated Elastic from Gen7
     	for(UInt_t oct = 1; oct < 9; oct++ ) {
 				//std::cout << "Checking entry: " << entry << " -> passed" << std::endl;
-      	if(detector->GetDetectorHasBeenHit() == 5 && pmt->GetPMTLeftNbOfPEs().size() > 8 && pmt->GetPMTLeftNbOfPEs()[oct]>0 && pmt->GetPMTRightNbOfPEs().size() > 8 && pmt->GetPMTRightNbOfPEs()[oct]>0){
+      	if(detector->GetDetectorHasBeenHit() == 5 && pmt->GetPMTTotalNbOfPEs().size() > 8 && pmt->GetPMTTotalNbOfPEs()[oct]>0){
         	if(pmt->GetPMTTotalYieldEL().size() > 8 && pmt->GetPMTTotalYieldEL()[oct]>0) {
           	hist[oct-1]->Fill(primary->OriginVertexKineticEnergy,pmt->GetPMTTotalYieldEL()[oct]);
 	       	}
@@ -483,7 +483,7 @@ void walk_tree(TChain *tree, const char tag, std::vector<TH1D*> &hist, const cha
 		}
 		else if(tag == 'q'){ //Radiated Quasi-Elastic from Gen7
     	for(UInt_t oct = 1; oct < 9; oct++ ) {
-      	if(detector->GetDetectorHasBeenHit() == 5 && pmt->GetPMTLeftNbOfPEs().size() > 8 && pmt->GetPMTLeftNbOfPEs()[oct]>0 && pmt->GetPMTRightNbOfPEs().size() > 8 && pmt->GetPMTRightNbOfPEs()[oct]>0){
+      	if(detector->GetDetectorHasBeenHit() == 5 && pmt->GetPMTTotalNbOfPEs().size() > 8 && pmt->GetPMTTotalNbOfPEs()[oct]>0){
         	if(pmt->GetPMTTotalYieldQE().size() > 8 && pmt->GetPMTTotalYieldQE()[oct]>0) {
           	hist[oct-1]->Fill(primary->OriginVertexKineticEnergy,pmt->GetPMTTotalYieldQE()[oct]);
 	       	}
@@ -492,7 +492,7 @@ void walk_tree(TChain *tree, const char tag, std::vector<TH1D*> &hist, const cha
 		}
 		else if(tag == 'd'){ //Radiated DIS from Gen7
     	for(UInt_t oct = 1; oct < 9; oct++ ) {
-      		if(detector->GetDetectorHasBeenHit() == 5 && pmt->GetPMTLeftNbOfPEs().size() > 8 && pmt->GetPMTLeftNbOfPEs()[oct]>0 && pmt->GetPMTRightNbOfPEs().size() > 8 && pmt->GetPMTRightNbOfPEs()[oct]>0){
+      		if(detector->GetDetectorHasBeenHit() == 5 && pmt->GetPMTTotalNbOfPEs().size() > 8 && pmt->GetPMTTotalNbOfPEs()[oct]>0){
         	if(pmt->GetPMTTotalYieldDIS().size() > 8 && pmt->GetPMTTotalYieldDIS()[oct]>0) {
           	hist[oct-1]->Fill(primary->OriginVertexKineticEnergy,pmt->GetPMTTotalYieldDIS()[oct]);
 	       	}
@@ -501,7 +501,7 @@ void walk_tree(TChain *tree, const char tag, std::vector<TH1D*> &hist, const cha
 		}
 		else if(tag == 'a'){ //All other yields
     	for(UInt_t oct = 1; oct < 9; oct++ ) {
-      	if(detector->GetDetectorHasBeenHit() == 5 && pmt->GetPMTLeftNbOfPEs().size() > 8 && pmt->GetPMTLeftNbOfPEs()[oct]>0 && pmt->GetPMTRightNbOfPEs().size() > 8 && pmt->GetPMTRightNbOfPEs()[oct]>0){
+      	if(detector->GetDetectorHasBeenHit() == 5 && pmt->GetPMTTotalNbOfPEs().size() > 8 && pmt->GetPMTTotalNbOfPEs()[oct]>0){
         	if(pmt->GetPMTTotalYield().size() > 8 && pmt->GetPMTTotalYield()[oct]>0) {
           	hist[oct-1]->Fill(primary->OriginVertexKineticEnergy,pmt->GetPMTTotalYield()[oct]);
 	       	}
