@@ -1,9 +1,9 @@
 //=============================================================================
 // Kurtis Bartlett
 // 2015/7/23 Updated: 2015/8/17 for documentation
-// Al_Schwinger_Gen7_Rates.C
+// Al_Schwinger_Gen7_Yields.C
 //
-// A script designed to calculate the rates for the Schwinger corrected
+// A script designed to calculate the yields for the Schwinger corrected
 // Aluminum elastic generator, the Christy-Bosted Radiative Look-Up table
 // method generator, the Aluminum Inelastic Single Particle Excited States
 // generator, and the Giant Dipole Resonance generator. The details of these
@@ -24,7 +24,7 @@
 // four parameters are the locations of the generator 2, 7, 11, and 9 
 // repectively.
 //
-// The rates are read out to a file set by the save path and name variables in
+// The yields are read out to a file set by the save path and name variables in
 // the constants section.
 //
 // *NOTE: Make sure that you modify the source code to point to source files in
@@ -70,27 +70,27 @@ const Double_t kHighX = 1200.0;
 
 const Double_t ival = -1.0; //Array Initialization Value
 
-//Set path to save canvases of rate histograms.
+//Set path to save canvases of yield histograms.
 //Note - That the save_root_path variable must be the absolute dir, it can not 
 //include a ~ to start in your home directory.
 const char* save_root_path = "/u/home/kbartlet/Qweak/AluminumSimulations/dummy_el_peak/";
 //const char* save_root_file_name = "Al_4p_DS_qtorscan_peak_test";
-const char* save_output_file_name = "_rate_output.txt";
+const char* save_output_file_name = "_yield_output.txt";
 //*****************************************************************************
 //Function Declaration
 //*****************************************************************************
 void graph_plots(const char* title, const char* y_label, std::vector<Double_t> octant, std::vector<Double_t> octant_err, 
-	std::vector<Double_t> rate, std::vector<Double_t> err);
-void output_text(const char* label, std::ostream &outfile, std::vector<Double_t> rate, std::vector<Double_t> err);
-void cal_rate(Int_t fnum, std::vector<TH1D*> hist, std::vector<Double_t> &rate, std::vector<Double_t> &err);
-void rate_plots(TCanvas *can, const char* label, std::vector<TH1D*> hist);
+	std::vector<Double_t> yield, std::vector<Double_t> err);
+void output_text(const char* label, std::ostream &outfile, std::vector<Double_t> yield, std::vector<Double_t> err);
+void cal_yield(Int_t fnum, std::vector<TH1D*> hist, std::vector<Double_t> &yield, std::vector<Double_t> &err);
+void yield_plots(TCanvas *can, const char* label, std::vector<TH1D*> hist);
 void walk_tree(TChain *tree, const char tag, std::vector<TH1D*> &hist, const char* label);
 TChain* chain_files(const char* rootfilepath, Int_t &fnum);
 
 //*****************************************************************************
 //Main
 //*****************************************************************************
-void Al_Schwinger_Gen7_Rates(const char* save_root_file_name, const char* schwingerpath,
+void Al_Schwinger_Gen7_Yields(const char* save_root_file_name, const char* schwingerpath,
 	const char* gen7path, const char* inelasticSPSpath, const char* GDRpath){
 
 	std::cout << "\n" << std::endl;
@@ -211,40 +211,40 @@ void Al_Schwinger_Gen7_Rates(const char* save_root_file_name, const char* schwin
 
 
 	//---------------------------------------------------------------------------
-	//Plot the rate weighted Vertex KE for post distribution check.
+	//Plot the yield weighted Vertex KE for post distribution check.
 	//---------------------------------------------------------------------------
-	rate_plots(c_schwinger, "Test", hist_schwinger);
-	rate_plots(c_rad_elastic, "Test", hist_rad_elastic);
-	rate_plots(c_rad_quasielastic, "Test", hist_rad_quasielastic);
-	rate_plots(c_rad_DIS, "Test", hist_rad_DIS);
-	rate_plots(c_inelasticSPS, "Test", hist_inelasticSPS);
-	rate_plots(c_GDR, "Test", hist_GDR);
+	yield_plots(c_schwinger, "Test", hist_schwinger);
+	yield_plots(c_rad_elastic, "Test", hist_rad_elastic);
+	yield_plots(c_rad_quasielastic, "Test", hist_rad_quasielastic);
+	yield_plots(c_rad_DIS, "Test", hist_rad_DIS);
+	yield_plots(c_inelasticSPS, "Test", hist_inelasticSPS);
+	yield_plots(c_GDR, "Test", hist_GDR);
 
 	//---------------------------------------------------------------------------
-	//Initialize Rate and Error Vectors, Size Arrays
+	//Initialize Yield and Error Vectors, Size Arrays
 	//---------------------------------------------------------------------------
 	std::vector<Double_t> octant;
 	std::vector<Double_t> octant_err;
 
-	std::vector<Double_t> schwinger_rate;
+	std::vector<Double_t> schwinger_yield;
 	std::vector<Double_t> schwinger_err;
 
-	std::vector<Double_t> rad_elastic_rate;
+	std::vector<Double_t> rad_elastic_yield;
 	std::vector<Double_t> rad_elastic_err;
 
-	std::vector<Double_t> rad_quasielastic_rate;
+	std::vector<Double_t> rad_quasielastic_yield;
 	std::vector<Double_t> rad_quasielastic_err;
 
-	std::vector<Double_t> rad_DIS_rate;
+	std::vector<Double_t> rad_DIS_yield;
 	std::vector<Double_t> rad_DIS_err;
 
-	std::vector<Double_t> inelasticSPS_rate;
+	std::vector<Double_t> inelasticSPS_yield;
 	std::vector<Double_t> inelasticSPS_err;
 
-	std::vector<Double_t> GDR_rate;
+	std::vector<Double_t> GDR_yield;
 	std::vector<Double_t> GDR_err;
 
-	std::vector<Double_t> total_rate;
+	std::vector<Double_t> total_yield;
 	std::vector<Double_t> total_err;
 
 	//Resize with push_back function
@@ -252,102 +252,102 @@ void Al_Schwinger_Gen7_Rates(const char* save_root_file_name, const char* schwin
 		octant.push_back(octt+1);
 		octant_err.push_back(0.0);
 
-		schwinger_rate.push_back(ival);
+		schwinger_yield.push_back(ival);
 		schwinger_err.push_back(ival);
 
-		rad_elastic_rate.push_back(ival);
+		rad_elastic_yield.push_back(ival);
 		rad_elastic_err.push_back(ival);
 
-		rad_quasielastic_rate.push_back(ival);
+		rad_quasielastic_yield.push_back(ival);
 		rad_quasielastic_err.push_back(ival);
 
-		rad_DIS_rate.push_back(ival);
+		rad_DIS_yield.push_back(ival);
 		rad_DIS_err.push_back(ival);
 
-		inelasticSPS_rate.push_back(ival);
+		inelasticSPS_yield.push_back(ival);
 		inelasticSPS_err.push_back(ival);
 
-		GDR_rate.push_back(ival);
+		GDR_yield.push_back(ival);
 		GDR_err.push_back(ival);
 
-		total_rate.push_back(ival);
+		total_yield.push_back(ival);
 		total_err.push_back(ival);
 	}
 
 	//---------------------------------------------------------------------------
-	//Call function to calculate the rate for each generator. Requires the number
+	//Call function to calculate the yield for each generator. Requires the number
 	// of chained files stored in filenum array, vector of histograms, and
-	// rate/err vector variables to fill.
+	// yield/err vector variables to fill.
 	//---------------------------------------------------------------------------
-	cal_rate(filenum[0], hist_schwinger, schwinger_rate, schwinger_err);
-	cal_rate(filenum[1], hist_rad_elastic, rad_elastic_rate, rad_elastic_err);
-	cal_rate(filenum[1], hist_rad_quasielastic, rad_quasielastic_rate, rad_quasielastic_err);
-	cal_rate(filenum[1], hist_rad_DIS, rad_DIS_rate, rad_DIS_err);
-	cal_rate(filenum[2], hist_inelasticSPS, inelasticSPS_rate, inelasticSPS_err);
-	cal_rate(filenum[3], hist_GDR, GDR_rate, GDR_err);
+	cal_yield(filenum[0], hist_schwinger, schwinger_yield, schwinger_err);
+	cal_yield(filenum[1], hist_rad_elastic, rad_elastic_yield, rad_elastic_err);
+	cal_yield(filenum[1], hist_rad_quasielastic, rad_quasielastic_yield, rad_quasielastic_err);
+	cal_yield(filenum[1], hist_rad_DIS, rad_DIS_yield, rad_DIS_err);
+	cal_yield(filenum[2], hist_inelasticSPS, inelasticSPS_yield, inelasticSPS_err);
+	cal_yield(filenum[3], hist_GDR, GDR_yield, GDR_err);
 
 	//---------------------------------------------------------------------------
-	//Calculate Total Rate
+	//Calculate Total Yield
 	//
-	// Total Rate is the sum of the Schwinger Elastic, Rad Elastic, Rad Quasi,
+	// Total Yield is the sum of the Schwinger Elastic, Rad Elastic, Rad Quasi,
 	// Rad DIS, InelasticSPS, and GDR.
 	// Total Err is the Sqrt the sum of the squares.
 	//---------------------------------------------------------------------------
-	for(UInt_t oct = 0; oct < total_rate.size(); oct++){
-		total_rate[oct] = schwinger_rate[oct] + rad_elastic_rate[oct] + rad_quasielastic_rate[oct] + rad_DIS_rate[oct] + inelasticSPS_rate[oct] + GDR_rate[oct];
+	for(UInt_t oct = 0; oct < total_yield.size(); oct++){
+		total_yield[oct] = schwinger_yield[oct] + rad_elastic_yield[oct] + rad_quasielastic_yield[oct] + rad_DIS_yield[oct] + inelasticSPS_yield[oct] + GDR_yield[oct];
 		total_err[oct] = TMath::Sqrt(TMath::Power(schwinger_err[oct],2) + TMath::Power(rad_elastic_err[oct],2) + TMath::Power(rad_quasielastic_err[oct],2) + TMath::Power(rad_DIS_err[oct],2) + TMath::Power(inelasticSPS_err[oct],2) + TMath::Power(GDR_err[oct],2));
 	}
 
 	//---------------------------------------------------------------------------
-	//Write Rates to Output File
+	//Write Yields to Output File
 	//---------------------------------------------------------------------------
-	output_file << Form("%s_Rates \n", save_root_file_name) << std::endl;
-	output_text("Schwinger:", output_file, schwinger_rate, schwinger_err);
-	output_text("Rad Elastic:", output_file, rad_elastic_rate, rad_elastic_err);
-	output_text("Rad Quasi:", output_file, rad_quasielastic_rate, rad_quasielastic_err);
-	output_text("Rad DIS:", output_file, rad_DIS_rate, rad_DIS_err);
-	output_text("InelasticSPS:", output_file, inelasticSPS_rate, inelasticSPS_err);
-	output_text("GDR:", output_file, GDR_rate, GDR_err);
-	output_text("Total:", output_file, total_rate, total_err);
+	output_file << Form("%s_Yields \n", save_root_file_name) << std::endl;
+	output_text("Schwinger:", output_file, schwinger_yield, schwinger_err);
+	output_text("Rad Elastic:", output_file, rad_elastic_yield, rad_elastic_err);
+	output_text("Rad Quasi:", output_file, rad_quasielastic_yield, rad_quasielastic_err);
+	output_text("Rad DIS:", output_file, rad_DIS_yield, rad_DIS_err);
+	output_text("InelasticSPS:", output_file, inelasticSPS_yield, inelasticSPS_err);
+	output_text("GDR:", output_file, GDR_yield, GDR_err);
+	output_text("Total:", output_file, total_yield, total_err);
 
 	output_file.close();
-	std::cout << "\n" << Form("Writing Rates to file located: %s%s%s \n", save_root_path, save_root_file_name, save_output_file_name) << std::endl;
+	std::cout << "\n" << Form("Writing Yields to file located: %s%s%s \n", save_root_path, save_root_file_name, save_output_file_name) << std::endl;
 
 
 	//---------------------------------------------------------------------------
 	//Generate TGraph Plots
 	//---------------------------------------------------------------------------
 	c_schwinger->cd(5);
-	graph_plots(Form("%s",schwingerpath), "Schwinger Rate [MHz/#muA]", octant, octant_err, schwinger_rate, schwinger_err);
+	graph_plots(Form("%s",schwingerpath), "Schwinger Yield [?/#muA]", octant, octant_err, schwinger_yield, schwinger_err);
 
 	c_rad_elastic->cd(5);
-	graph_plots(Form("%s Rad Elastic", gen7path), "Rad Elastic Rate [MHz/#muA]", octant, octant_err, rad_elastic_rate, rad_elastic_err);
+	graph_plots(Form("%s Rad Elastic", gen7path), "Rad Elastic Yield [?/#muA]", octant, octant_err, rad_elastic_yield, rad_elastic_err);
 
 	c_rad_quasielastic->cd(5);
-	graph_plots(Form("%s Rad Quasi-Elastic", gen7path), "Rad Quasi Rate [MHz/#muA]", octant, octant_err, rad_quasielastic_rate, rad_quasielastic_err);
+	graph_plots(Form("%s Rad Quasi-Elastic", gen7path), "Rad Quasi Yield [?/#muA]", octant, octant_err, rad_quasielastic_yield, rad_quasielastic_err);
 
 	c_rad_DIS->cd(5);
-	graph_plots(Form("%s Rad DIS", gen7path), "Rad DIS Rate [MHz/#muA]", octant, octant_err, rad_DIS_rate, rad_DIS_err);
+	graph_plots(Form("%s Rad DIS", gen7path), "Rad DIS Yield [?/#muA]", octant, octant_err, rad_DIS_yield, rad_DIS_err);
 
 	c_inelasticSPS->cd(5);
-	graph_plots(Form("%s Inelastic", inelasticSPSpath), "InelasticSPS Rate [MHz/#muA]", octant, octant_err, inelasticSPS_rate, inelasticSPS_err);
+	graph_plots(Form("%s Inelastic", inelasticSPSpath), "InelasticSPS Yield [?/#muA]", octant, octant_err, inelasticSPS_yield, inelasticSPS_err);
 
 	c_GDR->cd(5);
-	graph_plots(Form("%s GDR", GDRpath), "GDR Rate [MHz/#muA]", octant, octant_err, GDR_rate, GDR_err);
+	graph_plots(Form("%s GDR", GDRpath), "GDR Yield [?/#muA]", octant, octant_err, GDR_yield, GDR_err);
 
 	c_total->cd();
-	graph_plots(Form("%s Total Rates", save_root_file_name), "Total Rate [MHz/#muA]", octant, octant_err, total_rate, total_err);
+	graph_plots(Form("%s Total Yields", save_root_file_name), "Total Yield [?/#muA]", octant, octant_err, total_yield, total_err);
 
 	//---------------------------------------------------------------------------
 	//Save Plots
 	//---------------------------------------------------------------------------
-	c_schwinger->SaveAs(Form("%s%s.png",save_root_path, schwingerpath));
-	c_rad_elastic->SaveAs(Form("%s%s_rad_elastic.png",save_root_path, gen7path));
-	c_rad_quasielastic->SaveAs(Form("%s%s_rad_quasi.png",save_root_path, gen7path));
-	c_rad_DIS->SaveAs(Form("%s%s_rad_DIS.png",save_root_path, gen7path));
-	c_inelasticSPS->SaveAs(Form("%s%s.png",save_root_path, inelasticSPSpath));
-	c_GDR->SaveAs(Form("%s%s.png",save_root_path, GDRpath));
-	c_total->SaveAs(Form("%s%s_total_vs_octant.png",save_root_path, save_root_file_name));
+	c_schwinger->SaveAs(Form("%s%s_yields.png",save_root_path, schwingerpath));
+	c_rad_elastic->SaveAs(Form("%s%s_rad_elastic_yields.png",save_root_path, gen7path));
+	c_rad_quasielastic->SaveAs(Form("%s%s_rad_quasi_yields.png",save_root_path, gen7path));
+	c_rad_DIS->SaveAs(Form("%s%s_rad_DIS_yields.png",save_root_path, gen7path));
+	c_inelasticSPS->SaveAs(Form("%s%s_yields.png",save_root_path, inelasticSPSpath));
+	c_GDR->SaveAs(Form("%s%s_yields.png",save_root_path, GDRpath));
+	c_total->SaveAs(Form("%s%s_total_vs_octant_yields.png",save_root_path, save_root_file_name));
 	return;
 }
 
@@ -357,9 +357,9 @@ void Al_Schwinger_Gen7_Rates(const char* save_root_file_name, const char* schwin
 //*****************************************************************************
 
 void graph_plots(const char* title, const char* y_label, std::vector<Double_t> octant, std::vector<Double_t> octant_err, 
-	std::vector<Double_t> rate, std::vector<Double_t> err){
+	std::vector<Double_t> yield, std::vector<Double_t> err){
 
-	TGraphErrors* graph = new TGraphErrors(octant.size(), octant.data(), rate.data(), octant_err.data(), err.data());
+	TGraphErrors* graph = new TGraphErrors(octant.size(), octant.data(), yield.data(), octant_err.data(), err.data());
 	graph->SetTitle(Form("%s",title));
 	graph->GetXaxis()->SetTitle("Octant");
 	graph->GetXaxis()->CenterTitle();
@@ -373,26 +373,26 @@ void graph_plots(const char* title, const char* y_label, std::vector<Double_t> o
 }
 
 
-void output_text(const char* label, std::ostream &outfile, std::vector<Double_t> rate, std::vector<Double_t> err){
+void output_text(const char* label, std::ostream &outfile, std::vector<Double_t> yield, std::vector<Double_t> err){
 
 	outfile << std::setprecision(5) << std::left << Form("%s \t",label)
-		<< std::setw(12) << rate[0] << std::setw(12) << err[0]
-		<< std::setw(12) << rate[1] << std::setw(12) << err[1]
-		<< std::setw(12) << rate[2] << std::setw(12) << err[2]
-		<< std::setw(12) << rate[3] << std::setw(12) << err[3]
-		<< std::setw(12) << rate[4] << std::setw(12) << err[4]
-		<< std::setw(12) << rate[5] << std::setw(12) << err[5]
-		<< std::setw(12) << rate[6] << std::setw(12) << err[6]
-		<< std::setw(12) << rate[7] << std::setw(12) << err[7] << "\n";
+		<< std::setw(12) << yield[0] << std::setw(12) << err[0]
+		<< std::setw(12) << yield[1] << std::setw(12) << err[1]
+		<< std::setw(12) << yield[2] << std::setw(12) << err[2]
+		<< std::setw(12) << yield[3] << std::setw(12) << err[3]
+		<< std::setw(12) << yield[4] << std::setw(12) << err[4]
+		<< std::setw(12) << yield[5] << std::setw(12) << err[5]
+		<< std::setw(12) << yield[6] << std::setw(12) << err[6]
+		<< std::setw(12) << yield[7] << std::setw(12) << err[7] << "\n";
 
 	return;
 }
 
-void cal_rate(Int_t fnum, std::vector<TH1D*> hist, std::vector<Double_t> &rate, std::vector<Double_t> &err){
+void cal_yield(Int_t fnum, std::vector<TH1D*> hist, std::vector<Double_t> &yield, std::vector<Double_t> &err){
 	for(UInt_t oct = 0; oct < hist.size(); oct ++){
 		if(fnum > 0){
-			rate[oct] = hist[oct]->IntegralAndError(1,kBins-1, err[oct]);
-			rate[oct] = rate[oct]/1000/fnum; //Factor of 1000 to convert from kHz to MHz
+			yield[oct] = hist[oct]->IntegralAndError(1,kBins-1, err[oct]);
+			yield[oct] = yield[oct]/1000/fnum; //Factor of 1000 to convert from kHz to MHz
 			err[oct] = err[oct]/1000/fnum;
 		}
 		else{
@@ -402,10 +402,10 @@ void cal_rate(Int_t fnum, std::vector<TH1D*> hist, std::vector<Double_t> &rate, 
 	return;
 }
 
-void rate_plots(TCanvas *can, const char* label, std::vector<TH1D*> hist){
+void yield_plots(TCanvas *can, const char* label, std::vector<TH1D*> hist){
 	for(UInt_t oct = 0; oct < hist.size(); oct++){
 		can->cd(pane[oct]);
-		hist[oct]->GetXaxis()->SetTitle("Vertex Kinetic Energy (Rate Weighted) [MeV]");
+		hist[oct]->GetXaxis()->SetTitle("Vertex Kinetic Energy (Yield Weighted) [MeV]");
 		hist[oct]->GetXaxis()->CenterTitle();
 		hist[oct]->GetYaxis()->SetTitle("Entries");
 		hist[oct]->GetYaxis()->CenterTitle();
@@ -463,8 +463,8 @@ void walk_tree(TChain *tree, const char tag, std::vector<TH1D*> &hist, const cha
 				if(detector->GetDetectorHasBeenHit() == 5 && pmt->GetPMTLeftNbOfPEs().size() > 8 && pmt->GetPMTLeftNbOfPEs()[oct]>0 && pmt->GetPMTRightNbOfPEs().size() > 8 && pmt->GetPMTRightNbOfPEs()[oct]>0){
         	for(UInt_t j = 0; j < target->GetElasticScatteredEnergy().size(); j++){
           	if((target->GetElasticScatteredEnergy()[j] - target->GetDetectorLocalVertexTotalEnergy()[j]) < 15){
-            	if(pmt->GetPMTTotalRate().size() > 8 && pmt->GetPMTTotalRate()[oct]>0){
-              	hist[oct-1]->Fill(primary->OriginVertexKineticEnergy,pmt->GetPMTTotalRate()[oct]);
+            	if(pmt->GetPMTTotalYield().size() > 8 && pmt->GetPMTTotalYield()[oct]>0){
+              	hist[oct-1]->Fill(primary->OriginVertexKineticEnergy,pmt->GetPMTTotalYield()[oct]);
             	}
           	}
         	}
@@ -475,8 +475,8 @@ void walk_tree(TChain *tree, const char tag, std::vector<TH1D*> &hist, const cha
     	for(UInt_t oct = 1; oct < 9; oct++ ) {
 				//std::cout << "Checking entry: " << entry << " -> passed" << std::endl;
       	if(detector->GetDetectorHasBeenHit() == 5 && pmt->GetPMTLeftNbOfPEs().size() > 8 && pmt->GetPMTLeftNbOfPEs()[oct]>0 && pmt->GetPMTRightNbOfPEs().size() > 8 && pmt->GetPMTRightNbOfPEs()[oct]>0){
-        	if(pmt->GetPMTTotalRateEL().size() > 8 && pmt->GetPMTTotalRateEL()[oct]>0) {
-          	hist[oct-1]->Fill(primary->OriginVertexKineticEnergy,pmt->GetPMTTotalRateEL()[oct]);
+        	if(pmt->GetPMTTotalYieldEL().size() > 8 && pmt->GetPMTTotalYieldEL()[oct]>0) {
+          	hist[oct-1]->Fill(primary->OriginVertexKineticEnergy,pmt->GetPMTTotalYieldEL()[oct]);
 	       	}
       	}
     	}
@@ -484,8 +484,8 @@ void walk_tree(TChain *tree, const char tag, std::vector<TH1D*> &hist, const cha
 		else if(tag == 'q'){ //Radiated Quasi-Elastic from Gen7
     	for(UInt_t oct = 1; oct < 9; oct++ ) {
       	if(detector->GetDetectorHasBeenHit() == 5 && pmt->GetPMTLeftNbOfPEs().size() > 8 && pmt->GetPMTLeftNbOfPEs()[oct]>0 && pmt->GetPMTRightNbOfPEs().size() > 8 && pmt->GetPMTRightNbOfPEs()[oct]>0){
-        	if(pmt->GetPMTTotalRateQE().size() > 8 && pmt->GetPMTTotalRateQE()[oct]>0) {
-          	hist[oct-1]->Fill(primary->OriginVertexKineticEnergy,pmt->GetPMTTotalRateQE()[oct]);
+        	if(pmt->GetPMTTotalYieldQE().size() > 8 && pmt->GetPMTTotalYieldQE()[oct]>0) {
+          	hist[oct-1]->Fill(primary->OriginVertexKineticEnergy,pmt->GetPMTTotalYieldQE()[oct]);
 	       	}
       	}
     	}
@@ -493,17 +493,17 @@ void walk_tree(TChain *tree, const char tag, std::vector<TH1D*> &hist, const cha
 		else if(tag == 'd'){ //Radiated DIS from Gen7
     	for(UInt_t oct = 1; oct < 9; oct++ ) {
       		if(detector->GetDetectorHasBeenHit() == 5 && pmt->GetPMTLeftNbOfPEs().size() > 8 && pmt->GetPMTLeftNbOfPEs()[oct]>0 && pmt->GetPMTRightNbOfPEs().size() > 8 && pmt->GetPMTRightNbOfPEs()[oct]>0){
-        	if(pmt->GetPMTTotalRateDIS().size() > 8 && pmt->GetPMTTotalRateDIS()[oct]>0) {
-          	hist[oct-1]->Fill(primary->OriginVertexKineticEnergy,pmt->GetPMTTotalRateDIS()[oct]);
+        	if(pmt->GetPMTTotalYieldDIS().size() > 8 && pmt->GetPMTTotalYieldDIS()[oct]>0) {
+          	hist[oct-1]->Fill(primary->OriginVertexKineticEnergy,pmt->GetPMTTotalYieldDIS()[oct]);
 	       	}
       	}
     	}
 		}
-		else if(tag == 'a'){ //All other rates
+		else if(tag == 'a'){ //All other yields
     	for(UInt_t oct = 1; oct < 9; oct++ ) {
       	if(detector->GetDetectorHasBeenHit() == 5 && pmt->GetPMTLeftNbOfPEs().size() > 8 && pmt->GetPMTLeftNbOfPEs()[oct]>0 && pmt->GetPMTRightNbOfPEs().size() > 8 && pmt->GetPMTRightNbOfPEs()[oct]>0){
-        	if(pmt->GetPMTTotalRate().size() > 8 && pmt->GetPMTTotalRate()[oct]>0) {
-          	hist[oct-1]->Fill(primary->OriginVertexKineticEnergy,pmt->GetPMTTotalRate()[oct]);
+        	if(pmt->GetPMTTotalYield().size() > 8 && pmt->GetPMTTotalYield()[oct]>0) {
+          	hist[oct-1]->Fill(primary->OriginVertexKineticEnergy,pmt->GetPMTTotalYield()[oct]);
 	       	}
       	}
     	}
