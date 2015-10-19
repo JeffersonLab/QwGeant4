@@ -86,7 +86,7 @@ private:
     //--- deposited energy in the Lumi in one step
     std::vector<Float_t> DepositedEnergy;
     Float_t TotalDepositedEnergy;
-    Float_t Rate;
+    std::vector<Float_t> Rate;
 
 	
 public:
@@ -256,8 +256,8 @@ public:
     std::vector<Float_t>  GetDepositedEnergy() const      {return DepositedEnergy;}	
     Float_t    GetTotalEnergyDeposit()   const {return TotalDepositedEnergy;}
 
-    void StoreRate(Float_t rate) { Rate = rate; }
-    Float_t GetRate(void) { return Rate; }
+    void StoreRate(Float_t rate) { Rate.push_back(rate); }
+    std::vector<Float_t> GetRate(void) { return Rate; }
 	
 
     // define a new Class known to ROOT  

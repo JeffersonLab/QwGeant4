@@ -118,7 +118,7 @@ void QweakSimUserLumi_DetectorEvent::Initialize()
     //--- deposited energy in the Lumi in one step
     DepositedEnergy.clear(); 
     TotalDepositedEnergy             = 0.0;
-    Rate                             = 0.0;
+    Rate.clear();
 }
 
 
