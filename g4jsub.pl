@@ -194,7 +194,7 @@ sub print_xml {
   <Project name=\"qweak\"/>
   <Track name=\"simulation\"/>
   <Name name=\"$basename\"/>
-  <OS name=\"centos62\"/>
+  <OS name=\"centos65\"/>
   <Command><![CDATA[
 source /home/$user/.login
 cd $QwGeantDir
@@ -225,7 +225,7 @@ if( $tapedir ) {
   <Project name=\"qweak\"/>
   <Track name=\"simulation\"/>
   <Name name=\"$basename\"/>
-  <OS name=\"centos62\"/>
+  <OS name=\"centos65\"/>
   <Command><![CDATA[
 source /home/$user/.login
 cd $QwGeantDir
