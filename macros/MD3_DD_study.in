@@ -1,0 +1,145 @@
+#=======================================
+# Macro file when runing in batch mode 
+#      (no graphical output)
+#
+# usage:
+#
+#=======================================
+
+# This shows the processes for all particles
+#/process/list   
+# AddDiscreteProcess to OpticalPhoton
+#     Transportation,                msc,              hIoni,              eIoni
+#              eBrem,            annihil,               phot,              compt
+#               conv,             muIoni,            muBrems,         muPairProd
+#              Decay,           Cerenkov,       OpAbsorption,         OpBoundary
+
+# This turns off processes for all particles
+#/process/inactivate msc  
+#/process/inactivate eBrem
+#/process/inactivate compt
+#/process/inactivate eIoni
+#/process/inactivate phot
+#/process/inactivate Cerenkov
+
+# or you can turn it off only for electrons
+# process labelled "1" in e- process list is MultipleScattering, see QweakSimPhysicsList.cc, line 180
+#/particle/select e-
+#/particle/process/dump
+#/particle/process/inactivate 3 
+
+
+#=================================================
+# Macro file myQweakConfiguration.mac
+# Base configuration of the Qweak Apparatus
+# Defaults to production LH2 simulation
+#=================================================
+
+#==========================
+# Store Tracks
+#==========================
+/tracking/storeTrajectory 1
+
+#==========================
+# Octant Selection
+#==========================
+# Valid values range from 0 to 12
+# default 0: events thrown in all octants
+# 1-8: events thrown in corresponding octant
+# 9-12: events thrown in two octants (9 for 1+5, 12 for 4+8)
+
+/EventGen/SelectOctant 3
+
+#==========================
+# Primary generator
+#==========================
+# If below set points are not given, the beam starts
+# at (0,0,0) (inside QTOR)
+#
+# place beam befor pre-radiator of MD3
+/PrimaryEvent/SetBeamPositionX 0.0 cm
+/PrimaryEvent/SetBeamPositionY 335.0 cm
+/PrimaryEvent/SetBeamPositionZ 560.0 cm
+/PrimaryEvent/SetPolarization L
+#/PrimaryEvent/SetFixedPosMom true
+
+/EventGen/SetBeamEnergy    1160 MeV
+
+#==========================
+# Set beam rastering region
+#==========================
+/PrimaryEvent/SetRasterXmin 0.0 mm
+/PrimaryEvent/SetRasterXmax 0.0 mm
+/PrimaryEvent/SetRasterYmin 0.0 mm
+/PrimaryEvent/SetRasterYmax 0.0 mm
+
+
+#==========================
+# Cerenkov Detector related
+#==========================
+#  Air     :without Cerenkov light production 
+#  Quartz  :with    Cerenkov light production
+# 
+# Angle is definedagaing vertical (y) axis
+# - a tilt angle of 0.0*deg means vertical 
+# - negative angle will tilt detector towards target
+
+/Cerenkov/SetCerenkovMaterial Quartz
+
+/Cerenkov/SetTiltingAngle 0.0 degree
+
+/Cerenkov/SetPreradiatorMaterial PBA
+
+# Define the number of Cereknov Bars
+/Cerenkov/SetNumberOfDetectors 8
+
+# Move Cerenkov Detectors to actual position 
+/Cerenkov/Cerenkov1/SetCenterPositionInY  334.724 cm
+/Cerenkov/Cerenkov1/SetCenterPositionInZ  576.665 cm
+
+/Cerenkov/Cerenkov2/SetCenterPositionInY  334.742 cm
+/Cerenkov/Cerenkov2/SetCenterPositionInZ  576.705 cm
+
+/Cerenkov/Cerenkov3/SetCenterPositionInY  334.738 cm
+/Cerenkov/Cerenkov3/SetCenterPositionInZ  577.020 cm
+
+/Cerenkov/Cerenkov4/SetCenterPositionInY  335.036 cm
+/Cerenkov/Cerenkov4/SetCenterPositionInZ  577.425 cm
+
+/Cerenkov/Cerenkov5/SetCenterPositionInY  335.074 cm
+/Cerenkov/Cerenkov5/SetCenterPositionInZ  577.515 cm
+
+/Cerenkov/Cerenkov6/SetCenterPositionInY  335.252 cm
+/Cerenkov/Cerenkov6/SetCenterPositionInZ  577.955 cm
+
+/Cerenkov/Cerenkov7/SetCenterPositionInY  335.224 cm
+/Cerenkov/Cerenkov7/SetCenterPositionInZ  577.885 cm
+
+/Cerenkov/Cerenkov8/SetCenterPositionInY  334.888 cm
+/Cerenkov/Cerenkov8/SetCenterPositionInZ  577.060 cm
+
+
+/random/setSavingFlag 0
+/random/setDirectoryName random/%name%_%jobid%
+/random/setSeeds %seedA% %seedB%
+
+
+# Select the tracking flag
+#  0: Allow primaries only (default)
+#  1: Allow primaries and optical photons only
+#  2: track all primaries and their secondaries except optical photons
+#  3: track all primaries and their secondaries
+# 
+#/TrackingAction/TrackingFlag 0
+#/TrackingAction/TrackingFlag 1
+/TrackingAction/TrackingFlag 2
+#/TrackingAction/TrackingFlag 3
+
+
+/EventGen/SelectOctant 3
+
+#set the rootfile name
+/Analysis/RootFileName rootfiles/%name%_%jobid%_workdir/%name%_%jobid%.root
+
+#number of events
+/run/beamOn %nevents%
