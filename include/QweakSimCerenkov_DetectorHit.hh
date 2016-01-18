@@ -50,6 +50,8 @@ private:
   G4double time;
 
   G4int TrackID;
+  G4int ParentID;
+  G4String CreatorProcessName;
 
   G4ThreeVector localPos;
   G4ThreeVector worldPos;
@@ -82,6 +84,12 @@ public:
   
   inline void   StoreTrackID(G4int tid)    { TrackID = tid; }
   inline G4int GetTrackID() const { return TrackID; }
+
+  inline void   StoreParentID(G4int tid)    { ParentID = tid; }
+  inline G4int GetParentID() const { return ParentID; }
+  
+  inline void   StoreCreatorProcessName(G4String name)    { CreatorProcessName = name; }
+  inline G4String GetCreatorProcessName() const { return CreatorProcessName; }
 
   inline void  StoreDetectorID(G4int detector_ID)  { DetectorID = detector_ID; }
   inline G4int   GetDetectorID() const { return DetectorID; }

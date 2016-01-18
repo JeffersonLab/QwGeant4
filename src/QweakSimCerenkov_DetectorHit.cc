@@ -37,6 +37,9 @@ QweakSimCerenkov_DetectorHit::QweakSimCerenkov_DetectorHit()
   crossSectionWeight              = 0.;
 
   particleName                    = "None";
+  CreatorProcessName              = "None";
+  TrackID                         = -1;
+  ParentID                        = -1;
   particleType                    = -1;
 }
 
@@ -59,6 +62,8 @@ QweakSimCerenkov_DetectorHit::QweakSimCerenkov_DetectorHit(const QweakSimCerenko
     : G4VHit() {
 
   DetectorID       = right.DetectorID;
+  TrackID          = right.TrackID;
+  ParentID         = right.ParentID;
 
   cellPos  = right.cellPos;
   cellRot  = right.cellRot;
@@ -82,6 +87,7 @@ QweakSimCerenkov_DetectorHit::QweakSimCerenkov_DetectorHit(const QweakSimCerenko
   currentPolarization      = right.currentPolarization;
 
   particleName             = right.particleName;
+  CreatorProcessName       = right.CreatorProcessName;
   particleType             = right.particleType;
 }
 
@@ -89,6 +95,8 @@ QweakSimCerenkov_DetectorHit::QweakSimCerenkov_DetectorHit(const QweakSimCerenko
 const QweakSimCerenkov_DetectorHit& QweakSimCerenkov_DetectorHit::operator=(const QweakSimCerenkov_DetectorHit &right)
 {
   DetectorID       = right.DetectorID;
+  TrackID          = right.TrackID;
+  ParentID         = right.ParentID;
 
   cellPos  = right.cellPos;
   cellRot  = right.cellRot;
@@ -111,8 +119,9 @@ const QweakSimCerenkov_DetectorHit& QweakSimCerenkov_DetectorHit::operator=(cons
   currentPolarization      = right.currentPolarization;
 
   particleName             = right.particleName;
+  CreatorProcessName       = right.CreatorProcessName;
   particleType             = right.particleType;
-  
+
   return *this;
 }
 
