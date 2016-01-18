@@ -954,6 +954,9 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 
                 TString rParticleName = TString(aHit->GetParticleName());
                 G4int rParticleType = (Int_t) aHit->GetParticleType();
+                G4int rTrackId = (Int_t) aHit->GetTrackID();
+                G4int rParentId = (Int_t) aHit->GetParentID();
+                TString rCreatorName = TString(aHit->GetCreatorProcessName());
 
                 // get total Energy of hit
                 Float_t rTotalEnergy     = (Float_t) aHit->GetTotalEnergy() / MeV;
@@ -988,6 +991,9 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 analysis->fRootEvent->Cerenkov.Detector.StoreDetectorHasBeenHit(5);
                 analysis->fRootEvent->Cerenkov.Detector.StoreParticleName(rParticleName);
                 analysis->fRootEvent->Cerenkov.Detector.StoreParticleType(rParticleType);
+                analysis->fRootEvent->Cerenkov.Detector.StoreParticleID(rTrackId);
+                analysis->fRootEvent->Cerenkov.Detector.StoreParentID(rParentId);
+                analysis->fRootEvent->Cerenkov.Detector.StoreCreatorProcessName(rCreatorName);
                 analysis->fRootEvent->Cerenkov.Detector.StoreGlobalTimeOfHit(rGlobalTime);
                 analysis->fRootEvent->Cerenkov.Detector.StoreOriginVertexPositionX(rOriginVertexPositionX);
                 analysis->fRootEvent->Cerenkov.Detector.StoreOriginVertexPositionY(rOriginVertexPositionY);
