@@ -169,6 +169,9 @@ private:
   //@{
   std::vector<TString> ParticleName;         ///< Name of the particle type of this hit
   std::vector<Int_t>   ParticleType;         ///< \ref Lund_type of the particle type of this hit
+  std::vector<Int_t>   ParticleID;           ///< Id of this hit
+  std::vector<Int_t>   ParentID;             ///< Id of the parent of this hit
+  std::vector<TString> CreatorProcessName;   ///< Process name that created this hit
   //@}
 
   /// \name Polarization of the hit in local coordinates
@@ -215,6 +218,14 @@ public:
   void     StoreParticleType(Int_t pt)      { ParticleType.push_back(pt); }
   std::vector<Int_t>      GetParticleType() const {return  ParticleType;}
 
+  void     StoreParentID(Int_t Pid)      { ParentID.push_back(Pid); }
+  std::vector<Int_t>      GetParentID() const {return  ParentID;}
+
+  void     StoreCreatorProcessName(TString name)      { CreatorProcessName.push_back(name); }
+  std::vector<TString>      GetCreatorProcessName() const {return  CreatorProcessName;}
+
+  void     StoreParticleID(Int_t pid)      { ParticleID.push_back(pid); }
+  std::vector<Int_t>      GetParticleID() const {return  ParticleID;}
 
   void     StoreGlobalTimeOfHit(Float_t gtime) { GlobalTimeOfHit.push_back(gtime); }
   std::vector<Float_t>    GetGloablTimeOfHit()  const {return GlobalTimeOfHit;}

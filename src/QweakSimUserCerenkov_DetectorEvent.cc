@@ -110,12 +110,15 @@ void QweakSimUserCerenkov_DetectorEvent::Initialize()
     GlobalMomentumZ.clear();
     GlobalThetaAngle.clear();
     GlobalPhiAngle.clear();
-    
+
     EdgeEventFlag.clear();
 
     ParticleName.clear();
+    CreatorProcessName.clear();
+    ParticleID.clear();
+    ParentID.clear();
     ParticleType.clear();
-    
+
     TotalEnergy.clear();
     KineticEnergy.clear();
 
