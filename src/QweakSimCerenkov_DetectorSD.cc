@@ -135,6 +135,9 @@ G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistor
   G4ThreeVector currentPolarization      = aStep->GetTrack()->GetPolarization();
 
   G4int trackID = aStep->GetTrack()->GetTrackID();
+  G4int parentID = aStep->GetTrack()->GetParentID();
+//   G4String processName = aStep->GetTrack()->GetCreatorProcess()->GetProcessName();
+  G4String processName = aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName();
 
    G4ParticleDefinition*  fpParticleDefinition = aStep->GetTrack()->GetDefinition();
    G4String ParticleName      = fpParticleDefinition->GetParticleName();
@@ -169,6 +172,8 @@ G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistor
   QweakSimCerenkov_DetectorHit* aHit = new QweakSimCerenkov_DetectorHit(MotherCopyNo);
 
   aHit->StoreTrackID(trackID);
+  aHit->StoreParentID(parentID);
+  aHit->StoreCreatorProcessName(processName);
 
   aHit->StoreDetectorID(MotherCopyNo);
 
