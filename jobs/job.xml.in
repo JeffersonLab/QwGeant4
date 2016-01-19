@@ -3,7 +3,7 @@
   <Project name="qweak"/>
   <Track name="simulation"/>
   <Name name="%name%_%jobid%"/>
-  <OS name="centos62"/>
+  <OS name="centos65"/>
   <Command><![CDATA[
 cd %qwgeant4%
 mkdir -p rootfiles
