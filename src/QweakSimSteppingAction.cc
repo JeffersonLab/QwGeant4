@@ -27,6 +27,7 @@
 #include "G4Positron.hh"
 #include "G4OpticalPhoton.hh"
 #include "G4PionMinus.hh"
+#include "G4PionPlus.hh"
 #include "G4OpBoundaryProcess.hh"
 #include "G4SDManager.hh"
 #include "G4UnitsTable.hh"
@@ -105,7 +106,7 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep){
   }
 
   G4int parentID = theTrack->GetParentID();
-  if( (particleType==G4Electron::ElectronDefinition()||particleType==G4PionMinus::PionMinusDefinition()) && parentID==0 ){
+  if( (particleType==G4Electron::ElectronDefinition()||particleType==G4PionMinus::PionMinusDefinition()||particleType==G4PionPlus::PionPlusDefinition()) && parentID==0 ){
 
     //jpan: to account for the energy loss before the event generation,
     //      force to change primary momentum direction here
@@ -196,7 +197,7 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep){
 	    myUserInfo->StoreOriginVertexKineticEnergy(E_out - 0.511*MeV);
 	    //	    G4cout << "Stepping Action E_out:: " << (E_out - 0.511*MeV)/MeV << G4endl;
 	  }
-          if(particleType==G4PionMinus::PionMinusDefinition())
+          if(particleType==G4PionMinus::PionMinusDefinition()||particleType==G4PionPlus::PionPlusDefinition())
           {
 	    myUserInfo->StoreOriginVertexKineticEnergy(E_out - 139.57*MeV);
           }

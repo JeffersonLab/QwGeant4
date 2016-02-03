@@ -257,7 +257,9 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
     * \li 6: Moller scattering (see QweakSimEPEvent::Moller_Scattering)
     * \li 7: Radiative Scattering (see QweakSimEPEvent::Radiative_Cross_Section_Proton)
     * \li 8: Quasielastic scattering from aluminum using the Bosted fit
-    * \li 88: Pion photoprodcution
+    * \li 88: Pion photoprodcution on LH2
+    * \li 89: Pion photoproduction on aluminum
+    * \li 90: Pion photoproduction on carbon
     * \li 9: Aluminum Nuclear inelastic Single Particle States
     * \li 10: Aluminum GDR
     * \li 11: Aluminum Nuclear Radiated Inelastic from Bosted fit
@@ -339,6 +341,16 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
        fCrossSection[0] = Pion_PhotoProduction(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
        Asymmetry = GetAsymmetry_EP(RelativeThetaAngle, E_in); //--- use the elastic asymmetry for now
      }
+   else if(ReactionType==89) //--- Al target, pion photo-production cross section 3.35 GeV
+   {
+       fCrossSection[0] = Pion_PhotoProductionAl(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
+       Asymmetry = GetAsymmetry_EP(RelativeThetaAngle, E_in); //--- use the elastic asymmetry for now
+   }
+   else if(ReactionType==90) //--- Carbon target, pion photo-production cross section 3.35 GeV
+   {
+       fCrossSection[0] = Pion_PhotoProductionCarbon(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
+       Asymmetry = GetAsymmetry_EP(RelativeThetaAngle, E_in); //--- use the elastic asymmetry for now
+   }
    else if(ReactionType==9) // Nuclear Inelastics Single Particle States - Aluminum
      {
        fCrossSection[0] = AlNuclInel(E_in, RelativeThetaAngle, fWeightN, Q2, E_out);
@@ -412,7 +424,7 @@ void QweakSimEPEvent::GetanEvent(G4double E_in,
    else                         phase_space *= (cos(GetThetaAngle_Min())-cos(GetThetaAngle_Max()));
 
    // For ReactionTypes that are differential in E'
-   if (ReactionType == 7 || ReactionType == 88) phase_space *= (GetEPrime_Max()-GetEPrime_Min())/1000.0;  // units [Sr*GeV]
+   if (ReactionType == 7 || ReactionType == 88 || ReactionType == 89 || ReactionType == 90) phase_space *= (GetEPrime_Max()-GetEPrime_Min())/1000.0;  // units [Sr*GeV]
    // Delta_Resonance (reac 5) and Quasi_Elastic_Bosted (reac 8) are also
    // differential in Eprime, but the xsect returned by these functions 
    // already includes the additional phase space factor. - K.Mesick 13/May/14
@@ -1617,7 +1629,8 @@ G4double QweakSimEPEvent::AlGDR(G4double E_in, //MeV
 //--- Fang Guo
 //
 //---   Calculates the Cross Section weighting factor for 
-//---   pion photo-production with the wiser code. 
+//---   pion photo-production with the wiser code.
+//---   LH2 target 
 //
 // EPrime_Max, EPrime_Min in GeV
 // E_in is in MeV, 
@@ -1652,12 +1665,12 @@ G4double QweakSimEPEvent::Pion_PhotoProduction(G4double E_in, //MeV
     G4double rad_len = myUserInfo->TargetEntranceWindowThickness/(8.896*cm) + lh2_length/(871.9*cm) + intern_rad_len;   //--- radiation length
     //G4cout << "radiation length: " << rad_len << G4endl;
 
-    G4int type = 1; //--- pi-
+    G4int type = 1; //--- 0: pi+, 1: pi-
 	
     // wiser_sigma() needs E_in & pf in GeV, Theta in radians,
     //  rad_len in fraction (not %)
     //  wiser_sigma returns crsec in nb/GeV/sr 
-    G4double xsect = (1.0/1000.00) * wiser_sigma(E_in/GeV, pf/GeV, Theta, rad_len, type); //--- nanobarns/GeV/str --> ub/sr
+    G4double xsect = (1.0/1000.00) * wiser_sigma(E_in/GeV, pf/GeV, Theta, rad_len, type); //--- nanobarns/GeV/str --> ub/GeV/sr
 	
     fWeightN = xsect*sin(Theta);
 
@@ -1666,6 +1679,119 @@ G4double QweakSimEPEvent::Pion_PhotoProduction(G4double E_in, //MeV
 
     return xsect;
 }
+
+//--- Al Dummy Target
+
+G4double QweakSimEPEvent::Pion_PhotoProductionAl(G4double E_in, //MeV
+						 G4double Theta, //radians
+						 G4double &fWeightN,
+						 G4double &Q2,
+						 G4double &E_out)
+{
+    const G4double Mpi = 0.13957*GeV;   ///--- GeV
+	
+    if (Theta<GetThetaAngle_Min())
+        Theta = GetThetaAngle_Min();
+	
+    // need to evaluate Q2 properply, in order to evaluate 
+    // the internal radiation length more accurately below
+    Q2 = 0.026; 
+	
+    G4double tmp_EpMax = GetEPrime_Max();
+    if(GetEPrime_Max() > E_in) tmp_EpMax = E_in;
+	
+    E_out = (G4UniformRand()*(tmp_EpMax - GetEPrime_Min()) + GetEPrime_Min());   //--- final total energy in GeV
+    G4double pf = sqrt(pow(E_out,2) - pow(Mpi,2)); //--- final momentum in GeV
+	
+    //---
+    //--- radiation length from page 12 of "The Qweak target design and safety document"
+    //--- http://qweak.jlab.org/DocDB/0010/001041/002/Qweak%20Target%20PDR.pdf
+    //---
+    //G4double Al_length = myPositionZ - (myUserInfo->TargetCenterPositionZ) + 0.5*(myUserInfo->TargetLength);
+    G4double Al_length = 0.0*mm;
+    if (ReactionRegion == 2 || ReactionRegion == 4 || ReactionRegion == 5 || ReactionRegion == 6 || ReactionRegion == 10) //-- Entrance & US Al dummy
+        Al_length = myPositionZ - (myUserInfo->TargetCenterPositionZ) + 0.5*(myUserInfo->TargetLength) + (myUserInfo->TargetEntranceWindowThickness);
+    else if (ReactionRegion == 3 || ReactionRegion == 7 || ReactionRegion == 8 || ReactionRegion == 9 || ReactionRegion == 11) //-- Exit & DS Al dummy
+        Al_length = myPositionZ - (myUserInfo->TargetCenterPositionZ) - 0.5*(myUserInfo->TargetLength);
+
+    G4double intern_rad_len = 0.0204; // internal radiator from Mo/Tsai
+    G4double rad_len = Al_length/(8.896*cm) + intern_rad_len;   //--- radiation length
+
+    //G4cout << "ReactionRegion: " << ReactionRegion << G4endl;
+    //G4cout << "myPositionZ: " << myPositionZ << G4endl;
+    //G4cout << "myUserInfo->TargetCenterPositionZ: " << myUserInfo->TargetCenterPositionZ << G4endl;
+    //G4cout << "myUserInfo->TargetLength: " << myUserInfo->TargetLength << G4endl;
+    //G4cout << "Al_length: " << Al_length << G4endl;
+    //G4cout << "rad_len: " << rad_len << G4endl;
+    //G4cout << "Theta: " << Theta << G4endl << G4endl;
+	
+    G4int type = 1; //--- 0: pi+   1:pi-
+	
+    // wiser_sigma() needs E_in & pf in GeV, Theta in radians,
+    //  rad_len in fraction (not %)
+    //  wiser_sigma returns crsec in nb/GeV/sr 
+    G4double xsect = (1.0/1000.00) * wiser_sigma(E_in/GeV, pf/GeV, Theta, rad_len, type); //--- nanobarns/GeV/str --> ub/GeV/sr
+	
+    fWeightN = xsect*sin(Theta);
+	
+    //G4cout << E_in/GeV <<"\t" << pf/GeV << "\t" << Theta <<"\t" << rad_len <<"\t" << type << G4endl;
+    //G4cout << "------ Pion crsec :: " << xsect << " ------" << G4endl;
+	
+    return xsect;
+}
+
+
+//--- Carbon Target
+
+G4double QweakSimEPEvent::Pion_PhotoProductionCarbon(G4double E_in, //MeV
+                                                     G4double Theta, //radians
+                                                     G4double &fWeightN,
+                                                     G4double &Q2,
+                                                     G4double &E_out)
+{
+    const G4double Mpi = 0.13957*GeV;   ///--- GeV
+	
+    if (Theta<GetThetaAngle_Min())
+        Theta = GetThetaAngle_Min();
+	
+    // need to evaluate Q2 properply, in order to evaluate 
+    // the internal radiation length more accurately below
+    Q2 = 0.026; 
+	
+    G4double tmp_EpMax = GetEPrime_Max();
+    if(GetEPrime_Max() > E_in) tmp_EpMax = E_in;
+	
+    E_out = (G4UniformRand()*(tmp_EpMax - GetEPrime_Min()) + GetEPrime_Min());   //--- final total energy in GeV
+    G4double pf = sqrt(pow(E_out,2) - pow(Mpi,2)); //--- final momentum in GeV
+	
+    //---
+    //--- radiation length calculated from http://pdg.lbl.gov/2013/reviews/rpp2013-rev-atomic-nuclear-prop.pdf
+    //---
+    //G4double C_length = myPositionZ - (myUserInfo->TargetCenterPositionZ) + 0.5*(myUserInfo->TargetLength);
+    G4double C_length = 0.0*mm;
+    if (ReactionRegion == 2 || ReactionRegion == 4 || ReactionRegion == 5 || ReactionRegion == 6 || ReactionRegion == 10) //-- Entrance & US C dummy
+        C_length = myPositionZ - (myUserInfo->TargetCenterPositionZ) + 0.5*(myUserInfo->TargetLength) + (myUserInfo->TargetEntranceWindowThickness);
+    else if (ReactionRegion == 3 || ReactionRegion == 7 || ReactionRegion == 8 || ReactionRegion == 9 || ReactionRegion == 11) //-- Exit & DS C dummy
+        C_length = myPositionZ - (myUserInfo->TargetCenterPositionZ) - 0.5*(myUserInfo->TargetLength);
+
+    G4double intern_rad_len = 0.0204; // internal radiator from Mo/Tsai
+    G4double rad_len = C_length/(19.32*cm) + intern_rad_len;   //--- radiation length
+	
+    G4int type = 1; //--- 0: pi+   1:pi-
+	
+    // wiser_sigma() needs E_in & pf in GeV, Theta in radians,
+    //  rad_len in fraction (not %)
+    //  wiser_sigma returns crsec in nb/GeV/sr 
+    G4double xsect = (1.0/1000.00) * wiser_sigma(E_in/GeV, pf/GeV, Theta, rad_len, type); //--- nanobarns/GeV/str --> ub/GeV/sr
+	
+    fWeightN = xsect*sin(Theta);
+	
+    //G4cout << E_in/GeV <<"\t" << pf/GeV << "\t" << Theta <<"\t" << rad_len <<"\t" << type << G4endl;
+    //G4cout << "------ Pion crsec :: " << xsect << " ------" << G4endl;
+	
+    return xsect;
+}
+
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 

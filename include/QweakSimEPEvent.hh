@@ -231,6 +231,18 @@ class QweakSimEPEvent {
                                 G4double &fWeightN,
                                 G4double &Q2,
                                 G4double &E_out);
+
+  G4double Pion_PhotoProductionAl(G4double E_in,
+			          G4double Theta,
+				  G4double &fWeightN,
+				  G4double &Q2,
+				  G4double &E_out);
+	
+  G4double Pion_PhotoProductionCarbon(G4double E_in,
+                                      G4double Theta,
+                                      G4double &fWeightN,
+                                      G4double &Q2,
+                                      G4double &E_out);
 	
   G4double Quasi_Elastic_Bosted(G4double E_in, G4double Theta, G4int Zin, 
                                 G4int Ain, G4double &fWeightN, G4double &Q2, G4double &E_out);
