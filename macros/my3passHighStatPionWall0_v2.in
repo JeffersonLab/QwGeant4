@@ -1,0 +1,48 @@
+#Programmer: 
+#Purpose: The macro file for the Qtor Scan study
+#
+#Date: 11-22-2012
+#Modified: James Dowd
+#Assisted By:
+#
+/control/execute myQweakConfiguration.mac
+#/control/execute macros/peiqing_2011.mac
+#/control/execute macros/noTracking.mac
+
+/random/setSavingFlag 1
+/random/setDirectoryName random/%name%_%jobid%
+/random/setSeeds %seedA% %seedB%
+
+#track everything
+/TrackingAction/TrackingFlag 3
+
+#set generation limits
+/EventGen/SetBeamEnergy 3.35 GeV
+/EventGen/SetThetaMin 5.5 degree
+/EventGen/SetThetaMax 12 degree
+/EventGen/SetEPrimeMin %eprime_min% MeV
+/EventGen/SetEPrimeMax %eprime_max% MeV
+/PrimaryEvent/SetParticleType pi-
+
+#set reaction region and type
+/EventGen/SelectReactionRegion 1
+/EventGen/SelectReactionType 88
+/EventGen/SelectOctant 7
+
+#/PionWall/Enable
+#/PionWall/SetThicknessInZ 5.08 cm
+
+/Trigger/PrintHits false
+/Trigger/Disable cer
+/Trigger/Enable all
+/Trigger/Show
+
+#set QTOR current
+/MagneticField/SetActualCurrent %current%
+
+#set the rootfile name
+/Analysis/RootFileName rootfiles/%name%_%jobid%_workdir/%name%_%jobid%.root
+
+#number of events
+/run/beamOn %nevents%
+
