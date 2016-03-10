@@ -659,6 +659,9 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         // Store Number of Hits for: Cerenkov Detector
         analysis->fRootEvent->Cerenkov.Detector.StoreDetectorNbOfHits(n_hitCerenkovDetector);
 		
+        // Store Number of Hits for: Cerenkov Radiator
+        analysis->fRootEvent->Cerenkov.Radiator.StoreDetectorNbOfHits(n_hitCerenkovRadiator);
+
         // Store Number of Hits for: Cerenkov PMT Detector
         analysis->fRootEvent->Cerenkov.PMT.StoreDetectorNbOfHits(n_hitCerenkovPMT);
 
