@@ -1,0 +1,55 @@
+<Request>
+  <Email email="%user%@jlab.org" request="false" job="false"/>
+  <Project name="qweak"/>
+  <Track name="simulation"/>
+  <Name name="%name%_%jobid%"/>
+  <OS name="centos65"/>
+  <Command><![CDATA[
+if ( -f /mss/home/%user%/rootfiles/%name%/%name%_%jobid%_tracking.root ) exit 0
+
+date | tee -a /home/%user%/scratch/job/%name%_%jobid%.stat
+ls -al $WORKDIR | tee -a /home/%user%/scratch/job/%name%_%jobid%.stat
+
+# Change to QwGeant4 directory
+cd %qwgeant4%
+mkdir -p rootfiles
+ln -sf $WORKDIR rootfiles/%name%_%jobid%_workdir
+build/QweakSimG4 macros/jobs/%name%_%jobid%.mac | grep -v ^Target
+rm -f rootfiles/%name%_%jobid%_workdir
+mv $WORKDIR/%name%_%jobid%.root $WORKDIR/%name%_%jobid%_simulation.root
+
+date   | tee -a /home/%user%/scratch/job/%name%_%jobid%.stat
+ls -al $WORKDIR   | tee -a /home/%user%/scratch/job/%name%_%jobid%.stat
+ls -al %qwgeant4% | tee -a /home/%user%/scratch/job/%name%_%jobid%.stat
+
+# Change to QwAnalysis directory
+cd %qwanalysis%
+setenv QWSCRATCH %qwscratch%
+setenv QWANALYSIS %qwanalysis%
+source SetupFiles/SET_ME_UP.csh
+setenv QW_DATA      $WORKDIR/data
+setenv QW_ROOTFILES $WORKDIR/rootfiles
+mkdir -p $QW_DATA $QW_ROOTFILES
+ln -sf $WORKDIR/%name%_%jobid%_simulation.root $QW_DATA/QwSim_%jobid%.root
+bin/qwsimtracking -r %jobid% --R2-octant 1 --R3-octant 1
+mv $QW_ROOTFILES/QwSim_%jobid%.root $WORKDIR/%name%_%jobid%_tracking.root
+
+date | tee -a /home/%user%/scratch/job/%name%_%jobid%.stat
+ls -al $WORKDIR     | tee -a /home/%user%/scratch/job/%name%_%jobid%.stat
+ls -al %qwanalysis% | tee -a /home/%user%/scratch/job/%name%_%jobid%.stat
+  ]]></Command>
+
+  <Memory space="1500" unit="MB"/>
+  <TimeLimit unit="minutes" time="4320"/>
+
+  <Job>
+    <Output src="%name%_%jobid%_simulation.root" dest="mss:/mss/home/%user%/rootfiles/%name%/%name%_%jobid%_simulation.root"/>
+    <Output src="%name%_%jobid%_tracking.root"   dest="mss:/mss/home/%user%/rootfiles/%name%/%name%_%jobid%_tracking.root"/>
+    <Stdout dest="/home/%user%/scratch/job/%name%_%jobid%.out"/>
+    <Stderr dest="/home/%user%/scratch/job/%name%_%jobid%.err"/>
+  </Job>
+
+</Request>
+
+
+

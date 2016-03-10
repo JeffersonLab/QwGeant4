@@ -19,17 +19,55 @@
 # Track all primaries and all secondaries
 /TrackingAction/TrackingFlag 3
 
-# Set reaction region and type
-/EventGen/SelectReactionRegion 1
-/EventGen/SelectReactionType 1
-
 # Trigger on scintillator detector only
-/Trigger/Disable cer
-/Trigger/Enable scint
+#/Trigger/Disable cer
+#/Trigger/Enable scint
 /Trigger/Show
 
 # Set the rootfile name
 /Analysis/RootFileName rootfiles/%name%_%jobid%_workdir/%name%_%jobid%.root
+
+# Select octant 1-5 (i.e. 9)
+/EventGen/SelectOctant 9
+# Package 1 is at 180 degrees, not at 0 degrees
+/HDC/SetRotationAngleInPhi 180 degree
+/VDC/SetRotationAngleInPhi 180 degree
+
+# Target US Al window
+#/EventGen/SelectReactionType 2
+#/EventGen/SelectReactionRegion 2
+
+# Target DS Al window
+#/EventGen/SelectReactionType 2
+#/EventGen/SelectReactionRegion 3
+
+# Target US 2% Al
+#/EventGen/SelectReactionType 2
+#/EventGen/SelectReactionRegion 5
+#/Target/SetTarget USAl2p
+
+# Target DS 4% Al
+#/EventGen/SelectReactionType 2
+#/EventGen/SelectReactionRegion 8
+#/Target/SetTarget DSAl4p
+
+# Target LH2
+/EventGen/SelectReactionType 1
+/EventGen/SelectReactionRegion 1
+/Target/SetTarget LH2
+
+# 4 mm x 4 mm raster
+/PrimaryEvent/SetRasterXmin -2.0 mm
+/PrimaryEvent/SetRasterYmin -2.0 mm
+/PrimaryEvent/SetRasterXmax 2.0 mm
+/PrimaryEvent/SetRasterYmax 2.0 mm
+
+# Set the beam positions (steps of 0.5 mm)
+# and beam directions (steps of 0.5 mrad)
+/PrimaryEvent/SetBeamPositionX 0 mm
+/PrimaryEvent/SetBeamPositionY 0 mm
+/PrimaryEvent/SetBeamDirectionX 0 mrad
+/PrimaryEvent/SetBeamDirectionY 0 mrad
 
 # Simulate number of events
 /run/beamOn %nevents%
