@@ -37,7 +37,7 @@
 #include "QweakSimSteppingVerbose.hh"
 #include "QweakSimTrackInformation.hh"
 #include "QweakSimEPEvent.hh"
-#include "QweakSimCerenkovDetector_PMTSD.hh"
+#include "QweakSimCerenkov_PMTSD.hh"
 #include "QweakSimPMTOnly_PMTSD.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -399,7 +399,7 @@ void QweakSimSteppingAction::UserSteppingAction(const G4Step* theStep){
             break;
           } else { 
             G4String CerenkovSDName="/CerenkovPMTSD";
-            QweakSimCerenkovDetector_PMTSD* cerenkovpmtSD = (QweakSimCerenkovDetector_PMTSD*)SDman->FindSensitiveDetector(CerenkovSDName);
+            QweakSimCerenkov_PMTSD* cerenkovpmtSD = (QweakSimCerenkov_PMTSD*)SDman->FindSensitiveDetector(CerenkovSDName);
             if(cerenkovpmtSD) {
               //myUserInfo->GetCurrentPMTHit()->SetHitValid(True);
   	      cerenkovpmtSD->ProcessHits_constStep(theStep,NULL); 

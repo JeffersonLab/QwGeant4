@@ -10,8 +10,8 @@
 #include "QweakSimUserInformation.hh"
 #include "QweakSimCerenkovDetectorMessenger.hh"
 #include "QweakSimCerenkov_DetectorSD.hh"
-#include "QweakSimCerenkovDetector_PMTSD.hh"
-// #include "QweakSimPMTEntranceWindowSD.hh"
+#include "QweakSimCerenkov_RadiatorSD.hh"
+#include "QweakSimCerenkov_PMTSD.hh"
 
 // user classes
 class QweakSimCerenkovDetectorMessenger;
@@ -368,8 +368,9 @@ private:
   G4ThreeVector    Translation_PMTEntranceWindow;
   G4RotationMatrix Rotation_PMTEntranceWindow;
  
-  // pointer to the sensitive detector
+  // pointer to the sensitive detectors
   G4VSensitiveDetector* CerenkovDetectorSD;
+  G4VSensitiveDetector* CerenkovRadiatorSD;
   G4VSensitiveDetector* CerenkovDetector_PMTSD;
 
   // Cerenkov Position variable now a vector for eight positions

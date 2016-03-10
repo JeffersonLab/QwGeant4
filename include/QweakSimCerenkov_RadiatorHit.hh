@@ -1,26 +1,26 @@
 /**
-   \class QweakSimCerenkov_DetectorHit
+   \class QweakSimCerenkov_RadiatorHit
     
-   \brief Handling of a hit in the Cerenkov detector
-    
+   \brief Handling of a hit in the Cerenkov radiator
+
  */
 
-#ifndef QweakSimCerenkov_DetectorHit_h
-#define QweakSimCerenkov_DetectorHit_h 
+#ifndef QweakSimCerenkov_RadiatorHit_h
+#define QweakSimCerenkov_RadiatorHit_h 
 
 // user includes
 #include "QweakSimHit.hh"
 
-class QweakSimCerenkov_DetectorHit : public G4VHit
+class QweakSimCerenkov_RadiatorHit : public G4VHit
 {
   public:
 
-      QweakSimCerenkov_DetectorHit();
-      QweakSimCerenkov_DetectorHit(G4int detector_id);
-      virtual ~QweakSimCerenkov_DetectorHit();
-      QweakSimCerenkov_DetectorHit(const QweakSimCerenkov_DetectorHit &right);
-      const QweakSimCerenkov_DetectorHit& operator=(const QweakSimCerenkov_DetectorHit &right);
-      int operator==(const QweakSimCerenkov_DetectorHit &right) const;
+      QweakSimCerenkov_RadiatorHit();
+      QweakSimCerenkov_RadiatorHit(G4int detector_id);
+      virtual ~QweakSimCerenkov_RadiatorHit();
+      QweakSimCerenkov_RadiatorHit(const QweakSimCerenkov_RadiatorHit &right);
+      const QweakSimCerenkov_RadiatorHit& operator=(const QweakSimCerenkov_RadiatorHit &right);
+      int operator==(const QweakSimCerenkov_RadiatorHit &right) const;
 
       inline void *operator new(size_t);
       inline void operator delete(void *aHit);
@@ -157,22 +157,22 @@ public:
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-typedef G4THitsCollection<QweakSimCerenkov_DetectorHit> QweakSimCerenkovDetectorHitsCollection;
+typedef G4THitsCollection<QweakSimCerenkov_RadiatorHit> QweakSimCerenkovRadiatorHitsCollection;
 
-extern G4Allocator<QweakSimCerenkov_DetectorHit>  QweakSimCerenkovDetectorHitAllocator;
+extern G4Allocator<QweakSimCerenkov_RadiatorHit>  QweakSimCerenkovRadiatorHitAllocator;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-inline void* QweakSimCerenkov_DetectorHit::operator new(size_t)
+inline void* QweakSimCerenkov_RadiatorHit::operator new(size_t)
 {
   void* aHit;
-  aHit = (void*) QweakSimCerenkovDetectorHitAllocator.MallocSingle();
+  aHit = (void*) QweakSimCerenkovRadiatorHitAllocator.MallocSingle();
   return aHit;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-inline void QweakSimCerenkov_DetectorHit::operator delete(void* aHit)
+inline void QweakSimCerenkov_RadiatorHit::operator delete(void* aHit)
 {
-   QweakSimCerenkovDetectorHitAllocator.FreeSingle((QweakSimCerenkov_DetectorHit*) aHit);
+   QweakSimCerenkovRadiatorHitAllocator.FreeSingle((QweakSimCerenkov_RadiatorHit*) aHit);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

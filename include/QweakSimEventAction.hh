@@ -104,6 +104,7 @@ private:
   G4int LumiDetector_CollID;
   G4int TungstenPlugDetector_CollID;
   G4int CerenkovDetector_CollID;
+  G4int CerenkovRadiator_CollID;
   G4int CerenkovDetectorPMT_CollID;
 
   QweakSimAnalysis*             analysis;

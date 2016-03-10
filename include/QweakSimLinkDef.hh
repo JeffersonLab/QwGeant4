@@ -84,6 +84,7 @@
 #pragma link C++ class QweakSimUserCerenkov_MainEvent+;
 #pragma link C++ class QweakSimUserCerenkov_OctantEvent+;
 #pragma link C++ class QweakSimUserCerenkov_DetectorEvent+;
+#pragma link C++ class QweakSimUserCerenkov_RadiatorEvent+;
 #pragma link C++ class QweakSimUserCerenkov_PMTEvent+;
 
 #endif

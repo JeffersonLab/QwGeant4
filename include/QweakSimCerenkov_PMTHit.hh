@@ -1,20 +1,20 @@
-#ifndef QweakSimCerenkovDetector_PMTHit_h
-#define QweakSimCerenkovDetector_PMTHit_h 
+#ifndef QweakSimCerenkov_PMTHit_h
+#define QweakSimCerenkov_PMTHit_h 
 
 // user includes
 #include "QweakSimHit.hh"
 
-class QweakSimCerenkovDetector_PMTHit : public G4VHit
+class QweakSimCerenkov_PMTHit : public G4VHit
 {
 public:
   
-  QweakSimCerenkovDetector_PMTHit();
-  virtual ~QweakSimCerenkovDetector_PMTHit();
+  QweakSimCerenkov_PMTHit();
+  virtual ~QweakSimCerenkov_PMTHit();
   
-  QweakSimCerenkovDetector_PMTHit(const QweakSimCerenkovDetector_PMTHit &right);
-  QweakSimCerenkovDetector_PMTHit(G4int pmt_id);
-  const QweakSimCerenkovDetector_PMTHit & operator=(const QweakSimCerenkovDetector_PMTHit &right);
-  int operator==(const QweakSimCerenkovDetector_PMTHit &right) const;
+  QweakSimCerenkov_PMTHit(const QweakSimCerenkov_PMTHit &right);
+  QweakSimCerenkov_PMTHit(G4int pmt_id);
+  const QweakSimCerenkov_PMTHit & operator=(const QweakSimCerenkov_PMTHit &right);
+  int operator==(const QweakSimCerenkov_PMTHit &right) const;
   
   inline void *operator new(size_t);
   inline void operator delete(void *aHit);
@@ -53,20 +53,20 @@ private:
 
  };
 
-typedef G4THitsCollection<QweakSimCerenkovDetector_PMTHit> QweakSimCerenkovDetector_PMTHitsCollection;
+typedef G4THitsCollection<QweakSimCerenkov_PMTHit> QweakSimCerenkovDetector_PMTHitsCollection;
 
-extern G4Allocator<QweakSimCerenkovDetector_PMTHit>  QweakSimCerenkovDetector_PMTHitAllocator;
+extern G4Allocator<QweakSimCerenkov_PMTHit>  QweakSimCerenkov_PMTHitAllocator;
 
-inline void* QweakSimCerenkovDetector_PMTHit::operator new(size_t)
+inline void* QweakSimCerenkov_PMTHit::operator new(size_t)
 {
   void* aHit;
-  aHit = (void*) QweakSimCerenkovDetector_PMTHitAllocator.MallocSingle();
+  aHit = (void*) QweakSimCerenkov_PMTHitAllocator.MallocSingle();
   return aHit;
 }
 
-inline void QweakSimCerenkovDetector_PMTHit::operator delete(void* aHit)
+inline void QweakSimCerenkov_PMTHit::operator delete(void* aHit)
 {
-   QweakSimCerenkovDetector_PMTHitAllocator.FreeSingle((QweakSimCerenkovDetector_PMTHit*) aHit);
+   QweakSimCerenkov_PMTHitAllocator.FreeSingle((QweakSimCerenkov_PMTHit*) aHit);
 }
 
 #endif

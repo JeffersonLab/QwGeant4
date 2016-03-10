@@ -43,7 +43,8 @@
 #include "QweakSimLumi_DetectorHit.hh"
 #include "QweakSimTungstenPlug_DetectorHit.hh"
 #include "QweakSimCerenkov_DetectorHit.hh"
-#include "QweakSimCerenkovDetector_PMTHit.hh"
+#include "QweakSimCerenkov_RadiatorHit.hh"
+#include "QweakSimCerenkov_PMTHit.hh"
 #include "QweakSimTrajectory.hh"
 #include "QweakSimUserMainEvent.hh"
 
@@ -65,7 +66,7 @@ QweakSimEventAction::QweakSimEventAction(QweakSimAnalysis* AN, QweakSimUserInfor
 
 
     TargetDetector_CollID              = -1;
-    //GEM_WirePlane_CollID               = -1;
+    GEM_WirePlane_CollID               = -1;
     HDC_WirePlane_CollID               = -1;
     VDC_WirePlane_CollID               = -1;
     VDC_DriftCellFront_CollID          = -1;
@@ -73,12 +74,13 @@ QweakSimEventAction::QweakSimEventAction(QweakSimAnalysis* AN, QweakSimUserInfor
     TriggerScintillatorDetector_CollID = -1;
     TriggerScintillatorPMT_CollID      = -1;
     LeadGlassDetector_CollID           = -1;
-    //LeadGlassPMT_CollID                = -1;
+    LeadGlassPMT_CollID                = -1;
     PMTOnlyDetector_CollID	       = -1;
     PMTOnlyDetectorPMT_CollID	       = -1;
     LumiDetector_CollID                = -1;
     TungstenPlugDetector_CollID        = -1;
     CerenkovDetector_CollID            = -1;
+    CerenkovRadiator_CollID            = -1;
     CerenkovDetectorPMT_CollID         = -1;
 
     // Event action messenger
@@ -184,7 +186,6 @@ void QweakSimEventAction::BeginOfEventAction(const G4Event* /*evt*/)
         VDC_DriftCellBack_CollID = SDman->GetCollectionID("VDCDriftCellBackSD/DriftCellBackCollection");
     }
 
-
     // check for existing TriggerScintillator Collection ID (if it's -1 it will be assigned)
     if (TriggerScintillatorDetector_CollID==-1) {
         TriggerScintillatorDetector_CollID = SDman->GetCollectionID("TriggerScintillatorSD/TriggerScintillatorCollection");
@@ -194,23 +195,23 @@ void QweakSimEventAction::BeginOfEventAction(const G4Event* /*evt*/)
     if (LeadGlassDetector_CollID==-1) {
         LeadGlassDetector_CollID = SDman->GetCollectionID("LeadGlassSD/LeadGlassCollection");
     }
-    
+
     // check for existing PMTOnly Collection ID (if it's -1 it will be assigned)
     if (PMTOnlyDetector_CollID==-1) {
         PMTOnlyDetector_CollID = SDman->GetCollectionID("PMTOnlySD/PMTOnlyCollection");
-    }    
+    }
 
     // check for existing PMTOnly Collection ID (if it's -1 it will be assigned)
     if (PMTOnlyDetectorPMT_CollID==-1) {
         PMTOnlyDetectorPMT_CollID = SDman->GetCollectionID("PMTOnly_PMTSD/PMTHitCollection");
     }
-    // check for existing LumiDetector Collection ID (if it's -1 it will be assigned)
 
+    // check for existing LumiDetector Collection ID (if it's -1 it will be assigned)
     if (LumiDetector_CollID==-1) {
         // Do we want to change this so that both US and DS lumis have the same SD?
         LumiDetector_CollID = SDman->GetCollectionID("USLumiSD/LumiCollection");
     }
-	
+
     // check for existing TungstenPlug Collection ID (if it's -1 it will be assigned)
     if (TungstenPlugDetector_CollID==-1) {
         TungstenPlugDetector_CollID = SDman->GetCollectionID("TungstenPlugSD/TungstenPlugCollection");
@@ -219,6 +220,11 @@ void QweakSimEventAction::BeginOfEventAction(const G4Event* /*evt*/)
     // check for existing CerenkovDetector Collection ID (if it's -1 it will be assigned)
     if (CerenkovDetector_CollID==-1) {
         CerenkovDetector_CollID = SDman->GetCollectionID("CerenkovDetectorSD/CerenkovDetectorCollection");
+    }
+
+    // check for existing CerenkovRadiator Collection ID (if it's -1 it will be assigned)
+    if (CerenkovRadiator_CollID==-1) {
+        CerenkovRadiator_CollID = SDman->GetCollectionID("CerenkovRadiatorSD/CerenkovRadiatorCollection");
     }
 
     // check for existing CerenkovDetectorPMT Collection ID (if it's -1 it will be assigned)
@@ -296,6 +302,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     QweakSimLumi_DetectorHitsCollection*                LumiDetector_HC                = 0;
     QweakSimTungstenPlug_DetectorHitsCollection*        TungstenPlugDetector_HC     = 0;
     QweakSimCerenkovDetectorHitsCollection*             CerenkovDetector_HC            = 0;
+    QweakSimCerenkovRadiatorHitsCollection*             CerenkovRadiator_HC            = 0;
     QweakSimCerenkovDetector_PMTHitsCollection*         CerenkovDetectorPMT_HC         = 0;
 
     G4int n_hitTarget = 0;
@@ -312,7 +319,8 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     G4int n_hitPMTOnlyPMT = 0;
     G4int n_hitLumi = 0;
     G4int n_hitTungstenPlug = 0;
-    G4int n_hitCerenkov = 0;
+    G4int n_hitCerenkovDetector = 0;
+    G4int n_hitCerenkovRadiator = 0;
     G4int n_hitCerenkovPMT = 0;
 
     if (HCE) {
@@ -402,7 +410,13 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         // get  CerenkovDetector Hit Collector pointer
         if (CerenkovDetector_CollID > -1) {
             CerenkovDetector_HC    = (QweakSimCerenkovDetectorHitsCollection*)(HCE->GetHC(CerenkovDetector_CollID));
-            n_hitCerenkov          = CerenkovDetector_HC -> entries();
+            n_hitCerenkovDetector  = CerenkovDetector_HC -> entries();
+        }
+
+        // get  CerenkovRadiator Hit Collector pointer
+        if (CerenkovRadiator_CollID > -1) {
+            CerenkovRadiator_HC    = (QweakSimCerenkovRadiatorHitsCollection*)(HCE->GetHC(CerenkovRadiator_CollID));
+            n_hitCerenkovRadiator  = CerenkovRadiator_HC -> entries();
         }
 
         // get  CerenkovDetectorPMT Hit Collector pointer
@@ -423,8 +437,9 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
              << ",\tPMTOnlyPMT " << n_hitPMTOnlyPMT
              << ",\tLumi " << n_hitLumi
              << ",\tTungstenPlug " << n_hitTungstenPlug
-             << ",\tCerenkov " << n_hitCerenkov
-             << "\tCerenkovPMT " << n_hitCerenkovPMT << G4endl;
+             << ",\tCerenkovRad " << n_hitCerenkovRadiator
+             << ",\tCerenkovDet " << n_hitCerenkovDetector
+             << ",\tCerenkovPMT " << n_hitCerenkovPMT << G4endl;
     }
 
 
@@ -433,6 +448,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 
     // Initialize/Clear Event variables, initialize Cerenkov Detector with NoHit Flag
     analysis->fRootEvent->Cerenkov.Detector.Initialize();
+    analysis->fRootEvent->Cerenkov.Radiator.Initialize();
     analysis->fRootEvent->Cerenkov.PMT.Initialize();
 
     // Initialize/Clear Event variables in Region 1
@@ -489,7 +505,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     //##########################################################################################################################
     //
     if ( fTrigger[kTriggerAll] /* Trigger on every event */
-            || (fTrigger[kTrigger4Fold] && (n_VDChitWirePlane == 4) && (n_VDChitDCFront > 0) && (n_VDChitDCBack > 0) && (n_hitCerenkov > 0) ) /* 4-fold coincidence */
+            || (fTrigger[kTrigger4Fold] && (n_VDChitWirePlane == 4) && (n_VDChitDCFront > 0) && (n_VDChitDCBack > 0) && (n_hitCerenkovDetector > 0) ) /* 4-fold coincidence */
             || (fTrigger[kTrigger3Fold] && (n_VDChitWirePlane >= 2) && (n_VDChitDCFront > 0) && (n_VDChitDCBack > 0) ) /* 3-fold coincidence */
             || (fTrigger[kTriggerScint] && (n_hitTriggerScintillator > 0) ) /* Qweak trigger on a hit in the trigger scintillator */
 	    || (fTrigger[kTriggerHDC]   && (n_HDChitWirePlane >= 6))         /* HDC Trigger */
@@ -497,7 +513,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
             || (fTrigger[kTriggerPMTOnly] && (n_hitPMTOnly >0))         /* a hit in the PMTOnly */
             || (fTrigger[kTriggerLumi] && (n_hitLumi > 0))
             || (fTrigger[kTriggerTungstenPlug] && (n_hitTungstenPlug>0) )    // Hit on the TungstenPlug
-            || (fTrigger[kTriggerCer]   && (n_hitCerenkov > 0) )            /* Triggering on Main Detector */
+            || (fTrigger[kTriggerCer]   && (n_hitCerenkovDetector > 0) )            /* Triggering on Main Detector */
        ) {
 
         //========================================
@@ -641,7 +657,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         analysis->fRootEvent->Region3.ChamberFront.DriftCell.StoreVDriftCellNbOfHits(n_VDChitDCBack);
 
         // Store Number of Hits for: Cerenkov Detector
-        analysis->fRootEvent->Cerenkov.Detector.StoreDetectorNbOfHits(n_hitCerenkov);
+        analysis->fRootEvent->Cerenkov.Detector.StoreDetectorNbOfHits(n_hitCerenkovDetector);
 		
         // Store Number of Hits for: Cerenkov PMT Detector
         analysis->fRootEvent->Cerenkov.PMT.StoreDetectorNbOfHits(n_hitCerenkovPMT);
@@ -891,10 +907,10 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         // Store Cerenkov Detector hits into /Cerenkov
         //=========================================================
 
-        if (n_hitCerenkov > 0) {
+        if (n_hitCerenkovDetector > 0) {
 
             // loop over hits
-            for (int i1 = 0; i1 < n_hitCerenkov; i1++) {
+            for (int i1 = 0; i1 < n_hitCerenkovDetector; i1++) {
 
                 QweakSimCerenkov_DetectorHit* aHit = (*CerenkovDetector_HC)[i1];
 
@@ -1091,8 +1107,172 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 //--------------------------------------------------------------------------------------------
 
 
-            } // end  for(int i1=0;i1<n_hitCerenkov;i1++)
-        } // end    if (n_hitCerenkov >0)
+            } // end for (int i1 = 0; i1 < n_hitCerenkovDetector; i1++)
+        } // end if (n_hitCerenkovDetector > 0)
+
+
+        //=========================================================
+        // Store Cerenkov radiator hits into /CerenkovRadiator
+        //=========================================================
+
+        if (n_hitCerenkovRadiator > 0) {
+
+            // loop over hits
+            for (int i1 = 0; i1 < n_hitCerenkovRadiator; i1++) {
+
+                QweakSimCerenkov_RadiatorHit* aHit = (*CerenkovRadiator_HC)[i1];
+
+                G4int octantID = (Int_t) aHit->GetDetectorID() + 1;
+
+                if (print_Cerenkov_DetectorHit) aHit->Print();
+
+                // get local position of hit
+                G4ThreeVector localPosition  = aHit->GetLocalPosition();
+                Float_t rLocalPositionX = (Float_t) localPosition.x() / cm;
+                Float_t rLocalPositionY = (Float_t) localPosition.y() / cm;
+                Float_t rLocalPositionZ = (Float_t) localPosition.z() / cm;
+
+                // get world position of hit
+                G4ThreeVector globalPosition  = aHit->GetWorldPosition();
+                Float_t rGlobalPositionX = (Float_t) globalPosition.x() / cm;
+                Float_t rGlobalPositionY = (Float_t) globalPosition.y() / cm;
+                Float_t rGlobalPositionZ = (Float_t) globalPosition.z() / cm;
+
+                // get local Momentum of hit
+                G4ThreeVector localMomentum  = aHit->GetLocalMomentum();
+                Float_t rLocalMomentumX = (Float_t) localMomentum.x() / MeV;
+                Float_t rLocalMomentumY = (Float_t) localMomentum.y() / MeV;
+                Float_t rLocalMomentumZ = (Float_t) localMomentum.z() / MeV;
+                Float_t rLocalPhiAngle   = (Float_t) localMomentum.phi() / degree - 90.0;
+                Float_t rLocalThetaAngle = (Float_t) localMomentum.theta() / degree;
+
+                // get world Momentum of hit
+                G4ThreeVector globalMomentum  = aHit->GetWorldMomentum();
+                Float_t rGlobalMomentumX = (Float_t) globalMomentum.x() / MeV;
+                Float_t rGlobalMomentumY = (Float_t) globalMomentum.y() / MeV;
+                Float_t rGlobalMomentumZ = (Float_t) globalMomentum.z() / MeV;
+                Float_t rGlobalPhiAngle   = (Float_t) globalMomentum.phi() / degree - 90.0;
+                Float_t rGlobalThetaAngle = (Float_t) globalMomentum.theta() / degree;
+
+                G4ThreeVector localExitPosition = myUserInfo->GetLocalCerenkovExitPosition();
+                Float_t rLocalExitPositionX = (Float_t) localExitPosition.x() / cm;
+                Float_t rLocalExitPositionY = (Float_t) localExitPosition.y() / cm;
+                Float_t rLocalExitPositionZ = (Float_t) localExitPosition.z() / cm;
+
+                G4ThreeVector originVertexPosition  = aHit->GetOriginVertexPosition();
+                Float_t rOriginVertexPositionX = (Float_t) originVertexPosition.x() / cm;
+                Float_t rOriginVertexPositionY = (Float_t) originVertexPosition.y() / cm;
+                Float_t rOriginVertexPositionZ = (Float_t) originVertexPosition.z() / cm;
+
+                G4ThreeVector originVertexMomentumDirection = aHit->GetOriginVertexMomentumDirection();
+                Float_t rOriginVertexMomentumDirectionX = (Float_t) originVertexMomentumDirection.x();
+                Float_t rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
+                Float_t rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
+                Float_t rOriginVertexPhiAngle   = (Float_t) originVertexMomentumDirection.phi() / degree;
+                Float_t rOriginVertexThetaAngle = (Float_t) originVertexMomentumDirection.theta() / degree;
+
+                Float_t rOriginVertexKineticEnergy = (Float_t) aHit->GetOriginVertexKineticEnergy() / MeV;
+                Float_t rOriginVertexTotalEnergy   = (Float_t) aHit->GetOriginVertexTotalEnergy() / MeV;
+
+                Float_t rGlobalTime = (Float_t) aHit->GetGlobalTime() / ns;
+
+                TString rParticleName = TString(aHit->GetParticleName());
+                G4int rParticleType = (Int_t) aHit->GetParticleType();
+                G4int rTrackId = (Int_t) aHit->GetTrackID();
+                G4int rParentId = (Int_t) aHit->GetParentID();
+                TString rCreatorName = TString(aHit->GetCreatorProcessName());
+
+                // get total Energy of hit
+                Float_t rTotalEnergy     = (Float_t) aHit->GetTotalEnergy() / MeV;
+
+                // get kinetic Energy of hit
+                Float_t rKineticEnergy     = (Float_t) aHit->GetKineticEnergy() / MeV;
+
+                // get polarization of hit
+                G4ThreeVector rGlobalPolarizationVector = aHit->GetPolarization();
+                Float_t rGlobalPolarizationX = rGlobalPolarizationVector.x();
+                Float_t rGlobalPolarizationY = rGlobalPolarizationVector.y();
+                Float_t rGlobalPolarizationZ = rGlobalPolarizationVector.z();
+
+                Float_t rLongitudinalPolarization = 0.0;
+                G4ThreeVector rTransversePolarizationVector =  G4ThreeVector(0.0,0.0,0.0);
+                if  (globalMomentum.mag() > 0){
+                  // longitudinal polarization is along the momentum direction
+                  rLongitudinalPolarization = rGlobalPolarizationVector.dot(globalMomentum)/globalMomentum.mag()/rGlobalPolarizationVector.mag();
+                  // transverse polarization is all except longitudinal
+                  rTransversePolarizationVector = rGlobalPolarizationVector - rLongitudinalPolarization*globalMomentum/globalMomentum.mag();
+                }
+                Float_t rTransversePolarization = rTransversePolarizationVector.mag();
+                Float_t rTransversePolarizationX = rTransversePolarizationVector.x();
+                Float_t rTransversePolarizationY = rTransversePolarizationVector.y();
+                Float_t rTransversePolarizationZ = rTransversePolarizationVector.z();
+                Float_t rTransversePolarizationPhiAngle = rTransversePolarizationVector.phi() / degree;
+
+                //  edgeEvent = myUserInfo->GetEdgeEventDetected();
+
+                //==========================================================
+                analysis->fRootEvent->Cerenkov.Radiator.StoreDetectorID(octantID);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreDetectorHasBeenHit(5);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreParticleName(rParticleName);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreParticleType(rParticleType);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreParticleID(rTrackId);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreParentID(rParentId);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreCreatorProcessName(rCreatorName);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreGlobalTimeOfHit(rGlobalTime);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreOriginVertexPositionX(rOriginVertexPositionX);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreOriginVertexPositionY(rOriginVertexPositionY);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreOriginVertexPhiAngle(rOriginVertexPhiAngle);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreOriginVertexThetaAngle(rOriginVertexThetaAngle);
+
+                analysis->fRootEvent->Cerenkov.Radiator.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
+
+                analysis->fRootEvent->Cerenkov.Radiator.StoreDetectorLocalPositionX(rLocalPositionX);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreDetectorLocalPositionY(rLocalPositionY);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreDetectorLocalPositionZ(rLocalPositionZ);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreDetectorLocalExitPositionX(rLocalExitPositionX);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreDetectorLocalExitPositionY(rLocalExitPositionY);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreDetectorLocalExitPositionZ(rLocalExitPositionZ);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreDetectorGlobalPositionX(rGlobalPositionX);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreDetectorGlobalPositionY(rGlobalPositionY);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreDetectorGlobalPositionZ(rGlobalPositionZ);
+
+                // store polarization of hit
+                analysis->fRootEvent->Cerenkov.Radiator.StorePolarizationX(rGlobalPolarizationX);
+                analysis->fRootEvent->Cerenkov.Radiator.StorePolarizationY(rGlobalPolarizationY);
+                analysis->fRootEvent->Cerenkov.Radiator.StorePolarizationZ(rGlobalPolarizationZ);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreLongitudinalPolarization(rLongitudinalPolarization);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreTransversePolarization(rTransversePolarization);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreTransversePolarizationX(rTransversePolarizationX);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreTransversePolarizationY(rTransversePolarizationY);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreTransversePolarizationZ(rTransversePolarizationZ);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreTransversePolarizationPhiAngle(rTransversePolarizationPhiAngle);
+
+                // store local momentum and track angles Phi and Theta
+                analysis->fRootEvent->Cerenkov.Radiator.StoreLocalMomentumX(rLocalMomentumX);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreLocalMomentumY(rLocalMomentumY);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreLocalMomentumZ(rLocalMomentumZ);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreLocalPhiAngle(rLocalPhiAngle);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreLocalThetaAngle(rLocalThetaAngle);
+
+                // store global momentum and track angles Phi and Theta
+                analysis->fRootEvent->Cerenkov.Radiator.StoreGlobalMomentumX(rGlobalMomentumX);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreGlobalMomentumY(rGlobalMomentumY);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreGlobalMomentumZ(rGlobalMomentumZ);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreGlobalPhiAngle(rGlobalPhiAngle);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreGlobalThetaAngle(rGlobalThetaAngle);
+
+                // store total+kinetic energy of a hit
+                analysis->fRootEvent->Cerenkov.Radiator.StoreTotalEnergy(rTotalEnergy);
+                analysis->fRootEvent->Cerenkov.Radiator.StoreKineticEnergy(rKineticEnergy);
+
+            } // end for (int i1 = 0; i1 < n_hitCerenkovRadiator; i1++)
+
+        } // end if (n_hitCerenkovRadiator > 0)
 
 
         //=========================================================
@@ -1149,7 +1329,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
             // loop over hits
             for (int i1 = 0; i1 < n_hitCerenkovPMT; i1++) {
 
-                QweakSimCerenkovDetector_PMTHit* aHit = (*CerenkovDetectorPMT_HC)[i1];
+                QweakSimCerenkov_PMTHit* aHit = (*CerenkovDetectorPMT_HC)[i1];
                 G4int octantID = (Int_t) aHit->GetDetectorID() + 1;
 
                 if (octantID > (Int_t) PmtHitsLeft.size()) {
@@ -2636,7 +2816,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         analysis->fRootEvent->Region2.Clear();
         analysis->fRootEvent->Region1.Clear();
 	
-    } //end of if( (n_hitWirePlane == 2)&&(n_hitFront >0)&&(n_hitBack >0)&&(n_hitCerenkov >0) )
+    } //end of if( (n_hitWirePlane == 2)&&(n_hitFront >0)&&(n_hitBack >0)&&(n_hitCerenkovDetector >0) )
 
     myUserInfo->ResetCerenkovSecondaryParticleInfo();
 

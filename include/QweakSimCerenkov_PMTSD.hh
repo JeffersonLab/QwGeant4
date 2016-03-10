@@ -4,20 +4,20 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 // user includes
+#include "QweakSimCerenkov_PMTHit.hh"
 #include "QweakSimSensitiveDetectorDeclaration.hh"
-#include "QweakSimCerenkovDetector_PMTHit.hh"
 
 // user classes
 class QweakSimTrajectory;
 class QweakSimUserInformation;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-class QweakSimCerenkovDetector_PMTSD : public G4VSensitiveDetector
+class QweakSimCerenkov_PMTSD : public G4VSensitiveDetector
 {
 
 public:
-  QweakSimCerenkovDetector_PMTSD(G4String name, QweakSimUserInformation *myUserInfo);
-  ~QweakSimCerenkovDetector_PMTSD();
+  QweakSimCerenkov_PMTSD(G4String name, QweakSimUserInformation *myUserInfo);
+  virtual ~QweakSimCerenkov_PMTSD();
   
   void Initialize(G4HCofThisEvent* HCE);
   G4bool ProcessHits(G4Step* /*aStep*/,G4TouchableHistory* /*ROhist*/){

@@ -1,23 +1,3 @@
-//=============================================================================
-// 
-//   ---------------------------
-//  | Doxygen File Information |
-//  ---------------------------
-/**
- 
-   \file QweakSimUserMainEvent.hh
-   $Revision: 1.2 $	
-   $Date: 2005/12/27 19:30:33 $
-   \author Klaus Hans Grimm
-     
-*/
-//=============================================================================
-// 
-//=============================================================================
-// 
-//   ---------------------------
-//  | Doxygen Class Information |
-//  ---------------------------
 /**
    \class QweakSimUserMainEvent
     
@@ -34,12 +14,9 @@
 	  Cerenkov.
     
  */
-//=============================================================================
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 #ifndef QweakSimUserMainEvent_h
 #define QweakSimUserMainEvent_h
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
 // root include
 #include "TObject.h"
@@ -57,9 +34,8 @@
 #include "QweakSimUserTungstenPlug_MainEvent.hh"
 #include "QweakSimUserCerenkov_MainEvent.hh"
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-class QweakSimUserMainEvent : public TObject
-// class QweakSimUserMainEvent 
+
+class QweakSimUserMainEvent: public TObject
 {
 
 /** \page global_coordinate_system global coordinate system
@@ -105,8 +81,6 @@ class QweakSimUserMainEvent : public TObject
  *  This group contains all variables that are included in the ROOT file.
  */
 
-private:
-
 public:
 
   QweakSimUserPrimaryEvent                     Primary;              ///< object containing primary particle info
@@ -141,9 +115,4 @@ public:
 
 };  // end class QweakSimMainEvent 
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-
 #endif 
-
-
-

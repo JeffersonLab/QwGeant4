@@ -1,20 +1,20 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-#include "QweakSimCerenkovDetector_PMTSD.hh"
-
 // geant4 includes
 #include "G4OpticalPhoton.hh"
 
 // user includes
 #include "QweakSimSensitiveDetectorDefinition.hh"
-#include "QweakSimCerenkovDetector_PMTHit.hh"
 #include "QweakSimUserInformation.hh"
 #include "QweakSimTrackInformation.hh"
 #include "QweakSimTrajectory.hh"
 
+#include "QweakSimCerenkov_PMTHit.hh"
+#include "QweakSimCerenkov_PMTSD.hh"
+
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-QweakSimCerenkovDetector_PMTSD::QweakSimCerenkovDetector_PMTSD(G4String name, QweakSimUserInformation *userInfo)
+QweakSimCerenkov_PMTSD::QweakSimCerenkov_PMTSD(G4String name, QweakSimUserInformation *userInfo)
 :G4VSensitiveDetector(name)
 {
   collectionName.insert("PMTHitCollection"); 
@@ -23,13 +23,13 @@ QweakSimCerenkovDetector_PMTSD::QweakSimCerenkovDetector_PMTSD(G4String name, Qw
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-QweakSimCerenkovDetector_PMTSD::~QweakSimCerenkovDetector_PMTSD()
+QweakSimCerenkov_PMTSD::~QweakSimCerenkov_PMTSD()
 {
 
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void QweakSimCerenkovDetector_PMTSD::Initialize(G4HCofThisEvent* HCE)
+void QweakSimCerenkov_PMTSD::Initialize(G4HCofThisEvent* HCE)
 {
    CerenkovDetector_PMTHitsCollection = new QweakSimCerenkovDetector_PMTHitsCollection(SensitiveDetectorName,collectionName[0]);
    
@@ -39,7 +39,7 @@ void QweakSimCerenkovDetector_PMTSD::Initialize(G4HCofThisEvent* HCE)
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-G4bool QweakSimCerenkovDetector_PMTSD::ProcessHits_constStep(const G4Step* aStep,G4TouchableHistory* /*ROhist*/)
+G4bool QweakSimCerenkov_PMTSD::ProcessHits_constStep(const G4Step* aStep,G4TouchableHistory* /*ROhist*/)
 {
 
   if (aStep->GetTrack()->GetDefinition() != G4OpticalPhoton::OpticalPhotonDefinition()) 
@@ -62,7 +62,7 @@ G4bool QweakSimCerenkovDetector_PMTSD::ProcessHits_constStep(const G4Step* aStep
   G4double currentPhotonEnergy = aStep->GetTrack()->GetTotalEnergy();
   G4double currentHitTime      = aStep->GetTrack()->GetGlobalTime();
   G4int MotherCopyNo      = theTouchable->GetVolume(1)->GetCopyNo();
-  QweakSimCerenkovDetector_PMTHit* aHit = new QweakSimCerenkovDetector_PMTHit();
+  QweakSimCerenkov_PMTHit* aHit = new QweakSimCerenkov_PMTHit();
   G4int MotherReplicaNo2  = theTouchable->GetReplicaNumber(3);        // Several MotherVolumes
 
 //  std::cout<<"store hit info: detector "<<MotherReplicaNo2<<"  PMTID "<<MotherCopyNo<<std::endl;
@@ -81,13 +81,13 @@ G4bool QweakSimCerenkovDetector_PMTSD::ProcessHits_constStep(const G4Step* aStep
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void QweakSimCerenkovDetector_PMTSD::EndOfEvent(G4HCofThisEvent* )
+void QweakSimCerenkov_PMTSD::EndOfEvent(G4HCofThisEvent* )
 {
 
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-QweakSimTrajectory* QweakSimCerenkovDetector_PMTSD::GetParentTrajectory(G4int parentID)
+QweakSimTrajectory* QweakSimCerenkov_PMTSD::GetParentTrajectory(G4int parentID)
 {
   G4TrajectoryContainer* trajectoryContainer = 
    G4RunManager::GetRunManager()->GetCurrentEvent()->GetTrajectoryContainer();

@@ -4,10 +4,9 @@
 #include <vector>
 
 //user includes
-#include "QweakSimCerenkovDetector_PMTHit.hh"
-
 #include "G4PhysicsOrderedFreeVector.hh"
 
+#include "QweakSimCerenkov_PMTHit.hh"
 #include "QweakSimPrimaryGeneratorAction.hh"
 #include "QweakSimSystemOfUnits.hh"
 #include "QweakSimPhysicalConstants.hh"
@@ -182,7 +181,7 @@ private:
 
   std::vector <G4double> CerenkovPhotonEnergy;
 
-  QweakSimCerenkovDetector_PMTHit *PMTHit;
+  QweakSimCerenkov_PMTHit *PMTHit;
 
   G4int PMTSide;
 
@@ -399,8 +398,8 @@ private:
   G4int    GetCerenkovSecondaryPhotonCount() {return  cerenkovSecondaryPhotonCount;};
   G4int    GetCerenkovSecondaryPositronCount() {return  cerenkovSecondaryPositronCount;};
   
-  void SetCurrentPMTHit(QweakSimCerenkovDetector_PMTHit* hit, G4int side){PMTHit = hit; PMTSide = side;};
-  QweakSimCerenkovDetector_PMTHit *GetCurrentPMTHit(){return PMTHit;};
+  void SetCurrentPMTHit(QweakSimCerenkov_PMTHit* hit, G4int side){PMTHit = hit; PMTSide = side;};
+  QweakSimCerenkov_PMTHit *GetCurrentPMTHit(){return PMTHit;};
   G4int GetCurrentPMTSide() {return PMTSide;};
 
   void     AddCerenkovEnergyDeposit(G4double eng){CerEngDep += eng;};

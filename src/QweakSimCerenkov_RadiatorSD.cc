@@ -1,36 +1,36 @@
-#include "QweakSimCerenkov_DetectorSD.hh"
+#include "QweakSimCerenkov_RadiatorSD.hh"
 
 // user includes
 #include "QweakSimSensitiveDetectorDefinition.hh"
 #include "QweakSimCerenkov_DetectorHit.hh"
 #include "QweakSimTrackInformation.hh"
 
-QweakSimCerenkov_DetectorSD::QweakSimCerenkov_DetectorSD(G4String name)
+QweakSimCerenkov_RadiatorSD::QweakSimCerenkov_RadiatorSD(G4String name)
 : G4VSensitiveDetector(name),
-  CerenkovDetectorHitsCollection(0),
-  CerenkovDetectorCollectionID(-1)
+  CerenkovRadiatorHitsCollection(0),
+  CerenkovRadiatorCollectionID(-1)
 {
-  collectionName.insert("CerenkovDetectorCollection"); 
+  collectionName.insert("CerenkovRadiatorCollection"); 
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-QweakSimCerenkov_DetectorSD::~QweakSimCerenkov_DetectorSD() { }
+QweakSimCerenkov_RadiatorSD::~QweakSimCerenkov_RadiatorSD() { }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void QweakSimCerenkov_DetectorSD::Initialize(G4HCofThisEvent* HCE)
+void QweakSimCerenkov_RadiatorSD::Initialize(G4HCofThisEvent* HCE)
 {
-  CerenkovDetectorHitsCollection = new QweakSimCerenkovDetectorHitsCollection(SensitiveDetectorName,collectionName[0]);
+  CerenkovRadiatorHitsCollection = new QweakSimCerenkovRadiatorHitsCollection(SensitiveDetectorName,collectionName[0]);
 
-  CerenkovDetectorCollectionID = G4SDManager::GetSDMpointer()->GetCollectionID(collectionName[0]);
+  CerenkovRadiatorCollectionID = G4SDManager::GetSDMpointer()->GetCollectionID(collectionName[0]);
 
-  HCE->AddHitsCollection(CerenkovDetectorCollectionID , CerenkovDetectorHitsCollection);
+  HCE->AddHitsCollection(CerenkovRadiatorCollectionID , CerenkovRadiatorHitsCollection);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistory* /*ROhist*/)
+G4bool QweakSimCerenkov_RadiatorSD::ProcessHits(G4Step* aStep, G4TouchableHistory* /*ROhist*/)
 {
 
-//G4cout << G4endl << "###### Calling QweakSimCerenkov_DetectorSD::ProcessHits() " << G4endl << G4endl; 
+//G4cout << G4endl << "###### Calling QweakSimCerenkov_RadiatorSD::ProcessHits() " << G4endl << G4endl;
 
   G4double charge = aStep->GetTrack()->GetDefinition()->GetPDGCharge();
   if(charge==0. && aStep->GetTrack()->GetTotalEnergy()/MeV < 0.1) {
@@ -51,7 +51,7 @@ G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistor
   G4VPhysicalVolume*  physVol      = theTouchable->GetVolume();
 
 //   if(strcmp(physVol->GetName(),"CerenkovDetector_Physical")) {
-  if(strcmp(physVol->GetName(),"ActiveArea_Physical")) {
+  if(strcmp(physVol->GetName(),"Radiator_Physical")) {
     return false;
   }
 
@@ -61,7 +61,7 @@ G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistor
   //======================================================================================
   // for test purpose only : print out all the source and primary info of this track 
 
-//   G4cout << "Printing Track Info inside QweakSimCerenkov_DetectorSD " << G4endl;
+//   G4cout << "Printing Track Info inside QweakSimCerenkov_RadiatorSD " << G4endl;
 //
 //   QweakSimTrackInformation* trackInfo;
 //
@@ -82,8 +82,8 @@ G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistor
   if (preStepPoint->GetStepStatus() != fGeomBoundary) {
 
       //       G4cout << "=======================================================================" << G4endl; 
-      //       G4cout << ">>>> QweakSimCerenkov_DetectorSD: We are NOT crossing a boundary  <<<<<<" << G4endl; 
-      //       G4cout << ">>>>       Aborting QweakSimCerenkov_DetectorSD::ProcessHits      <<<<<<" << G4endl; 
+      //       G4cout << ">>>> QweakSimCerenkov_RadiatorSD: We are NOT crossing a boundary  <<<<<<" << G4endl;
+      //       G4cout << ">>>>       Aborting QweakSimCerenkov_RadiatorSD::ProcessHits      <<<<<<" << G4endl;
       //       G4cout << "=======================================================================" << G4endl;   
     return false;
   }
@@ -136,7 +136,7 @@ G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistor
 //   G4double crossSection                   = info->GetCrossSection();
 //   G4double crossSectionWeight             = info->GetCrossSectionWeight();
 
-  QweakSimCerenkov_DetectorHit* aHit = new QweakSimCerenkov_DetectorHit(MotherCopyNo);
+  QweakSimCerenkov_RadiatorHit* aHit = new QweakSimCerenkov_RadiatorHit(MotherCopyNo);
 
   aHit->StoreTrackID(trackID);
   aHit->StoreParentID(parentID);
@@ -180,9 +180,9 @@ G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistor
   
 //   G4cout << "%%%%%%%%%%%%%%%%%%%%%%%  before inserting the hit" << G4endl;
 
-  CerenkovDetectorHitsCollection->insert(aHit); 
+  CerenkovRadiatorHitsCollection->insert(aHit);
   
-//   G4cout << G4endl << "###### Leaving QweakSimCerenkovDetectorSD::ProcessHits() " << G4endl << G4endl; 
+//   G4cout << G4endl << "###### Leaving QweakSimCerenkovRadiatorSD::ProcessHits() " << G4endl << G4endl;
 
 // Peiqing: comment this disable geting secondary info
 //  info->StoreCerenkovHitEnergy(info->GetParticleHistoryLength()-1,currentTotalEnergy);
@@ -191,9 +191,9 @@ G4bool QweakSimCerenkov_DetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistor
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void QweakSimCerenkov_DetectorSD::EndOfEvent(G4HCofThisEvent* )
+void QweakSimCerenkov_RadiatorSD::EndOfEvent(G4HCofThisEvent* )
 {
-  //G4cout << G4endl << "###### Calling QweakSimCerenkov_DetectorSD::EndOfEvent() " << G4endl << G4endl; 
+  //G4cout << G4endl << "###### Calling QweakSimCerenkov_RadiatorSD::EndOfEvent() " << G4endl << G4endl;
   
 //   G4int NbDCHits = DC_hitsCollection->entries();
   
@@ -201,7 +201,7 @@ void QweakSimCerenkov_DetectorSD::EndOfEvent(G4HCofThisEvent* )
 // 	 << " hits in the Drift Cells : " << G4endl;
 //   for (G4int i=0;i<NbDCHits;i++) (*DC_hitsCollection)[i]->Print();
 
-   //G4cout << G4endl << "###### Leaving QweakSimCerenkov_DetectorSD::EndOfEvent() " << G4endl << G4endl; 
+   //G4cout << G4endl << "###### Leaving QweakSimCerenkov_RadiatorSD::EndOfEvent() " << G4endl << G4endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

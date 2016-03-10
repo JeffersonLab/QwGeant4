@@ -22,6 +22,7 @@
 
 // user includes
 #include "QweakSimUserCerenkov_DetectorEvent.hh"
+#include "QweakSimUserCerenkov_RadiatorEvent.hh"
 #include "QweakSimUserCerenkov_PMTEvent.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....

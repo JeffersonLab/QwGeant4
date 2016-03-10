@@ -1,8 +1,8 @@
-#include "QweakSimCerenkov_DetectorHit.hh"
+#include "QweakSimCerenkov_RadiatorHit.hh"
 
-G4Allocator<QweakSimCerenkov_DetectorHit> QweakSimCerenkovDetectorHitAllocator;
+G4Allocator<QweakSimCerenkov_RadiatorHit> QweakSimCerenkovRadiatorHitAllocator;
 
-QweakSimCerenkov_DetectorHit::QweakSimCerenkov_DetectorHit()
+QweakSimCerenkov_RadiatorHit::QweakSimCerenkov_RadiatorHit()
 {
   DetectorID  = -1;
   pLogV       = 0;
@@ -30,7 +30,7 @@ QweakSimCerenkov_DetectorHit::QweakSimCerenkov_DetectorHit()
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-QweakSimCerenkov_DetectorHit::QweakSimCerenkov_DetectorHit(G4int detector_id)
+QweakSimCerenkov_RadiatorHit::QweakSimCerenkov_RadiatorHit(G4int detector_id)
 {
   DetectorID      = detector_id;
   time = 0.;
@@ -38,10 +38,10 @@ QweakSimCerenkov_DetectorHit::QweakSimCerenkov_DetectorHit(G4int detector_id)
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-QweakSimCerenkov_DetectorHit::~QweakSimCerenkov_DetectorHit() { }
+QweakSimCerenkov_RadiatorHit::~QweakSimCerenkov_RadiatorHit() { }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-QweakSimCerenkov_DetectorHit::QweakSimCerenkov_DetectorHit(const QweakSimCerenkov_DetectorHit &right)
+QweakSimCerenkov_RadiatorHit::QweakSimCerenkov_RadiatorHit(const QweakSimCerenkov_RadiatorHit &right)
 : G4VHit()
 {
   DetectorID       = right.DetectorID;
@@ -75,7 +75,7 @@ QweakSimCerenkov_DetectorHit::QweakSimCerenkov_DetectorHit(const QweakSimCerenko
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-const QweakSimCerenkov_DetectorHit& QweakSimCerenkov_DetectorHit::operator=(const QweakSimCerenkov_DetectorHit &right)
+const QweakSimCerenkov_RadiatorHit& QweakSimCerenkov_RadiatorHit::operator=(const QweakSimCerenkov_RadiatorHit &right)
 {
   DetectorID       = right.DetectorID;
   TrackID          = right.TrackID;
@@ -108,14 +108,14 @@ const QweakSimCerenkov_DetectorHit& QweakSimCerenkov_DetectorHit::operator=(cons
   return *this;
 }
 
-int QweakSimCerenkov_DetectorHit::operator==(const QweakSimCerenkov_DetectorHit & ) const
+int QweakSimCerenkov_RadiatorHit::operator==(const QweakSimCerenkov_RadiatorHit & ) const
 {
   //return (this==&right) ? 1 : 0;
   return 0;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void QweakSimCerenkov_DetectorHit::Draw()
+void QweakSimCerenkov_RadiatorHit::Draw()
 {
   G4VVisManager* pVVisManager = G4VVisManager::GetConcreteInstance();
   if(pVVisManager)
@@ -144,9 +144,9 @@ void QweakSimCerenkov_DetectorHit::Draw()
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void QweakSimCerenkov_DetectorHit::Print()
+void QweakSimCerenkov_RadiatorHit::Print()
 {
-  G4cout << " CerenkovDetector[" << DetectorID << "] : time " << time/ns
+  G4cout << " CerenkovRadiator[" << DetectorID << "] : time " << time/ns
          << " (nsec) --- local (x,y,z) [cm] " 
 	 << localPos.x()/cm << ", " 
 	 << localPos.y()/cm << ", " 
@@ -157,5 +157,3 @@ void QweakSimCerenkov_DetectorHit::Print()
 	 << worldPos.z()/cm << ", "
 	 << G4endl;
 }
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

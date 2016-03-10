@@ -1,18 +1,18 @@
-#include "QweakSimUserCerenkov_DetectorEvent.hh"
+#include "QweakSimUserCerenkov_RadiatorEvent.hh"
 
-ClassImp(QweakSimUserCerenkov_DetectorEvent)
+ClassImp(QweakSimUserCerenkov_RadiatorEvent)
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-QweakSimUserCerenkov_DetectorEvent::QweakSimUserCerenkov_DetectorEvent()
+QweakSimUserCerenkov_RadiatorEvent::QweakSimUserCerenkov_RadiatorEvent()
 {
   Initialize();
 } 
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-QweakSimUserCerenkov_DetectorEvent::~QweakSimUserCerenkov_DetectorEvent() { }
+QweakSimUserCerenkov_RadiatorEvent::~QweakSimUserCerenkov_RadiatorEvent() { }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-void QweakSimUserCerenkov_DetectorEvent::Initialize()
+void QweakSimUserCerenkov_RadiatorEvent::Initialize()
 {
     DetectorID.clear();
     TrackID                        = 0;
@@ -20,26 +20,6 @@ void QweakSimUserCerenkov_DetectorEvent::Initialize()
     NbOfHits                       = 0;
     GlobalTimeOfHit.clear();
     EdgeEventFlag.clear();
-
-    SecPartLocalOriginX.clear();
-    SecPartLocalOriginY.clear();
-    SecPartLocalOriginZ.clear();
-
-    SecPartLocalMomentumX.clear();
-    SecPartLocalMomentumY.clear();
-    SecPartLocalMomentumZ.clear();
-
-    SecPartLocalEnergy.clear();
-    SecPartLocalType.clear();
-
-
-    OpticalPhotonCount = 0;
-    CerenkovPhotonEnergy.clear();
-
-    SecondaryParticleCount = 0;
-    SecondaryElectronCount = 0;
-    SecondaryPhotonCount   = 0;  
-    SecondaryPositronCount = 0;
   
     HitLocalPositionX.clear();
     HitLocalPositionY.clear();
@@ -100,28 +80,3 @@ void QweakSimUserCerenkov_DetectorEvent::Initialize()
     KineticEnergy.clear();
 
 }	
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-
-void QweakSimUserCerenkov_DetectorEvent::AddSecondaryParticleEvent(Float_t XO, Float_t YO, Float_t ZO,
-								   Float_t XM, Float_t YM, Float_t ZM,
-								   Float_t energy, Int_t type)
-{
-  SecPartLocalOriginX.push_back(XO);
-  SecPartLocalOriginY.push_back(YO);
-  SecPartLocalOriginZ.push_back(ZO);
-  
-  SecPartLocalMomentumX.push_back(XM);
-  SecPartLocalMomentumY.push_back(YM);
-  SecPartLocalMomentumZ.push_back(ZM);
-  
-  SecPartLocalEnergy.push_back(energy);
-  SecPartLocalType.push_back(type);
- 
-  if (type == 11)  SecondaryElectronCount++;
-  if (type == 22)  SecondaryPhotonCount++;
-  if (type == -11) SecondaryPositronCount++;
-  SecondaryParticleCount++;  
-}
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
-

@@ -68,6 +68,7 @@ QweakSimCerenkovDetector::QweakSimCerenkovDetector(QweakSimUserInformation *user
 
     // pointer to the sensitive detector
     CerenkovDetectorSD      = NULL;
+    CerenkovRadiatorSD      = NULL;
     CerenkovDetector_PMTSD  = NULL;
 
     // clear vector containing temp solids for boolean soild union
@@ -2148,7 +2149,11 @@ void QweakSimCerenkovDetector::ConstructComponent(G4VPhysicalVolume* MotherVolum
     SDman->AddNewDetector(CerenkovDetectorSD);
     ActiveArea_Logical->SetSensitiveDetector(CerenkovDetectorSD);
 
-    CerenkovDetector_PMTSD = new QweakSimCerenkovDetector_PMTSD("/CerenkovPMTSD",myUserInfo);
+    CerenkovRadiatorSD = new QweakSimCerenkov_RadiatorSD("/CerenkovRadiatorSD");
+    SDman->AddNewDetector(CerenkovRadiatorSD);
+    Radiator_Logical->SetSensitiveDetector(CerenkovRadiatorSD);
+
+    CerenkovDetector_PMTSD = new QweakSimCerenkov_PMTSD("/CerenkovPMTSD",myUserInfo);
     SDman->AddNewDetector(CerenkovDetector_PMTSD);
     Cathode_Logical->SetSensitiveDetector(CerenkovDetector_PMTSD);
 
