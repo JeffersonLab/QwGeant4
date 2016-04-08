@@ -19,7 +19,6 @@
 // user includes
 #include "QweakSimUserCerenkov_DetectorEvent.hh"
 #include "QweakSimUserCerenkov_RadiatorEvent.hh"
-#include "QweakSimUserCerenkov_OctantEvent.hh"
 #include "QweakSimUserCerenkov_PMTEvent.hh"
 
 class QweakSimUserCerenkov_MainEvent: public TObject
