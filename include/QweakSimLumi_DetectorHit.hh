@@ -47,6 +47,10 @@ class QweakSimLumi_DetectorHit : public G4VHit {
         inline void   StoreTrackID(G4double tid)       { trackID = tid; }
         inline G4double GetTrackID() const        {return trackID;}
 
+        //----------------- Octant 
+        inline void  StoreDetectorID(G4int detector_ID)  { detectorID = detector_ID; }
+        inline G4int   GetDetectorID() const { return detectorID; }
+
         //----------------- PrarticleName & ParticleType
 
         inline void   StoreParticleName(G4String pn)   {particleName = pn;}

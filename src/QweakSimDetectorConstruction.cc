@@ -123,7 +123,8 @@ QweakSimDetectorConstruction::QweakSimDetectorConstruction(QweakSimUserInformati
   
   pPMTOnly		 = NULL;
 
-  pLumiDetector     = NULL;
+  pUSLumiDetector   = NULL;
+  pDSLumiDetector   = NULL;
 
   // pGEM               = NULL;
   pHDC               = NULL;
@@ -189,7 +190,8 @@ QweakSimDetectorConstruction::~QweakSimDetectorConstruction()
   
   if (pPMTOnly)		    delete pPMTOnly;
 
-  if (pLumiDetector)    delete pLumiDetector;
+  if (pUSLumiDetector)    delete pUSLumiDetector;
+  if (pDSLumiDetector)    delete pDSLumiDetector;
 
   if (pTarget)              delete pTarget;
   if (pBeamLine)            delete pBeamLine;
@@ -228,7 +230,8 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   
   pPMTOnly 	       = new QweakSimPMTOnly(myUserInfo);
 
-  pLumiDetector        = new QweakSimLumiDetector();
+  pUSLumiDetector      = new QweakSimLumiDetector("USLumi");
+  pDSLumiDetector      = new QweakSimLumiDetector("DSLumi");
 
   pMainMagnet          = new QweakSimMainMagnet(); // QTOR Geometry (decoupled from field)
 
@@ -605,11 +608,20 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   // create/place Lumis into MotherVolume
   //=========================================
   //
-  if (pLumiDetector) {
-    pLumiDetector->ConstructComponent(experimentalHall_Physical);
+  if (pUSLumiDetector) {
+    pUSLumiDetector->ConstructComponent(experimentalHall_Physical,
+                                      7.0*cm,25.0*cm,2.0*cm,
+                                      25.0*cm,0.0*cm,-387.5*cm);
     
-    pGeometry->AddModule(pLumiDetector->getUSLumiPhysicalVolume());
-    //pGeometry->AddModule(pLumiDetector->getDSLumiPhysicalVolume());
+    pGeometry->AddModule(pUSLumiDetector->getLumiPhysicalVolume());
+  }
+	
+  if (pDSLumiDetector) {
+    pDSLumiDetector->ConstructComponent(experimentalHall_Physical,
+                                      7.0*cm,25.0*cm,2.0*cm,
+                                      -25.0*cm,0.0*cm,-387.5*cm);
+    
+    pGeometry->AddModule(pDSLumiDetector->getLumiPhysicalVolume());
   }
 	
   //===============================================

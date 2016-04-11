@@ -20,71 +20,57 @@ class QweakSimLumiDetector {
     private:
         QweakSimLumiMessenger* LumiMessenger;
         QweakSimMaterial* pMaterial;
-        G4VisAttributes*   USLumi_VisAtt;
+        G4VisAttributes*   Lumi_VisAtt;
 
         // Lumi positions and rotations
-        G4RotationMatrix* USLumi_Rot;
-        G4RotationMatrix* DSLumi_Rot;
-        G4ThreeVector USLumi_XYZ;
-        G4ThreeVector DSLumi_XYZ;
+        G4RotationMatrix* Lumi_Rot;
+        G4ThreeVector Lumi_XYZ;
 
-        G4double USLumi_Position_X;
-        G4double USLumi_Position_Y;
-        G4double USLumi_Position_Z;
-        G4double DSLumi_Position_X;
-        G4double DSLumi_Position_Y;
-        G4double DSLumi_Position_Z;
+        G4double Lumi_Position_X;
+        G4double Lumi_Position_Y;
+        G4double Lumi_Position_Z;
+
+        // Lumi tag
+        G4String Lumi_Tag;
 
         // Define Upsteam and Downstream lumis
-        G4VSolid*          USLumi_Solid;
-        G4LogicalVolume*   USLumi_Logical;
-        G4VPhysicalVolume* USLumi_Physical;
-        G4VSolid*          DSLumi_Solid;
-        G4LogicalVolume*   DSLumi_Logical;
-        G4VPhysicalVolume* DSLumi_Physical;
+        G4VSolid*          Lumi_Solid;
+        G4LogicalVolume*   Lumi_Logical;
+        G4VPhysicalVolume* Lumi_Physical;
 
-        /* USLumi geometries */
-        G4double USLumi_Length_X;
-        G4double USLumi_Length_Y;
-        G4double USLumi_Length_Z;
-
-        // DSLumi geometries
-        G4double DSLumi_Length_X;
-        G4double DSLumi_Length_Y;
-        G4double DSLumi_Length_Z;
+        /* Lumi geometries */
+        G4double Lumi_Length_X;
+        G4double Lumi_Length_Y;
+        G4double Lumi_Length_Z;
 
         // Quartz bar for lumis
         G4Material* QuartzBar;  
 
         // Sensitive detectors
-        G4VSensitiveDetector* USLumiSD;
-        G4VSensitiveDetector* DSLumiSD;
+        G4VSensitiveDetector* LumiSD;
 
     public:
         // Constructor and destructor
-        QweakSimLumiDetector();
+        QweakSimLumiDetector(G4String);
         virtual ~QweakSimLumiDetector();
 
         // fuctions for the messanger class
-        void SetUSLumi_PositionInX(G4double);
-        void SetUSLumi_PositionInY(G4double);
-        void SetUSLumi_PositionInZ(G4double);
+        void SetLumi_PositionInX(G4double);
+        void SetLumi_PositionInY(G4double);
+        void SetLumi_PositionInZ(G4double);
 
-        void SetUSLumi_Material(G4String);
+        void SetLumi_Material(G4String);
 
-        void SetUSLumi_Enabled();
-        void SetUSLumi_Disabled();
+        void SetLumi_Enabled();
+        void SetLumi_Disabled();
 
-        void ConstructComponent(G4VPhysicalVolume*);
+        void ConstructComponent(G4VPhysicalVolume*, G4double, G4double,
+                                G4double, G4double, G4double, G4double);
 
         // For the GDML crap
-        G4VPhysicalVolume* getUSLumiPhysicalVolume() {
-            return USLumi_Physical;
+        G4VPhysicalVolume* getLumiPhysicalVolume() {
+            return Lumi_Physical;
         }
-        G4VPhysicalVolume* getDSLumiPhysicalVolume() {
-            return DSLumi_Physical;
-        }
-
 };
 
 #endif

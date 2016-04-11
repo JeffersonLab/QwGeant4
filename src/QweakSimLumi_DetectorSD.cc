@@ -4,7 +4,7 @@
 #include "QweakSimSensitiveDetectorDefinition.hh"
 
 QweakSimLumi_DetectorSD::QweakSimLumi_DetectorSD(G4String name):G4VSensitiveDetector(name) {
-    collectionName.insert("LumiCollection");
+    collectionName.insert(name);
     Lumi_CollectionID = -1;
 }
 

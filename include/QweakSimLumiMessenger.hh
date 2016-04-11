@@ -15,7 +15,7 @@ class QweakSimLumiDetector;
 
 class QweakSimLumiMessenger: public G4UImessenger {
     public:
-        QweakSimLumiMessenger(QweakSimLumiDetector*);
+        QweakSimLumiMessenger(QweakSimLumiDetector*, G4String);
         ~QweakSimLumiMessenger();
         void SetNewValue(G4UIcommand*, G4String);
 
@@ -23,11 +23,11 @@ class QweakSimLumiMessenger: public G4UImessenger {
         QweakSimLumiDetector* myLumi;
         G4UIdirectory* LumiDir;
 
-        G4UIcmdWithADoubleAndUnit* USLumi_SetPositionInX_Cmd;
-        G4UIcmdWithADoubleAndUnit* USLumi_SetPositionInY_Cmd;
-        G4UIcmdWithADoubleAndUnit* USLumi_SetPositionInZ_Cmd;
+        G4UIcmdWithADoubleAndUnit* Lumi_SetPositionInX_Cmd;
+        G4UIcmdWithADoubleAndUnit* Lumi_SetPositionInY_Cmd;
+        G4UIcmdWithADoubleAndUnit* Lumi_SetPositionInZ_Cmd;
 
-        G4UIcmdWithoutParameter* USLumi_SetEnabled_Cmd;
-        G4UIcmdWithoutParameter* USLumi_SetDisabled_Cmd;
+        G4UIcmdWithoutParameter* Lumi_SetEnabled_Cmd;
+        G4UIcmdWithoutParameter* Lumi_SetDisabled_Cmd;
 };
 #endif

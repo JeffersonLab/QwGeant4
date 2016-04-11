@@ -130,7 +130,8 @@ private:
 
   QweakSimPMTOnly* 		pPMTOnly;
 
-  QweakSimLumiDetector*     pLumiDetector;
+  QweakSimLumiDetector*     pUSLumiDetector;
+  QweakSimLumiDetector*     pDSLumiDetector;
 
   QweakSimMainMagnet*        pMainMagnet;
 

@@ -11,8 +11,8 @@
 // G4Allocator... what does this do again?
 G4Allocator<QweakSimLumi_DetectorHit> QweakSimLumi_DetectorHitAllocator;
 
-QweakSimLumi_DetectorHit::QweakSimLumi_DetectorHit() {
-    detectorID                    = -1;
+QweakSimLumi_DetectorHit::QweakSimLumi_DetectorHit(G4int detector_id) {
+    detectorID                    = detector_id;
     primaryEventNumber            = -1;
     trackID                       = -1.;
 
@@ -46,8 +46,8 @@ QweakSimLumi_DetectorHit::QweakSimLumi_DetectorHit() {
     pLogV                         = 0;
 }
 
-QweakSimLumi_DetectorHit::QweakSimLumi_DetectorHit(G4int detector_id) {
-    detectorID = detector_id;
+QweakSimLumi_DetectorHit::QweakSimLumi_DetectorHit() {
+    detectorID = -1;
     time       = 0.;
     pLogV      = 0;
 }

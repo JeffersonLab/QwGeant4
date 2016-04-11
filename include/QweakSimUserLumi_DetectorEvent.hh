@@ -26,7 +26,7 @@ private:
     //TTree   *DataTree;
     //TBranch *secondaryElectronBranch;
 
-    //std::vector<Float_t> DetectorID;
+    std::vector<Int_t> DetectorID;
 	
     Int_t                PrimaryEventNumber;
 	
@@ -99,6 +99,10 @@ public:
  
     //void SetTree(TTree *data);
     void Initialize();
+	
+    //----------------- DetectorID
+    void     StoreDetectorID(Int_t did)  { DetectorID.push_back(did); }
+    std::vector<Int_t>      GetDetectorID() const {return DetectorID;}
 	
     //----------------- PrimaryEventNumber
 	

@@ -30,7 +30,7 @@ QweakSimUserLumi_DetectorEvent::~QweakSimUserLumi_DetectorEvent()
 
 void QweakSimUserLumi_DetectorEvent::Initialize()
 {
-    //DetectorID                   = 0.0;
+    DetectorID.clear();
 	
     PrimaryEventNumber             = 0;
 	
