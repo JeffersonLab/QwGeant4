@@ -3,8 +3,17 @@
 #include "QweakSimTrackInformation.hh"
 #include "QweakSimSensitiveDetectorDefinition.hh"
 
-QweakSimLumi_DetectorSD::QweakSimLumi_DetectorSD(G4String name):G4VSensitiveDetector(name) {
-    collectionName.insert(name);
+//QweakSimCerenkov_DetectorSD::QweakSimCerenkov_DetectorSD(G4String name)
+//: G4VSensitiveDetector(name),
+//  CerenkovDetectorHitsCollection(0),
+//  CerenkovDetectorCollectionID(-1)
+//{
+//  collectionName.insert("CerenkovDetectorCollection"); 
+//}
+QweakSimLumi_DetectorSD::QweakSimLumi_DetectorSD(G4String name):G4VSensitiveDetector(name)
+//            , LumiDetectorHitsCollection(0), LumiDetectorCollectionID(-1)
+{
+    collectionName.insert("LumiDetectorCollection");
     Lumi_CollectionID = -1;
 }
 
