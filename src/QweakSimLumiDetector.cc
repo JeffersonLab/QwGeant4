@@ -93,7 +93,7 @@ void QweakSimLumiDetector::ConstructComponent(G4VPhysicalVolume* MotherVolume,
     // Define sensitive detector
     G4SDManager* SDman = G4SDManager::GetSDMpointer();
 
-    LumiSD = new QweakSimLumi_DetectorSD(G4String("/" + Lumi_Tag + "SD"));
+    LumiSD = new QweakSimLumi_DetectorSD(G4String("/" + Lumi_Tag + "SD"), Lumi_Tag);
     SDman->AddNewDetector(LumiSD);
     Lumi_Logical->SetSensitiveDetector(LumiSD);
 

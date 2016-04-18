@@ -6,7 +6,7 @@
 
 class QweakSimLumi_DetectorSD : public G4VSensitiveDetector {
     public:
-        QweakSimLumi_DetectorSD(G4String name);
+        QweakSimLumi_DetectorSD(G4String name, G4String tag);
         ~QweakSimLumi_DetectorSD();
 
         void Initialize(G4HCofThisEvent* HCE);

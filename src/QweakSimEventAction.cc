@@ -78,7 +78,7 @@ QweakSimEventAction::QweakSimEventAction(QweakSimAnalysis* AN, QweakSimUserInfor
     PMTOnlyDetector_CollID	       = -1;
     PMTOnlyDetectorPMT_CollID	       = -1;
     USLumiDetector_CollID              = -1;
-    USLumiDetector_CollID              = -1;
+    DSLumiDetector_CollID              = -1;
     TungstenPlugDetector_CollID        = -1;
     CerenkovDetector_CollID            = -1;
     CerenkovRadiator_CollID            = -1;
@@ -211,12 +211,12 @@ void QweakSimEventAction::BeginOfEventAction(const G4Event* /*evt*/)
 
     // check for existing USLumiDetector Collection ID (if it's -1 it will be assigned)
     if (USLumiDetector_CollID==-1) {
-        USLumiDetector_CollID = SDman->GetCollectionID("USLumiSD/LumiDetectorCollection");
+        USLumiDetector_CollID = SDman->GetCollectionID("USLumiSD/USLumiDetectorCollection");
     }
 
     // check for existing DSLumiDetector Collection ID (if it's -1 it will be assigned)
     if (DSLumiDetector_CollID==-1) {
-        DSLumiDetector_CollID = SDman->GetCollectionID("DSLumiSD/LumiDetectorCollection");
+        DSLumiDetector_CollID = SDman->GetCollectionID("DSLumiSD/DSLumiDetectorCollection");
     }
 
     // check for existing TungstenPlug Collection ID (if it's -1 it will be assigned)

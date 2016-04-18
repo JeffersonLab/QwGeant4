@@ -10,10 +10,10 @@
 //{
 //  collectionName.insert("CerenkovDetectorCollection"); 
 //}
-QweakSimLumi_DetectorSD::QweakSimLumi_DetectorSD(G4String name):G4VSensitiveDetector(name)
+QweakSimLumi_DetectorSD::QweakSimLumi_DetectorSD(G4String name, G4String tag):G4VSensitiveDetector(name)
 //            , LumiDetectorHitsCollection(0), LumiDetectorCollectionID(-1)
 {
-    collectionName.insert("LumiDetectorCollection");
+    collectionName.insert(G4String(tag + "DetectorCollection"));
     Lumi_CollectionID = -1;
 }
 
