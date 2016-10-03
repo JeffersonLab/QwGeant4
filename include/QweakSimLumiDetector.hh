@@ -23,7 +23,7 @@ class QweakSimLumiDetector {
         G4VisAttributes*   Lumi_VisAtt;
 
         // Lumi positions and rotations
-        G4RotationMatrix* Lumi_Rot;
+        std::vector< G4RotationMatrix* > Lumi_Rot;
         G4ThreeVector Lumi_XYZ;
 
         G4double Lumi_Position_X;
@@ -36,7 +36,7 @@ class QweakSimLumiDetector {
         // Define Upsteam and Downstream lumis
         G4VSolid*          Lumi_Solid;
         G4LogicalVolume*   Lumi_Logical;
-        G4VPhysicalVolume* Lumi_Physical;
+        std::vector< G4VPhysicalVolume* > Lumi_Physical;
 
         /* Lumi geometries */
         G4double Lumi_Length_X;
@@ -68,7 +68,7 @@ class QweakSimLumiDetector {
                                 G4double, G4double, G4double, G4double);
 
         // For the GDML crap
-        G4VPhysicalVolume* getLumiPhysicalVolume() {
+        std::vector <G4VPhysicalVolume*> getLumiPhysicalVolume() {
             return Lumi_Physical;
         }
 };

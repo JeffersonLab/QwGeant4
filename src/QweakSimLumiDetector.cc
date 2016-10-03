@@ -16,16 +16,18 @@
 
 QweakSimLumiDetector::QweakSimLumiDetector(G4String tag)
 {
+    // Set the tag number in the class, 0 for USLumi, 1 for DSLumi
+    Lumi_Tag      = tag;
 
     // Initialize pointers to objects
     LumiMessenger = NULL;
-    Lumi_Rot      = NULL;
+    Lumi_Rot.resize(4,NULL);
     Lumi_Solid    = NULL;
     Lumi_Logical  = NULL;
-    Lumi_Physical = NULL;
-
-    // Set the tag number in the class, 0 for USLumi, 1 for DSLumi
-    Lumi_Tag      = tag;
+    //if(Lumi_Tag == 0)
+        Lumi_Physical.resize(4,NULL);
+    //else if(Lumi_Tag == 1)
+    //    Lumi_Physical.resize(8,0);
 
     /* Geometries are for the detector in the 1 slot:
      * https://qweak.jlab.org/wiki/images/Qweak-Coordinate-Systems.png
@@ -61,8 +63,9 @@ void QweakSimLumiDetector::ConstructComponent(G4VPhysicalVolume* MotherVolume,
     Lumi_Position_Z = pos_Z;
 
     // Create G4RotationMatrix and set rotation to zero for now
-    Lumi_Rot = new G4RotationMatrix();
-    Lumi_Rot->rotateX(0);
+    for(unsigned int i = 0; i < Lumi_Rot.size(); i++) {                                  
+        Lumi_Rot[i] = new G4RotationMatrix();
+    }
 
     // Create G4ThreeVector for lumi positions
     Lumi_XYZ = G4ThreeVector(Lumi_Position_X, Lumi_Position_Y, Lumi_Position_Z);
@@ -76,19 +79,38 @@ void QweakSimLumiDetector::ConstructComponent(G4VPhysicalVolume* MotherVolume,
 
     // Place the lumi bar into a quartz lv
     Lumi_Logical = new G4LogicalVolume(Lumi_Solid,        // Solid placed in lv
-                                         QuartzBar,       // Material for lv
-                                         "Lumi_Logical",  // Name for object
-                                         0,0,0);          // Set all options to zero for now
+                                       QuartzBar,         // Material for lv
+                                       "Lumi_Logical",    // Name for object
+                                       0,0,0);            // Set all options to zero for now
 
-    // Create G4PVPlacement with lumi position
-    Lumi_Physical = new G4PVPlacement(Lumi_Rot,
-                                        Lumi_XYZ,
-                                        "Lumi_Physical",
-                                        Lumi_Logical,
-                                        MotherVolume,
-                                        false,
-                                        0,
-                                        pSurfChk);
+    Lumi_Rot[0]->rotateZ(90*degree);                                 
+    Lumi_Rot[1]->rotateZ(0*degree);                                 
+    Lumi_Rot[2]->rotateZ(90*degree);                                 
+    Lumi_Rot[3]->rotateZ(0*degree);                                 
+
+    for(unsigned int i = 0; i < Lumi_Physical.size(); i++) {                                  
+        // Create G4PVPlacement with lumi position                          
+        Lumi_Physical[i] = new G4PVPlacement(Lumi_Rot[i],                   
+                Lumi_XYZ.rotateZ(90*degree), 
+                "Lumi_Physical",               
+                Lumi_Logical,                  
+                MotherVolume,                  
+                false,                         
+                i,
+                pSurfChk);                     
+    }                                                                       
+
+    //// Create G4PVPlacement with lumi position
+    //for(unsigned int i = 0; i < Lumi_Physical.size(); i++) {
+    //    Lumi_Physical[i] = new G4PVPlacement(Lumi_Rot,
+    //                                      Lumi_XYZ.rotateZ(-90*degree),
+    //                                      "Lumi_Physical",
+    //                                      Lumi_Logical,
+    //                                      MotherVolume,
+    //                                      false,
+    //                                      0,
+    //                                      pSurfChk);
+    //}
 
     // Define sensitive detector
     G4SDManager* SDman = G4SDManager::GetSDMpointer();
@@ -112,9 +134,11 @@ void QweakSimLumiDetector::SetLumi_PositionInX(G4double xPos) {
 
     G4cout << "=== Calling QweakSimLumi::SetLumi_PositionInX() " << G4endl;
     Lumi_Position_X = xPos;                                                               
-    Lumi_Physical->SetTranslation(G4ThreeVector(Lumi_Position_X,
-                Lumi_Position_Y,
-                Lumi_Position_Z));
+    for(unsigned int i = 0; i < Lumi_Physical.size(); i++) {
+    Lumi_Physical[i]->SetTranslation(G4ThreeVector(Lumi_Position_X,
+                                                   Lumi_Position_Y,
+                                                   Lumi_Position_Z));
+    }
     G4cout << "=== Leaving QweakSimLumi::SetLumi_PositionInX() " << G4endl << G4endl;
 }
 
@@ -123,9 +147,11 @@ void QweakSimLumiDetector::SetLumi_PositionInY(G4double yPos) {
 
     G4cout << "=== Calling QweakSimLumi::SetLumi_PositionInY() " << G4endl;
     Lumi_Position_Y = yPos;                                                               
-    Lumi_Physical->SetTranslation(G4ThreeVector(Lumi_Position_Y,
-                Lumi_Position_Y,
-                Lumi_Position_Z));
+    for(unsigned int i = 0; i < Lumi_Physical.size(); i++) {
+        Lumi_Physical[i]->SetTranslation(G4ThreeVector(Lumi_Position_Y,
+                                                       Lumi_Position_Y,
+                                                       Lumi_Position_Z));
+    }
     G4cout << "=== Leaving QweakSimLumi::SetLumi_PositionInY() " << G4endl << G4endl;
 }
 
@@ -134,9 +160,11 @@ void QweakSimLumiDetector::SetLumi_PositionInZ(G4double zPos) {
 
     G4cout << "=== Calling QweakSimLumi::SetLumi_PositionInZ() " << G4endl;
     Lumi_Position_Z = zPos;                                                               
-    Lumi_Physical->SetTranslation(G4ThreeVector(Lumi_Position_Z,
-                Lumi_Position_Y,
-                Lumi_Position_Z));
+    for(unsigned int i = 0; i < Lumi_Physical.size(); i++) {
+        Lumi_Physical[i]->SetTranslation(G4ThreeVector(Lumi_Position_Z,
+                                                       Lumi_Position_Y,
+                                                       Lumi_Position_Z));
+    }
     G4cout << "=== Leaving QweakSimLumi::SetLumi_PositionInZ() " << G4endl << G4endl;
 }
 
@@ -162,9 +190,11 @@ void QweakSimLumiDetector::SetLumi_Enabled() {
     G4cout << "=== Calling QweakSimLumi::SetLumi_Enabled() " << G4endl;
     Lumi_VisAtt->SetVisibility(true);
     SetLumi_Material(QuartzBar -> GetName());
-    Lumi_Physical->SetTranslation(G4ThreeVector(Lumi_Position_X,
-                                                  Lumi_Position_Y, 
-                                                  Lumi_Position_Z));
+    for(unsigned int i = 0; i < Lumi_Physical.size(); i++) {
+        Lumi_Physical[i]->SetTranslation(G4ThreeVector(Lumi_Position_X,
+                                                       Lumi_Position_Y, 
+                                                       Lumi_Position_Z));
+    }
     G4cout << "=== Leaving QweakSimLumi::SetLumi_Enabled() " << G4endl << G4endl;
 }
 
@@ -178,8 +208,10 @@ void QweakSimLumiDetector::SetLumi_Disabled() {
     G4cout << "=== Calling QweakSimLumi::SetLumi_Disabled() " << G4endl;
     Lumi_VisAtt -> SetVisibility(false);
     SetLumi_Material("Air");
-    Lumi_Physical->SetTranslation(G4ThreeVector(Lumi_Position_X,
-                                                  Lumi_Position_Y, 
-                                                  Lumi_Position_Z + 400*cm));
+    for(unsigned int i = 0; i < Lumi_Physical.size(); i++) {
+        Lumi_Physical[i]->SetTranslation(G4ThreeVector(Lumi_Position_X,
+                                                       Lumi_Position_Y,
+                                                       Lumi_Position_Z + 400*cm));
+    }
     G4cout << "=== Leaving QweakSimLumi::SetLumi_Disabled() " << G4endl << G4endl;
 }

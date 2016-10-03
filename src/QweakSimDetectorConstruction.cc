@@ -613,15 +613,15 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
                                       7.0*cm,25.0*cm,2.0*cm,
                                       25.0*cm,0.0*cm,-387.5*cm);
     
-    pGeometry->AddModule(pUSLumiDetector->getLumiPhysicalVolume());
+    pGeometry->AddModule(pUSLumiDetector->getLumiPhysicalVolume()[2]);
   }
 	
   if (pDSLumiDetector) {
     pDSLumiDetector->ConstructComponent(experimentalHall_Physical,
                                       7.0*cm,25.0*cm,2.0*cm,
-                                      -25.0*cm,0.0*cm,-387.5*cm);
+                                      -25.0*cm,-200.0*cm,-987.5*cm);
     
-    pGeometry->AddModule(pDSLumiDetector->getLumiPhysicalVolume());
+    pGeometry->AddModule(pDSLumiDetector->getLumiPhysicalVolume()[2]);
   }
 	
   //===============================================
