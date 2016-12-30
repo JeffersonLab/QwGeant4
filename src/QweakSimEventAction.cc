@@ -77,7 +77,10 @@ QweakSimEventAction::QweakSimEventAction(QweakSimAnalysis* AN, QweakSimUserInfor
     LeadGlassPMT_CollID                = -1;
     PMTOnlyDetector_CollID	       = -1;
     PMTOnlyDetectorPMT_CollID	       = -1;
-    USLumiDetector_CollID              = -1;
+    USLumi1Detector_CollID              = -1;
+    USLumi3Detector_CollID              = -1;
+    USLumi5Detector_CollID              = -1;
+    USLumi7Detector_CollID              = -1;
     DSLumiDetector_CollID              = -1;
     TungstenPlugDetector_CollID        = -1;
     CerenkovDetector_CollID            = -1;
@@ -111,9 +114,15 @@ QweakSimEventAction::QweakSimEventAction(QweakSimAnalysis* AN, QweakSimUserInfor
 	    fTriggerName[kTriggerPMTOnly] = "pmtonly";
         kMapTriggerMode["wplug"] = kTriggerTungstenPlug;
 	    fTriggerName[kTriggerTungstenPlug] = "wplug";
-        fTriggerName[kTriggerUSLumi] = "uslumi";
+        fTriggerName[kTriggerUSLumi1] = "uslumi1";
+        fTriggerName[kTriggerUSLumi3] = "uslumi3";
+        fTriggerName[kTriggerUSLumi5] = "uslumi5";
+        fTriggerName[kTriggerUSLumi7] = "uslumi7";
         fTriggerName[kTriggerDSLumi] = "dslumi";
-        kMapTriggerMode["uslumi"] = kTriggerUSLumi;  // trigger for the uslumi
+        kMapTriggerMode["uslumi1"] = kTriggerUSLumi1;  // trigger for the uslumi1
+        kMapTriggerMode["uslumi3"] = kTriggerUSLumi3;  // trigger for the uslumi3
+        kMapTriggerMode["uslumi5"] = kTriggerUSLumi5;  // trigger for the uslumi5
+        kMapTriggerMode["uslumi7"] = kTriggerUSLumi7;  // trigger for the uslumi7
         kMapTriggerMode["dslumi"] = kTriggerDSLumi;  // trigger for the dslumi
     }
     if (kMapTriggerMode.size() != kNumTriggers)
@@ -209,9 +218,24 @@ void QweakSimEventAction::BeginOfEventAction(const G4Event* /*evt*/)
         PMTOnlyDetectorPMT_CollID = SDman->GetCollectionID("PMTOnly_PMTSD/PMTHitCollection");
     }
 
-    // check for existing USLumiDetector Collection ID (if it's -1 it will be assigned)
-    if (USLumiDetector_CollID==-1) {
-        USLumiDetector_CollID = SDman->GetCollectionID("USLumiSD/USLumiDetectorCollection");
+    // check for existing USLumi1Detector Collection ID (if it's -1 it will be assigned)
+    if (USLumi1Detector_CollID==-1) {
+        USLumi1Detector_CollID = SDman->GetCollectionID("USLumi1SD/USLumi1DetectorCollection");
+    }
+
+    // check foe existing USLumi3Detector Collection ID (if it's -1 it will be assigned)
+    if (USLumi3Detector_CollID==-1) {
+        USLumi3Detector_CollID = SDman->GetCollectionID("USLumi3SD/USLumi3DetectorCollection");
+    }
+
+    // check foe existing USLumi5Detector Collection ID (if it's -1 it will be assigned)
+    if (USLumi5Detector_CollID==-1) {
+        USLumi5Detector_CollID = SDman->GetCollectionID("USLumi5SD/USLumi5DetectorCollection");
+    }
+
+    // check foe existing USLumi7Detector Collection ID (if it's -1 it will be assigned)
+    if (USLumi7Detector_CollID==-1) {
+        USLumi7Detector_CollID = SDman->GetCollectionID("USLumi7SD/USLumi7DetectorCollection");
     }
 
     // check for existing DSLumiDetector Collection ID (if it's -1 it will be assigned)
@@ -306,7 +330,10 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     //QweakSimLeadGlass_PMTHitsCollection*                LeadGlassPMT_HC                = 0;
     QweakSimPMTOnly_DetectorHitsCollection*             PMTOnlyDetector_HC             = 0;
     QweakSimPMTOnly_PMTHitsCollection*                  PMTOnlyPMT_HC		       = 0;
-    QweakSimLumi_DetectorHitsCollection*                USLumiDetector_HC              = 0;
+    QweakSimLumi_DetectorHitsCollection*                USLumi1Detector_HC             = 0;
+    QweakSimLumi_DetectorHitsCollection*                USLumi3Detector_HC             = 0;
+    QweakSimLumi_DetectorHitsCollection*                USLumi5Detector_HC             = 0;
+    QweakSimLumi_DetectorHitsCollection*                USLumi7Detector_HC             = 0;
     QweakSimLumi_DetectorHitsCollection*                DSLumiDetector_HC              = 0;
     QweakSimTungstenPlug_DetectorHitsCollection*        TungstenPlugDetector_HC     = 0;
     QweakSimCerenkovDetectorHitsCollection*             CerenkovDetector_HC            = 0;
@@ -325,7 +352,10 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     //G4int n_hitLeadGlassPMT = 0;
     G4int n_hitPMTOnly = 0;
     G4int n_hitPMTOnlyPMT = 0;
-    G4int n_hitUSLumi = 0;
+    G4int n_hitUSLumi1 = 0;
+    G4int n_hitUSLumi3 = 0;
+    G4int n_hitUSLumi5 = 0;
+    G4int n_hitUSLumi7 = 0;
     G4int n_hitDSLumi = 0;
     G4int n_hitTungstenPlug = 0;
     G4int n_hitCerenkovDetector = 0;
@@ -404,10 +434,28 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
             n_hitPMTOnlyPMT = PMTOnlyPMT_HC->entries();
 	}
 
-        // get  USLumiDetector Hit Collector pointer
-        if (USLumiDetector_CollID > -1) {
-            USLumiDetector_HC    = (QweakSimLumi_DetectorHitsCollection*)(HCE->GetHC(USLumiDetector_CollID));
-            n_hitUSLumi          = USLumiDetector_HC -> entries();
+        // get  USLumi1Detector Hit Collector pointer
+        if (USLumi1Detector_CollID > -1) {
+            USLumi1Detector_HC    = (QweakSimLumi_DetectorHitsCollection*)(HCE->GetHC(USLumi1Detector_CollID));
+            n_hitUSLumi1          = USLumi1Detector_HC -> entries();
+        }
+  
+        // get  USLumi3Detector Hit Collector pointer
+        if (USLumi3Detector_CollID > -1) {
+            USLumi3Detector_HC    = (QweakSimLumi_DetectorHitsCollection*)(HCE->GetHC(USLumi3Detector_CollID));
+            n_hitUSLumi3          = USLumi3Detector_HC -> entries();
+        }
+  
+        // get  USLumi5Detector Hit Collector pointer
+        if (USLumi5Detector_CollID > -1) {
+            USLumi5Detector_HC    = (QweakSimLumi_DetectorHitsCollection*)(HCE->GetHC(USLumi5Detector_CollID));
+            n_hitUSLumi5          = USLumi5Detector_HC -> entries();
+        }
+  
+        // get  USLumi7Detector Hit Collector pointer
+        if (USLumi7Detector_CollID > -1) {
+            USLumi7Detector_HC    = (QweakSimLumi_DetectorHitsCollection*)(HCE->GetHC(USLumi7Detector_CollID));
+            n_hitUSLumi7          = USLumi7Detector_HC -> entries();
         }
   
         // get  DSLumiDetector Hit Collector pointer
@@ -450,7 +498,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
              << ",\tLeadGlass " << n_hitLeadGlass
              << ",\tPMTOnly " << n_hitPMTOnly
              << ",\tPMTOnlyPMT " << n_hitPMTOnlyPMT
-             << ",\tLumi " << n_hitUSLumi + n_hitDSLumi
+             << ",\tLumi " << n_hitUSLumi1 + n_hitUSLumi3 + n_hitUSLumi5 + n_hitUSLumi7 + n_hitDSLumi
              << ",\tTungstenPlug " << n_hitTungstenPlug
              << ",\tCerenkovRad " << n_hitCerenkovRadiator
              << ",\tCerenkovDet " << n_hitCerenkovDetector
@@ -504,7 +552,10 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
     analysis->fRootEvent->LeadGlass.Detector.Initialize();
     analysis->fRootEvent->PMTOnly.Detector.Initialize();
     analysis->fRootEvent->PMTOnly.PMT.Initialize();
-    analysis->fRootEvent->USLumi.Detector.Initialize();
+    analysis->fRootEvent->USLumi1.Detector.Initialize();
+    analysis->fRootEvent->USLumi3.Detector.Initialize();
+    analysis->fRootEvent->USLumi5.Detector.Initialize();
+    analysis->fRootEvent->USLumi7.Detector.Initialize();
     analysis->fRootEvent->DSLumi.Detector.Initialize();
     analysis->fRootEvent->TungstenPlug.Detector.Initialize();
 
@@ -527,7 +578,10 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 	    || (fTrigger[kTriggerHDC]   && (n_HDChitWirePlane >= 6))         /* HDC Trigger */
             || (fTrigger[kTriggerLeadGlass] && (n_hitLeadGlass >0))         /* a hit in the LeadGlass */
             || (fTrigger[kTriggerPMTOnly] && (n_hitPMTOnly >0))         /* a hit in the PMTOnly */
-            || (fTrigger[kTriggerUSLumi] && (n_hitUSLumi > 0))
+            || (fTrigger[kTriggerUSLumi1] && (n_hitUSLumi1 > 0))
+            || (fTrigger[kTriggerUSLumi3] && (n_hitUSLumi3 > 0))
+            || (fTrigger[kTriggerUSLumi5] && (n_hitUSLumi5 > 0))
+            || (fTrigger[kTriggerUSLumi7] && (n_hitUSLumi7 > 0))
             || (fTrigger[kTriggerDSLumi] && (n_hitDSLumi > 0))
             || (fTrigger[kTriggerTungstenPlug] && (n_hitTungstenPlug>0) )    // Hit on the TungstenPlug
             || (fTrigger[kTriggerCer]   && (n_hitCerenkovDetector > 0) )            /* Triggering on Main Detector */
@@ -694,8 +748,8 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         // Store Number of Hits for: PMTOnly PMT Detector
         analysis->fRootEvent->PMTOnly.PMT.StoreDetectorNbOfHits(n_hitPMTOnlyPMT);
 
-        // Store Number of Hits for: USLumi Detector
-        analysis->fRootEvent->USLumi.Detector.StoreDetectorNbOfHits(n_hitUSLumi);
+        // Store Number of Hits for: USLumi1 Detector
+        analysis->fRootEvent->USLumi1.Detector.StoreDetectorNbOfHits(n_hitUSLumi1);
 
         // Store Number of Hits for: DSLumi Detector
         analysis->fRootEvent->DSLumi.Detector.StoreDetectorNbOfHits(n_hitDSLumi);
@@ -2510,15 +2564,15 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
         } // end	if (n_hitPMTOnlyPMT >0)
 
         //===========================================================
-        // Store USLumi hits into /USLumi
+        // Store USLumi1 hits into /USLumi1
         //===========================================================
 		
-        if (n_hitUSLumi > 0) {
+        if (n_hitUSLumi1 > 0) {
 			
             //--- loop over hits
-            for (int i1=0;i1<n_hitUSLumi;i1++) {
+            for (int i1=0;i1<n_hitUSLumi1;i1++) {
 				
-                QweakSimLumi_DetectorHit* aHit = (*USLumiDetector_HC)[i1];
+                QweakSimLumi_DetectorHit* aHit = (*USLumi1Detector_HC)[i1];
 
                 G4int octantID = (Int_t) aHit->GetDetectorID() + 1;
 
@@ -2534,7 +2588,7 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
 				
                 //--- GetHasBeenHit();
                 //GetEdgeEventFlag();
-                //n_hitUSLumi <---> GetNbOfHits();
+                //n_hitUSLumi1 <---> GetNbOfHits();
 				
                 //--- get world position of hit
                 G4ThreeVector globalPosition  = aHit->GetWorldPosition();
@@ -2605,74 +2659,578 @@ void QweakSimEventAction::EndOfEventAction(const G4Event* evt) {
                 //--------------------------------------------------------------------------------------------
 
                 //--- store Primary Event Number
-                analysis->fRootEvent->USLumi.Detector.StoreDetectorID(octantID);
-                analysis->fRootEvent->USLumi.Detector.StorePrimaryEventNumber((Int_t) PrimaryEventNumber);
+                analysis->fRootEvent->USLumi1.Detector.StoreDetectorID(octantID);
+                analysis->fRootEvent->USLumi1.Detector.StorePrimaryEventNumber((Int_t) PrimaryEventNumber);
 				
                 //--- store track ID
-                analysis->fRootEvent->USLumi.Detector.StoreTrackID(rTrackID);
+                analysis->fRootEvent->USLumi1.Detector.StoreTrackID(rTrackID);
 				
                 //--- store particle name & type
-                analysis->fRootEvent->USLumi.Detector.StoreParticleName(rParticleName);
-                analysis->fRootEvent->USLumi.Detector.StoreParticleType(rParticleType);
+                analysis->fRootEvent->USLumi1.Detector.StoreParticleName(rParticleName);
+                analysis->fRootEvent->USLumi1.Detector.StoreParticleType(rParticleType);
 				
                 //--- store global time of hit
-                analysis->fRootEvent->USLumi.Detector.StoreGlobalTimeOfHit(rGlobalTime);
+                analysis->fRootEvent->USLumi1.Detector.StoreGlobalTimeOfHit(rGlobalTime);
 				
                 //--- mark USLumi detector as been hit
-                analysis->fRootEvent->USLumi.Detector.StoreDetectorHasBeenHit(5);
+                analysis->fRootEvent->USLumi1.Detector.StoreDetectorHasBeenHit(5);
                 //--- edge event flag
                 //--- Store Nb of hits  --- Done in previous code
-                //analysis->fRootEvent->USLumi.Detector.StoreDetectorNbOfHits(n_hitUSLumi);
+                //analysis->fRootEvent->USLumi1.Detector.StoreDetectorNbOfHits(n_hitUSLumi);
 				
                 //--- store global position
-                analysis->fRootEvent->USLumi.Detector.StoreDetectorGlobalPositionX(rGlobalPositionX);
-                analysis->fRootEvent->USLumi.Detector.StoreDetectorGlobalPositionY(rGlobalPositionY);
-                analysis->fRootEvent->USLumi.Detector.StoreDetectorGlobalPositionZ(rGlobalPositionZ);
+                analysis->fRootEvent->USLumi1.Detector.StoreDetectorGlobalPositionX(rGlobalPositionX);
+                analysis->fRootEvent->USLumi1.Detector.StoreDetectorGlobalPositionY(rGlobalPositionY);
+                analysis->fRootEvent->USLumi1.Detector.StoreDetectorGlobalPositionZ(rGlobalPositionZ);
 				
                 //--- store local position
-                analysis->fRootEvent->USLumi.Detector.StoreDetectorLocalPositionX(rLocalPositionX);
-                analysis->fRootEvent->USLumi.Detector.StoreDetectorLocalPositionY(rLocalPositionY);
-                analysis->fRootEvent->USLumi.Detector.StoreDetectorLocalPositionZ(rLocalPositionZ);
+                analysis->fRootEvent->USLumi1.Detector.StoreDetectorLocalPositionX(rLocalPositionX);
+                analysis->fRootEvent->USLumi1.Detector.StoreDetectorLocalPositionY(rLocalPositionY);
+                analysis->fRootEvent->USLumi1.Detector.StoreDetectorLocalPositionZ(rLocalPositionZ);
 				
-                //analysis->fRootEvent->USLumi.Detector.StoreDetectorLocalExitPositionX(rLocalExitPositionX);
-                //analysis->fRootEvent->USLumi.Detector.StoreDetectorLocalExitPositionY(rLocalExitPositionY);
-                //analysis->fRootEvent->USLumi.Detector.StoreDetectorLocalExitPositionZ(rLocalExitPositionZ);
+                //analysis->fRootEvent->USLumi1.Detector.StoreDetectorLocalExitPositionX(rLocalExitPositionX);
+                //analysis->fRootEvent->USLumi1.Detector.StoreDetectorLocalExitPositionY(rLocalExitPositionY);
+                //analysis->fRootEvent->USLumi1.Detector.StoreDetectorLocalExitPositionZ(rLocalExitPositionZ);
 				
                 //--- store origin vertex position
-                analysis->fRootEvent->USLumi.Detector.StoreOriginVertexPositionX(rOriginVertexPositionX);
-                analysis->fRootEvent->USLumi.Detector.StoreOriginVertexPositionY(rOriginVertexPositionY);
-                analysis->fRootEvent->USLumi.Detector.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
+                analysis->fRootEvent->USLumi1.Detector.StoreOriginVertexPositionX(rOriginVertexPositionX);
+                analysis->fRootEvent->USLumi1.Detector.StoreOriginVertexPositionY(rOriginVertexPositionY);
+                analysis->fRootEvent->USLumi1.Detector.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
 				
                 //--- store local vertex momentum direction
-                analysis->fRootEvent->USLumi.Detector.StoreLocalVertexMomentumDirectionX(rLocalVertexMomentumDirectionX);
-                analysis->fRootEvent->USLumi.Detector.StoreLocalVertexMomentumDirectionY(rLocalVertexMomentumDirectionY);
-                analysis->fRootEvent->USLumi.Detector.StoreLocalVertexMomentumDirectionZ(rLocalVertexMomentumDirectionZ);
+                analysis->fRootEvent->USLumi1.Detector.StoreLocalVertexMomentumDirectionX(rLocalVertexMomentumDirectionX);
+                analysis->fRootEvent->USLumi1.Detector.StoreLocalVertexMomentumDirectionY(rLocalVertexMomentumDirectionY);
+                analysis->fRootEvent->USLumi1.Detector.StoreLocalVertexMomentumDirectionZ(rLocalVertexMomentumDirectionZ);
 				
                 //--- store origin vertex momentum direction
-                analysis->fRootEvent->USLumi.Detector.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);
-                analysis->fRootEvent->USLumi.Detector.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);
-                analysis->fRootEvent->USLumi.Detector.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
+                analysis->fRootEvent->USLumi1.Detector.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);
+                analysis->fRootEvent->USLumi1.Detector.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);
+                analysis->fRootEvent->USLumi1.Detector.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
 				
                 //--- store origin theta & phi angle
-                analysis->fRootEvent->USLumi.Detector.StoreOriginVertexThetaAngle(rOriginVertexThetaAngle);
-                analysis->fRootEvent->USLumi.Detector.StoreOriginVertexPhiAngle(rOriginVertexPhiAngle);
+                analysis->fRootEvent->USLumi1.Detector.StoreOriginVertexThetaAngle(rOriginVertexThetaAngle);
+                analysis->fRootEvent->USLumi1.Detector.StoreOriginVertexPhiAngle(rOriginVertexPhiAngle);
 				
                 //--- store origin kinetic energy & total energy
-                analysis->fRootEvent->USLumi.Detector.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
-                analysis->fRootEvent->USLumi.Detector.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
+                analysis->fRootEvent->USLumi1.Detector.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
+                analysis->fRootEvent->USLumi1.Detector.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
 				
                 //--- store local vertex kinetic & total energy
-                analysis->fRootEvent->USLumi.Detector.StoreDetectorLocalVertexKineticEnergy(rKineticEnergy);
-                analysis->fRootEvent->USLumi.Detector.StoreDetectorLocalVertexTotalEnergy(rTotalEnergy);
+                analysis->fRootEvent->USLumi1.Detector.StoreDetectorLocalVertexKineticEnergy(rKineticEnergy);
+                analysis->fRootEvent->USLumi1.Detector.StoreDetectorLocalVertexTotalEnergy(rTotalEnergy);
 
                 //--- store global track theta & phi angle
-                analysis->fRootEvent->USLumi.Detector.StoreGlobalThetaAngle(rGlobalThetaAngle);
-                analysis->fRootEvent->USLumi.Detector.StoreGlobalPhiAngle(rGlobalPhiAngle);
+                analysis->fRootEvent->USLumi1.Detector.StoreGlobalThetaAngle(rGlobalThetaAngle);
+                analysis->fRootEvent->USLumi1.Detector.StoreGlobalPhiAngle(rGlobalPhiAngle);
 				
                 //--- store USLumi deposited energy
-                analysis->fRootEvent->USLumi.Detector.StoreDepositedEnergy(rDepositedEnergy);
+                analysis->fRootEvent->USLumi1.Detector.StoreDepositedEnergy(rDepositedEnergy);
 		// -- TotalDepositedEnergy is evaluated in UserUSLumi class
-		        analysis->fRootEvent->USLumi.Detector.StoreRate(CalculateRate( myUserInfo->GetCrossSection(), 1));
+		        analysis->fRootEvent->USLumi1.Detector.StoreRate(CalculateRate( myUserInfo->GetCrossSection(), 1));
+		        //G4cout <<CalculateRate( myUserInfo->GetCrossSection(), 1)<<G4endl;
+            } // end  for(int i1=0;i1<n_hitLumi;i1++)	   
+        } // end    if (n_hitLumi >0)
+        
+        //===========================================================
+        // Store USLumi3 hits into /USLumi3
+        //===========================================================
+		
+        if (n_hitUSLumi3 > 0) {
+			
+            //--- loop over hits
+            for (int i1=0;i1<n_hitUSLumi3;i1++) {
+				
+                QweakSimLumi_DetectorHit* aHit = (*USLumi3Detector_HC)[i1];
+
+                G4int octantID = (Int_t) aHit->GetDetectorID() + 1;
+
+                //--- track ID
+                Float_t rTrackID = (Float_t) aHit->GetTrackID();
+				
+                //--- particle name & type
+                TString rParticleName = TString(aHit->GetParticleName());
+                Int_t rParticleType = (Int_t) aHit->GetParticleType();
+				
+                //--- get global time of hit
+                Float_t rGlobalTime = (Float_t) aHit->GetGlobalTime() / ns;
+				
+                //--- GetHasBeenHit();
+                //GetEdgeEventFlag();
+                //n_hitUSLumi3 <---> GetNbOfHits();
+				
+                //--- get world position of hit
+                G4ThreeVector globalPosition  = aHit->GetWorldPosition();
+                Float_t rGlobalPositionX = (Float_t) globalPosition.x() / cm;
+                Float_t rGlobalPositionY = (Float_t) globalPosition.y() / cm;
+                Float_t rGlobalPositionZ = (Float_t) globalPosition.z() / cm;
+				
+                //--- get local position of hit
+                G4ThreeVector localPosition  = aHit->GetLocalPosition();
+                Float_t rLocalPositionX = (Float_t) localPosition.x() / cm;
+                Float_t rLocalPositionY = (Float_t) localPosition.y() / cm;
+                Float_t rLocalPositionZ = (Float_t) localPosition.z() / cm;
+				
+                //--- get local exit position of hit
+                //G4ThreeVector localExitPosition = aHit->GetLocalExitPosition();
+                //Float_t rLocalExitPositionX = (Float_t) localExitPosition.x() / cm;
+                //Float_t rLocalExitPositionY = (Float_t) localExitPosition.y() / cm;
+                //Float_t rLocalExitPositionZ = (Float_t) localExitPosition.z() / cm;
+				
+                //--- get origin vertex position
+                G4ThreeVector originVertexPosition  = aHit->GetOriginVertexPosition();
+                Float_t rOriginVertexPositionX = (Float_t) originVertexPosition.x() / cm;
+                Float_t rOriginVertexPositionY = (Float_t) originVertexPosition.y() / cm;
+                Float_t rOriginVertexPositionZ = (Float_t) originVertexPosition.z() / cm;
+				
+                //--- get world momentum of hit
+                G4ThreeVector globalMomentum  = aHit->GetWorldMomentum();
+                //Float_t rGlobalMomentumX = (Float_t) globalMomentum.x() / MeV;
+                //Float_t rGlobalMomentumY = (Float_t) globalMomentum.y() / MeV;
+                //Float_t rGlobalMomentumZ = (Float_t) globalMomentum.z() / MeV;
+
+                //--- get global theta & phi angle
+                Float_t rGlobalThetaAngle = (Float_t) globalMomentum.theta() / degree;
+                Float_t rGlobalPhiAngle   = (Float_t) globalMomentum.phi() / degree - 90.0;
+				
+                //--- get local momentum of hit  
+                //G4ThreeVector localMomentum = aHit->GetLocalMomentum();
+                //Float_t rLocalMomentumX = (Float_t) localMomentum.x() / MeV;
+                //Float_t rLocalMomentumY = (Float_t) localMomentum.y() / MeV;
+                //Float_t rLocalMomentumZ = (Float_t) localMomentum.z() / MeV;
+				
+                //--- get local vertex momentum direction of hit
+                G4ThreeVector localVertexMomentumDirection = aHit->GetMomentumDirection();
+                Float_t rLocalVertexMomentumDirectionX = (Float_t) localVertexMomentumDirection.x();
+                Float_t rLocalVertexMomentumDirectionY = (Float_t) localVertexMomentumDirection.y();
+                Float_t rLocalVertexMomentumDirectionZ = (Float_t) localVertexMomentumDirection.z();
+				
+                //--- get origin vertex momentum direction of hit
+                G4ThreeVector originVertexMomentumDirection = aHit->GetOriginVertexMomentumDirection();
+                Float_t rOriginVertexMomentumDirectionX = (Float_t) originVertexMomentumDirection.x();
+                Float_t rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
+                Float_t rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
+				
+                //--- get origin vertex theta & phi angle
+                Float_t rOriginVertexThetaAngle = (Float_t) originVertexMomentumDirection.theta() / degree;
+                Float_t rOriginVertexPhiAngle   = (Float_t) originVertexMomentumDirection.phi() / degree;
+				
+                //--- get origin vertex kinetic energy & total energy
+                Float_t rOriginVertexKineticEnergy = (Float_t ) aHit->GetOriginVertexKineticEnergy() / MeV;
+                Float_t rOriginVertexTotalEnergy   = (Float_t ) aHit->GetOriginVertexTotalEnergy() / MeV;
+				
+                //--- get total energy & total energy of hit
+                Float_t rKineticEnergy = (Float_t) aHit->GetKineticEnergy() / MeV;
+                Float_t rTotalEnergy = (Float_t) aHit->GetTotalEnergy() / MeV;
+				
+                //--- get USLumi deposited energy
+                Float_t rDepositedEnergy = (Float_t) aHit->GetHitDepositedEnergy() / MeV;
+                //--------------------------------------------------------------------------------------------
+
+                //--- store Primary Event Number
+                analysis->fRootEvent->USLumi3.Detector.StoreDetectorID(octantID);
+                analysis->fRootEvent->USLumi3.Detector.StorePrimaryEventNumber((Int_t) PrimaryEventNumber);
+				
+                //--- store track ID
+                analysis->fRootEvent->USLumi3.Detector.StoreTrackID(rTrackID);
+				
+                //--- store particle name & type
+                analysis->fRootEvent->USLumi3.Detector.StoreParticleName(rParticleName);
+                analysis->fRootEvent->USLumi3.Detector.StoreParticleType(rParticleType);
+				
+                //--- store global time of hit
+                analysis->fRootEvent->USLumi3.Detector.StoreGlobalTimeOfHit(rGlobalTime);
+				
+                //--- mark USLumi detector as been hit
+                analysis->fRootEvent->USLumi3.Detector.StoreDetectorHasBeenHit(5);
+                //--- edge event flag
+                //--- Store Nb of hits  --- Done in previous code
+                //analysis->fRootEvent->USLumi3.Detector.StoreDetectorNbOfHits(n_hitUSLumi);
+				
+                //--- store global position
+                analysis->fRootEvent->USLumi3.Detector.StoreDetectorGlobalPositionX(rGlobalPositionX);
+                analysis->fRootEvent->USLumi3.Detector.StoreDetectorGlobalPositionY(rGlobalPositionY);
+                analysis->fRootEvent->USLumi3.Detector.StoreDetectorGlobalPositionZ(rGlobalPositionZ);
+				
+                //--- store local position
+                analysis->fRootEvent->USLumi3.Detector.StoreDetectorLocalPositionX(rLocalPositionX);
+                analysis->fRootEvent->USLumi3.Detector.StoreDetectorLocalPositionY(rLocalPositionY);
+                analysis->fRootEvent->USLumi3.Detector.StoreDetectorLocalPositionZ(rLocalPositionZ);
+				
+                //analysis->fRootEvent->USLumi3.Detector.StoreDetectorLocalExitPositionX(rLocalExitPositionX);
+                //analysis->fRootEvent->USLumi3.Detector.StoreDetectorLocalExitPositionY(rLocalExitPositionY);
+                //analysis->fRootEvent->USLumi3.Detector.StoreDetectorLocalExitPositionZ(rLocalExitPositionZ);
+				
+                //--- store origin vertex position
+                analysis->fRootEvent->USLumi3.Detector.StoreOriginVertexPositionX(rOriginVertexPositionX);
+                analysis->fRootEvent->USLumi3.Detector.StoreOriginVertexPositionY(rOriginVertexPositionY);
+                analysis->fRootEvent->USLumi3.Detector.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
+				
+                //--- store local vertex momentum direction
+                analysis->fRootEvent->USLumi3.Detector.StoreLocalVertexMomentumDirectionX(rLocalVertexMomentumDirectionX);
+                analysis->fRootEvent->USLumi3.Detector.StoreLocalVertexMomentumDirectionY(rLocalVertexMomentumDirectionY);
+                analysis->fRootEvent->USLumi3.Detector.StoreLocalVertexMomentumDirectionZ(rLocalVertexMomentumDirectionZ);
+				
+                //--- store origin vertex momentum direction
+                analysis->fRootEvent->USLumi3.Detector.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);
+                analysis->fRootEvent->USLumi3.Detector.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);
+                analysis->fRootEvent->USLumi3.Detector.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
+				
+                //--- store origin theta & phi angle
+                analysis->fRootEvent->USLumi3.Detector.StoreOriginVertexThetaAngle(rOriginVertexThetaAngle);
+                analysis->fRootEvent->USLumi3.Detector.StoreOriginVertexPhiAngle(rOriginVertexPhiAngle);
+				
+                //--- store origin kinetic energy & total energy
+                analysis->fRootEvent->USLumi3.Detector.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
+                analysis->fRootEvent->USLumi3.Detector.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
+				
+                //--- store local vertex kinetic & total energy
+                analysis->fRootEvent->USLumi3.Detector.StoreDetectorLocalVertexKineticEnergy(rKineticEnergy);
+                analysis->fRootEvent->USLumi3.Detector.StoreDetectorLocalVertexTotalEnergy(rTotalEnergy);
+
+                //--- store global track theta & phi angle
+                analysis->fRootEvent->USLumi3.Detector.StoreGlobalThetaAngle(rGlobalThetaAngle);
+                analysis->fRootEvent->USLumi3.Detector.StoreGlobalPhiAngle(rGlobalPhiAngle);
+				
+                //--- store USLumi deposited energy
+                analysis->fRootEvent->USLumi3.Detector.StoreDepositedEnergy(rDepositedEnergy);
+		// -- TotalDepositedEnergy is evaluated in UserUSLumi class
+		        analysis->fRootEvent->USLumi3.Detector.StoreRate(CalculateRate( myUserInfo->GetCrossSection(), 1));
+		        //G4cout <<CalculateRate( myUserInfo->GetCrossSection(), 1)<<G4endl;
+            } // end  for(int i1=0;i1<n_hitLumi;i1++)	   
+        } // end    if (n_hitLumi >0)
+
+        //===========================================================
+        // Store USLumi5 hits into /USLumi5
+        //===========================================================
+		
+        if (n_hitUSLumi5 > 0) {
+			
+            //--- loop over hits
+            for (int i1=0;i1<n_hitUSLumi5;i1++) {
+				
+                QweakSimLumi_DetectorHit* aHit = (*USLumi5Detector_HC)[i1];
+
+                G4int octantID = (Int_t) aHit->GetDetectorID() + 1;
+
+                //--- track ID
+                Float_t rTrackID = (Float_t) aHit->GetTrackID();
+				
+                //--- particle name & type
+                TString rParticleName = TString(aHit->GetParticleName());
+                Int_t rParticleType = (Int_t) aHit->GetParticleType();
+				
+                //--- get global time of hit
+                Float_t rGlobalTime = (Float_t) aHit->GetGlobalTime() / ns;
+				
+                //--- GetHasBeenHit();
+                //GetEdgeEventFlag();
+                //n_hitUSLumi5 <---> GetNbOfHits();
+				
+                //--- get world position of hit
+                G4ThreeVector globalPosition  = aHit->GetWorldPosition();
+                Float_t rGlobalPositionX = (Float_t) globalPosition.x() / cm;
+                Float_t rGlobalPositionY = (Float_t) globalPosition.y() / cm;
+                Float_t rGlobalPositionZ = (Float_t) globalPosition.z() / cm;
+				
+                //--- get local position of hit
+                G4ThreeVector localPosition  = aHit->GetLocalPosition();
+                Float_t rLocalPositionX = (Float_t) localPosition.x() / cm;
+                Float_t rLocalPositionY = (Float_t) localPosition.y() / cm;
+                Float_t rLocalPositionZ = (Float_t) localPosition.z() / cm;
+				
+                //--- get local exit position of hit
+                //G4ThreeVector localExitPosition = aHit->GetLocalExitPosition();
+                //Float_t rLocalExitPositionX = (Float_t) localExitPosition.x() / cm;
+                //Float_t rLocalExitPositionY = (Float_t) localExitPosition.y() / cm;
+                //Float_t rLocalExitPositionZ = (Float_t) localExitPosition.z() / cm;
+				
+                //--- get origin vertex position
+                G4ThreeVector originVertexPosition  = aHit->GetOriginVertexPosition();
+                Float_t rOriginVertexPositionX = (Float_t) originVertexPosition.x() / cm;
+                Float_t rOriginVertexPositionY = (Float_t) originVertexPosition.y() / cm;
+                Float_t rOriginVertexPositionZ = (Float_t) originVertexPosition.z() / cm;
+				
+                //--- get world momentum of hit
+                G4ThreeVector globalMomentum  = aHit->GetWorldMomentum();
+                //Float_t rGlobalMomentumX = (Float_t) globalMomentum.x() / MeV;
+                //Float_t rGlobalMomentumY = (Float_t) globalMomentum.y() / MeV;
+                //Float_t rGlobalMomentumZ = (Float_t) globalMomentum.z() / MeV;
+
+                //--- get global theta & phi angle
+                Float_t rGlobalThetaAngle = (Float_t) globalMomentum.theta() / degree;
+                Float_t rGlobalPhiAngle   = (Float_t) globalMomentum.phi() / degree - 90.0;
+				
+                //--- get local momentum of hit  
+                //G4ThreeVector localMomentum = aHit->GetLocalMomentum();
+                //Float_t rLocalMomentumX = (Float_t) localMomentum.x() / MeV;
+                //Float_t rLocalMomentumY = (Float_t) localMomentum.y() / MeV;
+                //Float_t rLocalMomentumZ = (Float_t) localMomentum.z() / MeV;
+				
+                //--- get local vertex momentum direction of hit
+                G4ThreeVector localVertexMomentumDirection = aHit->GetMomentumDirection();
+                Float_t rLocalVertexMomentumDirectionX = (Float_t) localVertexMomentumDirection.x();
+                Float_t rLocalVertexMomentumDirectionY = (Float_t) localVertexMomentumDirection.y();
+                Float_t rLocalVertexMomentumDirectionZ = (Float_t) localVertexMomentumDirection.z();
+				
+                //--- get origin vertex momentum direction of hit
+                G4ThreeVector originVertexMomentumDirection = aHit->GetOriginVertexMomentumDirection();
+                Float_t rOriginVertexMomentumDirectionX = (Float_t) originVertexMomentumDirection.x();
+                Float_t rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
+                Float_t rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
+				
+                //--- get origin vertex theta & phi angle
+                Float_t rOriginVertexThetaAngle = (Float_t) originVertexMomentumDirection.theta() / degree;
+                Float_t rOriginVertexPhiAngle   = (Float_t) originVertexMomentumDirection.phi() / degree;
+				
+                //--- get origin vertex kinetic energy & total energy
+                Float_t rOriginVertexKineticEnergy = (Float_t ) aHit->GetOriginVertexKineticEnergy() / MeV;
+                Float_t rOriginVertexTotalEnergy   = (Float_t ) aHit->GetOriginVertexTotalEnergy() / MeV;
+				
+                //--- get total energy & total energy of hit
+                Float_t rKineticEnergy = (Float_t) aHit->GetKineticEnergy() / MeV;
+                Float_t rTotalEnergy = (Float_t) aHit->GetTotalEnergy() / MeV;
+				
+                //--- get USLumi deposited energy
+                Float_t rDepositedEnergy = (Float_t) aHit->GetHitDepositedEnergy() / MeV;
+                //--------------------------------------------------------------------------------------------
+
+                //--- store Primary Event Number
+                analysis->fRootEvent->USLumi5.Detector.StoreDetectorID(octantID);
+                analysis->fRootEvent->USLumi5.Detector.StorePrimaryEventNumber((Int_t) PrimaryEventNumber);
+				
+                //--- store track ID
+                analysis->fRootEvent->USLumi5.Detector.StoreTrackID(rTrackID);
+				
+                //--- store particle name & type
+                analysis->fRootEvent->USLumi5.Detector.StoreParticleName(rParticleName);
+                analysis->fRootEvent->USLumi5.Detector.StoreParticleType(rParticleType);
+				
+                //--- store global time of hit
+                analysis->fRootEvent->USLumi5.Detector.StoreGlobalTimeOfHit(rGlobalTime);
+				
+                //--- mark USLumi detector as been hit
+                analysis->fRootEvent->USLumi5.Detector.StoreDetectorHasBeenHit(5);
+                //--- edge event flag
+                //--- Store Nb of hits  --- Done in previous code
+                //analysis->fRootEvent->USLumi5.Detector.StoreDetectorNbOfHits(n_hitUSLumi);
+				
+                //--- store global position
+                analysis->fRootEvent->USLumi5.Detector.StoreDetectorGlobalPositionX(rGlobalPositionX);
+                analysis->fRootEvent->USLumi5.Detector.StoreDetectorGlobalPositionY(rGlobalPositionY);
+                analysis->fRootEvent->USLumi5.Detector.StoreDetectorGlobalPositionZ(rGlobalPositionZ);
+				
+                //--- store local position
+                analysis->fRootEvent->USLumi5.Detector.StoreDetectorLocalPositionX(rLocalPositionX);
+                analysis->fRootEvent->USLumi5.Detector.StoreDetectorLocalPositionY(rLocalPositionY);
+                analysis->fRootEvent->USLumi5.Detector.StoreDetectorLocalPositionZ(rLocalPositionZ);
+				
+                //analysis->fRootEvent->USLumi5.Detector.StoreDetectorLocalExitPositionX(rLocalExitPositionX);
+                //analysis->fRootEvent->USLumi5.Detector.StoreDetectorLocalExitPositionY(rLocalExitPositionY);
+                //analysis->fRootEvent->USLumi5.Detector.StoreDetectorLocalExitPositionZ(rLocalExitPositionZ);
+				
+                //--- store origin vertex position
+                analysis->fRootEvent->USLumi5.Detector.StoreOriginVertexPositionX(rOriginVertexPositionX);
+                analysis->fRootEvent->USLumi5.Detector.StoreOriginVertexPositionY(rOriginVertexPositionY);
+                analysis->fRootEvent->USLumi5.Detector.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
+				
+                //--- store local vertex momentum direction
+                analysis->fRootEvent->USLumi5.Detector.StoreLocalVertexMomentumDirectionX(rLocalVertexMomentumDirectionX);
+                analysis->fRootEvent->USLumi5.Detector.StoreLocalVertexMomentumDirectionY(rLocalVertexMomentumDirectionY);
+                analysis->fRootEvent->USLumi5.Detector.StoreLocalVertexMomentumDirectionZ(rLocalVertexMomentumDirectionZ);
+				
+                //--- store origin vertex momentum direction
+                analysis->fRootEvent->USLumi5.Detector.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);
+                analysis->fRootEvent->USLumi5.Detector.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);
+                analysis->fRootEvent->USLumi5.Detector.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
+				
+                //--- store origin theta & phi angle
+                analysis->fRootEvent->USLumi5.Detector.StoreOriginVertexThetaAngle(rOriginVertexThetaAngle);
+                analysis->fRootEvent->USLumi5.Detector.StoreOriginVertexPhiAngle(rOriginVertexPhiAngle);
+				
+                //--- store origin kinetic energy & total energy
+                analysis->fRootEvent->USLumi5.Detector.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
+                analysis->fRootEvent->USLumi5.Detector.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
+				
+                //--- store local vertex kinetic & total energy
+                analysis->fRootEvent->USLumi5.Detector.StoreDetectorLocalVertexKineticEnergy(rKineticEnergy);
+                analysis->fRootEvent->USLumi5.Detector.StoreDetectorLocalVertexTotalEnergy(rTotalEnergy);
+
+                //--- store global track theta & phi angle
+                analysis->fRootEvent->USLumi5.Detector.StoreGlobalThetaAngle(rGlobalThetaAngle);
+                analysis->fRootEvent->USLumi5.Detector.StoreGlobalPhiAngle(rGlobalPhiAngle);
+				
+                //--- store USLumi deposited energy
+                analysis->fRootEvent->USLumi5.Detector.StoreDepositedEnergy(rDepositedEnergy);
+		// -- TotalDepositedEnergy is evaluated in UserUSLumi class
+		        analysis->fRootEvent->USLumi5.Detector.StoreRate(CalculateRate( myUserInfo->GetCrossSection(), 1));
+		        //G4cout <<CalculateRate( myUserInfo->GetCrossSection(), 1)<<G4endl;
+            } // end  for(int i1=0;i1<n_hitLumi;i1++)	   
+        } // end    if (n_hitLumi >0)
+
+        //===========================================================
+        // Store USLumi7 hits into /USLumi7
+        //===========================================================
+		
+        if (n_hitUSLumi7 > 0) {
+			
+            //--- loop over hits
+            for (int i1=0;i1<n_hitUSLumi7;i1++) {
+				
+                QweakSimLumi_DetectorHit* aHit = (*USLumi7Detector_HC)[i1];
+
+                G4int octantID = (Int_t) aHit->GetDetectorID() + 1;
+
+                //--- track ID
+                Float_t rTrackID = (Float_t) aHit->GetTrackID();
+				
+                //--- particle name & type
+                TString rParticleName = TString(aHit->GetParticleName());
+                Int_t rParticleType = (Int_t) aHit->GetParticleType();
+				
+                //--- get global time of hit
+                Float_t rGlobalTime = (Float_t) aHit->GetGlobalTime() / ns;
+				
+                //--- GetHasBeenHit();
+                //GetEdgeEventFlag();
+                //n_hitUSLumi7 <---> GetNbOfHits();
+				
+                //--- get world position of hit
+                G4ThreeVector globalPosition  = aHit->GetWorldPosition();
+                Float_t rGlobalPositionX = (Float_t) globalPosition.x() / cm;
+                Float_t rGlobalPositionY = (Float_t) globalPosition.y() / cm;
+                Float_t rGlobalPositionZ = (Float_t) globalPosition.z() / cm;
+				
+                //--- get local position of hit
+                G4ThreeVector localPosition  = aHit->GetLocalPosition();
+                Float_t rLocalPositionX = (Float_t) localPosition.x() / cm;
+                Float_t rLocalPositionY = (Float_t) localPosition.y() / cm;
+                Float_t rLocalPositionZ = (Float_t) localPosition.z() / cm;
+				
+                //--- get local exit position of hit
+                //G4ThreeVector localExitPosition = aHit->GetLocalExitPosition();
+                //Float_t rLocalExitPositionX = (Float_t) localExitPosition.x() / cm;
+                //Float_t rLocalExitPositionY = (Float_t) localExitPosition.y() / cm;
+                //Float_t rLocalExitPositionZ = (Float_t) localExitPosition.z() / cm;
+				
+                //--- get origin vertex position
+                G4ThreeVector originVertexPosition  = aHit->GetOriginVertexPosition();
+                Float_t rOriginVertexPositionX = (Float_t) originVertexPosition.x() / cm;
+                Float_t rOriginVertexPositionY = (Float_t) originVertexPosition.y() / cm;
+                Float_t rOriginVertexPositionZ = (Float_t) originVertexPosition.z() / cm;
+				
+                //--- get world momentum of hit
+                G4ThreeVector globalMomentum  = aHit->GetWorldMomentum();
+                //Float_t rGlobalMomentumX = (Float_t) globalMomentum.x() / MeV;
+                //Float_t rGlobalMomentumY = (Float_t) globalMomentum.y() / MeV;
+                //Float_t rGlobalMomentumZ = (Float_t) globalMomentum.z() / MeV;
+
+                //--- get global theta & phi angle
+                Float_t rGlobalThetaAngle = (Float_t) globalMomentum.theta() / degree;
+                Float_t rGlobalPhiAngle   = (Float_t) globalMomentum.phi() / degree - 90.0;
+				
+                //--- get local momentum of hit  
+                //G4ThreeVector localMomentum = aHit->GetLocalMomentum();
+                //Float_t rLocalMomentumX = (Float_t) localMomentum.x() / MeV;
+                //Float_t rLocalMomentumY = (Float_t) localMomentum.y() / MeV;
+                //Float_t rLocalMomentumZ = (Float_t) localMomentum.z() / MeV;
+				
+                //--- get local vertex momentum direction of hit
+                G4ThreeVector localVertexMomentumDirection = aHit->GetMomentumDirection();
+                Float_t rLocalVertexMomentumDirectionX = (Float_t) localVertexMomentumDirection.x();
+                Float_t rLocalVertexMomentumDirectionY = (Float_t) localVertexMomentumDirection.y();
+                Float_t rLocalVertexMomentumDirectionZ = (Float_t) localVertexMomentumDirection.z();
+				
+                //--- get origin vertex momentum direction of hit
+                G4ThreeVector originVertexMomentumDirection = aHit->GetOriginVertexMomentumDirection();
+                Float_t rOriginVertexMomentumDirectionX = (Float_t) originVertexMomentumDirection.x();
+                Float_t rOriginVertexMomentumDirectionY = (Float_t) originVertexMomentumDirection.y();
+                Float_t rOriginVertexMomentumDirectionZ = (Float_t) originVertexMomentumDirection.z();
+				
+                //--- get origin vertex theta & phi angle
+                Float_t rOriginVertexThetaAngle = (Float_t) originVertexMomentumDirection.theta() / degree;
+                Float_t rOriginVertexPhiAngle   = (Float_t) originVertexMomentumDirection.phi() / degree;
+				
+                //--- get origin vertex kinetic energy & total energy
+                Float_t rOriginVertexKineticEnergy = (Float_t ) aHit->GetOriginVertexKineticEnergy() / MeV;
+                Float_t rOriginVertexTotalEnergy   = (Float_t ) aHit->GetOriginVertexTotalEnergy() / MeV;
+				
+                //--- get total energy & total energy of hit
+                Float_t rKineticEnergy = (Float_t) aHit->GetKineticEnergy() / MeV;
+                Float_t rTotalEnergy = (Float_t) aHit->GetTotalEnergy() / MeV;
+				
+                //--- get USLumi deposited energy
+                Float_t rDepositedEnergy = (Float_t) aHit->GetHitDepositedEnergy() / MeV;
+                //--------------------------------------------------------------------------------------------
+
+                //--- store Primary Event Number
+                analysis->fRootEvent->USLumi7.Detector.StoreDetectorID(octantID);
+                analysis->fRootEvent->USLumi7.Detector.StorePrimaryEventNumber((Int_t) PrimaryEventNumber);
+				
+                //--- store track ID
+                analysis->fRootEvent->USLumi7.Detector.StoreTrackID(rTrackID);
+				
+                //--- store particle name & type
+                analysis->fRootEvent->USLumi7.Detector.StoreParticleName(rParticleName);
+                analysis->fRootEvent->USLumi7.Detector.StoreParticleType(rParticleType);
+				
+                //--- store global time of hit
+                analysis->fRootEvent->USLumi7.Detector.StoreGlobalTimeOfHit(rGlobalTime);
+				
+                //--- mark USLumi detector as been hit
+                analysis->fRootEvent->USLumi7.Detector.StoreDetectorHasBeenHit(5);
+                //--- edge event flag
+                //--- Store Nb of hits  --- Done in previous code
+                //analysis->fRootEvent->USLumi7.Detector.StoreDetectorNbOfHits(n_hitUSLumi);
+				
+                //--- store global position
+                analysis->fRootEvent->USLumi7.Detector.StoreDetectorGlobalPositionX(rGlobalPositionX);
+                analysis->fRootEvent->USLumi7.Detector.StoreDetectorGlobalPositionY(rGlobalPositionY);
+                analysis->fRootEvent->USLumi7.Detector.StoreDetectorGlobalPositionZ(rGlobalPositionZ);
+				
+                //--- store local position
+                analysis->fRootEvent->USLumi7.Detector.StoreDetectorLocalPositionX(rLocalPositionX);
+                analysis->fRootEvent->USLumi7.Detector.StoreDetectorLocalPositionY(rLocalPositionY);
+                analysis->fRootEvent->USLumi7.Detector.StoreDetectorLocalPositionZ(rLocalPositionZ);
+				
+                //analysis->fRootEvent->USLumi7.Detector.StoreDetectorLocalExitPositionX(rLocalExitPositionX);
+                //analysis->fRootEvent->USLumi7.Detector.StoreDetectorLocalExitPositionY(rLocalExitPositionY);
+                //analysis->fRootEvent->USLumi7.Detector.StoreDetectorLocalExitPositionZ(rLocalExitPositionZ);
+				
+                //--- store origin vertex position
+                analysis->fRootEvent->USLumi7.Detector.StoreOriginVertexPositionX(rOriginVertexPositionX);
+                analysis->fRootEvent->USLumi7.Detector.StoreOriginVertexPositionY(rOriginVertexPositionY);
+                analysis->fRootEvent->USLumi7.Detector.StoreOriginVertexPositionZ(rOriginVertexPositionZ);
+				
+                //--- store local vertex momentum direction
+                analysis->fRootEvent->USLumi7.Detector.StoreLocalVertexMomentumDirectionX(rLocalVertexMomentumDirectionX);
+                analysis->fRootEvent->USLumi7.Detector.StoreLocalVertexMomentumDirectionY(rLocalVertexMomentumDirectionY);
+                analysis->fRootEvent->USLumi7.Detector.StoreLocalVertexMomentumDirectionZ(rLocalVertexMomentumDirectionZ);
+				
+                //--- store origin vertex momentum direction
+                analysis->fRootEvent->USLumi7.Detector.StoreOriginVertexMomentumDirectionX(rOriginVertexMomentumDirectionX);
+                analysis->fRootEvent->USLumi7.Detector.StoreOriginVertexMomentumDirectionY(rOriginVertexMomentumDirectionY);
+                analysis->fRootEvent->USLumi7.Detector.StoreOriginVertexMomentumDirectionZ(rOriginVertexMomentumDirectionZ);
+				
+                //--- store origin theta & phi angle
+                analysis->fRootEvent->USLumi7.Detector.StoreOriginVertexThetaAngle(rOriginVertexThetaAngle);
+                analysis->fRootEvent->USLumi7.Detector.StoreOriginVertexPhiAngle(rOriginVertexPhiAngle);
+				
+                //--- store origin kinetic energy & total energy
+                analysis->fRootEvent->USLumi7.Detector.StoreOriginVertexKineticEnergy(rOriginVertexKineticEnergy);
+                analysis->fRootEvent->USLumi7.Detector.StoreOriginVertexTotalEnergy(rOriginVertexTotalEnergy);
+				
+                //--- store local vertex kinetic & total energy
+                analysis->fRootEvent->USLumi7.Detector.StoreDetectorLocalVertexKineticEnergy(rKineticEnergy);
+                analysis->fRootEvent->USLumi7.Detector.StoreDetectorLocalVertexTotalEnergy(rTotalEnergy);
+
+                //--- store global track theta & phi angle
+                analysis->fRootEvent->USLumi7.Detector.StoreGlobalThetaAngle(rGlobalThetaAngle);
+                analysis->fRootEvent->USLumi7.Detector.StoreGlobalPhiAngle(rGlobalPhiAngle);
+				
+                //--- store USLumi deposited energy
+                analysis->fRootEvent->USLumi7.Detector.StoreDepositedEnergy(rDepositedEnergy);
+		// -- TotalDepositedEnergy is evaluated in UserUSLumi class
+		        analysis->fRootEvent->USLumi7.Detector.StoreRate(CalculateRate( myUserInfo->GetCrossSection(), 1));
 		        //G4cout <<CalculateRate( myUserInfo->GetCrossSection(), 1)<<G4endl;
             } // end  for(int i1=0;i1<n_hitLumi;i1++)	   
         } // end    if (n_hitLumi >0)

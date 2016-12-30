@@ -97,7 +97,10 @@ public:
   
   QweakSimUserPMTOnly_MainEvent		       PMTOnly;	             ///< tree containing PMTOnly info
 
-  QweakSimUserLumi_MainEvent                   USLumi;               ///< tree containing USLumi detector info
+  QweakSimUserLumi_MainEvent                   USLumi1;               ///< tree containing USLumi1 detector info
+  QweakSimUserLumi_MainEvent                   USLumi3;               ///< tree containing USLumi3 detector info
+  QweakSimUserLumi_MainEvent                   USLumi5;               ///< tree containing USLumi5 detector info
+  QweakSimUserLumi_MainEvent                   USLumi7;               ///< tree containing USLumi7 detector info
   QweakSimUserLumi_MainEvent                   DSLumi;               ///< tree containing DSLumi detector info
 
   QweakSimUserTungstenPlug_MainEvent	       TungstenPlug;         ///< tree containing TungstenPlug info
