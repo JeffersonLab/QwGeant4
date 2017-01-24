@@ -101,7 +101,14 @@ public:
   QweakSimUserLumi_MainEvent                   USLumi3;               ///< tree containing USLumi3 detector info
   QweakSimUserLumi_MainEvent                   USLumi5;               ///< tree containing USLumi5 detector info
   QweakSimUserLumi_MainEvent                   USLumi7;               ///< tree containing USLumi7 detector info
-  QweakSimUserLumi_MainEvent                   DSLumi;               ///< tree containing DSLumi detector info
+  QweakSimUserLumi_MainEvent                   DSLumi1;               ///< tree containing DSLumi1 detector info
+  QweakSimUserLumi_MainEvent                   DSLumi2;               ///< tree containing DSLumi2 detector info
+  QweakSimUserLumi_MainEvent                   DSLumi3;               ///< tree containing DSLumi3 detector info
+  QweakSimUserLumi_MainEvent                   DSLumi4;               ///< tree containing DSLumi4 detector info
+  QweakSimUserLumi_MainEvent                   DSLumi5;               ///< tree containing DSLumi5 detector info
+  QweakSimUserLumi_MainEvent                   DSLumi6;               ///< tree containing DSLumi6 detector info
+  QweakSimUserLumi_MainEvent                   DSLumi7;               ///< tree containing DSLumi7 detector info
+  QweakSimUserLumi_MainEvent                   DSLumi8;               ///< tree containing DSLumi8 detector info
 
   QweakSimUserTungstenPlug_MainEvent	       TungstenPlug;         ///< tree containing TungstenPlug info
 	

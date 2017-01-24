@@ -127,7 +127,14 @@ QweakSimDetectorConstruction::QweakSimDetectorConstruction(QweakSimUserInformati
   pUSLumi3Detector   = NULL;
   pUSLumi5Detector   = NULL;
   pUSLumi7Detector   = NULL;
-  pDSLumiDetector   = NULL;
+  pDSLumi1Detector   = NULL;
+  pDSLumi2Detector   = NULL;
+  pDSLumi3Detector   = NULL;
+  pDSLumi4Detector   = NULL;
+  pDSLumi5Detector   = NULL;
+  pDSLumi6Detector   = NULL;
+  pDSLumi7Detector   = NULL;
+  pDSLumi8Detector   = NULL;
 
   // pGEM               = NULL;
   pHDC               = NULL;
@@ -197,7 +204,14 @@ QweakSimDetectorConstruction::~QweakSimDetectorConstruction()
   if (pUSLumi3Detector)    delete pUSLumi3Detector;
   if (pUSLumi5Detector)    delete pUSLumi5Detector;
   if (pUSLumi7Detector)    delete pUSLumi7Detector;
-  if (pDSLumiDetector)    delete pDSLumiDetector;
+  if (pDSLumi1Detector)    delete pDSLumi1Detector;
+  if (pDSLumi2Detector)    delete pDSLumi2Detector;
+  if (pDSLumi3Detector)    delete pDSLumi3Detector;
+  if (pDSLumi4Detector)    delete pDSLumi4Detector;
+  if (pDSLumi5Detector)    delete pDSLumi5Detector;
+  if (pDSLumi6Detector)    delete pDSLumi6Detector;
+  if (pDSLumi7Detector)    delete pDSLumi7Detector;
+  if (pDSLumi8Detector)    delete pDSLumi8Detector;
 
   if (pTarget)              delete pTarget;
   if (pBeamLine)            delete pBeamLine;
@@ -240,7 +254,14 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   pUSLumi3Detector      = new QweakSimLumiDetector("USLumi3");
   pUSLumi5Detector      = new QweakSimLumiDetector("USLumi5");
   pUSLumi7Detector      = new QweakSimLumiDetector("USLumi7");
-  pDSLumiDetector      = new QweakSimLumiDetector("DSLumi");
+  pDSLumi1Detector      = new QweakSimLumiDetector("DSLumi1");
+  pDSLumi2Detector      = new QweakSimLumiDetector("DSLumi2");
+  pDSLumi3Detector      = new QweakSimLumiDetector("DSLumi3");
+  pDSLumi4Detector      = new QweakSimLumiDetector("DSLumi4");
+  pDSLumi5Detector      = new QweakSimLumiDetector("DSLumi5");
+  pDSLumi6Detector      = new QweakSimLumiDetector("DSLumi6");
+  pDSLumi7Detector      = new QweakSimLumiDetector("DSLumi7");
+  pDSLumi8Detector      = new QweakSimLumiDetector("DSLumi8");
 
   pMainMagnet          = new QweakSimMainMagnet(); // QTOR Geometry (decoupled from field)
 
@@ -646,12 +667,61 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
     pGeometry->AddModule(pUSLumi7Detector->getLumiPhysicalVolume());
   }
 	
-  if (pDSLumiDetector) {
-    pDSLumiDetector->ConstructComponent(experimentalHall_Physical,
+  if (pDSLumi1Detector) {
+    pDSLumi1Detector->ConstructComponent(experimentalHall_Physical,
                                       7.0*cm,25.0*cm,2.0*cm,
                                       -250.0*cm,0.0*cm,-387.5*cm);
     
-    pGeometry->AddModule(pDSLumiDetector->getLumiPhysicalVolume());
+    pGeometry->AddModule(pDSLumi1Detector->getLumiPhysicalVolume());
+  }
+  if (pDSLumi2Detector) {
+    pDSLumi2Detector->ConstructComponent(experimentalHall_Physical,
+                                      7.0*cm,25.0*cm,2.0*cm,
+                                      -250.0*cm,0.0*cm,-387.5*cm);
+    
+    pGeometry->AddModule(pDSLumi2Detector->getLumiPhysicalVolume());
+  }
+  if (pDSLumi3Detector) {
+    pDSLumi3Detector->ConstructComponent(experimentalHall_Physical,
+                                      7.0*cm,25.0*cm,2.0*cm,
+                                      -250.0*cm,0.0*cm,-387.5*cm);
+    
+    pGeometry->AddModule(pDSLumi3Detector->getLumiPhysicalVolume());
+  }
+  if (pDSLumi4Detector) {
+    pDSLumi4Detector->ConstructComponent(experimentalHall_Physical,
+                                      7.0*cm,25.0*cm,2.0*cm,
+                                      -250.0*cm,0.0*cm,-387.5*cm);
+    
+    pGeometry->AddModule(pDSLumi4Detector->getLumiPhysicalVolume());
+  }
+  if (pDSLumi5Detector) {
+    pDSLumi5Detector->ConstructComponent(experimentalHall_Physical,
+                                      7.0*cm,25.0*cm,2.0*cm,
+                                      -250.0*cm,0.0*cm,-387.5*cm);
+    
+    pGeometry->AddModule(pDSLumi5Detector->getLumiPhysicalVolume());
+  }
+  if (pDSLumi6Detector) {
+    pDSLumi6Detector->ConstructComponent(experimentalHall_Physical,
+                                      7.0*cm,25.0*cm,2.0*cm,
+                                      -250.0*cm,0.0*cm,-387.5*cm);
+    
+    pGeometry->AddModule(pDSLumi6Detector->getLumiPhysicalVolume());
+  }
+  if (pDSLumi7Detector) {
+    pDSLumi7Detector->ConstructComponent(experimentalHall_Physical,
+                                      7.0*cm,25.0*cm,2.0*cm,
+                                      -250.0*cm,0.0*cm,-387.5*cm);
+    
+    pGeometry->AddModule(pDSLumi7Detector->getLumiPhysicalVolume());
+  }
+  if (pDSLumi8Detector) {
+    pDSLumi8Detector->ConstructComponent(experimentalHall_Physical,
+                                      7.0*cm,25.0*cm,2.0*cm,
+                                      -250.0*cm,0.0*cm,-387.5*cm);
+    
+    pGeometry->AddModule(pDSLumi8Detector->getLumiPhysicalVolume());
   }
 	
   //===============================================

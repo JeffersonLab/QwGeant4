@@ -360,4 +360,9 @@
 #=====================================
 
 # Comment out the line below to leave the Lumi in
-/Lumi/USDisable
+/USLumi1/Lumi/Disable
+/USLumi3/Lumi/Disable
+/USLumi5/Lumi/Disable
+/USLumi7/Lumi/Disable
+/DSLumi/Lumi/Disable
+

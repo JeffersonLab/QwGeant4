@@ -49,7 +49,7 @@ enum EQweakSimTriggerMode
   { kTriggerAll, kTrigger4Fold, kTrigger3Fold,
     kTriggerScint, kTriggerLeadGlass, kTriggerCer,
     kTriggerHDC, kTriggerPMTOnly, kTriggerUSLumi1,kTriggerUSLumi3,kTriggerUSLumi5,kTriggerUSLumi7,
-    kTriggerDSLumi,kTriggerTungstenPlug, kNumTriggers};
+    kTriggerDSLumi1,kTriggerDSLumi2,kTriggerDSLumi3,kTriggerDSLumi4,kTriggerDSLumi5,kTriggerDSLumi6,kTriggerDSLumi7,kTriggerDSLumi8,kTriggerTungstenPlug, kNumTriggers};
 
 class QweakSimEventAction : public G4UserEventAction
 {
@@ -105,7 +105,14 @@ private:
   G4int USLumi3Detector_CollID;
   G4int USLumi5Detector_CollID;
   G4int USLumi7Detector_CollID;
-  G4int DSLumiDetector_CollID;
+  G4int DSLumi1Detector_CollID;
+  G4int DSLumi2Detector_CollID;
+  G4int DSLumi3Detector_CollID;
+  G4int DSLumi4Detector_CollID;
+  G4int DSLumi5Detector_CollID;
+  G4int DSLumi6Detector_CollID;
+  G4int DSLumi7Detector_CollID;
+  G4int DSLumi8Detector_CollID;
   G4int TungstenPlugDetector_CollID;
   G4int CerenkovDetector_CollID;
   G4int CerenkovRadiator_CollID;

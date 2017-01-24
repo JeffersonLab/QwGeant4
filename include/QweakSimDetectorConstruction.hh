@@ -134,7 +134,14 @@ private:
   QweakSimLumiDetector*     pUSLumi3Detector;
   QweakSimLumiDetector*     pUSLumi5Detector;
   QweakSimLumiDetector*     pUSLumi7Detector;
-  QweakSimLumiDetector*     pDSLumiDetector;
+  QweakSimLumiDetector*     pDSLumi1Detector;
+  QweakSimLumiDetector*     pDSLumi2Detector;
+  QweakSimLumiDetector*     pDSLumi3Detector;
+  QweakSimLumiDetector*     pDSLumi4Detector;
+  QweakSimLumiDetector*     pDSLumi5Detector;
+  QweakSimLumiDetector*     pDSLumi6Detector;
+  QweakSimLumiDetector*     pDSLumi7Detector;
+  QweakSimLumiDetector*     pDSLumi8Detector;
 
   QweakSimMainMagnet*        pMainMagnet;
 
