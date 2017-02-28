@@ -640,28 +640,28 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
   //
   if (pUSLumi1Detector) {
     pUSLumi1Detector->ConstructComponent(experimentalHall_Physical,
-                                      7.0*cm,25.0*cm,2.0*cm,
+                                      7.0*cm,25.0*cm,2.0*cm, 0.0,
                                       25.0*cm,0.0*cm,-387.5*cm);
     
     pGeometry->AddModule(pUSLumi1Detector->getLumiPhysicalVolume());
   }
   if (pUSLumi3Detector) {
     pUSLumi3Detector->ConstructComponent(experimentalHall_Physical,
-                                      7.0*cm,25.0*cm,2.0*cm,
+                                      7.0*cm,25.0*cm,2.0*cm, 90.0,
                                       0*cm,25.0*cm,-387.5*cm);
     
     pGeometry->AddModule(pUSLumi3Detector->getLumiPhysicalVolume());
   }
   if (pUSLumi5Detector) {
     pUSLumi5Detector->ConstructComponent(experimentalHall_Physical,
-                                      7.0*cm,25.0*cm,2.0*cm,
+                                      7.0*cm,25.0*cm,2.0*cm, 180.0,
                                       -25.0*cm,0.0*cm,-387.5*cm);
     
     pGeometry->AddModule(pUSLumi5Detector->getLumiPhysicalVolume());
   }
   if (pUSLumi7Detector) {
     pUSLumi7Detector->ConstructComponent(experimentalHall_Physical,
-                                      7.0*cm,25.0*cm,2.0*cm,
+                                      7.0*cm,25.0*cm,2.0*cm, 270.0,
                                       0*cm,-25.0*cm,-387.5*cm);
     
     pGeometry->AddModule(pUSLumi7Detector->getLumiPhysicalVolume());
@@ -669,57 +669,57 @@ G4VPhysicalVolume* QweakSimDetectorConstruction::ConstructQweak()
 	
   if (pDSLumi1Detector) {
     pDSLumi1Detector->ConstructComponent(experimentalHall_Physical,
-                                      7.0*cm,25.0*cm,2.0*cm,
-                                      -250.0*cm,0.0*cm,-387.5*cm);
+                                      7.0*cm,25.0*cm,2.0*cm, 0.0,
+                                      -250.0*cm,0.0*cm,1180*cm);
     
     pGeometry->AddModule(pDSLumi1Detector->getLumiPhysicalVolume());
   }
   if (pDSLumi2Detector) {
     pDSLumi2Detector->ConstructComponent(experimentalHall_Physical,
-                                      7.0*cm,25.0*cm,2.0*cm,
-                                      -250.0*cm,0.0*cm,-387.5*cm);
+                                      7.0*cm,25.0*cm,2.0*cm, 0.0,
+                                      -250.0*cm,0.0*cm,1180*cm);
     
     pGeometry->AddModule(pDSLumi2Detector->getLumiPhysicalVolume());
   }
   if (pDSLumi3Detector) {
     pDSLumi3Detector->ConstructComponent(experimentalHall_Physical,
-                                      7.0*cm,25.0*cm,2.0*cm,
-                                      -250.0*cm,0.0*cm,-387.5*cm);
+                                      7.0*cm,25.0*cm,2.0*cm, 0.0,
+                                      0.0*cm,250.0*cm,1180*cm);
     
     pGeometry->AddModule(pDSLumi3Detector->getLumiPhysicalVolume());
   }
   if (pDSLumi4Detector) {
     pDSLumi4Detector->ConstructComponent(experimentalHall_Physical,
-                                      7.0*cm,25.0*cm,2.0*cm,
-                                      -250.0*cm,0.0*cm,-387.5*cm);
+                                      7.0*cm,25.0*cm,2.0*cm, 0.0,
+                                      -250.0*cm,0.0*cm,1180*cm);
     
     pGeometry->AddModule(pDSLumi4Detector->getLumiPhysicalVolume());
   }
   if (pDSLumi5Detector) {
     pDSLumi5Detector->ConstructComponent(experimentalHall_Physical,
-                                      7.0*cm,25.0*cm,2.0*cm,
-                                      -250.0*cm,0.0*cm,-387.5*cm);
+                                      7.0*cm,25.0*cm,2.0*cm, 0.0,
+                                      250.0*cm,0.0*cm,1180*cm);
     
     pGeometry->AddModule(pDSLumi5Detector->getLumiPhysicalVolume());
   }
   if (pDSLumi6Detector) {
     pDSLumi6Detector->ConstructComponent(experimentalHall_Physical,
-                                      7.0*cm,25.0*cm,2.0*cm,
-                                      -250.0*cm,0.0*cm,-387.5*cm);
+                                      7.0*cm,25.0*cm,2.0*cm, 0.0,
+                                      -250.0*cm,0.0*cm,1180*cm);
     
     pGeometry->AddModule(pDSLumi6Detector->getLumiPhysicalVolume());
   }
   if (pDSLumi7Detector) {
     pDSLumi7Detector->ConstructComponent(experimentalHall_Physical,
-                                      7.0*cm,25.0*cm,2.0*cm,
-                                      -250.0*cm,0.0*cm,-387.5*cm);
+                                      7.0*cm,25.0*cm,2.0*cm, 0.0,
+                                      0.0*cm,-250.0*cm,1180*cm);
     
     pGeometry->AddModule(pDSLumi7Detector->getLumiPhysicalVolume());
   }
   if (pDSLumi8Detector) {
     pDSLumi8Detector->ConstructComponent(experimentalHall_Physical,
-                                      7.0*cm,25.0*cm,2.0*cm,
-                                      -250.0*cm,0.0*cm,-387.5*cm);
+                                      7.0*cm,25.0*cm,2.0*cm, 0.0,
+                                      -250.0*cm,0.0*cm,1180*cm);
     
     pGeometry->AddModule(pDSLumi8Detector->getLumiPhysicalVolume());
   }

@@ -64,7 +64,7 @@ class QweakSimLumiDetector {
         void SetLumi_Enabled();
         void SetLumi_Disabled();
 
-        void ConstructComponent(G4VPhysicalVolume*, G4double, G4double,
+        void ConstructComponent(G4VPhysicalVolume*, G4double, G4double, G4double,
                                 G4double, G4double, G4double, G4double);
 
         // For the GDML crap

@@ -47,7 +47,7 @@ QweakSimLumiDetector::~QweakSimLumiDetector() { }
 
 void QweakSimLumiDetector::ConstructComponent(G4VPhysicalVolume* MotherVolume,
                                               G4double length_X, G4double length_Y,
-                                              G4double length_Z, G4double pos_X,
+                                              G4double length_Z, G4double rot, G4double pos_X,
                                               G4double pos_Y, G4double pos_Z)
 {
     /* Lumi geometries */
@@ -62,7 +62,7 @@ void QweakSimLumiDetector::ConstructComponent(G4VPhysicalVolume* MotherVolume,
 
     // Create G4RotationMatrix and set rotation to zero for now
     Lumi_Rot = new G4RotationMatrix();
-    Lumi_Rot->rotateX(0);
+    Lumi_Rot->rotateX(rot);
 
     // Create G4ThreeVector for lumi positions
     Lumi_XYZ = G4ThreeVector(Lumi_Position_X, Lumi_Position_Y, Lumi_Position_Z);
